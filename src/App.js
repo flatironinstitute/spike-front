@@ -5,7 +5,7 @@ import "./App.css";
 class App extends Component {
   render() {
     return (
-      <div className="App container">
+      <div className="App container container--lg">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1>SpikeForest</h1>
