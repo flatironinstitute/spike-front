@@ -32,7 +32,6 @@ body {
   font-family: "Univers", "Arial", "HelveticaNeue", "Helvetica Neue", Helvetica,
     Arial, sans-serif;
   color: var(--off-black);
-  background-color: var(--dark-grey);
 }
 
 /* Typography
@@ -259,4 +258,41 @@ Use containers when you need a content area that has standard maximum width and 
   clear: both;
   content: "";
   display: table;
+}
+
+/* Navbar
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+nav {
+  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: var(--dark-grey);
+  z-index: 4;
+}
+.nav__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 1vmin 2vmin;
+}
+.nav__brand {
+  float: left;
+  margin-bottom: 0;
+}
+.nav__logo {
+  height: 10vmin;
+}
+.nav__item-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.nav__item {
+  padding-left: 20px;
 }
