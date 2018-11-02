@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import logo from "../logo.svg";
 import search from "../icon-search-wh.svg";
 
-export default class Navbar extends Component {
+class Navbar extends Component {
   render() {
     return (
       <div className="nav__wrapper">
@@ -39,3 +39,4 @@ export default class Navbar extends Component {
     );
   }
 }
+export default Navbar;

@@ -19,3 +19,4 @@ class Algos extends Component {
   }
 }
 export default Algos;
+// TODO: Refactor out the headers to be reusable.

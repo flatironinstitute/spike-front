@@ -9,9 +9,9 @@ class Home extends Component {
           <img src={logo} className="header__logo" alt="logo" />
           <div className="header__copy">
             <p>
-              <span class="header__copy--em">SpikeForest</span> is a website and
-              open source computing framework for evaluating and comparing spike
-              sorting algorithms for neurophysiology data analysis.
+              <span className="header__copy--em">SpikeForest</span> is a website
+              and open source computing framework for evaluating and comparing
+              spike sorting algorithms for neurophysiology data analysis.
             </p>
             <p>
               The system includes a collection of standard electrophysiology
@@ -28,6 +28,5 @@ class Home extends Component {
     );
   }
 }
-
 export default Home;
-// TODO: Refactor out the headers to be reusable.
+// TODO: Refactor out the headers to be reusable component.

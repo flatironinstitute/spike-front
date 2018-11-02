@@ -6,9 +6,18 @@ import About from "./components/About";
 import Datasets from "./components/Datasets";
 import Algos from "./components/Algos";
 import Navbar from "./components/Navbar";
+import headers from "./headers";
 
 class App extends Component {
   render() {
+    state = {
+      headers: {}
+    };
+
+    loadHeaderCopy = () => {
+      this.setState({ headers: headers });
+    };
+
     const App = () => (
       <div>
         <Navbar />
