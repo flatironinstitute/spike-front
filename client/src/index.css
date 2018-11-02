@@ -121,25 +121,17 @@ a:hover {
 Use containers when you need a content area that has standard maximum width and centered on the page.
 <div class="container {modifier_class}">Container</div>
 */
-
+.app {
+  background-color: var(--fi-grey);
+}
 .container {
   margin: 0 auto;
-  max-width: 1000px;
   padding: 0 10px;
   position: relative;
-  width: 100%;
+  width: 95%;
   box-sizing: border-box;
 }
-.container--lg {
-  margin: 0 auto;
-  max-width: 1200px;
-  padding: 3.2rem 1rem;
-}
-.container--sm {
-  margin: 0 auto;
-  max-width: 640px;
-  padding: 2.4rem 2rem;
-}
+
 .col {
   width: 100%;
   float: left;
@@ -253,6 +245,16 @@ Use containers when you need a content area that has standard maximum width and 
   }
 }
 
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1480px;
+  }
+}
+
+.container--body {
+  padding: 7.2rem 1rem;
+}
+
 .container:after,
 .row:after {
   clear: both;
@@ -260,39 +262,131 @@ Use containers when you need a content area that has standard maximum width and 
   display: table;
 }
 
+/* Lists
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+ul {
+  list-style: circle inside;
+}
+ol {
+  list-style: decimal inside;
+}
+ol,
+ul {
+  padding-left: 0;
+  margin-top: 0;
+}
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+  margin: 1.5rem 0 1.5rem 3rem;
+  font-size: 90%;
+}
+li {
+  margin-bottom: 1rem;
+}
+
 /* Navbar
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-nav {
-  width: 100%;
+.nav__wrapper {
+  height: 72px;
+  left: 0px;
   position: fixed;
-  left: 0;
-  top: 0;
-  background-color: var(--dark-grey);
-  z-index: 4;
+  right: 0px;
+  top: 0px;
+  width: 100%;
+  z-index: 100;
+  letter-spacing: 0.1rem;
+  background: none none repeat scroll 0% 0% / auto padding-box border-box;
+  font: normal normal 400 normal 2rem / 7rem "Univers", "Arial", "HelveticaNeue",
+    "Helvetica Neue", Helvetica, Arial, sans-serif;
+  cursor: pointer;
+}
+.container--nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.nav {
+  float: left;
+  width: 100%;
 }
 .nav__container {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1200px;
-  box-sizing: border-box;
-  margin: 0 auto;
-  padding: 1vmin 2vmin;
 }
 .nav__brand {
-  float: left;
-  margin-bottom: 0;
+  padding: 0px 20px 0px 24px;
+  text-decoration: none;
 }
 .nav__logo {
-  height: 10vmin;
+  background-position: 0px 1px;
+  display: inline-block;
+  height: 24px;
+  margin: 23px 20px 0px 0px;
+  text-decoration: none;
 }
-.nav__item-wrapper {
+.nav__title {
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--fi-blue);
+}
+.nav__link {
+  text-decoration: none;
+  padding: 0px 20px 0px 0px;
+  cursor: pointer;
+  color: var(--off-black);
+}
+.nav__link:hover {
+  color: var(--fi-blue);
+}
+.nav__link--last {
+  text-decoration: none;
+  cursor: pointer;
+  color: var(--off-black);
+}
+.nav__right {
+  box-sizing: border-box;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  float: right;
+  height: 72px;
 }
-.nav__item {
-  padding-left: 20px;
+.nav__search {
+  height: 24px;
+  min-height: auto;
+  min-width: auto;
+  text-decoration: none;
+  width: 24px;
+  margin: 24px 24px 0px 0px;
+}
+.active {
+  color: var(--fi-blue);
+}
+
+/* Header
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.header {
+  margin-top: 6rem;
+  text-align: center;
+}
+.header__title {
+  font-family: "Chronicle Text G1 Roman", Georgia, Times, "Times New Roman",
+    serif;
+  margin-bottom: 3rem;
+}
+.header__logo {
+  height: 52px;
+  margin-bottom: 3rem;
+}
+.header__copy {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 780px;
+  font-size: 1.8rem;
+  line-height: 2.9rem;
+  text-align: left;
+}
+.header__copy--em {
+  color: var(--fi-blue);
+  font-weight: bold;
 }
