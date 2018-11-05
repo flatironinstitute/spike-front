@@ -12,7 +12,7 @@ class Navbar extends Component {
             <div className="nav__container">
               <NavLink to="/" className="nav__brand">
                 <img src={logo} className="nav__logo" alt="logo" />
-                <span class="nav__title">SpikeForest</span>
+                <span className="nav__title">SpikeForest</span>
               </NavLink>
             </div>
           </nav>

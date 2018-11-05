@@ -6,41 +6,35 @@ class Datasets extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: []
+      datasets: []
     };
   }
 
   // Fetch the datasets on first mount
   componentDidMount() {
-    this.getList();
+    this.getDatasets();
   }
 
   // Retrieves the list of datasets from the Express app
-  getList = () => {
+  getDatasets = () => {
     fetch("/api/getDatasets")
-      .then(res => res.json())
-      .then(list => this.setState({ list }));
+      .then(res => {
+        return res.json();
+      })
+      .then(json => {
+        // let list = JSON.stringify(json);
+        // // let arr = Array.from(list);
+        // console.log(json, typeof json);
+        this.setState({ datasets: json });
+      });
   };
 
   render() {
-    const { list } = this.state;
-
     return (
       <div className="container container--body">
         <Header headerCopy={this.props.header} />
-        {/* Check to see if any items are found*/}
-        {list.length ? (
-          <div>
-            {/* Render the list of items */}
-            {list.map(item => {
-              return <div>{item}</div>;
-            })}
-          </div>
-        ) : (
-          <div>
-            <h2>No Datasets Found</h2>
-          </div>
-        )}
+        <p>{this.state.datasets[0]}</p>
+        <p />
       </div>
     );
   }

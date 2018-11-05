@@ -4,7 +4,7 @@
   "description": "Benchmarking of spike sorting algorithms. Seeing the spike forest for the trees.",
   "main": "start.js",
   "scripts": {
-    "start:server": "node start.js"
+    "start": "node start.js"
   },
   "repository": {
     "type": "git",

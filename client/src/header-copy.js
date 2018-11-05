@@ -1,5 +1,6 @@
 const headers = {
   about: {
+    id: "head01",
     name: "About",
     paragraphs: [
       "Powder chocolate jelly gummi bears icing jujubes icing ice cream icing. Chocolate sesame snaps cotton candy lemon drops cotton candy dragée oat cake carrot cake. Biscuit gummies lollipop chupa chups. Bonbon marzipan tiramisu pie chocolate bar donut."
@@ -7,6 +8,7 @@ const headers = {
   },
 
   algos: {
+    id: "head02",
     name: "Algorithyms",
     paragraphs: [
       "Caramels marzipan pie chocolate cake. Biscuit sesame snaps cookie biscuit caramels carrot cake jelly beans dragée. Liquorice cake chocolate bar sweet roll. Bear claw halvah chocolate bar cupcake topping tiramisu."
@@ -14,6 +16,7 @@ const headers = {
   },
 
   datasets: {
+    id: "head03",
     name: "Datasets",
     paragraphs: [
       "Cotton candy cake brownie chocolate cake muffin icing dragée tootsie roll. Dragée chocolate cake fruitcake lemon drops candy gummi bears tootsie roll chupa chups. Dragée chocolate bar brownie jelly-o gingerbread lollipop icing chocolate. Tart wafer jelly-o."
@@ -21,7 +24,7 @@ const headers = {
   },
 
   home: {
-    name: "",
+    id: "head04",
     image: "../logo.svg",
     paragraphs: [
       "SpikeForest is a website and open source computing framework for evaluating and comparing spike sorting algorithms for neurophysiology data analysis.",

@@ -11,8 +11,8 @@ class Header extends Component {
           <h2 className="header__title">{this.props.headerCopy.name}</h2>
         )}
         <div className="header__copy">
-          {this.props.headerCopy.paragraphs.map(para => (
-            <p>{para}</p>
+          {this.props.headerCopy.paragraphs.map((para, i) => (
+            <p key={i}>{para}</p>
           ))}
         </div>
       </div>
