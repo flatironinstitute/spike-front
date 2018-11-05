@@ -15,9 +15,9 @@ app.use(express.static(path.join(__dirname, "client/build")));
 app.get("/api/getDatasets", controller.getDatasets);
 
 // Handles any requests that don't match the ones above
-// router.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname + "/client/build/index.html"));
-// });
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/build/index.html"));
+});
 
 // // Takes the raw requests and turns them into usable properties on req.body
 // app.use(bodyParser.json());

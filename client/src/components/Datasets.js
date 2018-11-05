@@ -22,19 +22,21 @@ class Datasets extends Component {
         return res.json();
       })
       .then(json => {
-        // let list = JSON.stringify(json);
-        // // let arr = Array.from(list);
-        // console.log(json, typeof json);
+        console.log("🖥️🕹️From the KB🖥️🕹️", json, typeof json);
         this.setState({ datasets: json });
       });
   };
 
   render() {
+    let sets = this.state.datasets;
     return (
       <div className="container container--body">
         <Header headerCopy={this.props.header} />
-        <p>{this.state.datasets[0]}</p>
-        <p />
+        <div className="datasets--list">
+          {sets.map((set, i) => (
+            <p key={i}>{set}</p>
+          ))}
+        </div>
       </div>
     );
   }
