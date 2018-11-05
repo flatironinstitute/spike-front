@@ -262,6 +262,24 @@ Use containers when you need a content area that has standard maximum width and 
   display: table;
 }
 
+.container--nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.container--left-menu {
+  width: 100%;
+  margin-top: 6rem;
+}
+
+@media screen and (max-width: 768px) {
+  .container--left-menu {
+    margin-top: 0;
+  }
+}
+
 /* Lists
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 ul {
@@ -301,11 +319,6 @@ li {
   font: normal normal 400 normal 2rem / 7rem var(--sans);
   cursor: pointer;
 }
-.container--nav {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
 .nav {
   float: left;
   width: 100%;
@@ -322,7 +335,7 @@ li {
   background-position: 0px 1px;
   display: inline-block;
   height: 24px;
-  margin: 23px 20px 0px 0px;
+  margin: 0px 20px 0px 0px;
   text-decoration: none;
 }
 .nav__title {
@@ -402,6 +415,7 @@ li {
 }
 .left-menu__link {
   display: block;
+  text-decoration: none;
 }
 
 @media screen and (max-width: 768px) {
@@ -418,6 +432,9 @@ li {
   }
   .left-menu__link::after {
     content: " / ";
+  }
+  .left-menu__link:last-of-type::after {
+    content: "";
   }
   .left-menu__link {
     display: inline;
