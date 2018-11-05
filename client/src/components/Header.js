@@ -1,16 +1,17 @@
 import React, { Component } from "react";
+import logo from "../logo.svg";
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div className="header">
-        <h2 className="header__title">{this.props.name}</h2>
+        {this.props.headerCopy.image ? (
+          <img src={logo} className="header__logo" alt="logo" />
+        ) : (
+          <h2 className="header__title">{this.props.headerCopy.name}</h2>
+        )}
         <div className="header__copy">
-          {this.props.paragraphs.map(para => (
+          {this.props.headerCopy.paragraphs.map(para => (
             <p>{para}</p>
           ))}
         </div>

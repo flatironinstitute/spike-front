@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Header from "./Header";
 
 class Datasets extends Component {
   // Initialize the state
@@ -26,16 +27,7 @@ class Datasets extends Component {
 
     return (
       <div className="container container--body">
-        <div className="header">
-          <h2 className="header__title">Datasets</h2>
-          <div className="header__copy">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-              cursus purus quis pharetra aliquet. Orci varius natoque penatibus
-              et magnis.
-            </p>
-          </div>
-        </div>
+        <Header headerCopy={this.props.header} />
         {/* Check to see if any items are found*/}
         {list.length ? (
           <div>
@@ -54,4 +46,3 @@ class Datasets extends Component {
   }
 }
 export default Datasets;
-// TODO: Refactor out the headers to be reusable.

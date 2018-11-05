@@ -6,26 +6,33 @@ import About from "./components/About";
 import Datasets from "./components/Datasets";
 import Algos from "./components/Algos";
 import Navbar from "./components/Navbar";
-import headers from "./headers";
+import headerCopy from "./header-copy";
 
 class App extends Component {
   render() {
-    state = {
-      headers: {}
-    };
-
-    loadHeaderCopy = () => {
-      this.setState({ headers: headers });
-    };
-
     const App = () => (
       <div>
         <Navbar />
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/algos" component={Algos} />
-          <Route path="/about" component={About} />
-          <Route path="/datasets" component={Datasets} />
+          <Route
+            exact
+            path="/"
+            render={props => <Home {...props} header={headerCopy.home} />}
+          />
+          <Route
+            path="/algos"
+            render={props => <Algos {...props} header={headerCopy.algos} />}
+          />
+          <Route
+            path="/about"
+            render={props => <About {...props} header={headerCopy.about} />}
+          />
+          <Route
+            path="/datasets"
+            render={props => (
+              <Datasets {...props} header={headerCopy.datasets} />
+            )}
+          />
         </Switch>
       </div>
     );

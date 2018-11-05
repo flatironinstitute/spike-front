@@ -21,4 +21,4 @@ class LeftMenu extends Component {
     );
   }
 }
-export default About;
+export default LeftMenu;
