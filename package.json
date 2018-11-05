@@ -2,9 +2,9 @@
   "name": "spike-front",
   "version": "0.1.0",
   "description": "Benchmarking of spike sorting algorithms. Seeing the spike forest for the trees.",
-  "main": "server.js",
+  "main": "start.js",
   "scripts": {
-    "start:server": "node server.js"
+    "start:server": "node start.js"
   },
   "repository": {
     "type": "git",
