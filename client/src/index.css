@@ -18,6 +18,7 @@ html {
   --fi-brown: #903f2c;
   --fi-orange: #f28b00;
   --off-black: #222;
+  --light-grey: #edebf1;
   --dark-grey: #282c34;
   --sans: "Univers", "Arial", "HelveticaNeue", "Helvetica Neue", Helvetica,
     Arial, sans-serif;
@@ -33,6 +34,9 @@ body {
   font-weight: 400;
   font-family: var(--sans);
   color: var(--off-black);
+  /* background-color: var(--light-grey); */
+  background-color: #faf7ff;
+  /* background-color: #fdfcff; */
 }
 
 /* Typography
@@ -271,13 +275,6 @@ Use containers when you need a content area that has standard maximum width and 
 
 .container--left-menu {
   width: 100%;
-  margin-top: 6rem;
-}
-
-@media screen and (max-width: 768px) {
-  .container--left-menu {
-    margin-top: 0;
-  }
 }
 
 /* Lists
@@ -318,6 +315,7 @@ li {
   background: none none repeat scroll 0% 0% / auto padding-box border-box;
   font: normal normal 400 normal 2rem / 7rem var(--sans);
   cursor: pointer;
+  background-color: white;
 }
 .nav {
   float: left;
@@ -439,4 +437,22 @@ li {
   .left-menu__link {
     display: inline;
   }
+}
+
+/* Datasets
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.datasets--errors {
+  background-color: white;
+}
+
+.datasets--error-message {
+  color: var(--fi-brown);
+}
+
+.datasets--list {
+  text-align: center;
+}
+
+.datasets--title {
+  font-family: var(--serif);
 }

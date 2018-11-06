@@ -1,8 +1,7 @@
 const express = require("express");
 const path = require("path");
-const bodyParser = require("body-parser");
-const promisify = require("es6-promisify");
-const flash = require("connect-flash");
+// const bodyParser = require("body-parser");
+// const flash = require("connect-flash");
 const controller = require("./controllers/controller");
 const errorHandlers = require("./handlers/errorHandlers");
 
