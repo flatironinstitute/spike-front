@@ -12,7 +12,7 @@ const app = express();
 app.use(express.static(path.join(__dirname, "client/build")));
 
 // An api endpoint that returns a short list of items
-app.get("/api/getDatasets", controller.getDatasets);
+app.get("/api/getDatasets", controller.loadDatasets);
 
 // Handles any requests that don't match the ones above
 app.get("*", (req, res) => {

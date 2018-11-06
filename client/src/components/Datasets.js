@@ -24,6 +24,9 @@ class Datasets extends Component {
       .then(json => {
         console.log("🖥️🕹️From the KB🖥️🕹️", json, typeof json);
         this.setState({ datasets: json });
+      })
+      .catch(err => {
+        console.log("ERROR", err);
       });
   };
 
