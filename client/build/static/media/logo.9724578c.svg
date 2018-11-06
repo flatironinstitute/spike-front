@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="500px" height="500px" viewBox="0 0 500 500" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>Logo</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon id="Triangle-Copy-5" fill="#F6CF3F" points="251.5 26 436 262 67 262"></polygon>
+        <polygon id="Triangle-Copy-2" fill="#807F83" points="251 82 445 330 57 330"></polygon>
+        <path d="M311,405 L311,500 L192,500 L192,405 L47,405 L251,144 L455,405 L311,405 Z" id="Triangle-Copy-4" fill="#384CA2"></path>
+    </g>
+</svg>

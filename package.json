@@ -1,27 +1,24 @@
 {
   "name": "spike-front",
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "normalize.css": "^8.0.0",
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0",
-    "react-scripts": "2.1.0"
-  },
+  "description": "Benchmarking of spike sorting algorithms. Seeing the spike forest for the trees.",
+  "main": "start.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "node start.js"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elovero/spike-front.git"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
-  "homepage": "https://lillenlen.tech"
+  "keywords": [],
+  "author": "Elizabeth Lovero",
+  "homepage": "https://lillenlen.tech",
+  "dependencies": {
+    "@magland/kbucket": "0.12.1",
+    "body-parser": "^1.18.3",
+    "connect-flash": "^0.1.1",
+    "es6-promisify": "^6.0.1",
+    "express": "^4.16.4",
+    "path": "^0.12.7"
+  }
 }
