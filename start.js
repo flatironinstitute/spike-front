@@ -12,7 +12,10 @@ const app = express();
 app.use(express.static(path.join(__dirname, "client/build")));
 
 // An api endpoint that returns a short list of items
-app.get("/api/getDatasets", controller.loadDatasets);
+app.get(
+  "/api/getStudiesProcessed",
+  errorHandlers.catchErrors(controller.getStudiesProcessed)
+);
 
 // Handles any requests that don't match the ones above
 app.get("*", (req, res) => {
@@ -24,25 +27,16 @@ app.get("*", (req, res) => {
 // app.use(bodyParser.urlencoded({ extended: true }));
 
 // // flash middleware let's us use req.flash('error', 'Farts!'), which will then pass that message to the next page the user requests
-// app.use(flash());
+app.use(flash());
 
 // // pass variables to our templates + all requests
-// app.use((req, res, next) => {
-//   res.locals.flashes = req.flash();
-//   next();
-// });
+app.use((req, res, next) => {
+  res.locals.flashes = req.flash();
+  next();
+});
 
-// // promisify some callback based APIs
-// app.use((req, res, next) => {
-//   req.login = promisify(req.login, req);
-//   next();
-// });
-
-// // If that above routes didnt work, we 404 them and forward to error handler
-// app.use(errorHandlers.notFound);
-
-// // error handlers will see if these errors are just validation errors
-// app.use(errorHandlers.flashValidationErrors);
+// If that above routes didnt work, we 404 them and forward to error handler
+app.use(errorHandlers.notFound);
 
 // // otherwise this was a really bad error we didn't expect! eek
 // if (app.get("env") === "development") {

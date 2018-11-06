@@ -6,38 +6,39 @@ class Datasets extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      datasets: []
+      datasets: [],
+      studies: []
     };
   }
 
   // Fetch the datasets on first mount
   componentDidMount() {
-    this.getDatasets();
+    this.getStudiesProcessed();
   }
 
   // Retrieves the list of datasets from the Express app
-  getDatasets = () => {
-    fetch("/api/getDatasets")
+  getStudiesProcessed = () => {
+    fetch("/api/getStudiesProcessed")
       .then(res => {
+        console.log(res);
         return res.json();
       })
       .then(json => {
-        console.log("🖥️🕹️From the KB🖥️🕹️", json, typeof json);
-        this.setState({ datasets: json });
+        console.log(json);
+        this.setState({ datasets: json.datasets, studies: json.studies });
       })
       .catch(err => {
-        console.log("ERROR", err);
+        console.log("👎 ERROR", err);
       });
   };
 
   render() {
-    let sets = this.state.datasets;
     return (
       <div className="container container--body">
         <Header headerCopy={this.props.header} />
         <div className="datasets--list">
-          {sets.map((set, i) => (
-            <p key={i}>{set}</p>
+          {this.state.studies.map((study, i) => (
+            <p key={i}>{study.name}</p>
           ))}
         </div>
       </div>
