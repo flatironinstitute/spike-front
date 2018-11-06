@@ -25,8 +25,8 @@ app.get("*", (req, res) => {
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
 
-// // flash middleware let's us use req.flash('error', 'Farts!'), which will then pass that message to the next page the user requests
-app.use(flash());
+// // flash middleware let's one use req.flash('error', 'Farts!'), which will then pass that message to the next page the user requests
+// app.use(flash());
 
 // // pass variables to our templates + all requests
 app.use((req, res, next) => {

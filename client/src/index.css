@@ -18,7 +18,7 @@ html {
   --fi-brown: #903f2c;
   --fi-orange: #f28b00;
   --off-black: #222;
-  --light-grey: #edebf1;
+  --off-white: #fafafd; /* other possible background colors: #faf7ff, #fdfcff */
   --dark-grey: #282c34;
   --sans: "Univers", "Arial", "HelveticaNeue", "Helvetica Neue", Helvetica,
     Arial, sans-serif;
@@ -34,9 +34,7 @@ body {
   font-weight: 400;
   font-family: var(--sans);
   color: var(--off-black);
-  /* background-color: var(--light-grey); */
-  background-color: #faf7ff;
-  /* background-color: #fdfcff; */
+  background-color: var(--off-white);
 }
 
 /* Typography
@@ -443,6 +441,11 @@ li {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .datasets--errors {
   background-color: white;
+  max-width: 780px;
+  margin: 3rem auto;
+  padding: 1.8rem;
+  font-size: 1.8rem;
+  line-height: 2.9rem;
 }
 
 .datasets--error-message {
