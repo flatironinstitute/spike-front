@@ -44,22 +44,20 @@ class Datasets extends Component {
     return (
       <div className="container container--body">
         <Header headerCopy={this.props.header} />
-        <div className="datasets--errors">
-          {this.state.errors.length
-            ? this.state.errors.map((err, i) => (
-                <p className="datasets--error-message" key={i}>
-                  {err}
-                </p>
-              ))
-            : null}
-        </div>
-        <div className="datasets--list">
+        {this.state.errors.length
+          ? this.state.errors.map((err, i) => (
+              <p className="datasets--errors datasets--error-message" key={i}>
+                {err}
+              </p>
+            ))
+          : null}
+        <div className="datasets">
           <h3 className="datasets--title">Studies</h3>
           {this.state.studies.map((study, i) => (
             <p key={i}>{study.name}</p>
           ))}
         </div>
-        <div className="datasets--list">
+        <div className="datasets">
           <h3 className="datasets--title">Datasets</h3>
           {this.state.datasets.map((set, i) => (
             <p key={i}>{set.name}</p>

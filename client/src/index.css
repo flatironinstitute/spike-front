@@ -149,7 +149,7 @@ Use containers when you need a content area that has standard maximum width and 
 
 @media (min-width: 550px) {
   .container {
-    width: 80%;
+    width: 85%;
   }
   .col {
     margin-left: 2%;
@@ -326,6 +326,7 @@ li {
 .nav__brand {
   padding: 0px 20px 0px 24px;
   text-decoration: none;
+  white-space: nowrap;
 }
 .nav__logo {
   background-position: 0px 1px;
@@ -374,7 +375,7 @@ li {
 /* Header
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .header {
-  margin-top: 6rem;
+  margin: 6rem 0;
   text-align: center;
 }
 .header__title {
@@ -452,8 +453,9 @@ li {
   color: var(--fi-brown);
 }
 
-.datasets--list {
+.datasets {
   text-align: center;
+  margin: 6em 0;
 }
 
 .datasets--title {

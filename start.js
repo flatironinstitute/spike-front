@@ -1,8 +1,6 @@
 const express = require("express");
 const path = require("path");
-// const bodyParser = require("body-parser");
-// const flash = require("connect-flash");
-const controller = require("./controllers/controller");
+const routes = require("./routes/index");
 const errorHandlers = require("./handlers/errorHandlers");
 
 const app = express();
@@ -10,41 +8,25 @@ const app = express();
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, "client/build")));
 
-// An api endpoint that returns a short list of items
-app.get(
-  "/api/getStudiesProcessed",
-  errorHandlers.catchErrors(controller.getStudiesProcessed)
-);
+// Manage our specific routes for internal data calls
+app.use("/", routes);
 
 // Handles any requests that don't match the ones above
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/client/build/index.html"));
 });
 
-// // Takes the raw requests and turns them into usable properties on req.body
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
-
-// // flash middleware let's one use req.flash('error', 'Farts!'), which will then pass that message to the next page the user requests
-// app.use(flash());
-
-// // pass variables to our templates + all requests
-app.use((req, res, next) => {
-  res.locals.flashes = req.flash();
-  next();
-});
-
 // If that above routes didnt work, we 404 them and forward to error handler
 app.use(errorHandlers.notFound);
 
-// // otherwise this was a really bad error we didn't expect! eek
-// if (app.get("env") === "development") {
-//   /* Development Error Handler - Prints stack trace */
-//   app.use(errorHandlers.developmentErrors);
-// }
+// otherwise this was a really bad error we didn't expect! eek
+if (app.get("env") === "development") {
+  /* Development Error Handler - Prints stack trace */
+  app.use(errorHandlers.developmentErrors);
+}
 
-// // production error handler
-// app.use(errorHandlers.productionErrors);
+// production error handler
+app.use(errorHandlers.productionErrors);
 
 app.set("port", process.env.PORT || 5000);
 const server = app.listen(app.get("port"), () => {
