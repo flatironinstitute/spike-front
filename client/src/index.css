@@ -275,6 +275,10 @@ Use containers when you need a content area that has standard maximum width and 
   width: 100%;
 }
 
+.container--error {
+  margin-top: 10rem;
+}
+
 /* Lists
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 ul {
@@ -440,24 +444,36 @@ li {
 
 /* Datasets
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-.datasets--errors {
+.datasets {
+  text-align: center;
+  margin: 6em 0;
+}
+.datasets--title {
+  font-family: var(--serif);
+}
+
+/* Errors
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.errors {
   background-color: white;
   max-width: 780px;
   margin: 3rem auto;
   padding: 1.8rem;
   font-size: 1.8rem;
   line-height: 2.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-
-.datasets--error-message {
+.errors--message {
   color: var(--fi-brown);
+  margin-block-end: 0;
 }
-
-.datasets {
-  text-align: center;
-  margin: 6em 0;
+.errors--close {
+  cursor: pointer;
+  margin-block-end: 0;
+  font-family: var(--sans);
 }
-
-.datasets--title {
-  font-family: var(--serif);
+.errors--close:hover {
+  color: var(--fi-blue);
 }

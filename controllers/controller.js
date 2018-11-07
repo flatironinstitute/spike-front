@@ -8,9 +8,8 @@ exports.getStudiesProcessed = async (req, res, next) => {
     key: { name: "spikeforest_studies_processed" }
   });
   if (!obj) {
-    // req.flash("error", "Problem loading datasets object.");
+    console.log("Problem loading spikeforest_studies_processed object.");
     return;
   }
-  // req.flash("success", "Successfully loaded spikesorted datasets 👋");
   res.send(obj);
 };
