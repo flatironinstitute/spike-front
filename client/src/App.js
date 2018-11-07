@@ -10,13 +10,12 @@ import Error from "./components/Error";
 import headerCopy from "./header-copy";
 
 class App extends Component {
-  // Initialize the state
   constructor(props) {
     super(props);
     this.state = {
       datasets: [],
       studies: [],
-      errors: ["testing errors 📓"]
+      errors: []
     };
   }
 
@@ -24,7 +23,7 @@ class App extends Component {
   componentDidMount() {
     this.getStudiesProcessed();
   }
-
+  // TODO: Mve this into a data handling JS file?
   // Retrieves the list of datasets from the Express app
   getStudiesProcessed = () => {
     fetch("/api/getStudiesProcessed")
@@ -35,7 +34,7 @@ class App extends Component {
         this.setState({
           datasets: json.datasets,
           studies: json.studies,
-          errors: ["#2 testing errors 🔖📓"]
+          errors: []
         });
       })
       .catch(err => {

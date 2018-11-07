@@ -13,3 +13,18 @@ exports.getStudiesProcessed = async (req, res, next) => {
   }
   res.send(obj);
 };
+
+exports.getSortingResults = async (req, res, next) => {
+  let obj = await kbclient.loadObject(null, {
+    key: {
+      name: "spikeforest_sorting_results",
+      study: "magland_synth_noise10_K10_C4"
+    }
+  });
+  if (!obj) {
+    console.error("Problem loading spikeforest_sorting_results object.");
+    return;
+  }
+  res.send(obj);
+};
+// TODO: Send name and study key as req.body
