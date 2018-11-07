@@ -526,3 +526,11 @@ li {
     opacity: 0.2;
   }
 }
+
+/* React Collapsible Table
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.react-collapsible-theme {
+  text-align: left;
+  padding: 2rem;
+  background-color: #fff;
+}

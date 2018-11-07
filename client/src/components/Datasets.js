@@ -4,21 +4,29 @@ import ReactCollapsingTable from "react-collapsing-table";
 
 class Datasets extends Component {
   render() {
+    console.log(this.props.datasets[0]);
     const studyColumns = [
       {
         accessor: "name",
         label: "Study Name",
         priorityLevel: 1,
         position: 1,
-        minWidth: 150,
+        minWidth: 100,
         sortable: true
+      },
+      {
+        accessor: "number",
+        label: "Number of Datasets",
+        priorityLevel: 3,
+        position: 3,
+        minWidth: 100
       },
       {
         accessor: "description",
         label: "Description",
         priorityLevel: 2,
         position: 2,
-        minWidth: 300
+        minWidth: 100
       }
     ];
     const datasetColumns = [
@@ -27,7 +35,7 @@ class Datasets extends Component {
         label: "Dataset Name",
         priorityLevel: 1,
         position: 1,
-        minWidth: 150,
+        minWidth: 100,
         sortable: true
       },
       {
@@ -35,25 +43,28 @@ class Datasets extends Component {
         label: "Study",
         priorityLevel: 2,
         position: 2,
-        minWidth: 150
+        minWidth: 100
       },
       {
-        accessor: "computed_info",
-        label: "Computed Info",
+        accessor: "computed_info.duration_sec",
+        label: "Duration Seconds",
         priorityLevel: 3,
         position: 3,
-        minWidth: 150
+        minWidth: 100
       }
     ];
-    // TODO: remove console log
-    console.log("Studies", this.props.studies);
-    console.log("Datasets", this.props.datasets);
     return (
       <div className="container container--body">
         <Header headerCopy={this.props.header} />
         <div className="datasets">
           <h3 className="datasets--title">Study Sets</h3>
-          <p />
+          <ul>
+            <li>bionet</li>
+            <li>magland_synth</li>
+            <li>boyden</li>
+            <li>kampff</li>
+            <li>mea256yger</li>
+          </ul>
         </div>
         <div className="datasets">
           <h3 className="datasets--title">Studies</h3>
@@ -61,13 +72,17 @@ class Datasets extends Component {
             showPagination={true}
             rows={this.props.studies}
             columns={studyColumns}
+            rowSize={15}
           />
         </div>
         <div className="datasets">
           <h3 className="datasets--title">Datasets</h3>
-          {this.props.datasets.map((set, i) => (
-            <p key={i}>{set.name}</p>
-          ))}
+          <ReactCollapsingTable
+            showPagination={true}
+            rows={this.props.datasets}
+            columns={datasetColumns}
+            rowSize={15}
+          />
         </div>
       </div>
     );
