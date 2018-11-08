@@ -25,7 +25,7 @@ class Navbar extends Component {
               Datasets
             </NavLink>
             <NavLink className="nav__link" to="/algos" activeClassName="active">
-              Algorithyms
+              Algorithms
             </NavLink>
             <NavLink className="nav__link" to="/about" activeClassName="active">
               About
@@ -40,3 +40,4 @@ class Navbar extends Component {
   }
 }
 export default Navbar;
+// TODO: Make a search functionality

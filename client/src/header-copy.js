@@ -9,7 +9,7 @@ const headers = {
 
   algos: {
     id: "head02",
-    name: "Algorithyms",
+    name: "Algorithms",
     paragraphs: [
       "Caramels marzipan pie chocolate cake. Biscuit sesame snaps cookie biscuit caramels carrot cake jelly beans dragée. Liquorice cake chocolate bar sweet roll. Bear claw halvah chocolate bar cupcake topping tiramisu."
     ]

@@ -5,13 +5,13 @@ class Preloader extends Component {
   render() {
     return (
       <div className="container preloader">
-        <h4 className="preloader--header">
+        <h4 className="preloader__header">
           Loading
           <span>.</span>
           <span>.</span>
           <span>.</span>
         </h4>
-        <img src={logo} className="preloader--image" alt="spinning logo" />
+        <img src={logo} className="preloader__image" alt="spinning logo" />
       </div>
     );
   }

@@ -4,7 +4,6 @@ import ReactCollapsingTable from "react-collapsing-table";
 
 class Datasets extends Component {
   render() {
-    console.log(this.props.datasets[0]);
     const studyColumns = [
       {
         accessor: "name",

@@ -9,10 +9,10 @@ class Error extends Component {
       <div className="container container--error">
         {this.props.errors.map((err, i) => (
           <div className="errors" key={i.toString + "errors"}>
-            <p className="errors--message" key={i}>
+            <p className="errors__message" key={i}>
               {err}
             </p>
-            <p className="errors--close" onClick={this.closeErrors}>
+            <p className="errors__close" onClick={this.closeErrors}>
               X
             </p>
           </div>
