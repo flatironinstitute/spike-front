@@ -8,6 +8,8 @@ const app = express();
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, "client/build")));
 
+app.set("view engine", "html");
+
 // Manage our specific routes for internal data calls
 app.use("/", routes);
 
