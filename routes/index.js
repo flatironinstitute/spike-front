@@ -3,10 +3,13 @@ const router = express.Router();
 const controller = require("../controllers/controller");
 const { catchErrors } = require("../handlers/errorHandlers");
 
-// An api endpoint that returns a complete list of studies processed and datasets.
+// Endpoint returns a complete list of studies processed and datasets.
 router.get(
   "/api/getStudiesProcessed",
   catchErrors(controller.getStudiesProcessed)
 );
+
+// Endpoint returns a results of sorting algos on a study (or a set)
+router.get("/api/getSortingResults", catchErrors(controller.getSortingResults));
 
 module.exports = router;
