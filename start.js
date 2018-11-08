@@ -2,16 +2,24 @@ const express = require("express");
 const path = require("path");
 const routes = require("./routes/index");
 const errorHandlers = require("./handlers/errorHandlers");
+const controller = require("./controllers/controller");
 
 const app = express();
 
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, "client/build")));
 
-app.set("view engine", "html");
+// Endpoint returns a complete list of studies processed and datasets.
+app.get(
+  "/api/getStudiesProcessed",
+  errorHandlers.catchErrors(controller.getStudiesProcessed)
+);
 
-// Manage our specific routes for internal data calls
-app.use("/", routes);
+// Endpoint returns a results of sorting algos on a study (or a set)
+app.get(
+  "/api/getSortingResults",
+  errorHandlers.catchErrors(controller.getSortingResults)
+);
 
 // Handles any requests that don't match the ones above
 app.get("*", (req, res) => {
