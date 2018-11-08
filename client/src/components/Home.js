@@ -40,7 +40,7 @@ class Home extends Component {
   render() {
     console.log("STUDY SETS", this.state.studySets);
     return (
-      <div className="container container--body">
+      <div className="container container__body">
         <Header headerCopy={this.props.header} />
         {this.state.studySets.length < 1 ? <Preloader /> : null}
       </div>

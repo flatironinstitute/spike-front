@@ -253,7 +253,7 @@ Use containers when you need a content area that has standard maximum width and 
   }
 }
 
-.container--body {
+.container__body {
   padding: 7.2rem 1rem;
 }
 
@@ -277,6 +277,14 @@ Use containers when you need a content area that has standard maximum width and 
 
 .container--error {
   margin-top: 10rem;
+}
+
+.container--algos {
+  margin-bottom: 7.2rem;
+}
+
+.container__body--algos {
+  padding: 7.2rem 1rem 0rem 1rem;
 }
 
 /* Lists
@@ -532,26 +540,7 @@ li {
 .algos {
   font-family: var(--sans);
 }
-
-.algos__header {
-  position: fixed;
-  top: 72px;
-  left: 0px;
-  height: 73px;
-  width: 100%;
-  z-index: 102;
-  padding-left: 24px;
-  padding-right: 24px;
-  font-size: 18pt;
-  line-height: 73px;
-  letter-spacing: 0.4pt;
-  background-color: #ebebeb;
-}
-
-.algos__row {
-}
-
-.algos__icon {
+.algos__image {
 }
 
 /* React Collapsible Table

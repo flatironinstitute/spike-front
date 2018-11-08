@@ -1,18 +1,18 @@
 import React from "react";
-import icon from "../docs.svg";
+import icon from "../active.svg";
 
-const DocsIcon = ({ row, accessor }) => {
+const ActiveIcon = ({ row, accessor }) => {
   return (
     <a style={{ textDecoration: "none" }} href={row[accessor]}>
       <img
         src={icon}
         className="algos__icon"
-        width="35"
-        height="35"
-        alt="docs icon"
+        width="25"
+        height="25"
+        alt="active icon"
       />
     </a>
   );
 };
 
-export default DocsIcon;
+export default ActiveIcon;

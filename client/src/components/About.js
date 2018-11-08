@@ -7,7 +7,7 @@ class About extends Component {
     return (
       <div>
         <LeftMenu />
-        <div className="container container--body">
+        <div className="container container__body">
           <Header headerCopy={this.props.header} />
         </div>
       </div>

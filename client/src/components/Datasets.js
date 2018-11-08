@@ -53,7 +53,7 @@ class Datasets extends Component {
       }
     ];
     return (
-      <div className="container container--body">
+      <div className="container container__body">
         <Header headerCopy={this.props.header} />
         <div className="datasets">
           <h3 className="datasets--title">Study Sets</h3>

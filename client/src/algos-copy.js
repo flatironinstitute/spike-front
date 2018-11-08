@@ -2,6 +2,7 @@ const algos = [
   {
     name: "SpyKING CIRCUS",
     latest: "0.7.0",
+    isActive: true,
     authors: "Pierre Yger and Olivier Marre",
     repoUrl: "https://github.com/spyking-circus/spyking-circus",
     docsUrl: "http://spyking-circus.rtfd.org"
@@ -9,6 +10,7 @@ const algos = [
   {
     name: "MountainSort",
     latest: "0.2.0",
+    isActive: true,
     authors: "Jeremy Magland, Tom Davidson, Alex Morley, and Witold Wysota",
     repoUrl: "https://github.com/flatironinstitute/mountainsort_examples",
     docsUrl:
@@ -17,6 +19,7 @@ const algos = [
   {
     name: "Herding Spikes 2",
     latest: "0.2.0",
+    isActive: true,
     authors:
       "Matthias Hennig, Jano Horvath, Cole Hurwitz, Oliver Muthmann, Albert Puente Encinas, Martino Sorbaro, Cesar Juarez Ramirez, and Raimon Wintzer",
     repoUrl: "https://github.com/mhhennig/HS2",
@@ -25,6 +28,7 @@ const algos = [
   {
     name: "tridesclous",
     latest: "1.0.0",
+    isActive: true,
     authors: "Samuel Garcia and Christophe Pouzat",
     repoUrl: "https://github.com/tridesclous/tridesclous",
     docsUrl: "https://tridesclous.readthedocs.io/en/latest/"
@@ -32,6 +36,7 @@ const algos = [
   {
     name: "UltraMegaSort 2000",
     latest: "Feb 2012",
+    isActive: true,
     authors: "Daniel N. Hill, Samar B. Mehta, and David Kleinfeld ",
     repoUrl: "https://neurophysics.ucsd.edu/software.php",
     docsUrl: "https://neurophysics.ucsd.edu/lab/UltraMegaSort2000%20Manual.pdf"
@@ -39,6 +44,7 @@ const algos = [
   {
     name: "KiloSort",
     latest: "0.1.0",
+    isActive: true,
     authors: "Pachitariu M, Steinmetz NA, Kadir S, Carandini M and Harris KD",
     repoUrl: "https://github.com/cortex-lab/KiloSort",
     docsUrl:
@@ -47,6 +53,7 @@ const algos = [
   {
     name: "JRClust",
     latest: "3.2.5",
+    isActive: true,
     authors: "J James Jun",
     repoUrl: "https://github.com/JaneliaSciComp/JRCLUST",
     docsUrl: "https://github.com/JaneliaSciComp/JRCLUST/wiki"
@@ -54,6 +61,7 @@ const algos = [
   {
     name: "MClust",
     latest: "4.4.07",
+    isActive: true,
     authors: " A. David Redish",
     repoUrl: "http://redishlab.neuroscience.umn.edu/MClust/MClust.html",
     docsUrl: "http://redishlab.neuroscience.umn.edu/MClust/MClust-4.4.pdf"
@@ -61,6 +69,7 @@ const algos = [
   {
     name: "IronClust",
     latest: "4.2.7",
+    isActive: true,
     authors: "J James Jun",
     repoUrl: "https://github.com/jamesjun/ironclust",
     docsUrl: "https://github.com/jamesjun/ironclust"
@@ -68,6 +77,7 @@ const algos = [
   {
     name: "YASS: Yet Another Spike Sorter",
     latest: "0.10.0",
+    isActive: true,
     authors: "Pierre Yger and Olivier Marre",
     repoUrl: "https://github.com/paninski-lab/yass",
     docsUrl: "https://yass.readthedocs.io/en/latest/"

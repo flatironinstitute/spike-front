@@ -7,8 +7,8 @@ const RepoIcon = ({ row, accessor }) => {
       <img
         src={icon}
         className="algos__icon"
-        width="50"
-        height="50"
+        width="35"
+        height="35"
         alt="github icon"
       />
     </a>

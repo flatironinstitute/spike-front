@@ -11,7 +11,7 @@ const headers = {
     id: "head02",
     name: "Algorithms",
     paragraphs: [
-      "Caramels marzipan pie chocolate cake. Biscuit sesame snaps cookie biscuit caramels carrot cake jelly beans dragée. Liquorice cake chocolate bar sweet roll. Bear claw halvah chocolate bar cupcake topping tiramisu."
+      "Entries indicated with a check are actively available for comparison on this site. The gray entries are forthcoming."
     ]
   },
 
