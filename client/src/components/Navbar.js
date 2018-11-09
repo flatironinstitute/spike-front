@@ -7,7 +7,7 @@ class Navbar extends Component {
   render() {
     return (
       <div className="nav__wrapper">
-        <div className="container container--nav">
+        <div className="container container__nav">
           <nav className="nav">
             <div className="nav__container">
               <NavLink to="/" className="nav__brand">

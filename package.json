@@ -18,7 +18,6 @@
     "body-parser": "^1.18.3",
     "connect-flash": "^0.1.1",
     "es6-promisify": "^6.0.1",
-    "express": "^4.16.4",
-    "path": "^0.12.7"
+    "express": "^4.16.4"
   }
 }

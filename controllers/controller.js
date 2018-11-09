@@ -3,6 +3,12 @@ let kbclient = new KBucketClient();
 kbclient.setConfig({ share_ids: ["spikeforest.spikeforest1"] });
 kbclient.setPairioConfig({ collections: ["spikeforest"] });
 
+const batchArr = [
+  "summarize_recordings",
+  "ms4_magland_synth_dev",
+  "ironclust_magland_synth_dev"
+];
+
 exports.getStudiesProcessed = async (req, res, next) => {
   let obj = await kbclient.loadObject(null, {
     key: { name: "spikeforest_studies_processed" }
@@ -14,17 +20,29 @@ exports.getStudiesProcessed = async (req, res, next) => {
   res.send(obj);
 };
 
-exports.getSortingResults = async (req, res, next) => {
-  let obj = await kbclient.loadObject(null, {
-    key: {
-      name: "spikeforest_sorting_results",
-      study: "magland_synth_noise10_K10_C4"
-    }
+async function getABatchResult(batch) {
+  let result = await kbclient.loadObject(null, {
+    key: { batch_name: batch }
   });
-  if (!obj) {
-    console.error("Problem loading spikeforest_sorting_results object.");
+  console.log("🇰🇿 a batch result", result.recordings.length);
+  return result;
+}
+
+exports.getBatchResults = async (req, res, next) => {
+  const promises = batchArr.map(getABatchResult);
+  const allBatches = await Promise.all(promises);
+  if (!allBatches) {
     return;
   }
-  res.send(obj);
+  res.send(allBatches);
 };
-// TODO: Send name and study key as req.body
+
+// Steps to get data
+// 1. Get all 3 batches
+// 2. Get the sorting results from each batch
+// 2b. Group the sorting results by study name and note the sorter name
+// 2c. Make an object for each study with sub-objects for each sorter and sub-sub objects for each recording that will later contain the contents of the comparison with truth json
+// 3. Convert the comparison with truth on each recording into a http url
+// 4. Make an http request to get each comparison with truth
+// 5. Get the accuracy of all the firings that were sorted from this JSON and make into an array.
+// 6. Add this array to the study object under the storer and recording.

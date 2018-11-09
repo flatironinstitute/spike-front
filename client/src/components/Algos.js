@@ -61,7 +61,7 @@ class Algos extends Component {
         <div className="container container__body container__body--algos">
           <Header headerCopy={this.props.header} />
         </div>
-        <div className="container container--algos">
+        <div className="container container__algos">
           <ReactCollapsingTable columns={algosColumns} rows={algoRows} />
         </div>
       </div>

@@ -6,7 +6,7 @@ class Error extends Component {
   }
   render() {
     return (
-      <div className="container container--error">
+      <div className="container container__error">
         {this.props.errors.map((err, i) => (
           <div className="errors" key={i.toString + "errors"}>
             <p className="errors__message" key={i}>
