@@ -24,24 +24,37 @@ async function getABatchResult(batch) {
   let result = await kbclient.loadObject(null, {
     key: { batch_name: batch }
   });
-  console.log("🇰🇿 a batch result", result.recordings.length);
   return result;
 }
 
+// function organizeBatchResults(allBatches) {
+//   const arrBatches = Array.from(allBatches);
+//   const recordingResults = arrBatches.map(
+//     batch => batch.summarize_recording_results
+//   );
+//   const sortingResults = arrBatches.map(batch => batch.sorting_results);
+//   return {
+//     sortingResults: sortingResults,
+//     recordingResults: recordingResults
+//   };
+// }
+
 exports.getBatchResults = async (req, res, next) => {
   const promises = batchArr.map(getABatchResult);
-  const allBatches = await Promise.all(promises);
+  let allBatches = await Promise.all(promises);
+
   if (!allBatches) {
     return;
   }
+
   res.send(allBatches);
 };
 
 // Steps to get data
-// 1. Get all 3 batches
-// 2. Get the sorting results from each batch
-// 2b. Group the sorting results by study name and note the sorter name
-// 2c. Make an object for each study with sub-objects for each sorter and sub-sub objects for each recording that will later contain the contents of the comparison with truth json
+// 1. Get all 3 batches ✅
+// 2. Get the sorting results from each batch ✅
+// 2b. Group the sorting results by study name and note the sorter name ✅
+// 2c. Make an object for each study with sub-objects for each sorter and sub-sub objects for each recording ✅
 // 3. Convert the comparison with truth on each recording into a http url
 // 4. Make an http request to get each comparison with truth
 // 5. Get the accuracy of all the firings that were sorted from this JSON and make into an array.
