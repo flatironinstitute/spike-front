@@ -27,18 +27,6 @@ async function getABatchResult(batch) {
   return result;
 }
 
-// function organizeBatchResults(allBatches) {
-//   const arrBatches = Array.from(allBatches);
-//   const recordingResults = arrBatches.map(
-//     batch => batch.summarize_recording_results
-//   );
-//   const sortingResults = arrBatches.map(batch => batch.sorting_results);
-//   return {
-//     sortingResults: sortingResults,
-//     recordingResults: recordingResults
-//   };
-// }
-
 exports.getBatchResults = async (req, res, next) => {
   const promises = batchArr.map(getABatchResult);
   let allBatches = await Promise.all(promises);

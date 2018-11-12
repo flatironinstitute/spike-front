@@ -30,7 +30,7 @@ class App extends Component {
           <Route
             path="/Recordings"
             render={props => (
-              <Recordings {...props} header={headerCopy.Recordings} />
+              <Recordings {...props} header={headerCopy.recordings} />
             )}
           />
         </Switch>

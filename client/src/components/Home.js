@@ -15,7 +15,7 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      results: {},
+      rawResults: {},
       sortingResults: {},
       recordingResults: {},
       errors: []
@@ -36,7 +36,7 @@ class Home extends Component {
         if (json.length > 1) {
           this.organizeBatchResults(json);
           this.setState({
-            results: json
+            rawResults: json
           });
         }
       })
@@ -55,8 +55,8 @@ class Home extends Component {
     const sortingResults = allBatches
       .map(batch => batch.sorting_results)
       .flat();
-    this.getAccuracyData(sortingResults);
-    this.organizeSortingResults(sortingResults);
+    const withAccuracy = await this.getAccuracyData(sortingResults);
+    this.organizeSortingResults(withAccuracy);
     this.setState({
       recordingResults
     });
@@ -65,15 +65,19 @@ class Home extends Component {
   async getAccuracyData(sortingResults) {
     const promises = sortingResults.map(this.getAccuracyUrl);
     let allAccuracy = await Promise.all(promises);
-    console.log("accuracyData 🐔", allAccuracy);
+    return allAccuracy;
   }
 
   async getAccuracyUrl(sortingResult) {
     let accuracy = await kbclient.findFile(
       sortingResult.comparison_with_truth.json
     );
-    sortingResult = sortingResult[accuracy] = accuracy;
-    return sortingResult;
+
+    const newSortingResult = Object.assign(
+      { accuracy: accuracy },
+      sortingResult
+    );
+    return newSortingResult;
   }
 
   organizeSortingResults(unsorted) {
@@ -93,20 +97,18 @@ class Home extends Component {
         return r;
       }, []);
     }
-    console.log("subsortedByAlgo 🙉", sortedByStudy);
     this.setState({
       sortingResults: sortedByStudy
     });
   }
 
   render() {
-    console.log("🛴", this.state.results);
     return (
       <div>
         {this.state.errors.length ? <Error errors={this.state.errors} /> : null}
         <div className="container container__body">
           <Header headerCopy={this.props.header} />
-          {this.state.results.length && this.state.results.length > 1 ? (
+          {this.state.rawResults.length && this.state.rawResults.length > 1 ? (
             <div className="container">
               <h3>Recording Results</h3>
               <ReactJson src={this.state.recordingResults} />
