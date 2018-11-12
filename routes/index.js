@@ -12,4 +12,7 @@ router.get(
 // Endpoint returns a results of sorting algos on a study (or a set)
 router.get("/api/getSortingResults", catchErrors(controller.getSortingResults));
 
+// Endpoint returns a results of sorting algos on a study (or a set)
+router.get("/api/getBatchResults", catchErrors(controller.getBatchResults));
+
 module.exports = router;

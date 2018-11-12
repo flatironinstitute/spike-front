@@ -4,7 +4,7 @@ import React, { Component } from "react";
 class LeftMenu extends Component {
   render() {
     return (
-      <div className="container container--left-menu">
+      <div className="container container__left-menu">
         <div className="left-menu">
           <a href="/about/background" className="left-menu__link">
             <span>Background</span>

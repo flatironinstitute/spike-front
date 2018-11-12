@@ -15,11 +15,11 @@ const headers = {
     ]
   },
 
-  datasets: {
+  recordings: {
     id: "head03",
-    name: "Datasets",
+    name: "Recordings",
     paragraphs: [
-      "Cotton candy cake brownie chocolate cake muffin icing dragée tootsie roll. Dragée chocolate cake fruitcake lemon drops candy gummi bears tootsie roll chupa chups. Dragée chocolate bar brownie jelly-o gingerbread lollipop icing chocolate. Tart wafer jelly-o."
+      "Short for electrophysiology recording. Cotton candy cake brownie chocolate cake muffin icing dragée tootsie roll. Dragée chocolate cake fruitcake lemon drops candy gummi bears tootsie roll chupa chups. Dragée chocolate bar brownie jelly-o gingerbread lollipop icing chocolate. Tart wafer jelly-o."
     ]
   },
 

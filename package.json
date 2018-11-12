@@ -4,6 +4,8 @@
   "description": "Benchmarking of spike sorting algorithms. Seeing the spike forest for the trees.",
   "main": "start.js",
   "scripts": {
+    "both": "npm run start-server && npm run start-client",
+    "client": "cd client && npm run start",
     "start": "node start.js"
   },
   "repository": {
@@ -18,7 +20,6 @@
     "body-parser": "^1.18.3",
     "connect-flash": "^0.1.1",
     "es6-promisify": "^6.0.1",
-    "express": "^4.16.4",
-    "path": "^0.12.7"
+    "express": "^4.16.4"
   }
 }

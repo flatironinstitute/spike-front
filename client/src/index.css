@@ -264,22 +264,22 @@ Use containers when you need a content area that has standard maximum width and 
   display: table;
 }
 
-.container--nav {
+.container__nav {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
 }
 
-.container--left-menu {
+.container__left-menu {
   width: 100%;
 }
 
-.container--error {
+.container__error {
   margin-top: 10rem;
 }
 
-.container--algos {
+.container__algos {
   margin-bottom: 7.2rem;
 }
 
@@ -450,13 +450,13 @@ li {
   }
 }
 
-/* Datasets
+/* Recordings
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-.datasets {
+.recordings {
   text-align: center;
   margin: 6em 0;
 }
-.datasets--title {
+.recordings__title {
   font-family: var(--serif);
 }
 
@@ -497,7 +497,7 @@ li {
   font-size: calc(10px + 2vmin);
 }
 .preloader__image {
-  animation: logo-spin infinite 15s linear;
+  /* animation: logo-spin infinite 15s linear; */
   height: 10vmin;
 }
 @keyframes logo-spin {
@@ -539,8 +539,6 @@ li {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .algos {
   font-family: var(--sans);
-}
-.algos__image {
 }
 
 /* React Collapsible Table
