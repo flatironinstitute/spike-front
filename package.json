@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@magland/kbucket": "^0.12.4",
     "d3": "^5.7.0",
     "lodash": "^4.17.11",
     "normalize.css": "^8.0.0",
