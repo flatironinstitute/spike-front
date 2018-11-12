@@ -56,17 +56,19 @@ class Home extends Component {
     const sortingResults = allBatches
       .map(batch => batch.sorting_results)
       .flat();
-    const withAccuracy = await this.getAccuracyData(sortingResults);
+    const withAccuracy = await this.getAccuracy(sortingResults);
     this.organizeSortingResults(withAccuracy);
     this.setState({
       recordingResults
     });
   }
 
-  async getAccuracyData(sortingResults) {
-    const promises = sortingResults.map(this.getAccuracyUrl);
-    let allAccuracy = await Promise.all(promises);
-    return allAccuracy;
+  async getAccuracy(sortingResults) {
+    const urlPromises = sortingResults.map(this.getAccuracyUrl);
+    let withAccuracyUrl = await Promise.all(urlPromises);
+    const jsonPromises = withAccuracyUrl.map(this.getAccuracyJSON);
+    let withAccuracyJSON = await Promise.all(jsonPromises);
+    return withAccuracyJSON;
   }
 
   async getAccuracyUrl(sortingResult) {
@@ -74,11 +76,29 @@ class Home extends Component {
       sortingResult.comparison_with_truth.json
     );
 
-    const newSortingResult = Object.assign(
-      { accuracy: accuracy },
+    const withAccuracyUrl = Object.assign(
+      { accuracy: { url: accuracy, json: {} } },
       sortingResult
     );
-    return newSortingResult;
+    return withAccuracyUrl;
+  }
+
+  async getAccuracyJSON(withAccuracyUrl) {
+    let accuracyJSON = await fetch(withAccuracyUrl.accuracy.url)
+      .then(res => {
+        return res.json();
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({
+          errors: [
+            ...this.state.errors,
+            "🤦‍ an individual accuracy json failed to load"
+          ]
+        });
+      });
+    withAccuracyUrl.accuracy.json = accuracyJSON;
+    return withAccuracyUrl;
   }
 
   organizeSortingResults(unsorted) {
