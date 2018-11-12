@@ -497,7 +497,7 @@ li {
   font-size: calc(10px + 2vmin);
 }
 .preloader__image {
-  animation: logo-spin infinite 15s linear;
+  /* animation: logo-spin infinite 15s linear; */
   height: 10vmin;
 }
 @keyframes logo-spin {

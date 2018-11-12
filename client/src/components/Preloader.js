@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import logo from "../logo.svg";
+import logo from "../logo-animation.gif";
 
 class Preloader extends Component {
   render() {

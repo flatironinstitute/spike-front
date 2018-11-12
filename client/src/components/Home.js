@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Header from "./Header";
 import Preloader from "./Preloader";
 import Error from "./Error";
+import { isEmpty } from "../utils";
 // TODO: Remove when JSON is done being used
 import ReactJson from "react-json-view";
 
@@ -26,7 +27,7 @@ class Home extends Component {
     this.getBatchResults();
   }
 
-  // TODO: Move this into a data handling JS file?
+  // TODO: Move all these functions into a data handling JS file?
   getBatchResults = () => {
     fetch("/api/getBatchResults")
       .then(res => {
@@ -102,22 +103,13 @@ class Home extends Component {
     });
   }
 
-  // TODO: Move this to a utils file
-  isEmpty(obj) {
-    for (var key in obj) {
-      if (obj.hasOwnProperty(key)) return false;
-    }
-    return true;
-  }
-
   render() {
-    console.log(this.isEmpty(this.state.sortingResults));
     return (
       <div>
         {this.state.errors.length ? <Error errors={this.state.errors} /> : null}
         <div className="container container__body">
           <Header headerCopy={this.props.header} />
-          {this.isEmpty(this.state.sortingResults) ? (
+          {isEmpty(this.state.sortingResults) ? (
             <Preloader />
           ) : (
             <div className="container">
