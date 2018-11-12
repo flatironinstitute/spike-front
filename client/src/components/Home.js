@@ -102,21 +102,30 @@ class Home extends Component {
     });
   }
 
+  // TODO: Move this to a utils file
+  isEmpty(obj) {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) return false;
+    }
+    return true;
+  }
+
   render() {
+    console.log(this.isEmpty(this.state.sortingResults));
     return (
       <div>
         {this.state.errors.length ? <Error errors={this.state.errors} /> : null}
         <div className="container container__body">
           <Header headerCopy={this.props.header} />
-          {this.state.rawResults.length && this.state.rawResults.length > 1 ? (
+          {this.isEmpty(this.state.sortingResults) ? (
+            <Preloader />
+          ) : (
             <div className="container">
               <h3>Recording Results</h3>
               <ReactJson src={this.state.recordingResults} />
               <h3>Sorting Results</h3>
               <ReactJson src={this.state.sortingResults} />
             </div>
-          ) : (
-            <Preloader />
           )}
         </div>
       </div>
