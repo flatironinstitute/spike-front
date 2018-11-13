@@ -3,7 +3,7 @@ import Header from "./Header";
 import Preloader from "./Preloader";
 import Error from "./Error";
 import { isEmpty } from "../utils";
-import { getBatchResults } from "../dataHandlers";
+import { getBatchResults, getSortingResults } from "../dataHandlers";
 // TODO: Remove when JSON is done being used
 import ReactJson from "react-json-view";
 
@@ -18,7 +18,27 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this.getBatchResults();
+    this.fetchBatchData();
+  }
+
+  async fetchBatchData() {
+    const allBatches = await getBatchResults();
+    this.setRecordingResults(allBatches);
+    this.setSortingResults(allBatches);
+  }
+
+  setRecordingResults(allBatches) {
+    const recordingResults = allBatches
+      .map(batch => batch.summarize_recording_results)
+      .flat();
+
+    this.setState({
+      recordingResults
+    });
+  }
+
+  setSortingResults(allBatches) {
+    const sortingResults = getSortingResults(allBatches);
   }
 
   render() {

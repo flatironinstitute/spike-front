@@ -1,5 +1,5 @@
 import React from "react";
-import icon from "../github.png";
+import icon from "../images/github.png";
 
 const RepoIcon = ({ row, accessor }) => {
   return (

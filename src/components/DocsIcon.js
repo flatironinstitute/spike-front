@@ -1,5 +1,5 @@
 import React from "react";
-import icon from "../docs.svg";
+import icon from "../images/docs.svg";
 
 const DocsIcon = ({ row, accessor }) => {
   return (

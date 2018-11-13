@@ -9,7 +9,7 @@ const batchArr = [
   "ironclust_magland_synth_dev"
 ];
 
-exports.getStudiesProcessed = async (req, res, next) => {
+export async function getStudiesProcessed() {
   let obj = await kbclient.loadObject(null, {
     key: { name: "spikeforest_studies_processed" }
   });
@@ -17,43 +17,35 @@ exports.getStudiesProcessed = async (req, res, next) => {
     console.log("Problem loading spikeforest_studies_processed object.");
     return;
   }
-  res.send(obj);
-};
+  return obj;
+}
 
-async function getABatchResult(batch) {
+export async function getABatchResult(batch) {
   let result = await kbclient.loadObject(null, {
     key: { batch_name: batch }
   });
   return result;
 }
 
-exports.getBatchResults = async () => {
+export async function getBatchResults() {
   const promises = batchArr.map(getABatchResult);
   let allBatches = await Promise.all(promises);
 
   if (!allBatches) {
-    // TODO: how to return an error
+    // TODO: how to return an error as blank?
     return;
   }
 
   return allBatches;
-};
-
-async organizeBatchResults(allBatches) {
-  const recordingResults = allBatches
-    .map(batch => batch.summarize_recording_results)
-    .flat();
-  const sortingResults = allBatches
-    .map(batch => batch.sorting_results)
-    .flat();
-  const withAccuracy = await this.getAccuracy(sortingResults);
-  this.organizeSortingResults(withAccuracy);
-  // this.setState({
-  //   recordingResults
-  // });
 }
 
-async getAccuracy(sortingResults) {
+export async function getSortingResults(allBatches) {
+  const sortingResults = allBatches.map(batch => batch.sorting_results).flat();
+  const withAccuracy = await this.getAccuracy(sortingResults);
+  return this.organizeSortingResults(withAccuracy);
+}
+
+export async function getAccuracy(sortingResults) {
   const urlPromises = sortingResults.map(this.getAccuracyUrl);
   let withAccuracyUrl = await Promise.all(urlPromises);
   const jsonPromises = withAccuracyUrl.map(this.getAccuracyJSON);
@@ -61,7 +53,7 @@ async getAccuracy(sortingResults) {
   return withAccuracyJSON;
 }
 
-async getAccuracyUrl(sortingResult) {
+export async function getAccuracyUrl(sortingResult) {
   let accuracy = await kbclient.findFile(
     sortingResult.comparison_with_truth.json
   );
@@ -73,7 +65,7 @@ async getAccuracyUrl(sortingResult) {
   return withAccuracyUrl;
 }
 
-async getAccuracyJSON(withAccuracyUrl) {
+export async function getAccuracyJSON(withAccuracyUrl) {
   let accuracyJSON = await fetch(withAccuracyUrl.accuracy.url)
     .then(res => {
       return res.json();
@@ -91,7 +83,7 @@ async getAccuracyJSON(withAccuracyUrl) {
   return withAccuracyUrl;
 }
 
-organizeSortingResults(unsorted) {
+export function organizeSortingResults(unsorted) {
   let sortedByStudy = unsorted.reduce((r, a) => {
     r[a.study_name] = r[a.study_name] || [];
     r[a.study_name].push(a);
@@ -100,7 +92,7 @@ organizeSortingResults(unsorted) {
   this.subSortByAlgo(sortedByStudy);
 }
 
-subSortByAlgo(sortedByStudy) {
+export function subSortByAlgo(sortedByStudy) {
   for (const study in sortedByStudy) {
     sortedByStudy[study] = sortedByStudy[study].reduce((r, a) => {
       r[a.sorter_name] = r[a.sorter_name] || [];
@@ -108,5 +100,5 @@ subSortByAlgo(sortedByStudy) {
       return r;
     }, []);
   }
-  return sortedByStudy
+  return sortedByStudy;
 }
