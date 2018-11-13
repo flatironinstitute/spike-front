@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import logo from "../logo.svg";
-import search from "../icon-search-wh.svg";
+import logo from "../images/logo.svg";
+import search from "../images/icon-search-wh.svg";
 
 class Navbar extends Component {
   render() {
