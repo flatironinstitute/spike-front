@@ -72,12 +72,6 @@ export async function getAccuracyJSON(withAccuracyUrl) {
     })
     .catch(err => {
       console.log(err);
-      // this.setState({
-      //   errors: [
-      //     ...this.state.errors,
-      //     "🤦‍ an individual accuracy json failed to load"
-      //   ]
-      // });
     });
   withAccuracyUrl.accuracy.json = accuracyJSON;
   return withAccuracyUrl;

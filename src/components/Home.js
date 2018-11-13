@@ -23,11 +23,12 @@ class Home extends Component {
 
   async fetchBatchData() {
     const allBatches = await getBatchResults();
-    this.setRecordingResults(allBatches);
-    this.setSortingResults(allBatches);
+    console.log(allBatches);
+    // this.setRecordingResults(allBatches);
+    // this.setSortingResults(allBatches);
   }
 
-  setRecordingResults(allBatches) {
+  async setRecordingResults(allBatches) {
     const recordingResults = allBatches
       .map(batch => batch.summarize_recording_results)
       .flat();
@@ -37,8 +38,11 @@ class Home extends Component {
     });
   }
 
-  setSortingResults(allBatches) {
-    const sortingResults = getSortingResults(allBatches);
+  async setSortingResults(allBatches) {
+    const sortingResults = await getSortingResults(allBatches);
+    this.setState({
+      sortingResults
+    });
   }
 
   render() {
