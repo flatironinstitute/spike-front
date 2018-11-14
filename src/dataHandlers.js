@@ -3,11 +3,7 @@ let kbclient = new KBucketClient();
 kbclient.setConfig({ share_ids: ["spikeforest.spikeforest1"] });
 kbclient.setPairioConfig({ collections: ["spikeforest"] });
 
-const batchArr = [
-  "summarize_recordings",
-  "ms4_magland_synth_dev",
-  "ironclust_magland_synth_dev"
-];
+const batchArr = ["ms4_magland_synth_dev", "ironclust_magland_synth_dev"];
 
 export async function getStudiesProcessed() {
   let obj = await kbclient.loadObject(null, {
@@ -41,14 +37,15 @@ export async function getBatchResults() {
 
 export async function getSortingResults(allBatches) {
   const sortingResults = allBatches.map(batch => batch.sorting_results).flat();
-  const withAccuracy = await this.getAccuracy(sortingResults);
-  return this.organizeSortingResults(withAccuracy);
+  const withAccuracy = await getAccuracy(sortingResults);
+  const organized = await organizeSortingResults(withAccuracy);
+  return organized;
 }
 
 export async function getAccuracy(sortingResults) {
-  const urlPromises = sortingResults.map(this.getAccuracyUrl);
+  const urlPromises = sortingResults.map(getAccuracyUrl);
   let withAccuracyUrl = await Promise.all(urlPromises);
-  const jsonPromises = withAccuracyUrl.map(this.getAccuracyJSON);
+  const jsonPromises = withAccuracyUrl.map(getAccuracyJSON);
   let withAccuracyJSON = await Promise.all(jsonPromises);
   return withAccuracyJSON;
 }
@@ -77,13 +74,14 @@ export async function getAccuracyJSON(withAccuracyUrl) {
   return withAccuracyUrl;
 }
 
-export function organizeSortingResults(unsorted) {
+export async function organizeSortingResults(unsorted) {
   let sortedByStudy = unsorted.reduce((r, a) => {
     r[a.study_name] = r[a.study_name] || [];
     r[a.study_name].push(a);
     return r;
   }, {});
-  this.subSortByAlgo(sortedByStudy);
+  return sortedByStudy;
+  // return subSortByAlgo(sortedByStudy);
 }
 
 export function subSortByAlgo(sortedByStudy) {

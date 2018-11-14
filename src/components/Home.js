@@ -23,16 +23,17 @@ class Home extends Component {
 
   async fetchBatchData() {
     const allBatches = await getBatchResults();
-    console.log(allBatches);
-    // this.setRecordingResults(allBatches);
-    // this.setSortingResults(allBatches);
+    if (allBatches.length && isEmpty(this.state.recordingResults)) {
+      this.setRecordingResults(allBatches);
+      this.setSortingResults(allBatches);
+    }
   }
 
+  // TODO: These arrays are now empty.🤔
   async setRecordingResults(allBatches) {
     const recordingResults = allBatches
       .map(batch => batch.summarize_recording_results)
       .flat();
-
     this.setState({
       recordingResults
     });
@@ -46,17 +47,17 @@ class Home extends Component {
   }
 
   render() {
+    let loading = isEmpty(this.state.sortingResults);
+    console.log(loading, this.state.sortingResults);
     return (
       <div>
         {this.state.errors.length ? <Error errors={this.state.errors} /> : null}
         <div className="container container__body">
           <Header headerCopy={this.props.header} />
-          {isEmpty(this.state.sortingResults) ? (
+          {loading ? (
             <Preloader />
           ) : (
             <div className="container">
-              <h3>Recording Results</h3>
-              <ReactJson src={this.state.recordingResults} />
               <h3>Sorting Results</h3>
               <ReactJson src={this.state.sortingResults} />
             </div>
