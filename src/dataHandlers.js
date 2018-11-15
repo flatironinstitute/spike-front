@@ -36,7 +36,7 @@ export async function getANewBatchResult(batch) {
   let result = await kbclient.loadObject(null, {
     key: { batch_name: batch, name: "job_results" }
   });
-  // TODO: add error function
+  // TODO: add proper error function
   if (!result) {
     console.log(`🚒 Problem loading the batch ${batch}`);
   }
@@ -119,13 +119,13 @@ export function organizeSortingResults(unsorted) {
   let flattened = grouped.map(group => {
     let accuracies = group.map(d => d.accuracy.accuracy_array);
     accuracies = accuracies.reduce((a, b) => a.concat(b), []);
+    let floaties = accuracies.map(ac => parseFloat(ac));
     return {
       study: group[0].study_name,
       sorter: group[0].sorter_name,
-      accuracy: accuracies
+      accuracies: floaties,
+      in_range: floaties.length
     };
   });
   return flattened;
 }
-
-// float number = Float.parseFloat(numberAsString);

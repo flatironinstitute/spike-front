@@ -11,12 +11,17 @@ class Heatmap extends Component {
     this.updateD3(newProps);
   }
 
-  updateD3(props) {}
-
-  makeBar(bar) {}
+  updateD3(props) {
+    const scale = d3
+      .scaleLinear()
+      .domain([0, 10])
+      .range([0, 200]);
+    const axis = d3.axisBottom(scale);
+    d3.select(this.refs.g).call(axis);
+  }
 
   render() {
-    return <div />;
+    return <g transform="translate(10, 30)" ref="g" />;
   }
 }
 
