@@ -18,6 +18,8 @@ class Home extends Component {
     this.state = {
       batches: {},
       sortingResults: {},
+      studies: [],
+      sorters: [],
       recordingSummary: {},
       accuracy: 0.8,
       errors: []
@@ -49,6 +51,7 @@ class Home extends Component {
     this.setState({
       sortingResults
     });
+    this.setAxisArrays();
     // TODO: FIND THE RIGHT LIFECYCLE EVENT FOR THIS
     this.filterAccuracy();
   }
@@ -62,6 +65,16 @@ class Home extends Component {
     this.setState({
       sortingResults: filtered
     });
+  }
+
+  setAxisArrays(results) {
+    let studies = results
+      .map(item => item.study)
+      .filter((value, index, self) => self.indexOf(value) === index);
+    let sorters = results
+      .map(item => item.sorter)
+      .filter((value, index, self) => self.indexOf(value) === index);
+    this.setState({ studies: studies, sorters: sorters });
   }
 
   // TODO: update with filterAccuracy Function
@@ -83,7 +96,11 @@ class Home extends Component {
             <div>
               <div className="container">
                 <svg width="1100" height="500">
-                  <Heatmap />
+                  <Heatmap
+                    results={this.state.sortingResults}
+                    sorters={this.state.sorters}
+                    studies={this.state.studies}
+                  />
                 </svg>
               </div>
               {/* <div className="container">

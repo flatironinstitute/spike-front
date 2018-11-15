@@ -1,10 +1,18 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
 
+const Swatch = ({ color, width, x, y }) => (
+  <rect width={width} height="20" x={x} y={y} style={{ fill: color }} />
+);
+
 class Heatmap extends Component {
   constructor(props) {
     super();
     this.updateD3(props);
+    let colors = d3.schemePurples[10];
+    this.state = {
+      colors: colors
+    };
   }
 
   componentWillReceiveProps(newProps) {
@@ -12,12 +20,17 @@ class Heatmap extends Component {
   }
 
   updateD3(props) {
-    const scale = d3
-      .scaleLinear()
-      .domain([0, 10])
-      .range([0, 200]);
-    const axis = d3.axisBottom(scale);
-    d3.select(this.refs.g).call(axis);
+    this.setAxisArrays(props.results);
+  }
+
+  setAxisArrays(results) {
+    let studies = results
+      .map(item => item.study)
+      .filter((value, index, self) => self.indexOf(value) === index);
+    let sorters = results
+      .map(item => item.sorter)
+      .filter((value, index, self) => self.indexOf(value) === index);
+    console.log(sorters, studies);
   }
 
   render() {
