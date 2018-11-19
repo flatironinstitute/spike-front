@@ -9,38 +9,47 @@ import {
   getBatchResults,
   getSortingResults
 } from "../dataHandlers";
+import * as cache from "../cache";
+
 // TODO: Remove when JSON is done being used
-// import ReactJson from "react-json-view";
+import ReactJson from "react-json-view";
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      batches: {},
       sortingResults: {},
-      studies: [],
-      sorters: [],
       recordingSummary: {},
-      accuracy: 0.8,
+      accuracy: 0.9,
       errors: []
     };
   }
 
   componentDidMount() {
-    this.fetchBatchData();
-    this.fetchRecordingsSummary();
+    let existingResults = cache.get("sortingResults");
+    let existingRecordings = cache.get("recordingSummary");
+    if (existingResults) {
+      this.setState({ sortingResults: existingResults });
+    } else {
+      this.fetchBatchData();
+    }
+    if (existingRecordings) {
+      this.setState({ recordingSummary: existingRecordings });
+    } else {
+      this.fetchRecordingsSummary();
+    }
   }
 
   async fetchRecordingsSummary() {
     const summary = await getRecordingsSummary();
-    if (summary.length && isEmpty(this.state.recordingSummary)) {
+    if (summary.job_results.length && isEmpty(this.state.recordingSummary)) {
+      cache.set("recordingSummary", summary);
       this.setState({ recordingSummary: summary });
     }
   }
 
   async fetchBatchData() {
     const allBatches = await getBatchResults();
-    this.setState({ batches: allBatches });
     if (allBatches.length && isEmpty(this.state.sortingResults)) {
       this.setSortingResults(allBatches);
     }
@@ -51,11 +60,10 @@ class Home extends Component {
     this.setState({
       sortingResults
     });
-    this.setAxisArrays();
-    // TODO: FIND THE RIGHT LIFECYCLE EVENT FOR THIS
     this.filterAccuracy();
   }
 
+  // TODO: Separate filter accuracy in the lifecycle to allow for re-render
   filterAccuracy() {
     let filtered = this.state.sortingResults.map(result => {
       let above = result.accuracies.filter(accu => accu >= this.state.accuracy);
@@ -65,25 +73,26 @@ class Home extends Component {
     this.setState({
       sortingResults: filtered
     });
+    cache.set("sortingResults", filtered);
   }
 
-  setAxisArrays(results) {
-    let studies = results
+  getStudies() {
+    return this.state.sortingResults
       .map(item => item.study)
       .filter((value, index, self) => self.indexOf(value) === index);
-    let sorters = results
-      .map(item => item.sorter)
-      .filter((value, index, self) => self.indexOf(value) === index);
-    this.setState({ studies: studies, sorters: sorters });
   }
 
-  // TODO: update with filterAccuracy Function
-  // shouldComponentUpdate(nextProps, nextState) {}
+  // TODO: remove if unused
+  getSorters() {
+    return this.state.sortingResults
+      .map(item => item.sorter)
+      .filter((value, index, self) => self.indexOf(value) === index);
+  }
 
   render() {
     let loading = isEmpty(this.state.sortingResults);
     if (!loading) {
-      console.log("⚱️ SORTING RESULTS 🕷️", this.state.sortingResults);
+      console.log("🏆 SORTING RESULTS 🐯", this.state.sortingResults);
     }
     return (
       <div>
@@ -95,18 +104,19 @@ class Home extends Component {
           ) : (
             <div>
               <div className="container">
-                <svg width="1100" height="500">
-                  <Heatmap
-                    results={this.state.sortingResults}
-                    sorters={this.state.sorters}
-                    studies={this.state.studies}
-                  />
-                </svg>
+                <Heatmap
+                  results={this.state.sortingResults}
+                  studies={this.getStudies()}
+                />
               </div>
-              {/* <div className="container">
+              <div className="container">
                 <h3>Sorting Results</h3>
                 <ReactJson src={this.state.sortingResults} />
-              </div> */}
+              </div>
+              <div className="container">
+                <h3>Recording Results</h3>
+                <ReactJson src={this.state.recordingSummary} />
+              </div>
             </div>
           )}
         </div>
