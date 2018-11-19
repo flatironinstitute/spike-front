@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
+// import Legend from "./Legend/";
 
 class Heatmap extends Component {
   constructor(props) {
@@ -150,44 +151,6 @@ class Heatmap extends Component {
         "The number of units below the accuracy threshhold is " + d.in_range
       );
     });
-
-    // TODO: Refactor into a new function
-    /*make legend using colors */
-    var legend = svg
-      .selectAll(".legend")
-      .data([0].concat(colorScale.quantiles()), function(d) {
-        return d;
-      })
-      .enter()
-      .append("g")
-      .attr("className", "legend");
-
-    /*make legend boxes */
-    legend
-      .append("rect")
-      .attr("x", function(d, i) {
-        return legendElementWidth * i;
-      })
-      .attr("y", height / 1.8)
-      .attr("width", legendElementWidth)
-      .attr("height", gridSize / 2)
-      .style("fill", function(d, i) {
-        return colors[i];
-      });
-
-    /*make legend labels*/
-    legend
-      .append("text")
-      .attr("className", "mono")
-      .data(builtData)
-      .text(function(d) {
-        console.log(d, typeof d, "🌭");
-        return "≥ " + Math.round(d);
-      })
-      .attr("x", function(d, i) {
-        return legendElementWidth * i;
-      })
-      .attr("y", height / 1.8 + gridSize);
   }
   render() {
     return (
@@ -198,6 +161,7 @@ class Heatmap extends Component {
               if (!this.state.svgElem) this.setState({ svgElem: elem });
             }}
           />
+          {/* <Legend colors={colors} width={width} /> */}
         </g>
       </div>
     );
