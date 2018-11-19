@@ -99,7 +99,7 @@ class Home extends Component {
             <Preloader />
           ) : (
             <div>
-              <div className="container">
+              <div className="container container__heatmap">
                 <Heatmap
                   results={this.state.sortingResults}
                   studies={this.getStudies()}
