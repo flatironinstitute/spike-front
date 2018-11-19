@@ -551,21 +551,24 @@ li {
 
 /* Heatmap
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+.heatmap {
+  border: 2px dotted violet;
+  height: auto;
+}
+
 rect.bordered {
-  stroke: #e6e6e6;
+  stroke: pink;
   stroke-width: 2px;
+}
+
+.mono {
+  font-size: 9pt;
+  font-family: var(--sans);
+  color: var(--off-black);
 }
 
 text.mono {
   font-size: 9pt;
-  font-family: Consolas, courier;
-  fill: #aaa;
-}
-
-text.axis-workweek {
-  fill: #000;
-}
-
-text.axis-worktime {
-  fill: #000;
+  font-family: var(--sans);
+  color: var(--off-black);
 }
