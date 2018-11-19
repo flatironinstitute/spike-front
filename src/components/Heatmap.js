@@ -39,7 +39,7 @@ class Heatmap extends Component {
     this.setState(builtData);
     if (builtData.length) {
       const svg = d3.select(this.state.svgElem);
-      this.buildGrid("#react-d3-heatMap", 600, 800, true, [11], svg, builtData);
+      this.buildGrid("#react-d3-heatMap", 600, 800, true, [12], svg, builtData);
     }
   }
 
@@ -59,6 +59,7 @@ class Heatmap extends Component {
       reOrgs.push(results.filter(res => res.study === study));
     });
 
+    console.log("🦄 regorgs", reOrgs);
     //parent array
     for (var index_a = 0; index_a < reOrgs.length; index_a++) {
       builtData.push([]);
@@ -71,7 +72,7 @@ class Heatmap extends Component {
         // formerly percentageLT
         let sorterName = reOrgs[index_a][index_b].sorter;
 
-        builtData[index_a].push({
+        let newObj = {
           study: studyName,
           in_range: inRange,
           width: gridItemWidth,
@@ -79,7 +80,9 @@ class Heatmap extends Component {
           x: xpos,
           y: ypos,
           sorter: sorterName
-        });
+        };
+        console.log("🦇", newObj);
+        builtData[index_a].push(newObj);
         xpos += stepX;
       }
       xpos = startX;
@@ -106,15 +109,12 @@ class Heatmap extends Component {
       Math.round(maxNum / 2),
       maxNum
     ];
-    const colorRange = ["#384CA2", "#AE9567"];
 
+    const colorRange = ["#384CA2", "#AE9567"];
     let color = d3
       .scaleLinear()
       .domain(domainScale)
-      .range(["#384CA2", "#AE9567"]);
-
-    // TODO: why is color returning a function.
-    // console.log("🖥️", domainScale, color);
+      .range(colorRange);
 
     var tip = d3Tip()
       .attr("class", "d3-tip")
@@ -137,7 +137,7 @@ class Heatmap extends Component {
       .data(builtData)
       .enter()
       .append("svg:g")
-      .attr("class", "row");
+      .attr("className", "row");
 
     var col = row
       .selectAll(".cell")
@@ -228,13 +228,14 @@ class Heatmap extends Component {
     // use the length of the first nested array to determine how many (aka range)
     let nextStartX = dims[0] - 5;
     nextStartY = height - 2;
-    console.log("🐖 BUILT DATA IN bUILD GRID", builtData[0]);
+    console.log("🗺️ BUILT DATA IN bUILD GRID", builtData);
     for (var i = 0; i < builtData[0].length + 1; i++) {
       grid
         .append("text")
         .attr("x", function() {
           var ret = nextStartX;
-          nextStartX += 59; //(i === 0 ? (ret + 55) : (ret + 60));
+          // TODO: use variable
+          nextStartX += 11; //(i === 0 ? (ret + 55) : (ret + 60));
           return ret;
         })
         .attr("y", nextStartY)

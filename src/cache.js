@@ -10,7 +10,6 @@ export var cache = lru({
 
 export const set = (key, value) => {
   cache.set(key, value);
-  console.log("🦄 cache set", key, value);
 };
 
 export const get = key => {
