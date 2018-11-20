@@ -556,13 +556,14 @@ li {
 
 /* Heatmap
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-.heatmap {
+.heatmap__container {
   border: 2px dotted violet;
   height: auto;
+  padding-bottom: 150px;
 }
 
 rect.bordered {
-  stroke: pink;
+  stroke: var(--off-white);
   stroke-width: 2px;
 }
 

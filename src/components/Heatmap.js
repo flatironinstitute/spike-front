@@ -45,8 +45,8 @@ class Heatmap extends Component {
 
   buildGrid(id, svg, builtData) {
     var margin = { top: 50, right: 0, bottom: 100, left: 226 },
-      width = 1024 - margin.left - margin.right,
-      height = 830 - margin.top - margin.bottom,
+      width = 1024,
+      height = 830 + margin.top + margin.bottom,
       gridSize = Math.floor(width / 4),
       legendElementWidth = gridSize * 0.5;
 
@@ -87,7 +87,6 @@ class Heatmap extends Component {
     svg
       .selectAll(".label__study")
       .data(this.props.studies)
-      .enter()
       .append("text")
       .text(function(d) {
         return d;
@@ -132,6 +131,7 @@ class Heatmap extends Component {
       .attr("y", function(d) {
         return (studiesArr.indexOf(d.study) + 0.25) * gridSize;
       })
+      // TODO: make this a variable
       .attr("rx", 4)
       .attr("ry", 4)
       .attr("class", "sorter bordered")
@@ -154,8 +154,8 @@ class Heatmap extends Component {
   }
   render() {
     return (
-      <div className="heatmap" id="react-d3-heatMap">
-        <g>
+      <div className="heatmap__container" id="react-d3-heatMap">
+        <g className="heatmap">
           <svg
             ref={elem => {
               if (!this.state.svgElem) this.setState({ svgElem: elem });
