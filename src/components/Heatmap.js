@@ -1,55 +1,25 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
-// import Legend from "./Legend/";
+import HeatmapLabel from "./HeatmapLabel";
+import Preloader from "./Preloader";
+import Legend from "./Legend";
 
 class Heatmap extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      svgElem: undefined,
-      builtData: []
+      svgElem: undefined
     };
+    this.legendElementWidth = this.props.gridSize * 0.5;
   }
 
   componentDidMount() {
-    if (!this.state.builtData.length) {
-      this.buildViz();
-    }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.results !== nextProps.results) {
-      return true;
-    }
-    return false;
-  }
-
-  async buildViz() {
-    const builtData = await this.buildData();
-    this.setState(builtData);
-    if (builtData.length) {
-      const svg = d3.select(this.state.svgElem);
-      this.buildGrid("#react-d3-heatMap", svg, builtData);
-    }
-  }
-
-  buildData() {
-    return this.props.results.map(result => {
-      return {
-        study: result.study,
-        in_range: result.in_range,
-        sorter: result.sorter
-      };
-    });
+    const svg = d3.select("#heatmap-svg");
+    this.buildGrid("#react-d3-heatMap", svg, this.props.builtData);
   }
 
   buildGrid(id, svg, builtData) {
-    var margin = { top: 50, right: 0, bottom: 100, left: 226 },
-      width = 1024,
-      height = 830 + margin.top + margin.bottom,
-      gridSize = Math.floor(width / 4),
-      legendElementWidth = gridSize * 0.5;
-
+    // TODO: refactor out
     const colors = [
       "#ffffd9",
       "#edf8b1",
@@ -61,6 +31,7 @@ class Heatmap extends Component {
       "#253494",
       "#081d58"
     ];
+    console.log("🕴️", this.props.builtData, builtData);
     var colorScale = d3
       .scaleQuantile()
       .domain([
@@ -74,51 +45,31 @@ class Heatmap extends Component {
       .range(colors);
 
     // TARO TRANSLATION FYI
-    // groups = studies
-    // years = sorters
+    // groups = studies = y
+    // years = sorters = x
 
     // Make an SVG with the correct height and width
     svg
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    /*label studies */
-    svg
-      .selectAll(".label__study")
-      .data(this.props.studies)
-      .append("text")
-      .text(function(d) {
-        return d;
-      })
-      .attr("x", 0)
-      .attr("y", function(d, i) {
-        return i * gridSize;
-      })
-      .style("text-anchor", "end")
-      .attr("transform", "translate(-6," + gridSize / 1.5 + ")")
-      .attr("className", "mono");
-
-    /*label sorters */
-    svg
-      .selectAll(".label__sorter")
-      .data(this.props.sorters)
-      .enter()
-      .append("text")
-      .text(function(d) {
-        return d;
-      })
-      .attr("x", function(d, i) {
-        return i * gridSize;
-      })
-      .attr("y", 0)
-      .style("text-anchor", "middle")
-      .attr("transform", "translate(" + gridSize / 2 + ", -6)")
-      .attr("className", "mono");
+      .attr(
+        "width",
+        this.props.width + this.props.margin.left + this.props.margin.right
+      )
+      .attr(
+        "height",
+        this.props.height + this.props.margin.top + this.props.margin.bottom
+      )
+      .attr(
+        "transform",
+        "translate(" +
+          this.props.margin.left +
+          "," +
+          this.props.margin.top +
+          ")"
+      );
 
     /*plot the heatmap*/
-    // TODO refactor dis
-    let sortersArr = this.props.sorters;
+    const gridSize = this.props.gridSize;
+    let sorterArr = this.props.sorters;
     let studiesArr = this.props.studies;
     var heatMap = svg
       .selectAll(".sorter")
@@ -126,14 +77,13 @@ class Heatmap extends Component {
       .enter()
       .append("rect")
       .attr("x", function(d, i) {
-        return sortersArr.indexOf(d.sorter) * gridSize;
+        return sorterArr.indexOf(d.sorter) * gridSize;
       })
       .attr("y", function(d) {
         return (studiesArr.indexOf(d.study) + 0.25) * gridSize;
       })
-      // TODO: make this a variable
-      .attr("rx", 4)
-      .attr("ry", 4)
+      .attr("rx", sorterArr.length)
+      .attr("ry", studiesArr.length)
       .attr("class", "sorter bordered")
       .attr("width", gridSize)
       .attr("height", gridSize)
@@ -152,15 +102,32 @@ class Heatmap extends Component {
       );
     });
   }
+
   render() {
     return (
       <div className="heatmap__container" id="react-d3-heatMap">
         <g className="heatmap">
-          <svg
-            ref={elem => {
-              if (!this.state.svgElem) this.setState({ svgElem: elem });
-            }}
-          />
+          <svg id="heatmap-svg" />
+          {this.props.studies.map((study, i) => (
+            <HeatmapLabel
+              key={i * this.props.gridSize}
+              x={0}
+              y={i * this.props.gridSize}
+              label={study}
+              translate={"translate(-6," + this.props.gridSize / 1.5 + ")"}
+              id="heatmap-label__study"
+            />
+          ))}
+          {this.props.sorters.map((sorter, i) => (
+            <HeatmapLabel
+              key={i * this.props.gridSize}
+              x={i * this.props.gridSize}
+              y={0}
+              label={sorter}
+              translate={"translate(" + this.props.gridSize / 2 + ", -6)"}
+              id="heatmap-label__sorter"
+            />
+          ))}
           {/* <Legend colors={colors} width={width} /> */}
         </g>
       </div>
