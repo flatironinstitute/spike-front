@@ -287,6 +287,11 @@ Use containers when you need a content area that has standard maximum width and 
   padding: 7.2rem 1rem 0rem 1rem;
 }
 
+.container__heatmap {
+  width: 100%;
+  margin-bottom: 7.2rem;
+}
+
 /* Lists
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 ul {
@@ -551,21 +556,49 @@ li {
 
 /* Heatmap
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+.heatmap__container {
+  height: auto;
+  padding-bottom: 150px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.heatmap-label {
+  display: block;
+  font-size: 9pt;
+  font-family: var(--sans);
+  color: var(--off-black);
+}
+
+.heatmap-label__study {
+  display: block;
+  font-size: 9pt;
+  font-family: var(--sans);
+  color: var(--off-black);
+}
+
+.heatmap-label__sorter {
+  display: inline-block;
+  font-size: 9pt;
+  font-family: var(--sans);
+  color: var(--off-black);
+}
+
 rect.bordered {
-  stroke: #e6e6e6;
+  stroke: var(--off-white);
   stroke-width: 2px;
+}
+
+.mono {
+  font-size: 9pt;
+  font-family: var(--sans);
+  color: var(--off-black);
 }
 
 text.mono {
   font-size: 9pt;
-  font-family: Consolas, courier;
-  fill: #aaa;
-}
-
-text.axis-workweek {
-  fill: #000;
-}
-
-text.axis-worktime {
-  fill: #000;
+  font-family: var(--sans);
+  color: var(--off-black);
 }

@@ -1,276 +1,144 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
-import d3Tip from "d3-tip";
+import HeatmapLabelYAxis from "./HeatmapLabelYAxis";
+import HeatmapLabelXAxis from "./HeatmapLabelXAxis";
+import { isEmpty } from "../utils";
+import Legend from "./Legend";
 
 class Heatmap extends Component {
   constructor(props) {
     super(props);
+    // TODO: refactor out and replace colors.
     this.state = {
-      svgElem: undefined,
-      builtData: []
+      colors: [
+        "#ffffd9",
+        "#edf8b1",
+        "#c7e9b4",
+        "#7fcdbb",
+        "#41b6c4",
+        "#1d91c0",
+        "#225ea8",
+        "#253494",
+        "#081d58"
+      ]
     };
+    this.legendElementWidth = this.props.gridSize * 0.5;
   }
 
   componentDidMount() {
-    if (!this.state.builtData.length) {
-      this.buildViz();
-    }
+    const svg = d3.select("#heatmap-svg");
+    this.buildGrid("#react-d3-heatMap", svg, this.props.builtData);
   }
 
-  // TODO: Implement this for results props.
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (this.props.color !== nextProps.color) {
-  //     return true;
-  //   }
-  //   if (this.state.count !== nextState.count) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
+  buildGrid(id, svg, builtData) {
+    var colorScale = d3
+      .scaleQuantile()
+      .domain([
+        d3.min(builtData, function(d) {
+          return d.in_range;
+        }),
+        d3.max(builtData, function(d) {
+          return d.in_range;
+        })
+      ])
+      .range(this.state.colors);
 
-  async buildViz() {
-    const builtData = await this.buildData(
-      600,
-      800,
-      true,
-      [11],
-      this.props.results
-    );
-    this.setState(builtData);
-    if (builtData.length) {
-      const svg = d3.select(this.state.svgElem);
-      this.buildGrid("#react-d3-heatMap", 600, 800, true, [12], svg, builtData);
-    }
-  }
+    // Axis translation
+    // studies = y
+    // sorters = x
 
-  async buildData(gridWidth, gridHeight, square, dims, results) {
-    var builtData = [];
-    var gridItemWidth = dims[0];
-    var gridItemHeight = square ? gridItemWidth : dims[1];
-    var startX = gridItemWidth; // / 2;
-    var startY = gridItemHeight / 2;
-    var stepX = gridItemWidth;
-    var stepY = gridItemHeight;
-    var xpos = startX;
-    var ypos = startY;
+    // Make an SVG with the correct height and width
+    svg
+      .attr(
+        "width",
+        this.props.width + this.props.margin.left + this.props.margin.right
+      )
+      .attr(
+        "height",
+        this.props.height + this.props.margin.top + this.props.margin.bottom
+      )
+      .attr(
+        "transform",
+        "translate(" +
+          this.props.margin.left +
+          "," +
+          this.props.margin.top +
+          ")"
+      );
 
-    let reOrgs = [];
-    this.props.studies.forEach(study => {
-      reOrgs.push(results.filter(res => res.study === study));
-    });
-
-    console.log("🦄 regorgs", reOrgs);
-    //parent array
-    for (var index_a = 0; index_a < reOrgs.length; index_a++) {
-      builtData.push([]);
-      //nested array
-      for (var index_b = 0; index_b < reOrgs[index_a].length; index_b++) {
-        // formerly suitecount
-        let studyName = reOrgs[index_a][index_b].study;
-        // formerly patientcount
-        let inRange = reOrgs[index_a][index_b].in_range;
-        // formerly percentageLT
-        let sorterName = reOrgs[index_a][index_b].sorter;
-
-        let newObj = {
-          study: studyName,
-          in_range: inRange,
-          width: gridItemWidth,
-          height: gridItemHeight,
-          x: xpos,
-          y: ypos,
-          sorter: sorterName
-        };
-        console.log("🦇", newObj);
-        builtData[index_a].push(newObj);
-        xpos += stepX;
-      }
-      xpos = startX;
-      ypos += stepY;
-    }
-
-    return builtData;
-  }
-
-  getMaxNum() {
-    let rangeCounts = this.props.results.map(study => study.in_range);
-    return d3.max(rangeCounts);
-  }
-
-  buildGrid(id, width, height, square, dims, svg, builtData) {
-    // TODO: reconfigure this function be called on the individual row level.
-    const maxNum = this.getMaxNum();
-    const domainScale = [
-      0,
-      1,
-      Math.round(maxNum / 5),
-      Math.round(maxNum / 4),
-      Math.round(maxNum / 3),
-      Math.round(maxNum / 2),
-      maxNum
-    ];
-
-    const colorRange = ["#384CA2", "#AE9567"];
-    let color = d3
-      .scaleLinear()
-      .domain(domainScale)
-      .range(colorRange);
-
-    var tip = d3Tip()
-      .attr("class", "d3-tip")
-      .html(function(d) {
-        return (
-          "<span style='bg-color:#CCCCCC;font-size:12;font-color:#555;opacity:.8;'>" +
-          d +
-          " above the accuracy threshold</span>"
-        );
-      });
-
-    var grid = svg
-      .attr("width", width)
-      .attr("height", height)
-      .attr("class", "grid")
-      .call(tip);
-
-    var row = grid
-      .selectAll(".row")
+    // Plot the heatmap
+    const gridSize = this.props.gridSize;
+    let sorterArr = this.props.sorters;
+    let studiesArr = this.props.studies;
+    var heatMap = svg
+      .selectAll(".sorter")
       .data(builtData)
       .enter()
-      .append("svg:g")
-      .attr("className", "row");
-
-    var col = row
-      .selectAll(".cell")
-      .data(function(d) {
-        return d;
-      })
-      .enter()
-      .append("svg:rect")
-      .attr("class", "cell")
-      .attr("x", function(d) {
-        return d.x;
+      .append("rect")
+      .attr("x", function(d, i) {
+        return sorterArr.indexOf(d.sorter) * gridSize;
       })
       .attr("y", function(d) {
-        return d.y;
+        return (studiesArr.indexOf(d.study) + 0.25) * gridSize;
       })
-      .attr("width", function(d) {
-        return d.width;
-      })
-      .attr("height", function(d) {
-        return d.height;
-      })
-      .on("mouseover", function(d) {
-        d3.select(this)
-          .style("stroke", "rgb(255,0,0)")
-          .style("stroke-width", "2.5px")
-          .style("border", "1px solid #FFFFFF")
-          .style("padding", "2px");
-        tip.show(d.in_range);
-      })
-      .on("mouseout", function(d) {
-        d3.select(this)
-          .style("stroke", "#555")
-          .style("stroke-width", "1px")
-          .style("border", "1px solid #DDDDDD")
-          .style("padding", "1px");
-        tip.hide(d.in_range);
-      })
-      .on("click", function() {
-        console.log(d3.select(this));
-      })
-      .style("fill", function(d) {
-        return color(d.in_range);
-      })
-      .style("stroke", "#555");
+      .attr("rx", sorterArr.length)
+      .attr("ry", studiesArr.length)
+      .attr("class", "sorter bordered")
+      .attr("width", gridSize)
+      .attr("height", gridSize)
+      .style("fill", this.state.colors[0]);
 
-    var text = row
-      .selectAll(".label")
-      .data(function(d) {
-        return d;
-      })
-      .enter()
-      .append("svg:text")
+    heatMap
       .transition()
-      .duration(2500)
-      .delay(500)
-      .attr("x", function(d) {
-        return d.x + d.width / 2;
-      })
-      .attr("y", function(d) {
-        return d.y + d.height / 2;
-      })
-      .attr("text-anchor", "middle")
-      .attr("dy", ".35em")
-      .text(function(d) {
-        return d.in_range;
+      .duration(1000)
+      .style("fill", function(d) {
+        return colorScale(d.in_range);
       });
 
-    // top label for the y axis
-    grid
-      .append("text")
-      .attr("x", 0)
-      .attr("y", 20)
-      .style("text-anchor", "left")
-      .text("Studies");
-
-    //build side labels for the y axis
-    let nextStartY = dims[0] + 5; //20 + 15 + Math.round(dims[0]/2)
-    for (let obj in builtData) {
-      grid
-        .append("text")
-        .attr("x", 20)
-        .attr("y", nextStartY + (nextStartY - 5) * obj)
-        .style("text-anchor", "left")
-        .text(builtData[obj][0].study);
-    }
-
-    // build label for the x axis
-    // use the length of the first nested array to determine how many (aka range)
-    let nextStartX = dims[0] - 5;
-    nextStartY = height - 2;
-    console.log("🗺️ BUILT DATA IN bUILD GRID", builtData);
-    for (var i = 0; i < builtData[0].length + 1; i++) {
-      grid
-        .append("text")
-        .attr("x", function() {
-          var ret = nextStartX;
-          // TODO: use variable
-          nextStartX += 11; //(i === 0 ? (ret + 55) : (ret + 60));
-          return ret;
-        })
-        .attr("y", nextStartY)
-        .style("text-anchor", "bottom")
-        .text(i > 0 ? i * 10 + "%" : i); //special req to account for "less than 10%"
-    }
-
-    grid
-      .append("text")
-      .attr("x", (nextStartX -= 50))
-      .attr("y", (nextStartY -= 30))
-      .style("text-anchor", "left")
-      .text("Uncontrolled");
-
-    grid
-      .append("text")
-      .attr("x", nextStartX)
-      .attr("y", (nextStartY += 15))
-      .style("text-anchor", "left")
-      .text("Care Opportunities");
+    heatMap.append("title").text(function(d) {
+      return (
+        "The number of units below the accuracy threshhold is " + d.in_range
+      );
+    });
   }
 
-  // PROPS
-  // studies
-  // sorters
-  // results
+  getTranslationY(index) {
+    const halfGrid = this.props.gridSize / 1.5;
+    const copyHeight = 19 * index + 9;
+    const translation = this.props.gridSize * index + halfGrid + copyHeight;
+    return translation * -1;
+  }
 
   render() {
+    const toTop = this.props.height + 170;
     return (
-      <div className="heatmap" id="react-d3-heatMap">
-        <svg
-          ref={elem => {
-            if (!this.state.svgElem) this.setState({ svgElem: elem });
-          }}
-        />
+      <div className="heatmap__container" id="react-d3-heatMap">
+        <g className="heatmap">
+          <svg id="heatmap-svg" />
+          {this.props.studies.map((study, i) => (
+            <HeatmapLabelYAxis
+              key={i * this.props.gridSize}
+              x={0}
+              y={i * this.props.gridSize}
+              label={study}
+              translateY={this.getTranslationY(i)}
+              translateX={-6}
+              id="heatmap-label__study"
+            />
+          ))}
+          {this.props.sorters.map((sorter, i) => (
+            <HeatmapLabelXAxis
+              key={i * this.props.gridSize}
+              x={i * this.props.gridSize}
+              y={0}
+              label={sorter}
+              index={i}
+              translateY={toTop * -1}
+              id="heatmap-label__sorter"
+            />
+          ))}
+          <Legend colors={this.state.colors} width={this.props.width} />
+        </g>
       </div>
     );
   }

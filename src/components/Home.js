@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Header from "./Header";
 import Preloader from "./Preloader";
 import Error from "./Error";
-import Heatmap from "./Heatmap";
+import HeatmapContainer from "./HeatmapContainer";
 import { isEmpty } from "../utils";
 import {
   getRecordingsSummary,
@@ -20,7 +20,7 @@ class Home extends Component {
     this.state = {
       sortingResults: {},
       recordingSummary: {},
-      accuracy: 0.9,
+      accuracy: 0.8,
       errors: []
     };
   }
@@ -57,15 +57,12 @@ class Home extends Component {
 
   async setSortingResults(allBatches) {
     const sortingResults = await getSortingResults(allBatches);
-    this.setState({
-      sortingResults
-    });
-    this.filterAccuracy();
+    this.filterAccuracy(sortingResults);
   }
 
   // TODO: Separate filter accuracy in the lifecycle to allow for re-render
-  filterAccuracy() {
-    let filtered = this.state.sortingResults.map(result => {
+  filterAccuracy(sortingResults) {
+    let filtered = sortingResults.map(result => {
       let above = result.accuracies.filter(accu => accu >= this.state.accuracy);
       result.in_range = above.length;
       return result;
@@ -73,7 +70,6 @@ class Home extends Component {
     this.setState({
       sortingResults: filtered
     });
-    cache.set("sortingResults", filtered);
   }
 
   getStudies() {
@@ -82,7 +78,6 @@ class Home extends Component {
       .filter((value, index, self) => self.indexOf(value) === index);
   }
 
-  // TODO: remove if unused
   getSorters() {
     return this.state.sortingResults
       .map(item => item.sorter)
@@ -91,9 +86,6 @@ class Home extends Component {
 
   render() {
     let loading = isEmpty(this.state.sortingResults);
-    if (!loading) {
-      console.log("🏆 SORTING RESULTS 🐯", this.state.sortingResults);
-    }
     return (
       <div>
         {this.state.errors.length ? <Error errors={this.state.errors} /> : null}
@@ -102,21 +94,12 @@ class Home extends Component {
           {loading ? (
             <Preloader />
           ) : (
-            <div>
-              <div className="container">
-                <Heatmap
-                  results={this.state.sortingResults}
-                  studies={this.getStudies()}
-                />
-              </div>
-              <div className="container">
-                <h3>Sorting Results</h3>
-                <ReactJson src={this.state.sortingResults} />
-              </div>
-              <div className="container">
-                <h3>Recording Results</h3>
-                <ReactJson src={this.state.recordingSummary} />
-              </div>
+            <div className="container container__heatmap">
+              <HeatmapContainer
+                results={this.state.sortingResults}
+                studies={this.getStudies()}
+                sorters={this.getSorters()}
+              />
             </div>
           )}
         </div>
