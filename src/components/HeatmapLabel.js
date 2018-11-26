@@ -3,20 +3,24 @@ import * as d3 from "d3";
 
 class HeatmapLabel extends Component {
   render() {
-    let style = `transform: translate(${this.props.translateX}px, ${
+    let styles = `transform: translate(${this.props.translateX}px, ${
       this.props.translateY
     }px)`;
-    console.log(this.props.translateX, this.props.translateY, style);
+    console.log(this.props.translateX, this.props.translateY, styles);
     return (
       <g className="heatmap__label">
         <text
-          styles={style}
+          style={{
+            transform: `translate(${this.props.translateX}px, ${
+              this.props.translateY
+            }px)`
+          }}
           textAnchor="end"
           x={this.props.x}
           y={this.props.y}
           className={this.props.id}
         >
-          {this.props.label} {style}
+          {this.props.label}
         </text>
       </g>
     );

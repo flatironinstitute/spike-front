@@ -571,7 +571,7 @@ li {
 }
 
 .heatmap-label__sorter {
-  display: block;
+  display: inline-block;
 }
 
 rect.bordered {

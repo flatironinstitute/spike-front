@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import * as d3 from "d3";
 import HeatmapLabel from "./HeatmapLabel";
 import { isEmpty } from "../utils";
-import Preloader from "./Preloader";
 import Legend from "./Legend";
 
 class Heatmap extends Component {
@@ -102,23 +101,34 @@ class Heatmap extends Component {
     });
   }
 
-  getTranslation(index, divisor) {
-    const translation = ((this.props.gridSize * index) / divisor) * -1;
+  getTranslationX(index) {
+    const base = this.props.gridSize * index;
+    const offsetFactor = this.props.gridSize / 2;
+    const translation =
+      index > 0 ? base + offsetFactor : base + offsetFactor + 220;
     return translation;
   }
 
+  getTranslationY(index) {
+    const halfGrid = this.props.gridSize / 1.5;
+    const copyHeight = 24 * index + 12;
+    const translation = this.props.gridSize * index + halfGrid + copyHeight;
+    return translation * -1;
+  }
+
   render() {
-    let loading = isEmpty(this.props.gridSize);
+    const toTop = this.props.height + 170;
     return (
       <div className="heatmap__container" id="react-d3-heatMap">
         <g className="heatmap">
+          <svg id="heatmap-svg" />
           {this.props.studies.map((study, i) => (
             <HeatmapLabel
               key={i * this.props.gridSize}
               x={0}
               y={i * this.props.gridSize}
               label={study}
-              translateY={this.getTranslation(i, 1.5)}
+              translateY={this.getTranslationY(i)}
               translateX={-6}
               id="heatmap-label__study"
             />
@@ -129,12 +139,11 @@ class Heatmap extends Component {
               x={i * this.props.gridSize}
               y={0}
               label={sorter}
-              translateX={this.getTranslation(i, 2)}
-              translateY={-6}
+              translateX={this.getTranslationX(i)}
+              translateY={toTop * -1}
               id="heatmap-label__sorter"
             />
           ))}
-          <svg id="heatmap-svg" />
           <Legend colors={this.state.colors} width={this.props.width} />
         </g>
       </div>
