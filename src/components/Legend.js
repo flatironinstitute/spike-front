@@ -17,7 +17,7 @@ class Legend extends Component {
   }
 
   render() {
-    console.log(this.props.colors, this.props.width, "⛪");
+    // console.log(this.props.colors, this.props.width, "⛪");
     return (
       <g>
         {d3.range(20).map(i => (

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
-import HeatmapLabel from "./HeatmapLabel";
+import HeatmapLabelYAxis from "./HeatmapLabelYAxis";
+import HeatmapLabelXAxis from "./HeatmapLabelXAxis";
 import { isEmpty } from "../utils";
 import Legend from "./Legend";
 
@@ -101,17 +102,9 @@ class Heatmap extends Component {
     });
   }
 
-  getTranslationX(index) {
-    const base = this.props.gridSize * index;
-    const offsetFactor = this.props.gridSize / 2;
-    const translation =
-      index > 0 ? base + offsetFactor : base + offsetFactor + 220;
-    return translation;
-  }
-
   getTranslationY(index) {
     const halfGrid = this.props.gridSize / 1.5;
-    const copyHeight = 24 * index + 12;
+    const copyHeight = 19 * index + 9;
     const translation = this.props.gridSize * index + halfGrid + copyHeight;
     return translation * -1;
   }
@@ -123,7 +116,7 @@ class Heatmap extends Component {
         <g className="heatmap">
           <svg id="heatmap-svg" />
           {this.props.studies.map((study, i) => (
-            <HeatmapLabel
+            <HeatmapLabelYAxis
               key={i * this.props.gridSize}
               x={0}
               y={i * this.props.gridSize}
@@ -134,12 +127,12 @@ class Heatmap extends Component {
             />
           ))}
           {this.props.sorters.map((sorter, i) => (
-            <HeatmapLabel
+            <HeatmapLabelXAxis
               key={i * this.props.gridSize}
               x={i * this.props.gridSize}
               y={0}
               label={sorter}
-              translateX={this.getTranslationX(i)}
+              index={i}
               translateY={toTop * -1}
               id="heatmap-label__sorter"
             />

@@ -557,21 +557,33 @@ li {
 /* Heatmap
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .heatmap__container {
-  border: 2px dotted violet;
   height: auto;
   padding-bottom: 150px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 .heatmap-label {
   display: block;
+  font-size: 9pt;
+  font-family: var(--sans);
+  color: var(--off-black);
 }
 
 .heatmap-label__study {
   display: block;
+  font-size: 9pt;
+  font-family: var(--sans);
+  color: var(--off-black);
 }
 
 .heatmap-label__sorter {
   display: inline-block;
+  font-size: 9pt;
+  font-family: var(--sans);
+  color: var(--off-black);
 }
 
 rect.bordered {
