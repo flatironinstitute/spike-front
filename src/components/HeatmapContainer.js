@@ -39,12 +39,14 @@ class HeatmapContainer extends Component {
   }
 
   getGridSize() {
-    Math.floor(this.width / this.props.sorters.length);
+    // TODO: Make grid size responsive.
+    let a = Math.floor(this.width / this.props.sorters.length);
+    let b = Math.floor(this.height / this.props.studies.length);
   }
 
   render() {
     let loading = isEmpty(this.state.builtData);
-    let gridSize = Math.floor(this.width / this.props.sorters.length);
+    let gridSize = Math.floor(this.height / this.props.studies.length);
     return (
       <div>
         {loading ? (

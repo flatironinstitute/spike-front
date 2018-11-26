@@ -1,14 +1,26 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
 import HeatmapLabel from "./HeatmapLabel";
+import { isEmpty } from "../utils";
 import Preloader from "./Preloader";
 import Legend from "./Legend";
 
 class Heatmap extends Component {
   constructor(props) {
     super(props);
+    // TODO: refactor out and replace colors.
     this.state = {
-      svgElem: undefined
+      colors: [
+        "#ffffd9",
+        "#edf8b1",
+        "#c7e9b4",
+        "#7fcdbb",
+        "#41b6c4",
+        "#1d91c0",
+        "#225ea8",
+        "#253494",
+        "#081d58"
+      ]
     };
     this.legendElementWidth = this.props.gridSize * 0.5;
   }
@@ -19,19 +31,6 @@ class Heatmap extends Component {
   }
 
   buildGrid(id, svg, builtData) {
-    // TODO: refactor out
-    const colors = [
-      "#ffffd9",
-      "#edf8b1",
-      "#c7e9b4",
-      "#7fcdbb",
-      "#41b6c4",
-      "#1d91c0",
-      "#225ea8",
-      "#253494",
-      "#081d58"
-    ];
-    console.log("🕴️", this.props.builtData, builtData);
     var colorScale = d3
       .scaleQuantile()
       .domain([
@@ -42,11 +41,11 @@ class Heatmap extends Component {
           return d.in_range;
         })
       ])
-      .range(colors);
+      .range(this.state.colors);
 
-    // TARO TRANSLATION FYI
-    // groups = studies = y
-    // years = sorters = x
+    // Axis translation
+    // studies = y
+    // sorters = x
 
     // Make an SVG with the correct height and width
     svg
@@ -67,7 +66,7 @@ class Heatmap extends Component {
           ")"
       );
 
-    /*plot the heatmap*/
+    // Plot the heatmap
     const gridSize = this.props.gridSize;
     let sorterArr = this.props.sorters;
     let studiesArr = this.props.studies;
@@ -87,7 +86,7 @@ class Heatmap extends Component {
       .attr("class", "sorter bordered")
       .attr("width", gridSize)
       .attr("height", gridSize)
-      .style("fill", colors[0]);
+      .style("fill", this.state.colors[0]);
 
     heatMap
       .transition()
@@ -103,18 +102,24 @@ class Heatmap extends Component {
     });
   }
 
+  getTranslation(index, divisor) {
+    const translation = ((this.props.gridSize * index) / divisor) * -1;
+    return translation;
+  }
+
   render() {
+    let loading = isEmpty(this.props.gridSize);
     return (
       <div className="heatmap__container" id="react-d3-heatMap">
         <g className="heatmap">
-          <svg id="heatmap-svg" />
           {this.props.studies.map((study, i) => (
             <HeatmapLabel
               key={i * this.props.gridSize}
               x={0}
               y={i * this.props.gridSize}
               label={study}
-              translate={"translate(-6," + this.props.gridSize / 1.5 + ")"}
+              translateY={this.getTranslation(i, 1.5)}
+              translateX={-6}
               id="heatmap-label__study"
             />
           ))}
@@ -124,11 +129,13 @@ class Heatmap extends Component {
               x={i * this.props.gridSize}
               y={0}
               label={sorter}
-              translate={"translate(" + this.props.gridSize / 2 + ", -6)"}
+              translateX={this.getTranslation(i, 2)}
+              translateY={-6}
               id="heatmap-label__sorter"
             />
           ))}
-          {/* <Legend colors={colors} width={width} /> */}
+          <svg id="heatmap-svg" />
+          <Legend colors={this.state.colors} width={this.props.width} />
         </g>
       </div>
     );

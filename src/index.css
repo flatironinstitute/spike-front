@@ -562,6 +562,18 @@ li {
   padding-bottom: 150px;
 }
 
+.heatmap-label {
+  display: block;
+}
+
+.heatmap-label__study {
+  display: block;
+}
+
+.heatmap-label__sorter {
+  display: block;
+}
+
 rect.bordered {
   stroke: var(--off-white);
   stroke-width: 2px;

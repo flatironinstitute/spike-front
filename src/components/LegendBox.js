@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class LegendBox extends Component {
   render() {
-    console.log("🍀, props");
+    console.log("🍀", this.props);
     return (
       <g>
         <rect
