@@ -4,12 +4,7 @@ import Preloader from "./Preloader";
 import Error from "./Error";
 import HeatmapContainer from "./HeatmapContainer";
 import { isEmpty } from "../utils";
-import {
-  getRecordingsSummary,
-  getBatchResults,
-  getSortingResults
-} from "../dataHandlers";
-import * as cache from "../cache";
+import { getBatchResults, getSortingResults } from "../dataHandlers";
 
 // TODO: Remove when JSON is done being used
 // import ReactJson from "react-json-view";
@@ -19,33 +14,14 @@ class Home extends Component {
     super(props);
     this.state = {
       sortingResults: {},
-      recordingSummary: {},
+      recordings: {},
       accuracy: 0.8,
       errors: []
     };
   }
 
   componentDidMount() {
-    let existingResults = cache.get("sortingResults");
-    let existingRecordings = cache.get("recordingSummary");
-    if (existingResults) {
-      this.setState({ sortingResults: existingResults });
-    } else {
-      this.fetchBatchData();
-    }
-    if (existingRecordings) {
-      this.setState({ recordingSummary: existingRecordings });
-    } else {
-      this.fetchRecordingsSummary();
-    }
-  }
-
-  async fetchRecordingsSummary() {
-    const summary = await getRecordingsSummary();
-    if (summary.job_results.length && isEmpty(this.state.recordingSummary)) {
-      cache.set("recordingSummary", summary);
-      this.setState({ recordingSummary: summary });
-    }
+    this.fetchBatchData();
   }
 
   async fetchBatchData() {

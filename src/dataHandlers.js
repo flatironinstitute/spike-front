@@ -3,34 +3,35 @@ let kbclient = new KBucketClient();
 kbclient.setConfig({ share_ids: ["spikeforest.spikeforest1"] });
 kbclient.setPairioConfig({ collections: ["spikeforest"] });
 
+// New data handling functions as of 11/16/18
+export async function getRecordings() {
+  let obj = await kbclient.loadObject(null, {
+    key: { target: "spikeforest_website", name: "recordings" }
+  });
+  if (!obj) {
+    console.log("Problem loading recordings object.");
+    return;
+  }
+  return obj;
+}
+
+export async function getStudies() {
+  let obj = await kbclient.loadObject(null, {
+    key: { target: "spikeforest_website", name: "studies" }
+  });
+  if (!obj) {
+    console.log("Problem loading studies object.");
+    return;
+  }
+  return obj;
+}
+
+// Prior data handling functions
 const batchArr = [
   "ms4_magland_synth_dev3",
   "irc_magland_synth_dev3",
   "sc_magland_synth_dev3"
 ];
-
-// TODO: Do I need this?
-export async function getStudiesProcessed() {
-  let obj = await kbclient.loadObject(null, {
-    key: { name: "spikeforest_studies_processed" }
-  });
-  if (!obj) {
-    console.log("Problem loading spikeforest_studies_processed object.");
-    return;
-  }
-  return obj;
-}
-
-export async function getRecordingsSummary() {
-  let obj = await kbclient.loadObject(null, {
-    key: { batch_name: "summarize_recordings", name: "job_results" }
-  });
-  if (!obj) {
-    console.log("Problem loading summarize_recordings object.");
-    return;
-  }
-  return obj;
-}
 
 export async function getANewBatchResult(batch) {
   let result = await kbclient.loadObject(null, {
