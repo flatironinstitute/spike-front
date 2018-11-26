@@ -12,7 +12,7 @@ import {
 import * as cache from "../cache";
 
 // TODO: Remove when JSON is done being used
-import ReactJson from "react-json-view";
+// import ReactJson from "react-json-view";
 
 class Home extends Component {
   constructor(props) {

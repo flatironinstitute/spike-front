@@ -9,7 +9,7 @@ class HeatmapContainer extends Component {
     this.state = {
       builtData: []
     };
-    // TODO: Make this respoonsive
+    // TODO: Make margin and overall width responsive
     this.margin = { top: 50, right: 0, bottom: 100, left: 226 };
     this.width = 1024;
     this.height = 830 + this.margin.top + this.margin.bottom;
@@ -38,14 +38,9 @@ class HeatmapContainer extends Component {
     });
   }
 
-  getGridSize() {
-    // TODO: Make grid size responsive.
-    let a = Math.floor(this.width / this.props.sorters.length);
-    let b = Math.floor(this.height / this.props.studies.length);
-  }
-
   render() {
     let loading = isEmpty(this.state.builtData);
+    // TODO: Make grid size responsive.
     let gridSize = Math.floor(this.height / this.props.studies.length);
     return (
       <div>

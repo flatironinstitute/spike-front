@@ -19,10 +19,10 @@ class Navbar extends Component {
           <div className="nav__right">
             <NavLink
               className="nav__link"
-              to="/datasets"
+              to="/recordings"
               activeClassName="active"
             >
-              Datasets
+              Recordings
             </NavLink>
             <NavLink className="nav__link" to="/algos" activeClassName="active">
               Algorithms
