@@ -26,7 +26,30 @@ export async function getStudies() {
   return obj;
 }
 
-// Prior data handling functions
+export async function getSorters() {
+  let obj = await kbclient.loadObject(null, {
+    key: { target: "spikeforest_website", name: "sorters" }
+  });
+  if (!obj) {
+    console.log("Problem loading sorters object.");
+    return;
+  }
+  return obj;
+}
+
+export async function getTrueUnits() {
+  let obj = await kbclient.loadObject(null, {
+    key: { target: "spikeforest_website", name: "true_units" }
+  });
+  if (!obj) {
+    console.log("Problem loading true units object.");
+    return;
+  }
+  return obj;
+}
+
+/* Prior data handling functions
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 const batchArr = [
   "ms4_magland_synth_dev3",
   "irc_magland_synth_dev3",
@@ -129,4 +152,23 @@ export function organizeSortingResults(unsorted) {
     };
   });
   return flattened;
+}
+
+export function organizeUnits(trueUnits) {
+  function groupBy(list, keyGetter) {
+    const map = new Map();
+    list.forEach(item => {
+      const key = keyGetter(item);
+      const collection = map.get(key);
+      if (!collection) {
+        map.set(key, [item]);
+      } else {
+        collection.push(item);
+      }
+    });
+    return map;
+  }
+
+  const grouped = groupBy(trueUnits, unit => unit.study);
+  return grouped;
 }

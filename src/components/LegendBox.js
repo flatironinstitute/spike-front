@@ -17,7 +17,7 @@ class LegendBox extends Component {
           height="20"
           x={this.props.x}
           y="21"
-          class="mono"
+          className="mono"
         >
           {this.props.text}
         </text>

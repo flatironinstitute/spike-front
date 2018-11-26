@@ -7,7 +7,7 @@ import Recordings from "./components/Recordings";
 import Algos from "./components/Algos";
 import Navbar from "./components/Navbar";
 import headerCopy from "./header-copy";
-import { getRecordings, getStudies } from "./dataHandlers";
+import { getRecordings, getStudies, getSorters, getTrueUnits } from "./dataHandlers";
 import { isEmpty } from "./utils";
 
 class App extends Component {
@@ -17,13 +17,17 @@ class App extends Component {
     this.state = {
       recordings: [],
       studies: [],
-      studySets: []
+      studySets: [],
+      sorters: [],
+      units: []
     };
   }
 
   componentDidMount() {
     this.fetchRecordings();
     this.fetchStudies();
+    this.fetchSorters();
+    this.fetchUnits();
   }
 
   async fetchRecordings() {
@@ -34,6 +38,7 @@ class App extends Component {
   }
 
   async fetchStudies() {
+    // TODO: GET COUNT OF RECORDINGS IN A STUDY
     const studies = await getStudies();
     if (studies.studies.length && isEmpty(this.state.studies)) {
       this.setState(studies: studies.studies);
@@ -51,8 +56,22 @@ class App extends Component {
     this.setState({studySets:sets});
   }
 
+  async fetchSorters() {
+    const sorters = await getSorters();
+    if (sorters.sorters.length && isEmpty(this.state.sorters)) {
+      this.setState({sorters: sorters.sorters});
+    }
+  }
+
+  async fetchUnits() {
+    // TODO: Format into { study: "", sorter: "", accuracies: [], in_range: 0 }
+    const units = await getTrueUnits();
+    if (units.true_units.length && isEmpty(this.state.units)) {
+      this.setState({units: units.true_units});
+    }
+  }
+
   render() {
-    console.log('studySets 🐌', this.state.studySets);
     const App = () => (
       <div>
         <Navbar />
@@ -60,11 +79,19 @@ class App extends Component {
           <Route
             exact
             path="/"
-            render={props => <Home {...props} header={headerCopy.home} />}
+            render={props => (
+              <Home 
+                {...props} 
+                header={headerCopy.home} 
+                sorters={this.state.sorters} 
+                studies={this.state.studies} 
+                units={this.state.units}
+              />
+            )}
           />
           <Route
             path="/algos"
-            render={props => <Algos {...props} header={headerCopy.algos} />}
+            render={props => <Algos {...props} header={headerCopy.algos} sorters={this.state.sorters} />}
           />
           <Route
             path="/about"
@@ -79,6 +106,7 @@ class App extends Component {
                 recordings={this.state.recordings}
                 studies={this.state.studies}
                 studySets={this.state.studySets}
+                sorters={this.state.sorters}
               />
             )}
           />

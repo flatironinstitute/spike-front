@@ -3,8 +3,8 @@ import Header from "./Header";
 import Preloader from "./Preloader";
 import Error from "./Error";
 import HeatmapContainer from "./HeatmapContainer";
+import { organizeUnits } from "../dataHandlers";
 import { isEmpty } from "../utils";
-import { getBatchResults, getSortingResults } from "../dataHandlers";
 
 // TODO: Remove when JSON is done being used
 // import ReactJson from "react-json-view";
@@ -13,55 +13,54 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sortingResults: {},
-      recordings: {},
+      sortedUnits: {},
       accuracy: 0.8,
       errors: []
     };
   }
 
   componentDidMount() {
-    this.fetchBatchData();
-  }
-
-  async fetchBatchData() {
-    const allBatches = await getBatchResults();
-    if (allBatches.length && isEmpty(this.state.sortingResults)) {
-      this.setSortingResults(allBatches);
+    if (this.props.units.length) {
+      this.sortUnits(this.props.units);
     }
   }
 
-  async setSortingResults(allBatches) {
-    const sortingResults = await getSortingResults(allBatches);
-    this.filterAccuracy(sortingResults);
+  async sortUnits(trueUnits) {
+    console.log("🦄", trueUnits[0]);
+    let orgs = organizeUnits(trueUnits);
+    console.log("🐴", orgs);
   }
 
   // TODO: Separate filter accuracy in the lifecycle to allow for re-render
-  filterAccuracy(sortingResults) {
-    let filtered = sortingResults.map(result => {
+  filterAccuracy(sortedUnits) {
+    let filtered = sortedUnits.map(result => {
       let above = result.accuracies.filter(accu => accu >= this.state.accuracy);
       result.in_range = above.length;
       return result;
     });
     this.setState({
-      sortingResults: filtered
+      sortedUnits: filtered
     });
   }
 
   getStudies() {
-    return this.state.sortingResults
-      .map(item => item.study)
+    return this.props.studies
+      .map(item => item.name)
       .filter((value, index, self) => self.indexOf(value) === index);
   }
 
   getSorters() {
-    return this.state.sortingResults
-      .map(item => item.sorter)
+    return this.props.sorters
+      .map(item => item.name)
       .filter((value, index, self) => self.indexOf(value) === index);
   }
 
   render() {
-    let loading = isEmpty(this.state.sortingResults);
+    let loading =
+      isEmpty(this.state.sortedUnits) ||
+      isEmpty(this.props.sorters) ||
+      isEmpty(this.props.studies);
+    // console.log("🗃️", this.state.sortedUnits);
     return (
       <div>
         {this.state.errors.length ? <Error errors={this.state.errors} /> : null}
@@ -72,7 +71,7 @@ class Home extends Component {
           ) : (
             <div className="container container__heatmap">
               <HeatmapContainer
-                results={this.state.sortingResults}
+                results={this.state.sortedUnits}
                 studies={this.getStudies()}
                 sorters={this.getSorters()}
               />
