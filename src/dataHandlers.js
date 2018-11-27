@@ -48,6 +48,72 @@ export async function getTrueUnits() {
   return obj;
 }
 
+export function flattenUnits(trueUnits, sorters) {
+  const sorterKeys = sorters.map(sorter => sorter.name);
+  // TODO: turn ids and other results into arrays to represent the group.
+  let newUnits = [];
+  trueUnits.forEach(unit => {
+    for (const key of sorterKeys) {
+      if (unit.sorting_results[key]) {
+        let floatie = [parseFloat(unit.sorting_results[key].Accuracy)];
+        let sorterObj = {
+          firing_rate: unit.firing_rate,
+          num_events: unit.num_events,
+          peak_channel: unit.peak_channel,
+          recording: unit.recording,
+          snr: unit.snr,
+          study: unit.study,
+          unit_id: unit.unit_id,
+          sorter: key,
+          sorting_results: unit.sorting_results[key],
+          accuracies: floatie
+        };
+        newUnits.push(sorterObj);
+      } else {
+        let blankSorterObj = {
+          firing_rate: unit.firing_rate,
+          num_events: unit.num_events,
+          peak_channel: unit.peak_channel,
+          recording: unit.recording,
+          snr: unit.snr,
+          study: unit.study,
+          unit_id: unit.unit_id,
+          sorter: key,
+          sorting_results: {
+            num_matches: 0,
+            Accuracy: "0",
+            best_unit: 0,
+            matched_unit: 0,
+            unit_id: 0,
+            f_n: "0",
+            f_p: "0"
+          },
+          accuracies: [0]
+        };
+        newUnits.push(blankSorterObj);
+      }
+    }
+  });
+  return newUnits;
+}
+
+export function groupUnitsWithAccuracy(allUnits) {
+  let groupedUnits = Object.values(
+    allUnits.reduce(function(r, e) {
+      let key = e.study + "|" + e.sorter;
+      if (!r[key]) {
+        r[key] = e;
+      } else {
+        let floatie = parseFloat(e.sorting_results.Accuracy);
+        r[key].accuracies.push(floatie);
+      }
+      return r;
+    }, {})
+  );
+
+  return groupedUnits;
+}
+
 /* Prior data handling functions
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 const batchArr = [
@@ -152,23 +218,4 @@ export function organizeSortingResults(unsorted) {
     };
   });
   return flattened;
-}
-
-export function organizeUnits(trueUnits) {
-  function groupBy(list, keyGetter) {
-    const map = new Map();
-    list.forEach(item => {
-      const key = keyGetter(item);
-      const collection = map.get(key);
-      if (!collection) {
-        map.set(key, [item]);
-      } else {
-        collection.push(item);
-      }
-    });
-    return map;
-  }
-
-  const grouped = groupBy(trueUnits, unit => unit.study);
-  return grouped;
 }

@@ -3,7 +3,7 @@ import Header from "./Header";
 import Preloader from "./Preloader";
 import Error from "./Error";
 import HeatmapContainer from "./HeatmapContainer";
-import { organizeUnits } from "../dataHandlers";
+import { flattenUnits, groupUnitsWithAccuracy } from "../dataHandlers";
 import { isEmpty } from "../utils";
 
 // TODO: Remove when JSON is done being used
@@ -13,7 +13,9 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sortedUnits: {},
+      allUnits: {},
+      unitsByStudyAndSorter: {},
+      filteredUnits: [],
       accuracy: 0.8,
       errors: []
     };
@@ -21,25 +23,35 @@ class Home extends Component {
 
   componentDidMount() {
     if (this.props.units.length) {
-      this.sortUnits(this.props.units);
+      this.sortUnits(this.props.units, this.props.sorters);
     }
   }
 
-  async sortUnits(trueUnits) {
-    console.log("🦄", trueUnits[0]);
-    let orgs = organizeUnits(trueUnits);
-    console.log("🐴", orgs);
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.state.unitsByStudyAndSorter !== prevState.unitsByStudyAndSorter) {
+      this.filterAccuracy();
+    }
+  }
+
+  async sortUnits(trueUnits, sorters) {
+    let flatUnits = await flattenUnits(trueUnits, sorters);
+    let unitsByStudyAndSorter = await groupUnitsWithAccuracy(flatUnits);
+    console.log("🍍", unitsByStudyAndSorter);
+    this.setState({
+      allUnits: flatUnits,
+      unitsByStudyAndSorter: unitsByStudyAndSorter
+    });
   }
 
   // TODO: Separate filter accuracy in the lifecycle to allow for re-render
-  filterAccuracy(sortedUnits) {
-    let filtered = sortedUnits.map(result => {
+  filterAccuracy() {
+    let filtered = this.state.unitsByStudyAndSorter.map(result => {
       let above = result.accuracies.filter(accu => accu >= this.state.accuracy);
       result.in_range = above.length;
       return result;
     });
     this.setState({
-      sortedUnits: filtered
+      filteredUnits: filtered
     });
   }
 
@@ -57,10 +69,10 @@ class Home extends Component {
 
   render() {
     let loading =
-      isEmpty(this.state.sortedUnits) ||
+      isEmpty(this.state.unitsByStudyAndSorter) ||
       isEmpty(this.props.sorters) ||
       isEmpty(this.props.studies);
-    // console.log("🗃️", this.state.sortedUnits);
+    // console.log("🗃️", this.state.unitsByStudyAndSorter);
     return (
       <div>
         {this.state.errors.length ? <Error errors={this.state.errors} /> : null}
@@ -71,7 +83,7 @@ class Home extends Component {
           ) : (
             <div className="container container__heatmap">
               <HeatmapContainer
-                results={this.state.sortedUnits}
+                results={this.state.unitsByStudyAndSorter}
                 studies={this.getStudies()}
                 sorters={this.getSorters()}
               />
