@@ -16,11 +16,13 @@ class HeatmapContainer extends Component {
   }
 
   componentDidMount() {
-    this.buildData().then(data => {
-      this.setState({
-        builtData: data
+    if (this.props.results.length) {
+      this.buildData().then(data => {
+        this.setState({
+          builtData: data
+        });
       });
-    });
+    }
   }
 
   async buildData() {

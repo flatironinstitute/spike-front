@@ -36,7 +36,6 @@ class Home extends Component {
   async sortUnits(trueUnits, sorters) {
     let flatUnits = await flattenUnits(trueUnits, sorters);
     let unitsByStudyAndSorter = await groupUnitsWithAccuracy(flatUnits);
-    console.log("🍍", unitsByStudyAndSorter);
     this.setState({
       allUnits: flatUnits,
       unitsByStudyAndSorter: unitsByStudyAndSorter
@@ -68,11 +67,7 @@ class Home extends Component {
   }
 
   render() {
-    let loading =
-      isEmpty(this.state.unitsByStudyAndSorter) ||
-      isEmpty(this.props.sorters) ||
-      isEmpty(this.props.studies);
-    // console.log("🗃️", this.state.unitsByStudyAndSorter);
+    let loading = isEmpty(this.state.filteredUnits);
     return (
       <div>
         {this.state.errors.length ? <Error errors={this.state.errors} /> : null}
@@ -83,7 +78,7 @@ class Home extends Component {
           ) : (
             <div className="container container__heatmap">
               <HeatmapContainer
-                results={this.state.unitsByStudyAndSorter}
+                results={this.state.filteredUnits}
                 studies={this.getStudies()}
                 sorters={this.getSorters()}
               />
