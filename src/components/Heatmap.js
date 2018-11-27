@@ -109,7 +109,7 @@ class Heatmap extends Component {
   }
 
   render() {
-    const toTop = this.props.height + 170;
+    const toTop = this.props.height + 300;
     return (
       <div className="heatmap__container" id="react-d3-heatMap">
         <g className="heatmap">
