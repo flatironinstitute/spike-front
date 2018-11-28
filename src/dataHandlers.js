@@ -131,10 +131,10 @@ export function generateGradient(startColor, endColor, steps) {
   const diffG = end["G"] - start["G"];
   const diffB = end["B"] - start["B"];
 
-  let stepsHex = new Array();
-  let stepsR = new Array();
-  let stepsG = new Array();
-  let stepsB = new Array();
+  let stepsHex = [];
+  let stepsR = [];
+  let stepsG = [];
+  let stepsB = [];
 
   for (let i = 0; i <= steps; i++) {
     stepsR[i] = start["R"] + (diffR / steps) * i;

@@ -30,7 +30,6 @@ class HeatmapContainer extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.accuracy !== prevState.accuracy) {
-      console.log("🏤 Component did update");
       this.filterAccuracy();
     }
   }
@@ -45,7 +44,6 @@ class HeatmapContainer extends Component {
       let above = result.accuracies.filter(accu => {
         return accu >= this.state.accuracy;
       });
-      console.log("🇪🇺", above.length, result.in_range);
       result.in_range = above.length;
       return result;
     });
@@ -82,7 +80,6 @@ class HeatmapContainer extends Component {
     // TODO: Make grid size responsive.
     let gridSize = Math.floor(this.height / this.props.studies.length);
     let value = this.state.accuracy;
-    const formatPc = p => p * 100 + "%";
     return (
       <div>
         {loading ? (
