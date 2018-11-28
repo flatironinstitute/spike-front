@@ -67,7 +67,7 @@ class Legend extends Component {
   render() {
     return (
       <div className="legend__container">
-        <h4 className="legend__title"> Better Title</h4>
+        <h4 className="legend__title">Legend/Title?</h4>
         <div className="legend__copy">
           <p>Number of units meeting the minimum threshold of accuracy</p>
         </div>
