@@ -101,7 +101,7 @@ class Heatmap extends Component {
   }
 
   getTranslationY(index) {
-    const halfGrid = this.props.gridSize / 1.5;
+    const halfGrid = this.props.gridSize * 1.8;
     const copyHeight = 19 * index + 9;
     const translation = this.props.gridSize * index + halfGrid + copyHeight;
     return translation * -1;
@@ -130,7 +130,7 @@ class Heatmap extends Component {
                 y={i * this.props.gridSize}
                 label={study}
                 translateY={this.getTranslationY(i)}
-                translateX={-6}
+                translateX={20}
                 id="heatmap-label__study"
               />
             ))}
