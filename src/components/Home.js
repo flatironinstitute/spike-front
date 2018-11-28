@@ -28,7 +28,6 @@ class Home extends Component {
   async sortUnits(trueUnits, sorters) {
     let flatUnits = await flattenUnits(trueUnits, sorters);
     let unitsByStudyAndSorter = await groupUnitsWithAccuracy(flatUnits);
-    console.log("💶", unitsByStudyAndSorter[2]);
     this.setState({
       allUnits: flatUnits,
       unitsByStudyAndSorter: unitsByStudyAndSorter

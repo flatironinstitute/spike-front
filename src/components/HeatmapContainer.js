@@ -19,10 +19,10 @@ class HeatmapContainer extends Component {
     this.width = 440;
     this.height = 400 + this.margin.top + this.margin.bottom;
     this.colors = [];
+    this.generateColors();
   }
 
   componentDidMount() {
-    this.generateColors();
     if (this.props.allUnits.length) {
       this.filterAccuracy();
     }
@@ -95,7 +95,7 @@ class HeatmapContainer extends Component {
                 height={this.height}
               />
               <div className="slider__container">
-                <h4 className="slider__title" />
+                <h4 className="slider__title">.</h4>
                 <div className="slider__vertical">
                   <Slider
                     min={0}

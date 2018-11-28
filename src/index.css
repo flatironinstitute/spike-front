@@ -647,7 +647,7 @@ text.mono {
 }
 
 .rangeslider-vertical .rangeslider__fill {
-  background-color: #337ab7;
+  background-color: #337ab7 !important;
 }
 
 .slider__copy {
