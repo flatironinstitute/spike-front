@@ -13,7 +13,6 @@ class Legend extends Component {
   updateD3(props) {
     const svg = d3.select("#legend-svg");
     const legendElementWidth = this.props.gridSize * 0.5;
-    const height = 100;
     const colors = this.props.colors;
 
     var colorScale = d3
@@ -68,9 +67,9 @@ class Legend extends Component {
   render() {
     return (
       <div className="legend__container">
-        <h4 className="legend__title">Legend</h4>
+        <h4 className="legend__title"> Better Title</h4>
         <div className="legend__copy">
-          <p>Alohamora wand elf parchment, Wingardium Leviosa hippogriff.</p>
+          <p>Number of units meeting the minimum threshold of accuracy</p>
         </div>
         <svg id="legend-svg" />
       </div>

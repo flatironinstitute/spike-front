@@ -15,7 +15,6 @@ class HeatmapLabelXAxis extends Component {
     // TODO: make base responsive/inherited
     const base = 226;
     const cell = (this.props.x / 3) * -1;
-    console.log(cell, "📴");
     this.setState({
       translateX: base + cell
     });

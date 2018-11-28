@@ -81,6 +81,7 @@ class Home extends Component {
                 results={this.state.filteredUnits}
                 studies={this.getStudies()}
                 sorters={this.getSorters()}
+                allUnits={this.state.allUnits}
               />
             </div>
           )}

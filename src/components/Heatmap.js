@@ -111,7 +111,7 @@ class Heatmap extends Component {
     const toTop = this.props.height + 300;
     return (
       <div className="container container__heatmap--row">
-        <div className="heatmap__legend col--6">
+        <div className="heatmap__legend col--2">
           <Legend
             gridSize={this.props.gridSize}
             colors={this.state.colors}
@@ -125,7 +125,7 @@ class Heatmap extends Component {
             <svg id="heatmap-svg" />
             {this.props.studies.map((study, i) => (
               <HeatmapLabelYAxis
-                key={i * this.props.gridSize}
+                key={i * this.props.gridSize + "Y"}
                 x={0}
                 y={i * this.props.gridSize}
                 label={study}
@@ -136,7 +136,7 @@ class Heatmap extends Component {
             ))}
             {this.props.sorters.map((sorter, i) => (
               <HeatmapLabelXAxis
-                key={i * this.props.gridSize}
+                key={i * this.props.gridSize + "X"}
                 x={i * this.props.gridSize}
                 y={0}
                 label={sorter}
@@ -146,6 +146,31 @@ class Heatmap extends Component {
               />
             ))}
           </g>
+        </div>
+        {/* TODO: Refactor into a separate component */}
+        <div className="unitdetail col--4">
+          <h4 className="unitdetail__title">Detail View TK</h4>
+          <div className="unitdetail__copy">
+            <ul className="unitdetail__list">
+              <li>firing_rate: 2.33</li>
+              <li>in_range: 80</li>
+              <li>num_events: 1398</li>
+              <li>peak_channel: 0</li>
+              <li>recording: "001_synth"</li>
+              <li>snr: 25.396783859187707</li>
+              <li>sorter: "MountainSort4-thr3"</li>
+              <li>study: "magland_synth_noise10_K10_C4"</li>
+            </ul>
+            <p>
+              Boggarts lavender robes, Hermione Granger Fantastic Beasts and
+              Where to Find Them. Bee in your bonnet Hand of Glory elder wand,
+              spectacles House Cup Bertie Bott’s Every Flavor Beans Impedimenta.
+              Stunning spells tap-dancing spider Slytherin’s Heir mewing kittens
+              Remus Lupin. Palominos scarlet train black robes, Metamorphimagus
+              Niffler dead easy second bedroom. Padma and Parvati Sorting Hat
+              Minister of Magic blue turban remember my last.
+            </p>
+          </div>
         </div>
       </div>
     );

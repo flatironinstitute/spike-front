@@ -628,3 +628,26 @@ text.mono {
   line-height: 2.9rem;
   text-align: left;
 }
+
+/* Unit Detail
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.unitdetail {
+  text-align: right;
+}
+.unitdetail__title {
+  font-family: var(--serif);
+}
+
+.unitdetail__copy {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.2rem;
+  line-height: 2.9rem;
+  text-align: left;
+}
+
+.unitdetail__list {
+  font-size: 1.2rem;
+  font-family: var(--serif);
+  text-align: right;
+}

@@ -57,6 +57,7 @@ class HeatmapContainer extends Component {
             margin={this.margin}
             width={this.width}
             height={this.height}
+            allUnits={this.props.allUnits}
           />
         )}
       </div>
