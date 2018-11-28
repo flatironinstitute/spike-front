@@ -3,13 +3,8 @@ import Header from "./Header";
 import Preloader from "./Preloader";
 import Error from "./Error";
 import HeatmapContainer from "./HeatmapContainer";
+import { flattenUnits, groupUnitsWithAccuracy } from "../dataHandlers";
 import { isEmpty } from "../utils";
-import {
-  getRecordingsSummary,
-  getBatchResults,
-  getSortingResults
-} from "../dataHandlers";
-import * as cache from "../cache";
 
 // TODO: Remove when JSON is done being used
 // import ReactJson from "react-json-view";
@@ -18,74 +13,61 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sortingResults: {},
-      recordingSummary: {},
+      allUnits: {},
+      unitsByStudyAndSorter: {},
+      filteredUnits: [],
       accuracy: 0.8,
       errors: []
     };
   }
 
   componentDidMount() {
-    let existingResults = cache.get("sortingResults");
-    let existingRecordings = cache.get("recordingSummary");
-    if (existingResults) {
-      this.setState({ sortingResults: existingResults });
-    } else {
-      this.fetchBatchData();
-    }
-    if (existingRecordings) {
-      this.setState({ recordingSummary: existingRecordings });
-    } else {
-      this.fetchRecordingsSummary();
+    if (this.props.units.length) {
+      this.sortUnits(this.props.units, this.props.sorters);
     }
   }
 
-  async fetchRecordingsSummary() {
-    const summary = await getRecordingsSummary();
-    if (summary.job_results.length && isEmpty(this.state.recordingSummary)) {
-      cache.set("recordingSummary", summary);
-      this.setState({ recordingSummary: summary });
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.state.unitsByStudyAndSorter !== prevState.unitsByStudyAndSorter) {
+      this.filterAccuracy();
     }
   }
 
-  async fetchBatchData() {
-    const allBatches = await getBatchResults();
-    if (allBatches.length && isEmpty(this.state.sortingResults)) {
-      this.setSortingResults(allBatches);
-    }
-  }
-
-  async setSortingResults(allBatches) {
-    const sortingResults = await getSortingResults(allBatches);
-    this.filterAccuracy(sortingResults);
+  async sortUnits(trueUnits, sorters) {
+    let flatUnits = await flattenUnits(trueUnits, sorters);
+    let unitsByStudyAndSorter = await groupUnitsWithAccuracy(flatUnits);
+    this.setState({
+      allUnits: flatUnits,
+      unitsByStudyAndSorter: unitsByStudyAndSorter
+    });
   }
 
   // TODO: Separate filter accuracy in the lifecycle to allow for re-render
-  filterAccuracy(sortingResults) {
-    let filtered = sortingResults.map(result => {
+  filterAccuracy() {
+    let filtered = this.state.unitsByStudyAndSorter.map(result => {
       let above = result.accuracies.filter(accu => accu >= this.state.accuracy);
       result.in_range = above.length;
       return result;
     });
     this.setState({
-      sortingResults: filtered
+      filteredUnits: filtered
     });
   }
 
   getStudies() {
-    return this.state.sortingResults
-      .map(item => item.study)
+    return this.props.studies
+      .map(item => item.name)
       .filter((value, index, self) => self.indexOf(value) === index);
   }
 
   getSorters() {
-    return this.state.sortingResults
-      .map(item => item.sorter)
+    return this.props.sorters
+      .map(item => item.name)
       .filter((value, index, self) => self.indexOf(value) === index);
   }
 
   render() {
-    let loading = isEmpty(this.state.sortingResults);
+    let loading = isEmpty(this.state.filteredUnits);
     return (
       <div>
         {this.state.errors.length ? <Error errors={this.state.errors} /> : null}
@@ -94,11 +76,12 @@ class Home extends Component {
           {loading ? (
             <Preloader />
           ) : (
-            <div className="container container__heatmap">
+            <div className="container__heatmap">
               <HeatmapContainer
-                results={this.state.sortingResults}
+                results={this.state.filteredUnits}
                 studies={this.getStudies()}
                 sorters={this.getSorters()}
+                allUnits={this.state.allUnits}
               />
             </div>
           )}

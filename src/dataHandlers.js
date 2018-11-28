@@ -3,34 +3,124 @@ let kbclient = new KBucketClient();
 kbclient.setConfig({ share_ids: ["spikeforest.spikeforest1"] });
 kbclient.setPairioConfig({ collections: ["spikeforest"] });
 
+// New data handling functions as of 11/16/18
+export async function getRecordings() {
+  let obj = await kbclient.loadObject(null, {
+    key: { target: "spikeforest_website", name: "recordings" }
+  });
+  if (!obj) {
+    console.log("Problem loading recordings object.");
+    return;
+  }
+  return obj;
+}
+
+export async function getStudies() {
+  let obj = await kbclient.loadObject(null, {
+    key: { target: "spikeforest_website", name: "studies" }
+  });
+  if (!obj) {
+    console.log("Problem loading studies object.");
+    return;
+  }
+  return obj;
+}
+
+export async function getSorters() {
+  let obj = await kbclient.loadObject(null, {
+    key: { target: "spikeforest_website", name: "sorters" }
+  });
+  if (!obj) {
+    console.log("Problem loading sorters object.");
+    return;
+  }
+  return obj;
+}
+
+export async function getTrueUnits() {
+  let obj = await kbclient.loadObject(null, {
+    key: { target: "spikeforest_website", name: "true_units" }
+  });
+  if (!obj) {
+    console.log("Problem loading true units object.");
+    return;
+  }
+  return obj;
+}
+
+export function flattenUnits(trueUnits, sorters) {
+  const sorterKeys = sorters.map(sorter => sorter.name);
+  // TODO: turn ids and other results into arrays to represent the group.
+  let newUnits = [];
+  trueUnits.forEach(unit => {
+    for (const key of sorterKeys) {
+      if (unit.sorting_results[key]) {
+        let floatie = [parseFloat(unit.sorting_results[key].Accuracy)];
+        let sorterObj = {
+          firing_rate: unit.firing_rate,
+          num_events: unit.num_events,
+          peak_channel: unit.peak_channel,
+          recording: unit.recording,
+          snr: unit.snr,
+          study: unit.study,
+          unit_id: unit.unit_id,
+          sorter: key,
+          sorting_results: unit.sorting_results[key],
+          accuracies: floatie
+        };
+        newUnits.push(sorterObj);
+      } else {
+        let blankSorterObj = {
+          firing_rate: unit.firing_rate,
+          num_events: unit.num_events,
+          peak_channel: unit.peak_channel,
+          recording: unit.recording,
+          snr: unit.snr,
+          study: unit.study,
+          unit_id: unit.unit_id,
+          sorter: key,
+          sorting_results: {
+            num_matches: 0,
+            Accuracy: "0",
+            best_unit: 0,
+            matched_unit: 0,
+            unit_id: 0,
+            f_n: "0",
+            f_p: "0"
+          },
+          accuracies: [0]
+        };
+        newUnits.push(blankSorterObj);
+      }
+    }
+  });
+  return newUnits;
+}
+
+export function groupUnitsWithAccuracy(allUnits) {
+  let groupedUnits = Object.values(
+    allUnits.reduce(function(r, e) {
+      let key = e.study + "|" + e.sorter;
+      if (!r[key]) {
+        r[key] = e;
+      } else {
+        let floatie = parseFloat(e.sorting_results.Accuracy);
+        r[key].accuracies.push(floatie);
+      }
+      return r;
+    }, {})
+  );
+
+  return groupedUnits;
+}
+
+/* Prior data handling functions
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 const batchArr = [
   "ms4_magland_synth_dev3",
   "irc_magland_synth_dev3",
   "sc_magland_synth_dev3"
 ];
-
-// TODO: Do I need this?
-export async function getStudiesProcessed() {
-  let obj = await kbclient.loadObject(null, {
-    key: { name: "spikeforest_studies_processed" }
-  });
-  if (!obj) {
-    console.log("Problem loading spikeforest_studies_processed object.");
-    return;
-  }
-  return obj;
-}
-
-export async function getRecordingsSummary() {
-  let obj = await kbclient.loadObject(null, {
-    key: { batch_name: "summarize_recordings", name: "job_results" }
-  });
-  if (!obj) {
-    console.log("Problem loading summarize_recordings object.");
-    return;
-  }
-  return obj;
-}
 
 export async function getANewBatchResult(batch) {
   let result = await kbclient.loadObject(null, {

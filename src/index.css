@@ -292,6 +292,12 @@ Use containers when you need a content area that has standard maximum width and 
   margin-bottom: 7.2rem;
 }
 
+.container__heatmap--row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
 /* Lists
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 ul {
@@ -556,13 +562,13 @@ li {
 
 /* Heatmap
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-.heatmap__container {
+.heatmap__col {
   height: auto;
   padding-bottom: 150px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .heatmap-label {
@@ -601,4 +607,47 @@ text.mono {
   font-size: 9pt;
   font-family: var(--sans);
   color: var(--off-black);
+}
+
+.heatmap__legend {
+}
+
+/* Legend
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.legend__container {
+  /* add */
+}
+.legend__title {
+  font-family: var(--serif);
+}
+
+.legend__copy {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.2rem;
+  line-height: 2.9rem;
+  text-align: left;
+}
+
+/* Unit Detail
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.unitdetail {
+  text-align: right;
+}
+.unitdetail__title {
+  font-family: var(--serif);
+}
+
+.unitdetail__copy {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.2rem;
+  line-height: 2.9rem;
+  text-align: left;
+}
+
+.unitdetail__list {
+  font-size: 1.2rem;
+  font-family: var(--serif);
+  text-align: right;
 }

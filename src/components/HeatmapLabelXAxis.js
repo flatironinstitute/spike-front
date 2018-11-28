@@ -14,15 +14,12 @@ class HeatmapLabelXAxis extends Component {
   getTranslationX() {
     // TODO: make base responsive/inherited
     const base = 226;
-    const cell = this.props.x / 1.5;
-    const elem = document.getElementById(this.props.label);
-    let textLength = elem.clientWidth / 2;
+    const cell = (this.props.x / 3) * -1;
     this.setState({
-      translateX: base + cell + textLength
+      translateX: base + cell
     });
   }
   render() {
-    console.log(this.state.translateX);
     return (
       <g className="heatmap__label">
         <text
@@ -30,7 +27,7 @@ class HeatmapLabelXAxis extends Component {
           style={{
             transform: `translate(${this.state.translateX}px, ${
               this.props.translateY
-            }px)`
+            }px) rotate(-45deg)`
           }}
           textAnchor="end"
           x={this.props.x}

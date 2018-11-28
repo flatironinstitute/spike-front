@@ -9,18 +9,20 @@ class HeatmapContainer extends Component {
     this.state = {
       builtData: []
     };
-    // TODO: Make margin and overall width responsive
+    // TODO: Make margin and overall height / width responsive
     this.margin = { top: 50, right: 0, bottom: 100, left: 226 };
-    this.width = 1024;
-    this.height = 830 + this.margin.top + this.margin.bottom;
+    this.width = 440;
+    this.height = 400 + this.margin.top + this.margin.bottom;
   }
 
   componentDidMount() {
-    this.buildData().then(data => {
-      this.setState({
-        builtData: data
+    if (this.props.results.length) {
+      this.buildData().then(data => {
+        this.setState({
+          builtData: data
+        });
       });
-    });
+    }
   }
 
   async buildData() {
@@ -55,6 +57,7 @@ class HeatmapContainer extends Component {
             margin={this.margin}
             width={this.width}
             height={this.height}
+            allUnits={this.props.allUnits}
           />
         )}
       </div>

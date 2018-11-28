@@ -21,15 +21,14 @@ class Heatmap extends Component {
         "#081d58"
       ]
     };
-    this.legendElementWidth = this.props.gridSize * 0.5;
   }
 
   componentDidMount() {
     const svg = d3.select("#heatmap-svg");
-    this.buildGrid("#react-d3-heatMap", svg, this.props.builtData);
+    this.buildGrid(svg, this.props.builtData);
   }
 
-  buildGrid(id, svg, builtData) {
+  buildGrid(svg, builtData) {
     var colorScale = d3
       .scaleQuantile()
       .domain([
@@ -102,42 +101,77 @@ class Heatmap extends Component {
   }
 
   getTranslationY(index) {
-    const halfGrid = this.props.gridSize / 1.5;
+    const halfGrid = this.props.gridSize * 1.8;
     const copyHeight = 19 * index + 9;
     const translation = this.props.gridSize * index + halfGrid + copyHeight;
     return translation * -1;
   }
 
   render() {
-    const toTop = this.props.height + 170;
+    const toTop = this.props.height + 300;
     return (
-      <div className="heatmap__container" id="react-d3-heatMap">
-        <g className="heatmap">
-          <svg id="heatmap-svg" />
-          {this.props.studies.map((study, i) => (
-            <HeatmapLabelYAxis
-              key={i * this.props.gridSize}
-              x={0}
-              y={i * this.props.gridSize}
-              label={study}
-              translateY={this.getTranslationY(i)}
-              translateX={-6}
-              id="heatmap-label__study"
-            />
-          ))}
-          {this.props.sorters.map((sorter, i) => (
-            <HeatmapLabelXAxis
-              key={i * this.props.gridSize}
-              x={i * this.props.gridSize}
-              y={0}
-              label={sorter}
-              index={i}
-              translateY={toTop * -1}
-              id="heatmap-label__sorter"
-            />
-          ))}
-          <Legend colors={this.state.colors} width={this.props.width} />
-        </g>
+      <div className="container container__heatmap--row">
+        <div className="heatmap__legend col--2">
+          <Legend
+            gridSize={this.props.gridSize}
+            colors={this.state.colors}
+            builtData={this.props.builtData}
+            width={this.props.width}
+            height={this.props.height}
+          />
+        </div>
+        <div className="heatmap__col col--6">
+          <g className="heatmap">
+            <svg id="heatmap-svg" />
+            {this.props.studies.map((study, i) => (
+              <HeatmapLabelYAxis
+                key={i * this.props.gridSize + "Y"}
+                x={0}
+                y={i * this.props.gridSize}
+                label={study}
+                translateY={this.getTranslationY(i)}
+                translateX={20}
+                id="heatmap-label__study"
+              />
+            ))}
+            {this.props.sorters.map((sorter, i) => (
+              <HeatmapLabelXAxis
+                key={i * this.props.gridSize + "X"}
+                x={i * this.props.gridSize}
+                y={0}
+                label={sorter}
+                index={i}
+                translateY={toTop * -1}
+                id="heatmap-label__sorter"
+              />
+            ))}
+          </g>
+        </div>
+        {/* TODO: Refactor into a separate component */}
+        <div className="unitdetail col--4">
+          <h4 className="unitdetail__title">Detail View TK</h4>
+          <div className="unitdetail__copy">
+            <ul className="unitdetail__list">
+              <li>firing_rate: 2.33</li>
+              <li>in_range: 80</li>
+              <li>num_events: 1398</li>
+              <li>peak_channel: 0</li>
+              <li>recording: "001_synth"</li>
+              <li>snr: 25.396783859187707</li>
+              <li>sorter: "MountainSort4-thr3"</li>
+              <li>study: "magland_synth_noise10_K10_C4"</li>
+            </ul>
+            <p>
+              Boggarts lavender robes, Hermione Granger Fantastic Beasts and
+              Where to Find Them. Bee in your bonnet Hand of Glory elder wand,
+              spectacles House Cup Bertie Bott’s Every Flavor Beans Impedimenta.
+              Stunning spells tap-dancing spider Slytherin’s Heir mewing kittens
+              Remus Lupin. Palominos scarlet train black robes, Metamorphimagus
+              Niffler dead easy second bedroom. Padma and Parvati Sorting Hat
+              Minister of Magic blue turban remember my last.
+            </p>
+          </div>
+        </div>
       </div>
     );
   }
