@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
-import LegendBox from "./LegendBox";
 
 class Legend extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.updateD3(this.props);
   }
 
@@ -12,24 +11,69 @@ class Legend extends Component {
   }
 
   updateD3(props) {
-    this.width = d3.scaleBand().domain(this.props.colors.length);
-    this.width.range([0, this.props.width]);
+    const svg = d3.select("#legend-svg");
+    const legendElementWidth = this.props.gridSize * 0.5;
+    const height = 100;
+    const colors = this.props.colors;
+
+    var colorScale = d3
+      .scaleQuantile()
+      .domain([
+        d3.min(this.props.builtData, function(d) {
+          return d.in_range;
+        }),
+        d3.max(this.props.builtData, function(d) {
+          return d.in_range;
+        })
+      ])
+      .range(colors);
+
+    svg.attr("width", this.props.width).attr("height", this.props.height);
+
+    var legend = svg
+      .selectAll(".legend")
+      .data([0].concat(colorScale.quantiles()), function(d) {
+        return d;
+      })
+      .enter()
+      .append("g")
+      .attr("class", "legend");
+
+    /*make legend boxes */
+    legend
+      .append("rect")
+      .attr("y", function(d, i) {
+        return legendElementWidth * i;
+      })
+      .attr("x", 0)
+      .attr("width", legendElementWidth)
+      .attr("height", this.props.gridSize / 2)
+      .style("fill", function(d, i) {
+        return colors[i];
+      });
+
+    /*make legend labels*/
+    legend
+      .append("text")
+      .attr("class", "mono")
+      .text(function(d) {
+        return "≥ " + Math.round(d);
+      })
+      .attr("y", function(d, i) {
+        return legendElementWidth * i + 19;
+      })
+      .attr("x", this.props.gridSize / 1.5);
   }
 
   render() {
-    // console.log(this.props.colors, this.props.width, "⛪");
     return (
-      <g>
-        {d3.range(20).map(i => (
-          <LegendBox
-            color={this.props.colors[i]}
-            width={this.width.step()}
-            x={this.width(i)}
-            text={"test"}
-            y="0"
-          />
-        ))}
-      </g>
+      <div className="legend__container">
+        <h4 className="legend__title">Legend</h4>
+        <div className="legend__copy">
+          <p>Alohamora wand elf parchment, Wingardium Leviosa hippogriff.</p>
+        </div>
+        <svg id="legend-svg" />
+      </div>
     );
   }
 }

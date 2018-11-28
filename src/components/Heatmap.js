@@ -21,15 +21,14 @@ class Heatmap extends Component {
         "#081d58"
       ]
     };
-    this.legendElementWidth = this.props.gridSize * 0.5;
   }
 
   componentDidMount() {
     const svg = d3.select("#heatmap-svg");
-    this.buildGrid("#react-d3-heatMap", svg, this.props.builtData);
+    this.buildGrid(svg, this.props.builtData);
   }
 
-  buildGrid(id, svg, builtData) {
+  buildGrid(svg, builtData) {
     var colorScale = d3
       .scaleQuantile()
       .domain([
@@ -111,33 +110,43 @@ class Heatmap extends Component {
   render() {
     const toTop = this.props.height + 300;
     return (
-      <div className="heatmap__container" id="react-d3-heatMap">
-        <g className="heatmap">
-          <svg id="heatmap-svg" />
-          {this.props.studies.map((study, i) => (
-            <HeatmapLabelYAxis
-              key={i * this.props.gridSize}
-              x={0}
-              y={i * this.props.gridSize}
-              label={study}
-              translateY={this.getTranslationY(i)}
-              translateX={-6}
-              id="heatmap-label__study"
-            />
-          ))}
-          {this.props.sorters.map((sorter, i) => (
-            <HeatmapLabelXAxis
-              key={i * this.props.gridSize}
-              x={i * this.props.gridSize}
-              y={0}
-              label={sorter}
-              index={i}
-              translateY={toTop * -1}
-              id="heatmap-label__sorter"
-            />
-          ))}
-          <Legend colors={this.state.colors} width={this.props.width} />
-        </g>
+      <div className="container container__heatmap--row">
+        <div className="heatmap__legend col--6">
+          <Legend
+            gridSize={this.props.gridSize}
+            colors={this.state.colors}
+            builtData={this.props.builtData}
+            width={this.props.width}
+            height={this.props.height}
+          />
+        </div>
+        <div className="heatmap__col col--6">
+          <g className="heatmap">
+            <svg id="heatmap-svg" />
+            {this.props.studies.map((study, i) => (
+              <HeatmapLabelYAxis
+                key={i * this.props.gridSize}
+                x={0}
+                y={i * this.props.gridSize}
+                label={study}
+                translateY={this.getTranslationY(i)}
+                translateX={-6}
+                id="heatmap-label__study"
+              />
+            ))}
+            {this.props.sorters.map((sorter, i) => (
+              <HeatmapLabelXAxis
+                key={i * this.props.gridSize}
+                x={i * this.props.gridSize}
+                y={0}
+                label={sorter}
+                index={i}
+                translateY={toTop * -1}
+                id="heatmap-label__sorter"
+              />
+            ))}
+          </g>
+        </div>
       </div>
     );
   }

@@ -11,7 +11,7 @@ class HeatmapContainer extends Component {
     };
     // TODO: Make margin and overall height / width responsive
     this.margin = { top: 50, right: 0, bottom: 100, left: 226 };
-    this.width = 1024;
+    this.width = 440;
     this.height = 400 + this.margin.top + this.margin.bottom;
   }
 
