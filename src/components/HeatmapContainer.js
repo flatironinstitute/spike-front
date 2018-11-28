@@ -5,6 +5,7 @@ import Preloader from "./Preloader";
 import Legend from "./Legend";
 import Slider from "react-rangeslider";
 import "react-rangeslider/lib/index.css";
+import { generateGradient } from "../dataHandlers";
 
 class HeatmapContainer extends Component {
   constructor(props) {
@@ -17,20 +18,11 @@ class HeatmapContainer extends Component {
     this.margin = { top: 50, right: 0, bottom: 100, left: 226 };
     this.width = 440;
     this.height = 400 + this.margin.top + this.margin.bottom;
-    this.colors = [
-      "#ffffd9",
-      "#edf8b1",
-      "#c7e9b4",
-      "#7fcdbb",
-      "#41b6c4",
-      "#1d91c0",
-      "#225ea8",
-      "#253494",
-      "#081d58"
-    ];
+    this.colors = [];
   }
 
   componentDidMount() {
+    this.generateColors();
     if (this.props.allUnits.length) {
       this.filterAccuracy();
     }
@@ -41,6 +33,11 @@ class HeatmapContainer extends Component {
       console.log("🏤 Component did update");
       this.filterAccuracy();
     }
+  }
+
+  generateColors() {
+    let colors = generateGradient("#ffffff", "#384ca2", 9);
+    this.colors = colors;
   }
 
   filterAccuracy() {
@@ -74,18 +71,10 @@ class HeatmapContainer extends Component {
     });
   }
 
-  handleAccuracyChangeStart = () => {
-    console.log("🏰 Change event started");
-  };
-
   handleAccuracyChange = value => {
     this.setState({
       accuracy: value
     });
-  };
-
-  handleChangeComplete = () => {
-    console.log("📪 Change event completed");
   };
 
   render() {
@@ -93,6 +82,7 @@ class HeatmapContainer extends Component {
     // TODO: Make grid size responsive.
     let gridSize = Math.floor(this.height / this.props.studies.length);
     let value = this.state.accuracy;
+    const formatPc = p => p * 100 + "%";
     return (
       <div>
         {loading ? (
@@ -107,15 +97,22 @@ class HeatmapContainer extends Component {
                 width={this.width}
                 height={this.height}
               />
-              <Slider
-                min={0}
-                max={1}
-                value={value}
-                step={0.01}
-                onChangeStart={this.handleAccuracyChangeStart}
-                onChange={this.handleAccuracyChange}
-                onChangeComplete={this.handleAccuracyChangeComplete}
-              />
+              <div className="slider__container">
+                <h4 className="slider__title" />
+                <div className="slider__vertical">
+                  <Slider
+                    min={0}
+                    max={1}
+                    value={value}
+                    step={0.05}
+                    orientation="vertical"
+                    onChange={this.handleAccuracyChange}
+                  />
+                </div>
+                <div className="slider__copy">
+                  <p>Mimimum accuracy: {Math.round(value * 100) / 100}</p>
+                </div>
+              </div>
             </div>
             <div className="heatmap__col col--6">
               <Heatmap

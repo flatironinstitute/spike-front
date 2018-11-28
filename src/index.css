@@ -615,13 +615,42 @@ text.mono {
 /* Legend
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .legend__container {
-  /* add */
+  max-height: 500px;
 }
 .legend__title {
   font-family: var(--serif);
 }
 
 .legend__copy {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  text-align: left;
+  margin-bottom: 3rem;
+}
+
+/* Range Slider
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.slider__container {
+}
+
+.slider__title {
+  font-family: var(--serif);
+}
+
+.slider__vertical {
+}
+
+.rangeslider__handle {
+  border-radius: 45px !important;
+}
+
+.rangeslider-vertical .rangeslider__fill {
+  background-color: #337ab7;
+}
+
+.slider__copy {
   margin-left: auto;
   margin-right: auto;
   font-size: 1.2rem;
