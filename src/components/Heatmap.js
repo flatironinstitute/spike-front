@@ -95,13 +95,13 @@ class Heatmap extends Component {
 
   getTranslationY(index) {
     const halfGrid = this.props.gridSize * 1.8;
-    const copyHeight = 19 * index + 9;
+    const copyHeight = 19 * index + 20;
     const translation = this.props.gridSize * index + halfGrid + copyHeight;
     return translation * -1;
   }
 
   render() {
-    const toTop = this.props.height + 300;
+    const toTop = this.props.height + 350;
     return (
       <div>
         <g className="heatmap">
@@ -109,11 +109,12 @@ class Heatmap extends Component {
           {this.props.studies.map((study, i) => (
             <HeatmapLabelYAxis
               key={i * this.props.gridSize + "Y"}
-              x={0}
+              x={this.props.margin.left}
               y={i * this.props.gridSize}
               label={study}
+              sorters={this.props.sorters.length}
               translateY={this.getTranslationY(i)}
-              translateX={20}
+              translateX={120}
               id="heatmap-label__study"
             />
           ))}

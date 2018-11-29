@@ -110,7 +110,7 @@ export function groupUnitsWithAccuracy(allUnits) {
       return r;
     }, {})
   );
-
+  console.log("👖", groupedUnits);
   return groupedUnits;
 }
 
@@ -130,12 +130,10 @@ export function generateGradient(startColor, endColor, steps) {
   const diffR = end["R"] - start["R"];
   const diffG = end["G"] - start["G"];
   const diffB = end["B"] - start["B"];
-
   let stepsHex = [];
   let stepsR = [];
   let stepsG = [];
   let stepsB = [];
-
   for (let i = 0; i <= steps; i++) {
     stepsR[i] = start["R"] + (diffR / steps) * i;
     stepsG[i] = start["G"] + (diffG / steps) * i;
@@ -148,5 +146,4 @@ export function generateGradient(startColor, endColor, steps) {
       "" +
       Math.round(stepsB[i]).toString(16);
   }
-  return stepsHex;
 }

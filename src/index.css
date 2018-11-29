@@ -568,7 +568,7 @@ li {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .heatmap-label {
@@ -576,6 +576,7 @@ li {
   font-size: 9pt;
   font-family: var(--sans);
   color: var(--off-black);
+  text-align: right;
 }
 
 .heatmap-label__study {
@@ -646,8 +647,12 @@ text.mono {
   border-radius: 45px !important;
 }
 
+.rangeslider-vertical {
+  margin: 2rem auto 2rem 0 !important;
+}
+
 .rangeslider-vertical .rangeslider__fill {
-  background-color: #337ab7 !important;
+  background-color: #384ca2 !important;
 }
 
 .slider__copy {

@@ -15,7 +15,7 @@ class HeatmapContainer extends Component {
       accuracy: 0.8
     };
     // TODO: Make margin and overall height / width responsive
-    this.margin = { top: 50, right: 0, bottom: 100, left: 226 };
+    this.margin = { top: 150, right: 0, bottom: 100, left: 326 };
     this.width = 440;
     this.height = 400 + this.margin.top + this.margin.bottom;
     this.colors = [];
@@ -87,15 +87,8 @@ class HeatmapContainer extends Component {
         ) : (
           <div className="container container__heatmap--row">
             <div className="heatmap__legend col--2">
-              <Legend
-                gridSize={gridSize}
-                colors={this.colors}
-                builtData={this.state.builtData}
-                width={this.width}
-                height={this.height}
-              />
               <div className="slider__container">
-                <h4 className="slider__title">.</h4>
+                <h4 className="slider__title">Legend/Title?</h4>
                 <div className="slider__vertical">
                   <Slider
                     min={0}
@@ -110,8 +103,15 @@ class HeatmapContainer extends Component {
                   <p>Mimimum accuracy: {Math.round(value * 100) / 100}</p>
                 </div>
               </div>
+              <Legend
+                gridSize={gridSize}
+                colors={this.colors}
+                builtData={this.state.builtData}
+                width={this.width}
+                height={this.height}
+              />
             </div>
-            <div className="heatmap__col col--6">
+            <div className="heatmap__col col--7">
               <Heatmap
                 colors={this.colors}
                 builtData={this.state.builtData}
@@ -125,7 +125,7 @@ class HeatmapContainer extends Component {
               />
             </div>
             {/* TODO: Refactor into a separate component */}
-            <div className="unitdetail col--4">
+            <div className="unitdetail col--3">
               <h4 className="unitdetail__title">Detail View TK</h4>
               <div className="unitdetail__copy">
                 <ul className="unitdetail__list">
