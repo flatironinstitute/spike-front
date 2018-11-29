@@ -47,7 +47,8 @@ class Home extends Component {
   }
 
   render() {
-    let loading = isEmpty(this.state.unitsByStudyAndSorter);
+    let loading =
+      isEmpty(this.state.unitsByStudyAndSorter) || isEmpty(this.props.studies);
     return (
       <div>
         {this.state.errors.length ? <Error errors={this.state.errors} /> : null}

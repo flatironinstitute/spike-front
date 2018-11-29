@@ -110,7 +110,6 @@ export function groupUnitsWithAccuracy(allUnits) {
       return r;
     }, {})
   );
-  console.log("👖", groupedUnits);
   return groupedUnits;
 }
 
@@ -146,4 +145,5 @@ export function generateGradient(startColor, endColor, steps) {
       "" +
       Math.round(stepsB[i]).toString(16);
   }
+  return stepsHex;
 }

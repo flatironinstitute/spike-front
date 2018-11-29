@@ -16,7 +16,6 @@ class Heatmap extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.builtData !== prevProps.builtData) {
-      console.log("🏤 Component did update in heatmap");
       this.buildGrid(this.svg, this.props.builtData);
     }
   }

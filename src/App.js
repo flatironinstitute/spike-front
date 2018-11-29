@@ -40,6 +40,7 @@ class App extends Component {
   async fetchStudies() {
     // TODO: GET COUNT OF RECORDINGS IN A STUDY
     const studies = await getStudies();
+    console.log("paper", studies);
     if (studies.studies.length && isEmpty(this.state.studies)) {
       this.setState(studies: studies.studies);
     }
@@ -49,7 +50,6 @@ class App extends Component {
   getStudySets() {
     const uniques = [...new Set(this.state.studies.map(study => study.study_set))];
     const sets = [];
-    // TODO: Add more properties of the study sets
     uniques.forEach(set => {
       sets.push({name: set});
     })
@@ -64,7 +64,6 @@ class App extends Component {
   }
 
   async fetchUnits() {
-    // TODO: Format into { study: "", sorter: "", accuracies: [], in_range: 0 }
     const units = await getTrueUnits();
     if (units.true_units.length && isEmpty(this.state.units)) {
       this.setState({units: units.true_units});

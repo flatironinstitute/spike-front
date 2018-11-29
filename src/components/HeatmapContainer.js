@@ -14,7 +14,6 @@ class HeatmapContainer extends Component {
       builtData: [],
       accuracy: 0.8
     };
-    // TODO: Make margin and overall height / width responsive
     this.margin = { top: 150, right: 0, bottom: 100, left: 326 };
     this.width = 440;
     this.height = 400 + this.margin.top + this.margin.bottom;
@@ -36,6 +35,7 @@ class HeatmapContainer extends Component {
 
   generateColors() {
     let colors = generateGradient("#ffffff", "#384ca2", 9);
+    console.log("🚛", colors);
     this.colors = colors;
   }
 
