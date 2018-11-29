@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Heatmap from "./Heatmap";
+import HeatmapViz from "./HeatmapViz";
 import { isEmpty } from "../utils";
 import Preloader from "./Preloader";
 import Legend from "./Legend";
@@ -84,69 +85,74 @@ class HeatmapContainer extends Component {
         {loading ? (
           <Preloader />
         ) : (
-          <div className="container container__heatmap--row">
-            <div className="heatmap__legend col--2">
-              <div className="slider__container">
-                <h4 className="slider__title">Legend/Title?</h4>
-                <div className="slider__vertical">
-                  <Slider
-                    min={0}
-                    max={1}
-                    value={value}
-                    step={0.05}
-                    orientation="vertical"
-                    onChange={this.handleAccuracyChange}
-                  />
+          <div>
+            <div className="container container__heatmap--row">
+              <HeatmapViz />
+            </div>
+            <div className="container container__heatmap--row">
+              <div className="heatmap__legend col--2">
+                <div className="slider__container">
+                  <h4 className="slider__title">Legend/Title?</h4>
+                  <div className="slider__vertical">
+                    <Slider
+                      min={0}
+                      max={1}
+                      value={value}
+                      step={0.05}
+                      orientation="vertical"
+                      onChange={this.handleAccuracyChange}
+                    />
+                  </div>
+                  <div className="slider__copy">
+                    <p>Mimimum accuracy: {Math.round(value * 100) / 100}</p>
+                  </div>
                 </div>
-                <div className="slider__copy">
-                  <p>Mimimum accuracy: {Math.round(value * 100) / 100}</p>
-                </div>
+                <Legend
+                  gridSize={gridSize}
+                  colors={this.colors}
+                  builtData={this.state.builtData}
+                  width={this.width}
+                  height={this.height}
+                />
               </div>
-              <Legend
-                gridSize={gridSize}
-                colors={this.colors}
-                builtData={this.state.builtData}
-                width={this.width}
-                height={this.height}
-              />
-            </div>
-            <div className="heatmap__col col--7">
-              <Heatmap
-                colors={this.colors}
-                builtData={this.state.builtData}
-                sorters={this.props.sorters}
-                studies={this.props.studies}
-                gridSize={gridSize}
-                margin={this.margin}
-                width={this.width}
-                height={this.height}
-                allUnits={this.props.allUnits}
-              />
-            </div>
-            {/* TODO: Refactor into a separate component */}
-            <div className="unitdetail col--3">
-              <h4 className="unitdetail__title">Detail View TK</h4>
-              <div className="unitdetail__copy">
-                <ul className="unitdetail__list">
-                  <li>firing_rate: 2.33</li>
-                  <li>in_range: 80</li>
-                  <li>num_events: 1398</li>
-                  <li>peak_channel: 0</li>
-                  <li>recording: "001_synth"</li>
-                  <li>snr: 25.396783859187707</li>
-                  <li>sorter: "MountainSort4-thr3"</li>
-                  <li>study: "magland_synth_noise10_K10_C4"</li>
-                </ul>
-                <p>
-                  Boggarts lavender robes, Hermione Granger Fantastic Beasts and
-                  Where to Find Them. Bee in your bonnet Hand of Glory elder
-                  wand, spectacles House Cup Bertie Bott’s Every Flavor Beans
-                  Impedimenta. Stunning spells tap-dancing spider Slytherin’s
-                  Heir mewing kittens Remus Lupin. Palominos scarlet train black
-                  robes, Metamorphimagus Niffler dead easy second bedroom. Padma
-                  and Parvati Sorting Hat Minister of Magic blue turban remember
-                  my last.
-                </p>
+              <div className="heatmap__col col--7">
+                <Heatmap
+                  colors={this.colors}
+                  builtData={this.state.builtData}
+                  sorters={this.props.sorters}
+                  studies={this.props.studies}
+                  gridSize={gridSize}
+                  margin={this.margin}
+                  width={this.width}
+                  height={this.height}
+                  allUnits={this.props.allUnits}
+                />
+              </div>
+              {/* TODO: Refactor into a separate component */}
+              <div className="unitdetail col--3">
+                <h4 className="unitdetail__title">Detail View TK</h4>
+                <div className="unitdetail__copy">
+                  <ul className="unitdetail__list">
+                    <li>firing_rate: 2.33</li>
+                    <li>in_range: 80</li>
+                    <li>num_events: 1398</li>
+                    <li>peak_channel: 0</li>
+                    <li>recording: "001_synth"</li>
+                    <li>snr: 25.396783859187707</li>
+                    <li>sorter: "MountainSort4-thr3"</li>
+                    <li>study: "magland_synth_noise10_K10_C4"</li>
+                  </ul>
+                  <p>
+                    Boggarts lavender robes, Hermione Granger Fantastic Beasts
+                    and Where to Find Them. Bee in your bonnet Hand of Glory
+                    elder wand, spectacles House Cup Bertie Bott’s Every Flavor
+                    Beans Impedimenta. Stunning spells tap-dancing spider
+                    Slytherin’s Heir mewing kittens Remus Lupin. Palominos
+                    scarlet train black robes, Metamorphimagus Niffler dead easy
+                    second bedroom. Padma and Parvati Sorting Hat Minister of
+                    Magic blue turban remember my last.
+                  </p>
+                </div>
               </div>
             </div>
           </div>

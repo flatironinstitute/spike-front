@@ -17,7 +17,6 @@ class Heatmap extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.builtData !== prevProps.builtData) {
       this.svg.selectAll("*").remove();
-      console.log("⚽ removed", this.svg);
       this.buildGrid(this.svg, this.props.builtData);
     }
   }
@@ -88,9 +87,7 @@ class Heatmap extends Component {
       });
 
     heatMap.append("title").text(function(d) {
-      return (
-        "The number of units below the accuracy threshhold is " + d.in_range
-      );
+      return ` Range:${d.in_range} Study:${d.study} Sorter:${d.sorter}`;
     });
   }
 

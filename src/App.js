@@ -38,9 +38,7 @@ class App extends Component {
   }
 
   async fetchStudies() {
-    // TODO: GET COUNT OF RECORDINGS IN A STUDY
     const studies = await getStudies();
-    console.log("paper", studies);
     if (studies.studies.length && isEmpty(this.state.studies)) {
       this.setState(studies: studies.studies);
     }
