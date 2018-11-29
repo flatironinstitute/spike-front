@@ -12,10 +12,6 @@ class Recordings extends Component {
     };
   }
 
-  componentDidMount() {
-    console.log(this.props.studySets);
-  }
-
   render() {
     const setColumns = [
       {

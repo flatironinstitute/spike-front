@@ -568,7 +568,7 @@ li {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .heatmap-label {
@@ -576,6 +576,7 @@ li {
   font-size: 9pt;
   font-family: var(--sans);
   color: var(--off-black);
+  text-align: right;
 }
 
 .heatmap-label__study {
@@ -615,13 +616,46 @@ text.mono {
 /* Legend
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .legend__container {
-  /* add */
+  max-height: 500px;
 }
 .legend__title {
   font-family: var(--serif);
 }
 
 .legend__copy {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  text-align: left;
+  margin-bottom: 3rem;
+}
+
+/* Range Slider
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.slider__container {
+}
+
+.slider__title {
+  font-family: var(--serif);
+}
+
+.slider__vertical {
+}
+
+.rangeslider__handle {
+  border-radius: 45px !important;
+}
+
+.rangeslider-vertical {
+  margin: 2rem auto 2rem 0 !important;
+}
+
+.rangeslider-vertical .rangeslider__fill {
+  background-color: #384ca2 !important;
+}
+
+.slider__copy {
   margin-left: auto;
   margin-right: auto;
   font-size: 1.2rem;

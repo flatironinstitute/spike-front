@@ -12,6 +12,7 @@ class Legend extends Component {
 
   updateD3(props) {
     const svg = d3.select("#legend-svg");
+    svg.selectAll("*").remove();
     const legendElementWidth = this.props.gridSize * 0.5;
     const colors = this.props.colors;
 
@@ -67,7 +68,6 @@ class Legend extends Component {
   render() {
     return (
       <div className="legend__container">
-        <h4 className="legend__title">Legend/Title?</h4>
         <div className="legend__copy">
           <p>Number of units meeting the minimum threshold of accuracy</p>
         </div>

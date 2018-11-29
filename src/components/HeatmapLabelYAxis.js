@@ -11,7 +11,7 @@ class HeatmapLabelYAxis extends Component {
               this.props.translateY
             }px)`
           }}
-          textAnchor="end"
+          textAnchor="start"
           x={this.props.x}
           y={this.props.y}
           className={this.props.id}

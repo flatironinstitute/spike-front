@@ -15,8 +15,6 @@ class Home extends Component {
     this.state = {
       allUnits: {},
       unitsByStudyAndSorter: {},
-      filteredUnits: [],
-      accuracy: 0.8,
       errors: []
     };
   }
@@ -27,30 +25,12 @@ class Home extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.state.unitsByStudyAndSorter !== prevState.unitsByStudyAndSorter) {
-      this.filterAccuracy();
-    }
-  }
-
   async sortUnits(trueUnits, sorters) {
     let flatUnits = await flattenUnits(trueUnits, sorters);
     let unitsByStudyAndSorter = await groupUnitsWithAccuracy(flatUnits);
     this.setState({
       allUnits: flatUnits,
       unitsByStudyAndSorter: unitsByStudyAndSorter
-    });
-  }
-
-  // TODO: Separate filter accuracy in the lifecycle to allow for re-render
-  filterAccuracy() {
-    let filtered = this.state.unitsByStudyAndSorter.map(result => {
-      let above = result.accuracies.filter(accu => accu >= this.state.accuracy);
-      result.in_range = above.length;
-      return result;
-    });
-    this.setState({
-      filteredUnits: filtered
     });
   }
 
@@ -67,7 +47,8 @@ class Home extends Component {
   }
 
   render() {
-    let loading = isEmpty(this.state.filteredUnits);
+    let loading =
+      isEmpty(this.state.unitsByStudyAndSorter) || isEmpty(this.props.studies);
     return (
       <div>
         {this.state.errors.length ? <Error errors={this.state.errors} /> : null}
@@ -78,10 +59,10 @@ class Home extends Component {
           ) : (
             <div className="container__heatmap">
               <HeatmapContainer
-                results={this.state.filteredUnits}
                 studies={this.getStudies()}
                 sorters={this.getSorters()}
                 allUnits={this.state.allUnits}
+                results={this.state.unitsByStudyAndSorter}
               />
             </div>
           )}
