@@ -16,6 +16,8 @@ class Heatmap extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.builtData !== prevProps.builtData) {
+      this.svg.selectAll("*").remove();
+      console.log("⚽ removed", this.svg);
       this.buildGrid(this.svg, this.props.builtData);
     }
   }
