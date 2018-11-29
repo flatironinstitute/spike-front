@@ -13,7 +13,7 @@ class HeatmapLabelXAxis extends Component {
   }
   getTranslationX() {
     // TODO: make base responsive/inherited
-    const base = 226;
+    const base = 330;
     const cell = (this.props.x / 2) * -1;
     this.setState({
       translateX: base + cell

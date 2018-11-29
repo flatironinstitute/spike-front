@@ -35,7 +35,6 @@ class HeatmapContainer extends Component {
 
   generateColors() {
     let colors = generateGradient("#ffffff", "#384ca2", 9);
-    console.log("🚛", colors);
     this.colors = colors;
   }
 

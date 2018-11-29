@@ -12,6 +12,7 @@ class Legend extends Component {
 
   updateD3(props) {
     const svg = d3.select("#legend-svg");
+    svg.selectAll("*").remove();
     const legendElementWidth = this.props.gridSize * 0.5;
     const colors = this.props.colors;
 
