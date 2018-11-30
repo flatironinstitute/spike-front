@@ -33,7 +33,7 @@ class App extends Component {
   async fetchRecordings() {
     const recordings = await getRecordings();
     if (recordings.recordings.length && isEmpty(this.state.recordings)) {
-      this.setState(recordings: recordings.recordings);
+      this.setState({recordings: recordings.recordings});
     }
   }
 
@@ -42,7 +42,7 @@ class App extends Component {
     const studies = await getStudies();
     console.log("paper", studies);
     if (studies.studies.length && isEmpty(this.state.studies)) {
-      this.setState(studies: studies.studies);
+      this.setState({studies: studies.studies});
     }
     this.getStudySets();
   }
