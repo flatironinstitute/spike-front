@@ -27,14 +27,14 @@ class HeatmapContainer extends Component {
     if (this.props.results.length) {
       this.filterAccuracy();
     }
-    if (this.props.unitsMap.length) {
-      this.filterAccuracyMap();
-    }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.accuracy !== prevState.accuracy) {
-      this.filterAccuracy();
+    // if (this.state.accuracy !== prevState.accuracy) {
+    //   this.filterAccuracy();
+    // }
+    if (this.props.unitsMap !== prevState.unitsMap) {
+      this.filterAccuracyMap();
     }
   }
 
@@ -59,7 +59,9 @@ class HeatmapContainer extends Component {
   }
 
   filterAccuracyMap() {
-    console.log("⚒️", this.props.unitsMap);
+    this.props.unitsMap.forEach(study => {
+      console.log("⚒️", study.keys());
+    });
   }
 
   async buildData(filtered) {

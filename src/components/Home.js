@@ -23,7 +23,7 @@ class Home extends Component {
   }
 
   async componentDidMount() {
-    if (this.props.units.length && this.props.sorters.length) {
+    if (this.props.units.length && this.props.studies.length) {
       let flatUnits = await flattenUnits(
         this.props.units,
         this.props.sorters,
@@ -63,6 +63,7 @@ class Home extends Component {
   }
 
   render() {
+    console.log("〽️", this.state.unitsMap);
     let loading =
       isEmpty(this.state.accuracyArrayUnits) || isEmpty(this.props.studies);
     return (
