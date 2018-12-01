@@ -13,6 +13,7 @@ class HeatmapContainer extends Component {
     super(props);
     this.state = {
       builtData: [],
+      mappedData: [],
       accuracy: 0.8
     };
     this.margin = { top: 150, right: 0, bottom: 100, left: 326 };
@@ -23,8 +24,11 @@ class HeatmapContainer extends Component {
   }
 
   componentDidMount() {
-    if (this.props.allUnits.length) {
+    if (this.props.results.length) {
       this.filterAccuracy();
+    }
+    if (this.props.unitsMap.length) {
+      this.filterAccuracyMap();
     }
   }
 
@@ -52,6 +56,10 @@ class HeatmapContainer extends Component {
         builtData: data
       });
     });
+  }
+
+  filterAccuracyMap() {
+    console.log("⚒️", this.props.unitsMap);
   }
 
   async buildData(filtered) {
@@ -87,7 +95,7 @@ class HeatmapContainer extends Component {
         ) : (
           <div>
             <div className="container container__heatmap--row">
-              <HeatmapViz />
+              <HeatmapViz filteredData={this.state.builtData} />
             </div>
             <div className="container container__heatmap--row">
               <div className="heatmap__legend col--2">

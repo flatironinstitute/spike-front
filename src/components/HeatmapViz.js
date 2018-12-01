@@ -5,8 +5,26 @@ import { XYPlot, XAxis, YAxis, HeatmapSeries, Hint } from "react-vis";
 class HeatmapViz extends Component {
   constructor(props) {
     super(props);
-    this.state = { hoveredNode: null };
+    this.state = { hoveredNode: null, vizData: null };
+    // TODO: make a separate one of these for every row!
   }
+
+  componentDidMount() {
+    this.buildVizData(this.props.filteredData);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.builtData !== prevProps.builtData) {
+      this.buildVizData(this.props.filteredData);
+    }
+  }
+
+  buildVizData(data) {
+    if (data) {
+      console.log("🍑", data[0]);
+    }
+  }
+
   render() {
     const data = [
       { x: 1, y: 0, color: 10, name: "a" },
@@ -26,9 +44,11 @@ class HeatmapViz extends Component {
     return (
       <div className="App">
         <XYPlot
+          xType="ordinal"
+          yType="ordinal"
           onMouseLeave={() => this.setState({ hoveredNode: null })}
-          height={300}
-          width={300}
+          height={800}
+          width={800}
         >
           <XAxis />
           <YAxis />
