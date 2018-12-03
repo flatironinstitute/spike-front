@@ -32,7 +32,7 @@ class HeatmapRow extends Component {
               width={this.dims.width}
             >
               <XAxis />
-              <YAxis left={50} />
+              <YAxis />
               <HeatmapSeries
                 colorRange={["#ffffff", "#384ca2"]}
                 data={data}

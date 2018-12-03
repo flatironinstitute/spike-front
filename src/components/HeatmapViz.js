@@ -22,7 +22,13 @@ class HeatmapViz extends Component {
   buildVizData(data) {
     if (data) {
       let vizData = data.map(study => {
-        return Object.values(study)[0];
+        let values = Object.values(study)[0];
+        return values.sort((a, b) => {
+          let textA = a.sorter.toUpperCase();
+          let textB = b.sorter.toUpperCase();
+          return textA < textB ? -1 : textA > textB ? 1 : 0;
+        });
+        // TODO: Allow for other sorting
       });
       this.setState({ vizData: vizData });
     }
