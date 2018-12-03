@@ -24,11 +24,7 @@ class Home extends Component {
 
   async componentDidMount() {
     if (this.props.units.length && this.props.studies.length) {
-      let flatUnits = await flattenUnits(
-        this.props.units,
-        this.props.sorters,
-        this.props.studies
-      );
+      let flatUnits = await flattenUnits(this.props.units, this.props.studies);
       this.setState({ flatUnits: flatUnits });
     }
   }
@@ -36,17 +32,20 @@ class Home extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.state.flatUnits !== prevState.flatUnits) {
       this.mapUnits();
-      this.groupWithAccuracy();
+      // this.groupWithAccuracy();
     }
   }
 
-  async groupWithAccuracy() {
-    let accuracyArrayUnits = await groupUnitsWithAccuracy(this.state.flatUnits);
-    this.setState({ accuracyArrayUnits: accuracyArrayUnits });
-  }
+  // async groupWithAccuracy() {
+  //   let accuracyArrayUnits = await groupUnitsWithAccuracy(this.state.flatUnits);
+  //   this.setState({ accuracyArrayUnits: accuracyArrayUnits });
+  // }
 
   async mapUnits() {
-    let unitsMap = await mapUnitsBySorterStudy(this.state.flatUnits);
+    let unitsMap = await mapUnitsBySorterStudy(
+      this.state.flatUnits,
+      this.props.sorters
+    );
     this.setState({ unitsMap: unitsMap });
   }
 
@@ -63,9 +62,7 @@ class Home extends Component {
   }
 
   render() {
-    console.log("〽️", this.state.unitsMap);
-    let loading =
-      isEmpty(this.state.accuracyArrayUnits) || isEmpty(this.props.studies);
+    let loading = isEmpty(this.state.flatUnits) || isEmpty(this.props.studies);
     return (
       <div>
         <div className="container container__body">

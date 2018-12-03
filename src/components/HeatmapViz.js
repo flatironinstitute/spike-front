@@ -6,6 +6,10 @@ class HeatmapViz extends Component {
   constructor(props) {
     super(props);
     this.state = { hoveredNode: null, vizData: null };
+    this.dims = {
+      height: 800,
+      width: 800
+    };
     // TODO: make a separate one of these for every row!
   }
 
@@ -26,6 +30,16 @@ class HeatmapViz extends Component {
   }
 
   render() {
+    const vizData = {
+      study_name: [
+        {
+          sorter: "",
+          in_range: 0,
+          accuracies: [],
+          true_units: []
+        }
+      ]
+    };
     const data = [
       { x: 1, y: 0, color: 10, name: "a" },
       { x: 1, y: 5, color: 10, name: "b" },
@@ -47,10 +61,12 @@ class HeatmapViz extends Component {
           xType="ordinal"
           yType="ordinal"
           onMouseLeave={() => this.setState({ hoveredNode: null })}
-          height={800}
-          width={800}
+          height={this.dims.height}
+          width={this.dims.width}
         >
           <XAxis />
+          <YAxis hideTicks />
+          <YAxis left={50} tickFormat={v => v * v} />
           <YAxis />
           <HeatmapSeries
             colorRange={["#ffffff", "#384ca2"]}
