@@ -121,15 +121,19 @@ export async function mapUnitsBySorterStudy(allUnits, sorters) {
     );
   }
 
-  function sumAccuracies(allSorted) {
+  function sumAccuracies(allSorted, study) {
     let formattedSorted = [];
     for (var sorted in allSorted) {
       let accuracies = allSorted[sorted].map(unit => unit.accuracy);
       let newObj = {
+        study: study,
         sorter: sorted,
+        y: study,
+        x: sorted,
         true_units: allSorted[sorted],
         accuracies: accuracies,
         in_range: 0,
+        color: 0,
         is_applied: true
       };
       formattedSorted.push(newObj);
@@ -137,9 +141,13 @@ export async function mapUnitsBySorterStudy(allUnits, sorters) {
     for (var sorter in sorters) {
       let thisSorting = filterFormats(formattedSorted, sorters, sorter);
       let dummyObj = {
+        study: study,
         sorter: sorters[sorter].name,
+        y: study,
+        x: sorters[sorter].name,
         true_units: [],
         accuracies: [],
+        color: 0,
         in_range: null,
         is_applied: false
       };
@@ -167,7 +175,7 @@ export async function mapUnitsBySorterStudy(allUnits, sorters) {
   const bySorter = [];
   for (let study in byStudy) {
     let allSorted = groupBy(byStudy[study], study => study.sorter);
-    let summedAcc = sumAccuracies(allSorted);
+    let summedAcc = sumAccuracies(allSorted, study);
     let obj = { [study]: summedAcc };
     bySorter.push(obj);
   }

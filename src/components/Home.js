@@ -17,7 +17,6 @@ class Home extends Component {
     super(props);
     this.state = {
       flatUnits: {},
-      accuracyArrayUnits: {},
       unitsMap: {}
     };
   }
@@ -32,14 +31,8 @@ class Home extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.state.flatUnits !== prevState.flatUnits) {
       this.mapUnits();
-      // this.groupWithAccuracy();
     }
   }
-
-  // async groupWithAccuracy() {
-  //   let accuracyArrayUnits = await groupUnitsWithAccuracy(this.state.flatUnits);
-  //   this.setState({ accuracyArrayUnits: accuracyArrayUnits });
-  // }
 
   async mapUnits() {
     let unitsMap = await mapUnitsBySorterStudy(
@@ -75,7 +68,6 @@ class Home extends Component {
                 studies={this.getStudies()}
                 sorters={this.getSorters()}
                 allUnits={this.state.flatUnits}
-                results={this.state.accuracyArrayUnits}
                 unitsMap={this.state.unitsMap}
               />
             </div>
