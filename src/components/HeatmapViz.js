@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import HeatmapRow from "./HeatmapRow";
-import Preloader from "./Preloader";
 import { isEmpty } from "../utils";
 
 class HeatmapViz extends Component {
