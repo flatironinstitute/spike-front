@@ -566,8 +566,8 @@ li {
   height: auto;
   padding-bottom: 150px;
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: center;
 }
 
@@ -634,24 +634,18 @@ text.mono {
 /* Range Slider
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .slider__container {
+  width: 600px;
 }
 
 .slider__title {
   font-family: var(--serif);
 }
 
-.slider__vertical {
-}
-
 .rangeslider__handle {
   border-radius: 45px !important;
 }
 
-.rangeslider-vertical {
-  margin: 2rem auto 2rem 0 !important;
-}
-
-.rangeslider-vertical .rangeslider__fill {
+.rangeslider-horizontal .rangeslider__fill {
   background-color: #384ca2 !important;
 }
 

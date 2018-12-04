@@ -54,8 +54,8 @@ class HeatmapRow extends Component {
                 <Hint
                   xType="literal"
                   yType="literal"
-                  getX={d => d.x}
-                  getY={d => d.y}
+                  getX={data => data.x}
+                  getY={data => data.y}
                   value={{
                     sorter: hoveredNode.sorter,
                     study: hoveredNode.study,

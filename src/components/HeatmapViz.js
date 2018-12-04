@@ -39,7 +39,7 @@ class HeatmapViz extends Component {
     return (
       <div>
         {loading ? (
-          <Preloader />
+          <h4>...</h4>
         ) : (
           <div className="App">
             {this.state.vizData.map((data, i) => (
