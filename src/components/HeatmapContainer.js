@@ -68,10 +68,12 @@ class HeatmapContainer extends Component {
           <div className="container container__heatmap--row">
             <div className="heatmap__col col--8">
               {/* TODO: add responsive width that heads down to the graphic */}
+              <h4 className="slider__title">Hello what is the name of this</h4>
+              <HeatmapViz filteredData={this.state.builtData} />
               <div className="slider__container">
-                <h4 className="slider__title">
-                  Hello what is the name of this
-                </h4>
+                <div className="slider__copy">
+                  <p>Mimimum accuracy: {Math.round(accuracy * 100) / 100}</p>
+                </div>
                 <div className="slider__vertical">
                   <Slider
                     min={0}
@@ -82,11 +84,7 @@ class HeatmapContainer extends Component {
                     onChange={this.handleAccuracyChange}
                   />
                 </div>
-                <div className="slider__copy">
-                  <p>Mimimum accuracy: {Math.round(accuracy * 100) / 100}</p>
-                </div>
               </div>
-              <HeatmapViz filteredData={this.state.builtData} />
             </div>
             {/* TODO: Refactor into a separate component */}
             <div className="unitdetail col--4">
