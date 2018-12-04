@@ -34,8 +34,8 @@ class HeatmapContainer extends Component {
       let above = sorter.accuracies.filter(accu => {
         return accu >= this.state.accuracy;
       });
-      sorter.in_range = above.length;
-      sorter.color = above.length;
+      sorter.in_range = sorter.is_applied ? above.length : -1;
+      sorter.color = sorter.is_applied ? above.length : -1;
       return sorter;
     });
     return newArr;
@@ -67,9 +67,11 @@ class HeatmapContainer extends Component {
         ) : (
           <div className="container container__heatmap--row">
             <div className="heatmap__col col--8">
-              {/* TODO: add responsive width that heads down to the graphic */}
-              <h4 className="slider__title">Hello what is the name of this</h4>
-              <HeatmapViz filteredData={this.state.builtData} />
+              <h4 className="slider__title">Spike Sorting Results Overview</h4>
+              <HeatmapViz
+                filteredData={this.state.builtData}
+                sorters={this.props.sorters}
+              />
               <div className="slider__container">
                 <div className="slider__copy">
                   <p>Mimimum accuracy: {Math.round(accuracy * 100) / 100}</p>
