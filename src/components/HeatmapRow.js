@@ -9,9 +9,14 @@ class HeatmapRow extends Component {
     super(props);
     this.state = { hoveredNode: null };
     this.dims = {
-      height: 100,
-      width: 400
+      height: 50,
+      width: 600
     };
+    this.margin = { left: 180, right: 20, top: 5, bottom: 5 };
+    if (this.props.index === 0) {
+      this.dims.height = 110;
+      this.margin.top = 65;
+    }
   }
 
   render() {
@@ -30,8 +35,15 @@ class HeatmapRow extends Component {
               onMouseLeave={() => this.setState({ hoveredNode: null })}
               height={this.dims.height}
               width={this.dims.width}
+              margin={this.margin}
             >
-              <XAxis />
+              {this.props.index === 0 ? (
+                <XAxis
+                  orientation={"top"}
+                  tickLabelAngle={-25}
+                  position={"start"}
+                />
+              ) : null}
               <YAxis />
               <HeatmapSeries
                 colorRange={["#ffffff", "#384ca2"]}
@@ -42,12 +54,13 @@ class HeatmapRow extends Component {
                 <Hint
                   xType="literal"
                   yType="literal"
-                  getX={d => d.x}
-                  getY={d => d.y}
+                  getX={data => data.x}
+                  getY={data => data.y}
                   value={{
                     sorter: hoveredNode.sorter,
                     study: hoveredNode.study,
-                    value: hoveredNode.in_range
+                    value: hoveredNode.in_range,
+                    used: hoveredNode.is_applied.toString()
                   }}
                 />
               )}

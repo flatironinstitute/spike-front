@@ -66,29 +66,28 @@ class HeatmapContainer extends Component {
           <Preloader />
         ) : (
           <div className="container container__heatmap--row">
-            <div className="heatmap__legend col--2">
+            <div className="heatmap__col col--8">
+              {/* TODO: add responsive width that heads down to the graphic */}
+              <h4 className="slider__title">Hello what is the name of this</h4>
+              <HeatmapViz filteredData={this.state.builtData} />
               <div className="slider__container">
-                <h4 className="slider__title">Legend/Title?</h4>
+                <div className="slider__copy">
+                  <p>Mimimum accuracy: {Math.round(accuracy * 100) / 100}</p>
+                </div>
                 <div className="slider__vertical">
                   <Slider
                     min={0}
                     max={1}
                     value={accuracy}
                     step={0.05}
-                    orientation="vertical"
+                    orientation="horizontal"
                     onChange={this.handleAccuracyChange}
                   />
                 </div>
-                <div className="slider__copy">
-                  <p>Mimimum accuracy: {Math.round(accuracy * 100) / 100}</p>
-                </div>
               </div>
             </div>
-            <div className="heatmap__col col--7">
-              <HeatmapViz filteredData={this.state.builtData} />
-            </div>
             {/* TODO: Refactor into a separate component */}
-            <div className="unitdetail col--3">
+            <div className="unitdetail col--4">
               <h4 className="unitdetail__title">Detail View TK</h4>
               <div className="unitdetail__copy">
                 <ul className="unitdetail__list">

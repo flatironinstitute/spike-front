@@ -97,22 +97,6 @@ export function flattenUnits(trueUnits, studies) {
   return newUnits;
 }
 
-export async function groupUnitsWithAccuracy(allUnits) {
-  let groupedUnits = Object.values(
-    allUnits.reduce(function(r, e) {
-      let key = e.study + "|" + e.sorter;
-      if (!r[key]) {
-        r[key] = e;
-      } else {
-        let floatie = parseFloat(e.sorting_results.Accuracy);
-        r[key].accuracies.push(floatie);
-      }
-      return r;
-    }, {})
-  );
-  return groupedUnits;
-}
-
 export async function mapUnitsBySorterStudy(allUnits, sorters) {
   // Filter sortmatted
   function filterFormats(formattedSorted, sorters, sorter) {
@@ -180,39 +164,4 @@ export async function mapUnitsBySorterStudy(allUnits, sorters) {
     bySorter.push(obj);
   }
   return bySorter;
-}
-
-export function generateGradient(startColor, endColor, steps) {
-  const start = {
-    Hex: startColor,
-    R: parseInt(startColor.slice(1, 3), 16),
-    G: parseInt(startColor.slice(3, 5), 16),
-    B: parseInt(startColor.slice(5, 7), 16)
-  };
-  const end = {
-    Hex: endColor,
-    R: parseInt(endColor.slice(1, 3), 16),
-    G: parseInt(endColor.slice(3, 5), 16),
-    B: parseInt(endColor.slice(5, 7), 16)
-  };
-  const diffR = end["R"] - start["R"];
-  const diffG = end["G"] - start["G"];
-  const diffB = end["B"] - start["B"];
-  let stepsHex = [];
-  let stepsR = [];
-  let stepsG = [];
-  let stepsB = [];
-  for (let i = 0; i <= steps; i++) {
-    stepsR[i] = start["R"] + (diffR / steps) * i;
-    stepsG[i] = start["G"] + (diffG / steps) * i;
-    stepsB[i] = start["B"] + (diffB / steps) * i;
-    stepsHex[i] =
-      "#" +
-      Math.round(stepsR[i]).toString(16) +
-      "" +
-      Math.round(stepsG[i]).toString(16) +
-      "" +
-      Math.round(stepsB[i]).toString(16);
-  }
-  return stepsHex;
 }

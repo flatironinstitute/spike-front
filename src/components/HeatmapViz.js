@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import HeatmapRow from "./HeatmapRow";
-import Preloader from "./Preloader";
 import { isEmpty } from "../utils";
 
 class HeatmapViz extends Component {
@@ -39,11 +38,11 @@ class HeatmapViz extends Component {
     return (
       <div>
         {loading ? (
-          <Preloader />
+          <h4>...</h4>
         ) : (
           <div className="App">
             {this.state.vizData.map((data, i) => (
-              <HeatmapRow vizDatum={data} key={`hmrow${i}`} />
+              <HeatmapRow vizDatum={data} key={`hmrow${i}`} index={i} />
             ))}
           </div>
         )}
