@@ -566,51 +566,13 @@ li {
   height: auto;
   padding-bottom: 150px;
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: center;
 }
 
-.heatmap-label {
-  display: block;
-  font-size: 9pt;
-  font-family: var(--sans);
-  color: var(--off-black);
-  text-align: right;
-}
-
-.heatmap-label__study {
-  display: block;
-  font-size: 9pt;
-  font-family: var(--sans);
-  color: var(--off-black);
-}
-
-.heatmap-label__sorter {
-  display: inline-block;
-  font-size: 9pt;
-  font-family: var(--sans);
-  color: var(--off-black);
-}
-
-rect.bordered {
-  stroke: var(--off-white);
-  stroke-width: 2px;
-}
-
-.mono {
-  font-size: 9pt;
-  font-family: var(--sans);
-  color: var(--off-black);
-}
-
-text.mono {
-  font-size: 9pt;
-  font-family: var(--sans);
-  color: var(--off-black);
-}
-
-.heatmap__legend {
+.slider__title {
+  font-family: var(--serif);
 }
 
 /* Legend
@@ -634,33 +596,28 @@ text.mono {
 /* Range Slider
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .slider__container {
-}
-
-.slider__title {
-  font-family: var(--serif);
-}
-
-.slider__vertical {
+  width: 600px;
+  margin: 10px 0;
 }
 
 .rangeslider__handle {
   border-radius: 45px !important;
 }
 
-.rangeslider-vertical {
-  margin: 2rem auto 2rem 0 !important;
-}
-
-.rangeslider-vertical .rangeslider__fill {
-  background-color: #384ca2 !important;
+.rangeslider-horizontal .rangeslider__fill {
+  background-color: #f6cf3f !important;
 }
 
 .slider__copy {
-  margin-left: auto;
-  margin-right: auto;
+  margin: 30px auto 0;
   font-size: 1.2rem;
   line-height: 2.9rem;
   text-align: left;
+}
+
+.slider__copy > p {
+  margin-bottom: 0;
+  line-height: 1.3rem;
 }
 
 /* Unit Detail
