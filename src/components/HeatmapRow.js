@@ -9,16 +9,20 @@ class HeatmapRow extends Component {
     super(props);
     this.state = { hoveredNode: null };
     this.dims = {
-      height: 150,
-      width: 500
+      height: 50,
+      width: 600
     };
+    this.margin = { left: 180, right: 20, top: 5, bottom: 5 };
+    if (this.props.index === 0) {
+      this.dims.height = 110;
+      this.margin.top = 65;
+    }
   }
 
   render() {
     const data = this.props.vizDatum;
     const { hoveredNode } = this.state;
     const loading = isEmpty(data);
-    const margin = { left: 150, right: 20, top: 100, bottom: 5 };
     return (
       <div>
         {loading ? (
@@ -31,7 +35,7 @@ class HeatmapRow extends Component {
               onMouseLeave={() => this.setState({ hoveredNode: null })}
               height={this.dims.height}
               width={this.dims.width}
-              margin={margin}
+              margin={this.margin}
             >
               {this.props.index === 0 ? (
                 <XAxis
