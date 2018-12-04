@@ -48,14 +48,14 @@ export async function getTrueUnits() {
   return obj;
 }
 
-export function flattenUnits(trueUnits, sorters) {
-  const sorterKeys = sorters.map(sorter => sorter.name);
-  // TODO: turn ids and other results into arrays to represent the group.
+export function flattenUnits(trueUnits, studies) {
   let newUnits = [];
   trueUnits.forEach(unit => {
-    for (const key of sorterKeys) {
+    const myStudy = studies.filter(study => study.name === unit.study);
+    const mySorters = myStudy[0].sorters ? myStudy[0].sorters : [];
+    for (const key of mySorters) {
       if (unit.sorting_results[key]) {
-        let floatie = [parseFloat(unit.sorting_results[key].Accuracy)];
+        let floatie = parseFloat(unit.sorting_results[key].Accuracy);
         let sorterObj = {
           firing_rate: unit.firing_rate,
           num_events: unit.num_events,
@@ -66,7 +66,7 @@ export function flattenUnits(trueUnits, sorters) {
           unit_id: unit.unit_id,
           sorter: key,
           sorting_results: unit.sorting_results[key],
-          accuracies: floatie
+          accuracy: floatie
         };
         newUnits.push(sorterObj);
       } else {
@@ -88,7 +88,7 @@ export function flattenUnits(trueUnits, sorters) {
             f_n: "0",
             f_p: "0"
           },
-          accuracies: [0]
+          accuracy: 0
         };
         newUnits.push(blankSorterObj);
       }
@@ -97,7 +97,7 @@ export function flattenUnits(trueUnits, sorters) {
   return newUnits;
 }
 
-export function groupUnitsWithAccuracy(allUnits) {
+export async function groupUnitsWithAccuracy(allUnits) {
   let groupedUnits = Object.values(
     allUnits.reduce(function(r, e) {
       let key = e.study + "|" + e.sorter;
@@ -111,6 +111,75 @@ export function groupUnitsWithAccuracy(allUnits) {
     }, {})
   );
   return groupedUnits;
+}
+
+export async function mapUnitsBySorterStudy(allUnits, sorters) {
+  // Filter sortmatted
+  function filterFormats(formattedSorted, sorters, sorter) {
+    return formattedSorted.filter(
+      formatted => formatted.sorter === sorters[sorter].name
+    );
+  }
+
+  function sumAccuracies(allSorted, study) {
+    let formattedSorted = [];
+    for (var sorted in allSorted) {
+      let accuracies = allSorted[sorted].map(unit => unit.accuracy);
+      let newObj = {
+        study: study,
+        sorter: sorted,
+        y: study,
+        x: sorted,
+        true_units: allSorted[sorted],
+        accuracies: accuracies,
+        in_range: 0,
+        color: 0,
+        is_applied: true
+      };
+      formattedSorted.push(newObj);
+    }
+    for (var sorter in sorters) {
+      let thisSorting = filterFormats(formattedSorted, sorters, sorter);
+      let dummyObj = {
+        study: study,
+        sorter: sorters[sorter].name,
+        y: study,
+        x: sorters[sorter].name,
+        true_units: [],
+        accuracies: [],
+        color: 0,
+        in_range: null,
+        is_applied: false
+      };
+      if (!thisSorting.length) {
+        formattedSorted.push(dummyObj);
+      }
+    }
+    return formattedSorted;
+  }
+
+  function groupBy(list, keyGetter) {
+    const map = {};
+    list.forEach(item => {
+      const key = keyGetter(item);
+      if (!map[key]) {
+        map[key] = [item];
+      } else {
+        map[key].push(item);
+      }
+    });
+    return map;
+  }
+
+  const byStudy = await groupBy(allUnits, unit => unit.study);
+  const bySorter = [];
+  for (let study in byStudy) {
+    let allSorted = groupBy(byStudy[study], study => study.sorter);
+    let summedAcc = sumAccuracies(allSorted, study);
+    let obj = { [study]: summedAcc };
+    bySorter.push(obj);
+  }
+  return bySorter;
 }
 
 export function generateGradient(startColor, endColor, steps) {

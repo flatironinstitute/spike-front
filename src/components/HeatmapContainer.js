@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import Heatmap from "./Heatmap";
+import HeatmapViz from "./HeatmapViz";
 import { isEmpty } from "../utils";
 import Preloader from "./Preloader";
-import Legend from "./Legend";
 import Slider from "react-rangeslider";
 import "react-rangeslider/lib/index.css";
-import { generateGradient } from "../dataHandlers";
 
 class HeatmapContainer extends Component {
   constructor(props) {
@@ -14,58 +12,43 @@ class HeatmapContainer extends Component {
       builtData: [],
       accuracy: 0.8
     };
-    this.margin = { top: 150, right: 0, bottom: 100, left: 326 };
-    this.width = 440;
-    this.height = 400 + this.margin.top + this.margin.bottom;
-    this.colors = [];
-    this.generateColors();
   }
 
   componentDidMount() {
-    if (this.props.allUnits.length) {
-      this.filterAccuracy();
+    if (this.props.unitsMap.length) {
+      this.filterAccuracyMap();
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.accuracy !== prevState.accuracy) {
-      this.filterAccuracy();
+    if (
+      this.props.unitsMap !== prevProps.unitsMap ||
+      this.state.accuracy !== prevState.accuracy
+    ) {
+      this.filterAccuracyMap();
     }
   }
 
-  generateColors() {
-    let colors = generateGradient("#ffffff", "#384ca2", 9);
-    this.colors = colors;
-  }
-
-  filterAccuracy() {
-    let filtered = this.props.results.map(result => {
-      let above = result.accuracies.filter(accu => {
+  filterAccuracy(sorterArray) {
+    let newArr = sorterArray.map(sorter => {
+      let above = sorter.accuracies.filter(accu => {
         return accu >= this.state.accuracy;
       });
-      result.in_range = above.length;
-      return result;
+      sorter.in_range = above.length;
+      sorter.color = above.length;
+      return sorter;
     });
-    this.buildData(filtered).then(data => {
-      this.setState({
-        builtData: data
-      });
-    });
+    return newArr;
   }
 
-  async buildData(filtered) {
-    const builtData = await this.formatData(filtered);
-    return builtData;
-  }
-
-  formatData(filtered) {
-    return filtered.map(result => {
-      return {
-        study: result.study,
-        in_range: result.in_range,
-        sorter: result.sorter
-      };
+  filterAccuracyMap() {
+    let built = this.props.unitsMap.map(study => {
+      let values = Object.values(study)[0];
+      let key = Object.keys(study)[0];
+      let filtered = this.filterAccuracy(values);
+      return { [key]: filtered };
     });
+    this.setState({ builtData: built });
   }
 
   handleAccuracyChange = value => {
@@ -76,9 +59,7 @@ class HeatmapContainer extends Component {
 
   render() {
     let loading = isEmpty(this.state.builtData);
-    // TODO: Make grid size responsive.
-    let gridSize = Math.floor(this.height / this.props.studies.length);
-    let value = this.state.accuracy;
+    let accuracy = this.state.accuracy;
     return (
       <div>
         {loading ? (
@@ -92,36 +73,19 @@ class HeatmapContainer extends Component {
                   <Slider
                     min={0}
                     max={1}
-                    value={value}
+                    value={accuracy}
                     step={0.05}
                     orientation="vertical"
                     onChange={this.handleAccuracyChange}
                   />
                 </div>
                 <div className="slider__copy">
-                  <p>Mimimum accuracy: {Math.round(value * 100) / 100}</p>
+                  <p>Mimimum accuracy: {Math.round(accuracy * 100) / 100}</p>
                 </div>
               </div>
-              <Legend
-                gridSize={gridSize}
-                colors={this.colors}
-                builtData={this.state.builtData}
-                width={this.width}
-                height={this.height}
-              />
             </div>
             <div className="heatmap__col col--7">
-              <Heatmap
-                colors={this.colors}
-                builtData={this.state.builtData}
-                sorters={this.props.sorters}
-                studies={this.props.studies}
-                gridSize={gridSize}
-                margin={this.margin}
-                width={this.width}
-                height={this.height}
-                allUnits={this.props.allUnits}
-              />
+              <HeatmapViz filteredData={this.state.builtData} />
             </div>
             {/* TODO: Refactor into a separate component */}
             <div className="unitdetail col--3">

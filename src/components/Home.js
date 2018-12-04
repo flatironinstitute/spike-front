@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import Header from "./Header";
 import Preloader from "./Preloader";
-import Error from "./Error";
 import HeatmapContainer from "./HeatmapContainer";
-import { flattenUnits, groupUnitsWithAccuracy } from "../dataHandlers";
+import {
+  flattenUnits,
+  groupUnitsWithAccuracy,
+  mapUnitsBySorterStudy
+} from "../dataHandlers";
 import { isEmpty } from "../utils";
 
 // TODO: Remove when JSON is done being used
@@ -13,25 +16,30 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      allUnits: {},
-      unitsByStudyAndSorter: {},
-      errors: []
+      flatUnits: {},
+      unitsMap: {}
     };
   }
 
-  componentDidMount() {
-    if (this.props.units.length) {
-      this.sortUnits(this.props.units, this.props.sorters);
+  async componentDidMount() {
+    if (this.props.units.length && this.props.studies.length) {
+      let flatUnits = await flattenUnits(this.props.units, this.props.studies);
+      this.setState({ flatUnits: flatUnits });
     }
   }
 
-  async sortUnits(trueUnits, sorters) {
-    let flatUnits = await flattenUnits(trueUnits, sorters);
-    let unitsByStudyAndSorter = await groupUnitsWithAccuracy(flatUnits);
-    this.setState({
-      allUnits: flatUnits,
-      unitsByStudyAndSorter: unitsByStudyAndSorter
-    });
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.flatUnits !== prevState.flatUnits) {
+      this.mapUnits();
+    }
+  }
+
+  async mapUnits() {
+    let unitsMap = await mapUnitsBySorterStudy(
+      this.state.flatUnits,
+      this.props.sorters
+    );
+    this.setState({ unitsMap: unitsMap });
   }
 
   getStudies() {
@@ -47,11 +55,9 @@ class Home extends Component {
   }
 
   render() {
-    let loading =
-      isEmpty(this.state.unitsByStudyAndSorter) || isEmpty(this.props.studies);
+    let loading = isEmpty(this.state.flatUnits) || isEmpty(this.props.studies);
     return (
       <div>
-        {this.state.errors.length ? <Error errors={this.state.errors} /> : null}
         <div className="container container__body">
           <Header headerCopy={this.props.header} />
           {loading ? (
@@ -61,8 +67,8 @@ class Home extends Component {
               <HeatmapContainer
                 studies={this.getStudies()}
                 sorters={this.getSorters()}
-                allUnits={this.state.allUnits}
-                results={this.state.unitsByStudyAndSorter}
+                allUnits={this.state.flatUnits}
+                unitsMap={this.state.unitsMap}
               />
             </div>
           )}
