@@ -2,11 +2,7 @@ import React, { Component } from "react";
 import Header from "./Header";
 import Preloader from "./Preloader";
 import HeatmapContainer from "./HeatmapContainer";
-import {
-  flattenUnits,
-  groupUnitsWithAccuracy,
-  mapUnitsBySorterStudy
-} from "../dataHandlers";
+import { flattenUnits, mapUnitsBySorterStudy } from "../dataHandlers";
 import { isEmpty } from "../utils";
 
 // TODO: Remove when JSON is done being used
