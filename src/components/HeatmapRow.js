@@ -94,7 +94,7 @@ class HeatmapRow extends Component {
                 labelAnchorX="middle"
                 labelAnchorY="central"
                 getLabel={d => {
-                  return d.in_range > 0 ? `${d.in_range}` : "n/a";
+                  return d.in_range > 0 ? `${d.in_range}` : "";
                 }}
               />
             </XYPlot>

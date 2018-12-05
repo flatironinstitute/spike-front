@@ -572,9 +572,6 @@ li {
   justify-content: center;
 }
 
-.heatmap__container {
-}
-
 .heatmap__legend {
   margin-top: 5rem;
 }
@@ -593,8 +590,7 @@ li {
 }
 
 .rv-xy-plot__series--label-text {
-  font-size: 11px;
-  color: var(--label-grey);
+  font-size: 10px;
 }
 
 /* Legend
@@ -627,7 +623,7 @@ li {
 }
 
 .rangeslider__fill {
-  background-color: #f6cf3f !important;
+  background-color: var(--fi-yellow) !important;
   border-radius: 1px !important;
 }
 
