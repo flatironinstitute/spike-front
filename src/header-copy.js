@@ -11,15 +11,15 @@ const headers = {
     id: "head02",
     name: "Algorithms",
     paragraphs: [
-      "Entries indicated with a check are actively available for comparison on this site. The gray entries are forthcoming."
+      "Entries indicated with a check are actively available for comparison on this site. Other entries are forthcoming."
     ]
   },
 
   recordings: {
     id: "head03",
-    name: "Recordings",
+    name: "",
     paragraphs: [
-      "Short for electrophysiology recording. Cotton candy cake brownie chocolate cake muffin icing dragée tootsie roll. Dragée chocolate cake fruitcake lemon drops candy gummi bears tootsie roll chupa chups. Dragée chocolate bar brownie jelly-o gingerbread lollipop icing chocolate. Tart wafer jelly-o."
+      "Below are the types of data being analyzed. Add more text here please. Biscuit gummies lollipop chupa chups. Bonbon marzipan tiramisu pie chocolate bar donut."
     ]
   },
 

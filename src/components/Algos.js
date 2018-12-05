@@ -7,6 +7,44 @@ import algoRows from "../algos-copy";
 import ReactCollapsingTable from "react-collapsing-table";
 
 class Algos extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      rows: []
+    };
+  }
+
+  componentDidMount() {
+    if (this.props.sorters.length) {
+      this.filterActives();
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.sorters !== prevProps.sorters) {
+      this.filterActives();
+    }
+  }
+
+  filterActives() {
+    let rows = algoRows.map(algo => {
+      let activeSorters = this.props.sorters.filter(
+        sorter => sorter.processor_name === algo.name
+      );
+      algo.isActive = activeSorters.length ? true : false;
+      return algo;
+    });
+    rows.sort((a, b) => {
+      let textA = a.name.toUpperCase();
+      let textB = b.name.toUpperCase();
+      return textA < textB ? -1 : textA > textB ? 1 : 0;
+    });
+    rows.sort((a, b) => {
+      return a.isActive === b.isActive ? 0 : a.isActive ? -1 : 1;
+    });
+    this.setState({ rows: rows });
+  }
+
   render() {
     const algosColumns = [
       {
@@ -62,7 +100,7 @@ class Algos extends Component {
           <Header headerCopy={this.props.header} />
         </div>
         <div className="container container__algos">
-          <ReactCollapsingTable columns={algosColumns} rows={algoRows} />
+          <ReactCollapsingTable columns={algosColumns} rows={this.state.rows} />
         </div>
       </div>
     );
