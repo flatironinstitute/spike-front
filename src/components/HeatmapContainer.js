@@ -34,8 +34,8 @@ class HeatmapContainer extends Component {
       let above = sorter.accuracies.filter(accu => {
         return accu >= this.state.accuracy;
       });
-      sorter.in_range = sorter.is_applied ? above.length : -1;
-      sorter.color = sorter.is_applied ? above.length : -1;
+      sorter.in_range = above.length;
+      sorter.color = above.length;
       return sorter;
     });
     return newArr;

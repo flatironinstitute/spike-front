@@ -73,8 +73,9 @@ class HeatmapRow extends Component {
                   value={{
                     sorter: hoveredNode.sorter,
                     study: hoveredNode.study,
-                    value: hoveredNode.in_range,
-                    used: hoveredNode.is_applied.toString()
+                    value:
+                      hoveredNode.in_range > 0 ? hoveredNode.in_range : "n/a",
+                    applied: hoveredNode.is_applied.toString()
                   }}
                 />
               )}
