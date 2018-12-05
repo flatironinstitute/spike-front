@@ -95,8 +95,8 @@ class Recordings extends Component {
           <div className="recordings">
             <h3 className="recordings__title">Studies</h3>
             <p>
-              A study is defined as a group of recordings whose accuracy results
-              it is meaningful to aggregate together.
+              A study is a collection of recordings. Sorting results may be
+              aggregated over a study.
             </p>
             <ReactCollapsingTable
               showPagination={true}
