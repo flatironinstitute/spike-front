@@ -10,7 +10,7 @@ class LeftMenu extends Component {
             <span>Background</span>
           </a>
           <a href="/about/data" className="left-menu__link">
-            <span>Data</span>
+            <span>Platform Data</span>
           </a>
           <a href="/about/contributors" className="left-menu__link">
             <span>Contributors</span>
