@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import HeatmapRow from "./HeatmapRow";
 import { isEmpty } from "../utils";
+import { ContinuousColorLegend } from "react-vis";
 
 class HeatmapViz extends Component {
   constructor(props) {
@@ -40,10 +41,26 @@ class HeatmapViz extends Component {
         {loading ? (
           <h4>...</h4>
         ) : (
-          <div className="App">
+          <div className="heatmap__container">
             {this.state.vizData.map((data, i) => (
-              <HeatmapRow vizDatum={data} key={`hmrow${i}`} index={i} />
+              <HeatmapRow
+                vizDatum={data}
+                key={`hmrow${i}`}
+                index={i}
+                sorters={this.props.sorters.sort()}
+              />
             ))}
+            <div className="heatmap__legend">
+              <ContinuousColorLegend
+                width={600}
+                startColor={"#fafafd"}
+                endColor={"#384ca2"}
+                startTitle="0"
+                midTitle="100"
+                endTitle="200"
+                height="20"
+              />
+            </div>
           </div>
         )}
       </div>

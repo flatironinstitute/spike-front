@@ -67,9 +67,11 @@ class HeatmapContainer extends Component {
         ) : (
           <div className="container container__heatmap--row">
             <div className="heatmap__col col--8">
-              {/* TODO: add responsive width that heads down to the graphic */}
-              <h4 className="slider__title">Hello what is the name of this</h4>
-              <HeatmapViz filteredData={this.state.builtData} />
+              <h4 className="slider__title">Spike Sorting Results Overview</h4>
+              <HeatmapViz
+                filteredData={this.state.builtData}
+                sorters={this.props.sorters}
+              />
               <div className="slider__container">
                 <div className="slider__copy">
                   <p>Mimimum accuracy: {Math.round(accuracy * 100) / 100}</p>
