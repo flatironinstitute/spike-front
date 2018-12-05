@@ -47,10 +47,59 @@ class Recordings extends Component {
         minWidth: 100
       },
       {
+        accessor: "filesize",
+        label: "Total file size",
+        priorityLevel: 4,
+        position: 4,
+        minWidth: 100
+      },
+      {
+        accessor: "channels",
+        label: "Channels",
+        priorityLevel: 5,
+        position: 5,
+        minWidth: 100
+      },
+      {
+        accessor: "duration",
+        label: "Duration (in seconds)",
+        priorityLevel: 6,
+        position: 6,
+        minWidth: 100
+      },
+      {
+        accessor: "type",
+        label: "Experiment type (synthetic / in vivo / in vitro)",
+        priorityLevel: 7,
+        position: 7,
+        minWidth: 100
+      },
+      {
+        accessor: "probetype",
+        label: "Probe type",
+        priorityLevel: 8,
+        position: 8,
+        minWidth: 100
+      },
+      {
+        accessor: "region",
+        label: "Brain region",
+        priorityLevel: 9,
+        position: 9,
+        minWidth: 100
+      },
+      {
+        accessor: "groundtruth",
+        label: "Groundtruth units",
+        priorityLevel: 10,
+        position: 10,
+        minWidth: 100
+      },
+      {
         accessor: "description",
         label: "Description",
-        priorityLevel: 2,
-        position: 2,
+        priorityLevel: 11,
+        position: 11,
         minWidth: 100
       }
     ];

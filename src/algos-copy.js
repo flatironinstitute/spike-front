@@ -1,5 +1,6 @@
 const algos = [
   {
+    id: 1,
     name: "SpykingCircus",
     latest: "0.7.0",
     isActive: false,
@@ -8,6 +9,7 @@ const algos = [
     docsUrl: "http://spyking-circus.rtfd.org"
   },
   {
+    id: 2,
     name: "MountainSort4",
     latest: "0.2.0",
     isActive: false,
@@ -17,6 +19,7 @@ const algos = [
       "https://github.com/flatironinstitute/mountainsort_examples/blob/master/README.md"
   },
   {
+    id: 3,
     name: "Herding Spikes 2",
     latest: "0.2.0",
     isActive: false,
@@ -26,6 +29,7 @@ const algos = [
     docsUrl: "https://github.com/mhhennig/HS2/tree/master/documentation"
   },
   {
+    id: 4,
     name: "tridesclous",
     latest: "1.0.0",
     isActive: false,
@@ -34,6 +38,7 @@ const algos = [
     docsUrl: "https://tridesclous.readthedocs.io/en/latest/"
   },
   {
+    id: 5,
     name: "UltraMegaSort 2000",
     latest: "Feb 2012",
     isActive: false,
@@ -42,6 +47,7 @@ const algos = [
     docsUrl: "https://neurophysics.ucsd.edu/lab/UltraMegaSort2000%20Manual.pdf"
   },
   {
+    id: 6,
     name: "KiloSort",
     latest: "0.1.0",
     isActive: false,
@@ -51,14 +57,16 @@ const algos = [
       "https://papers.nips.cc/paper/6326-fast-and-accurate-spike-sorting-of-high-channel-count-probes-with-kilosort"
   },
   {
+    id: 7,
     name: "JRClust",
     latest: "3.2.5",
     isActive: false,
-    authors: "J James Jun",
+    authors: "Alan Liddell",
     repoUrl: "https://github.com/JaneliaSciComp/JRCLUST",
     docsUrl: "https://github.com/JaneliaSciComp/JRCLUST/wiki"
   },
   {
+    id: 8,
     name: "MClust",
     latest: "4.4.07",
     isActive: false,
@@ -67,6 +75,7 @@ const algos = [
     docsUrl: "http://redishlab.neuroscience.umn.edu/MClust/MClust-4.4.pdf"
   },
   {
+    id: 9,
     name: "IronClust",
     latest: "4.2.7",
     isActive: false,
@@ -75,6 +84,7 @@ const algos = [
     docsUrl: "https://github.com/jamesjun/ironclust"
   },
   {
+    id: 10,
     name: "YASS: Yet Another Spike Sorter",
     latest: "0.10.0",
     isActive: false,
