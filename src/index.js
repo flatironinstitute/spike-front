@@ -1,9 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
+
+// import css
 import "normalize.css";
 import "./index.css";
+
+// import components
 import App from "./App";
+
+// import react router deps
+import { BrowserRouter } from "react-router-dom";
+
+// import service worker from CRA
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
