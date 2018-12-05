@@ -100,11 +100,7 @@ class Algos extends Component {
           <Header headerCopy={this.props.header} />
         </div>
         <div className="container container__algos">
-          <ReactCollapsingTable
-            columns={algosColumns}
-            rows={this.state.rows}
-            theme=""
-          />
+          <ReactCollapsingTable columns={algosColumns} rows={this.state.rows} />
         </div>
       </div>
     );
