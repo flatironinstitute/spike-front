@@ -11,7 +11,7 @@ const headers = {
     id: "head02",
     name: "Algorithms",
     paragraphs: [
-      "Entries indicated with a check are actively available for comparison on this site. The gray entries are forthcoming."
+      "Entries indicated with a check are actively available for comparison on this site. Other entries are forthcoming."
     ]
   },
 
