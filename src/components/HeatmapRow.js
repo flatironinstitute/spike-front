@@ -1,6 +1,13 @@
 import React, { Component } from "react";
 import "../../node_modules/react-vis/dist/style.css";
-import { XYPlot, XAxis, YAxis, HeatmapSeries, Hint } from "react-vis";
+import {
+  XYPlot,
+  XAxis,
+  YAxis,
+  HeatmapSeries,
+  Hint,
+  LabelSeries
+} from "react-vis";
 import Preloader from "./Preloader";
 import { isEmpty } from "../utils";
 
@@ -82,6 +89,14 @@ class HeatmapRow extends Component {
                   value={valueObj}
                 />
               )}
+              <LabelSeries
+                data={data}
+                labelAnchorX="middle"
+                labelAnchorY="central"
+                getLabel={d => {
+                  return d.in_range > 0 ? `${d.in_range}` : "n/a";
+                }}
+              />
             </XYPlot>
           </div>
         )}

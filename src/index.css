@@ -20,6 +20,7 @@ html {
   --off-black: #222;
   --off-white: #fafafd; /* other possible background colors: #faf7ff, #fdfcff */
   --dark-grey: #282c34;
+  --label-grey: #6b6b76;
   --sans: "Univers", "Arial", "HelveticaNeue", "Helvetica Neue", Helvetica,
     Arial, sans-serif;
   --serif: "Chronicle Text G1 Roman", Georgia, Times, "Times New Roman", serif;
@@ -589,6 +590,11 @@ li {
 
 .slider__title {
   font-family: var(--serif);
+}
+
+.rv-xy-plot__series--label-text {
+  font-size: 11px;
+  color: var(--label-grey);
 }
 
 /* Legend
