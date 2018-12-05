@@ -28,6 +28,15 @@ class HeatmapRow extends Component {
     let midpoint = sorters.length * 0.5;
     let gridWidth = base / sorters.length;
     let gridHeight = 50;
+    let valueObj = {
+      sorter: hoveredNode ? hoveredNode.sorter : null,
+      study: hoveredNode ? hoveredNode.study : null,
+      value:
+        hoveredNode && hoveredNode.in_range > 0 ? hoveredNode.in_range : "n/a"
+    };
+    if (hoveredNode && !hoveredNode.is_applied) {
+      valueObj.status = "Algorithm not applied";
+    }
     return (
       <div>
         {loading ? (
@@ -70,13 +79,7 @@ class HeatmapRow extends Component {
                     }
                   }}
                   getY={data => gridHeight}
-                  value={{
-                    sorter: hoveredNode.sorter,
-                    study: hoveredNode.study,
-                    value:
-                      hoveredNode.in_range > 0 ? hoveredNode.in_range : "n/a",
-                    applied: hoveredNode.is_applied.toString()
-                  }}
+                  value={valueObj}
                 />
               )}
             </XYPlot>

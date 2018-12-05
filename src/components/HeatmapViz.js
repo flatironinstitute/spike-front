@@ -55,9 +55,8 @@ class HeatmapViz extends Component {
                 width={600}
                 startColor={"#fafafd"}
                 endColor={"#384ca2"}
-                startTitle="0"
-                midTitle="100"
-                endTitle="200"
+                startTitle="Lowest Accuracy"
+                endTitle="Highest Accuracy"
                 height="20"
               />
             </div>
