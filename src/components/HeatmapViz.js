@@ -53,9 +53,12 @@ class HeatmapViz extends Component {
             <div className="heatmap__legend">
               <ContinuousColorLegend
                 width={600}
+                startColor={"#fafafd"}
+                endColor={"#384ca2"}
                 startTitle="0"
                 midTitle="100"
                 endTitle="200"
+                height="20"
               />
             </div>
           </div>
