@@ -649,6 +649,7 @@ li {
 .unitdetail {
   text-align: right;
 }
+
 .unitdetail__title {
   font-family: var(--serif);
 }
@@ -658,7 +659,7 @@ li {
   margin-right: auto;
   font-size: 1.2rem;
   line-height: 2.9rem;
-  text-align: left;
+  text-align: right;
 }
 
 .unitdetail__list {

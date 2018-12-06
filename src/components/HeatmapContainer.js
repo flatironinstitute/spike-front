@@ -90,9 +90,9 @@ class HeatmapContainer extends Component {
               </div>
             </div>
             {/* TODO: Refactor into a separate component */}
-            <div className="unitdetail col--4">
+            <div className="unitdetail col--8">
               <StudySorterSummary
-                selectedNode={Object.values(this.state.builtData[0])[0]}
+                selectedNode={Object.values(this.state.builtData[0])}
               />
             </div>
           </div>

@@ -59,7 +59,6 @@ export function flattenUnits(trueUnits, studies) {
           unit.sorting_results[key].Accuracy ||
             unit.sorting_results[key].accuracy
         );
-        console.log("🏓", floatie);
         let sorterObj = {
           firing_rate: unit.firing_rate,
           num_events: unit.num_events,
