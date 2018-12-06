@@ -31,7 +31,7 @@ class StudySorterSummary extends Component {
       },
       {
         accessor: "snr",
-        label: "Recording Name",
+        label: "SNR",
         priorityLevel: 4,
         position: 4,
         minWidth: 100,
