@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import Home from "./components/Home";
 import About from "./components/About";
 import Recordings from "./components/Recordings";
+import Study from "./components/Study";
 import Algos from "./components/Algos";
 import Navbar from "./components/Navbar";
 import headerCopy from "./header-copy";
@@ -111,6 +112,19 @@ class App extends Component {
             path="/Recordings"
             render={props => (
               <Recordings
+                {...props}
+                header={headerCopy.recordings}
+                recordings={this.state.recordings}
+                studies={this.state.studies}
+                studySets={this.state.studySets}
+                sorters={this.state.sorters}
+              />
+            )}
+          />
+          <Route
+            path="/Study"
+            render={props => (
+              <Study
                 {...props}
                 header={headerCopy.recordings}
                 recordings={this.state.recordings}

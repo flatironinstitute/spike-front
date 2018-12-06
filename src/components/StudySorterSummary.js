@@ -63,6 +63,7 @@ class StudySorterSummary extends Component {
       <div className="unitdetail__container">
         <h4 className="unitdetail__title">Detail View</h4>
         <div className="unitdetail__copy">
+          <p>These links might become buttons</p>
           <p>
             Sorter: <a>{selectedNode.sorter}</a>
           </p>
@@ -74,6 +75,9 @@ class StudySorterSummary extends Component {
             rows={selectedNode.true_units}
             columns={trueUnitColumns}
           />
+          <h4 className="unitdetail__title">
+            I am where a scatter plot of sorting_results would live
+          </h4>
         </div>
       </div>
     );
