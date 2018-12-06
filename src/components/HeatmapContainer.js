@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import HeatmapViz from "./HeatmapViz";
 import { isEmpty } from "../utils";
 import Preloader from "./Preloader";
+import StudySorterSummary from "./StudySorterSummary";
 import Slider from "react-rangeslider";
 import "react-rangeslider/lib/index.css";
 
@@ -90,29 +91,9 @@ class HeatmapContainer extends Component {
             </div>
             {/* TODO: Refactor into a separate component */}
             <div className="unitdetail col--4">
-              <h4 className="unitdetail__title">Detail View TK</h4>
-              <div className="unitdetail__copy">
-                <ul className="unitdetail__list">
-                  <li>firing_rate: 2.33</li>
-                  <li>in_range: 80</li>
-                  <li>num_events: 1398</li>
-                  <li>peak_channel: 0</li>
-                  <li>recording: "001_synth"</li>
-                  <li>snr: 25.396783859187707</li>
-                  <li>sorter: "MountainSort4-thr3"</li>
-                  <li>study: "magland_synth_noise10_K10_C4"</li>
-                </ul>
-                <p>
-                  Boggarts lavender robes, Hermione Granger Fantastic Beasts and
-                  Where to Find Them. Bee in your bonnet Hand of Glory elder
-                  wand, spectacles House Cup Bertie Bott’s Every Flavor Beans
-                  Impedimenta. Stunning spells tap-dancing spider Slytherin’s
-                  Heir mewing kittens Remus Lupin. Palominos scarlet train black
-                  robes, Metamorphimagus Niffler dead easy second bedroom. Padma
-                  and Parvati Sorting Hat Minister of Magic blue turban remember
-                  my last.
-                </p>
-              </div>
+              <StudySorterSummary
+                selectedNode={Object.values(this.state.builtData[0])[0]}
+              />
             </div>
           </div>
         )}

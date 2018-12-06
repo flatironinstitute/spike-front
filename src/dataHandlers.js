@@ -55,7 +55,11 @@ export function flattenUnits(trueUnits, studies) {
     const mySorters = myStudy[0].sorters ? myStudy[0].sorters : [];
     for (const key of mySorters) {
       if (unit.sorting_results[key]) {
-        let floatie = parseFloat(unit.sorting_results[key].Accuracy);
+        let floatie = parseFloat(
+          unit.sorting_results[key].Accuracy ||
+            unit.sorting_results[key].accuracy
+        );
+        console.log("🏓", floatie);
         let sorterObj = {
           firing_rate: unit.firing_rate,
           num_events: unit.num_events,
