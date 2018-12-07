@@ -82,7 +82,7 @@ class HeatmapRow extends Component {
                     if (slot <= midpoint) {
                       return slot * gridWidth;
                     } else {
-                      return slot * gridWidth - 99;
+                      return slot * gridWidth - 80;
                     }
                   }}
                   getY={data => gridHeight}
