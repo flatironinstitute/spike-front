@@ -75,7 +75,7 @@ class HeatmapContainer extends Component {
               />
               <div className="slider__container">
                 <div className="slider__copy">
-                  <p>Mimimum accuracy: {Math.round(accuracy * 100) / 100}</p>
+                  <p>Minimum accuracy: {Math.round(accuracy * 100) / 100}</p>
                 </div>
                 <div className="slider__vertical">
                   <Slider

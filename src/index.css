@@ -21,9 +21,11 @@ html {
   --off-white: #fafafd; /* other possible background colors: #faf7ff, #fdfcff */
   --dark-grey: #282c34;
   --label-grey: #6b6b76;
-  --sans: "Univers", "Arial", "HelveticaNeue", "Helvetica Neue", Helvetica,
+  /* --sans: "Univers", "Arial", "HelveticaNeue", "Helvetica Neue", Helvetica,
     Arial, sans-serif;
-  --serif: "Chronicle Text G1 Roman", Georgia, Times, "Times New Roman", serif;
+  --serif: "Chronicle Text G1 Roman", Georgia, Times, "Times New Roman", serif; */
+  --sans: "Nunito Sans", sans-serif;
+  --serif: "Nunito Sans", sans-serif;
 }
 body {
   margin: 0;
