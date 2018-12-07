@@ -30,7 +30,12 @@ class HeatmapViz extends Component {
         });
         // TODO: Allow for other sorting
       });
-      this.setState({ vizData: vizData });
+      let newViz = vizData.sort((a, b) => {
+        let textA = a[0].study.toUpperCase();
+        let textB = b[0].study.toUpperCase();
+        return textA < textB ? -1 : textA > textB ? 1 : 0;
+      });
+      this.setState({ vizData: newViz });
     }
   }
 

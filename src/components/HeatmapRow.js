@@ -19,7 +19,7 @@ class HeatmapRow extends Component {
       height: 50,
       width: 700
     };
-    this.margin = { left: 180, right: 120, top: 5, bottom: 5 };
+    this.margin = { left: 190, right: 120, top: 5, bottom: 5 };
     if (this.props.index === 0) {
       this.dims.height = 110;
       this.margin.top = 65;

@@ -65,16 +65,22 @@ class StudySorterSummary extends Component {
         <div className="unitdetail__copy">
           <p>These links might become buttons</p>
           <p>
-            Sorter: <a>{selectedNode.sorter}</a>
+            Sorter:{selectedNode.sorter}
+            <a className="button button-primary" href="/study">
+              View Sorter
+            </a>
           </p>
           <p>
-            Study: <a>{selectedNode.study}</a>
+            Study:{selectedNode.study}
+            <a className="button button-primary" href="/study">
+              View Study
+            </a>
           </p>
-          <ReactCollapsingTable
+          {/* <ReactCollapsingTable
             showPagination={false}
             rows={selectedNode.true_units}
             columns={trueUnitColumns}
-          />
+          /> */}
           <h4 className="unitdetail__title">
             I am where a scatter plot of sorting_results would live
           </h4>
