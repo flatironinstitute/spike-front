@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import ReactCollapsingTable from "react-collapsing-table";
+// import ReactCollapsingTable from "react-collapsing-table";
+import StudySorterTable from "./StudySorterTable";
 
 class StudySorterSummary extends Component {
   render() {
     const selectedNode = this.props.selectedNode[0][0];
-    console.log(selectedNode);
     const trueUnitColumns = [
       {
         accessor: "recording",
@@ -31,7 +31,7 @@ class StudySorterSummary extends Component {
       },
       {
         accessor: "snr",
-        label: "Recording Name",
+        label: "SNR",
         priorityLevel: 4,
         position: 4,
         minWidth: 100,
@@ -63,21 +63,8 @@ class StudySorterSummary extends Component {
       <div className="unitdetail__container">
         <h4 className="unitdetail__title">Detail View</h4>
         <div className="unitdetail__copy">
-          <p>These links might become buttons</p>
-          <p>
-            Sorter: <a>{selectedNode.sorter}</a>
-          </p>
-          <p>
-            Study: <a>{selectedNode.study}</a>
-          </p>
-          <ReactCollapsingTable
-            showPagination={false}
-            rows={selectedNode.true_units}
-            columns={trueUnitColumns}
-          />
-          <h4 className="unitdetail__title">
-            I am where a scatter plot of sorting_results would live
-          </h4>
+          <p>Some nice thoughts on this study/sorter pair</p>
+          <StudySorterTable selectedNode={selectedNode} />
         </div>
       </div>
     );
