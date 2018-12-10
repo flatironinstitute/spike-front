@@ -17,14 +17,18 @@ class Home extends Component {
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     if (this.props.units.length && this.props.studies.length) {
-      let flatUnits = await flattenUnits(this.props.units, this.props.studies);
+      let flatUnits = flattenUnits(this.props.units, this.props.studies);
       this.setState({ flatUnits: flatUnits });
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if (this.props.units !== prevProps.units) {
+      let flatUnits = flattenUnits(this.props.units, this.props.studies);
+      this.setState({ flatUnits: flatUnits });
+    }
     if (this.state.flatUnits !== prevState.flatUnits) {
       this.mapUnits();
     }
@@ -52,6 +56,7 @@ class Home extends Component {
 
   render() {
     let loading = isEmpty(this.state.flatUnits) || isEmpty(this.props.studies);
+    console.log("📎", this.state.flatUnits);
     return (
       <div>
         <div className="container container__body">

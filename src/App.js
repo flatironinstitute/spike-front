@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import { Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./components/Home";
 import About from "./components/About";
 import Recordings from "./components/Recordings";
@@ -71,16 +71,17 @@ class App extends Component {
 
   async fetchUnits() {
     const units = await getTrueUnits();
+    console.log("units 🌂", units);
     if (units.true_units.length && isEmpty(this.state.units)) {
       this.setState({ units: units.true_units });
     }
   }
 
   render() {
-    const App = () => (
-      <div>
-        <Navbar />
-        <Switch>
+    return (
+      <Router>
+        <div>
+          <Navbar />
           <Route
             exact
             path="/"
@@ -134,13 +135,8 @@ class App extends Component {
               />
             )}
           />
-        </Switch>
-      </div>
-    );
-    return (
-      <Switch>
-        <App />
-      </Switch>
+        </div>
+      </Router>
     );
   }
 }
