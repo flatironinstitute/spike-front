@@ -56,7 +56,6 @@ class Home extends Component {
 
   render() {
     let loading = isEmpty(this.state.flatUnits) || isEmpty(this.props.studies);
-    console.log("📎", this.state.flatUnits);
     return (
       <div>
         <div className="container container__body">

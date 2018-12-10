@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import "./App.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import Home from "./components/Home";
 import About from "./components/About";
 import Recordings from "./components/Recordings";
-import Study from "./components/Study";
+import Studies from "./components/Studies";
 import Algos from "./components/Algos";
 import Navbar from "./components/Navbar";
+import SingleStudy from "./components/SingleStudy";
 import headerCopy from "./header-copy";
 import {
   getRecordings,
@@ -71,7 +72,6 @@ class App extends Component {
 
   async fetchUnits() {
     const units = await getTrueUnits();
-    console.log("units 🌂", units);
     if (units.true_units.length && isEmpty(this.state.units)) {
       this.setState({ units: units.true_units });
     }
@@ -79,64 +79,70 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
-        <div>
-          <Navbar />
-          <Route
-            exact
-            path="/"
-            render={props => (
-              <Home
-                {...props}
-                header={headerCopy.home}
-                sorters={this.state.sorters}
-                studies={this.state.studies}
-                units={this.state.units}
-              />
-            )}
-          />
-          <Route
-            path="/algos"
-            render={props => (
-              <Algos
-                {...props}
-                header={headerCopy.algos}
-                sorters={this.state.sorters}
-              />
-            )}
-          />
-          <Route
-            path="/about"
-            render={props => <About {...props} header={headerCopy.about} />}
-          />
-          <Route
-            path="/Recordings"
-            render={props => (
-              <Recordings
-                {...props}
-                header={headerCopy.recordings}
-                recordings={this.state.recordings}
-                studies={this.state.studies}
-                studySets={this.state.studySets}
-                sorters={this.state.sorters}
-              />
-            )}
-          />
-          <Route
-            path="/Study"
-            render={props => (
-              <Study
-                {...props}
-                header={headerCopy.recordings}
-                recordings={this.state.recordings}
-                studies={this.state.studies}
-                studySets={this.state.studySets}
-                sorters={this.state.sorters}
-              />
-            )}
-          />
-        </div>
-      </Router>
+      <div>
+        <Navbar />
+        <Route
+          exact
+          path="/"
+          render={props => (
+            <Home
+              {...props}
+              header={headerCopy.home}
+              sorters={this.state.sorters}
+              studies={this.state.studies}
+              units={this.state.units}
+            />
+          )}
+        />
+        <Route
+          path="/algos"
+          render={props => (
+            <Algos
+              {...props}
+              header={headerCopy.algos}
+              sorters={this.state.sorters}
+            />
+          )}
+        />
+        <Route
+          path="/about"
+          render={props => <About {...props} header={headerCopy.about} />}
+        />
+        <Route
+          path="/recordings"
+          render={props => (
+            <Recordings
+              {...props}
+              header={headerCopy.recordings}
+              recordings={this.state.recordings}
+              studies={this.state.studies}
+              studySets={this.state.studySets}
+              sorters={this.state.sorters}
+            />
+          )}
+        />
+        <Route
+          path="/studies"
+          render={props => (
+            <Studies
+              {...props}
+              header={headerCopy.studies}
+              studies={this.state.studies}
+              units={this.state.units}
+            />
+          )}
+        />
+        <Route
+          path="/study/:studyId"
+          render={props => (
+            <SingleStudy
+              {...props}
+              studies={this.state.studies}
+              units={this.state.units}
+            />
+          )}
+        />
+      </div>
     );
   }
 }

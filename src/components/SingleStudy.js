@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactCollapsingTable from "react-collapsing-table";
 
-class Study extends Component {
+class SingleStudy extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -80,4 +80,4 @@ class Study extends Component {
     );
   }
 }
-export default Study;
+export default SingleStudy;

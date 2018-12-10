@@ -30,6 +30,12 @@ const headers = {
       "SpikeForest is a website and open source computing framework for evaluating and comparing spike sorting algorithms for neurophysiology data analysis.",
       "The system includes a collection of standard electrophysiology datasets together with ground truth information and a collection of spike sorting algorithms. Each algorithm is run against all datasets, and the results are updated on a daily basis as needed. You can browse all datasets, algorithms, sorting results, and comparisons, and inspect the source code used to generate these data."
     ]
+  },
+
+  studies: {
+    id: "head05",
+    name: "Studies",
+    paragraphs: []
   }
 };
 

@@ -51,7 +51,11 @@ class StudySorterTable extends Component {
             </p>
             <p>
               Source:{" "}
-              <a href="https://en.wikipedia.org/wiki/Luigi" target="_blank">
+              <a
+                href="https://en.wikipedia.org/wiki/Luigi"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Wikipedia
               </a>
             </p>
@@ -73,7 +77,11 @@ class StudySorterTable extends Component {
             </p>
             <p>
               Source:{" "}
-              <a href="https://en.wikipedia.org/wiki/Yoshi" target="_blank">
+              <a
+                href="https://en.wikipedia.org/wiki/Yoshi"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Wikipedia
               </a>
             </p>
@@ -97,6 +105,7 @@ class StudySorterTable extends Component {
               <a
                 href="https://en.wikipedia.org/wiki/Toad_(Nintendo)"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 Wikipedia
               </a>
