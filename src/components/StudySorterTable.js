@@ -11,7 +11,7 @@ class StudySorterTable extends Component {
   }
   render() {
     const selectedNode = this.props.selectedNode;
-    console.log(selectedNode);
+    console.log("selectedNode 🐛", selectedNode);
     return (
       <div style={{ padding: 50, background: "#fff" }}>
         <Tabs>
