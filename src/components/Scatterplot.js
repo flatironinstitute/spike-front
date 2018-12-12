@@ -60,14 +60,13 @@ class Scatterplot extends Component {
     const markSeriesProps = {
       animation: true,
       className: "mark-series-example",
-      sizeRange: [5, 5],
+      sizeRange: [0, 10],
       seriesId: "my-example-scatterplot",
       colorRange: colorRanges[colorType],
       opacityType: "literal",
       data,
       onNearestXY: d => this.setState({ hoveredNode: d })
     };
-    const mode = "svg";
     let valueObj = {
       recording: hoveredNode
         ? `${hoveredNode.recording}:${hoveredNode.color / 10}`
@@ -96,7 +95,7 @@ class Scatterplot extends Component {
         <XYPlot
           onMouseLeave={() => this.setState({ hoveredNode: null })}
           width={500}
-          height={300}
+          height={400}
         >
           <VerticalGridLines />
           <HorizontalGridLines />

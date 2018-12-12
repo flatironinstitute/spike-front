@@ -55,6 +55,10 @@ class StudySorterTable extends Component {
               <b>Configuration</b> (<i>Parameters used for this sorting</i>)
             </p>
             <p>
+              <b>Requirements</b> (
+              <i>Sortware and other containers, GPU, NVIDA</i>)
+            </p>
+            <p>
               here is something about that fictional character who primarily
               appears in Nintendo's Mario franchise. Created by Japanese video
               game designer Shigeru Miyamoto, he is portrayed as a citizen of
@@ -68,6 +72,16 @@ class StudySorterTable extends Component {
             </p>
             <p>
               Source:{" "}
+              <a
+                href="https://en.wikipedia.org/wiki/Toad_(Nintendo)"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Wikipedia
+              </a>
+            </p>
+            <p>
+              Source:
               <a
                 href="https://en.wikipedia.org/wiki/Toad_(Nintendo)"
                 target="_blank"

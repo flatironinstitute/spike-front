@@ -68,13 +68,11 @@ class HeatmapContainer extends Component {
         ) : (
           <div className="container container__heatmap--row">
             <div className="heatmap__col col--8">
-              <h4 className="slider__title">Spike Sorting Results Overview</h4>
-              <p>Count above accuracy threshold</p>
-              <HeatmapViz
-                filteredData={this.state.builtData}
-                sorters={this.props.sorters}
-              />
               <div className="slider__container">
+                <h4 className="slider__title">
+                  Spike Sorting Results Overview
+                </h4>
+                <p>Number of groundtruth units above accuracy threshold</p>
                 <div className="slider__copy">
                   <p>Minimum accuracy: {Math.round(accuracy * 100) / 100}</p>
                 </div>
@@ -89,6 +87,10 @@ class HeatmapContainer extends Component {
                   />
                 </div>
               </div>
+              <HeatmapViz
+                filteredData={this.state.builtData}
+                sorters={this.props.sorters}
+              />
             </div>
             {/* TODO: Refactor into a separate component */}
             <div className="unitdetail col--8">

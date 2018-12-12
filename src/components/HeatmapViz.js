@@ -47,6 +47,16 @@ class HeatmapViz extends Component {
           <h4>...</h4>
         ) : (
           <div className="heatmap__container">
+            <div className="heatmap__legend">
+              <ContinuousColorLegend
+                width={600}
+                startColor={"#fafafd"}
+                endColor={"#384ca2"}
+                startTitle="Least Units Found"
+                endTitle="Most Units Found"
+                height={20}
+              />
+            </div>
             {this.state.vizData.map((data, i) => (
               <HeatmapRow
                 vizDatum={data}
@@ -55,16 +65,6 @@ class HeatmapViz extends Component {
                 sorters={this.props.sorters.sort()}
               />
             ))}
-            <div className="heatmap__legend">
-              <ContinuousColorLegend
-                width={600}
-                startColor={"#fafafd"}
-                endColor={"#384ca2"}
-                startTitle="Lowest Accuracy"
-                endTitle="Highest Accuracy"
-                height={20}
-              />
-            </div>
           </div>
         )}
       </div>
