@@ -22,7 +22,10 @@ class StudySorterSummary extends Component {
               </a>
             </div>
           </div>
-          <StudySorterTable selectedNode={selectedNode} />
+          <StudySorterTable
+            selectedNode={selectedNode}
+            accuracy={this.props.accuracy}
+          />
         </div>
       </div>
     );

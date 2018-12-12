@@ -92,6 +92,7 @@ class HeatmapContainer extends Component {
             {/* TODO: Refactor into a separate component */}
             <div className="unitdetail col--8">
               <StudySorterSummary
+                accuracy={this.state.accuracy}
                 selectedNode={Object.values(this.state.builtData[0])}
               />
             </div>

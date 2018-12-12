@@ -22,9 +22,11 @@ class Home extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.units !== prevProps.units && this.props.studies.length) {
-      let flatUnits = flattenUnits(this.props.units, this.props.studies);
-      this.setState({ flatUnits: flatUnits });
+    if (this.props.units !== prevProps.units) {
+      if (this.props.studies.length) {
+        let flatUnits = flattenUnits(this.props.units, this.props.studies);
+        this.setState({ flatUnits: flatUnits });
+      }
     }
     if (this.state.flatUnits !== prevState.flatUnits) {
       this.mapUnits();
@@ -52,7 +54,12 @@ class Home extends Component {
   }
 
   render() {
-    let loading = isEmpty(this.state.flatUnits) || isEmpty(this.props.studies);
+    let loading =
+      isEmpty(this.state.flatUnits) ||
+      isEmpty(this.props.studies) ||
+      isEmpty(this.props.sorters);
+    let sorters = this.props.sorters.length ? this.getSorters() : null;
+    let studies = this.props.studies.length ? this.getStudies() : null;
     return (
       <div>
         <div className="container container__body">
@@ -62,8 +69,8 @@ class Home extends Component {
           ) : (
             <div className="container__heatmap">
               <HeatmapContainer
-                studies={this.getStudies()}
-                sorters={this.getSorters()}
+                studies={studies}
+                sorters={sorters}
                 allUnits={this.state.flatUnits}
                 unitsMap={this.state.unitsMap}
               />

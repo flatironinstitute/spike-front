@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
+import Scatterplot from "./Scatterplot";
 
 class StudySorterTable extends Component {
   constructor(props) {
@@ -11,7 +12,6 @@ class StudySorterTable extends Component {
   }
   render() {
     const selectedNode = this.props.selectedNode;
-    console.log("selectedNode 🐛", selectedNode);
     return (
       <div style={{ padding: 50, background: "#fff" }}>
         <Tabs>
@@ -22,46 +22,54 @@ class StudySorterTable extends Component {
             <Tab disabled>Other</Tab>
           </TabList>
           <TabPanel>
-            <p>Items under accuracy threshold: {selectedNode.in_range}</p>
-          </TabPanel>
-          <TabPanel>
-            <p>
-              <b>Scatterplot</b> (
-              <i>Japanese: ルイージ Hepburn: Ruīji, [ɾɯ.iː.dʑi̥]</i>) (
-              <i>English: /luˈiːdʒi/; Italian: [luˈiːdʒi]</i>) is a fictional
-              character featured in video games and related media released by
-              Nintendo. Created by prominent game designer Shigeru Miyamoto,
-              Luigi is portrayed as the slightly younger but taller fraternal
-              twin brother of Nintendo's mascot Mario, and appears in many games
-              throughout the Mario franchise, often as a sidekick to his
-              brother.
-            </p>
-            <p>
-              Source:{" "}
-              <a
-                href="https://en.wikipedia.org/wiki/Luigi"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Wikipedia
-              </a>
-            </p>
+            <p>Items above accuracy threshold: {selectedNode.in_range}</p>
+            <Scatterplot
+              selectedUnits={this.props.selectedNode.true_units}
+              accuracy={this.props.accuracy}
+            />
           </TabPanel>
           <TabPanel>
             <p>
               <b>Details</b>
-              <ul>
-                <li>Duration</li>
-                <li>Number channels</li>
-                <li>Sample rate</li>
-                <li>File size</li>
-                <li>Number groundtruth</li>
-              </ul>
+            </p>
+            <ul>
+              <li>
+                <b>Duration: </b>1234 milleseconds
+              </li>
+              <li>
+                <b>Number channels: </b>4
+              </li>
+              <li>
+                <b>Sample rate: </b>12344
+              </li>
+              <li>
+                <b>File size: </b>12344
+              </li>
+              <li>
+                <b>Number groundtruth: </b>12344
+              </li>
+            </ul>
+          </TabPanel>
+          <TabPanel>
+            <p>
+              <b>Configuration</b> (<i>Parameters used for this sorting</i>)
+            </p>
+            <p>
+              here is something about that fictional character who primarily
+              appears in Nintendo's Mario franchise. Created by Japanese video
+              game designer Shigeru Miyamoto, he is portrayed as a citizen of
+              the Mushroom Kingdom and is one of Princess Peach's most loyal
+              attendants; constantly working on her behalf. He is usually seen
+              as a non-player character (NPC) who provides assistance to Mario
+              and his friends in most games, but there are times when Toad(s)
+              takes center stage and appears as a protagonist, as seen in Super
+              Mario Bros. 2, Wario's Woods, Super Mario 3D World, and Captain
+              Toad: Treasure Tracker.
             </p>
             <p>
               Source:{" "}
               <a
-                href="https://en.wikipedia.org/wiki/Yoshi"
+                href="https://en.wikipedia.org/wiki/Toad_(Nintendo)"
                 target="_blank"
                 rel="noopener noreferrer"
               >
