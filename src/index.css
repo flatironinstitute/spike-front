@@ -660,6 +660,11 @@ li {
   font-weight: bold;
 }
 
+.rv-xy-plot__axis__title {
+  transform: translate(-163, 35) !important;
+  font-weight: bold !important;
+}
+
 /* Legend
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .legend__container {

@@ -17,7 +17,7 @@ class Scatterplot extends Component {
 
     this.state = {
       data: [],
-      colorType: "typeB",
+      colorType: "typeA",
       hoveredNode: null
     };
   }

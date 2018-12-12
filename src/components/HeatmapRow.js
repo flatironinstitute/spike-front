@@ -66,6 +66,7 @@ class HeatmapRow extends Component {
                   orientation={"top"}
                   tickLabelAngle={-25}
                   position={"start"}
+                  title="Count above accuracy threshold"
                 />
               ) : null}
               <YAxis />
