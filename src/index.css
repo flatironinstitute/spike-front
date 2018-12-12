@@ -128,7 +128,7 @@ input[type="reset"],
 input[type="button"] {
   display: inline-block;
   height: 38px;
-  padding: 0 30px;
+  padding: 0 15px;
   color: #555;
   text-align: center;
   font-size: 11px;
@@ -215,7 +215,7 @@ Use containers when you need a content area that has standard maximum width and 
 
 @media (min-width: 550px) {
   .container {
-    width: 85%;
+    width: 95%;
   }
   .col {
     margin-left: 2%;
@@ -657,6 +657,12 @@ li {
 
 .rv-xy-plot__series--label-text {
   font-size: 10px;
+  font-weight: bold;
+}
+
+.rv-xy-plot__axis__title {
+  transform: translate(-163, 35) !important;
+  font-weight: bold !important;
 }
 
 /* Legend
@@ -731,4 +737,11 @@ li {
   font-size: 1.2rem;
   font-family: var(--serif);
   text-align: right;
+}
+
+.tab-header__row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  /* justify-content: space-between; */
 }
