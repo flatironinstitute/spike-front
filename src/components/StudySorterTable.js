@@ -14,27 +14,10 @@ class StudySorterTable extends Component {
     console.log("selectedNode 🐛", selectedNode);
     return (
       <div style={{ padding: 50, background: "#fff" }}>
-        <div className="tab-header__row">
-          <p>
-            <b>Sorter: </b>
-            {selectedNode.sorter}
-          </p>
-          <p>
-            <a className="button button-primary" href="/study">
-              View Sorter
-            </a>
-          </p>
-          <h6>Study: {selectedNode.study}</h6>
-          <p>
-            <a className="button button-primary" href="/study">
-              View Study
-            </a>
-          </p>
-        </div>
         <Tabs>
           <TabList>
             <Tab>Scatterplot</Tab>
-            <Tab>Info</Tab>
+            <Tab>Details</Tab>
             <Tab>Configuration</Tab>
             <Tab disabled>Other</Tab>
           </TabList>

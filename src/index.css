@@ -128,7 +128,7 @@ input[type="reset"],
 input[type="button"] {
   display: inline-block;
   height: 38px;
-  padding: 0 30px;
+  padding: 0 15px;
   color: #555;
   text-align: center;
   font-size: 11px;
@@ -215,7 +215,7 @@ Use containers when you need a content area that has standard maximum width and 
 
 @media (min-width: 550px) {
   .container {
-    width: 85%;
+    width: 95%;
   }
   .col {
     margin-left: 2%;
@@ -735,7 +735,7 @@ li {
 
 .tab-header__row {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-end;
+  /* justify-content: space-between; */
 }
