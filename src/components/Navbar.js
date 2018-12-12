@@ -24,13 +24,6 @@ class Navbar extends Component {
             >
               Recordings
             </NavLink>
-            <NavLink
-              className="nav__link"
-              to="/studies"
-              activeClassName="active"
-            >
-              Studies
-            </NavLink>
             <NavLink className="nav__link" to="/algos" activeClassName="active">
               Algorithms
             </NavLink>

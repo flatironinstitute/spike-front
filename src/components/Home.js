@@ -5,9 +5,6 @@ import HeatmapContainer from "./HeatmapContainer";
 import { flattenUnits, mapUnitsBySorterStudy } from "../dataHandlers";
 import { isEmpty } from "../utils";
 
-// TODO: Remove when JSON is done being used
-// import ReactJson from "react-json-view";
-
 class Home extends Component {
   constructor(props) {
     super(props);

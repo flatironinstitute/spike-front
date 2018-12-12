@@ -14,27 +14,31 @@ class StudySorterTable extends Component {
     console.log("selectedNode 🐛", selectedNode);
     return (
       <div style={{ padding: 50, background: "#fff" }}>
+        <div className="tab-header__row">
+          <p>
+            <b>Sorter: </b>
+            {selectedNode.sorter}
+          </p>
+          <p>
+            <a className="button button-primary" href="/study">
+              View Sorter
+            </a>
+          </p>
+          <h6>Study: {selectedNode.study}</h6>
+          <p>
+            <a className="button button-primary" href="/study">
+              View Study
+            </a>
+          </p>
+        </div>
         <Tabs>
           <TabList>
-            <Tab>Info</Tab>
             <Tab>Scatterplot</Tab>
-            <Tab disabled>Yoshi</Tab>
-            <Tab disabled>Toad</Tab>
+            <Tab>Info</Tab>
+            <Tab>Configuration</Tab>
+            <Tab disabled>Other</Tab>
           </TabList>
           <TabPanel>
-            <h6>Sorter: {selectedNode.sorter}</h6>
-            <p>
-              <a className="button button-primary" href="/study">
-                View Sorter
-              </a>
-            </p>
-            <h6>Study: {selectedNode.study}</h6>
-            <p>
-              {" "}
-              <a className="button button-primary" href="/study">
-                View Study
-              </a>
-            </p>
             <p>Items under accuracy threshold: {selectedNode.in_range}</p>
           </TabPanel>
           <TabPanel>
@@ -62,7 +66,7 @@ class StudySorterTable extends Component {
           </TabPanel>
           <TabPanel>
             <p>
-              <b>Yoshi</b> (<i>ヨッシー Yosshī, [joɕ.ɕiː]</i>) (
+              <b>Test configuration</b> (<i>ヨッシー Yosshī, [joɕ.ɕiː]</i>) (
               <i>English: /ˈjoʊʃi/ or /ˈjɒʃi/</i>), once romanized as Yossy, is
               a fictional anthropomorphic dinosaur who appears in video games
               published by Nintendo. Yoshi debuted in Super Mario World (1990)

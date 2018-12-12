@@ -732,3 +732,10 @@ li {
   font-family: var(--serif);
   text-align: right;
 }
+
+.tab-header__row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
