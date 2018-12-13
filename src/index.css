@@ -731,6 +731,8 @@ li {
   font-size: 1.2rem;
   line-height: 2.9rem;
   text-align: right;
+  padding: 5rem;
+  background-color: white;
 }
 
 .unitdetail__list {
@@ -743,5 +745,5 @@ li {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  /* justify-content: space-between; */
+  margin-bottom: 2rem;
 }

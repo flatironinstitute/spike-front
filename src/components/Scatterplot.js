@@ -65,7 +65,7 @@ class Scatterplot extends Component {
       colorRange: colorRanges[colorType],
       opacityType: "literal",
       data,
-      onNearestXY: d => this.setState({ hoveredNode: d })
+      onValueMouseOver: d => this.setState({ hoveredNode: d })
     };
     let valueObj = {
       recording: hoveredNode
@@ -76,25 +76,22 @@ class Scatterplot extends Component {
       num_events: hoveredNode ? hoveredNode.size : null
     };
     let lineObjArr = [
-      {
-        x: 2,
-        y: this.props.accuracy
-      },
+      { x: 2, y: this.props.accuracy },
       { x: 26, y: this.props.accuracy }
     ];
     return (
       <div className="canvas-wrapper">
         <div className="canvas-example-controls">
-          <a
+          <div
             className="button primary-button"
             onClick={() => this.setState({ colorType: nextType[colorType] })}
           >
             FAKE FILTER
-          </a>
+          </div>
         </div>
         <XYPlot
           onMouseLeave={() => this.setState({ hoveredNode: null })}
-          width={500}
+          width={550}
           height={400}
         >
           <VerticalGridLines />
@@ -110,7 +107,10 @@ class Scatterplot extends Component {
           {hoveredNode && (
             <Hint
               value={valueObj}
-              align={{ vertical: "bottom", horizontal: "left" }}
+              getX={d => {
+                return d.snr;
+              }}
+              getY={d => d.accuracy}
             />
           )}
         </XYPlot>

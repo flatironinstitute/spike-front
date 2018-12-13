@@ -23,10 +23,8 @@ class Home extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.units !== prevProps.units) {
-      if (this.props.studies.length) {
-        let flatUnits = flattenUnits(this.props.units, this.props.studies);
-        this.setState({ flatUnits: flatUnits });
-      }
+      let flatUnits = flattenUnits(this.props.units, this.props.studies);
+      this.setState({ flatUnits: flatUnits });
     }
     if (this.state.flatUnits !== prevState.flatUnits) {
       this.mapUnits();

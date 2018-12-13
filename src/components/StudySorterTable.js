@@ -13,7 +13,7 @@ class StudySorterTable extends Component {
   render() {
     const selectedNode = this.props.selectedNode;
     return (
-      <div style={{ padding: 50, background: "#fff" }}>
+      <div>
         <Tabs>
           <TabList>
             <Tab>Scatterplot</Tab>
