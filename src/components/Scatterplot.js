@@ -18,7 +18,9 @@ class Scatterplot extends Component {
     this.state = {
       data: [],
       colorType: "typeA",
-      hoveredNode: null
+      hoveredNode: null,
+      minSNR: 0,
+      maxSNR: 100
     };
   }
 
@@ -44,11 +46,22 @@ class Scatterplot extends Component {
       opacity: unit.accuracy * 0.5 + 0.5,
       recording: unit.recording
     }));
-    this.setState({ data: newUnits });
+    let min = this.getMinSNR(newUnits);
+    let max = this.getMaxSNR(newUnits);
+    this.setState({ data: newUnits, minSNR: min, maxSNR: max });
+  }
+
+  getMinSNR(data) {
+    return data.reduce((min, p) => (p.x < min ? p.x : min), data[0].y);
+  }
+
+  getMaxSNR(data) {
+    let max = data.reduce((max, p) => (p.x > max ? p.x : max), data[0].y);
+    return Math.round(max * 100) / 100;
   }
 
   render() {
-    const { data, colorType, hoveredNode } = this.state;
+    const { data, colorType, hoveredNode, minSNR, maxSNR } = this.state;
     const colorRanges = {
       typeA: ["#59E4EC", "#0D676C"],
       typeB: ["#EFC1E3", "#B52F93"]
@@ -76,8 +89,8 @@ class Scatterplot extends Component {
       num_events: hoveredNode ? hoveredNode.size : null
     };
     let lineObjArr = [
-      { x: 2, y: this.props.accuracy },
-      { x: 26, y: this.props.accuracy }
+      { x: minSNR, y: this.props.accuracy },
+      { x: maxSNR, y: this.props.accuracy }
     ];
     return (
       <div className="canvas-wrapper">

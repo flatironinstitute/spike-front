@@ -27,7 +27,6 @@ class HeatmapRow extends Component {
   }
 
   render() {
-    console.log("👸", this.props);
     const data = this.props.vizDatum;
     const { hoveredNode } = this.state;
     const loading = isEmpty(data);
