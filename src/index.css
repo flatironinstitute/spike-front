@@ -658,6 +658,7 @@ li {
 .rv-xy-plot__series--label-text {
   font-size: 10px;
   font-weight: bold;
+  cursor: default !important;
 }
 
 .rv-xy-plot__axis__title {

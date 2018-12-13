@@ -75,7 +75,6 @@ class HeatmapRow extends Component {
                 }}
                 onValueClick={d => {
                   this.props.selectStudy(d);
-                  console.log("CLICK! ⌨️", d);
                 }}
               />
               {hoveredNode && (
@@ -98,6 +97,9 @@ class HeatmapRow extends Component {
                 data={data}
                 labelAnchorX="middle"
                 labelAnchorY="central"
+                onValueClick={d => {
+                  this.props.selectStudy(d);
+                }}
                 getLabel={d => {
                   return d.in_range > 0 ? `${d.in_range}` : "";
                 }}

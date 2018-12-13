@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import StudySorterTable from "./StudySorterTable";
 import { isEmpty } from "../utils";
-import Preloader from "./Preloader";
 
 class StudySorterSummary extends Component {
   render() {
