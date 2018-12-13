@@ -59,6 +59,7 @@ class HeatmapViz extends Component {
             </div>
             {this.state.vizData.map((data, i) => (
               <HeatmapRow
+                {...this.props}
                 vizDatum={data}
                 key={`hmrow${i}`}
                 index={i}

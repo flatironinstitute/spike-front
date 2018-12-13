@@ -1,6 +1,7 @@
 // select study
 // TODO: should I use name or set an iD?
 export function selectStudy(studyId) {
+  console.log("🌭selected study", studyId);
   return {
     type: "SELECT_STUDY",
     studyId

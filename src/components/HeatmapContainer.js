@@ -5,6 +5,9 @@ import Preloader from "./Preloader";
 import StudySorterSummary from "./StudySorterSummary";
 import Slider from "react-rangeslider";
 import "react-rangeslider/lib/index.css";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as actionCreators from "../actions/actionCreators";
 
 class HeatmapContainer extends Component {
   constructor(props) {
@@ -88,6 +91,7 @@ class HeatmapContainer extends Component {
                 </div>
               </div>
               <HeatmapViz
+                {...this.props}
                 filteredData={this.state.builtData}
                 sorters={this.props.sorters}
               />
@@ -95,6 +99,7 @@ class HeatmapContainer extends Component {
             {/* TODO: Refactor into a separate component */}
             <div className="unitdetail col--8">
               <StudySorterSummary
+                {...this.props}
                 accuracy={this.state.accuracy}
                 selectedNode={Object.values(this.state.builtData[0])}
               />
@@ -106,4 +111,18 @@ class HeatmapContainer extends Component {
   }
 }
 
-export default HeatmapContainer;
+function mapStateToProps(state) {
+  return {
+    selectedStudy: state.selectedStudy,
+    selectedSorter: state.selectedSorter
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(actionCreators, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HeatmapContainer);

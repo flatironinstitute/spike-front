@@ -11,9 +11,9 @@ class StudySorterTable extends Component {
     };
   }
   render() {
-    const selectedNode = this.props.selectedNode;
+    const { selectedStudy, accuracy } = this.props;
     return (
-      <div style={{ padding: 50, background: "#fff" }}>
+      <div>
         <Tabs>
           <TabList>
             <Tab>Scatterplot</Tab>
@@ -22,10 +22,13 @@ class StudySorterTable extends Component {
             <Tab disabled>Other</Tab>
           </TabList>
           <TabPanel>
-            <p>Items above accuracy threshold: {selectedNode.in_range}</p>
+            <p>
+              Items above accuracy threshold:
+              {selectedStudy ? selectedStudy.in_range : ""}
+            </p>
             <Scatterplot
-              selectedUnits={this.props.selectedNode.true_units}
-              accuracy={this.props.accuracy}
+              selectedUnits={selectedStudy.true_units}
+              accuracy={accuracy}
             />
           </TabPanel>
           <TabPanel>
