@@ -10,9 +10,6 @@ import {
 } from "react-vis";
 import Preloader from "./Preloader";
 import { isEmpty } from "../utils";
-// import PropTypes from "prop-types";
-// import { connect } from "react-redux";
-// import * as actionCreators from "../actions/actionCreators";
 
 class HeatmapRow extends Component {
   constructor(props) {
@@ -30,6 +27,7 @@ class HeatmapRow extends Component {
   }
 
   render() {
+    console.log("👸", this.props);
     const data = this.props.vizDatum;
     const { hoveredNode } = this.state;
     const loading = isEmpty(data);
@@ -75,6 +73,10 @@ class HeatmapRow extends Component {
                 data={data}
                 onValueMouseOver={d => {
                   this.setState({ hoveredNode: d });
+                }}
+                onValueClick={d => {
+                  this.props.selectStudy(d);
+                  console.log("CLICK! ⌨️", d);
                 }}
               />
               {hoveredNode && (
