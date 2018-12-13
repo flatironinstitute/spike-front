@@ -32,8 +32,8 @@ class Routes extends Component {
   }
 
   componentDidMount() {
-    this.fetchRecordings();
     this.fetchStudies();
+    this.fetchRecordings();
     this.fetchSorters();
     this.fetchUnits();
   }

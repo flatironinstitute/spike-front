@@ -3,6 +3,7 @@ import StudySorterTable from "./StudySorterTable";
 
 class StudySorterSummary extends Component {
   render() {
+    console.log("❄️ study sorter", this.props);
     const selectedNode = this.props.selectedNode[0][0];
     return (
       <div className="unitdetail__container">

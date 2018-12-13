@@ -22,7 +22,9 @@ class Home extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.units !== prevProps.units) {
+    console.log("🏡 DID UPDATE");
+    if (this.props.units !== prevProps.units && this.props.studies.length) {
+      console.log("🏡 inside yes");
       let flatUnits = flattenUnits(this.props.units, this.props.studies);
       this.setState({ flatUnits: flatUnits });
     }
