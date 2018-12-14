@@ -6,7 +6,7 @@ kbclient.setPairioConfig({ collections: ["spikeforest"] });
 // New data handling functions as of 11/16/18
 export async function getRecordings() {
   let obj = await kbclient.loadObject(null, {
-    key: { target: "spikeforest_website_dev", name: "recordings" }
+    key: { target: "spikeforest_website_dev_12_13_2018", name: "recordings" }
   });
   if (!obj) {
     console.log("Problem loading recordings object.");
@@ -17,7 +17,7 @@ export async function getRecordings() {
 
 export async function getStudies() {
   let obj = await kbclient.loadObject(null, {
-    key: { target: "spikeforest_website_dev", name: "studies" }
+    key: { target: "spikeforest_website_dev_12_13_2018", name: "studies" }
   });
   if (!obj) {
     console.log("Problem loading studies object.");
@@ -28,7 +28,7 @@ export async function getStudies() {
 
 export async function getSorters() {
   let obj = await kbclient.loadObject(null, {
-    key: { target: "spikeforest_website_dev", name: "sorters" }
+    key: { target: "spikeforest_website_dev_12_13_2018", name: "sorters" }
   });
   if (!obj) {
     console.log("Problem loading sorters object.");
@@ -39,7 +39,7 @@ export async function getSorters() {
 
 export async function getTrueUnits() {
   let obj = await kbclient.loadObject(null, {
-    key: { target: "spikeforest_website_dev", name: "true_units" }
+    key: { target: "spikeforest_website_dev_12_13_2018", name: "true_units" }
   });
   if (!obj) {
     console.log("Problem loading true units object.");
