@@ -1,6 +1,5 @@
-{
-  "recordings": [
-    {
+const recordings = {
+  "recordings": [{
       "name": "001_synth",
       "study": "magland_synth_noise10_K10_C4",
       "directory": "kbucket://15734439d8cf/groundtruth/magland_synth/datasets_noise10_K10_C4/001_synth",
@@ -1362,3 +1361,5 @@
     }
   ]
 }
+
+export default recordings;

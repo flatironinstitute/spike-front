@@ -1,9 +1,16 @@
-import React, { Component } from "react";
+import React, {
+  Component
+} from "react";
 import Header from "./Header";
 import Preloader from "./Preloader";
 import HeatmapContainer from "./HeatmapContainer";
-import { flattenUnits, mapUnitsBySorterStudy } from "../dataHandlers";
-import { isEmpty } from "../utils";
+import {
+  flattenUnits,
+  mapUnitsBySorterStudy
+} from "../dataHandlers";
+import {
+  isEmpty
+} from "../utils";
 
 class Home extends Component {
   constructor(props) {
@@ -17,16 +24,19 @@ class Home extends Component {
   componentDidMount() {
     if (this.props.units.length && this.props.studies.length) {
       let flatUnits = flattenUnits(this.props.units, this.props.studies);
-      this.setState({ flatUnits: flatUnits });
+      this.setState({
+        flatUnits: flatUnits
+      });
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("🏡 DID UPDATE");
     if (this.props.units !== prevProps.units && this.props.studies.length) {
       console.log("🏡 inside yes");
       let flatUnits = flattenUnits(this.props.units, this.props.studies);
-      this.setState({ flatUnits: flatUnits });
+      this.setState({
+        flatUnits: flatUnits
+      });
     }
     if (this.state.flatUnits !== prevState.flatUnits) {
       this.mapUnits();
@@ -38,7 +48,9 @@ class Home extends Component {
       this.state.flatUnits,
       this.props.sorters
     );
-    this.setState({ unitsMap: unitsMap });
+    this.setState({
+      unitsMap: unitsMap
+    });
   }
 
   getStudies() {
@@ -60,24 +72,39 @@ class Home extends Component {
       isEmpty(this.props.sorters);
     let sorters = this.props.sorters.length ? this.getSorters() : null;
     let studies = this.props.studies.length ? this.getStudies() : null;
-    return (
-      <div>
-        <div className="container container__body">
-          <Header headerCopy={this.props.header} />
-          {loading ? (
-            <Preloader />
-          ) : (
-            <div className="container__heatmap">
-              <HeatmapContainer
-                studies={studies}
-                sorters={sorters}
-                allUnits={this.state.flatUnits}
-                unitsMap={this.state.unitsMap}
-              />
-            </div>
-          )}
-        </div>
-      </div>
+    console.log(loading, this.state.flatUnits, this.props.studies);
+    return ( <
+      div >
+      <
+      div className = "container container__body" >
+      <
+      Header headerCopy = {
+        this.props.header
+      }
+      /> {
+        loading ? ( <
+          Preloader / >
+        ) : ( <
+          div className = "container__heatmap" >
+          <
+          HeatmapContainer studies = {
+            studies
+          }
+          sorters = {
+            sorters
+          }
+          allUnits = {
+            this.state.flatUnits
+          }
+          unitsMap = {
+            this.state.unitsMap
+          }
+          /> <
+          /div>
+        )
+      } <
+      /div> <
+      /div>
     );
   }
 }

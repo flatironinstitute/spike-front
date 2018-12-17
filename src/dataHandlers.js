@@ -1,49 +1,71 @@
+import recordings from "./data/recordings";
+import sorters from "./data/sorters";
+import studies from "./data/studies";
+import units from "./data/units";
+
+
 const KBucketClient = require("@magland/kbucket").KBucketClient;
 let kbclient = new KBucketClient();
-kbclient.setConfig({ share_ids: ["spikeforest.spikeforest1"] });
-kbclient.setPairioConfig({ collections: ["spikeforest"] });
+kbclient.setConfig({
+  share_ids: ["spikeforest.spikeforest1"]
+});
+kbclient.setPairioConfig({
+  collections: ["spikeforest"]
+});
 
 // New data handling functions as of 11/16/18
 export async function getRecordings() {
   let obj = await kbclient.loadObject(null, {
-    key: { target: "spikeforest_website_dev_12_13_2018", name: "recordings" }
+    key: {
+      target: "spikeforest_website_dev_12_13_2018",
+      name: "recordings"
+    }
   });
   if (!obj) {
     console.log("Problem loading recordings object.");
-    return;
+    return recordings;
   }
   return obj;
 }
 
 export async function getStudies() {
   let obj = await kbclient.loadObject(null, {
-    key: { target: "spikeforest_website_dev_12_13_2018", name: "studies" }
+    key: {
+      target: "spikeforest_website_dev_12_13_2018",
+      name: "studies"
+    }
   });
   if (!obj) {
     console.log("Problem loading studies object.");
-    return;
+    return studies;
   }
   return obj;
 }
 
 export async function getSorters() {
   let obj = await kbclient.loadObject(null, {
-    key: { target: "spikeforest_website_dev_12_13_2018", name: "sorters" }
+    key: {
+      target: "spikeforest_website_dev_12_13_2018",
+      name: "sorters"
+    }
   });
   if (!obj) {
     console.log("Problem loading sorters object.");
-    return;
+    return sorters;
   }
   return obj;
 }
 
 export async function getTrueUnits() {
   let obj = await kbclient.loadObject(null, {
-    key: { target: "spikeforest_website_dev_12_13_2018", name: "true_units" }
+    key: {
+      target: "spikeforest_website_dev_12_13_2018",
+      name: "true_units"
+    }
   });
   if (!obj) {
     console.log("Problem loading true units object.");
-    return;
+    return units;
   }
   return obj;
 }
@@ -57,7 +79,7 @@ export function flattenUnits(trueUnits, studies) {
       if (unit.sorting_results[key]) {
         let floatie = parseFloat(
           unit.sorting_results[key].Accuracy ||
-            unit.sorting_results[key].accuracy
+          unit.sorting_results[key].accuracy
         );
         let sorterObj = {
           firing_rate: unit.firing_rate,
@@ -163,7 +185,9 @@ export async function mapUnitsBySorterStudy(allUnits, sorters) {
   for (let study in byStudy) {
     let allSorted = groupBy(byStudy[study], study => study.sorter);
     let summedAcc = sumAccuracies(allSorted, study);
-    let obj = { [study]: summedAcc };
+    let obj = {
+      [study]: summedAcc
+    };
     bySorter.push(obj);
   }
   return bySorter;

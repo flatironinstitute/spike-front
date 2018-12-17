@@ -1,4 +1,7 @@
-import { createStore, compose } from "redux";
+import {
+  createStore,
+  compose
+} from "redux";
 
 // import the root reducer
 import rootReducer from "./reducers/index";
