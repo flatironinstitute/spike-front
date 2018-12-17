@@ -3,7 +3,6 @@ import sorters from "./data/sorters";
 import studies from "./data/studies";
 import units from "./data/units";
 
-
 const KBucketClient = require("@magland/kbucket").KBucketClient;
 let kbclient = new KBucketClient();
 kbclient.setConfig({
@@ -72,53 +71,58 @@ export async function getTrueUnits() {
 
 export function flattenUnits(trueUnits, studies) {
   let newUnits = [];
-  trueUnits.forEach(unit => {
-    const myStudy = studies.filter(study => study.name === unit.study);
-    const mySorters = myStudy[0].sorters ? myStudy[0].sorters : [];
-    for (const key of mySorters) {
-      if (unit.sorting_results[key]) {
-        let floatie = parseFloat(
-          unit.sorting_results[key].Accuracy ||
-          unit.sorting_results[key].accuracy
-        );
-        let sorterObj = {
-          firing_rate: unit.firing_rate,
-          num_events: unit.num_events,
-          peak_channel: unit.peak_channel,
-          recording: unit.recording,
-          snr: unit.snr,
-          study: unit.study,
-          unit_id: unit.unit_id,
-          sorter: key,
-          sorting_results: unit.sorting_results[key],
-          accuracy: floatie
-        };
-        newUnits.push(sorterObj);
-      } else {
-        let blankSorterObj = {
-          firing_rate: unit.firing_rate,
-          num_events: unit.num_events,
-          peak_channel: unit.peak_channel,
-          recording: unit.recording,
-          snr: unit.snr,
-          study: unit.study,
-          unit_id: unit.unit_id,
-          sorter: key,
-          sorting_results: {
-            num_matches: 0,
-            Accuracy: "0",
-            best_unit: 0,
-            matched_unit: 0,
-            unit_id: 0,
-            f_n: "0",
-            f_p: "0"
-          },
-          accuracy: 0
-        };
-        newUnits.push(blankSorterObj);
+  // TODO: Add new static list to replace sorters below
+  if (studies.length) {
+    trueUnits.forEach(unit => {
+      const myStudy = studies.filter(study => study.name === unit.study);
+      const mySorters = myStudy[0].sorters
+        ? myStudy[0].sorters
+        : ["IronClust-tetrode", "MountainSort4-thr3", "SpykingCircus"];
+      for (const key of mySorters) {
+        if (unit.sorting_results[key]) {
+          let floatie = parseFloat(
+            unit.sorting_results[key].Accuracy ||
+              unit.sorting_results[key].accuracy
+          );
+          let sorterObj = {
+            firing_rate: unit.firing_rate,
+            num_events: unit.num_events,
+            peak_channel: unit.peak_channel,
+            recording: unit.recording,
+            snr: unit.snr,
+            study: unit.study,
+            unit_id: unit.unit_id,
+            sorter: key,
+            sorting_results: unit.sorting_results[key],
+            accuracy: floatie
+          };
+          newUnits.push(sorterObj);
+        } else {
+          let blankSorterObj = {
+            firing_rate: unit.firing_rate,
+            num_events: unit.num_events,
+            peak_channel: unit.peak_channel,
+            recording: unit.recording,
+            snr: unit.snr,
+            study: unit.study,
+            unit_id: unit.unit_id,
+            sorter: key,
+            sorting_results: {
+              num_matches: 0,
+              Accuracy: "0",
+              best_unit: 0,
+              matched_unit: 0,
+              unit_id: 0,
+              f_n: "0",
+              f_p: "0"
+            },
+            accuracy: 0
+          };
+          newUnits.push(blankSorterObj);
+        }
       }
-    }
-  });
+    });
+  }
   return newUnits;
 }
 
