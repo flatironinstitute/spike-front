@@ -73,6 +73,7 @@ export function flattenUnits(trueUnits, studies) {
   let newUnits = [];
   // TODO: Add new static list to replace sorters below
   if (studies.length) {
+    console.log("DIG IN FLATTEN 🍭");
     trueUnits.forEach(unit => {
       const myStudy = studies.filter(study => study.name === unit.study);
       const mySorters = myStudy[0].sorters

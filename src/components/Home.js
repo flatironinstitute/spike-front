@@ -23,7 +23,6 @@ class Home extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.units !== prevProps.units) {
-      console.log("DIG it updated 🛒 and units");
       let flatUnits = flattenUnits(this.props.units, this.props.studies);
       this.setState({ flatUnits: flatUnits });
     }
@@ -59,12 +58,6 @@ class Home extends Component {
       isEmpty(this.props.sorters);
     let sorters = this.props.sorters.length ? this.getSorters() : null;
     let studies = this.props.studies.length ? this.getStudies() : null;
-    // console.log(
-    //   "🌭",
-    //   this.props.units,
-    //   this.state.flatUnits,
-    //   this.props.studies
-    // );
     return (
       <div>
         <div className="container container__body">
