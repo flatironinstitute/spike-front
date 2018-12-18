@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router";
+
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as actionCreators from "../actions/actionCreators";
@@ -13,12 +14,12 @@ import Algos from "../components/Algos";
 import Navbar from "../components/Navbar";
 import SingleStudy from "../components/SingleStudy";
 import headerCopy from "../header-copy";
-// import {
-//   fetchRecordings,
-//   fetchSorters,
-//   fetchStudies,
-//   fetchUnits
-// } from "../actions/actionCreators";
+import {
+  fetchRecordings,
+  fetchSorters,
+  fetchStudies,
+  fetchUnits
+} from "../actions/actionCreators";
 
 class Routes extends Component {
   constructor(props) {
@@ -26,10 +27,10 @@ class Routes extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchStudies();
-    this.props.fetchRecordings();
-    this.props.fetchSorters();
-    this.props.fetchUnits();
+    fetchStudies();
+    fetchRecordings();
+    fetchSorters();
+    fetchUnits();
   }
 
   // async fetchRecordings() {
@@ -85,6 +86,7 @@ class Routes extends Component {
   // }
 
   render() {
+    console.log("🍍", this.props, this.state);
     return (
       <div>
         <Navbar />
@@ -122,4 +124,21 @@ class Routes extends Component {
   }
 }
 
-export default Routes;
+function mapStateToProps(state) {
+  return {
+    recordings: state.recordings,
+    studies: state.studies,
+    sorters: state.sorters,
+    units: state.units,
+    loading: state.loading
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(actionCreators, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Routes);

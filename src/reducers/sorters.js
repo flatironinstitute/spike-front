@@ -1,6 +1,15 @@
 import { REQUEST_SORTERS, RECEIVE_SORTERS } from "../actions/actionCreators";
 
-const sorters = (state = {}, action) => {
+const initialState = {
+  selectedStudy: null,
+  recordings: null,
+  sorters: null,
+  studies: null,
+  units: null,
+  loading: false
+};
+
+const sorters = (state = initialState, action) => {
   switch (action.type) {
     case REQUEST_SORTERS:
       return { ...state, loading: true };

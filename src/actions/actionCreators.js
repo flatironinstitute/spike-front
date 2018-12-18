@@ -22,82 +22,68 @@ export const selectStudy = study => ({
 });
 
 // Recordings
-export function requestRecordings() {
-  return {
-    type: REQUEST_RECORDINGS
-  };
-}
+export const requestRecordings = () => ({
+  type: REQUEST_RECORDINGS
+});
 
-export function receiveRecordings(recordings) {
-  console.log("in recieve recordings", recordings.recordings);
+export const receiveRecordings = recordings => {
+  console.log("in receive recordings", recordings.recordings);
   return {
     type: RECEIVE_RECORDINGS,
     recordings: recordings.recordings
   };
-}
+};
 
-export async function fetchRecordings() {
+export const fetchRecordings = dispatch => {
   requestRecordings();
-  let recordings = await getRecordings();
-  receiveRecordings(recordings);
-}
+  let recordings = getRecordings();
+  dispatch(receiveRecordings(recordings));
+};
 
 // Sorters
-export function requestSorters() {
-  return {
-    type: REQUEST_SORTERS
-  };
-}
+export const requestSorters = () => ({
+  type: REQUEST_SORTERS
+});
 
-export function receiveSorters(sorters) {
-  return {
-    type: RECEIVE_SORTERS,
-    sorters
-  };
-}
+export const receiveSorters = sorters => ({
+  type: RECEIVE_SORTERS,
+  sorters
+});
 
-export async function fetchSorters() {
+export const fetchSorters = () => {
   requestSorters();
-  let sorters = await getSorters();
+  let sorters = getSorters();
   receiveSorters(sorters);
-}
+};
 
 // Studies
-export function requestStudies() {
-  return {
-    type: REQUEST_STUDIES
-  };
-}
+export const requestStudies = () => ({
+  type: REQUEST_STUDIES
+});
 
-export function receiveStudies(studies) {
-  return {
-    type: RECEIVE_STUDIES,
-    studies
-  };
-}
+export const receiveStudies = studies => ({
+  type: RECEIVE_STUDIES,
+  studies
+});
 
-export async function fetchStudies() {
+export const fetchStudies = () => {
   requestStudies();
-  let studies = await getStudies();
+  let studies = getStudies();
   receiveStudies(studies);
-}
+};
 
 // Units
-export function requestUnits() {
-  return {
-    type: REQUEST_UNITS
-  };
-}
+export const requestUnits = () => ({
+  type: REQUEST_UNITS
+});
 
-export function receiveUnits(units) {
-  return {
-    type: RECEIVE_UNITS,
-    units
-  };
-}
+export const receiveUnits = units => ({
+  type: RECEIVE_UNITS,
+  units
+});
 
-export async function fetchUnits() {
+export const fetchUnits = () => {
   requestUnits();
-  let units = await getTrueUnits();
+  let units = getTrueUnits();
   receiveUnits(units);
-}
+};

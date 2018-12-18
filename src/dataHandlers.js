@@ -14,7 +14,6 @@ kbclient.setPairioConfig({
 
 // New data handling functions as of 11/16/18
 export async function getRecordings() {
-  console.log("IN GET RECORDINGS");
   let obj = await kbclient.loadObject(null, {
     key: {
       target: "spikeforest_website_dev_12_13_2018",
