@@ -14,6 +14,7 @@ kbclient.setPairioConfig({
 
 // New data handling functions as of 11/16/18
 export async function getRecordings() {
+  console.log("IN GET RECORDINGS");
   let obj = await kbclient.loadObject(null, {
     key: {
       target: "spikeforest_website_dev_12_13_2018",
@@ -22,7 +23,7 @@ export async function getRecordings() {
   });
   if (!obj) {
     console.log("Problem loading recordings object.");
-    return recordings;
+    return recordings.recordings;
   }
   return obj;
 }
@@ -36,7 +37,7 @@ export async function getStudies() {
   });
   if (!obj) {
     console.log("Problem loading studies object.");
-    return studies;
+    return studies.studies;
   }
   return obj;
 }
@@ -50,7 +51,7 @@ export async function getSorters() {
   });
   if (!obj) {
     console.log("Problem loading sorters object.");
-    return sorters;
+    return sorters.sorters;
   }
   return obj;
 }
@@ -64,7 +65,7 @@ export async function getTrueUnits() {
   });
   if (!obj) {
     console.log("Problem loading true units object.");
-    return units;
+    return units.true_units;
   }
   return obj;
 }

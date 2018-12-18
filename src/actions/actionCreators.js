@@ -1,30 +1,103 @@
+import {
+  getRecordings,
+  getStudies,
+  getSorters,
+  getTrueUnits
+} from "../dataHandlers";
+
+export const SELECT_STUDY = "SELECT_STUDY";
+export const REQUEST_RECORDINGS = "REQUEST_RECORDINGS";
+export const RECEIVE_RECORDINGS = "RECEIVE_RECORDINGS";
+export const REQUEST_SORTERS = "REQUEST_SORTERS";
+export const RECEIVE_SORTERS = "RECEIVE_SORTERS";
+export const REQUEST_UNITS = "REQUEST_UNITS";
+export const RECEIVE_UNITS = "RECEIVE_UNITS";
+export const REQUEST_STUDIES = "REQUEST_STUDIES";
+export const RECEIVE_STUDIES = "RECEIVE_STUDIES";
+
 // select study
-// TODO: should I use name or set an iD?
-export function selectStudy(studyId) {
+export const selectStudy = study => ({
+  type: SELECT_STUDY,
+  study
+});
+
+// Recordings
+export function requestRecordings() {
   return {
-    type: "SELECT_STUDY",
-    studyId
-  };
-}
-// select sorter
-export function selectSorter(sorterId) {
-  return {
-    type: "SELECT_SORTER",
-    sorterId
+    type: REQUEST_RECORDINGS
   };
 }
 
-// TODO: Can I use a blank sorter/study ID to make this work instead of functions? 🤔
-// deselect study
-export function deselectStudy() {
+export function receiveRecordings(recordings) {
+  console.log("in recieve recordings", recordings.recordings);
   return {
-    type: "DESELECT_STUDY"
+    type: RECEIVE_RECORDINGS,
+    recordings: recordings.recordings
   };
 }
 
-// deselect sorter
-export function deselectSorter() {
+export async function fetchRecordings() {
+  requestRecordings();
+  let recordings = await getRecordings();
+  receiveRecordings(recordings);
+}
+
+// Sorters
+export function requestSorters() {
   return {
-    type: "DESELECT_SORTER"
+    type: REQUEST_SORTERS
   };
+}
+
+export function receiveSorters(sorters) {
+  return {
+    type: RECEIVE_SORTERS,
+    sorters
+  };
+}
+
+export async function fetchSorters() {
+  requestSorters();
+  let sorters = await getSorters();
+  receiveSorters(sorters);
+}
+
+// Studies
+export function requestStudies() {
+  return {
+    type: REQUEST_STUDIES
+  };
+}
+
+export function receiveStudies(studies) {
+  return {
+    type: RECEIVE_STUDIES,
+    studies
+  };
+}
+
+export async function fetchStudies() {
+  requestStudies();
+  let studies = await getStudies();
+  receiveStudies(studies);
+}
+
+// Units
+export function requestUnits() {
+  return {
+    type: REQUEST_UNITS
+  };
+}
+
+export function receiveUnits(units) {
+  return {
+    type: RECEIVE_UNITS,
+    units
+  };
+}
+
+export async function fetchUnits() {
+  requestUnits();
+  let units = await getTrueUnits();
+  receiveUnits(units);
 }

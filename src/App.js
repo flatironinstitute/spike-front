@@ -1,4 +1,7 @@
 import React from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as actionCreators from "./actions/actionCreators";
 
 // import router dependencies
 import PropTypes from "prop-types";
@@ -17,4 +20,21 @@ App.propTypes = {
   history: PropTypes.object
 };
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    recordings: state.recordings,
+    studies: state.studies,
+    sorters: state.sorters,
+    units: state.units,
+    loading: state.loading
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(actionCreators, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

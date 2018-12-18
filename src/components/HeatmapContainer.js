@@ -13,6 +13,7 @@ class HeatmapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // TODO: Change this to accuracy filtered data
       builtData: [],
       accuracy: 0.8
     };

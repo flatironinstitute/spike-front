@@ -104,7 +104,7 @@ class Scatterplot extends Component {
             className="button primary-button"
             onClick={() => this.setState({ colorType: nextType[colorType] })}
           >
-            FAKE FILTER
+            FILTER
           </div>
         </div>
         <XYPlot

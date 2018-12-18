@@ -14,8 +14,9 @@ class Home extends Component {
     };
   }
 
+  // TODO: Move flatten units and map units to redux?
   componentDidMount() {
-    if (this.props.units.length) {
+    if (this.props.units) {
       let flatUnits = flattenUnits(this.props.units, this.props.studies);
       this.setState({ flatUnits: flatUnits });
     }
@@ -28,6 +29,14 @@ class Home extends Component {
     }
     if (this.state.flatUnits !== prevState.flatUnits) {
       this.mapUnits();
+    }
+    let loading =
+      isEmpty(this.state.flatUnits) ||
+      isEmpty(this.props.studies) ||
+      isEmpty(this.props.sorters);
+
+    if (!loading) {
+      this.setState({ isLoading: false });
     }
   }
 
@@ -52,24 +61,21 @@ class Home extends Component {
   }
 
   render() {
-    let loading =
-      isEmpty(this.state.flatUnits) ||
-      isEmpty(this.props.studies) ||
-      isEmpty(this.props.sorters);
-    let sorters = this.props.sorters.length ? this.getSorters() : null;
-    let studies = this.props.studies.length ? this.getStudies() : null;
+    console.log("🏠 👛", this.props, "🐍", this.state);
+    let sorters = this.props.sorters ? this.getSorters() : null;
+    let studies = this.props.studies ? this.getStudies() : null;
     return (
       <div>
         <div className="container container__body">
           <Header headerCopy={this.props.header} />
-          {loading ? (
-            <Preloader />
+          {this.state.loading ? (
+            /* <Preloader /> */
+            <p>Home</p>
           ) : (
             <div className="container__heatmap">
               <HeatmapContainer
                 studies={studies}
                 sorters={sorters}
-                allUnits={this.state.flatUnits}
                 unitsMap={this.state.unitsMap}
               />
             </div>

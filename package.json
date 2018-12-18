@@ -24,7 +24,8 @@
     "react-scripts": "2.1.0",
     "react-tabs": "^2.3.0",
     "react-vis": "^1.11.5",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",

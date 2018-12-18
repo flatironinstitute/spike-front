@@ -1,13 +1,19 @@
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
 
-import selectedSorter from "./selectedSorter";
+import recordings from "./recordings";
 import selectedStudy from "./selectedStudy";
+import sorters from "./sorters";
+import studies from "./studies";
+import units from "./units";
 
 const rootReducer = history =>
   combineReducers({
-    selectedSorter,
+    recordings,
     selectedStudy,
+    sorters,
+    studies,
+    units,
     router: connectRouter(history)
   });
 
