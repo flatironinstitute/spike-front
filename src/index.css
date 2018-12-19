@@ -642,7 +642,7 @@ li {
   margin-bottom: 5rem;
 }
 
-.heatmap-viz {
+.heatmap__viz {
   max-height: 650px;
   overflow: scroll;
 }
