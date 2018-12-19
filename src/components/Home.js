@@ -23,9 +23,20 @@ class Home extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.units !== prevProps.units && this.props.studies) {
-      let flatUnits = flattenUnits(this.props.units, this.props.studies);
-      this.setState({ flatUnits: flatUnits });
+    if (
+      this.props.units !== prevProps.units ||
+      this.props.studies !== prevProps.studies
+    ) {
+      if (this.props.units && this.props.studies) {
+        let flatUnits = flattenUnits(this.props.units, this.props.studies);
+        this.setState({ flatUnits: flatUnits });
+      } else {
+        console.log(
+          "🎳 one new not both",
+          this.props.units,
+          this.props.studies
+        );
+      }
     }
     if (this.state.flatUnits !== prevState.flatUnits) {
       this.mapUnits();

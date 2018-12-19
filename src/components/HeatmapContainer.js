@@ -99,14 +99,16 @@ class HeatmapContainer extends Component {
                 sorters={this.props.sorters}
               />
             </div>
-            {/* TODO: Refactor into a separate component */}
-            <div className="unitdetail col--6">
-              <StudySorterSummary
-                {...this.props}
-                accuracy={this.state.accuracy}
-                selectedNode={Object.values(this.state.builtData[0])}
-              />
-            </div>
+            {this.props.selectedStudy ? (
+              <div className="unitdetail col--6">
+                <StudySorterSummary
+                  {...this.props}
+                  accuracy={this.state.accuracy}
+                />
+              </div>
+            ) : (
+              <div />
+            )}
           </div>
         )}
       </div>
