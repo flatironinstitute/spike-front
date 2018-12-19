@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../images/logo.svg";
-import search from "../images/icon-search-wh.svg";
+// import search from "../images/icon-search-wh.svg";
 
 class Navbar extends Component {
   render() {
@@ -30,9 +30,9 @@ class Navbar extends Component {
             <NavLink className="nav__link" to="/about" activeClassName="active">
               About
             </NavLink>
-            <NavLink to="/">
+            {/* <NavLink to="/">
               <img src={search} className="nav__search" alt="search" />
-            </NavLink>
+            </NavLink> */}
           </div>
         </div>
       </div>

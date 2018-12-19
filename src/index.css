@@ -392,8 +392,9 @@ li {
 
 /* Navbar
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+
 .nav__wrapper {
-  height: 72px;
+  height: 50px;
   left: 0px;
   position: fixed;
   right: 0px;
@@ -402,7 +403,7 @@ li {
   z-index: 100;
   letter-spacing: 0.1rem;
   background: none none repeat scroll 0% 0% / auto padding-box border-box;
-  font: normal normal 400 normal 2rem / 7rem var(--sans);
+  font: normal normal 400 normal 1.4rem / 6rem var(--sans);
   cursor: pointer;
   background-color: white;
 }
@@ -418,11 +419,12 @@ li {
   padding: 0px 20px 0px 24px;
   text-decoration: none;
   white-space: nowrap;
+  display: inline;
 }
 .nav__logo {
   background-position: 0px 1px;
   display: inline-block;
-  height: 24px;
+  height: 20px;
   margin: 0px 20px 0px 0px;
   text-decoration: none;
 }
@@ -449,7 +451,7 @@ li {
   box-sizing: border-box;
   display: flex;
   float: right;
-  height: 72px;
+  height: 50px;
 }
 .nav__search {
   height: 24px;
@@ -731,7 +733,7 @@ li {
 
 .unitdetail__title {
   font-family: var(--serif);
-  margin-top: 10px;
+  margin-top: 1nav0px;
 }
 
 .unitdetail__copy {

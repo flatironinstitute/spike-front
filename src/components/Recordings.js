@@ -1,15 +1,10 @@
 import React, { Component } from "react";
 import Header from "./Header";
-import Error from "./Error";
 import ReactCollapsingTable from "react-collapsing-table";
 import Preloader from "./Preloader";
 import { isEmpty } from "../utils";
 
 class Recordings extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const studyColumns = [
       {
