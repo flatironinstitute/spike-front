@@ -87,7 +87,7 @@ class HeatmapRow extends Component {
                   this.props.selectStudy(d);
                 }}
               />
-              {hoveredNode && (
+              {/* {hoveredNode && (
                 <Hint
                   xType="literal"
                   yType="literal"
@@ -102,7 +102,7 @@ class HeatmapRow extends Component {
                   getY={data => gridHeight}
                   value={valueObj}
                 />
-              )}
+              )} */}
               <LabelSeries
                 data={data}
                 labelAnchorX="middle"
