@@ -22,7 +22,7 @@ export async function getRecordings() {
   });
   if (!obj) {
     console.log("Problem loading recordings object.");
-    return recordings.recordings;
+    // return recordings.recordings;
   }
   return obj;
 }
@@ -36,7 +36,7 @@ export async function getStudies() {
   });
   if (!obj) {
     console.log("Problem loading studies object.");
-    return studies.studies;
+    // return studies.studies;
   }
   return obj;
 }
@@ -50,7 +50,7 @@ export async function getSorters() {
   });
   if (!obj) {
     console.log("Problem loading sorters object.");
-    return sorters.sorters;
+    // return sorters.sorters;
   }
   return obj;
 }
@@ -64,7 +64,7 @@ export async function getTrueUnits() {
   });
   if (!obj) {
     console.log("Problem loading true units object.");
-    return units.true_units;
+    // return units.true_units;
   }
   return obj;
 }
@@ -72,6 +72,7 @@ export async function getTrueUnits() {
 export function flattenUnits(trueUnits, studies) {
   let newUnits = [];
   // TODO: Add new static list to replace sorters below
+  // TODO: Add this to redux and find a way to get rid of the need for studies?
   if (studies.length) {
     trueUnits.forEach(unit => {
       const myStudy = studies.filter(study => study.name === unit.study);

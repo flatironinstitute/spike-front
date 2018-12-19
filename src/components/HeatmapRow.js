@@ -26,8 +26,18 @@ class HeatmapRow extends Component {
     }
   }
 
+  getClassName() {
+    const colorMap = this.props.vizDatum.map(datum => datum.color);
+    colorMap.sort((a, b) => a - b);
+    let withColor = this.props.vizDatum.map(datum => {
+      datum.style = colorMap.indexOf(datum.color) > 2 ? { fill: "white" } : {};
+      return datum;
+    });
+    return withColor;
+  }
+
   render() {
-    const data = this.props.vizDatum;
+    let data = this.getClassName();
     const { hoveredNode } = this.state;
     const loading = isEmpty(data);
     const sorters = this.props.sorters;
