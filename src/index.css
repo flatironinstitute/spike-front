@@ -361,6 +361,8 @@ Use containers when you need a content area that has standard maximum width and 
 .container__heatmap--row {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
   width: 100%;
 }
 
@@ -729,7 +731,7 @@ li {
 
 .unitdetail__title {
   font-family: var(--serif);
-  margin-top: 200px;
+  margin-top: 10px;
 }
 
 .unitdetail__copy {
