@@ -30,14 +30,6 @@ class Home extends Component {
     if (this.state.flatUnits !== prevState.flatUnits) {
       this.mapUnits();
     }
-    let loading =
-      isEmpty(this.state.flatUnits) ||
-      isEmpty(this.props.studies) ||
-      isEmpty(this.props.sorters);
-
-    if (!loading) {
-      this.setState({ isLoading: false });
-    }
   }
 
   async mapUnits() {
@@ -61,16 +53,18 @@ class Home extends Component {
   }
 
   render() {
-    console.log("🏠 👛", this.props, "🐍", this.state);
+    let loading =
+      isEmpty(this.state.flatUnits) ||
+      isEmpty(this.props.studies) ||
+      isEmpty(this.props.sorters);
     let sorters = this.props.sorters ? this.getSorters() : null;
     let studies = this.props.studies ? this.getStudies() : null;
     return (
       <div>
         <div className="container container__body">
           <Header headerCopy={this.props.header} />
-          {this.state.loading ? (
-            /* <Preloader /> */
-            <p>Home</p>
+          {loading ? (
+            <Preloader />
           ) : (
             <div className="container__heatmap">
               <HeatmapContainer

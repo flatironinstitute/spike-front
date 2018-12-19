@@ -6,13 +6,13 @@ const initialState = {
   sorters: null,
   studies: null,
   units: null,
-  loading: false
+  loading: null
 };
 
 const selectedStudy = (state = initialState, action) => {
   switch (action.type) {
     case SELECT_STUDY:
-      return { ...state, selectedStudy: action.study };
+      return action.study;
     default:
       return state;
   }

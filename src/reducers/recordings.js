@@ -1,7 +1,4 @@
-import {
-  REQUEST_RECORDINGS,
-  RECEIVE_RECORDINGS
-} from "../actions/actionCreators";
+import { RECEIVE_RECORDINGS } from "../actions/actionCreators";
 
 const initialState = {
   selectedStudy: null,
@@ -9,16 +6,13 @@ const initialState = {
   sorters: null,
   studies: null,
   units: null,
-  loading: false
+  loading: null
 };
 
 const recordings = (state = initialState, action) => {
-  console.log("in the recordings reducer", state, action);
   switch (action.type) {
-    case REQUEST_RECORDINGS:
-      return { ...state, loading: true };
     case RECEIVE_RECORDINGS:
-      return { ...state, recordings: action.recordings, loading: false };
+      return action.recordings;
     default:
       return state;
   }

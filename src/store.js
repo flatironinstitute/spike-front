@@ -12,7 +12,7 @@ const defaultState = {
   sorters: null,
   studies: null,
   units: null,
-  loading: false
+  loading: null
 };
 
 export const history = createBrowserHistory();

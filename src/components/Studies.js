@@ -4,6 +4,7 @@ import StudiesList from "./StudiesList";
 
 class Studies extends Component {
   render() {
+    console.log(this.props);
     return (
       <div>
         <div className="container container__body">

@@ -1,4 +1,4 @@
-import { REQUEST_UNITS, RECEIVE_UNITS } from "../actions/actionCreators";
+import { RECEIVE_UNITS } from "../actions/actionCreators";
 
 const initialState = {
   selectedStudy: null,
@@ -6,15 +6,13 @@ const initialState = {
   sorters: null,
   studies: null,
   units: null,
-  loading: false
+  loading: null
 };
 
 const units = (state = initialState, action) => {
   switch (action.type) {
-    case REQUEST_UNITS:
-      return { ...state, loading: true };
     case RECEIVE_UNITS:
-      return { ...state, units: action.units, loading: false };
+      return action.units;
     default:
       return state;
   }

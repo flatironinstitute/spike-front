@@ -1,4 +1,4 @@
-import { REQUEST_SORTERS, RECEIVE_SORTERS } from "../actions/actionCreators";
+import { RECEIVE_SORTERS } from "../actions/actionCreators";
 
 const initialState = {
   selectedStudy: null,
@@ -6,15 +6,13 @@ const initialState = {
   sorters: null,
   studies: null,
   units: null,
-  loading: false
+  loading: null
 };
 
 const sorters = (state = initialState, action) => {
   switch (action.type) {
-    case REQUEST_SORTERS:
-      return { ...state, loading: true };
     case RECEIVE_SORTERS:
-      return { ...state, sorters: action.sorters, loading: false };
+      return action.sorters;
     default:
       return state;
   }
