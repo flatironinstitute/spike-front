@@ -49,7 +49,7 @@ class HeatmapRow extends Component {
         {loading ? (
           <Preloader />
         ) : (
-          <div className="App">
+          <div className="App heatmap-row">
             <XYPlot
               xType="ordinal"
               yType="ordinal"
