@@ -49,7 +49,7 @@ class HeatmapViz extends Component {
           <div className="heatmap__container">
             <div className="heatmap__legend">
               <ContinuousColorLegend
-                width={600}
+                width={580}
                 startColor={"#fafafd"}
                 endColor={"#384ca2"}
                 startTitle="Least Units Found"

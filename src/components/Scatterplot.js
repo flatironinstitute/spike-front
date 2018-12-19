@@ -99,14 +99,14 @@ class Scatterplot extends Component {
     ];
     return (
       <div className="canvas-wrapper">
-        <div className="canvas-example-controls">
+        {/* <div className="canvas-example-controls">
           <div
             className="button primary-button"
             onClick={() => this.setState({ colorType: nextType[colorType] })}
           >
             FILTER
           </div>
-        </div>
+        </div> */}
         <XYPlot
           onMouseLeave={() => this.setState({ hoveredNode: null })}
           width={500}
