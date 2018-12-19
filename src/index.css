@@ -642,6 +642,11 @@ li {
   margin-bottom: 5rem;
 }
 
+.heatmap__viz {
+  max-height: 650px;
+  overflow: scroll;
+}
+
 .rv-continuous-color-legend .rv-gradient {
   height: 12px !important;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.2) !important;
@@ -656,7 +661,7 @@ li {
 }
 
 .rv-xy-plot__series--label-text {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
   cursor: default !important;
 }
@@ -687,7 +692,7 @@ li {
 /* Range Slider
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .slider__container {
-  width: 600px;
+  width: 580px;
   margin: 10px 0;
 }
 
@@ -724,6 +729,7 @@ li {
 
 .unitdetail__title {
   font-family: var(--serif);
+  margin-top: 200px;
 }
 
 .unitdetail__copy {

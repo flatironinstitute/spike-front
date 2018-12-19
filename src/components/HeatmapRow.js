@@ -17,17 +17,27 @@ class HeatmapRow extends Component {
     this.state = { hoveredNode: null };
     this.dims = {
       height: 50,
-      width: 700
+      width: 620
     };
-    this.margin = { left: 190, right: 120, top: 5, bottom: 5 };
+    this.margin = { left: 190, right: 80, top: 5, bottom: 5 };
     if (this.props.index === 0) {
       this.dims.height = 110;
       this.margin.top = 65;
     }
   }
 
+  getClassName() {
+    let colorMap = this.props.vizDatum.map(datum => datum.color);
+    colorMap.sort((a, b) => a - b);
+    let withColor = this.props.vizDatum.map(datum => {
+      datum.style = colorMap.indexOf(datum.color) > 2 ? { fill: "white" } : {};
+      return datum;
+    });
+    return withColor;
+  }
+
   render() {
-    const data = this.props.vizDatum;
+    let data = this.getClassName();
     const { hoveredNode } = this.state;
     const loading = isEmpty(data);
     const sorters = this.props.sorters;
@@ -49,7 +59,7 @@ class HeatmapRow extends Component {
         {loading ? (
           <Preloader />
         ) : (
-          <div className="App">
+          <div className="App heatmap-row">
             <XYPlot
               xType="ordinal"
               yType="ordinal"

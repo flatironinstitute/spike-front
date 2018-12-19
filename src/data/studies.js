@@ -1,6 +1,5 @@
-{
-  "studies": [
-    {
+const studies = {
+  "studies": [{
       "name": "magland_synth_noise10_K10_C4",
       "study_set": "magland_synth",
       "directory": "kbucket://15734439d8cf/groundtruth/magland_synth/datasets_noise10_K10_C4",
@@ -50,3 +49,5 @@
     }
   ]
 }
+
+export default studies;

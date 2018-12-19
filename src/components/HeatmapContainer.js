@@ -13,6 +13,7 @@ class HeatmapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // TODO: Change this to accuracy filtered data
       builtData: [],
       accuracy: 0.8
     };
@@ -77,7 +78,9 @@ class HeatmapContainer extends Component {
                 </h4>
                 <p>Number of groundtruth units above accuracy threshold</p>
                 <div className="slider__copy">
-                  <p>Minimum accuracy: {Math.round(accuracy * 100) / 100}</p>
+                  <p>
+                    <b>Minimum accuracy: {Math.round(accuracy * 100) / 100}</b>
+                  </p>
                 </div>
                 <div className="slider__vertical">
                   <Slider
@@ -96,14 +99,16 @@ class HeatmapContainer extends Component {
                 sorters={this.props.sorters}
               />
             </div>
-            {/* TODO: Refactor into a separate component */}
-            <div className="unitdetail col--8">
-              <StudySorterSummary
-                {...this.props}
-                accuracy={this.state.accuracy}
-                selectedNode={Object.values(this.state.builtData[0])}
-              />
-            </div>
+            {this.props.selectedStudy ? (
+              <div className="unitdetail col--6">
+                <StudySorterSummary
+                  {...this.props}
+                  accuracy={this.state.accuracy}
+                />
+              </div>
+            ) : (
+              <div />
+            )}
           </div>
         )}
       </div>

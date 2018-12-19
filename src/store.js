@@ -1,15 +1,28 @@
-import { createStore, compose } from "redux";
+import { applyMiddleware, compose, createStore } from "redux";
+import { createBrowserHistory } from "history";
 
-// import the root reducer
-import rootReducer from "./reducers/index";
+import { routerMiddleware } from "connected-react-router";
+import rootReducer from "./reducers";
+import thunk from "redux-thunk";
 
 // create an object for the default data
 const defaultState = {
   selectedStudy: null,
-  selectedSorter: null
+  recordings: null,
+  sorters: null,
+  studies: null,
+  units: null,
+  loading: null
 };
 
-// TODO: look at redux-async-intitial-state for handling async initial state and local storage
-const store = createStore(rootReducer, defaultState);
+export const history = createBrowserHistory();
+
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+export const store = createStore(
+  rootReducer(history),
+  defaultState,
+  composeEnhancer(applyMiddleware(thunk, routerMiddleware(history)))
+);
 
 export default store;

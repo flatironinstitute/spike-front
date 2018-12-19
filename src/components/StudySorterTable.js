@@ -62,35 +62,32 @@ class StudySorterTable extends Component {
               <i>Sortware and other containers, GPU, NVIDA</i>)
             </p>
             <p>
-              here is something about that fictional character who primarily
-              appears in Nintendo's Mario franchise. Created by Japanese video
-              game designer Shigeru Miyamoto, he is portrayed as a citizen of
-              the Mushroom Kingdom and is one of Princess Peach's most loyal
-              attendants; constantly working on her behalf. He is usually seen
-              as a non-player character (NPC) who provides assistance to Mario
-              and his friends in most games, but there are times when Toad(s)
-              takes center stage and appears as a protagonist, as seen in Super
-              Mario Bros. 2, Wario's Woods, Super Mario 3D World, and Captain
-              Toad: Treasure Tracker.
+              Didactic text to come about the dataset. Lorem ipsum dolor sit
+              amet, consectetur adipiscing elit. Pellentesque vehicula nisi
+              vitae ligula fermentum rhoncus. Vestibulum eget aliquet erat.
+              Curabitur ullamcorper imperdiet leo quis semper. Phasellus
+              fringilla lorem quis congue.
             </p>
             <p>
               Source:{" "}
               <a
-                href="https://en.wikipedia.org/wiki/Toad_(Nintendo)"
+                href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5743236/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Wikipedia
+                Chung JE, Magland JF, Barnett AH, et al. A Fully Automated
+                Approach to Spike Sorting. Neuron. 2017;95(6):1381-1394.e6.
               </a>
             </p>
             <p>
               Source:
               <a
-                href="https://en.wikipedia.org/wiki/Toad_(Nintendo)"
+                href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5743236/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Wikipedia
+                Chung JE, Magland JF, Barnett AH, et al. A Fully Automated
+                Approach to Spike Sorting. Neuron. 2017;95(6):1381-1394.e6.
               </a>
             </p>
           </TabPanel>

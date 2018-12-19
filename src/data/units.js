@@ -1,6 +1,5 @@
-{
-  "true_units": [
-    {
+const units = {
+  "true_units": [{
       "unit_id": 1,
       "snr": 25.396783859187707,
       "peak_channel": 0,
@@ -43362,3 +43361,5 @@
     }
   ]
 }
+
+export default units;

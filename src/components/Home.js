@@ -14,19 +14,29 @@ class Home extends Component {
     };
   }
 
+  // TODO: Move flatten units and map units to redux?
   componentDidMount() {
-    if (this.props.units.length && this.props.studies.length) {
+    if (this.props.units && this.props.studies) {
       let flatUnits = flattenUnits(this.props.units, this.props.studies);
       this.setState({ flatUnits: flatUnits });
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("🏡 DID UPDATE");
-    if (this.props.units !== prevProps.units && this.props.studies.length) {
-      console.log("🏡 inside yes");
-      let flatUnits = flattenUnits(this.props.units, this.props.studies);
-      this.setState({ flatUnits: flatUnits });
+    if (
+      this.props.units !== prevProps.units ||
+      this.props.studies !== prevProps.studies
+    ) {
+      if (this.props.units && this.props.studies) {
+        let flatUnits = flattenUnits(this.props.units, this.props.studies);
+        this.setState({ flatUnits: flatUnits });
+      } else {
+        console.log(
+          "🎳 one new not both",
+          this.props.units,
+          this.props.studies
+        );
+      }
     }
     if (this.state.flatUnits !== prevState.flatUnits) {
       this.mapUnits();
@@ -58,8 +68,8 @@ class Home extends Component {
       isEmpty(this.state.flatUnits) ||
       isEmpty(this.props.studies) ||
       isEmpty(this.props.sorters);
-    let sorters = this.props.sorters.length ? this.getSorters() : null;
-    let studies = this.props.studies.length ? this.getStudies() : null;
+    let sorters = this.props.sorters ? this.getSorters() : null;
+    let studies = this.props.studies ? this.getStudies() : null;
     return (
       <div>
         <div className="container container__body">
@@ -71,7 +81,6 @@ class Home extends Component {
               <HeatmapContainer
                 studies={studies}
                 sorters={sorters}
-                allUnits={this.state.flatUnits}
                 unitsMap={this.state.unitsMap}
               />
             </div>

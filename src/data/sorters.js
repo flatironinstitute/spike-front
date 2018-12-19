@@ -1,6 +1,5 @@
-{
-  "sorters": [
-    {
+const sorters = {
+  "sorters": [{
       "name": "MountainSort4-thr3",
       "processor_name": "MountainSort4",
       "params": {
@@ -22,7 +21,12 @@
     {
       "name": "SpykingCircus",
       "processor_name": "SpykingCircus",
-      "params": { "detect_sign": -1, "adjacency_radius": 100 }
+      "params": {
+        "detect_sign": -1,
+        "adjacency_radius": 100
+      }
     }
   ]
 }
+
+export default sorters;

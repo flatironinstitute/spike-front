@@ -1,4 +1,4 @@
-import { SELECT_STUDY } from "../actions/actionCreators";
+import { RECEIVE_UNITS } from "../actions/actionCreators";
 
 const initialState = {
   selectedStudy: null,
@@ -9,13 +9,13 @@ const initialState = {
   loading: null
 };
 
-const selectedStudy = (state = initialState, action) => {
+const units = (state = initialState, action) => {
   switch (action.type) {
-    case SELECT_STUDY:
-      return action.study;
+    case RECEIVE_UNITS:
+      return action.units;
     default:
       return state;
   }
 };
 
-export default selectedStudy;
+export default units;

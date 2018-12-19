@@ -41,14 +41,19 @@ class Scatterplot extends Component {
       u: unit,
       x: Math.round(unit.snr * 100) / 100,
       y: unit.accuracy,
-      size: unit.num_events,
+      size: this.getSqrt(unit.num_events),
       color: unit.unit_id * 10,
       opacity: unit.accuracy * 0.5 + 0.5,
-      recording: unit.recording
+      recording: unit.recording,
+      num_events: unit.num_events
     }));
     let min = this.getMinSNR(newUnits);
     let max = this.getMaxSNR(newUnits);
     this.setState({ data: newUnits, minSNR: min, maxSNR: max });
+  }
+
+  getSqrt(num_events) {
+    return Math.sqrt(num_events);
   }
 
   getMinSNR(data) {
@@ -73,7 +78,7 @@ class Scatterplot extends Component {
     const markSeriesProps = {
       animation: true,
       className: "mark-series-example",
-      sizeRange: [0, 10],
+      sizeRange: [0, 15],
       seriesId: "my-example-scatterplot",
       colorRange: colorRanges[colorType],
       opacityType: "literal",
@@ -86,7 +91,7 @@ class Scatterplot extends Component {
         : null,
       accuracy: hoveredNode ? hoveredNode.y : null,
       snr: hoveredNode ? hoveredNode.x : null,
-      num_events: hoveredNode ? hoveredNode.size : null
+      num_events: hoveredNode ? hoveredNode.num_events : null
     };
     let lineObjArr = [
       { x: minSNR, y: this.props.accuracy },
@@ -94,17 +99,17 @@ class Scatterplot extends Component {
     ];
     return (
       <div className="canvas-wrapper">
-        <div className="canvas-example-controls">
+        {/* <div className="canvas-example-controls">
           <div
             className="button primary-button"
             onClick={() => this.setState({ colorType: nextType[colorType] })}
           >
-            FAKE FILTER
+            FILTER
           </div>
-        </div>
+        </div> */}
         <XYPlot
           onMouseLeave={() => this.setState({ hoveredNode: null })}
-          width={550}
+          width={500}
           height={400}
         >
           <VerticalGridLines />
