@@ -78,7 +78,9 @@ class HeatmapContainer extends Component {
                 </h4>
                 <p>Number of groundtruth units above accuracy threshold</p>
                 <div className="slider__copy">
-                  <p>Minimum accuracy: {Math.round(accuracy * 100) / 100}</p>
+                  <p>
+                    <b>Minimum accuracy: {Math.round(accuracy * 100) / 100}</b>
+                  </p>
                 </div>
                 <div className="slider__vertical">
                   <Slider

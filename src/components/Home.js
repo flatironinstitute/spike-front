@@ -16,14 +16,14 @@ class Home extends Component {
 
   // TODO: Move flatten units and map units to redux?
   componentDidMount() {
-    if (this.props.units) {
+    if (this.props.units && this.props.studies) {
       let flatUnits = flattenUnits(this.props.units, this.props.studies);
       this.setState({ flatUnits: flatUnits });
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.units !== prevProps.units) {
+    if (this.props.units !== prevProps.units && this.props.studies) {
       let flatUnits = flattenUnits(this.props.units, this.props.studies);
       this.setState({ flatUnits: flatUnits });
     }

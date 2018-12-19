@@ -2,34 +2,15 @@ import React, { Component } from "react";
 import Header from "./Header";
 import Error from "./Error";
 import ReactCollapsingTable from "react-collapsing-table";
+import Preloader from "./Preloader";
+import { isEmpty } from "../utils";
 
 class Recordings extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      studies: [],
-      errors: []
-    };
   }
 
   render() {
-    const setColumns = [
-      {
-        accessor: "name",
-        label: "Study Set Name",
-        priorityLevel: 1,
-        position: 1,
-        minWidth: 100,
-        sortable: true
-      },
-      {
-        accessor: "number",
-        label: "Number of recordings",
-        priorityLevel: 3,
-        position: 3,
-        minWidth: 100
-      }
-    ];
     const studyColumns = [
       {
         accessor: "name",
@@ -127,42 +108,39 @@ class Recordings extends Component {
         minWidth: 100
       }
     ];
+    let loading = isEmpty(this.props.studies) || isEmpty(this.props.recordings);
     return (
       <div>
-        {this.state.errors.length ? <Error errors={this.state.errors} /> : null}
         <div className="container container__body">
           <Header headerCopy={this.props.header} />
-          <div className="recordings">
-            <h3 className="recordings__title">Study Sets</h3>
-            <ReactCollapsingTable
-              showPagination={true}
-              rows={this.props.studySets}
-              columns={setColumns}
-              rowSize={15}
-            />
-          </div>
-          <div className="recordings">
-            <h3 className="recordings__title">Studies</h3>
-            <p>
-              A study is a collection of recordings. Sorting results may be
-              aggregated over a study.
-            </p>
-            <ReactCollapsingTable
-              showPagination={true}
-              rows={this.props.studies}
-              columns={studyColumns}
-              rowSize={15}
-            />
-          </div>
-          <div className="recordings">
-            <h3 className="recordings__title">Recordings</h3>
-            <ReactCollapsingTable
-              showPagination={true}
-              rows={this.props.recordings}
-              columns={recordingColumns}
-              rowSize={15}
-            />
-          </div>
+          {loading ? (
+            <Preloader />
+          ) : (
+            <div>
+              <div className="recordings">
+                <h3 className="recordings__title">Studies</h3>
+                <p>
+                  A study is a collection of recordings. Sorting results may be
+                  aggregated over a study.
+                </p>
+                <ReactCollapsingTable
+                  showPagination={true}
+                  rows={this.props.studies}
+                  columns={studyColumns}
+                  rowSize={15}
+                />
+              </div>
+              <div className="recordings">
+                <h3 className="recordings__title">Recordings</h3>
+                <ReactCollapsingTable
+                  showPagination={true}
+                  rows={this.props.recordings}
+                  columns={recordingColumns}
+                  rowSize={15}
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );

@@ -3,7 +3,7 @@ const headers = {
     id: "head01",
     name: "About",
     paragraphs: [
-      "Powder chocolate jelly gummi bears icing jujubes icing ice cream icing. Chocolate sesame snaps cotton candy lemon drops cotton candy dragée oat cake carrot cake. Biscuit gummies lollipop chupa chups. Bonbon marzipan tiramisu pie chocolate bar donut."
+      "Basic background information on the methods, data, and collaborators to come"
     ]
   },
 
@@ -19,7 +19,7 @@ const headers = {
     id: "head03",
     name: "",
     paragraphs: [
-      "Below are the types of data being analyzed. Add more text here please. Biscuit gummies lollipop chupa chups. Bonbon marzipan tiramisu pie chocolate bar donut."
+      "Below are the types of data being analyzed. Add more text here please."
     ]
   },
 
