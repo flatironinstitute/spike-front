@@ -16,7 +16,7 @@ kbclient.setPairioConfig({
 export async function getRecordings() {
   let obj = await kbclient.loadObject(null, {
     key: {
-      target: "spikeforest_website_dev_12_18_2018",
+      target: "spikeforest_website_dev_12_19_2018",
       name: "recordings"
     }
   });
@@ -30,7 +30,7 @@ export async function getRecordings() {
 export async function getStudies() {
   let obj = await kbclient.loadObject(null, {
     key: {
-      target: "spikeforest_website_dev_12_18_2018",
+      target: "spikeforest_website_dev_12_19_2018",
       name: "studies"
     }
   });
@@ -44,7 +44,7 @@ export async function getStudies() {
 export async function getSorters() {
   let obj = await kbclient.loadObject(null, {
     key: {
-      target: "spikeforest_website_dev_12_18_2018",
+      target: "spikeforest_website_dev_12_19_2018",
       name: "sorters"
     }
   });
