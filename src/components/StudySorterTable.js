@@ -12,13 +12,14 @@ class StudySorterTable extends Component {
   }
   render() {
     const { selectedStudy, accuracy } = this.props;
+    console.log("🌻", this.props);
     return (
       <div>
         <Tabs>
           <TabList>
             <Tab>Scatterplot</Tab>
-            <Tab>Details</Tab>
-            <Tab>Configuration</Tab>
+            <Tab>Study</Tab>
+            <Tab>Sorter</Tab>
             <Tab disabled>Other</Tab>
           </TabList>
           <TabPanel>

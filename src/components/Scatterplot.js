@@ -122,15 +122,7 @@ class Scatterplot extends Component {
             strokeDasharray="7, 3"
             data={lineObjArr}
           />
-          {hoveredNode && (
-            <Hint
-              value={valueObj}
-              getX={d => {
-                return d.snr;
-              }}
-              getY={d => d.accuracy}
-            />
-          )}
+          {hoveredNode && <Hint value={valueObj} />}
         </XYPlot>
       </div>
     );
