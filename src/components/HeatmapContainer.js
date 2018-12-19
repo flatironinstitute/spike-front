@@ -98,7 +98,7 @@ class HeatmapContainer extends Component {
               />
             </div>
             {/* TODO: Refactor into a separate component */}
-            <div className="unitdetail col--8">
+            <div className="unitdetail col--6">
               <StudySorterSummary
                 {...this.props}
                 accuracy={this.state.accuracy}

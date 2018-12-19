@@ -109,7 +109,7 @@ class Scatterplot extends Component {
         </div>
         <XYPlot
           onMouseLeave={() => this.setState({ hoveredNode: null })}
-          width={550}
+          width={500}
           height={400}
         >
           <VerticalGridLines />

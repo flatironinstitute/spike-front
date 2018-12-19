@@ -17,7 +17,7 @@ class HeatmapRow extends Component {
     this.state = { hoveredNode: null };
     this.dims = {
       height: 50,
-      width: 700
+      width: 600
     };
     this.margin = { left: 190, right: 120, top: 5, bottom: 5 };
     if (this.props.index === 0) {
