@@ -16,10 +16,6 @@ import SingleStudy from "../components/SingleStudy";
 import headerCopy from "../header-copy";
 
 class Routes extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   async componentDidMount() {
     this.props.fetchStudies();
     this.props.fetchSorters();

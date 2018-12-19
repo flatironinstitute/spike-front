@@ -71,10 +71,10 @@ class Scatterplot extends Component {
       typeA: ["#59E4EC", "#0D676C"],
       typeB: ["#EFC1E3", "#B52F93"]
     };
-    const nextType = {
-      typeA: "typeB",
-      typeB: "typeA"
-    };
+    // const nextType = {
+    //   typeA: "typeB",
+    //   typeB: "typeA"
+    // };
     const markSeriesProps = {
       animation: true,
       className: "mark-series-example",

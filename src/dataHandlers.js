@@ -12,59 +12,79 @@ kbclient.setPairioConfig({
   collections: ["spikeforest"]
 });
 
+export async function asyncReturn(json) {
+  return json;
+}
+
 // New data handling functions as of 11/16/18
 export async function getRecordings() {
-  let obj = await kbclient.loadObject(null, {
-    key: {
-      target: "spikeforest_website_dev_12_19_2018",
-      name: "recordings"
-    }
-  });
+  let obj = null;
+  if (process.env.REACT_APP_USE_LOCAL_DATA) {
+    obj = await asyncReturn(recordings);
+  } else {
+    obj = await kbclient.loadObject(null, {
+      key: {
+        target: "spikeforest_website_dev_12_19_2018",
+        name: "recordings"
+      }
+    });
+  }
   if (!obj) {
     console.log("Problem loading recordings object.");
-    // return recordings.recordings;
   }
   return obj;
 }
 
 export async function getStudies() {
-  let obj = await kbclient.loadObject(null, {
-    key: {
-      target: "spikeforest_website_dev_12_19_2018",
-      name: "studies"
-    }
-  });
+  let obj = null;
+  if (process.env.REACT_APP_USE_LOCAL_DATA) {
+    obj = await asyncReturn(studies);
+  } else {
+    obj = await kbclient.loadObject(null, {
+      key: {
+        target: "spikeforest_website_dev_12_19_2018",
+        name: "studies"
+      }
+    });
+  }
   if (!obj) {
     console.log("Problem loading studies object.");
-    // return studies.studies;
   }
   return obj;
 }
 
 export async function getSorters() {
-  let obj = await kbclient.loadObject(null, {
-    key: {
-      target: "spikeforest_website_dev_12_19_2018",
-      name: "sorters"
-    }
-  });
+  let obj = null;
+  if (process.env.REACT_APP_USE_LOCAL_DATA) {
+    obj = await asyncReturn(sorters);
+  } else {
+    obj = await kbclient.loadObject(null, {
+      key: {
+        target: "spikeforest_website_dev_12_19_2018",
+        name: "sorters"
+      }
+    });
+  }
   if (!obj) {
     console.log("Problem loading sorters object.");
-    // return sorters.sorters;
   }
   return obj;
 }
 
 export async function getTrueUnits() {
-  let obj = await kbclient.loadObject(null, {
-    key: {
-      target: "spikeforest_website_dev_12_18_2018",
-      name: "true_units"
-    }
-  });
+  let obj = null;
+  if (process.env.REACT_APP_USE_LOCAL_DATA) {
+    obj = await asyncReturn(units);
+  } else {
+    obj = await kbclient.loadObject(null, {
+      key: {
+        target: "spikeforest_website_dev_12_18_2018",
+        name: "true_units"
+      }
+    });
+  }
   if (!obj) {
     console.log("Problem loading true units object.");
-    // return units.true_units;
   }
   return obj;
 }
