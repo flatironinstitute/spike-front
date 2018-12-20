@@ -1,7 +1,7 @@
-import recordings from "./data/recordings";
-import sorters from "./data/sorters";
-import studies from "./data/studies";
-import units from "./data/units";
+//import recordings from "./data/recordings";
+//import sorters from "./data/sorters";
+//import studies from "./data/studies";
+//import units from "./data/units";
 
 const KBucketClient = require("@magland/kbucket").KBucketClient;
 let kbclient = new KBucketClient();
@@ -12,13 +12,47 @@ kbclient.setPairioConfig({
   collections: ["spikeforest"]
 });
 
+const s_targets=[
+  'spikeforest_website_12_19_2018_magland_synth',
+  'spikeforest_website_12_19_2018_mearec',
+  'spikeforest_website_12_19_2018_bionet8c',
+  'spikeforest_website_12_19_2018_bionet32c',
+  'spikeforest_website_12_19_2018_paired'
+]
+
+async function load_data_jfm(targets,name,fieldname) {
+  console.log(':::::::::::::::::: loading',targets,name,fieldname);
+  let ret=[]
+  for (let i=0; i<targets.length; i++) {
+    let obj = await kbclient.loadObject(null, {
+      key: {
+        target: targets[i],
+        name: name
+      }
+    });
+    console.log(obj);
+    let tmp=obj[fieldname];
+    for (let j in tmp) {
+      ret.push(tmp[j]);
+    }
+  }
+  console.log(':::::::::::::::::: loaded',targets,name,fieldname,ret.length);
+  let ret2={};
+  ret2[fieldname]=ret;
+  return ret2;
+}
+
 export async function asyncReturn(json) {
   return json;
 }
 
 // New data handling functions as of 11/16/18
 export async function getRecordings() {
+  return await load_data_jfm(s_targets,'recordings','recordings');
+
+  /*
   let obj = null;
+
   if (process.env.REACT_APP_USE_LOCAL_DATA) {
     obj = await asyncReturn(recordings);
   } else {
@@ -33,9 +67,13 @@ export async function getRecordings() {
     console.log("Problem loading recordings object.");
   }
   return obj;
+  */
 }
 
 export async function getStudies() {
+  return await load_data_jfm(s_targets,'studies','studies');
+
+  /*
   let obj = null;
   if (process.env.REACT_APP_USE_LOCAL_DATA) {
     obj = await asyncReturn(studies);
@@ -51,9 +89,13 @@ export async function getStudies() {
     console.log("Problem loading studies object.");
   }
   return obj;
+  */
 }
 
 export async function getSorters() {
+  return await load_data_jfm(s_targets,'sorters','sorters');
+
+  /*
   let obj = null;
   if (process.env.REACT_APP_USE_LOCAL_DATA) {
     obj = await asyncReturn(sorters);
@@ -69,9 +111,13 @@ export async function getSorters() {
     console.log("Problem loading sorters object.");
   }
   return obj;
+  */
 }
 
 export async function getTrueUnits() {
+  return await load_data_jfm(s_targets,'true_units','true_units');
+
+  /*
   let obj = null;
   if (process.env.REACT_APP_USE_LOCAL_DATA) {
     obj = await asyncReturn(units);
@@ -87,6 +133,7 @@ export async function getTrueUnits() {
     console.log("Problem loading true units object.");
   }
   return obj;
+  */
 }
 
 export function flattenUnits(trueUnits, studies) {
