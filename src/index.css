@@ -758,3 +758,7 @@ li {
   align-items: flex-end;
   margin-bottom: 2rem;
 }
+
+.tab-header__bundle {
+  font-size: 1.4rem;
+}

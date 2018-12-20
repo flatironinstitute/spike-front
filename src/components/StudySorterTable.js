@@ -106,6 +106,14 @@ class StudySorterTable extends Component {
                 <b>PRM Template Name: </b>
                 {sorter.params.prm_template_name}
               </li>
+              <li>
+                <b>Processor Name: </b>
+                {sorter.params.processor_name}
+              </li>
+              <li>
+                <b>Processor Version: </b>
+                {sorter.params.processor_version}
+              </li>
             </ul>
             <p>
               Didactic text to come about the dataset. Lorem ipsum dolor sit

@@ -14,7 +14,7 @@ import { isEmpty } from "../utils";
 class HeatmapRow extends Component {
   constructor(props) {
     super(props);
-    this.state = { hoveredNode: null };
+    this.state = { hoveredNode: null, labelData: null, rowData: null };
     this.dims = {
       height: 50,
       width: 620
@@ -26,34 +26,52 @@ class HeatmapRow extends Component {
     }
   }
 
-  getClassName() {
+  componentDidMount() {
+    if (this.props.vizDatum) {
+      this.setLabelData();
+      this.setRowData();
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.selectedStudy !== prevProps.selectedStudy) {
+      this.setRowData();
+    }
+  }
+
+  setLabelData() {
     let colorMap = this.props.vizDatum.map(datum => datum.color);
     colorMap.sort((a, b) => a - b);
     let withColor = this.props.vizDatum.map(datum => {
       datum.style = colorMap.indexOf(datum.color) > 2 ? { fill: "white" } : {};
       return datum;
     });
-    return withColor;
+    this.setState({
+      labelData: withColor
+    });
+  }
+
+  setRowData() {
+    const hoverStroke = {
+      stroke: "#f28b00",
+      strokeWidth: 0.5
+    };
+    let withSelectedStudy = this.props.vizDatum.map(datum => {
+      if (this.props.selectedStudy && this.props.selectedStudy === datum) {
+        datum.style = hoverStroke;
+      } else {
+        datum.style = {};
+      }
+      return datum;
+    });
+    this.setState({
+      rowData: withSelectedStudy
+    });
   }
 
   render() {
-    let data = this.getClassName();
-    const { hoveredNode } = this.state;
-    const loading = isEmpty(data);
-    const sorters = this.props.sorters;
-    let base = this.dims.width - (this.margin.left + this.margin.right);
-    let midpoint = sorters.length * 0.5;
-    let gridWidth = base / sorters.length;
-    let gridHeight = 50;
-    let valueObj = {
-      sorter: hoveredNode ? hoveredNode.sorter : null,
-      study: hoveredNode ? hoveredNode.study : null,
-      value:
-        hoveredNode && hoveredNode.in_range > 0 ? hoveredNode.in_range : "n/a"
-    };
-    if (hoveredNode && !hoveredNode.is_applied) {
-      valueObj.status = "Algorithm not applied";
-    }
+    const { hoveredNode, rowData, labelData } = this.state;
+    const loading = isEmpty(labelData);
     return (
       <div>
         {loading ? (
@@ -79,7 +97,7 @@ class HeatmapRow extends Component {
               <YAxis />
               <HeatmapSeries
                 colorRange={["#fafafd", "#384ca2"]}
-                data={data}
+                data={rowData}
                 onValueMouseOver={d => {
                   this.setState({ hoveredNode: d });
                 }}
@@ -87,24 +105,8 @@ class HeatmapRow extends Component {
                   this.props.selectStudy(d);
                 }}
               />
-              {/* {hoveredNode && (
-                <Hint
-                  xType="literal"
-                  yType="literal"
-                  getX={data => {
-                    let slot = sorters.indexOf(data.sorter) + 1;
-                    if (slot <= midpoint) {
-                      return slot * gridWidth;
-                    } else {
-                      return slot * gridWidth - 80;
-                    }
-                  }}
-                  getY={data => gridHeight}
-                  value={valueObj}
-                />
-              )} */}
               <LabelSeries
-                data={data}
+                data={labelData}
                 labelAnchorX="middle"
                 labelAnchorY="central"
                 onValueClick={d => {
