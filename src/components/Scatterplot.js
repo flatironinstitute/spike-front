@@ -71,10 +71,7 @@ class Scatterplot extends Component {
       typeA: ["#59E4EC", "#0D676C"],
       typeB: ["#EFC1E3", "#B52F93"]
     };
-    // const nextType = {
-    //   typeA: "typeB",
-    //   typeB: "typeA"
-    // };
+    const alignment = { vertical: "top", horizontal: "left" };
     const markSeriesProps = {
       animation: true,
       className: "mark-series-example",
@@ -99,14 +96,6 @@ class Scatterplot extends Component {
     ];
     return (
       <div className="canvas-wrapper">
-        {/* <div className="canvas-example-controls">
-          <div
-            className="button primary-button"
-            onClick={() => this.setState({ colorType: nextType[colorType] })}
-          >
-            FILTER
-          </div>
-        </div> */}
         <XYPlot
           onMouseLeave={() => this.setState({ hoveredNode: null })}
           width={500}
@@ -122,7 +111,7 @@ class Scatterplot extends Component {
             strokeDasharray="7, 3"
             data={lineObjArr}
           />
-          {hoveredNode && <Hint value={valueObj} />}
+          {hoveredNode && <Hint value={valueObj} align={alignment} />}
         </XYPlot>
       </div>
     );

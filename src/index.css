@@ -677,7 +677,7 @@ li {
 
 .rv-xy-plot__series--heatmap > rect:hover {
   stroke-width: 1 !important;
-  stroke: #f6c200 !important;
+  stroke: #F6782D !important;
 }
 
 /* Legend
