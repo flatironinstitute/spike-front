@@ -41,7 +41,7 @@ class Scatterplot extends Component {
       u: unit,
       x: Math.round(unit.snr * 100) / 100,
       y: unit.accuracy,
-      size: this.getSqrt(unit.num_events),
+      size: Math.max(1,this.getSqrt(unit.num_events)),
       color: unit.unit_id * 10,
       opacity: unit.accuracy * 0.5 + 0.5,
       recording: unit.recording,
@@ -75,7 +75,7 @@ class Scatterplot extends Component {
     const markSeriesProps = {
       animation: true,
       className: "mark-series-example",
-      sizeRange: [0, 15],
+      sizeRange: [3, 15], // jfm changed minimum size to 3 (rather than 0)
       seriesId: "my-example-scatterplot",
       colorRange: colorRanges[colorType],
       opacityType: "literal",

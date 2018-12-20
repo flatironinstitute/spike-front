@@ -18,12 +18,13 @@ async function http_get_json(url) {
   return X.data;
 }
 
+const target_base='spikeforest_website_12_19_2018b';
 const s_targets=[
-  'spikeforest_website_12_19_2018_magland_synth',
-  'spikeforest_website_12_19_2018_mearec',
-  'spikeforest_website_12_19_2018_bionet8c',
-  'spikeforest_website_12_19_2018_bionet32c',
-  'spikeforest_website_12_19_2018_paired'
+  target_base+'_magland_synth',
+  target_base+'_mearec',
+  target_base+'_bionet8c',
+  target_base+'_bionet32c',
+  target_base+'_paired'
 ]
 
 async function load_data_jfm(targets,name,fieldname) {
