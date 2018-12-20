@@ -14,7 +14,7 @@ import { isEmpty } from "../utils";
 class HeatmapRow extends Component {
   constructor(props) {
     super(props);
-    this.state = { hoveredNode: null, labelData: null, rowData: null };
+    this.state = { hoveredNode: null, data: null };
     this.dims = {
       height: 50,
       width: 620
@@ -28,50 +28,34 @@ class HeatmapRow extends Component {
 
   componentDidMount() {
     if (this.props.vizDatum) {
-      this.setLabelData();
-      this.setRowData();
+      this.setData();
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (this.props.selectedStudy !== prevProps.selectedStudy) {
-      this.setRowData();
+      this.setData();
     }
   }
 
-  setLabelData() {
+  setData() {
     let colorMap = this.props.vizDatum.map(datum => datum.color);
     colorMap.sort((a, b) => a - b);
     let withColor = this.props.vizDatum.map(datum => {
       datum.style = colorMap.indexOf(datum.color) > 2 ? { fill: "white" } : {};
-      return datum;
-    });
-    this.setState({
-      labelData: withColor
-    });
-  }
-
-  setRowData() {
-    const hoverStroke = {
-      stroke: "#f28b00",
-      strokeWidth: 0.5
-    };
-    let withSelectedStudy = this.props.vizDatum.map(datum => {
       if (this.props.selectedStudy && this.props.selectedStudy === datum) {
-        datum.style = hoverStroke;
-      } else {
-        datum.style = {};
+        datum.style = { fill: "#f6cf3f" };
       }
       return datum;
     });
     this.setState({
-      rowData: withSelectedStudy
+      data: withColor
     });
   }
 
   render() {
-    const { hoveredNode, rowData, labelData } = this.state;
-    const loading = isEmpty(labelData);
+    const { hoveredNode, data } = this.state;
+    const loading = isEmpty(data);
     return (
       <div>
         {loading ? (
@@ -97,7 +81,7 @@ class HeatmapRow extends Component {
               <YAxis />
               <HeatmapSeries
                 colorRange={["#fafafd", "#384ca2"]}
-                data={rowData}
+                data={data}
                 onValueMouseOver={d => {
                   this.setState({ hoveredNode: d });
                 }}
@@ -106,7 +90,7 @@ class HeatmapRow extends Component {
                 }}
               />
               <LabelSeries
-                data={labelData}
+                data={data}
                 labelAnchorX="middle"
                 labelAnchorY="central"
                 onValueClick={d => {

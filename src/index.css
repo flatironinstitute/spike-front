@@ -675,6 +675,11 @@ li {
   font-weight: bold !important;
 }
 
+.rv-xy-plot__series--heatmap > rect:hover {
+  stroke-width: 1 !important;
+  stroke: var(--fi-yellow) !important;
+}
+
 /* Legend
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .legend__container {
