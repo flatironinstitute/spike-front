@@ -12,6 +12,12 @@ kbclient.setPairioConfig({
   collections: ["spikeforest"]
 });
 
+const axios=require('axios');
+async function http_get_json(url) {
+  let X=await axios.get(url,{responseType:'json'});
+  return X.data;
+}
+
 const s_targets=[
   'spikeforest_website_12_19_2018_magland_synth',
   'spikeforest_website_12_19_2018_mearec',
@@ -21,19 +27,27 @@ const s_targets=[
 ]
 
 async function load_data_jfm(targets,name,fieldname) {
-  console.log(':::::::::::::::::: loading',targets,name,fieldname);
+  console.log(':::::::::::::::::: loading',targets,name,fieldname,process.env.REACT_APP_TEST_SERVER_URL);
   let ret=[]
   for (let i=0; i<targets.length; i++) {
-    let obj = await kbclient.loadObject(null, {
-      key: {
-        target: targets[i],
-        name: name
-      }
-    });
-    console.log(obj);
-    let tmp=obj[fieldname];
-    for (let j in tmp) {
-      ret.push(tmp[j]);
+    let obj;
+    if (process.env.REACT_APP_TEST_SERVER_URL) {
+      let url0=process.env.REACT_APP_TEST_SERVER_URL+`/${targets[i]}/${name}.json`;
+      console.info('Loading from: '+url0);
+      obj = await http_get_json(url0);
+      console.log(obj);
+    }
+    else {
+      obj = await kbclient.loadObject(null, {
+        key: {
+          target: targets[i],
+          name: name
+        }
+      });
+    }
+    let list=obj[fieldname];
+    for (let j in list) {
+      ret.push(list[j]);
     }
   }
   console.log(':::::::::::::::::: loaded',targets,name,fieldname,ret.length);
