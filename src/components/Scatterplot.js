@@ -94,6 +94,7 @@ class Scatterplot extends Component {
       { x: minSNR, y: this.props.accuracy },
       { x: maxSNR, y: this.props.accuracy }
     ];
+    const tickValues = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
     return (
       <div className="canvas-wrapper">
         <XYPlot
@@ -104,7 +105,7 @@ class Scatterplot extends Component {
           <VerticalGridLines />
           <HorizontalGridLines />
           <XAxis title="SNR" />
-          <YAxis title="Accuracy" />
+          <YAxis title="Accuracy" tickValues={tickValues} />
           <MarkSeries {...markSeriesProps} />
           <LineSeries
             className="fourth-series"
