@@ -79,8 +79,9 @@ class Home extends Component {
           ) : (
             <div className="container__heatmap">
               <HeatmapContainer
-                studies={studies}
-                sorters={sorters}
+                {...this.props}
+                shortStudies={studies}
+                shortSorters={sorters}
                 unitsMap={this.state.unitsMap}
               />
             </div>

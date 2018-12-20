@@ -675,6 +675,11 @@ li {
   font-weight: bold !important;
 }
 
+.rv-xy-plot__series--heatmap > rect:hover {
+  stroke-width: 1 !important;
+  stroke: #F6782D !important;
+}
+
 /* Legend
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .legend__container {
@@ -757,4 +762,8 @@ li {
   flex-direction: column;
   align-items: flex-end;
   margin-bottom: 2rem;
+}
+
+.tab-header__bundle {
+  font-size: 1.4rem;
 }

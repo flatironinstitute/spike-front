@@ -96,7 +96,7 @@ class HeatmapContainer extends Component {
               <HeatmapViz
                 {...this.props}
                 filteredData={this.state.builtData}
-                sorters={this.props.sorters}
+                sorters={this.props.shortSorters}
               />
             </div>
             {this.props.selectedStudy ? (
