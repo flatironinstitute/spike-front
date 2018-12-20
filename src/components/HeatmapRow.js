@@ -44,7 +44,7 @@ class HeatmapRow extends Component {
     let withColor = this.props.vizDatum.map(datum => {
       datum.style = colorMap.indexOf(datum.color) > 2 ? { fill: "white" } : {};
       if (this.props.selectedStudy && this.props.selectedStudy === datum) {
-        datum.style = { fill: "#f6cf3f" };
+        datum.style = { fill: "#f6c200" };
       }
       return datum;
     });
