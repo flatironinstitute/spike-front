@@ -11,14 +11,14 @@ class StudySorterTable extends Component {
     };
   }
   render() {
-    const { selectedStudy, accuracy } = this.props;
+    const { selectedStudy, accuracy, study, sorter } = this.props;
     return (
       <div>
         <Tabs>
           <TabList>
             <Tab>Scatterplot</Tab>
-            <Tab>Details</Tab>
-            <Tab>Configuration</Tab>
+            <Tab>Study</Tab>
+            <Tab>Sorter</Tab>
             <Tab disabled>Other</Tab>
           </TabList>
           <TabPanel>
@@ -33,34 +33,88 @@ class StudySorterTable extends Component {
           </TabPanel>
           <TabPanel>
             <p>
-              <b>Details</b>
+              <b>Study: {study.name}</b>
             </p>
             <ul>
               <li>
-                <b>Duration: </b>1234 milleseconds
+                <b>Number recordings: </b>
+                {study.num_recordings}
               </li>
               <li>
-                <b>Number channels: </b>4
+                <b>Duration(sec): </b>
+                {study.recording_ranges.duration_sec[0]}
               </li>
               <li>
-                <b>Sample rate: </b>12344
+                <b>Number of channels: </b>
+                {study.recording_ranges.num_channels[0]}
               </li>
               <li>
-                <b>File size: </b>12344
+                <b>Sample rate (hz): </b>
+                {study.recording_ranges.samplerate_hz[0]}
               </li>
               <li>
-                <b>Number groundtruth: </b>12344
+                <b>File size (bytes): </b>
+                {study.recording_ranges.file_size_bytes[0]}
+              </li>
+              <li>
+                <b>Number groundtruth units: </b>
+                {study.recording_ranges.num_ground_truth_units[0]}
               </li>
             </ul>
+            <p>
+              Didactic text to come about the study. Lorem ipsum dolor sit amet,
+              consectetur adipiscing elit. Pellentesque vehicula nisi vitae
+              ligula fermentum rhoncus. Vestibulum eget aliquet erat. Curabitur
+              ullamcorper imperdiet leo quis semper. Phasellus fringilla lorem
+              quis congue.
+            </p>
+            <p>
+              Source:{" "}
+              <a
+                href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5743236/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                AUTHOR, T.K., Chung JE, Magland JF, Barnett AH, et al. A Fully
+                Automated Approach to Spike Sorting. Neuron.
+                2017;95(6):1381-1394.e6.
+              </a>
+            </p>
           </TabPanel>
           <TabPanel>
             <p>
-              <b>Configuration</b> (<i>Parameters used for this sorting</i>)
+              <b>Sorter: {sorter.name}</b>
             </p>
             <p>
-              <b>Requirements</b> (
-              <i>Sortware and other containers, GPU, NVIDA</i>)
+              <b>Configuration</b>
+              <br />(<i>Parameters used for this sorting</i>)
             </p>
+            <ul>
+              <li>
+                <b>Detect sign: </b>
+                {sorter.params.detect_sign}
+              </li>
+              <li>
+                <b>Adjacency Radius: </b>
+                {sorter.params.adjacency_radius}
+              </li>
+              <li>
+                <b>Detect Threshold: </b>
+                {sorter.params.detect_threshold}
+              </li>
+              <li>
+                <b>PRM Template Name: </b>
+                {sorter.params.prm_template_name}
+              </li>
+              <li>
+                <b>Processor Name: </b>
+                {sorter.params.processor_name}
+              </li>
+              <li>
+                <b>Processor Version: </b>
+                {sorter.params.processor_version}
+              </li>
+            </ul>
             <p>
               Didactic text to come about the dataset. Lorem ipsum dolor sit
               amet, consectetur adipiscing elit. Pellentesque vehicula nisi
@@ -75,19 +129,9 @@ class StudySorterTable extends Component {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Chung JE, Magland JF, Barnett AH, et al. A Fully Automated
-                Approach to Spike Sorting. Neuron. 2017;95(6):1381-1394.e6.
-              </a>
-            </p>
-            <p>
-              Source:
-              <a
-                href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5743236/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Chung JE, Magland JF, Barnett AH, et al. A Fully Automated
-                Approach to Spike Sorting. Neuron. 2017;95(6):1381-1394.e6.
+                AUTHOR, T.K., Chung JE, Magland JF, Barnett AH, et al. A Fully
+                Automated Approach to Spike Sorting. Neuron.
+                2017;95(6):1381-1394.e6.
               </a>
             </p>
           </TabPanel>

@@ -14,7 +14,7 @@ import { isEmpty } from "../utils";
 class HeatmapRow extends Component {
   constructor(props) {
     super(props);
-    this.state = { hoveredNode: null };
+    this.state = { hoveredNode: null, data: null };
     this.dims = {
       height: 50,
       width: 620
@@ -26,34 +26,36 @@ class HeatmapRow extends Component {
     }
   }
 
-  getClassName() {
+  componentDidMount() {
+    if (this.props.vizDatum) {
+      this.setData();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.selectedStudy !== prevProps.selectedStudy) {
+      this.setData();
+    }
+  }
+
+  setData() {
     let colorMap = this.props.vizDatum.map(datum => datum.color);
     colorMap.sort((a, b) => a - b);
     let withColor = this.props.vizDatum.map(datum => {
       datum.style = colorMap.indexOf(datum.color) > 2 ? { fill: "white" } : {};
+      if (this.props.selectedStudy && this.props.selectedStudy === datum) {
+        datum.style = { fill: "#F6782D" };
+      }
       return datum;
     });
-    return withColor;
+    this.setState({
+      data: withColor
+    });
   }
 
   render() {
-    let data = this.getClassName();
-    const { hoveredNode } = this.state;
+    const { hoveredNode, data } = this.state;
     const loading = isEmpty(data);
-    const sorters = this.props.sorters;
-    let base = this.dims.width - (this.margin.left + this.margin.right);
-    let midpoint = sorters.length * 0.5;
-    let gridWidth = base / sorters.length;
-    let gridHeight = 50;
-    let valueObj = {
-      sorter: hoveredNode ? hoveredNode.sorter : null,
-      study: hoveredNode ? hoveredNode.study : null,
-      value:
-        hoveredNode && hoveredNode.in_range > 0 ? hoveredNode.in_range : "n/a"
-    };
-    if (hoveredNode && !hoveredNode.is_applied) {
-      valueObj.status = "Algorithm not applied";
-    }
     return (
       <div>
         {loading ? (
@@ -87,22 +89,6 @@ class HeatmapRow extends Component {
                   this.props.selectStudy(d);
                 }}
               />
-              {hoveredNode && (
-                <Hint
-                  xType="literal"
-                  yType="literal"
-                  getX={data => {
-                    let slot = sorters.indexOf(data.sorter) + 1;
-                    if (slot <= midpoint) {
-                      return slot * gridWidth;
-                    } else {
-                      return slot * gridWidth - 80;
-                    }
-                  }}
-                  getY={data => gridHeight}
-                  value={valueObj}
-                />
-              )}
               <LabelSeries
                 data={data}
                 labelAnchorX="middle"
