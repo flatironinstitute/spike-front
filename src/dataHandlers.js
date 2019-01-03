@@ -18,7 +18,7 @@ async function http_get_json(url) {
   return X.data;
 }
 
-const target_base='spikeforest_website_12_19_2018b';
+const target_base='spikeforest_website_12_20_2018';
 const s_targets=[
   target_base+'_magland_synth',
   target_base+'_mearec',
