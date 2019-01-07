@@ -1,8 +1,10 @@
-//import recordings from "./data/recordings";
-//import sorters from "./data/sorters";
-//import studies from "./data/studies";
-//import units from "./data/units";
+import * as Sentry from "@sentry/node";
 
+Sentry.init({
+  dsn: "https://a7b7f1b624b44a9ea537ec1069859393@sentry.io/1365884"
+});
+
+// Connect to Kbucket
 const KBucketClient = require("@magland/kbucket").KBucketClient;
 let kbclient = new KBucketClient();
 kbclient.setConfig({
@@ -12,34 +14,49 @@ kbclient.setPairioConfig({
   collections: ["spikeforest"]
 });
 
-const axios=require('axios');
-async function http_get_json(url) {
-  let X=await axios.get(url,{responseType:'json'});
+// Collect data from server ? Not sure why this is built this way? To make it async?
+const axios = require("axios");
+async function fetchBackupJSON(url) {
+  let X = await axios.get(url, { responseType: "json" });
   return X.data;
 }
 
-const target_base='spikeforest_website_12_20_2018';
-const s_targets=[
-  target_base+'_magland_synth',
-  target_base+'_mearec',
-  target_base+'_bionet8c',
-  target_base+'_bionet32c',
-  target_base+'_paired',
-  target_base+'_manual'
-]
+const target_base = "spikeforest_website_12_20_2018";
+const s_targets = [
+  target_base + "_magland_synth",
+  target_base + "_mearec",
+  target_base + "_bionet8c",
+  target_base + "_bionet32c",
+  target_base + "_paired",
+  target_base + "_manual"
+];
 
-async function load_data_jfm(targets,name,fieldname) {
-  console.log(':::::::::::::::::: loading',targets,name,fieldname,process.env.REACT_APP_TEST_SERVER_URL);
-  let ret=[]
-  for (let i=0; i<targets.length; i++) {
+async function loadData(targets, name, fieldname) {
+  Sentry.addBreadcrumb({
+    category: "dataHandlers",
+    message: "Start loading " + name,
+    level: "info"
+  });
+
+  let returnArr = [];
+  for (let i = 0; i < targets.length; i++) {
     let obj;
-    if (process.env.REACT_APP_TEST_SERVER_URL) {
-      let url0=process.env.REACT_APP_TEST_SERVER_URL+`/${targets[i]}/${name}.json`;
-      console.info('Loading from: '+url0);
-      obj = await http_get_json(url0);
-      console.log(obj);
-    }
-    else {
+    // TODO: Should I use the local env key also?
+    if (
+      process.env.REACT_APP_USE_LOCAL_DATA &&
+      process.env.REACT_APP_TEST_SERVER_URL
+    ) {
+      let backupUrl =
+        process.env.REACT_APP_TEST_SERVER_URL + `/${targets[i]}/${name}.json`;
+      Sentry.addBreadcrumb({
+        category: "dataHandlers",
+        message: "Loading backup data from" + backupUrl,
+        level: "info"
+      });
+      obj = await fetchBackupJSON(backupUrl);
+      // TODO: Can I remove this??
+      console.log("🔌", obj);
+    } else {
       obj = await kbclient.loadObject(null, {
         key: {
           target: targets[i],
@@ -47,109 +64,43 @@ async function load_data_jfm(targets,name,fieldname) {
         }
       });
     }
-    let list=obj[fieldname];
+    let list = obj[fieldname];
     for (let j in list) {
-      ret.push(list[j]);
+      returnArr.push(list[j]);
+    }
+
+    if (obj) {
+      Sentry.addBreadcrumb({
+        category: "dataHandlers",
+        message: `Success loaded ${targets[i]}-${name} (${ret.length})`,
+        level: "info"
+      });
+    } else {
+      Sentry.captureException(
+        new Error(`Failed to load ${targets[i]}-${name}`)
+      );
     }
   }
-  console.log(':::::::::::::::::: loaded',targets,name,fieldname,ret.length);
-  let ret2={};
-  ret2[fieldname]=ret;
-  return ret2;
+  let returnObj = {};
+  returnObj[fieldname] = returnArr;
+  return returnObj;
 }
 
-export async function asyncReturn(json) {
-  return json;
-}
-
-// New data handling functions as of 11/16/18
+// New data handling functions as of 1/7/19
 export async function getRecordings() {
-  return await load_data_jfm(s_targets,'recordings','recordings');
-
-  /*
-  let obj = null;
-
-  if (process.env.REACT_APP_USE_LOCAL_DATA) {
-    obj = await asyncReturn(recordings);
-  } else {
-    obj = await kbclient.loadObject(null, {
-      key: {
-        target: "spikeforest_website_dev_12_19_2018",
-        name: "recordings"
-      }
-    });
-  }
-  if (!obj) {
-    console.log("Problem loading recordings object.");
-  }
-  return obj;
-  */
+  return await loadData(s_targets, "recordings", "recordings");
 }
 
 export async function getStudies() {
-  return await load_data_jfm(s_targets,'studies','studies');
-
-  /*
-  let obj = null;
-  if (process.env.REACT_APP_USE_LOCAL_DATA) {
-    obj = await asyncReturn(studies);
-  } else {
-    obj = await kbclient.loadObject(null, {
-      key: {
-        target: "spikeforest_website_dev_12_19_2018",
-        name: "studies"
-      }
-    });
-  }
-  if (!obj) {
-    console.log("Problem loading studies object.");
-  }
-  return obj;
-  */
+  return await loadData(s_targets, "studies", "studies");
 }
 
 export async function getSorters() {
-  return await load_data_jfm(s_targets,'sorters','sorters');
-
-  /*
-  let obj = null;
-  if (process.env.REACT_APP_USE_LOCAL_DATA) {
-    obj = await asyncReturn(sorters);
-  } else {
-    obj = await kbclient.loadObject(null, {
-      key: {
-        target: "spikeforest_website_dev_12_19_2018",
-        name: "sorters"
-      }
-    });
-  }
-  if (!obj) {
-    console.log("Problem loading sorters object.");
-  }
-  return obj;
-  */
+  return await loadData(s_targets, "sorters", "sorters");
 }
 
 export async function getTrueUnits() {
-  return await load_data_jfm(s_targets,'true_units','true_units');
-
-  /*
-  let obj = null;
-  if (process.env.REACT_APP_USE_LOCAL_DATA) {
-    obj = await asyncReturn(units);
-  } else {
-    obj = await kbclient.loadObject(null, {
-      key: {
-        target: "spikeforest_website_dev_12_18_2018",
-        name: "true_units"
-      }
-    });
-  }
-  if (!obj) {
-    console.log("Problem loading true units object.");
-  }
-  return obj;
-  */
+  return await loadData(s_targets, "true_units", "true_units");
 }
 
 export function flattenUnits(trueUnits, studies) {

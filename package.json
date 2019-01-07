@@ -7,6 +7,7 @@
   "license": "MIT",
   "dependencies": {
     "@magland/kbucket": "^0.12.5",
+    "@sentry/node": "^4.4.2",
     "connected-react-router": "^6.0.0",
     "d3": "^5.7.0",
     "history": "^4.7.2",
