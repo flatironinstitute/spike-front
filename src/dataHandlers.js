@@ -24,7 +24,8 @@ const s_targets=[
   target_base+'_mearec',
   target_base+'_bionet8c',
   target_base+'_bionet32c',
-  target_base+'_paired'
+  target_base+'_paired',
+  target_base+'_manual'
 ]
 
 async function load_data_jfm(targets,name,fieldname) {
