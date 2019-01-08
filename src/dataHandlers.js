@@ -1,8 +1,4 @@
-import * as Sentry from "@sentry/node";
-
-Sentry.init({
-  dsn: "https://a7b7f1b624b44a9ea537ec1069859393@sentry.io/1365884"
-});
+import * as Sentry from "@sentry/browser";
 
 // Connect to Kbucket
 const KBucketClient = require("@magland/kbucket").KBucketClient;
@@ -41,7 +37,7 @@ async function loadData(targets, name, fieldname) {
   let returnArr = [];
   for (let i = 0; i < targets.length; i++) {
     let obj;
-    // TODO: Should I use the local env key also?
+    // TODO: Should I remove the local env key?
     if (
       process.env.REACT_APP_USE_LOCAL_DATA &&
       process.env.REACT_APP_TEST_SERVER_URL
@@ -54,8 +50,6 @@ async function loadData(targets, name, fieldname) {
         level: "info"
       });
       obj = await fetchBackupJSON(backupUrl);
-      // TODO: Can I remove this??
-      console.log("🔌", obj);
     } else {
       obj = await kbclient.loadObject(null, {
         key: {
@@ -72,7 +66,7 @@ async function loadData(targets, name, fieldname) {
     if (obj) {
       Sentry.addBreadcrumb({
         category: "dataHandlers",
-        message: `Success loaded ${targets[i]}-${name} (${ret.length})`,
+        message: `Success loaded ${targets[i]}-${name} (${returnArr.length})`,
         level: "info"
       });
     } else {

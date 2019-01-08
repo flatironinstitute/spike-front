@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-let port=process.env.PORT||4000;
+let port = process.env.PORT || 4000;
 
-var express = require('express');
+var express = require("express");
 var app = express();
 
 app.use(function(req, res, next) {
@@ -11,7 +11,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 app.listen(port);
 
