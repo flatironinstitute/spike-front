@@ -7,6 +7,8 @@
   "license": "MIT",
   "dependencies": {
     "@magland/kbucket": "^0.12.5",
+    "@sentry/browser": "^4.4.2",
+    "@sentry/node": "^4.4.2",
     "connected-react-router": "^6.0.0",
     "d3": "^5.7.0",
     "history": "^4.7.2",
@@ -21,7 +23,7 @@
     "react-redux": "^6.0.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.0",
+    "react-scripts": "^2.1.3",
     "react-tabs": "^2.3.0",
     "react-vis": "^1.11.5",
     "redux": "^4.0.1",
