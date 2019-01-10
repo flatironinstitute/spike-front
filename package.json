@@ -16,6 +16,7 @@
     "path": "^0.12.7",
     "prop-types": "^15.6.2",
     "react": "^16.6.0",
+    "react-bootstrap": "^0.32.4",
     "react-collapsing-table": "^0.4.2",
     "react-dom": "^16.6.0",
     "react-json-view": "^1.19.1",

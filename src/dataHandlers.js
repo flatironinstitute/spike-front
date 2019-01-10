@@ -86,7 +86,9 @@ export async function getRecordings() {
 }
 
 export async function getStudies() {
-  return await loadData(s_targets, "studies", "studies");
+  let studies = await loadData(s_targets, "studies", "studies");
+  console.log("🆘", studies);
+  return studies;
 }
 
 export async function getSorters() {
@@ -167,6 +169,7 @@ export async function mapUnitsBySorterStudy(allUnits, sorters) {
     let formattedSorted = [];
     for (var sorted in allSorted) {
       let accuracies = allSorted[sorted].map(unit => unit.accuracy);
+      let snrs = allSorted[sorted].map(unit => unit.snr);
       let newObj = {
         study: study,
         sorter: sorted,
@@ -174,6 +177,7 @@ export async function mapUnitsBySorterStudy(allUnits, sorters) {
         x: sorted,
         true_units: allSorted[sorted],
         accuracies: accuracies,
+        snrs: snrs,
         in_range: 0,
         color: 0,
         is_applied: true
@@ -189,6 +193,7 @@ export async function mapUnitsBySorterStudy(allUnits, sorters) {
         x: sorters[sorter].name,
         true_units: [],
         accuracies: [],
+        snrs: [],
         color: 0,
         in_range: null,
         is_applied: false

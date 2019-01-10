@@ -80,7 +80,16 @@ class HeatmapRow extends Component {
               ) : null}
               <YAxis />
               <HeatmapSeries
-                colorRange={["#fafafd", "#384ca2"]}
+                colorRange={["#fcfdbf", "#db476a"]}
+                // colorRange={[
+                //   "#fcfdbf",
+                //   "#feca8d",
+                //   "#fb835f",
+                //   "#db476a",
+                //   "#9e2f7f",
+                //   "#621980",
+                //   "#241253"
+                // ]}
                 data={data}
                 onValueMouseOver={d => {
                   this.setState({ hoveredNode: d });

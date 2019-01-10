@@ -394,7 +394,7 @@ li {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 .nav__wrapper {
-  height: 50px;
+  height: 54px;
   left: 0px;
   position: fixed;
   right: 0px;
@@ -677,7 +677,7 @@ li {
 
 .rv-xy-plot__series--heatmap > rect:hover {
   stroke-width: 1 !important;
-  stroke: #F6782D !important;
+  stroke: #f6782d !important;
 }
 
 /* Legend
