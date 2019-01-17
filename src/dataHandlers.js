@@ -87,7 +87,6 @@ export async function getRecordings() {
 
 export async function getStudies() {
   let studies = await loadData(s_targets, "studies", "studies");
-  console.log("🆘", studies);
   return studies;
 }
 

@@ -53,6 +53,12 @@ class HeatmapRow extends Component {
     });
   }
 
+  conditionalSelectStudy(datum) {
+    if (this.props.format !== "average") {
+      this.props.selectStudy(datum);
+    }
+  }
+
   render() {
     const { hoveredNode, data } = this.state;
     const loading = isEmpty(data);
@@ -86,7 +92,7 @@ class HeatmapRow extends Component {
                   this.setState({ hoveredNode: d });
                 }}
                 onValueClick={d => {
-                  this.props.selectStudy(d);
+                  this.conditionalSelectStudy(d);
                 }}
               />
               <LabelSeries
@@ -94,7 +100,7 @@ class HeatmapRow extends Component {
                 labelAnchorX="middle"
                 labelAnchorY="central"
                 onValueClick={d => {
-                  this.props.selectStudy(d);
+                  this.conditionalSelectStudy(d);
                 }}
                 getLabel={d => {
                   return d.in_range > 0 ? `${d.in_range}` : "";

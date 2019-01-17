@@ -73,7 +73,6 @@ class HeatmapAverage extends Component {
   render() {
     let loading = isEmpty(this.state.builtData);
     let snr = this.state.snrMin;
-    console.log("🏘️", this.state.builtData);
     return (
       <div>
         {loading ? (
