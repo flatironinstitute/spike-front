@@ -41,7 +41,7 @@ class Scatterplot extends Component {
       u: unit,
       x: Math.round(unit.snr * 100) / 100,
       y: unit.accuracy,
-      size: Math.max(1,this.getSqrt(unit.num_events)),
+      size: Math.max(1, this.getSqrt(unit.num_events)),
       color: unit.unit_id * 10,
       opacity: unit.accuracy * 0.5 + 0.5,
       recording: unit.recording,
@@ -95,6 +95,9 @@ class Scatterplot extends Component {
       { x: maxSNR, y: this.props.accuracy }
     ];
     const tickValues = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
+    if (hoveredNode) {
+      console.log("📓", hoveredNode);
+    }
     return (
       <div className="canvas-wrapper">
         <XYPlot
