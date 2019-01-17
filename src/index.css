@@ -705,12 +705,16 @@ li {
   margin: 10px 0;
 }
 
+.rangeslider {
+  background-color: var(--fi-yellow) !important;
+}
+
 .rangeslider__handle {
   border-radius: 45px !important;
 }
 
 .rangeslider__fill {
-  background-color: var(--fi-yellow) !important;
+  background: #e6e6e6 !important;
   border-radius: 1px !important;
 }
 
