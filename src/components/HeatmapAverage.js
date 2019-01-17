@@ -36,13 +36,16 @@ class HeatmapAverage extends Component {
 
   filterAccuracy(sorterArray) {
     let newArr = sorterArray.map(sorter => {
-      let above = sorter.snrs.filter(accu => {
-        return accu >= this.state.snrMin;
+      let accs = [];
+      sorter.true_units.forEach(unit => {
+        if (unit.snr > this.state.snrMin) {
+          accs.push(unit.accuracy);
+        }
       });
       let aboveAvg = 0;
-      if (above.length) {
-        let sum = above.reduce((a, b) => a + b);
-        aboveAvg = sum / above.length;
+      if (accs.length) {
+        let sum = accs.reduce((a, b) => a + b);
+        aboveAvg = sum / accs.length;
       }
       sorter.in_range = Math.round(aboveAvg * 100) / 100;
       sorter.color = Math.round(aboveAvg * 100) / 100;
@@ -70,6 +73,7 @@ class HeatmapAverage extends Component {
   render() {
     let loading = isEmpty(this.state.builtData);
     let snr = this.state.snrMin;
+    console.log("🏘️", this.state.builtData);
     return (
       <div>
         {loading ? (
