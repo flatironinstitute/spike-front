@@ -51,7 +51,6 @@ class HeatmapViz extends Component {
         endTitle: "Highest Average Accuracy"
       }
     };
-    console.log("😮", this.state.vizData);
     return (
       <div>
         {loading ? (
@@ -75,6 +74,7 @@ class HeatmapViz extends Component {
                   vizDatum={data}
                   key={`hmrow${i}`}
                   index={i}
+                  format={this.props.format}
                   sorters={this.props.sorters.sort()}
                 />
               ))}

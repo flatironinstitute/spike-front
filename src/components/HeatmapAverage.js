@@ -8,6 +8,7 @@ import "react-rangeslider/lib/index.css";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as actionCreators from "../actions/actionCreators";
+import { formatToNDigits } from "../utils.js";
 
 class HeatmapAverage extends Component {
   constructor(props) {
@@ -36,14 +37,18 @@ class HeatmapAverage extends Component {
 
   filterAccuracy(sorterArray) {
     let newArr = sorterArray.map(sorter => {
-      let above = sorter.snrs.filter(accu => {
-        return accu >= this.state.snrMin;
+      let accs = [];
+      sorter.true_units.forEach(unit => {
+        if (unit.snr > this.state.snrMin) {
+          accs.push(unit.accuracy);
+        }
       });
       let aboveAvg = 0;
-      if (above.length) {
-        let sum = above.reduce((a, b) => a + b);
-        aboveAvg = sum / above.length;
+      if (accs.length) {
+        let sum = accs.reduce((a, b) => a + b);
+        aboveAvg = sum / accs.length;
       }
+      // This just prints the output to 2 digits
       sorter.in_range = Math.round(aboveAvg * 100) / 100;
       sorter.color = Math.round(aboveAvg * 100) / 100;
       return sorter;
@@ -122,7 +127,7 @@ class HeatmapAverage extends Component {
 function mapStateToProps(state) {
   return {
     selectedStudy: state.selectedStudy,
-    selectedSorter: state.selectedSorter
+    selectedRecording: state.selectedRecording
   };
 }
 

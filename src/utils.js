@@ -4,3 +4,7 @@ exports.isEmpty = obj => {
   }
   return true;
 };
+
+exports.formatToNDigits = (value, digits) => {
+  return value.toFixed(digits);
+};

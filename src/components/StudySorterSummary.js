@@ -66,6 +66,7 @@ class StudySorterSummary extends Component {
               sorter={this.state.sorter}
               selectedStudy={selectedStudy}
               accuracy={accuracy}
+              {...this.props}
             />
           )}
         </div>

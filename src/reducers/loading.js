@@ -2,6 +2,7 @@ import { START_LOADING, END_LOADING } from "../actions/actionCreators";
 
 const initialState = {
   selectedStudy: null,
+  selectedRecording: null,
   recordings: null,
   sorters: null,
   studies: null,

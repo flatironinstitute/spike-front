@@ -117,7 +117,7 @@ class HeatmapCount extends Component {
 function mapStateToProps(state) {
   return {
     selectedStudy: state.selectedStudy,
-    selectedSorter: state.selectedSorter
+    selectedRecording: state.selectedRecording
   };
 }
 

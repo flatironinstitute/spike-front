@@ -10,6 +10,9 @@ import {
   LineSeries,
   Hint
 } from "react-vis";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as actionCreators from "../actions/actionCreators";
 
 class Scatterplot extends Component {
   constructor(props) {
@@ -30,9 +33,12 @@ class Scatterplot extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (this.props.selectedUnits !== prevProps.selectedUnits) {
       this.buildScatterData(this.props.selectedUnits);
+    }
+    if (this.state.hoveredNode !== prevState.hoveredNode) {
+      console.log("NEW NODE", this.state.hoveredNode);
     }
   }
 
@@ -72,16 +78,6 @@ class Scatterplot extends Component {
       typeB: ["#EFC1E3", "#B52F93"]
     };
     const alignment = { vertical: "top", horizontal: "left" };
-    const markSeriesProps = {
-      animation: true,
-      className: "mark-series-example",
-      sizeRange: [3, 15], // jfm changed minimum size to 3 (rather than 0)
-      seriesId: "my-example-scatterplot",
-      colorRange: colorRanges[colorType],
-      opacityType: "literal",
-      data,
-      onValueMouseOver: d => this.setState({ hoveredNode: d })
-    };
     let valueObj = {
       recording: hoveredNode
         ? `${hoveredNode.recording}:${hoveredNode.color / 10}`
@@ -95,9 +91,7 @@ class Scatterplot extends Component {
       { x: maxSNR, y: this.props.accuracy }
     ];
     const tickValues = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
-    if (hoveredNode) {
-      console.log("📓", hoveredNode);
-    }
+    console.log("🐀", this.state.selectedRecording);
     return (
       <div className="canvas-wrapper">
         <XYPlot
@@ -109,7 +103,17 @@ class Scatterplot extends Component {
           <HorizontalGridLines />
           <XAxis title="SNR" />
           <YAxis title="Accuracy" tickValues={tickValues} />
-          <MarkSeries {...markSeriesProps} />
+          <MarkSeries
+            animation={true}
+            className="mark-series-example"
+            sizeRange={[3, 15]}
+            seriesId="my-example-scatterplot"
+            colorRange={colorRanges[colorType]}
+            opacityType="literal"
+            data={data}
+            onValueMouseOver={d => this.setState({ hoveredNode: d })}
+            onValueClick={d => this.setState({ selectedRecording: d })}
+          />
           <LineSeries
             className="fourth-series"
             strokeDasharray="7, 3"
@@ -121,4 +125,20 @@ class Scatterplot extends Component {
     );
   }
 }
+
 export default Scatterplot;
+
+// function mapStateToProps(state) {
+//   return {
+//     selectedRecording: state.selectedRecording
+//   };
+// }
+
+// function mapDispatchToProps(dispatch) {
+//   return bindActionCreators(actionCreators, dispatch);
+// }
+
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(Scatterplot);
