@@ -8,6 +8,7 @@ import "react-rangeslider/lib/index.css";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as actionCreators from "../actions/actionCreators";
+import { formatToNDigits } from "../utils.js";
 
 class HeatmapAverage extends Component {
   constructor(props) {
