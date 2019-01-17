@@ -7,6 +7,7 @@ import thunk from "redux-thunk";
 
 // create an object for the default data
 const defaultState = {
+  selectedRecording: null,
   selectedStudy: null,
   recordings: null,
   sorters: null,

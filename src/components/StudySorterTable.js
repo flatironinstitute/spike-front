@@ -27,6 +27,7 @@ class StudySorterTable extends Component {
               {selectedStudy ? selectedStudy.in_range : ""}
             </p>
             <Scatterplot
+              {...this.props}
               selectedUnits={selectedStudy.true_units}
               accuracy={accuracy}
             />

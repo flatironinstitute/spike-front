@@ -47,6 +47,7 @@ class HeatmapAverage extends Component {
         let sum = accs.reduce((a, b) => a + b);
         aboveAvg = sum / accs.length;
       }
+      // This just prints the output to 2 digits
       sorter.in_range = Math.round(aboveAvg * 100) / 100;
       sorter.color = Math.round(aboveAvg * 100) / 100;
       return sorter;
@@ -125,7 +126,7 @@ class HeatmapAverage extends Component {
 function mapStateToProps(state) {
   return {
     selectedStudy: state.selectedStudy,
-    selectedSorter: state.selectedSorter
+    selectedRecording: state.selectedRecording
   };
 }
 

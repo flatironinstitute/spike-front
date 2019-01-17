@@ -6,6 +6,7 @@ import {
 } from "../dataHandlers";
 
 export const SELECT_STUDY = "SELECT_STUDY";
+export const SELECT_RECORDING = "SELECT_RECORDING";
 export const RECEIVE_RECORDINGS = "RECEIVE_RECORDINGS";
 export const RECEIVE_SORTERS = "RECEIVE_SORTERS";
 export const RECEIVE_UNITS = "RECEIVE_UNITS";
@@ -18,6 +19,14 @@ export const selectStudy = study => ({
   type: SELECT_STUDY,
   study
 });
+
+export const selectRecording = recording => {
+  console.log("IN THE SELECT RECORDING", recording);
+  return {
+    type: SELECT_RECORDING,
+    recording
+  };
+};
 
 // Recordings
 export const receiveRecordings = recordings => {
