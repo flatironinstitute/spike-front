@@ -2,30 +2,27 @@ const express = require("express");
 const router = express.Router();
 const sorterController = require("../controllers/sorterController");
 const sortingResultController = require("../controllers/sortingResultController");
-const unitsController = require("../controllers/unitsController");
+const unitController = require("../controllers/unitController");
 const studyController = require("../controllers/studyController");
-const { catchErrors } = require("../handlers/errorHandlers");
 
 // Sorters
-router.get("/sorters", catchErrors(sorterController.getSorters));
-router.get("/storter/:id", catchErrors(sorterController.getSorterById));
+router.get("/sorters", sorterController.getSorters);
+router.get("/storter/:id", sorterController.getSorterById);
 
 // Studies
-router.get("/studies", catchErrors(studyController.getStudies));
-router.get("/study/:id", catchErrors(studyController.getStudyById));
+router.get("/studies", studyController.getStudies);
+router.get("/study/:id", studyController.getStudyById);
 
 // Sorting Results
 router.get(
   "/results/:studyId/:sorterId",
-  catchErrors(
-    sortingResultController(
-      sortingResultController.getSortingResultsByStudySorter
-    )
+  sortingResultController(
+    sortingResultController.getSortingResultsByStudySorter
   )
 );
 
 // Units
-router.get("/units/:studyId", catchErrors(unitsController.getUnitsByStudy));
-router.get("/unit/:id", catchErrors(unitsController.getUnitById));
+router.get("/units/:studyId", unitController.getUnitsByStudy);
+router.get("/unit/:id", unitController.getUnitById);
 
 module.exports = router;
