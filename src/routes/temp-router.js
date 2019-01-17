@@ -8,8 +8,6 @@ const { catchErrors } = require("../handlers/errorHandlers");
 
 // Sorters
 router.get("/sorters", catchErrors(sorterController.getSorters));
-// TODO: In case we need to paginate
-// router.get("/stories/page/:page", catchErrors(sorterController.getSorters));
 router.get("/storter/:id", catchErrors(sorterController.getSorterById));
 
 // Studies
@@ -28,13 +26,6 @@ router.get(
 
 // Units
 router.get("/units/:studyId", catchErrors(unitsController.getUnitsByStudy));
-
-// router.get("/rating/:id", catchErrors(ratingController.getRating));
-// router.post(
-//   "/rating/:id",
-//   ratingController.addRating,
-//   storyController.updateRatingStats
-// );
-// router.get("/results", catchErrors(storyController.getTopResults));
+router.get("/unit/:id", catchErrors(unitsController.getUnitById));
 
 module.exports = router;
