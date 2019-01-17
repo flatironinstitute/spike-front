@@ -41,6 +41,17 @@ class HeatmapViz extends Component {
 
   render() {
     const loading = isEmpty(this.state.vizData);
+    const legendCopy = {
+      count: {
+        startTitle: "Least Units Found",
+        endTitle: "Most Units Found"
+      },
+      average: {
+        startTitle: "Lowest Average Accuracy",
+        endTitle: "Highest Average Accuracy"
+      }
+    };
+    console.log("😮", this.state.vizData);
     return (
       <div>
         {loading ? (
@@ -52,8 +63,8 @@ class HeatmapViz extends Component {
                 width={580}
                 startColor={"#fafafd"}
                 endColor={"#384ca2"}
-                startTitle="Least Units Found"
-                endTitle="Most Units Found"
+                startTitle={legendCopy[this.props.format].startTitle}
+                endTitle={legendCopy[this.props.format].endTitle}
                 height={20}
               />
             </div>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Header from "./Header";
 import Preloader from "./Preloader";
-import HeatmapContainer from "./HeatmapContainer";
+import HeatmapsContainer from "./HeatmapsContainer";
 import { flattenUnits, mapUnitsBySorterStudy } from "../dataHandlers";
 import { isEmpty } from "../utils";
 
@@ -30,12 +30,6 @@ class Home extends Component {
       if (this.props.units && this.props.studies) {
         let flatUnits = flattenUnits(this.props.units, this.props.studies);
         this.setState({ flatUnits: flatUnits });
-      } else {
-        console.log(
-          "🎳 one new not both",
-          this.props.units,
-          this.props.studies
-        );
       }
     }
     if (this.state.flatUnits !== prevState.flatUnits) {
@@ -78,7 +72,7 @@ class Home extends Component {
             <Preloader />
           ) : (
             <div className="container__heatmap">
-              <HeatmapContainer
+              <HeatmapsContainer
                 {...this.props}
                 shortStudies={studies}
                 shortSorters={sorters}
