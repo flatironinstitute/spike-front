@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
 
 class About extends Component {
   render() {
@@ -16,7 +15,7 @@ class About extends Component {
             Please use the
             <a href="https://github.com/elovero/spike-front/issues">
               Github issues
-            </a>{' '}
+            </a>{" "}
             page to report website problems or
             <a href="mailto:elovero@flatironinstitute.org">contact</a> us
             directly.
@@ -47,10 +46,10 @@ class About extends Component {
               lab.
             </p>
             <p>
-              Early design principles were outlined in our{' '}
+              Early design principles were outlined in our{" "}
               <a href="https://github.com/flatironinstitute/spikesortercomparison">
                 white paper
-              </a>{' '}
+              </a>{" "}
               of May 2018. This was inspired in part a spike-sorting community
               discussion at the Janelia spike sorting meeting of 3/22/18.
             </p>
@@ -85,7 +84,7 @@ class About extends Component {
                 data.
               </li>
               <li>
-                <a href="http://www.spikesortingtest.com">Spikesortingtest</a>{' '}
+                <a href="http://www.spikesortingtest.com">Spikesortingtest</a>{" "}
                 by C. Mitelut.
               </li>
               <li>
