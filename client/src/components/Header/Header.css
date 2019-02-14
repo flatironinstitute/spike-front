@@ -1,0 +1,13 @@
+.navbar__white {
+  background: #fff;
+  /* border-bottom: 1px solid var(--fi-blue); */
+  position: fixed;
+}
+
+.navbar__hidden {
+  visibility: hidden;
+}
+
+.navbar__link {
+  color: rgba(0, 0, 0, 0.9) !important;
+}
