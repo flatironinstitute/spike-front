@@ -1,49 +1,31 @@
 {
-  "name": "spike-front-client",
-  "version": "0.2.0",
+  "name": "spikeforest-client-and-api",
+  "version": "1.0.0",
   "description": "Benchmarking spike sorting algorithms. Seeing the spike forest for the trees",
   "private": true,
   "author": "Elizabeth Lovero",
   "license": "MIT",
+  "scripts": {
+    "client": "cd client && yarn start",
+    "server": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "start": "node server.js",
+    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+  },
   "dependencies": {
     "@magland/kbucket": "^0.12.5",
     "@sentry/browser": "^4.4.2",
-    "@sentry/node": "^4.4.2",
-    "connected-react-router": "^6.0.0",
-    "d3": "^5.7.0",
-    "history": "^4.7.2",
-    "normalize.css": "^8.0.0",
-    "path": "^0.12.7",
-    "prop-types": "^15.6.2",
-    "react": "^16.6.0",
-    "react-bootstrap": "^0.32.4",
-    "react-collapsing-table": "^0.4.2",
-    "react-dom": "^16.6.0",
-    "react-json-view": "^1.19.1",
-    "react-rangeslider": "^2.2.0",
-    "react-redux": "^6.0.0",
-    "react-router": "^4.3.1",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "^2.1.3",
-    "react-tabs": "^2.3.0",
-    "react-vis": "^1.11.5",
-    "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "@sentry/node": "4.5.3",
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "husky": "^1.3.1",
+    "lint-staged": "^8.1.1",
+    "node-fetch": "^2.3.0",
+    "prettier": "^1.16.3"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "devDependencies": {
+    "concurrently": "^4.0.1"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
   "homepage": "https://lillenlen.tech"
 }
