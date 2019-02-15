@@ -5,7 +5,24 @@ class ContactForm extends Component {
   constructor(...args) {
     super(...args);
 
-    this.state = { validated: false };
+    this.state = {
+      validated: false,
+      firstName: "",
+      lastName: "",
+      email: "",
+      affiliation: "",
+      feedback: ""
+    };
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
   }
 
   handleSubmit(event) {
@@ -15,6 +32,7 @@ class ContactForm extends Component {
       event.stopPropagation();
     }
     this.setState({ validated: true });
+    this.props.sendContact(this.state);
   }
 
   render() {
@@ -32,6 +50,8 @@ class ContactForm extends Component {
             <Form.Control
               required
               type="text"
+              value={this.state.firstName}
+              onChange={this.handleInputChange}
               placeholder="Santiago"
               size="lg"
             />
@@ -45,6 +65,8 @@ class ContactForm extends Component {
               required
               type="text"
               placeholder="Ramón y Cajal"
+              value={this.state.lastName}
+              onChange={this.handleInputChange}
               size="lg"
             />
             <Form.Control.Feedback type="invalid">
@@ -62,6 +84,8 @@ class ContactForm extends Component {
                 aria-describedby="inputGroupPrepend"
                 required
                 size="lg"
+                value={this.state.email}
+                onChange={this.handleInputChange}
               />
               <Form.Control.Feedback type="invalid">
                 Please provide an email.
@@ -70,13 +94,26 @@ class ContactForm extends Component {
           </Form.Group>
           <Form.Group as={Col} md="6" controlId="validationCustom04">
             <Form.Label>Affiliation</Form.Label>
-            <Form.Control type="text" placeholder="(Optional)" size="lg" />
+            <Form.Control
+              type="text"
+              placeholder="(Optional)"
+              size="lg"
+              value={this.state.affiliation}
+              onChange={this.handleInputChange}
+            />
           </Form.Group>
         </Form.Row>
         <Form.Row>
           <Form.Group controlId="validationCustom05" as={Col} md="12">
             <Form.Label>Feedback</Form.Label>
-            <Form.Control as="textarea" rows="10" size="lg" required />
+            <Form.Control
+              as="textarea"
+              rows="10"
+              size="lg"
+              required
+              value={this.state.feedback}
+              onChange={this.handleInputChange}
+            />
             <Form.Control.Feedback type="invalid">
               Please provide feedback.
             </Form.Control.Feedback>

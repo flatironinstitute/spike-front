@@ -17,7 +17,7 @@ import Sorters from "../components/Pages/Sorters";
 import Internals from "../components/Pages/Internals";
 import Metrics from "../components/Pages/Metrics";
 import Contact from "../components/Contact/Contact";
-import SinglePairing from "../components/PairingBits/SinglePairing";
+import SingleResultPairing from "../components/ResultPairingBits/SingleResultPairing";
 import headerCopy from "../components/CopyHeader/header-copy";
 
 class Routes extends Component {
@@ -76,7 +76,7 @@ class Routes extends Component {
           />
           <Route
             path="/results/magland-synth-noise10-K10-C4/MountainSort4-thr3"
-            render={props => <SinglePairing {...this.props} />}
+            render={props => <SingleResultPairing {...this.props} />}
           />
         </Switch>
         <Footer />

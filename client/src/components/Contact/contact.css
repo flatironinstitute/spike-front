@@ -1,9 +1,3 @@
-/* .contact__body {
-  background: #4568dc;
-  background: -webkit-linear-gradient(to right, #b06ab3, #4568dc);
-  background: linear-gradient(to right, #b06ab3, #4568dc);
-} */
-
 .contact__body {
   background: #ef3b36; /* fallback for old browsers */
   background: -webkit-linear-gradient(to top, #ffffff, #ef3b36);
@@ -13,5 +7,5 @@
 .contact__form {
   max-width: 80rem;
   margin: 0 auto;
-  margin-bottom: 5.3rem;
+  margin-bottom: 7rem;
 }
