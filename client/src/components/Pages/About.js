@@ -13,7 +13,11 @@ class About extends Component {
           </p>
           <p className="byline">
             Please use the
-            <a href="https://github.com/elovero/spike-front/issues">
+            <a
+              href="https://github.com/elovero/spike-front/issues"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Github issues
             </a>{" "}
             page to report website problems or
@@ -34,8 +38,13 @@ class About extends Component {
             </p>
             <p>
               We are grateful for many collaborators at other institutions for
-              their vital help: Loren Frank (UCSD) Jason Chung (UCSD) Catalin
-              Mitelut (Columbia) Dan English (VT) [please add!] ETC
+              their vital help:
+              <ul>
+                <li>Jason Chung (UCSD) </li>
+                <li>Dan English (VT)</li>
+                <li>Loren Frank (UCSD)</li>
+                <li>Catalin Mitelut (Columbia)</li>
+              </ul>
             </p>
             <h3>History and Future</h3>
             <p>
@@ -47,7 +56,11 @@ class About extends Component {
             </p>
             <p>
               Early design principles were outlined in our{" "}
-              <a href="https://github.com/flatironinstitute/spikesortercomparison">
+              <a
+                href="https://github.com/flatironinstitute/spikesortercomparison"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 white paper
               </a>{" "}
               of May 2018. This was inspired in part a spike-sorting community
@@ -56,39 +69,77 @@ class About extends Component {
             <p>Influences for the concept and site design include:</p>
             <ul>
               <li>
-                <a href="https://clusteval.sdu.dk/">ClustEval website</a> Wiwie,
-                C., Röttger, R. & Baumbach, J. Comparing the performance of
-                biomedical clustering methods. Nature Methods (2015).
+                <a
+                  href="https://clusteval.sdu.dk/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  ClustEval website
+                </a>{" "}
+                Wiwie, C., Röttger, R. & Baumbach, J. Comparing the performance
+                of biomedical clustering methods. Nature Methods (2015).
               </li>
               <li>
-                <a href="http://neurofinder.codeneuro.org/">NeuroFinder,</a> by
-                Jeremy Freeman, for calcium imaging spatial neuron extraction
+                <a
+                  href="http://neurofinder.codeneuro.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  NeuroFinder,
+                </a>{" "}
+                by Jeremy Freeman, for calcium imaging spatial neuron extraction
                 comparison.
               </li>
               <li>
-                <a href="http://spikefinder.codeneuro.org">SpikeFinder</a>, by
-                P. Berens, for extracting spikes from calcium imaging
+                <a
+                  href="http://spikefinder.codeneuro.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  SpikeFinder
+                </a>
+                , by P. Berens, for extracting spikes from calcium imaging
                 fluorescence curves.
               </li>
               <li>
-                <a href="http://spike.g-node.org">G-Node</a>. A now-defunct
-                2011-2012 project wher the user uploads sorted data, which is
-                compared against a hidden ground truth sorting and optionally
-                published.
+                <a
+                  href="http://spike.g-node.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  G-Node
+                </a>
+                . A now-defunct 2011-2012 project wher the user uploads sorted
+                data, which is compared against a hidden ground truth sorting
+                and optionally published.
               </li>
               <li>
-                <a href="http://phy.cortexlab.net/data/sortingComparison">
+                <a
+                  href="http://phy.cortexlab.net/data/sortingComparison"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   cortexlab
                 </a>
                 , by N. Steinmetz. Comparison of several algorithms on hybrid
                 data.
               </li>
               <li>
-                <a href="http://www.spikesortingtest.com">Spikesortingtest</a>{" "}
+                <a
+                  href="http://www.spikesortingtest.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Spikesortingtest
+                </a>{" "}
                 by C. Mitelut.
               </li>
               <li>
-                <a href="http://simonster.github.io/SpikeSortingSoftware">
+                <a
+                  href="http://simonster.github.io/SpikeSortingSoftware"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   SpikeSortingSoftware
                 </a>
                 Older list of spike sorting codes and their features.
