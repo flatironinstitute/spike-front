@@ -1,18 +1,28 @@
-import React, { Component } from 'react';
-import { isEmpty } from '../../utils';
+import React, { Component } from "react";
+import { isEmpty } from "../../utils";
 
 // Redux
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as actionCreators from '../../actions/actionCreators';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as actionCreators from "../../actions/actionCreators";
 
 // http://localhost:3000/pairing/magland-synth-noise10-K10-C4/MountainSort4-thr3
+
+// Individual Study Page:
+// Description of the Study just copy
+
+// Pairing Page -> Study Results Page
+// Links to the other sorters on the study (button row)
+// Row of the heatmap with toolbar from heatmap
+// Scatterplot
+// spike sprays from each unit on click (// Channels as a separate row)
+// Table of data on each unit
 
 class SinglePairing extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pairing: [],
+      pairing: []
     };
   }
 
@@ -22,14 +32,14 @@ class SinglePairing extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.selectedPairing !== prevProps.selectedPairing) {
-      console.log('🍐', this.props.selectedPairing);
+      console.log("🍐", this.props.selectedPairing);
     }
   }
 
   render() {
     let header = isEmpty(this.props.selectedPairing)
       ? this.props.selectedPairing
-      : '🍐';
+      : "🍐";
     return (
       <div>
         <div className="container container__body">
@@ -74,7 +84,7 @@ class SinglePairing extends Component {
 
 function mapStateToProps(state) {
   return {
-    selectedPairing: state.pairing,
+    selectedPairing: state.pairing
   };
 }
 
