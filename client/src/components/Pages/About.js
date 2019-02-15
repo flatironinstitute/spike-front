@@ -35,7 +35,7 @@ class About extends Component {
             <p>
               We are grateful for many collaborators at other institutions for
               their vital help: Loren Frank (UCSD) Jason Chung (UCSD) Catalin
-              Mitelut (Columbia) Dan English (...) [please add!] ETC
+              Mitelut (Columbia) Dan English (VT) [please add!] ETC
             </p>
             <h3>History and Future</h3>
             <p>
