@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class About extends Component {
   render() {
     return (
-      <div className="about__body">
+      <div className="page__body about__body">
         <div className="intro">
           <p className="big">About SpikeForest</p>
           <div className="dividerthick" />

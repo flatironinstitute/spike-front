@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
-import './pages.css';
+import "./pages.css";
 
 class Metrics extends Component {
   render() {
     return (
-      <div className="home__body">
+      <div className="page__body">
         <div className="intro">
           <p className="big">Metrics</p>
           <div className="dividerthick" />

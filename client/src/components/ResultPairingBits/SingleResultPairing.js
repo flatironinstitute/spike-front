@@ -12,7 +12,7 @@ import spikeforestwidgets from "./SpikeforestWidgets";
 
 // http://localhost:3000/pairing/magland-synth-noise10-K10-C4/MountainSort4-thr3
 
-class SinglePairing extends Component {
+class SingleResultPairing extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,7 +39,11 @@ class SinglePairing extends Component {
         <div className="container container__body">
           <div className="header">
             <h2 className="header__title">
-              magland-synth-noise10-K10-C4 🍐 MountainSort4-thr3
+              magland-synth-noise10-K10-C4{" "}
+              <span role="img" aria-label="pear">
+                🍐
+              </span>{" "}
+              MountainSort4-thr3
             </h2>
             <div className="header__copy" id="widget1">
               {/* <p>
@@ -76,8 +80,6 @@ class SinglePairing extends Component {
   }
 }
 
-// export default SinglePairing;
-
 function mapStateToProps(state) {
   return {
     selectedPairing: state.pairing
@@ -91,4 +93,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SinglePairing);
+)(SingleResultPairing);

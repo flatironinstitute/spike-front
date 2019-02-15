@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import React, { Component } from "react";
+import { Container, Row, Col } from "react-bootstrap";
 
-import './pages.css';
+import "./pages.css";
 
 class Internals extends Component {
   render() {
     return (
-      <div className="home__body">
+      <div className="page__body">
         <div className="intro">
           <p className="big">Internals</p>
           <div className="dividerthick" />
@@ -78,9 +78,9 @@ class Internals extends Component {
           <Row>
             <Col
               style={{
-                display: 'flex',
-                justifyContent: 'center',
-                marginBottom: '5.2rem',
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: "5.2rem"
               }}
             >
               <p className="updated">

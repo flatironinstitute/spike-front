@@ -1,115 +1,115 @@
-import React, { Component } from 'react';
-import ReactCollapsingTable from 'react-collapsing-table';
-import Preloader from '../Preloader/Preloader';
-import { isEmpty } from '../../utils';
-import { HashLink as Link } from 'react-router-hash-link';
-import { Container } from 'react-bootstrap';
+import React, { Component } from "react";
+import ReactCollapsingTable from "react-collapsing-table";
+import Preloader from "../Preloader/Preloader";
+import { isEmpty } from "../../utils";
+import { HashLink as Link } from "react-router-hash-link";
+import { Container } from "react-bootstrap";
 
-import './pages.css';
+import "./pages.css";
 
 class Recordings extends Component {
   render() {
     const studyColumns = [
       {
-        accessor: 'name',
-        label: 'Study Name',
+        accessor: "name",
+        label: "Study Name",
         priorityLevel: 1,
         position: 1,
         minWidth: 100,
-        sortable: true,
+        sortable: true
       },
       {
-        accessor: 'number',
-        label: 'Number of recordings',
+        accessor: "number",
+        label: "Number of recordings",
         priorityLevel: 3,
         position: 3,
-        minWidth: 100,
+        minWidth: 100
       },
       {
-        accessor: 'filesize',
-        label: 'Total file size',
+        accessor: "filesize",
+        label: "Total file size",
         priorityLevel: 4,
         position: 4,
-        minWidth: 100,
+        minWidth: 100
       },
       {
-        accessor: 'channels',
-        label: 'Channels',
+        accessor: "channels",
+        label: "Channels",
         priorityLevel: 5,
         position: 5,
-        minWidth: 100,
+        minWidth: 100
       },
       {
-        accessor: 'duration',
-        label: 'Duration (in seconds)',
+        accessor: "duration",
+        label: "Duration (in seconds)",
         priorityLevel: 6,
         position: 6,
-        minWidth: 100,
+        minWidth: 100
       },
       {
-        accessor: 'type',
-        label: 'Experiment type (synthetic / in vivo / in vitro)',
+        accessor: "type",
+        label: "Experiment type (synthetic / in vivo / in vitro)",
         priorityLevel: 7,
         position: 7,
-        minWidth: 100,
+        minWidth: 100
       },
       {
-        accessor: 'probetype',
-        label: 'Probe type',
+        accessor: "probetype",
+        label: "Probe type",
         priorityLevel: 8,
         position: 8,
-        minWidth: 100,
+        minWidth: 100
       },
       {
-        accessor: 'region',
-        label: 'Brain region',
+        accessor: "region",
+        label: "Brain region",
         priorityLevel: 9,
         position: 9,
-        minWidth: 100,
+        minWidth: 100
       },
       {
-        accessor: 'groundtruth',
-        label: 'Groundtruth units',
+        accessor: "groundtruth",
+        label: "Groundtruth units",
         priorityLevel: 10,
         position: 10,
-        minWidth: 100,
+        minWidth: 100
       },
       {
-        accessor: 'description',
-        label: 'Description',
+        accessor: "description",
+        label: "Description",
         priorityLevel: 11,
         position: 11,
-        minWidth: 100,
-      },
+        minWidth: 100
+      }
     ];
     const recordingColumns = [
       {
-        accessor: 'name',
-        label: 'Recording Name',
+        accessor: "name",
+        label: "Recording Name",
         priorityLevel: 1,
         position: 1,
         minWidth: 100,
-        sortable: true,
+        sortable: true
       },
       {
-        accessor: 'study',
-        label: 'Study',
+        accessor: "study",
+        label: "Study",
         priorityLevel: 2,
         position: 2,
-        minWidth: 100,
+        minWidth: 100
       },
       {
-        accessor: 'description',
-        label: 'Description',
+        accessor: "description",
+        label: "Description",
         priorityLevel: 3,
         position: 3,
-        minWidth: 100,
-      },
+        minWidth: 100
+      }
     ];
     let loading = isEmpty(this.props.studies) || isEmpty(this.props.recordings);
     return (
       <div>
-        <div className="home__body">
+        <div className="page__body recordings__body">
           <div className="intro">
             <p className="big">Recordings</p>
             <div className="dividerthick" />
