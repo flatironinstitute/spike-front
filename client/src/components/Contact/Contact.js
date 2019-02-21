@@ -11,8 +11,8 @@ class Contact extends Component {
         <div className="intro">
           <p className="big">Contact Us</p>
           <p className="subhead">
-            Look for me in the struggle, hustlin 'til other brothers bubble.
-            Holla if ya hear me.
+            We appreciate your feedback and look forward to hearing from you
+            soon.
           </p>
           <p className="byline">
             Please use the

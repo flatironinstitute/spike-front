@@ -16,57 +16,58 @@ class ContactForm extends Component {
   }
 
   handleInputChange(event) {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
-
+    let value = event.target.value;
+    let name = event.target.name;
     this.setState({
       [name]: value
     });
   }
 
-  handleSubmit(event) {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    this.setState({ validated: true });
-    this.props.sendContact(this.state);
-  }
+  handleSubmit = event => {
+    event.preventDefault();
+    console.log("🥚 Search");
+    // const form = event.currentTarget;
+    // if (form.checkValidity() === false) {
+    //   event.preventDefault();
+    //   event.stopPropagation();
+    // }
+    // this.setState({ validated: true });
+  };
 
   render() {
-    const { validated } = this.state;
+    console.log("🍕", this.props);
     return (
       <Form
         noValidate
-        validated={validated}
-        onSubmit={e => this.handleSubmit(e)}
+        validated={this.state.validated}
+        onSubmit={this.handleSubmit}
         className="contact__form"
       >
         <Form.Row>
-          <Form.Group as={Col} md="6" controlId="validationCustom01">
-            <Form.Label>First name</Form.Label>
+          <Form.Group as={Col} md="6" controlId="formGroupFirstName">
+            <Form.Label>First Name</Form.Label>
             <Form.Control
               required
               type="text"
+              name="firstName"
               value={this.state.firstName}
-              onChange={this.handleInputChange}
-              placeholder="Santiago"
+              onChange={this.handleInputChange.bind(this)}
+              placeholder="Asami"
               size="lg"
             />
             <Form.Control.Feedback type="invalid">
               Please provide a first name.
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group as={Col} md="6" controlId="validationCustom02">
-            <Form.Label>Last name</Form.Label>
+          <Form.Group as={Col} md="6" controlId="formGroupLastName">
+            <Form.Label>Last Name</Form.Label>
             <Form.Control
               required
               type="text"
-              placeholder="Ramón y Cajal"
+              name="lastName"
+              placeholder="Sato"
               value={this.state.lastName}
-              onChange={this.handleInputChange}
+              onChange={this.handleInputChange.bind(this)}
               size="lg"
             />
             <Form.Control.Feedback type="invalid">
@@ -75,44 +76,47 @@ class ContactForm extends Component {
           </Form.Group>
         </Form.Row>
         <Form.Row>
-          <Form.Group as={Col} md="6" controlId="validationCustomEmail">
-            <Form.Label>Email address</Form.Label>
+          <Form.Group as={Col} md="6" controlId="formGroupEmail">
+            <Form.Label>Email</Form.Label>
             <InputGroup>
               <Form.Control
                 type="email"
-                placeholder="Email"
+                name="email"
+                placeholder="asami@futureindustries.rc"
                 aria-describedby="inputGroupPrepend"
                 required
                 size="lg"
                 value={this.state.email}
-                onChange={this.handleInputChange}
+                onChange={this.handleInputChange.bind(this)}
               />
               <Form.Control.Feedback type="invalid">
                 Please provide an email.
               </Form.Control.Feedback>
             </InputGroup>
           </Form.Group>
-          <Form.Group as={Col} md="6" controlId="validationCustom04">
+          <Form.Group as={Col} md="6" controlId="formGroupAffiliation">
             <Form.Label>Affiliation</Form.Label>
             <Form.Control
               type="text"
               placeholder="(Optional)"
+              name="affiliation"
               size="lg"
               value={this.state.affiliation}
-              onChange={this.handleInputChange}
+              onChange={this.handleInputChange.bind(this)}
             />
           </Form.Group>
         </Form.Row>
         <Form.Row>
-          <Form.Group controlId="validationCustom05" as={Col} md="12">
+          <Form.Group controlId="formGroupFeedback" as={Col} md="12">
             <Form.Label>Feedback</Form.Label>
             <Form.Control
               as="textarea"
               rows="10"
               size="lg"
+              name="feedback"
               required
               value={this.state.feedback}
-              onChange={this.handleInputChange}
+              onChange={this.handleInputChange.bind(this)}
             />
             <Form.Control.Feedback type="invalid">
               Please provide feedback.
@@ -120,16 +124,8 @@ class ContactForm extends Component {
           </Form.Group>
         </Form.Row>
         <Form.Row>
-          <Form.Group as={Col} md="6">
-            <Form.Check
-              required
-              label="Agree to terms and conditions"
-              feedback="You must agree before submitting."
-            />
-          </Form.Group>
-          <Form.Group as={Col} md="6">
-            <Button type="submit">Submit form</Button>
-          </Form.Group>
+          {/* TODO: Add recaptcha here */}
+          <Button type="submit">Submit form</Button>
         </Form.Row>
       </Form>
     );
