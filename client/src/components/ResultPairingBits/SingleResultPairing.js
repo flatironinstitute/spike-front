@@ -1,18 +1,22 @@
-import React, { Component } from 'react';
-import { isEmpty } from '../../utils';
+import React, { Component } from "react";
+import { isEmpty } from "../../utils";
 
 // Redux
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as actionCreators from '../../actions/actionCreators';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as actionCreators from "../../actions/actionCreators";
+
+import pairing from "../../data/stubData/pairing_sample";
+
+import spikeforestwidgets from "./SpikeforestWidgets";
 
 // http://localhost:3000/pairing/magland-synth-noise10-K10-C4/MountainSort4-thr3
 
-class SinglePairing extends Component {
+class SingleResultPairing extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pairing: [],
+      pairing: []
     };
   }
 
@@ -22,21 +26,27 @@ class SinglePairing extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.selectedPairing !== prevProps.selectedPairing) {
-      console.log('🍐', this.props.selectedPairing);
+      console.log("🍐", spikeforestwidgets);
     }
   }
 
   render() {
     let header = isEmpty(this.props.selectedPairing)
       ? this.props.selectedPairing
-      : '🍐';
+      : "🍐";
     return (
       <div>
         <div className="container container__body">
           <div className="header">
-            <h2 className="header__title">{header}</h2>
-            <div className="header__copy">
-              <p>
+            <h2 className="header__title">
+              magland-synth-noise10-K10-C4{" "}
+              <span role="img" aria-label="pear">
+                🍐
+              </span>{" "}
+              MountainSort4-thr3
+            </h2>
+            <div className="header__copy" id="widget1">
+              {/* <p>
                 Some text about the study overall. A study is a collection of
                 recordings. Sorting results may be aggregated over a study.Doggo
                 ipsum stop it fren you are doin me a concern. Thicc doggorino
@@ -58,7 +68,7 @@ class SinglePairing extends Component {
               <p>Experiment: synthetic ( IN VIVO / IN VITRO)</p>
               <p>Probe Type: tetrode</p>
               <p>Brain Region: occipital lobe</p>
-              <p>Groundtruth Units: true</p>
+              <p>Groundtruth Units: true</p> */}
             </div>
           </div>
           <div className="recordings">
@@ -70,11 +80,9 @@ class SinglePairing extends Component {
   }
 }
 
-// export default SinglePairing;
-
 function mapStateToProps(state) {
   return {
-    selectedPairing: state.pairing,
+    selectedPairing: state.pairing
   };
 }
 
@@ -85,4 +93,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SinglePairing);
+)(SingleResultPairing);

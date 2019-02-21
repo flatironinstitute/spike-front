@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import RepoIcon from '../AlgosBits/RepoIcon';
-import DocsIcon from '../AlgosBits/DocsIcon';
-import ActiveIcon from '../AlgosBits/ActiveIcon';
-import algoRows from '../AlgosBits/algos-copy';
-import ReactCollapsingTable from 'react-collapsing-table';
-import Preloader from '../Preloader/Preloader';
-import { isEmpty } from '../../utils';
-import { Container } from 'react-bootstrap';
+import React, { Component } from "react";
+import RepoIcon from "../AlgosBits/RepoIcon";
+import DocsIcon from "../AlgosBits/DocsIcon";
+import ActiveIcon from "../AlgosBits/ActiveIcon";
+import algoRows from "../AlgosBits/algos-copy";
+import ReactCollapsingTable from "react-collapsing-table";
+import Preloader from "../Preloader/Preloader";
+import { isEmpty } from "../../utils";
+import { Container } from "react-bootstrap";
 
 class Sorters extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rows: [],
+      rows: []
     };
   }
 
@@ -50,56 +50,56 @@ class Sorters extends Component {
   render() {
     const algosColumns = [
       {
-        accessor: 'name',
-        label: 'Name',
+        accessor: "name",
+        label: "Name",
         priorityLevel: 1,
         position: 1,
         minWidth: 100,
-        sortable: true,
+        sortable: true
       },
       {
-        accessor: 'isActive',
-        label: 'Active',
+        accessor: "isActive",
+        label: "Active",
         priorityLevel: 2,
         position: 2,
         minWidth: 100,
-        CustomComponent: ActiveIcon,
+        CustomComponent: ActiveIcon
       },
       {
-        accessor: 'latest',
-        label: 'Latest',
+        accessor: "latest",
+        label: "Latest",
         priorityLevel: 2,
         position: 2,
-        minWidth: 100,
+        minWidth: 100
       },
       {
-        accessor: 'authors',
-        label: 'Authors',
+        accessor: "authors",
+        label: "Authors",
         priorityLevel: 3,
         position: 3,
-        minWidth: 150,
+        minWidth: 150
       },
       {
-        accessor: 'repoUrl',
-        label: 'Repo',
+        accessor: "repoUrl",
+        label: "Repo",
         priorityLevel: 4,
         position: 4,
         minWidth: 100,
-        CustomComponent: RepoIcon,
+        CustomComponent: RepoIcon
       },
       {
-        accessor: 'docsUrl',
-        label: 'Docs',
+        accessor: "docsUrl",
+        label: "Docs",
         priorityLevel: 4,
         position: 4,
         minWidth: 100,
-        CustomComponent: DocsIcon,
-      },
+        CustomComponent: DocsIcon
+      }
     ];
     let loading = isEmpty(this.props.sorters) || isEmpty(this.props.recordings);
     return (
       <div>
-        <div className="home__body">
+        <div className="page__body">
           <div className="intro">
             <p className="big">Sorters</p>
             <div className="dividerthick" />

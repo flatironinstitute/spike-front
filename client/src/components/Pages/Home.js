@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
-import Preloader from '../Preloader/Preloader';
-import HeatmapsColumn from '../Heatmap/HeatmapsColumn';
-import { flattenUnits, mapUnitsBySorterStudy } from '../../dataHandlers';
-import { isEmpty } from '../../utils';
-import Container from 'react-bootstrap/Container';
-import { HashLink as Link } from 'react-router-hash-link';
+import React, { Component } from "react";
+import Preloader from "../Preloader/Preloader";
+import HeatmapsColumn from "../Heatmap/HeatmapsColumn";
+import { flattenUnits, mapUnitsBySorterStudy } from "../../dataHandlers";
+import { isEmpty } from "../../utils";
+import Container from "react-bootstrap/Container";
+import { HashLink as Link } from "react-router-hash-link";
 
-import './pages.css';
+import "./pages.css";
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       flatUnits: {},
-      unitsMap: {},
+      unitsMap: {}
     };
   }
 
@@ -68,7 +68,7 @@ class Home extends Component {
     let sorters = this.props.sorters ? this.getSorters() : null;
     let studies = this.props.studies ? this.getStudies() : null;
     return (
-      <div className="home__body">
+      <div className="page__body">
         <div className="intro">
           <p className="big big--home">Spike Sorting Results</p>
           <div className="dividerthick" />
