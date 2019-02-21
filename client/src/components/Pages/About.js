@@ -21,8 +21,7 @@ class About extends Component {
               Github issues
             </a>{" "}
             page to report website problems or
-            <a href="mailto:elovero@flatironinstitute.org">contact</a> us
-            directly.
+            <a href="/contact">contact</a> us directly.
           </p>
           <p className="updated">Updated on February 14, 2019</p>
         </div>

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import './footer.css';
-import github from './github-white.svg';
+import React, { Component } from "react";
+import "./footer.css";
+import github from "./github-white.svg";
 
 class Footer extends Component {
   render() {
@@ -46,11 +46,7 @@ class Footer extends Component {
             </a>
           </li>
           <li className="x-small">
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="mailto=elovero@flatironinstitute.org?Subject=Spikeforest%20Contact"
-            >
+            <a target="_blank" rel="noopener noreferrer" href="/contact">
               Contact
             </a>
           </li>
