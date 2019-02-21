@@ -1,23 +1,24 @@
-import React, { Component } from 'react';
-import { Route, Switch } from 'react-router';
+import React, { Component } from "react";
+import { Route, Switch } from "react-router";
 
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as actionCreators from '../actions/actionCreators';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as actionCreators from "../actions/actionCreators";
 
 // import components
-import Header from '../components/Header/Header';
-import Footer from '../components/Footer/Footer';
+import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
 
-import Home from '../components/Pages/Home';
-import About from '../components/Pages/About';
-import Recordings from '../components/Pages/Recordings';
-import Studies from '../components/Pages/Studies';
-import Sorters from '../components/Pages/Sorters';
-import Internals from '../components/Pages/Internals';
-import Metrics from '../components/Pages/Metrics';
-import SinglePairing from '../components/PairingBits/SinglePairing';
-import headerCopy from '../components/CopyHeader/header-copy';
+import Home from "../components/Pages/Home";
+import About from "../components/Pages/About";
+import Recordings from "../components/Pages/Recordings";
+import Studies from "../components/Pages/Studies";
+import Sorters from "../components/Pages/Sorters";
+import Internals from "../components/Pages/Internals";
+import Metrics from "../components/Pages/Metrics";
+import Contact from "../components/Contact/Contact";
+import SingleResultPairing from "../components/ResultPairingBits/SingleResultPairing";
+import headerCopy from "../components/CopyHeader/header-copy";
 
 class Routes extends Component {
   async componentDidMount() {
@@ -70,8 +71,12 @@ class Routes extends Component {
             render={props => <Metrics {...this.props} />}
           />
           <Route
-            path="/pairing/magland-synth-noise10-K10-C4/MountainSort4-thr3"
-            render={props => <SinglePairing {...this.props} />}
+            path="/contact"
+            render={props => <Contact {...this.props} />}
+          />
+          <Route
+            path="/results/magland-synth-noise10-K10-C4/MountainSort4-thr3"
+            render={props => <SingleResultPairing {...this.props} />}
           />
         </Switch>
         <Footer />
@@ -86,13 +91,13 @@ function mapStateToProps(state) {
     studies: state.studies,
     sorters: state.sorters,
     units: state.units,
-    loading: state.loading,
+    loading: state.loading
   };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    ...bindActionCreators(actionCreators, dispatch),
+    ...bindActionCreators(actionCreators, dispatch)
   };
 };
 

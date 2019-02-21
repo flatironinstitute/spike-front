@@ -2,49 +2,72 @@ import {
   getRecordings,
   getStudies,
   getSorters,
-  getTrueUnits,
-} from '../dataHandlers';
+  getTrueUnits
+} from "../dataHandlers";
 
-const fetch = require('node-fetch');
-const baseurl = process.env.API_URL || 'http://localhost:5000';
+const fetch = require("node-fetch");
+const baseurl = process.env.API_URL || "http://localhost:5000";
 
-export const SELECT_STUDY = 'SELECT_STUDY';
-export const SELECT_RECORDING = 'SELECT_RECORDING';
-export const RECEIVE_RECORDINGS = 'RECEIVE_RECORDINGS';
-export const RECEIVE_SORTERS = 'RECEIVE_SORTERS';
-export const RECEIVE_UNITS = 'RECEIVE_UNITS';
-export const RECEIVE_STUDIES = 'RECEIVE_STUDIES';
-export const RECEIVE_PAIRING = 'RECEIVE_PAIRING';
-export const START_LOADING = 'START_LOADING';
-export const END_LOADING = 'END_LOADING';
+export const SELECT_STUDY = "SELECT_STUDY";
+export const SELECT_RECORDING = "SELECT_RECORDING";
+export const RECEIVE_RECORDINGS = "RECEIVE_RECORDINGS";
+export const RECEIVE_SORTERS = "RECEIVE_SORTERS";
+export const RECEIVE_UNITS = "RECEIVE_UNITS";
+export const RECEIVE_STUDIES = "RECEIVE_STUDIES";
+export const RECEIVE_PAIRING = "RECEIVE_PAIRING";
+export const START_LOADING = "START_LOADING";
+export const END_LOADING = "END_LOADING";
+
+// Contact Form
+export const SEND_CONTACT = "SEND_CONTACT";
+export const SEND_CONTACT_SUCCESS = "SEND_CONTACT_SUCCESS";
+export const SEND_CONTACT_FAILURE = "SEND_CONTACT_FAILURE";
 
 // default API call function
 export const createFetch = async url => {
   const newUrl = baseurl + url;
   const response = await fetch(newUrl, {
-    method: 'GET',
-    mode: 'same-origin',
-    credentials: 'same-origin',
+    method: "GET",
+    mode: "same-origin",
+    credentials: "same-origin",
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    }
   });
   const body = await response.json();
   if (response.status !== 200) throw Error(body.message);
   return body;
 };
 
+export const createFetchPost = async (url, options) => {
+  const newUrl = baseurl + url;
+  const request = await fetch(newUrl, {
+    method: "POST",
+    mode: "same-origin",
+    credentials: "same-origin",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    data: options
+  });
+
+  const response = await request.json();
+  if (request.status !== 200) throw Error(response.message);
+  return response;
+};
+
 // select study
 export const selectStudy = study => ({
   type: SELECT_STUDY,
-  study,
+  study
 });
 
 export const selectRecording = recording => {
   return {
     type: SELECT_RECORDING,
-    recording,
+    recording
   };
 };
 
@@ -52,7 +75,7 @@ export const selectRecording = recording => {
 export const receiveRecordings = recordings => {
   return {
     type: RECEIVE_RECORDINGS,
-    recordings: recordings,
+    recordings: recordings
   };
 };
 
@@ -75,7 +98,7 @@ export const fetchRecordings = () => {
 // Sorters
 export const receiveSorters = sorters => ({
   type: RECEIVE_SORTERS,
-  sorters,
+  sorters
 });
 
 export const fetchSorters = () => {
@@ -97,7 +120,7 @@ export const fetchSorters = () => {
 // Studies
 export const receiveStudies = studies => ({
   type: RECEIVE_STUDIES,
-  studies,
+  studies
 });
 
 export const fetchStudies = () => {
@@ -120,7 +143,7 @@ export const fetchStudies = () => {
 export const receiveUnits = units => {
   return {
     type: RECEIVE_UNITS,
-    units,
+    units
   };
 };
 
@@ -143,18 +166,18 @@ export const fetchUnits = () => {
 // loading
 export const startLoading = () => ({
   type: START_LOADING,
-  loading: true,
+  loading: true
 });
 
 export const endLoading = () => ({
   type: END_LOADING,
-  loading: false,
+  loading: false
 });
 
 // Pairing
 export const receivePairing = pairing => ({
   type: RECEIVE_PAIRING,
-  pairing,
+  pairing
 });
 
 export const fetchPairing = () => {
@@ -172,3 +195,25 @@ export const fetchPairing = () => {
     // TODO: Add a sentry here
   };
 };
+
+export const sendContact = options => {
+  return function(dispatch) {
+    return createFetchPost(`/api/contact`, options)
+      .then(res => console.log("🤽‍♂️", res))
+      .catch(err => console.log(err));
+    // TODO: Add a sentry here
+  };
+};
+
+export function sendContactSuccess() {
+  return {
+    type: SEND_CONTACT_SUCCESS
+  };
+}
+
+export function sendContactFailure(error) {
+  return {
+    type: SEND_CONTACT_FAILURE,
+    error
+  };
+}

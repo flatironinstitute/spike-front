@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import Menu from 'react-burger-menu/lib/menus/slide';
-import Form from 'react-bootstrap/Form';
+import React, { Component } from "react";
+import Menu from "react-burger-menu/lib/menus/slide";
+import Form from "react-bootstrap/Form";
 
-import './Burger.css';
+import "./Burger.css";
 
 class BurgerWrap extends Component {
   render() {
@@ -11,7 +11,7 @@ class BurgerWrap extends Component {
         <p className="menu__tagline">
           <a href="/" target="_blank" rel="noopener noreferrer">
             SpikeForest
-          </a>{' '}
+          </a>{" "}
           compares spike-sorting algorithms against electrophysiology datasets
           with groundtruth.
         </p>
@@ -43,15 +43,11 @@ class BurgerWrap extends Component {
         <a id="about" className="menu-item-sm" href="/about">
           About
         </a>
-        <a
-          id="about"
-          className="menu-item-sm"
-          href="mailto=elovero@flatironinstitute.org?Subject=Spikeforest%20Contact"
-        >
+        <a id="about" className="menu-item-sm" href="/contact">
           Contact
         </a>
         <p className="menu__tagline">
-          Project of the{'  '}
+          Project of the{"  "}
           <a
             href="https://www.simonsfoundation.org/flatiron/center-for-computational-mathematics/"
             target="_blank"
@@ -59,7 +55,7 @@ class BurgerWrap extends Component {
           >
             Center for Computational Mathematics,
           </a>
-          {'   '}
+          {"   "}
           <a
             href="https://flatironinstitute.org"
             target="_blank"
@@ -72,19 +68,19 @@ class BurgerWrap extends Component {
           <a href="/" target="_blank" rel="noopener noreferrer">
             Other
           </a>
-          {'  '}
-          useful information{'  '}
+          {"  "}
+          useful information{"  "}
           <span role="img" aria-label="alembic">
             ⚗️
-          </span>{' '}
-          or{' '}
+          </span>{" "}
+          or{" "}
           <span role="img" aria-label="ghost">
             👻
           </span>
-          krimskrams{' '}
+          krimskrams{" "}
           <span role="img" aria-label="cheeseburger">
             🍔
-          </span>{' '}
+          </span>{" "}
           here?
         </p>
       </Menu>
