@@ -25,7 +25,8 @@ class ContactForm extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log("🥚 Search");
+    // TODO: Activate email send and conditional sending
+    console.log("📪 send contact");
     // const form = event.currentTarget;
     // if (form.checkValidity() === false) {
     //   event.preventDefault();
@@ -35,7 +36,6 @@ class ContactForm extends Component {
   };
 
   render() {
-    console.log("🍕", this.props);
     return (
       <Form
         noValidate
