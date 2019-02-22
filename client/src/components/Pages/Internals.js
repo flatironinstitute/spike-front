@@ -19,22 +19,20 @@ class Internals extends Component {
           <div className="prose-container">
             <h3>Set of spike sorting algorithms</h3>
             <p>
-              Each algorithm consists of the following:
-              <ul>
-                <li>
-                  Environment: A docker file and image representing the
-                  environment required for running the software.[Link to
-                  details]
-                </li>
-                <li>
-                  Python wrapper: A MountainLab processor used to execute the
-                  software. [link to details]
-                </li>
-              </ul>
-              As a secondary goal, reseachers may use the SpikeForest
-              infrastructure to run spike sorting on their own computers. [link
-              to details]
+              Each algorithm consists of the following: As a secondary goal,
+              reseachers may use the SpikeForest infrastructure to run spike
+              sorting on their own computers. [link to details]
             </p>
+            <ul>
+              <li>
+                Environment: A docker file and image representing the
+                environment required for running the software.[Link to details]
+              </li>
+              <li>
+                Python wrapper: A MountainLab processor used to execute the
+                software. [link to details]
+              </li>
+            </ul>
             <h3>
               Registered ground truth recordings organized into studies and
               study sets

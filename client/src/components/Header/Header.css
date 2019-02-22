@@ -5,7 +5,6 @@
 
 .navbar__white {
   background: #fff;
-  /* border-bottom: 1px solid var(--fi-blue); */
   position: fixed;
   width: 100vw;
   padding: 0.8rem 0;
@@ -16,6 +15,7 @@
 
 .navbar__center {
   margin: 0 0 0 2rem !important;
+  border-bottom: none;
 }
 
 .navbar__right {
@@ -27,11 +27,15 @@
   visibility: hidden;
 }
 
-.navbar__link {
-  color: rgba(0, 0, 0, 0.9) !important;
+a.nav-link,
+.nav-link > a {
+  border-bottom: none;
 }
 
-.active {
+a.nav-link.active {
   border-bottom: 2px solid var(--fi-blue);
+}
+
+.active > a {
   font-weight: bold;
 }
