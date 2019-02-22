@@ -53,7 +53,6 @@ export const createFetchPost = async (url, options) => {
     },
     body: body
   });
-  console.log("⛱️", request);
   const response = await request.json();
   if (request.status !== 200) {
     throw Error(response.message);
@@ -200,24 +199,28 @@ export const fetchPairing = () => {
   };
 };
 
-export const sendContact = options => {
-  return function(dispatch) {
-    return createFetchPost(`/api/contact`, options)
-      .then(res => console.log("🐩", res))
-      .catch(err => console.log(err));
-    // TODO: Add a sentry here
-  };
-};
-
 export function sendContactSuccess() {
   return {
-    type: SEND_CONTACT_SUCCESS
+    type: SEND_CONTACT_SUCCESS,
+    contactSent: true
   };
 }
 
 export function sendContactFailure(error) {
   return {
     type: SEND_CONTACT_FAILURE,
-    error
+    contactSent: false
   };
 }
+
+export const sendContact = options => {
+  return function(dispatch) {
+    return createFetchPost(`/api/contact`, options)
+      .then(res => {
+        dispatch(sendContactSuccess(res.success));
+      })
+      .catch(err => {
+        dispatch(sendContactFailure(err));
+      });
+  };
+};

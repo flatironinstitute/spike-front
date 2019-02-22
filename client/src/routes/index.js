@@ -91,7 +91,8 @@ function mapStateToProps(state) {
     studies: state.studies,
     sorters: state.sorters,
     units: state.units,
-    loading: state.loading
+    loading: state.loading,
+    contactSent: state.contactSent
   };
 }
 

@@ -51,13 +51,11 @@ kbclient.setPairioConfig({
 app.get("/api/hello", (req, res) => {
   res.send({ express: "Hello From Express" });
 });
-
-//   // let mailSent = await mail.send(req.body);
-//   // console.log("🍊", mailSent);
 app.post("/api/contact", (req, res) => {
+  // TODO: Attach to mail server when credit card is available.
   console.log("🗺️", req.body);
   res.send({
-    data: `I received your POST request.`
+    success: true
   });
 });
 

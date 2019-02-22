@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, InputGroup, Button, Col } from "react-bootstrap";
+import { Form, InputGroup, Button, Col, Alert } from "react-bootstrap";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { isEmpty } from "../../utils.js";
@@ -28,11 +28,6 @@ class ContactForm extends Component {
           feedback: ""
         }}
         onSubmit={(values, { setSubmitting }) => {
-          // setTimeout(() => {
-          //   alert(JSON.stringify(values, null, 2));
-          //   setSubmitting(false);
-          // }, 500);
-          console.log("🏓 sending contact", values);
           this.props.sendContact(values);
           setSubmitting(false);
         }}
@@ -47,6 +42,13 @@ class ContactForm extends Component {
           errors
         }) => (
           <Form noValidate onSubmit={handleSubmit} className="contact__form">
+            {this.props.contactSent ? (
+              <Alert variant={"success"}>
+                We appreciate your feedback. Thank you for contacting us.
+              </Alert>
+            ) : (
+              <div />
+            )}
             <Form.Row>
               <Form.Group as={Col} md="6" controlId="formGroupFirstName">
                 <Form.Label>First name</Form.Label>
