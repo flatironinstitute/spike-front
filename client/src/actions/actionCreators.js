@@ -42,6 +42,7 @@ export const createFetch = async url => {
 
 export const createFetchPost = async (url, options) => {
   const newUrl = baseurl + url;
+  const body = JSON.stringify(options);
   const request = await fetch(newUrl, {
     method: "POST",
     mode: "same-origin",
@@ -50,9 +51,9 @@ export const createFetchPost = async (url, options) => {
       Accept: "application/json",
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(options)
+    body: body
   });
-
+  console.log("⛱️", request);
   const response = await request.json();
   if (request.status !== 200) {
     throw Error(response.message);
