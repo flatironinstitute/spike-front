@@ -1,7 +1,25 @@
+.navbar__container {
+  width: 100%;
+  max-width: 100vw;
+}
+
 .navbar__white {
   background: #fff;
-  /* border-bottom: 1px solid var(--fi-blue); */
+  border-bottom: 1px solid var(--fi-blue);
   position: fixed;
+  /* width: 100vw; */
+  padding: 0.8rem;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.navbar__center {
+  margin-right: 0px !important;
+}
+
+.navbar__right {
+  float: right;
 }
 
 .navbar__hidden {

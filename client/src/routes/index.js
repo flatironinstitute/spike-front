@@ -31,7 +31,7 @@ class Routes extends Component {
   render() {
     return (
       <div>
-        <Header />
+        {/* <Header /> */}
         <Switch>
           <Route
             exact

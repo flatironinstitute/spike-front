@@ -69,7 +69,7 @@ class Home extends Component {
     let studies = this.props.studies ? this.getStudies() : null;
     return (
       <div className="page__body">
-        <div className="intro">
+        {/* <div className="intro">
           <p className="big big--home">Spike Sorting Results</p>
           <div className="dividerthick" />
           <p className="subhead">
@@ -118,7 +118,7 @@ class Home extends Component {
               their probe type and brain region.
             </p>
           </div>
-        </div>
+        </div> */}
         {loading ? (
           <Container id="overview">
             <Preloader />

@@ -21,9 +21,9 @@ html {
   --off-white: #fafafd;
   --dark-grey: #282c34;
   --label-grey: #6b6b76;
-  --sans: 'Quattrocento Sans', sans-serif;
-  --serif: 'Quattrocento', serif;
-  --mono: 'Rajdhani', sans-serif;
+  --sans: "Quattrocento Sans", sans-serif;
+  --serif: "Quattrocento", serif;
+  --mono: "Rajdhani", sans-serif;
 }
 body {
   margin: 0;
@@ -123,9 +123,9 @@ a:hover {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .button,
 button,
-input[type='submit'],
-input[type='reset'],
-input[type='button'] {
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
   display: inline-block;
   height: 38px;
   padding: 0 15px;
@@ -146,37 +146,37 @@ input[type='button'] {
 }
 .button:hover,
 button:hover,
-input[type='submit']:hover,
-input[type='reset']:hover,
-input[type='button']:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
 .button:focus,
 button:focus,
-input[type='submit']:focus,
-input[type='reset']:focus,
-input[type='button']:focus {
+input[type="submit"]:focus,
+input[type="reset"]:focus,
+input[type="button"]:focus {
   color: #333;
   border-color: #888;
   outline: 0;
 }
 .button.button-primary,
 button.button-primary,
-input[type='submit'].button-primary,
-input[type='reset'].button-primary,
-input[type='button'].button-primary {
+input[type="submit"].button-primary,
+input[type="reset"].button-primary,
+input[type="button"].button-primary {
   color: #fff;
   background-color: var(--fi-blue);
   border-color: var(--fi-blue);
 }
 .button.button-primary:hover,
 button.button-primary:hover,
-input[type='submit'].button-primary:hover,
-input[type='reset'].button-primary:hover,
-input[type='button'].button-primary:hover,
+input[type="submit"].button-primary:hover,
+input[type="reset"].button-primary:hover,
+input[type="button"].button-primary:hover,
 .button.button-primary:focus,
 button.button-primary:focus,
-input[type='submit'].button-primary:focus,
-input[type='reset'].button-primary:focus,
-input[type='button'].button-primary:focus {
+input[type="submit"].button-primary:focus,
+input[type="reset"].button-primary:focus,
+input[type="button"].button-primary:focus {
   color: #fff;
   background-color: var(--fi-yellow);
   border-color: var(--fi-yellow);
@@ -326,7 +326,7 @@ Use containers when you need a content area that has standard maximum width and 
 .container:after,
 .row:after {
   clear: both;
-  content: '';
+  content: "";
   display: table;
 }
 
@@ -393,7 +393,7 @@ li {
 /* Navbar
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-.nav__wrapper {
+/* .nav__wrapper {
   height: 54px;
   left: 0px;
   position: fixed;
@@ -406,12 +406,12 @@ li {
   font: normal normal 400 normal 1.4rem / 6rem var(--sans);
   cursor: pointer;
   background-color: white;
-}
-.nav {
+} */
+/* .nav {
   float: left;
   width: 100%;
-}
-.nav__container {
+} */
+/* .nav__container {
   display: flex;
   flex-direction: row;
 }
@@ -463,7 +463,7 @@ li {
 }
 .active {
   color: var(--fi-blue);
-}
+} */
 
 /* Left Menu
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -494,10 +494,10 @@ li {
     padding-left: 0rem;
   }
   .left-menu__link::after {
-    content: ' / ';
+    content: " / ";
   }
   .left-menu__link:last-of-type::after {
-    content: '';
+    content: "";
   }
   .left-menu__link {
     display: inline;

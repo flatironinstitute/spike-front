@@ -4,10 +4,10 @@ import Form from "react-bootstrap/Form";
 
 import "./Burger.css";
 
-class BurgerWrap extends Component {
+class InfoPanel extends Component {
   render() {
     return (
-      <Menu right width={500} customBurgerIcon={<img src="info-icon.svg" />}>
+      <Menu left width={500}>
         <p className="menu__tagline">
           <a href="/" target="_blank" rel="noopener noreferrer">
             SpikeForest
@@ -87,10 +87,4 @@ class BurgerWrap extends Component {
     );
   }
 }
-export default BurgerWrap;
-
-// About
-// Simons Foundation
-// Flatiron Institute
-// SpikeForest Analysis Framework
-// Contact
+export default InfoPanel;

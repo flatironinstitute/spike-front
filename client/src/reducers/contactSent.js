@@ -19,7 +19,7 @@ const contactSent = (state = initialState, action) => {
   switch (action.type) {
     case SEND_CONTACT_SUCCESS:
       return action.contactSent;
-    case SEND_CONTACT_SUCCESS:
+    case SEND_CONTACT_FAILURE:
       return action.contactSent;
     default:
       return state;
