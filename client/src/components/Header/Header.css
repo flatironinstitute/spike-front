@@ -5,7 +5,7 @@
 
 .navbar__white {
   background: #fff;
-  border-bottom: 1px solid var(--fi-blue);
+  /* border-bottom: 1px solid var(--fi-blue); */
   position: fixed;
   width: 100vw;
   padding: 0.8rem 0;
@@ -29,4 +29,9 @@
 
 .navbar__link {
   color: rgba(0, 0, 0, 0.9) !important;
+}
+
+.active {
+  border-bottom: 2px solid var(--fi-blue);
+  font-weight: bold;
 }

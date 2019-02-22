@@ -20,7 +20,7 @@ class Header extends Component {
               className="d-inline-block align-top"
             />
           </Navbar.Brand>
-          <Nav className="navbar__right" defaultActiveKey="/home">
+          <Nav className="navbar__right" defaultActiveKey="home">
             <Nav.Item>
               <Nav.Link eventKey="home" href="/">
                 Home

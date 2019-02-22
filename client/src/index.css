@@ -115,8 +115,9 @@ a {
   font-family: var(--sans);
 }
 a:hover {
-  color: var(--fi-teal);
   font-family: var(--sans);
+  color: var(--fi-blue);
+  font-weight: bold;
 }
 
 /* Buttons
