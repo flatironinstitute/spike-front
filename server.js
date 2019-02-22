@@ -48,10 +48,10 @@ app.get("/api/hello", (req, res) => {
   res.send({ express: "Hello From Express" });
 });
 app.post("/api/contact", (req, res) => {
-  console.log(req.body);
-  res.send(
-    `I received your POST request. This is what you sent me: ${req.body.post}`
-  );
+  console.log("🇷🇸", req.body);
+  res.send({
+    express: "I recieved your post request"
+  });
 });
 
 // Serve up client files

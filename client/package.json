@@ -9,6 +9,7 @@
     "bootstrap": "^4.2.1",
     "connected-react-router": "^6.0.0",
     "d3": "^5.9.1",
+    "formik": "^1.5.1",
     "history": "^4.7.2",
     "jquery": "^3.3.1",
     "modern-normalize": "^0.5.0",
@@ -31,7 +32,8 @@
     "react-tabs": "^2.3.0",
     "react-vis": "^1.11.5",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "yup": "^0.26.10"
   },
   "scripts": {
     "start": "react-scripts start",

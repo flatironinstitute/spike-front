@@ -50,12 +50,15 @@ export const createFetchPost = async (url, options) => {
       Accept: "application/json",
       "Content-Type": "application/json"
     },
-    data: options
+    body: JSON.stringify(options)
   });
 
   const response = await request.json();
-  if (request.status !== 200) throw Error(response.message);
-  return response;
+  if (request.status !== 200) {
+    throw Error(response.message);
+  } else {
+    return response;
+  }
 };
 
 // select study
@@ -199,7 +202,7 @@ export const fetchPairing = () => {
 export const sendContact = options => {
   return function(dispatch) {
     return createFetchPost(`/api/contact`, options)
-      .then(res => console.log("🤽‍♂️", res))
+      .then(res => console.log("🐩", res))
       .catch(err => console.log(err));
     // TODO: Add a sentry here
   };
