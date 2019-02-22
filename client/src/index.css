@@ -197,7 +197,6 @@ Use containers when you need a content area that has standard maximum width and 
 .container {
   margin: 0 auto;
   padding: 0 10px;
-  position: relative;
   width: 95%;
   box-sizing: border-box;
 }

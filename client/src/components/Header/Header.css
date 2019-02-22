@@ -27,15 +27,18 @@
   visibility: hidden;
 }
 
-a.nav-link,
-.nav-link > a {
+.nav-link {
   border-bottom: none;
+  font-family: var(--sans);
+  color: var(--black);
 }
 
-a.nav-link.active {
-  border-bottom: 2px solid var(--fi-blue);
+.nav-link:hover {
+  text-decoration: none;
+  color: var(--fi-blue);
 }
 
-.active > a {
+.nav-link.active {
   font-weight: bold;
+  border-bottom: 2px solid var(--fi-blue);
 }

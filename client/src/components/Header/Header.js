@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -28,37 +28,26 @@ class Header extends Component {
           </Navbar.Brand>
           <Nav
             className="navbar__right"
-            defaultActiveKey="/"
             activeKey={activeRoute}
             onSelect={selectedKey => {
-              console.log("🎹", selectedKey);
+              console.log("Route to 🗺️", selectedKey);
             }}
           >
-            <Nav.Item>
-              <Nav.Link eventKey="/">
-                <Link to="/">Home</Link>
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="/recordings">
-                <Link to="/recordings">Recordings</Link>
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="/sorters">
-                <Link to="/sorters">Sorters</Link>
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="/metrics">
-                <Link to="/metrics">Metrics</Link>
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="/internals">
-                <Link to="/internals">Internals</Link>
-              </Nav.Link>
-            </Nav.Item>
+            <LinkContainer exact to="/">
+              <Nav.Link eventKey="/">Home</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/recordings">
+              <Nav.Link eventKey="/recordings">Recordings</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/sorters">
+              <Nav.Link eventKey="/sorters">Sorters</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/metrics">
+              <Nav.Link eventKey="/metrics">Metrics</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/internals">
+              <Nav.Link eventKey="/internals">Internals</Nav.Link>
+            </LinkContainer>
           </Nav>
         </Nav>
       </div>
