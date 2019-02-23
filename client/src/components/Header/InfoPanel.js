@@ -1,88 +1,50 @@
 import React, { Component } from "react";
 import Menu from "react-burger-menu/lib/menus/slide";
-import Form from "react-bootstrap/Form";
+import { Link } from "react-router-dom";
 
-import "./Burger.css";
+import "./infopanel.css";
 
 class InfoPanel extends Component {
   render() {
+    console.log("🤰", this.props);
     return (
-      <Menu left width={500}>
-        <p className="menu__tagline">
-          <a href="/" target="_blank" rel="noopener noreferrer">
-            SpikeForest
-          </a>{" "}
-          compares spike-sorting algorithms against electrophysiology datasets
-          with groundtruth.
-        </p>
-        <a id="home" className="menu-item" href="/">
-          Home
-        </a>
-        <a id="recordings" className="menu-item" href="/recordings">
-          Recordings
-        </a>
-        <a id="studies" className="menu-item" href="/sorters">
-          Sorters
-        </a>
-        <a id="metrics" className="menu-item" href="/metrics">
-          Metrics
-        </a>
-        <a id="studies" className="menu-item" href="/internals">
-          Internals
-        </a>
-        <Form className="menu__form">
-          <Form.Group className="menu__formgroup">
-            <Form.Control
-              size="lg"
-              type="text"
-              placeholder="Search..."
-              className="menu__input"
-            />
-          </Form.Group>
-        </Form>
-        <a id="about" className="menu-item-sm" href="/about">
-          About
-        </a>
-        <a id="about" className="menu-item-sm" href="/contact">
-          Contact
-        </a>
-        <p className="menu__tagline">
-          Project of the{"  "}
-          <a
-            href="https://www.simonsfoundation.org/flatiron/center-for-computational-mathematics/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Center for Computational Mathematics,
-          </a>
-          {"   "}
-          <a
-            href="https://flatironinstitute.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Flatiron Institute
-          </a>
-        </p>
-        <p className="menu__tagline">
-          <a href="/" target="_blank" rel="noopener noreferrer">
-            Other
-          </a>
-          {"  "}
-          useful information{"  "}
-          <span role="img" aria-label="alembic">
-            ⚗️
-          </span>{" "}
-          or{" "}
-          <span role="img" aria-label="ghost">
-            👻
-          </span>
-          krimskrams{" "}
-          <span role="img" aria-label="cheeseburger">
-            🍔
-          </span>{" "}
-          here?
-        </p>
+      <Menu width={this.props.width}>
+        <div className="info__inset">
+          <h5>SpikeForest</h5>
+          <p>
+            Electrical recording from extracellular probes is a popular and
+            affordable method to capture the simultaneous activity of many
+            neurons in the brain or retina. There is a great need to quantify
+            the reliability of the firing events extracted from the recordings
+            by spike sorting algorithms. This website addresses this need,
+            assessing many popular spike sorting codes via "ground truth"
+            recordings, which are the gold standard in terms of accuracy.
+          </p>
+          <p>
+            We host a variety of experimental paired ground truth recordings
+            from the community and also many in silico synthetic recordings.
+            Each sorter is run on all recordings and the resulting accuracies
+            for the ground truth units are updated on a daily basis as needed.
+            Approximate CPU/GPU run times are also reported.
+          </p>
+          <p>
+            On the page below, browse all datasets, algorithms, sorting results,
+            and comparisons, and inspect the source code used to generate these
+            data. Use the links on the navbar to learn about{" "}
+            <Link to="/recordings">recordings</Link>,{" "}
+            <Link to="/sorters">sorters</Link>, and{" "}
+            <Link to="/metrics">metric definitions</Link>.
+          </p>
+          <p className="info__byline">
+            Project of{" "}
+            <a href="https://flatironinstitute.org" target="_blank">
+              Center for Computational Mathematics,
+            </a>{" "}
+            <a href="https://flatironinstitute.org" target="_blank">
+              Flatiron Institue.
+            </a>
+          </p>
+        </div>
       </Menu>
     );
   }

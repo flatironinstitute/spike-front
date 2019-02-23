@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import "./pages.css";
 
@@ -13,6 +14,11 @@ class Internals extends Component {
           <p className="subhead">
             All code used internally by SpikeForest is open source and
             independently run-able. The system consists of the following:
+          </p>
+          <p className="byline">
+            For more information on the team behind this project, please consult
+            the
+            <Link to="/about">About</Link> page.
           </p>
         </div>
         <div className="opener">

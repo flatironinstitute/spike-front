@@ -1,0 +1,143 @@
+:focus {
+  outline: none !important;
+}
+
+/* Position and sizing of burger button */
+.bm-burger-button {
+  position: fixed;
+  width: 23px;
+  height: 19px;
+  left: 36px;
+  top: 17px;
+}
+
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+  background: rgb(42, 42, 42);
+}
+
+/* Color/shape of burger icon bars on hover*/
+.bm-burger-bars-hover {
+  background: var(--fi-blue);
+  opacity: 1;
+}
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+  position: fixed;
+  width: 23px !important;
+  height: 19px !important;
+  left: 36px !important;
+  top: 17px !important;
+}
+
+/* Color/shape of close button cross */
+.bm-cross {
+  background: #f4f4f4;
+  height: 23px !important;
+}
+
+/*
+    Sidebar wrapper styles
+    Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
+    */
+.bm-menu-wrap {
+  position: fixed;
+  height: 95vh !important;
+  width: 95vw !important;
+  padding: 1.6rem 3.2rem;
+  background-color: rgba(40, 40, 40, 0.975) !important;
+  color: #f4f4f4;
+  top: 0 !important;
+}
+
+/* General sidebar styles */
+.bm-menu {
+  padding: 1rem 1.5rem;
+  overflow: hidden !important;
+}
+
+/* Morph shape necessary with bubble or elastic */
+.bm-morph-shape {
+  fill: #373a47;
+}
+
+/* Styling of overlay */
+.bm-overlay {
+  background-color: rgba(40, 40, 40, 0.975) !important;
+  top: 0 !important;
+}
+
+/* .menu__tagline {
+  color: #f4f4f4;
+  font-size: 1.7rem;
+  line-height: 1.7;
+  margin: 3rem 0;
+}
+
+.menu__tagline a {
+  color: #f4f4f4;
+  border-bottom: 1px solid var(--fi-blue);
+}
+
+.menu__tagline a:hover {
+  text-decoration: none;
+  color: var(--fi-blue);
+}
+
+.menu-item {
+  font-size: 3.2rem;
+  color: #f4f4f4;
+}
+
+.menu-item:hover {
+  color: var(--fi-blue);
+}
+
+.menu-item-sm {
+  color: #f4f4f4;
+  line-height: 3rem;
+}
+
+.menu-item-sm:hover {
+  color: var(--fi-blue);
+}
+
+.menu__form {
+  margin: 3rem 0;
+}
+
+.menu__formgroup {
+  border: 1px solid var(--fi-blue);
+  border-radius: 0.2rem;
+}
+
+.menu__input {
+  font-size: 1.7rem;
+  border-radius: 0.2rem !important;
+} */
+
+.info__inset {
+  border-top: 3px solid #5b5b5b;
+  margin: 5%;
+}
+
+.info__inset h5 {
+  font-weight: 700;
+  font-size: 3.2rem;
+  line-height: 1.7;
+  margin-top: 1.5rem;
+}
+
+.info__inset p {
+  font-size: 1.7rem;
+  line-height: 1.5;
+}
+
+.info__inset a {
+  color: #f4f4f4;
+}
+
+.info__byline {
+  padding-top: 4rem;
+}

@@ -4,20 +4,44 @@ import { LinkContainer } from "react-router-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import logo from "./logo-no-icon.svg";
-// import InfoPanel from "./InfoPanel";
-// TODO: Add info panel on left side
+import InfoPanel from "./InfoPanel";
 
 import "./Header.css";
 
 class Header extends Component {
+  constructor() {
+    super();
+    this.state = {
+      width: 1500,
+      height: 341
+    };
+  }
+
+  updateDimensions() {
+    if (window.innerWidth < 500) {
+      this.setState({ width: 450, height: 102 });
+    } else {
+      let update_width = window.innerWidth - 100;
+      let update_height = Math.round(update_width / 4.4);
+      this.setState({ width: update_width, height: update_height });
+    }
+  }
+
+  componentDidMount() {
+    this.updateDimensions();
+    window.addEventListener("resize", this.updateDimensions.bind(this));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions.bind(this));
+  }
+
   render() {
     let activeRoute = this.props.router.location.pathname;
-    // if (this.state.redirect) {
-    //   return <Redirect push to={this.state.pushRoute} />;
-    // }
     return (
       <div className="navbar__container">
         <Nav className="navbar__white">
+          <InfoPanel width={this.state.width} height={this.state.height} />
           <Navbar.Brand className="navbar__center" href="/">
             <img
               alt="spikeforest logo"
