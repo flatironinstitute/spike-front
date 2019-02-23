@@ -41,7 +41,9 @@ class Header extends Component {
     return (
       <div className="navbar__container">
         <Nav className="navbar__white">
-          <InfoPanel width={this.state.width} height={this.state.height} />
+          <div className="navbar__left">
+            <InfoPanel width={this.state.width} height={this.state.height} />
+          </div>
           <Navbar.Brand className="navbar__center" href="/">
             <img
               alt="spikeforest logo"

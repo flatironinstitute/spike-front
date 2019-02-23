@@ -3,12 +3,12 @@ import Menu from "react-burger-menu/lib/menus/slide";
 import { Link } from "react-router-dom";
 
 import "./infopanel.css";
+import icon from "./infoicon.svg";
 
 class InfoPanel extends Component {
   render() {
-    console.log("🤰", this.props);
     return (
-      <Menu width={this.props.width}>
+      <Menu width={this.props.width} customBurgerIcon={<img src={icon} />}>
         <div className="info__inset">
           <h5>SpikeForest</h5>
           <p>
@@ -37,10 +37,18 @@ class InfoPanel extends Component {
           </p>
           <p className="info__byline">
             Project of{" "}
-            <a href="https://flatironinstitute.org" target="_blank">
+            <a
+              href="https://flatironinstitute.org"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Center for Computational Mathematics,
             </a>{" "}
-            <a href="https://flatironinstitute.org" target="_blank">
+            <a
+              href="https://flatironinstitute.org"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Flatiron Institue.
             </a>
           </p>
