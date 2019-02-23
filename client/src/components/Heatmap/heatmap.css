@@ -1,9 +1,6 @@
 .container__heatmaps {
   width: 100%;
-  background: #f7f7f7;
   padding: 30px 0 16px 0;
-  margin-top: 3rem;
-  margin-bottom: 3rem;
 }
 
 .container__heatmap--row {
