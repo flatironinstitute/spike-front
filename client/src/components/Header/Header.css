@@ -1,13 +1,46 @@
+/* Header
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.navbar__container {
+  width: 100%;
+  max-width: 100vw;
+}
+
 .navbar__white {
   background: #fff;
-  /* border-bottom: 1px solid var(--fi-blue); */
   position: fixed;
+  width: 100vw;
+  padding: 0.8rem 0;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 
-.navbar__hidden {
-  visibility: hidden;
+.navbar__center {
+  margin: 0 !important;
+  border-bottom: none;
 }
 
-.navbar__link {
-  color: rgba(0, 0, 0, 0.9) !important;
+.navbar__right {
+  float: right;
+  margin: 0 2rem 0 0 !important;
+}
+
+.navbar__left {
+  min-width: 40rem;
+}
+
+.nav-link {
+  border-bottom: none;
+  font-family: var(--sans);
+  color: var(--black);
+}
+
+.nav-link:hover {
+  text-decoration: none;
+  color: var(--fi-blue);
+}
+
+.nav-link.active {
+  font-weight: bold;
+  border-bottom: 2px solid var(--fi-blue);
 }

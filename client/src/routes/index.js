@@ -18,7 +18,6 @@ import Internals from "../components/Pages/Internals";
 import Metrics from "../components/Pages/Metrics";
 import Contact from "../components/Contact/Contact";
 import SingleResultPairing from "../components/ResultPairingBits/SingleResultPairing";
-import headerCopy from "../components/CopyHeader/header-copy";
 
 class Routes extends Component {
   async componentDidMount() {
@@ -31,36 +30,21 @@ class Routes extends Component {
   render() {
     return (
       <div>
-        <Header />
+        <Header router={this.props.router} />
         <Switch>
-          <Route
-            exact
-            path="/"
-            render={props => <Home {...this.props} header={headerCopy.home} />}
-          />
+          <Route exact path="/" render={props => <Home {...this.props} />} />
           <Route
             path="/sorters"
-            render={props => (
-              <Sorters {...this.props} header={headerCopy.algos} />
-            )}
+            render={props => <Sorters {...this.props} />}
           />
-          <Route
-            path="/about"
-            render={props => (
-              <About {...this.props} header={headerCopy.about} />
-            )}
-          />
+          <Route path="/about" render={props => <About {...this.props} />} />
           <Route
             path="/recordings"
-            render={props => (
-              <Recordings {...this.props} header={headerCopy.recordings} />
-            )}
+            render={props => <Recordings {...this.props} />}
           />
           <Route
             path="/studies"
-            render={props => (
-              <Studies {...this.props} header={headerCopy.studies} />
-            )}
+            render={props => <Studies {...this.props} />}
           />
           <Route
             path="/internals"
@@ -91,7 +75,9 @@ function mapStateToProps(state) {
     studies: state.studies,
     sorters: state.sorters,
     units: state.units,
-    loading: state.loading
+    loading: state.loading,
+    contactSent: state.contactSent,
+    router: state.router
   };
 }
 

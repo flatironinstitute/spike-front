@@ -42,6 +42,7 @@ export const createFetch = async url => {
 
 export const createFetchPost = async (url, options) => {
   const newUrl = baseurl + url;
+  const body = JSON.stringify(options);
   const request = await fetch(newUrl, {
     method: "POST",
     mode: "same-origin",
@@ -50,12 +51,14 @@ export const createFetchPost = async (url, options) => {
       Accept: "application/json",
       "Content-Type": "application/json"
     },
-    data: options
+    body: body
   });
-
   const response = await request.json();
-  if (request.status !== 200) throw Error(response.message);
-  return response;
+  if (request.status !== 200) {
+    throw Error(response.message);
+  } else {
+    return response;
+  }
 };
 
 // select study
@@ -196,24 +199,28 @@ export const fetchPairing = () => {
   };
 };
 
-export const sendContact = options => {
-  return function(dispatch) {
-    return createFetchPost(`/api/contact`, options)
-      .then(res => console.log("🤽‍♂️", res))
-      .catch(err => console.log(err));
-    // TODO: Add a sentry here
-  };
-};
-
 export function sendContactSuccess() {
   return {
-    type: SEND_CONTACT_SUCCESS
+    type: SEND_CONTACT_SUCCESS,
+    contactSent: true
   };
 }
 
 export function sendContactFailure(error) {
   return {
     type: SEND_CONTACT_FAILURE,
-    error
+    contactSent: false
   };
 }
+
+export const sendContact = options => {
+  return function(dispatch) {
+    return createFetchPost(`/api/contact`, options)
+      .then(res => {
+        dispatch(sendContactSuccess(res.success));
+      })
+      .catch(err => {
+        dispatch(sendContactFailure(err));
+      });
+  };
+};

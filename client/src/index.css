@@ -17,13 +17,14 @@ html {
   --fi-yellow: #f6cf3f;
   --fi-brown: #903f2c;
   --fi-orange: #f28b00;
+  --black: #2a2a2a;
   --off-black: #222;
   --off-white: #fafafd;
   --dark-grey: #282c34;
   --label-grey: #6b6b76;
-  --sans: 'Quattrocento Sans', sans-serif;
-  --serif: 'Quattrocento', serif;
-  --mono: 'Rajdhani', sans-serif;
+  --sans: "Quattrocento Sans", sans-serif;
+  --serif: "Quattrocento", serif;
+  --mono: "Rajdhani", sans-serif;
 }
 body {
   margin: 0;
@@ -34,7 +35,7 @@ body {
   line-height: 1.6;
   font-weight: 400;
   font-family: var(--sans);
-  color: rgb(42, 42, 42);
+  color: var(--black);
 }
 
 /* Typography
@@ -111,21 +112,22 @@ p {
 /* Links
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 a {
-  color: var(--fi-blue);
+  border-bottom: 2px solid var(--fi-blue);
   font-family: var(--sans);
+  color: var(--black);
 }
 a:hover {
-  color: var(--fi-teal);
-  font-family: var(--sans);
+  text-decoration: none;
+  color: var(--fi-blue);
 }
 
 /* Buttons
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .button,
 button,
-input[type='submit'],
-input[type='reset'],
-input[type='button'] {
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
   display: inline-block;
   height: 38px;
   padding: 0 15px;
@@ -146,37 +148,37 @@ input[type='button'] {
 }
 .button:hover,
 button:hover,
-input[type='submit']:hover,
-input[type='reset']:hover,
-input[type='button']:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
 .button:focus,
 button:focus,
-input[type='submit']:focus,
-input[type='reset']:focus,
-input[type='button']:focus {
+input[type="submit"]:focus,
+input[type="reset"]:focus,
+input[type="button"]:focus {
   color: #333;
   border-color: #888;
   outline: 0;
 }
 .button.button-primary,
 button.button-primary,
-input[type='submit'].button-primary,
-input[type='reset'].button-primary,
-input[type='button'].button-primary {
+input[type="submit"].button-primary,
+input[type="reset"].button-primary,
+input[type="button"].button-primary {
   color: #fff;
   background-color: var(--fi-blue);
   border-color: var(--fi-blue);
 }
 .button.button-primary:hover,
 button.button-primary:hover,
-input[type='submit'].button-primary:hover,
-input[type='reset'].button-primary:hover,
-input[type='button'].button-primary:hover,
+input[type="submit"].button-primary:hover,
+input[type="reset"].button-primary:hover,
+input[type="button"].button-primary:hover,
 .button.button-primary:focus,
 button.button-primary:focus,
-input[type='submit'].button-primary:focus,
-input[type='reset'].button-primary:focus,
-input[type='button'].button-primary:focus {
+input[type="submit"].button-primary:focus,
+input[type="reset"].button-primary:focus,
+input[type="button"].button-primary:focus {
   color: #fff;
   background-color: var(--fi-yellow);
   border-color: var(--fi-yellow);
@@ -195,7 +197,6 @@ Use containers when you need a content area that has standard maximum width and 
 .container {
   margin: 0 auto;
   padding: 0 10px;
-  position: relative;
   width: 95%;
   box-sizing: border-box;
 }
@@ -326,7 +327,7 @@ Use containers when you need a content area that has standard maximum width and 
 .container:after,
 .row:after {
   clear: both;
-  content: '';
+  content: "";
   display: table;
 }
 
@@ -388,120 +389,6 @@ ol ul {
 }
 li {
   margin-bottom: 1rem;
-}
-
-/* Navbar
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-
-.nav__wrapper {
-  height: 54px;
-  left: 0px;
-  position: fixed;
-  right: 0px;
-  top: 0px;
-  width: 100%;
-  z-index: 100;
-  letter-spacing: 0.1rem;
-  background: none none repeat scroll 0% 0% / auto padding-box border-box;
-  font: normal normal 400 normal 1.4rem / 6rem var(--sans);
-  cursor: pointer;
-  background-color: white;
-}
-.nav {
-  float: left;
-  width: 100%;
-}
-.nav__container {
-  display: flex;
-  flex-direction: row;
-}
-.nav__brand {
-  padding: 0px 20px 0px 24px;
-  text-decoration: none;
-  white-space: nowrap;
-  display: inline;
-}
-.nav__logo {
-  background-position: 0px 1px;
-  display: inline-block;
-  height: 20px;
-  margin: 0px 20px 0px 0px;
-  text-decoration: none;
-}
-.nav__title {
-  cursor: pointer;
-  text-decoration: none;
-  color: var(--fi-blue);
-}
-.nav__link {
-  text-decoration: none;
-  padding: 0px 20px 0px 0px;
-  cursor: pointer;
-  color: var(--off-black);
-}
-.nav__link:hover {
-  color: var(--fi-blue);
-}
-.nav__link--last {
-  text-decoration: none;
-  cursor: pointer;
-  color: var(--off-black);
-}
-.nav__right {
-  box-sizing: border-box;
-  display: flex;
-  float: right;
-  height: 50px;
-}
-.nav__search {
-  height: 24px;
-  min-height: auto;
-  min-width: auto;
-  text-decoration: none;
-  width: 24px;
-  margin: 24px 24px 0px 0px;
-}
-.active {
-  color: var(--fi-blue);
-}
-
-/* Left Menu
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-.left-menu {
-  position: absolute;
-  top: 96px;
-  left: 24px;
-  font-family: var(--sans);
-  font-size: 1.8rem;
-  line-height: 2.4rem;
-  letter-spacing: 0.4pt;
-}
-.left-menu__link {
-  display: block;
-  text-decoration: none;
-}
-
-@media screen and (max-width: 768px) {
-  .left-menu {
-    position: relative;
-    top: 72px;
-    left: 0px;
-    line-height: 2.6rem;
-    padding: 2.4rem;
-    width: 100%;
-  }
-  .left-menu__link:first-of-type {
-    padding-left: 0rem;
-  }
-  .left-menu__link::after {
-    content: ' / ';
-  }
-  .left-menu__link:last-of-type::after {
-    content: '';
-  }
-  .left-menu__link {
-    display: inline;
-  }
 }
 
 /* Recordings

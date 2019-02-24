@@ -20,7 +20,7 @@ const generateHTML = (options = {}) => {
   return inlined;
 };
 
-exports.send = async options => {
+export const send = async options => {
   const html = generateHTML(options);
   const text = htmlToText.fromString(html);
 
@@ -29,10 +29,20 @@ exports.send = async options => {
   const mailOptions = {
     from: `Spikeforest <noreply@flatironinstitute.org>`,
     to: `Elizabeth Lovero <elovero@flatironinstitute.org>`,
-    subject: options.subject,
+    subject: `Thank you for contacting SpikeForest`,
     html,
     text
   };
   const sendMail = promisify(transport.sendMail, transport);
   return sendMail(mailOptions);
 };
+
+// Documentation from mailtrap.io
+// var transport = nodemailer.createTransport({
+//   host: "smtp.mailtrap.io",
+//   port: 2525,
+//   auth: {
+//     user: "9fe12073f605c2",
+//     pass: "f6bd91ba40d3dd"
+//   }
+// });

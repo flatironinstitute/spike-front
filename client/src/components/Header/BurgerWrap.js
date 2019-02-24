@@ -7,7 +7,7 @@ import "./Burger.css";
 class BurgerWrap extends Component {
   render() {
     return (
-      <Menu right width={500}>
+      <Menu right width={500} customBurgerIcon={<img src="info-icon.svg" />}>
         <p className="menu__tagline">
           <a href="/" target="_blank" rel="noopener noreferrer">
             SpikeForest

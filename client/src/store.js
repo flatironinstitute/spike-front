@@ -13,7 +13,8 @@ const defaultState = {
   sorters: null,
   studies: null,
   units: null,
-  loading: null
+  loading: null,
+  contactSent: null
 };
 
 export const history = createBrowserHistory();
