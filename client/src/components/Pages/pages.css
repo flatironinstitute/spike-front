@@ -1,6 +1,7 @@
 .page__body {
   padding-top: 7.2rem;
   min-height: 80vh;
+  background-color: hsla(240, 7%, 81%, 0.15);
 }
 
 .recordings__body {
