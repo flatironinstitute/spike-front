@@ -73,6 +73,7 @@ class HeatmapCount extends Component {
           </Container>
         ) : (
           <Container className="container__heatmap">
+            {/* TODO: Add Scrollytelling formatting */}
             <Row className="container__heatmap--row">
               <Col lg={largeCols} sm={12}>
                 <HeatmapViz
@@ -83,14 +84,12 @@ class HeatmapCount extends Component {
                   metric={this.props.metric}
                 />
               </Col>
-              {/* {this.props.selectedStudy ? ( */}
               <Col lg={6} sm={12}>
                 <StudySorterSummary
                   {...this.props}
-                  accuracy={this.props.accuracy}
+                  sliderValue={this.props.accuracy}
                 />
               </Col>
-              {/* ) : null} */}
             </Row>
           </Container>
         )}

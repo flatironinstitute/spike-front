@@ -49,7 +49,6 @@ class StudySorterSummary extends Component {
       <div className="card card--heatmap">
         <div className="card__header">
           <div className="card__category--div">
-            {/* <h4 className="card__title">Results: </h4> */}
             {/* TODO: add proper routes */}
             <span className="card__title--link">
               Study:
@@ -69,7 +68,9 @@ class StudySorterSummary extends Component {
               study={this.state.study}
               sorter={this.state.sorter}
               selectedStudy={this.props.selectedStudy}
-              accuracy={this.props.accuracy}
+              sliderValue={this.props.accuracy}
+              format={this.props.format}
+              metric={this.state.metric}
               {...this.props}
             />
           )}
