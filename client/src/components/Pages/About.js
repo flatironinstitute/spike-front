@@ -23,7 +23,6 @@ class About extends Component {
             page to report website problems or
             <a href="/contact">contact</a> us directly.
           </p>
-          <p className="updated">Updated on February 14, 2019</p>
         </div>
         <div className="opener">
           <div className="prose-container">

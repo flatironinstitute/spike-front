@@ -113,7 +113,6 @@ class Recordings extends Component {
           <div className="intro">
             <p className="big">Recordings</p>
             <div className="dividerthick" />
-            <p className="updated">Updated on February 14, 2019</p>
             <p className="updated-sub">
               Below is the current list of studies in SpikeForest. Click on each
               to see an expanded list of the recordings within each study.

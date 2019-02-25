@@ -14,7 +14,6 @@ class Metrics extends Component {
             Definitions of accuracy and other metrics used throughout
             SpikeForest.
           </p>
-          <p className="updated">Updated on February 14, 2019</p>
           <p className="updated-sub">
             Different accuracy metrics may be selected via the radio buttons on
             the results overview heatmap on the home page.
