@@ -14,7 +14,7 @@
   justify-content: space-between;
   align-items: flex-end;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  z-index: 100000;
+  z-index: 999;
 }
 
 .navbar__center {
@@ -40,6 +40,7 @@
   color: var(--black);
   padding: 0.5rem 1rem;
   margin: 0 0 0 2rem;
+  align-self: flex-end;
 }
 
 .nav-link {
