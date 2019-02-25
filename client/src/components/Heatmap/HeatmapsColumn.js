@@ -22,7 +22,8 @@ class HeatmapsColumn extends Component {
 
   handleFormatChange = value => {
     this.setState({
-      format: value
+      format: value,
+      sliderValue: 0
     });
   };
 
@@ -39,29 +40,34 @@ class HeatmapsColumn extends Component {
   };
 
   render() {
+    let largeCols = this.state.format === "cpu" ? 6 : 4;
     return (
       <div>
         <Container className="container__heatmap">
           <Row className="container__heatmap--row">
-            <Col lg={4} sm={12}>
+            <Col lg={largeCols} sm={12}>
               <ModeCard
                 format={this.state.format}
                 handleFormatChange={this.handleFormatChange}
               />
             </Col>
-            <Col lg={4} sm={12}>
+            <Col lg={largeCols} sm={12}>
               <SliderCard
                 format={this.state.format}
                 sliderValue={this.state.sliderValue}
                 handleSliderChange={this.handleSliderChange}
               />
             </Col>
-            <Col lg={4} sm={12}>
-              <MetricCard
-                metric={this.state.metric}
-                handleMetricChange={this.handleMetricChange}
-              />
-            </Col>
+            {largeCols < 6 ? (
+              <Col lg={4} sm={12}>
+                <MetricCard
+                  metric={this.state.metric}
+                  handleMetricChange={this.handleMetricChange}
+                />
+              </Col>
+            ) : (
+              <div />
+            )}
           </Row>
         </Container>
         {this.state.format === "count" ? (

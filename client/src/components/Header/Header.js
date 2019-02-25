@@ -36,7 +36,7 @@ class Header extends Component {
       return toTitleCase(activeArr.join(" "));
     } else {
       // TODO: Add name of vis currently up here
-      return "Number of Units Found";
+      return "Overview";
     }
   }
 

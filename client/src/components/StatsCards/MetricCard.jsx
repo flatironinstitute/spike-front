@@ -46,6 +46,7 @@ export class MetricCard extends Component {
                 size="lg"
                 value={this.props.metric}
                 onChange={this.props.handleMetricChange}
+                className="metric_button_toggle"
               >
                 <ToggleButton
                   size="lg"

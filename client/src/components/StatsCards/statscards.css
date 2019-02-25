@@ -70,3 +70,10 @@
   margin-bottom: 0;
   line-height: 1.3rem;
 }
+
+/* Metric Toggle
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.metric_button_toggle {
+  width: 100%;
+}

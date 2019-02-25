@@ -5,11 +5,15 @@ import "react-rangeslider/lib/index.css";
 import "./statscards.css";
 
 export class SliderCard extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   getSliderCopy() {
     let copy;
     switch (this.props.format) {
       case "count":
-        copy = "Minimum accuracy";
+        copy = "Minimum Accuracy";
         break;
       case "average":
         copy = "Minimum SNR";
@@ -59,9 +63,19 @@ export class SliderCard extends Component {
     return step;
   }
 
+  getSliderValue() {
+    if (this.state.useDefault) {
+      return 0;
+    } else {
+      this.setState({ useDefault: false });
+      return this.props.sliderValue;
+    }
+  }
+
   render() {
     let max = this.getSliderMax();
     let step = this.getSliderStep();
+    // TODO: Clear sliderValue on format change
     return (
       <div className="card card--stats">
         <div className="content">
