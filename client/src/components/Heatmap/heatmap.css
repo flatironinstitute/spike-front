@@ -3,14 +3,17 @@
 .container__heatmap {
   width: 100%;
   max-width: 95vw !important;
+  margin-top: 3rem;
 }
 
 .container__heatmap--row {
-  margin-bottom: 3rem;
+  /* margin-bottom: 3rem; */
 }
 
-.heatmap__column {
-  flex-basis: 35%;
+.scrollyteller__container {
+  display: flex;
+  justify-content: space-between;
+  /* padding: 5rem 0; */
 }
 
 .detail__column {
@@ -19,8 +22,8 @@
   position: sticky;
   flex-basis: 60%;
   align-self: flex-start;
-  background-color: purple;
 }
+
 .step {
   margin: 0 auto 2rem auto;
   border: 1px solid #333;
@@ -32,6 +35,8 @@
   /* margin-bottom: 5rem; */
 }
 
+/* Heatmap Cards
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 .card--heatmap {
   padding: 15px;
 }
@@ -40,10 +45,35 @@
   margin: 0 auto;
 }
 
-.scrollyteller__container {
+.card__header {
+  margin-bottom: 15px;
+}
+
+.card__title {
+  margin: 0;
+  color: #333;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 30px;
+}
+
+.card__title--link {
+  font-size: 20px;
+  margin-right: 15px;
+}
+
+.card__category {
+  font-size: 14px;
+  font-weight: 400;
+  color: #9a9a9a;
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+.card__category--div {
+  margin-bottom: 0;
+  line-height: 1.5;
   display: flex;
-  justify-content: space-between;
-  padding: 5rem 0;
 }
 
 /* Unit Detail

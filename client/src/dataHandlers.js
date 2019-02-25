@@ -1,40 +1,40 @@
-import * as Sentry from '@sentry/browser';
+import * as Sentry from "@sentry/browser";
 Sentry.init({
-  dsn: 'https://a7b7f1b624b44a9ea537ec1069859393@sentry.io/1365884',
+  dsn: "https://a7b7f1b624b44a9ea537ec1069859393@sentry.io/1365884"
 });
 
 // Connect to Kbucket
-const KBucketClient = require('@magland/kbucket').KBucketClient;
+const KBucketClient = require("@magland/kbucket").KBucketClient;
 let kbclient = new KBucketClient();
 kbclient.setConfig({
-  share_ids: ['spikeforest.spikeforest1'],
+  share_ids: ["spikeforest.spikeforest1"]
 });
 kbclient.setPairioConfig({
-  collections: ['spikeforest'],
+  collections: ["spikeforest"]
 });
 
 // Collect data from server ? Not sure why this is built this way? To make it async?
-const axios = require('axios');
+const axios = require("axios");
 async function fetchBackupJSON(url) {
-  let X = await axios.get(url, { responseType: 'json' });
+  let X = await axios.get(url, { responseType: "json" });
   return X.data;
 }
 
-const target_base = 'spikeforest_website_12_20_2018';
+const target_base = "spikeforest_website_12_20_2018";
 const s_targets = [
-  target_base + '_magland_synth',
-  target_base + '_mearec',
-  target_base + '_bionet8c',
-  target_base + '_bionet32c',
-  target_base + '_paired',
-  target_base + '_manual',
+  target_base + "_magland_synth",
+  target_base + "_mearec",
+  target_base + "_bionet8c",
+  target_base + "_bionet32c",
+  target_base + "_paired",
+  target_base + "_manual"
 ];
 
 async function loadData(targets, name, fieldname) {
   Sentry.addBreadcrumb({
-    category: 'dataHandlers',
-    message: 'Start loading ' + name,
-    level: 'info',
+    category: "dataHandlers",
+    message: "Start loading " + name,
+    level: "info"
   });
 
   let returnArr = [];
@@ -48,17 +48,17 @@ async function loadData(targets, name, fieldname) {
       let backupUrl =
         process.env.REACT_APP_TEST_SERVER_URL + `/${targets[i]}/${name}.json`;
       Sentry.addBreadcrumb({
-        category: 'dataHandlers',
-        message: 'Loading backup data from' + backupUrl,
-        level: 'info',
+        category: "dataHandlers",
+        message: "Loading backup data from" + backupUrl,
+        level: "info"
       });
       obj = await fetchBackupJSON(backupUrl);
     } else {
       obj = await kbclient.loadObject(null, {
         key: {
           target: targets[i],
-          name: name,
-        },
+          name: name
+        }
       });
     }
 
@@ -69,9 +69,9 @@ async function loadData(targets, name, fieldname) {
 
     if (obj) {
       Sentry.addBreadcrumb({
-        category: 'dataHandlers',
+        category: "dataHandlers",
         message: `Success loaded ${targets[i]}-${name} (${returnArr.length})`,
-        level: 'info',
+        level: "info"
       });
     } else {
       Sentry.captureException(
@@ -86,20 +86,20 @@ async function loadData(targets, name, fieldname) {
 
 // New data handling functions as of 1/7/19
 export async function getRecordings() {
-  return await loadData(s_targets, 'recordings', 'recordings');
+  return await loadData(s_targets, "recordings", "recordings");
 }
 
 export async function getStudies() {
-  let studies = await loadData(s_targets, 'studies', 'studies');
+  let studies = await loadData(s_targets, "studies", "studies");
   return studies;
 }
 
 export async function getSorters() {
-  return await loadData(s_targets, 'sorters', 'sorters');
+  return await loadData(s_targets, "sorters", "sorters");
 }
 
 export async function getTrueUnits() {
-  return await loadData(s_targets, 'true_units', 'true_units');
+  return await loadData(s_targets, "true_units", "true_units");
 }
 
 export function flattenUnits(trueUnits, studies) {
@@ -111,7 +111,7 @@ export function flattenUnits(trueUnits, studies) {
       const myStudy = studies.filter(study => study.name === unit.study);
       const mySorters = myStudy[0].sorters
         ? myStudy[0].sorters
-        : ['IronClust-tetrode', 'MountainSort4-thr3', 'SpykingCircus'];
+        : ["IronClust-tetrode", "MountainSort4-thr3", "SpykingCircus"];
       for (const key of mySorters) {
         if (unit.sorting_results[key]) {
           let floatie = parseFloat(
@@ -128,7 +128,7 @@ export function flattenUnits(trueUnits, studies) {
             unit_id: unit.unit_id,
             sorter: key,
             sorting_results: unit.sorting_results[key],
-            accuracy: floatie,
+            accuracy: floatie
           };
           newUnits.push(sorterObj);
         } else {
@@ -143,14 +143,14 @@ export function flattenUnits(trueUnits, studies) {
             sorter: key,
             sorting_results: {
               num_matches: 0,
-              Accuracy: '0',
+              Accuracy: "0",
               best_unit: 0,
               matched_unit: 0,
               unit_id: 0,
-              f_n: '0',
-              f_p: '0',
+              f_n: "0",
+              f_p: "0"
             },
-            accuracy: 0,
+            accuracy: 0
           };
           newUnits.push(blankSorterObj);
         }
@@ -183,7 +183,7 @@ export async function mapUnitsBySorterStudy(allUnits, sorters) {
         snrs: snrs,
         in_range: 0,
         color: 0,
-        is_applied: true,
+        is_applied: true
       };
       formattedSorted.push(newObj);
     }
@@ -199,7 +199,7 @@ export async function mapUnitsBySorterStudy(allUnits, sorters) {
         snrs: [],
         color: 0,
         in_range: null,
-        is_applied: false,
+        is_applied: false
       };
       if (!thisSorting.length) {
         formattedSorted.push(dummyObj);
@@ -227,7 +227,7 @@ export async function mapUnitsBySorterStudy(allUnits, sorters) {
     let allSorted = groupBy(byStudy[study], study => study.sorter);
     let summedAcc = sumAccuracies(allSorted, study);
     let obj = {
-      [study]: summedAcc,
+      [study]: summedAcc
     };
     bySorter.push(obj);
   }

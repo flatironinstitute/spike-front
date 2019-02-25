@@ -10,23 +10,6 @@ import { toTitleCase } from "../../utils";
 import "./statscards.css";
 
 export class MetricCard extends Component {
-  getMetricCopy() {
-    let copy;
-    switch (this.props.format) {
-      case "count":
-        copy = "Number units found above metric threshold";
-        break;
-      case "average":
-        copy = "Average metric above SNR threshold";
-        break;
-      case "cpu":
-        copy = "Estimated CPU Time";
-        break;
-      default:
-        copy = "";
-    }
-    return copy;
-  }
   render() {
     let title = toTitleCase(this.props.metric);
     return (

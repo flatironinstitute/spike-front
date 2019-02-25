@@ -44,10 +44,13 @@
 
 .rangeslider {
   background-color: var(--fi-yellow) !important;
+  margin: 15px 0 !important;
 }
 
 .rangeslider__handle {
   border-radius: 45px !important;
+  width: 28px !important;
+  height: 28px !important;
 }
 
 .rangeslider__fill {
