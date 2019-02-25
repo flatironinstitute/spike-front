@@ -8,9 +8,6 @@ import Preloader from "../Preloader/Preloader";
 import StudySorterSummary from "../ScatterplotBits/StudySorterSummary";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Slider from "react-rangeslider";
-import "react-rangeslider/lib/index.css";
 
 // Redux
 import { bindActionCreators } from "redux";
@@ -20,7 +17,7 @@ import * as actionCreators from "../../actions/actionCreators";
 // Stylin'
 import "./heatmap.css";
 
-class HeatmapAverage extends Component {
+class HeatmapSNR extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,10 +32,10 @@ class HeatmapAverage extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (
       this.props.unitsMap !== prevProps.unitsMap ||
-      this.state.snrMin !== prevState.snrMin
+      this.props.snrMin !== prevProps.snrMin
     ) {
       this.filterSNRMap();
     }
@@ -49,7 +46,7 @@ class HeatmapAverage extends Component {
     let newArr = sorterArray.map(sorter => {
       let accs = [];
       sorter.true_units.forEach(unit => {
-        if (unit.snr > this.state.snrMin) {
+        if (unit.snr > this.props.snrMin) {
           accs.push(unit.accuracy);
         }
       });
@@ -86,7 +83,7 @@ class HeatmapAverage extends Component {
           </Container>
         ) : (
           <Container>
-            <Row>
+            {/* <Row>
               <div className="heatmap__legend">
                 <ContinuousColorLegend
                   width={580}
@@ -97,7 +94,7 @@ class HeatmapAverage extends Component {
                   height={20}
                 />
               </div>
-            </Row>
+            </Row> */}
             <div className="scrollyteller__container">
               <HeatmapViz
                 {...this.props}
@@ -108,7 +105,7 @@ class HeatmapAverage extends Component {
               {this.props.selectedStudy ? (
                 <StudySorterSummary
                   {...this.props}
-                  accuracy={this.state.snrMin}
+                  accuracy={this.props.snrMin}
                 />
               ) : (
                 <div />
@@ -135,4 +132,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(HeatmapAverage);
+)(HeatmapSNR);

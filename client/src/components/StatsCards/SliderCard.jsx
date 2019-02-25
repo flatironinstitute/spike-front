@@ -75,7 +75,6 @@ export class SliderCard extends Component {
   render() {
     let max = this.getSliderMax();
     let step = this.getSliderStep();
-    // TODO: Clear sliderValue on format change
     return (
       <div className="card card--stats">
         <div className="content">

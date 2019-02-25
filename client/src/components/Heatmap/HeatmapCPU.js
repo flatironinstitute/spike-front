@@ -17,7 +17,7 @@ import * as actionCreators from "../../actions/actionCreators";
 // Stylin'
 import "./heatmap.css";
 
-class HeatmapCount extends Component {
+class HeatmapCPU extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,17 +34,17 @@ class HeatmapCount extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (
       this.props.unitsMap !== prevProps.unitsMap ||
-      this.props.accuracy !== prevProps.accuracy
+      this.props.cpuMax !== prevProps.cpuMax
     ) {
       this.filterAccuracyMap();
     }
   }
 
-  // Count functions for 'Number of groundtruth units above accuracy threshold'
+  // Count functions for 'Number of groundtruth units above cpuMax threshold'
   filterAccuracy(sorterArray) {
     let newArr = sorterArray.map(sorter => {
       let above = sorter.accuracies.filter(accu => {
-        return accu >= this.props.accuracy;
+        return accu >= this.props.cpuMax;
       });
       sorter.in_range = above.length;
       sorter.color = above.length;
@@ -72,8 +72,22 @@ class HeatmapCount extends Component {
             <Preloader />
           </Container>
         ) : (
-          <Container className="container__heatmap">
-            <div className="card">
+          <div>
+            {/* <Container>
+              <Row>
+                <div className="heatmap__legend">
+                  <ContinuousColorLegend
+                    width={580}
+                    startColor={"#fafafd"}
+                    endColor={"#384ca2"}
+                    startTitle={"Least Units Found"}
+                    endTitle={"Most Units Found"}
+                    height={20}
+                  />
+                </div>
+              </Row>
+            </Container> */}
+            <Container>
               <div className="scrollyteller__container">
                 <HeatmapViz
                   {...this.props}
@@ -84,12 +98,14 @@ class HeatmapCount extends Component {
                 {this.props.selectedStudy ? (
                   <StudySorterSummary
                     {...this.props}
-                    accuracy={this.props.accuracy}
+                    cpuMax={this.props.cpuMax}
                   />
-                ) : null}
+                ) : (
+                  <div />
+                )}
               </div>
-            </div>
-          </Container>
+            </Container>
+          </div>
         )}
       </div>
     );
@@ -110,4 +126,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(HeatmapCount);
+)(HeatmapCPU);

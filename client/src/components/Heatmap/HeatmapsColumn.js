@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import HeatmapCount from "./HeatmapCount";
-import HeatmapAverage from "./HeatmapAverage";
+import HeatmapSNR from "./HeatmapSNR";
+import HeatmapCPU from "./HeatmapCPU";
+
 import "react-rangeslider/lib/index.css";
 import { Col, Container, Row } from "react-bootstrap";
 
@@ -34,8 +36,9 @@ class HeatmapsColumn extends Component {
   };
 
   handleSliderChange = value => {
+    let round = Math.round(value * 100) / 100;
     this.setState({
-      sliderValue: value
+      sliderValue: round
     });
   };
 
@@ -70,11 +73,36 @@ class HeatmapsColumn extends Component {
             )}
           </Row>
         </Container>
-        {this.state.format === "count" ? (
-          <HeatmapCount {...this.props} format={this.state.format} />
-        ) : (
-          <HeatmapAverage {...this.props} format={this.state.format} />
-        )}
+        {(() => {
+          switch (this.state.format) {
+            case "count":
+              return (
+                <HeatmapCount
+                  {...this.props}
+                  format={this.state.format}
+                  accuracy={this.state.sliderValue}
+                />
+              );
+            case "average":
+              return (
+                <HeatmapSNR
+                  {...this.props}
+                  format={this.state.format}
+                  snrMin={this.state.sliderValue}
+                />
+              );
+            case "cpu":
+              return (
+                <HeatmapCPU
+                  {...this.props}
+                  format={this.state.format}
+                  cpuMax={this.state.sliderValue}
+                />
+              );
+            default:
+              return null;
+          }
+        })()}
       </div>
     );
   }
