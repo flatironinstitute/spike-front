@@ -42,10 +42,10 @@ class HeatmapViz extends Component {
     let copy;
     switch (this.props.format) {
       case "count":
-        copy = "Number units found above metric threshold";
+        copy = `Number units found above ${this.props.metric} threshold`;
         break;
       case "average":
-        copy = "Average metric above SNR threshold";
+        copy = `Average ${this.props.metric} above SNR threshold`;
         break;
       case "cpu":
         copy = "Estimated CPU Time";

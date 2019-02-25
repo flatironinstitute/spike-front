@@ -91,13 +91,21 @@ class HeatmapRow extends Component {
                     stroke: "none",
                     fill: "#222",
                     fontWeight: 600,
-                    fontSize: "12px"
+                    fontSize: "11px"
                   }
                 }}
               />
               <HeatmapSeries
                 colorRange={["#fafafd", "#384ca2"]}
                 data={data}
+                style={{
+                  text: {
+                    stroke: "none",
+                    fill: "#222",
+                    fontWeight: 600,
+                    fontSize: "14px"
+                  }
+                }}
                 onValueMouseOver={d => {
                   this.setState({ hoveredNode: d });
                 }}
