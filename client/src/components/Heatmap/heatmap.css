@@ -3,10 +3,11 @@
 .container__heatmap {
   width: 100%;
   max-width: 95vw !important;
+  margin-top: 3rem;
 }
 
 .container__heatmap--row {
-  margin-bottom: 3rem;
+  /* margin-bottom: 3rem; */
 }
 
 /* .heatmap__column {
