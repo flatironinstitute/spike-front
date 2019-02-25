@@ -64,7 +64,6 @@ class HeatmapCount extends Component {
 
   render() {
     let loading = isEmpty(this.state.builtData);
-    let largeCols = this.props.selectedStudy ? 6 : 12;
     return (
       <div>
         {loading ? (
@@ -75,7 +74,7 @@ class HeatmapCount extends Component {
           <Container className="container__heatmap">
             {/* TODO: Add Scrollytelling formatting */}
             <Row className="container__heatmap--row">
-              <Col lg={largeCols} sm={12}>
+              <Col lg={6} sm={12}>
                 <HeatmapViz
                   {...this.props}
                   filteredData={this.state.builtData}
