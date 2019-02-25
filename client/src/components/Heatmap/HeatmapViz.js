@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import HeatmapRow from "./HeatmapRow";
-import { isEmpty } from "../../utils";
+import { isEmpty, toTitleCase } from "../../utils";
 
 class HeatmapViz extends Component {
   constructor(props) {
@@ -38,10 +38,34 @@ class HeatmapViz extends Component {
     }
   }
 
+  getFormatCopy() {
+    let copy;
+    switch (this.props.format) {
+      case "count":
+        copy = "Number units found above metric threshold";
+        break;
+      case "average":
+        copy = "Average metric above SNR threshold";
+        break;
+      case "cpu":
+        copy = "Estimated CPU Time";
+        break;
+      default:
+        copy = "";
+    }
+    return copy;
+  }
+
   render() {
     const loading = isEmpty(this.state.vizData);
+    const title = this.getFormatCopy();
+    let subtitle = toTitleCase(this.props.metric);
     return (
-      <div className="card card--heatma">
+      <div className="card card--heatmap">
+        <div className="card__header">
+          <h4 className="card__title">{title}</h4>
+          <p className="card__category">{subtitle} ADD FORMULA HERE</p>
+        </div>
         {loading ? (
           <h4>...</h4>
         ) : (

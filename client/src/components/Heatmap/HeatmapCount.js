@@ -80,6 +80,7 @@ class HeatmapCount extends Component {
                   filteredData={this.state.builtData}
                   sorters={this.props.shortSorters}
                   format={this.props.format}
+                  metric={this.props.metric}
                 />
               </Col>
               {this.props.selectedStudy ? (

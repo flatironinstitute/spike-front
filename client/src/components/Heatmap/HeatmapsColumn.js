@@ -80,6 +80,7 @@ class HeatmapsColumn extends Component {
                 <HeatmapCount
                   {...this.props}
                   format={this.state.format}
+                  metric={this.state.metric}
                   accuracy={this.state.sliderValue}
                 />
               );
@@ -88,6 +89,7 @@ class HeatmapsColumn extends Component {
                 <HeatmapSNR
                   {...this.props}
                   format={this.state.format}
+                  metric={this.state.metric}
                   snrMin={this.state.sliderValue}
                 />
               );
