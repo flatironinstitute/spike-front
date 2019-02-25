@@ -3,8 +3,7 @@ import Preloader from "../Preloader/Preloader";
 import HeatmapsColumn from "../Heatmap/HeatmapsColumn";
 import { flattenUnits, mapUnitsBySorterStudy } from "../../dataHandlers";
 import { isEmpty } from "../../utils";
-import Container from "react-bootstrap/Container";
-import { HashLink as Link } from "react-router-hash-link";
+import { Container, Card } from "react-bootstrap";
 
 import "./pages.css";
 
@@ -70,8 +69,12 @@ class Home extends Component {
     return (
       <div className="page__body">
         {loading ? (
-          <Container id="overview">
-            <Preloader />
+          <Container className="container__heatmap" id="overview">
+            <Card>
+              <Card.Body>
+                <Preloader />
+              </Card.Body>
+            </Card>
           </Container>
         ) : (
           <HeatmapsColumn

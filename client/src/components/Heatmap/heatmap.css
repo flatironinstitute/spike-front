@@ -1,6 +1,6 @@
-.container__heatmaps {
+.container__heatmap {
   width: 100%;
-  padding: 30px 0 16px 0;
+  max-width: 95vw !important;
 }
 
 .container__heatmap--row {

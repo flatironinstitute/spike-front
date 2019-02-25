@@ -360,19 +360,6 @@ Use containers when you need a content area that has standard maximum width and 
   padding: 7.2rem 1rem 0rem 1rem;
 }
 
-/* .container__heatmap {
-  width: 100%;
-  margin-bottom: 7.2rem;
-}
-
-.container__heatmap--row {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-} */
-
 /* Lists
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 ul {
@@ -399,12 +386,9 @@ li {
 
 /* Recordings
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-.recordings {
-  text-align: center;
-  margin: 6em 0;
-}
-.recordings__title {
-  font-family: var(--serif);
+
+.card {
+  position: static;
 }
 
 /* Errors

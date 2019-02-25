@@ -11,7 +11,7 @@ class InfoPanel extends Component {
       <Menu
         right
         width={this.props.width}
-        customBurgerIcon={<img src={icon} />}
+        customBurgerIcon={<img src={icon} alt="icon" />}
       >
         <div className="info__inset">
           <h5>SpikeForest</h5>

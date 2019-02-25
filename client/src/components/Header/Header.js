@@ -6,6 +6,8 @@ import Nav from "react-bootstrap/Nav";
 import logo from "./logo-no-icon.svg";
 import InfoPanel from "./InfoPanel";
 
+import { toTitleCase } from "../../utils";
+
 import "./Header.css";
 
 class Header extends Component {
@@ -27,17 +29,11 @@ class Header extends Component {
     }
   }
 
-  toTitleCase(str) {
-    return str.replace(/\w\S*/g, function(txt) {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
-  }
-
   getPageName() {
     let activeRoute = this.props.router.location.pathname;
     let activeArr = activeRoute.split("/").filter(item => item);
     if (activeArr.length) {
-      return this.toTitleCase(activeArr.join(" "));
+      return toTitleCase(activeArr.join(" "));
     } else {
       // TODO: Add name of vis currently up here
       return "Number of Units Found";

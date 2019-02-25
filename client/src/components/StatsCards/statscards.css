@@ -1,0 +1,39 @@
+.card .content {
+  padding: 15px 15px 10px;
+}
+
+.card__label {
+  font-size: 2rem;
+  text-align: right;
+}
+
+.card__label p {
+  font-size: 1.6rem;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.card__formlabel {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.card__formlabel span {
+  font-size: 2em;
+  text-align: right;
+  color: var(--fi-blue);
+}
+
+.card__footer {
+  padding: 0;
+  background-color: transparent;
+  line-height: 30px;
+}
+
+.card__buttonrow {
+  margin: 0 auto 3rem auto;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}

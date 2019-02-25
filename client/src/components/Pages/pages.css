@@ -1,9 +1,27 @@
+/* Pages
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 .page__body {
   padding-top: 7.2rem;
-  min-height: 80vh;
+  min-height: 70vh;
   background-color: hsla(240, 7%, 81%, 0.15);
 }
 
+/* About
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.about__body {
+  background-image: linear-gradient(
+    177deg,
+    #fbd6cd 6%,
+    #fbe8aa 28%,
+    #50e2e3 56%,
+    #fdc0ee 78%,
+    #fdeba8 95%,
+    #fff 100%
+  );
+}
+
+/* Recordings
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 .recordings__body {
   background: #74ebd5; /* fallback for old browsers */
   background: -webkit-linear-gradient(
@@ -18,18 +36,16 @@
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-.about__body {
-  background-image: linear-gradient(
-    177deg,
-    #fbd6cd 6%,
-    #fbe8aa 28%,
-    #50e2e3 56%,
-    #fdc0ee 78%,
-    #fdeba8 95%,
-    #fff 100%
-  );
+.recordings {
+  text-align: center;
+  margin: 6em 0;
+}
+.recordings__title {
+  font-family: var(--serif);
 }
 
+/* Intro Header Styling
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 .intro {
   text-align: center;
   padding-bottom: 4.2rem;
