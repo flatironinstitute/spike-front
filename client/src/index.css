@@ -38,6 +38,12 @@ body {
   color: var(--black);
 }
 
+.wrapper {
+  min-height: 100vh;
+  position: relative;
+  background-color: white;
+}
+
 /* Typography
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 h1,

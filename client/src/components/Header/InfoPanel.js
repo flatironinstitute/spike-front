@@ -8,7 +8,11 @@ import icon from "./infoicon.svg";
 class InfoPanel extends Component {
   render() {
     return (
-      <Menu width={this.props.width} customBurgerIcon={<img src={icon} />}>
+      <Menu
+        right
+        width={this.props.width}
+        customBurgerIcon={<img src={icon} />}
+      >
         <div className="info__inset">
           <h5>SpikeForest</h5>
           <p>

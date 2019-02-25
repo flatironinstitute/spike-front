@@ -29,7 +29,7 @@ class Routes extends Component {
 
   render() {
     return (
-      <div>
+      <div className="wrapper">
         <Header router={this.props.router} />
         <Switch>
           <Route exact path="/" render={props => <Home {...this.props} />} />
