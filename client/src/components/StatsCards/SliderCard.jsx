@@ -5,10 +5,6 @@ import "react-rangeslider/lib/index.css";
 import "./statscards.css";
 
 export class SliderCard extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   getSliderCopy() {
     let copy;
     switch (this.props.format) {

@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import HeatmapViz from "./HeatmapViz";
 import { isEmpty } from "../../utils";
-import { ContinuousColorLegend } from "react-vis";
 
 // Components
 import Preloader from "../Preloader/Preloader";
-import StudySorterSummary from "../ScatterplotBits/StudySorterSummary";
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
+import HeatmapViz from "./HeatmapViz";
+import StudySorterSummary from "../ScatterplotBits/StudySorterSummary";
+// import { ContinuousColorLegend } from "react-vis";
+// import Row from "react-bootstrap/Row";
 
 // Redux
 import { bindActionCreators } from "redux";
@@ -16,6 +16,20 @@ import * as actionCreators from "../../actions/actionCreators";
 
 // Stylin'
 import "./heatmap.css";
+
+// TODO: re-incorporate legend
+// <Row>
+//   <div className="heatmap__legend">
+//     <ContinuousColorLegend
+//       width={580}
+//       startColor={"#fafafd"}
+//       endColor={"#384ca2"}
+//       startTitle={"Lowest Average Accuracy"}
+//       endTitle={"Highest Average Accuracy"}
+//       height={20}
+//     />
+//   </div>
+// </Row>
 
 class HeatmapSNR extends Component {
   constructor(props) {
@@ -83,18 +97,6 @@ class HeatmapSNR extends Component {
           </Container>
         ) : (
           <Container>
-            {/* <Row>
-              <div className="heatmap__legend">
-                <ContinuousColorLegend
-                  width={580}
-                  startColor={"#fafafd"}
-                  endColor={"#384ca2"}
-                  startTitle={"Lowest Average Accuracy"}
-                  endTitle={"Highest Average Accuracy"}
-                  height={20}
-                />
-              </div>
-            </Row> */}
             <div className="scrollyteller__container">
               <HeatmapViz
                 {...this.props}

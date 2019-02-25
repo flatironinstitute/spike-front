@@ -32,6 +32,14 @@
   /* margin-bottom: 5rem; */
 }
 
+.card--heatmap {
+  padding: 15px;
+}
+
+.card__image {
+  margin: 0 auto;
+}
+
 .scrollyteller__container {
   display: flex;
   justify-content: space-between;

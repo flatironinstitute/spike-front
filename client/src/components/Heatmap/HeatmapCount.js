@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import HeatmapViz from "./HeatmapViz";
 import { isEmpty } from "../../utils";
-import { ContinuousColorLegend } from "react-vis";
 
 // Components
 import Preloader from "../Preloader/Preloader";
 import StudySorterSummary from "../ScatterplotBits/StudySorterSummary";
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
+// import { ContinuousColorLegend } from "react-vis";
+// import Row from "react-bootstrap/Row";
 
 // Redux
 import { bindActionCreators } from "redux";
