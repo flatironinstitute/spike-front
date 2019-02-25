@@ -14,6 +14,7 @@
   justify-content: space-between;
   align-items: flex-end;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  z-index: 100000;
 }
 
 .navbar__center {
