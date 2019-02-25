@@ -73,7 +73,7 @@ class HeatmapCount extends Component {
           </Container>
         ) : (
           <Container className="container__heatmap">
-            <div className="scrollyteller__container">
+            <Row className="container__heatmap--row">
               <Col lg={largeCols} sm={12}>
                 <HeatmapViz
                   {...this.props}
@@ -91,7 +91,7 @@ class HeatmapCount extends Component {
                 />
               </Col>
               {/* ) : null} */}
-            </div>
+            </Row>
           </Container>
         )}
       </div>
