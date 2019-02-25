@@ -5,9 +5,8 @@ import { isEmpty } from "../../utils";
 // Components
 import Preloader from "../Preloader/Preloader";
 import StudySorterSummary from "../ScatterplotBits/StudySorterSummary";
-import Container from "react-bootstrap/Container";
+import { Col, Container, Row } from "react-bootstrap";
 // import { ContinuousColorLegend } from "react-vis";
-// import Row from "react-bootstrap/Row";
 
 // Redux
 import { bindActionCreators } from "redux";
@@ -65,6 +64,7 @@ class HeatmapCount extends Component {
 
   render() {
     let loading = isEmpty(this.state.builtData);
+    let largeCols = this.props.selectedStudy ? 6 : 12;
     return (
       <div>
         {loading ? (
@@ -73,22 +73,24 @@ class HeatmapCount extends Component {
           </Container>
         ) : (
           <Container className="container__heatmap">
-            <div className="card">
-              <div className="scrollyteller__container">
+            <Row className="scrollyteller__container">
+              <Col lg={largeCols} sm={12}>
                 <HeatmapViz
                   {...this.props}
                   filteredData={this.state.builtData}
                   sorters={this.props.shortSorters}
                   format={this.props.format}
                 />
-                {this.props.selectedStudy ? (
+              </Col>
+              {this.props.selectedStudy ? (
+                <Col lg={largeCols} sm={12}>
                   <StudySorterSummary
                     {...this.props}
                     accuracy={this.props.accuracy}
                   />
-                ) : null}
-              </div>
-            </div>
+                </Col>
+              ) : null}
+            </Row>
           </Container>
         )}
       </div>

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import HeatmapRow from './HeatmapRow';
-import { isEmpty } from '../../utils';
+import React, { Component } from "react";
+import HeatmapRow from "./HeatmapRow";
+import { isEmpty } from "../../utils";
 
 class HeatmapViz extends Component {
   constructor(props) {
@@ -41,7 +41,7 @@ class HeatmapViz extends Component {
   render() {
     const loading = isEmpty(this.state.vizData);
     return (
-      <div>
+      <div className="card card--heatma">
         {loading ? (
           <h4>...</h4>
         ) : (
