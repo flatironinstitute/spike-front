@@ -17,9 +17,9 @@ class StudySorterTable extends Component {
         <Tabs>
           <TabList>
             <Tab>Scatterplot</Tab>
-            <Tab>Study</Tab>
+            {/* <Tab>Study</Tab>
             <Tab>Sorter</Tab>
-            <Tab disabled>Other</Tab>
+            <Tab disabled>Other</Tab> */}
           </TabList>
           <TabPanel>
             <p>
@@ -32,7 +32,7 @@ class StudySorterTable extends Component {
               accuracy={accuracy}
             />
           </TabPanel>
-          <TabPanel>
+          {/* <TabPanel>
             <p>
               <b>Study: {study.name}</b>
             </p>
@@ -160,7 +160,7 @@ class StudySorterTable extends Component {
                 Wikipedia
               </a>
             </p>
-          </TabPanel>
+          </TabPanel> */}
         </Tabs>
       </div>
     );
