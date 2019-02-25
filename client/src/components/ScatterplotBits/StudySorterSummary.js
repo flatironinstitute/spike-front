@@ -35,46 +35,44 @@ class StudySorterSummary extends Component {
   }
 
   render() {
-    const { selectedStudy, accuracy } = this.props;
+    const study = this.props.selectedStudy
+      ? this.props.selectedStudy.study
+      : "";
+    const sorter = this.props.selectedStudy
+      ? this.props.selectedStudy.sorter
+      : "";
     const loading =
-      isEmpty(selectedStudy) ||
+      isEmpty(this.props.selectedStudy) ||
       isEmpty(this.state.study) ||
       isEmpty(this.state.sorter);
     return (
       <div className="card card--heatmap">
         <div className="card__header">
-          <h4 className="card__title">Detail View</h4>
-          <p className="card__category">24 Hour Performance</p>
+          <div className="card__category--div">
+            {/* <h4 className="card__title">Results: </h4> */}
+            {/* TODO: add proper routes */}
+            <span className="card__title--link">
+              Study:
+              <a href="/study">{study}</a>
+            </span>
+            <span className="card__title--link">
+              Sorter:
+              <a href="/sorters">{sorter}</a>
+            </span>
+          </div>
         </div>
         <div className="detail__column">
-          <h4 className="unitdetail__title">Detail View</h4>
-          <div className="unitdetail__copy">
-            <div className="tab-header__row">
-              <div className="tab-header__bundle">
-                <a href="/study">
-                  <b>Sorter: </b>
-                  {selectedStudy ? selectedStudy.sorter : ""}
-                </a>
-              </div>
-              <div className="tab-header__bundle">
-                <a href="/study">
-                  <b>Study: </b>
-                  {selectedStudy ? selectedStudy.study : ""}
-                </a>
-              </div>
-            </div>
-            {loading ? (
-              <h4 className="unitdetail__title">Click a box to select</h4>
-            ) : (
-              <StudySorterTable
-                study={this.state.study}
-                sorter={this.state.sorter}
-                selectedStudy={selectedStudy}
-                accuracy={accuracy}
-                {...this.props}
-              />
-            )}
-          </div>
+          {loading ? (
+            <h4 className="unitdetail__title">Click a box to select</h4>
+          ) : (
+            <StudySorterTable
+              study={this.state.study}
+              sorter={this.state.sorter}
+              selectedStudy={this.props.selectedStudy}
+              accuracy={this.props.accuracy}
+              {...this.props}
+            />
+          )}
         </div>
       </div>
     );

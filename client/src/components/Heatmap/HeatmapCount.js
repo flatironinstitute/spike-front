@@ -73,7 +73,7 @@ class HeatmapCount extends Component {
           </Container>
         ) : (
           <Container className="container__heatmap">
-            <Row className="scrollyteller__container">
+            <div className="scrollyteller__container">
               <Col lg={largeCols} sm={12}>
                 <HeatmapViz
                   {...this.props}
@@ -83,15 +83,15 @@ class HeatmapCount extends Component {
                   metric={this.props.metric}
                 />
               </Col>
-              {this.props.selectedStudy ? (
-                <Col lg={largeCols} sm={12}>
-                  <StudySorterSummary
-                    {...this.props}
-                    accuracy={this.props.accuracy}
-                  />
-                </Col>
-              ) : null}
-            </Row>
+              {/* {this.props.selectedStudy ? ( */}
+              <Col lg={6} sm={12}>
+                <StudySorterSummary
+                  {...this.props}
+                  accuracy={this.props.accuracy}
+                />
+              </Col>
+              {/* ) : null} */}
+            </div>
           </Container>
         )}
       </div>

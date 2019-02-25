@@ -35,7 +35,7 @@
 .scrollyteller__container {
   display: flex;
   justify-content: space-between;
-  padding: 5rem 0;
+  /* padding: 5rem 0; */
 }
 
 /* Heatmap Cards
@@ -60,12 +60,23 @@
   line-height: 30px;
 }
 
+.card__title--link {
+  font-size: 20px;
+  margin-right: 15px;
+}
+
 .card__category {
   font-size: 14px;
   font-weight: 400;
   color: #9a9a9a;
   margin-bottom: 0;
   line-height: 1.5;
+}
+
+.card__category--div {
+  margin-bottom: 0;
+  line-height: 1.5;
+  display: flex;
 }
 
 /* Unit Detail
