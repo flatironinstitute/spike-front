@@ -33,10 +33,12 @@ export class MetricCard extends Component {
       <div className="card card--stats">
         <div className="content">
           <div className="card__label">
-            <p>Metric</p>
-            {title}
+            <p>
+              Metric: <strong>{title}</strong>
+            </p>
           </div>
           <div className="card__footer">
+            <hr />
             <ButtonToolbar className="card_buttonrow">
               <ToggleButtonGroup
                 type="radio"

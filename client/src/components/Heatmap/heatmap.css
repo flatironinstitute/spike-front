@@ -11,14 +11,6 @@
   width: 100%;
 }
 
-.heatmap__buttonrow {
-  margin: 0 auto 3rem auto;
-  width: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-}
-
 .heatmap__big {
   font-size: 6.4rem;
   max-width: 70rem;

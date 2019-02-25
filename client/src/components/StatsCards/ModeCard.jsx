@@ -26,27 +26,28 @@ export class ModeCard extends Component {
       <div className="card card--stats">
         <div className="content">
           <div className="card__label">
-            <p>Mode</p>
-            {this.getFormatCopy()}
+            <p>
+              Mode: <strong>{this.getFormatCopy()}</strong>
+            </p>
           </div>
           <div className="card__footer">
             <hr />
-            <div
-              className="card__form"
-              // value={this.props.format}
-              // onChange={this.props.handleFormatChange}
-            >
-              <Form.Group controlId="exampleForm.ControlSelect1">
-                <Form.Control as="select">
-                  <option value={"count"}>
-                    Number units found above metric threshold
-                  </option>
-                  <option value={"average"}>
-                    Average metric above SNR threshold
-                  </option>
-                  <option value={"cpu"}>Estimated CPU Time</option>
-                </Form.Control>
-              </Form.Group>
+            <div className="card__form">
+              <Form.Control
+                as="select"
+                size="lg"
+                // value={this.props.format}
+                // onChange={this.props.handleFormatChange}
+                onChange={console.log("CHANGE")}
+              >
+                <option value={"count"}>
+                  Number units found above metric threshold
+                </option>
+                <option value={"average"}>
+                  Average metric above SNR threshold
+                </option>
+                <option value={"cpu"}>Estimated CPU Time</option>
+              </Form.Control>
             </div>
           </div>
         </div>

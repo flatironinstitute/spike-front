@@ -4,7 +4,7 @@
 
 .card__label {
   font-size: 2rem;
-  text-align: right;
+  text-align: left;
 }
 
 .card__label p {
@@ -16,12 +16,6 @@
 .card__formlabel {
   font-size: 16px;
   line-height: 1.5;
-}
-
-.card__formlabel span {
-  font-size: 2em;
-  text-align: right;
-  color: var(--fi-blue);
 }
 
 .card__footer {
