@@ -1,86 +1,108 @@
-import React, { Component } from 'react';
-import HeatmapCount from './HeatmapCount';
-import HeatmapAverage from './HeatmapAverage';
-import 'react-rangeslider/lib/index.css';
-import {
-  ButtonToolbar,
-  ToggleButtonGroup,
-  ToggleButton,
-  Container,
-} from 'react-bootstrap';
+import React, { Component } from "react";
+import HeatmapCount from "./HeatmapCount";
+import HeatmapSNR from "./HeatmapSNR";
+import HeatmapCPU from "./HeatmapCPU";
 
-import './heatmap.css';
+import "react-rangeslider/lib/index.css";
+import { Col, Container, Row } from "react-bootstrap";
+
+import ModeCard from "../StatsCards/ModeCard";
+import MetricCard from "../StatsCards/MetricCard";
+import SliderCard from "../StatsCards/SliderCard";
+
+import "./heatmap.css";
 
 class HeatmapsColumn extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      format: 'count',
+      format: "count",
+      metric: "accuracy",
+      sliderValue: 0
     };
   }
 
   handleFormatChange = value => {
     this.setState({
       format: value,
+      sliderValue: 0
+    });
+  };
+
+  handleMetricChange = value => {
+    this.setState({
+      metric: value
+    });
+  };
+
+  handleSliderChange = value => {
+    let round = Math.round(value * 100) / 100;
+    this.setState({
+      sliderValue: round
     });
   };
 
   render() {
-    let format = this.state.format;
-    let copy =
-      format === 'count'
-        ? 'Number of groundtruth units above accuracy threshold'
-        : 'Average accuracy of groundtruth units above SNR threshold';
+    let largeCols = this.state.format === "cpu" ? 6 : 4;
     return (
-      <div className="container__heatmaps">
-        <Container>
-          <p className="heatmap__big">Results Overview</p>
-          <p className="heatmap__title">{copy}</p>
-          <ButtonToolbar className="heatmap__buttonrow">
-            <ToggleButtonGroup
-              type="radio"
-              name="options"
-              size="lg"
-              value={this.state.format}
-              onChange={this.handleFormatChange}
-            >
-              <ToggleButton size="lg" value={'count'} variant="outline-dark">
-                Number of Units Found
-              </ToggleButton>
-              <ToggleButton size="lg" value={'average'} variant="outline-dark">
-                Average Accuracy Above a Threshhold
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </ButtonToolbar>
-          <ButtonToolbar className="heatmap__buttonrow">
-            <ToggleButtonGroup
-              type="radio"
-              name="options"
-              size="lg"
-              value={this.state.format}
-              onChange={this.handleFormatChange}
-            >
-              <ToggleButton size="lg" value={'accuracy'} variant="outline-dark">
-                Accuracy
-              </ToggleButton>
-              <ToggleButton
-                size="lg"
-                value={'precision'}
-                variant="outline-dark"
-              >
-                Precision
-              </ToggleButton>
-              <ToggleButton size="lg" value={'recall'} variant="outline-dark">
-                Recall
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </ButtonToolbar>
+      <div>
+        <Container className="container__heatmap">
+          <Row className="container__heatmap--row">
+            <Col lg={largeCols} sm={12}>
+              <ModeCard
+                format={this.state.format}
+                handleFormatChange={this.handleFormatChange}
+              />
+            </Col>
+            <Col lg={largeCols} sm={12}>
+              <SliderCard
+                format={this.state.format}
+                sliderValue={this.state.sliderValue}
+                handleSliderChange={this.handleSliderChange}
+              />
+            </Col>
+            {largeCols < 6 ? (
+              <Col lg={4} sm={12}>
+                <MetricCard
+                  metric={this.state.metric}
+                  handleMetricChange={this.handleMetricChange}
+                />
+              </Col>
+            ) : (
+              <div />
+            )}
+          </Row>
         </Container>
-        {format === 'count' ? (
-          <HeatmapCount {...this.props} format={this.state.format} />
-        ) : (
-          <HeatmapAverage {...this.props} format={this.state.format} />
-        )}
+        {(() => {
+          switch (this.state.format) {
+            case "count":
+              return (
+                <HeatmapCount
+                  {...this.props}
+                  format={this.state.format}
+                  accuracy={this.state.sliderValue}
+                />
+              );
+            case "average":
+              return (
+                <HeatmapSNR
+                  {...this.props}
+                  format={this.state.format}
+                  snrMin={this.state.sliderValue}
+                />
+              );
+            case "cpu":
+              return (
+                <HeatmapCPU
+                  {...this.props}
+                  format={this.state.format}
+                  cpuMax={this.state.sliderValue}
+                />
+              );
+            default:
+              return null;
+          }
+        })()}
       </div>
     );
   }

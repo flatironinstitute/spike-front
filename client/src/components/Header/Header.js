@@ -6,6 +6,8 @@ import Nav from "react-bootstrap/Nav";
 import logo from "./logo-no-icon.svg";
 import InfoPanel from "./InfoPanel";
 
+import { toTitleCase } from "../../utils";
+
 import "./Header.css";
 
 class Header extends Component {
@@ -27,6 +29,17 @@ class Header extends Component {
     }
   }
 
+  getPageName() {
+    let activeRoute = this.props.router.location.pathname;
+    let activeArr = activeRoute.split("/").filter(item => item);
+    if (activeArr.length) {
+      return toTitleCase(activeArr.join(" "));
+    } else {
+      // TODO: Add name of vis currently up here
+      return "Overview";
+    }
+  }
+
   componentDidMount() {
     this.updateDimensions();
     window.addEventListener("resize", this.updateDimensions.bind(this));
@@ -40,17 +53,16 @@ class Header extends Component {
     let activeRoute = this.props.router.location.pathname;
     return (
       <div className="navbar__container">
+        <InfoPanel width={this.state.width} height={this.state.height} />
         <Nav className="navbar__white">
-          <div className="navbar__left">
-            <InfoPanel width={this.state.width} height={this.state.height} />
-          </div>
-          <Navbar.Brand className="navbar__center" href="/">
+          <Navbar.Brand href="/" className="navbar__left">
             <img
               alt="spikeforest logo"
               src={logo}
               height="48"
               className="d-inline-block align-top"
             />
+            <p className="navbar__pagename">{this.getPageName()}</p>
           </Navbar.Brand>
           <Nav
             className="navbar__right"

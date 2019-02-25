@@ -13,6 +13,7 @@
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: flex-end;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .navbar__center {
@@ -22,11 +23,27 @@
 
 .navbar__right {
   float: right;
-  margin: 0 2rem 0 0 !important;
+  margin: 0 5rem 0 0 !important;
 }
 
 .navbar__left {
-  min-width: 40rem;
+  margin: 0 0 0 2rem !important;
+  border-bottom: none;
+  display: flex;
+}
+
+.navbar__pagename {
+  font-size: 1.6rem;
+  border-bottom: none;
+  font-family: var(--sans);
+  color: var(--black);
+  padding: 0.5rem 1rem;
+  margin: 0 0 0 2rem;
+}
+
+.nav-link {
+  display: block;
+  padding: 0.5rem 1rem;
 }
 
 .nav-link {

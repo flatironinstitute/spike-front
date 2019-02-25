@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { isEmpty } from "../../utils";
 
 // Redux
 import { bindActionCreators } from "redux";
@@ -41,9 +40,6 @@ class SingleResultPairing extends Component {
   }
 
   render() {
-    let header = isEmpty(this.props.selectedPairing)
-      ? this.props.selectedPairing
-      : "🍐";
     return (
       <div>
         <div className="container container__body">

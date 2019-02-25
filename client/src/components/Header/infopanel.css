@@ -8,10 +8,10 @@
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .bm-burger-button {
   position: fixed;
-  width: 30px;
-  height: 30px;
-  left: 25px;
-  top: 23px;
+  width: 20px;
+  height: 20px;
+  right: 28px;
+  top: 24px;
 }
 
 .bm-burger-bars {
@@ -27,7 +27,7 @@
   position: fixed;
   width: 23px !important;
   height: 19px !important;
-  left: 36px !important;
+  right: 36px !important;
   top: 17px !important;
 }
 
@@ -40,10 +40,8 @@
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .bm-menu-wrap {
   position: fixed;
-  height: 95vh !important;
-  width: 95vw !important;
   padding: 1.6rem 3.2rem;
-  background-color: rgba(40, 40, 40, 0.975) !important;
+  background-color: rgba(40, 40, 40, 1) !important;
   color: #f4f4f4;
   top: 0 !important;
 }
@@ -58,7 +56,7 @@
 }
 
 .bm-overlay {
-  background-color: rgba(40, 40, 40, 0.975) !important;
+  background-color: rgba(40, 40, 40, 1) !important;
   top: 0 !important;
 }
 

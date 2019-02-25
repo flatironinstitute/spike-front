@@ -1,0 +1,79 @@
+/* Stats Cards
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.card .content {
+  padding: 15px 15px 10px;
+}
+
+.card__label {
+  font-size: 2rem;
+  text-align: left;
+}
+
+.card__label p {
+  font-size: 1.6rem;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.card__formlabel {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.card__footer {
+  padding: 0;
+  background-color: transparent;
+  line-height: 30px;
+}
+
+.card__buttonrow {
+  margin: 0 auto 3rem auto;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+/* Range Slider
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.slider__horizontal {
+  background-color: white;
+}
+
+.rangeslider {
+  background-color: var(--fi-yellow) !important;
+}
+
+.rangeslider__handle {
+  border-radius: 45px !important;
+}
+
+.rangeslider__fill {
+  background: #e6e6e6 !important;
+  border-radius: 1px !important;
+}
+
+.rangeslider-horizontal {
+  border-radius: 1px !important;
+}
+
+.slider__copy {
+  margin: 30px auto 0;
+  font-size: 1.2rem;
+  line-height: 2.9rem;
+  text-align: left;
+}
+
+.slider__copy > p {
+  margin-bottom: 0;
+  line-height: 1.3rem;
+}
+
+/* Metric Toggle
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.metric_button_toggle {
+  width: 100%;
+}
