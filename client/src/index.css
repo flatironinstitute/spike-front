@@ -9,7 +9,7 @@ are based on 10px sizing. So basically 1.5rem = 15px :) */
   box-sizing: inherit;
 }
 html {
-  font-size: 80%;
+  font-size: 62.5%;
   --fi-blue: #384ca2;
   --fi-grey: #807f84;
   --fi-teal: #00839b;
