@@ -1,3 +1,6 @@
+/* Stats Cards
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
 .card .content {
   padding: 15px 15px 10px;
 }
@@ -30,4 +33,40 @@
   text-align: center;
   display: flex;
   justify-content: center;
+}
+
+/* Range Slider
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.slider__horizontal {
+  background-color: white;
+}
+
+.rangeslider {
+  background-color: var(--fi-yellow) !important;
+}
+
+.rangeslider__handle {
+  border-radius: 45px !important;
+}
+
+.rangeslider__fill {
+  background: #e6e6e6 !important;
+  border-radius: 1px !important;
+}
+
+.rangeslider-horizontal {
+  border-radius: 1px !important;
+}
+
+.slider__copy {
+  margin: 30px auto 0;
+  font-size: 1.2rem;
+  line-height: 2.9rem;
+  text-align: left;
+}
+
+.slider__copy > p {
+  margin-bottom: 0;
+  line-height: 1.3rem;
 }

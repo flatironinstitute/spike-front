@@ -36,17 +36,18 @@ export class ModeCard extends Component {
               <Form.Control
                 as="select"
                 size="lg"
-                // value={this.props.format}
-                // onChange={this.props.handleFormatChange}
-                onChange={console.log("CHANGE")}
+                value={this.props.format}
+                onChange={e => this.props.handleFormatChange(e.target.value)}
               >
-                <option value={"count"}>
+                <option key={"count-1"} value={"count"}>
                   Number units found above metric threshold
                 </option>
-                <option value={"average"}>
+                <option key={"average-1"} value={"average"}>
                   Average metric above SNR threshold
                 </option>
-                <option value={"cpu"}>Estimated CPU Time</option>
+                <option key={"cpu-1"} value={"cpu"}>
+                  Estimated CPU Time
+                </option>
               </Form.Control>
             </div>
           </div>

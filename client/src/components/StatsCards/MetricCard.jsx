@@ -39,7 +39,7 @@ export class MetricCard extends Component {
           </div>
           <div className="card__footer">
             <hr />
-            <ButtonToolbar className="card_buttonrow">
+            <ButtonToolbar>
               <ToggleButtonGroup
                 type="radio"
                 name="options"

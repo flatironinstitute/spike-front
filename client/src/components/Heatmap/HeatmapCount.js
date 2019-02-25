@@ -1,31 +1,29 @@
-import React, { Component } from 'react';
-import HeatmapViz from './HeatmapViz';
-import { isEmpty } from '../../utils';
-import { ContinuousColorLegend } from 'react-vis';
+import React, { Component } from "react";
+import HeatmapViz from "./HeatmapViz";
+import { isEmpty } from "../../utils";
+import { ContinuousColorLegend } from "react-vis";
 
 // Components
-import Preloader from '../Preloader/Preloader';
-import StudySorterSummary from '../ScatterplotBits/StudySorterSummary';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Slider from 'react-rangeslider';
-import 'react-rangeslider/lib/index.css';
+import Preloader from "../Preloader/Preloader";
+import StudySorterSummary from "../ScatterplotBits/StudySorterSummary";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 // Redux
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as actionCreators from '../../actions/actionCreators';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as actionCreators from "../../actions/actionCreators";
 
 // Stylin'
-import './heatmap.css';
+import "./heatmap.css";
 
 class HeatmapCount extends Component {
   constructor(props) {
     super(props);
     this.state = {
       builtData: [],
-      accuracy: 0.8,
+      accuracy: 0.8
     };
   }
 
@@ -43,12 +41,6 @@ class HeatmapCount extends Component {
       this.filterAccuracyMap();
     }
   }
-
-  handleSliderChange = value => {
-    this.setState({
-      accuracy: value,
-    });
-  };
 
   // Count functions for 'Number of groundtruth units above accuracy threshold'
   filterAccuracy(sorterArray) {
@@ -76,7 +68,7 @@ class HeatmapCount extends Component {
   render() {
     let loading = isEmpty(this.state.builtData);
     if (!loading) {
-      console.log('🏘️', this.state.builtData);
+      console.log("🏘️", this.state.builtData);
     }
     return (
       <div>
@@ -87,36 +79,14 @@ class HeatmapCount extends Component {
         ) : (
           <div>
             <Container>
-              <Row className="slider__horizontal">
-                <Col md={{ span: 6 }}>
-                  <p className="byline">
-                    <b>
-                      Minimum accuracy:
-                      {Math.round(this.state.accuracy * 100) / 100}
-                    </b>
-                  </p>
-                </Col>
-              </Row>
-              <Row className="slider__horizontal">
-                <Col md={{ span: 6 }}>
-                  <Slider
-                    min={0}
-                    max={1}
-                    value={this.state.accuracy}
-                    step={0.05}
-                    orientation="horizontal"
-                    onChange={this.handleSliderChange}
-                  />
-                </Col>
-              </Row>
               <Row>
                 <div className="heatmap__legend">
                   <ContinuousColorLegend
                     width={580}
-                    startColor={'#fafafd'}
-                    endColor={'#384ca2'}
-                    startTitle={'Least Units Found'}
-                    endTitle={'Most Units Found'}
+                    startColor={"#fafafd"}
+                    endColor={"#384ca2"}
+                    startTitle={"Least Units Found"}
+                    endTitle={"Most Units Found"}
                     height={20}
                   />
                 </div>
@@ -150,7 +120,7 @@ class HeatmapCount extends Component {
 function mapStateToProps(state) {
   return {
     selectedStudy: state.selectedStudy,
-    selectedRecording: state.selectedRecording,
+    selectedRecording: state.selectedRecording
   };
 }
 
