@@ -18,6 +18,7 @@ import Internals from "../components/Pages/Internals";
 import Metrics from "../components/Pages/Metrics";
 import Contact from "../components/Contact/Contact";
 import SingleResultPairing from "../components/ResultPairingBits/SingleResultPairing";
+import FourOhFour from "../components/Pages/FourOhFour";
 
 class Routes extends Component {
   async componentDidMount() {
@@ -62,6 +63,7 @@ class Routes extends Component {
             path="/results/magland-synth-noise10-K10-C4/MountainSort4-thr3"
             render={props => <SingleResultPairing {...this.props} />}
           />
+          <Route render={props => <FourOhFour {...this.props} />} />
         </Switch>
         <Footer />
       </div>

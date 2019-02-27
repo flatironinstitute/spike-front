@@ -3,11 +3,7 @@ import icon from "./github.png";
 
 const RepoIcon = ({ row, accessor }) => {
   return (
-    <a
-      style={{ textDecoration: "none", borderBottom: "none" }}
-      className="icon__link"
-      href={row[accessor]}
-    >
+    <a className="icon__link" href={row[accessor]}>
       <img
         src={icon}
         className="algos__icon"

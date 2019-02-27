@@ -1,18 +1,13 @@
 import React, { Component } from "react";
-
-// Redux
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import * as actionCreators from "../../actions/actionCreators";
+import { isEmpty, toTitleCase } from "../../utils";
+import Preloader from "../Preloader/Preloader";
+import { Card, Col, Container, Row } from "react-bootstrap";
 
 // import pairing from "../../data/stubData/pairing_sample";
 
 // import spikeforestwidgets from "./SpikeforestWidgets";
 
 // http://localhost:3000/pairing/magland-synth-noise10-K10-C4/MountainSort4-thr3
-
-// Individual Study Page:
-// Description of the Study just copy
 
 // Pairing Page -> Study Results Page
 // Links to the other sorters on the study (button row)
@@ -25,11 +20,13 @@ class SingleResultPairing extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pairing: []
+      study: "",
+      sorter: ""
     };
   }
 
   componentDidMount() {
+    console.log("🐠", this.getPageName());
     this.props.fetchPairing();
   }
 
@@ -39,64 +36,79 @@ class SingleResultPairing extends Component {
     }
   }
 
+  getPageName() {
+    let activeRoute = this.props.router.location.pathname;
+    let activeArr = activeRoute.split("/").filter(item => item);
+    console.log("🇺🇬", activeArr);
+    if (activeArr.length) {
+      return toTitleCase(activeArr.join(" "));
+    }
+  }
+
   render() {
+    let loading = isEmpty(this.state.study) || isEmpty(this.state.sorter);
     return (
       <div>
-        <div className="container container__body">
-          <div className="header">
-            <h2 className="header__title">
-              magland-synth-noise10-K10-C4{" "}
-              <span role="img" aria-label="pear">
-                🍐
-              </span>{" "}
-              MountainSort4-thr3
-            </h2>
-            <div className="header__copy" id="widget1">
-              {/* <p>
-                Some text about the study overall. A study is a collection of
-                recordings. Sorting results may be aggregated over a study.Doggo
-                ipsum stop it fren you are doin me a concern. Thicc doggorino
-                borkf long bois, floofs big ol extremely cuuuuuute.
-              </p>
-              <p>
-                Citation: Gratiy, Sergey L et al. “BioNet: A Python interface to
-                NEURON for modeling large-scale networks” PloS one vol. 13,8
-                e0201630. 2 Aug. 2018, doi:10.1371/journal.pone.0201630
-              </p>
-              <p>
-                Authors: Mario Speedwagon, Petey Cruiser, Anna Sthesia, Paul
-                Molive, and Anna Mull.
-              </p>
-              <p>Lab: Allen Institute, Seattle, WA.</p>
-              <p>Number of Recordings: 1234</p>
-              <p>Total File Size: 1234GB</p>
-              <p>Duration: 1234 seconds</p>
-              <p>Experiment: synthetic ( IN VIVO / IN VITRO)</p>
-              <p>Probe Type: tetrode</p>
-              <p>Brain Region: occipital lobe</p>
-              <p>Groundtruth Units: true</p> */}
-            </div>
-          </div>
-          <div className="recordings">
-            <h3 className="recordings__title">Recordings</h3>
-          </div>
+        <div className="page__body">
+          {loading ? (
+            <Container className="container__heatmap">
+              <Card>
+                <Card.Body>
+                  <Preloader />
+                </Card.Body>
+              </Card>
+            </Container>
+          ) : (
+            <Container className="container__heatmap">
+              <Row className="container__sorter--row">
+                <Col lg={12} sm={12}>
+                  <div className="card card--stats">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>
+                          Study: <strong>{this.state.study}</strong>
+                        </p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <p>
+                          {" "}
+                          Generally speaking, spike sorting algorithms take in
+                          an unfiltered multi-channel timeseries (aka,
+                          recording) and a list of algorithm parameters and
+                          output a list of firing times and associated integer
+                          unit labels. This page lists the spike sorting codes
+                          we run, as well as some that have yet to be
+                          incorporated. Most of the codes were developed at
+                          other institutions; two of them are in-house.
+                        </p>
+                        <p className="updated">Link to documentation?</p>
+                        <p className="updated">
+                          Embedded Notebooks / Scripts with Configs?
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="container__sorter--row">
+                <Col lg={12} sm={12}>
+                  <div className="card card--stats">
+                    <h2>
+                      Thar be monsters{" "}
+                      <span role="img" aria-label="squid">
+                        🦑
+                      </span>
+                    </h2>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          )}
         </div>
       </div>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    selectedPairing: state.pairing
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(actionCreators, dispatch);
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SingleResultPairing);
+export default SingleResultPairing;

@@ -49,6 +49,7 @@ kbclient.setPairioConfig({
 /* API 
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 app.get("/api/hello", (req, res) => {
+  console.log("🍐 hello pairing");
   res.send({ express: "Hello From Express" });
 });
 app.post("/api/contact", (req, res) => {
