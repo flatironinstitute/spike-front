@@ -1,12 +1,9 @@
 import React, { Component } from "react";
-import { isEmpty, toTitleCase } from "../../utils";
+import { isEmpty } from "../../utils";
 import Preloader from "../Preloader/Preloader";
 import { Card, Col, Container, Row } from "react-bootstrap";
 
-// import pairing from "../../data/stubData/pairing_sample";
-
 // import spikeforestwidgets from "./SpikeforestWidgets";
-
 // http://localhost:3000/pairing/magland-synth-noise10-K10-C4/MountainSort4-thr3
 
 // Pairing Page -> Study Results Page
@@ -27,7 +24,6 @@ class SingleResultPairing extends Component {
 
   componentDidMount() {
     this.getPageName();
-    console.log("🐠");
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -49,7 +45,7 @@ class SingleResultPairing extends Component {
   }
 
   render() {
-    console.log("🍋", this.props.pairing);
+    console.log("💛", this.props.pairing);
     let loading = isEmpty(this.state.study) || isEmpty(this.state.sorter);
     return (
       <div>
@@ -78,21 +74,7 @@ class SingleResultPairing extends Component {
                       </div>
                       <div className="card__footer">
                         <hr />
-                        <p>
-                          {" "}
-                          Generally speaking, spike sorting algorithms take in
-                          an unfiltered multi-channel timeseries (aka,
-                          recording) and a list of algorithm parameters and
-                          output a list of firing times and associated integer
-                          unit labels. This page lists the spike sorting codes
-                          we run, as well as some that have yet to be
-                          incorporated. Most of the codes were developed at
-                          other institutions; two of them are in-house.
-                        </p>
-                        <p className="updated">Link to documentation?</p>
-                        <p className="updated">
-                          Embedded Notebooks / Scripts with Configs?
-                        </p>
+                        <p>Hello what goes here? ☎️</p>
                       </div>
                     </div>
                   </div>

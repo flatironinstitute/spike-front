@@ -12,9 +12,6 @@ const initialState = {
 };
 
 const pairing = (state = initialState, action) => {
-  if (action.pairing) {
-    console.log("🚣‍♂️, PAIRING IN REDUCER", action.pairing);
-  }
   switch (action.type) {
     case RECEIVE_PAIRING:
       return action.pairing;

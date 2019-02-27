@@ -189,7 +189,6 @@ export const fetchPairing = (study, sorter) => {
     dispatch(startLoading());
     return createFetch(url)
       .then(res => {
-        console.log("💛", res);
         dispatch(receivePairing(res));
       })
       .then(() => {

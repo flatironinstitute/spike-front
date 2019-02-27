@@ -1,6 +1,6 @@
 // Each of the 4 arrays is a 3-d array of floats. Dimensions are 4x50xK where 4 is the number of channels, 50 is the number of timepoints, and K is the number of spikes.
 
-const pairing = {
+module.exports = {
   spikes1: [
     [
       [
@@ -13030,5 +13030,3 @@ const pairing = {
     ]
   ]
 };
-
-export default pairing;

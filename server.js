@@ -10,6 +10,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const app = express();
 const port = process.env.PORT || 5000;
+const pairing = require("./stubData/pairing.js");
 // const mail = require("./email/mail");
 
 app.use(bodyParser.json());
@@ -48,14 +49,12 @@ kbclient.setPairioConfig({
 
 /* API 
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-// app.get("/api/hello", (req, res) => {
-//   console.log("🍐 hello pairing");
-//   res.send({ express: "Hello From Express" });
-// });
 app.get("/api/:study/:sorter", (req, res) => {
   let study = req.params.study;
   let sorter = req.params.sorter;
-  res.send({ study: study, sorter: sorter });
+  // TODO: Convert this to the actual request for data from KBUCKET on the results controller
+  // Currently pulling data from a stub data json
+  res.send({ results: pairing });
 });
 // TODO: Change routing to name params explicitly
 // app.get("/users/:userId/books/:bookId", function(req, res) {
