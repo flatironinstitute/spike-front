@@ -26,23 +26,26 @@ class SingleResultPairing extends Component {
   }
 
   componentDidMount() {
-    console.log("🐠", this.getPageName());
-    this.props.fetchPairing();
+    this.getPageName();
+    console.log("🐠");
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.selectedPairing !== prevProps.selectedPairing) {
-      console.log("🍐", this.props.selectedPairing);
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.study !== prevState.study) {
+      this.props.fetchPairing(this.state.study, this.state.sorter);
     }
   }
 
   getPageName() {
     let activeRoute = this.props.router.location.pathname;
     let activeArr = activeRoute.split("/").filter(item => item);
-    console.log("🇺🇬", activeArr);
-    if (activeArr.length) {
-      return toTitleCase(activeArr.join(" "));
-    }
+    // TODO: Make this less fixed!
+    let study = activeArr[1];
+    let sorter = activeArr[2];
+    this.setState({
+      study,
+      sorter
+    });
   }
 
   render() {
@@ -93,7 +96,7 @@ class SingleResultPairing extends Component {
               </Row>
               <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
-                  <div className="card card--stats">
+                  <div className="card card--heatmap text-center">
                     <h2>
                       Thar be monsters{" "}
                       <span role="img" aria-label="squid">

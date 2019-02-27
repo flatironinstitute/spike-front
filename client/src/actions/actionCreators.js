@@ -183,7 +183,8 @@ export const receivePairing = pairing => ({
   pairing
 });
 
-export const fetchPairing = () => {
+export const fetchPairing = (study, sorter) => {
+  console.log("🎿", study, sorter);
   return function(dispatch) {
     dispatch(startLoading());
     return createFetch(`/api/hello`)
