@@ -38,6 +38,7 @@ class SingleResultPairing extends Component {
   }
 
   render() {
+    let results = this.props.pairing ? this.props.pairing : { results: "nada" };
     let loading = isEmpty(this.state.study) || isEmpty(this.state.sorter);
     return (
       <div>
@@ -66,15 +67,22 @@ class SingleResultPairing extends Component {
                       </div>
                       <div className="card__footer">
                         <hr />
-                        <p>Hello what goes here? ☎️</p>
+                        <p>
+                          Hello what goes here?{" "}
+                          <span role="img" aria-label="tropical drink">
+                            🍹
+                          </span>
+                        </p>
                       </div>
                     </div>
                   </div>
                 </Col>
               </Row>
-              <Row>
+              <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
-                  <ReactJson src={this.props.pairing} />
+                  <div className="card card--heatmap">
+                    <ReactJson src={results} />
+                  </div>
                 </Col>
               </Row>
               <Row className="container__sorter--row">
