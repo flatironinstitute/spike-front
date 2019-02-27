@@ -55,6 +55,7 @@ class HeatmapRow extends Component {
   render() {
     const { data } = this.state;
     const loading = isEmpty(data);
+    console.log("🖥️", data);
     return (
       <div>
         {loading ? (

@@ -38,7 +38,9 @@ class SingleResultPairing extends Component {
   }
 
   render() {
-    let results = this.props.pairing ? this.props.pairing : { results: "nada" };
+    let results = isEmpty(this.props.pairing)
+      ? { results: "nada" }
+      : this.props.pairing;
     let loading = isEmpty(this.state.study) || isEmpty(this.state.sorter);
     return (
       <div>
@@ -89,6 +91,9 @@ class SingleResultPairing extends Component {
                 <Col lg={12} sm={12}>
                   <div className="card card--heatmap text-center">
                     <h2>
+                      <span role="img" aria-label="wave">
+                        🌊
+                      </span>
                       Thar be monsters{" "}
                       <span role="img" aria-label="squid">
                         🦑
