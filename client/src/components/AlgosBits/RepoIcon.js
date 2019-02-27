@@ -1,9 +1,13 @@
-import React from 'react';
-import icon from './github.png';
+import React from "react";
+import icon from "./github.png";
 
 const RepoIcon = ({ row, accessor }) => {
   return (
-    <a style={{ textDecoration: 'none' }} href={row[accessor]}>
+    <a
+      style={{ textDecoration: "none", borderBottom: "none" }}
+      className="icon__link"
+      href={row[accessor]}
+    >
       <img
         src={icon}
         className="algos__icon"

@@ -59,7 +59,7 @@ class Sorters extends Component {
       },
       {
         accessor: "isActive",
-        label: "Active",
+        label: "Present",
         priorityLevel: 2,
         position: 2,
         minWidth: 100,
@@ -110,13 +110,13 @@ class Sorters extends Component {
             </Container>
           ) : (
             <Container className="container__heatmap">
-              <Row className="container__heatmap--row">
+              <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
                   <div className="card card--stats">
                     <div className="content">
                       <div className="card__label">
                         <p>
-                          Sorters:
+                          Sorters:{" "}
                           <strong>
                             Spike sorting algorithms tested in this project
                           </strong>
@@ -141,6 +141,16 @@ class Sorters extends Component {
                   </div>
                 </Col>
               </Row>
+              <Row className="container__sorter--row">
+                <Col lg={12} sm={12}>
+                  <div className="card card--stats">
+                    <ReactCollapsingTable
+                      columns={algosColumns}
+                      rows={this.state.rows}
+                    />
+                  </div>
+                </Col>
+              </Row>
             </Container>
           )}
         </div>
@@ -149,11 +159,7 @@ class Sorters extends Component {
   }
 }
 export default Sorters;
+
 {
-  /* <div className="subsection">
-  <Container>
-    <p className="subsection__title">Sorters</p>
-    <ReactCollapsingTable columns={algosColumns} rows={this.state.rows} />
-  </Container>
-</div>; */
+  /* <p className="subsection__title">Sorters</p> */
 }
