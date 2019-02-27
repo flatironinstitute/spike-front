@@ -2,16 +2,9 @@ import React, { Component } from "react";
 import { isEmpty } from "../../utils";
 import Preloader from "../Preloader/Preloader";
 import { Card, Col, Container, Row } from "react-bootstrap";
+import ReactJson from "react-json-view";
 
 // import spikeforestwidgets from "./SpikeforestWidgets";
-// http://localhost:3000/pairing/magland-synth-noise10-K10-C4/MountainSort4-thr3
-
-// Pairing Page -> Study Results Page
-// Links to the other sorters on the study (button row)
-// Row of the heatmap with toolbar from heatmap
-// Scatterplot
-// spike sprays from each unit on click (// Channels as a separate row)
-// Table of data on each unit
 
 class SingleResultPairing extends Component {
   constructor(props) {
@@ -45,7 +38,6 @@ class SingleResultPairing extends Component {
   }
 
   render() {
-    console.log("💛", this.props.pairing);
     let loading = isEmpty(this.state.study) || isEmpty(this.state.sorter);
     return (
       <div>
@@ -80,6 +72,11 @@ class SingleResultPairing extends Component {
                   </div>
                 </Col>
               </Row>
+              <Row>
+                <Col lg={12} sm={12}>
+                  <ReactJson src={this.props.pairing} />
+                </Col>
+              </Row>
               <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
                   <div className="card card--heatmap text-center">
@@ -101,3 +98,14 @@ class SingleResultPairing extends Component {
 }
 
 export default SingleResultPairing;
+
+// NOTES:
+// Sample url : http://localhost:3000/pairing/magland-synth-noise10-K10-C4/MountainSort4-thr3
+//
+// TODO:
+// Pairing Page -> Study Results Page
+// Links to the other sorters on the study (button row)
+// Row of the heatmap with toolbar from heatmap
+// Scatterplot
+// spike sprays from each unit on click (// Channels as a separate row)
+// Table of data on each unit
