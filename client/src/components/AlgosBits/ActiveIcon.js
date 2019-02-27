@@ -1,12 +1,12 @@
-import React from 'react';
-import icon from './active.svg';
+import React from "react";
+import icon from "./active.svg";
 
 const ActiveIcon = ({ row, accessor }) => {
   let isActive = row[accessor];
   return (
     <div>
       {isActive ? (
-        <a style={{ textDecoration: 'none' }} href={'./home'}>
+        <a className="icon__link" href={"./home"}>
           <img
             src={icon}
             className="algos__icon"

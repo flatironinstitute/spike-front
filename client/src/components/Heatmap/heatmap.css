@@ -6,8 +6,8 @@
   margin-top: 3rem;
 }
 
-.container__heatmap--row {
-  /* margin-bottom: 3rem; */
+.container__sorter--row {
+  margin-bottom: 3rem;
 }
 
 .scrollyteller__container {
@@ -65,7 +65,7 @@
 .card__category {
   font-size: 14px;
   font-weight: 400;
-  color: #9a9a9a;
+  color: #495057;
   margin-bottom: 0;
   line-height: 1.5;
 }

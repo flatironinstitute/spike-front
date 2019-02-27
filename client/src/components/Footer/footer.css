@@ -7,6 +7,10 @@
   font-size: 1.6rem;
 }
 
+.footer > p.updated {
+  color: #282828;
+}
+
 .footer p:last-child {
   margin-bottom: 0;
 }

@@ -47,32 +47,52 @@ class StudySorterSummary extends Component {
       isEmpty(this.state.sorter);
     return (
       <div className="card card--heatmap">
-        <div className="card__header">
-          <div className="card__category--div">
-            {/* TODO: add proper routes */}
-            <span className="card__title--link">
-              Study:
-              <a href="/study">{study}</a>
-            </span>
-            <span className="card__title--link">
-              Sorter:
-              <a href="/sorters">{sorter}</a>
-            </span>
-          </div>
-        </div>
         <div className="detail__column">
           {loading ? (
-            <h4 className="unitdetail__title">Click a box to select</h4>
+            <div className="card__header">
+              <h4 className="card__title">
+                Click an item on the left to see more detail below
+              </h4>
+              <p className="card__category">
+                <br />
+                We host a variety of experimental paired ground truth recordings
+                from the community and also many in silico synthetic recordings.
+                Each sorter is run on all recordings and the resulting
+                accuracies for the ground truth units are updated on a daily
+                basis as needed. Approximate CPU/GPU run times are also
+                reported.
+              </p>
+              <p className="card__category">
+                <br />
+                📝 There is space here to add more copy. Any thoughts on what
+                else I should include ?
+              </p>
+            </div>
           ) : (
-            <StudySorterTable
-              study={this.state.study}
-              sorter={this.state.sorter}
-              selectedStudy={this.props.selectedStudy}
-              sliderValue={this.props.accuracy}
-              format={this.props.format}
-              metric={this.state.metric}
-              {...this.props}
-            />
+            <div>
+              <div className="card__header">
+                <div className="card__category--div">
+                  {/* TODO: add proper routes */}
+                  <span className="card__title--link">
+                    Study:
+                    <a href="/study">{study}</a>
+                  </span>
+                  <span className="card__title--link">
+                    Sorter:
+                    <a href="/sorters">{sorter}</a>
+                  </span>
+                </div>
+              </div>
+              <StudySorterTable
+                study={this.state.study}
+                sorter={this.state.sorter}
+                selectedStudy={this.props.selectedStudy}
+                sliderValue={this.props.sliderValue}
+                format={this.props.format}
+                metric={this.state.metric}
+                {...this.props}
+              />
+            </div>
           )}
         </div>
       </div>
