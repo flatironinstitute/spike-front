@@ -184,19 +184,18 @@ export const receivePairing = pairing => ({
 });
 
 export const fetchPairing = (study, sorter) => {
-  console.log("🎿", study, sorter);
+  let url = `/api/${study}/${sorter}`;
   return function(dispatch) {
     dispatch(startLoading());
-    return createFetch(`/api/hello`)
-      .then(res => res.express)
-      .then(pairing => {
-        dispatch(receivePairing(pairing));
+    return createFetch(url)
+      .then(res => {
+        console.log("💛", res);
+        dispatch(receivePairing(res));
       })
       .then(() => {
         dispatch(endLoading());
       })
       .catch(err => console.log(err));
-    // TODO: Add a sentry here
   };
 };
 

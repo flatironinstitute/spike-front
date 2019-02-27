@@ -49,6 +49,7 @@ class SingleResultPairing extends Component {
   }
 
   render() {
+    console.log("🍋", this.props.pairing);
     let loading = isEmpty(this.state.study) || isEmpty(this.state.sorter);
     return (
       <div>
@@ -70,6 +71,9 @@ class SingleResultPairing extends Component {
                       <div className="card__label">
                         <p>
                           Study: <strong>{this.state.study}</strong>
+                        </p>
+                        <p>
+                          Sorter: <strong>{this.state.sorter}</strong>
                         </p>
                       </div>
                       <div className="card__footer">

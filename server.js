@@ -48,10 +48,19 @@ kbclient.setPairioConfig({
 
 /* API 
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-app.get("/api/hello", (req, res) => {
-  console.log("🍐 hello pairing");
-  res.send({ express: "Hello From Express" });
+// app.get("/api/hello", (req, res) => {
+//   console.log("🍐 hello pairing");
+//   res.send({ express: "Hello From Express" });
+// });
+app.get("/api/:study/:sorter", (req, res) => {
+  let study = req.params.study;
+  let sorter = req.params.sorter;
+  res.send({ study: study, sorter: sorter });
 });
+// TODO: Change routing to name params explicitly
+// app.get("/users/:userId/books/:bookId", function(req, res) {
+//   res.send(req.params);
+// });
 app.post("/api/contact", (req, res) => {
   // TODO: Attach to mail server when credit card is available.
   console.log("🗺️", req.body);

@@ -79,7 +79,8 @@ function mapStateToProps(state) {
     units: state.units,
     loading: state.loading,
     contactSent: state.contactSent,
-    router: state.router
+    router: state.router,
+    pairing: state.pairing
   };
 }
 

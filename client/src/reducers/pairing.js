@@ -1,4 +1,4 @@
-import { RECEIVE_PAIRING } from '../actions/actionCreators';
+import { RECEIVE_PAIRING } from "../actions/actionCreators";
 
 const initialState = {
   selectedStudy: null,
@@ -8,10 +8,13 @@ const initialState = {
   studies: null,
   units: null,
   loading: null,
-  pairing: null,
+  pairing: null
 };
 
 const pairing = (state = initialState, action) => {
+  if (action.pairing) {
+    console.log("🚣‍♂️, PAIRING IN REDUCER", action.pairing);
+  }
   switch (action.type) {
     case RECEIVE_PAIRING:
       return action.pairing;
