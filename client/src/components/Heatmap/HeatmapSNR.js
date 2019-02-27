@@ -3,11 +3,10 @@ import { isEmpty } from "../../utils";
 
 // Components
 import Preloader from "../Preloader/Preloader";
-import Container from "react-bootstrap/Container";
+import { Col, Container, Row } from "react-bootstrap";
 import HeatmapViz from "./HeatmapViz";
 import StudySorterSummary from "../ScatterplotBits/StudySorterSummary";
 // import { ContinuousColorLegend } from "react-vis";
-// import Row from "react-bootstrap/Row";
 
 // Redux
 import { bindActionCreators } from "redux";
@@ -89,6 +88,7 @@ class HeatmapSNR extends Component {
 
   render() {
     let loading = isEmpty(this.state.builtData);
+    console.log("🍋", this.props.selectedStudy);
     return (
       <div>
         {loading ? (
@@ -96,24 +96,24 @@ class HeatmapSNR extends Component {
             <Preloader />
           </Container>
         ) : (
-          <Container>
-            <div className="scrollyteller__container">
-              <HeatmapViz
-                {...this.props}
-                filteredData={this.state.builtData}
-                sorters={this.props.shortSorters}
-                format={this.props.format}
-                metric={this.props.metric}
-              />
-              {this.props.selectedStudy ? (
+          <Container className="container__heatmap">
+            <Row className="container__heatmap--row">
+              <Col lg={6} sm={12}>
+                <HeatmapViz
+                  {...this.props}
+                  filteredData={this.state.builtData}
+                  sorters={this.props.shortSorters}
+                  format={this.props.format}
+                  metric={this.props.metric}
+                />
+              </Col>
+              <Col lg={6} sm={12}>
                 <StudySorterSummary
                   {...this.props}
-                  accuracy={this.props.snrMin}
+                  sliderValue={this.props.snrMin}
                 />
-              ) : (
-                <div />
-              )}
-            </div>
+              </Col>
+            </Row>
           </Container>
         )}
       </div>
