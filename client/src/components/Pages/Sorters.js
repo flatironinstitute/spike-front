@@ -6,7 +6,7 @@ import algoRows from "../AlgosBits/algos-copy";
 import ReactCollapsingTable from "react-collapsing-table";
 import Preloader from "../Preloader/Preloader";
 import { isEmpty } from "../../utils";
-import { Container } from "react-bootstrap";
+import { Card, Col, Container, Row } from "react-bootstrap";
 
 class Sorters extends Component {
   constructor(props) {
@@ -100,44 +100,48 @@ class Sorters extends Component {
     return (
       <div>
         <div className="page__body">
-          <div className="intro">
-            <p className="big">Sorters</p>
-            <div className="dividerthick" />
-            <p className="subhead">
-              Spike sorting algorithms tested in this project
-            </p>
-          </div>
-          <div className="opener">
-            <div className="prose-container">
-              <p>
-                Generally speaking, spike sorting algorithms take in an
-                unfiltered multi-channel timeseries (aka, recording) and a list
-                of algorithm parameters, and output a list of firing times and
-                associated integer unit labels.
-              </p>
-              <p>
-                This page lists the spike sorting codes we run, as well as some
-                that have yet to be incorporated. Most of the codes were
-                developed at other institutions; two of them are in-house. Click
-                on the links in <b>[column x]</b> to get to the original git
-                repo, and <b>[column y]</b> for a docker image that enables you
-                to install it easily.
-              </p>
-              <p>[some info re bundled packages - Jeremy]</p>
-            </div>
-          </div>
           {loading ? (
-            <Preloader />
+            <Container className="container__heatmap">
+              <Card>
+                <Card.Body>
+                  <Preloader />
+                </Card.Body>
+              </Card>
+            </Container>
           ) : (
-            <div className="subsection">
-              <Container>
-                <p className="subsection__title">Sorters</p>
-                <ReactCollapsingTable
-                  columns={algosColumns}
-                  rows={this.state.rows}
-                />
-              </Container>
-            </div>
+            <Container className="container__heatmap">
+              <Row className="container__heatmap--row">
+                <Col lg={12} sm={12}>
+                  <div className="card card--stats">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>
+                          Sorters:
+                          <strong>
+                            Spike sorting algorithms tested in this project
+                          </strong>
+                        </p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <p>
+                          {" "}
+                          Generally speaking, spike sorting algorithms take in
+                          an unfiltered multi-channel timeseries (aka,
+                          recording) and a list of algorithm parameters and
+                          output a list of firing times and associated integer
+                          unit labels. This page lists the spike sorting codes
+                          we run, as well as some that have yet to be
+                          incorporated. Most of the codes were developed at
+                          other institutions; two of them are in-house.
+                        </p>
+                        <p className="updated">Link to documentation?</p>
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
           )}
         </div>
       </div>
@@ -145,3 +149,11 @@ class Sorters extends Component {
   }
 }
 export default Sorters;
+{
+  /* <div className="subsection">
+  <Container>
+    <p className="subsection__title">Sorters</p>
+    <ReactCollapsingTable columns={algosColumns} rows={this.state.rows} />
+  </Container>
+</div>; */
+}

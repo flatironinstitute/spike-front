@@ -54,6 +54,7 @@ class StudySorterSummary extends Component {
                 Click an item on the left to see more detail below
               </h4>
               <p className="card__category">
+                <br />
                 We host a variety of experimental paired ground truth recordings
                 from the community and also many in silico synthetic recordings.
                 Each sorter is run on all recordings and the resulting
