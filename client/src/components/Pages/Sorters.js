@@ -136,6 +136,9 @@ class Sorters extends Component {
                           other institutions; two of them are in-house.
                         </p>
                         <p className="updated">Link to documentation?</p>
+                        <p className="updated">
+                          Embedded Notebooks / Scripts with Configs?
+                        </p>
                       </div>
                     </div>
                   </div>
