@@ -80,7 +80,8 @@ function mapStateToProps(state) {
     loading: state.loading,
     contactSent: state.contactSent,
     router: state.router,
-    pairing: state.pairing
+    pairing: state.pairing,
+    recordingDetails: state.recordingDetails
   };
 }
 

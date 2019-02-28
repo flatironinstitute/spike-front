@@ -1,4 +1,4 @@
-import { RECEIVE_PAIRING } from "../actions/actionCreators";
+import { RECEIVE_RECORDING_DETAILS } from "../actions/actionCreators";
 
 const initialState = {
   selectedStudy: null,
@@ -12,13 +12,13 @@ const initialState = {
   recordingDetails: null
 };
 
-const pairing = (state = initialState, action) => {
+const recordingDetails = (state = initialState, action) => {
   switch (action.type) {
-    case RECEIVE_PAIRING:
-      return action.pairing;
+    case RECEIVE_RECORDING_DETAILS:
+      return action.recordingDetails;
     default:
       return state;
   }
 };
 
-export default pairing;
+export default recordingDetails;

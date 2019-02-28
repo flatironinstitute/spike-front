@@ -14,7 +14,9 @@ const defaultState = {
   studies: null,
   units: null,
   loading: null,
-  contactSent: null
+  contactSent: null,
+  pairing: null,
+  recordingDetails: null
 };
 
 export const history = createBrowserHistory();

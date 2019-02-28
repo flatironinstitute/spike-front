@@ -15,6 +15,7 @@ export const RECEIVE_SORTERS = "RECEIVE_SORTERS";
 export const RECEIVE_UNITS = "RECEIVE_UNITS";
 export const RECEIVE_STUDIES = "RECEIVE_STUDIES";
 export const RECEIVE_PAIRING = "RECEIVE_PAIRING";
+export const RECEIVE_RECORDING_DETAILS = "RECEIVE_RECORDING_DETAILS";
 export const START_LOADING = "START_LOADING";
 export const END_LOADING = "END_LOADING";
 
@@ -26,6 +27,7 @@ export const SEND_CONTACT_FAILURE = "SEND_CONTACT_FAILURE";
 // default API call function
 export const createFetch = async url => {
   const newUrl = baseurl + url;
+  console.log(" in fetch", newUrl);
   const response = await fetch(newUrl, {
     method: "GET",
     mode: "same-origin",
@@ -189,7 +191,29 @@ export const fetchPairing = (study, sorter) => {
     dispatch(startLoading());
     return createFetch(url)
       .then(res => {
-        dispatch(receivePairing(res));
+        // TODO: Change when no longer using
+        dispatch(receivePairing(res.results.results));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      })
+      .catch(err => console.log(err));
+  };
+};
+
+// Recording Details
+export const receiveRecordingDetails = recordingDetails => ({
+  type: RECEIVE_RECORDING_DETAILS,
+  recordingDetails
+});
+
+export const fetchRecordingDetails = (study, sorter, recording) => {
+  let url = `/api/${study}/${sorter}/${recording}`;
+  return function(dispatch) {
+    dispatch(startLoading());
+    return createFetch(url)
+      .then(res => {
+        dispatch(receiveRecordingDetails(res));
       })
       .then(() => {
         dispatch(endLoading());
