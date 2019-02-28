@@ -9,8 +9,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const app = express();
+var fs = require("fs");
 const port = process.env.PORT || 5000;
-const pairing = require("./stubData/pairing.js");
+const recDetails = require("./stubData/recordingDetails.js");
+const fakeResult = require("./stubData/fakeResult.js");
 // const mail = require("./email/mail");
 
 app.use(bodyParser.json());
@@ -49,17 +51,21 @@ kbclient.setPairioConfig({
 
 /* API 
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+// TODO: Convert this to the actual request for data from KBUCKET on the results controller
+// Currently pulling data from a stub data json
 app.get("/api/:study/:sorter", (req, res) => {
   let study = req.params.study;
   let sorter = req.params.sorter;
-  // TODO: Convert this to the actual request for data from KBUCKET on the results controller
-  // Currently pulling data from a stub data json
-  res.send({ results: pairing });
+  res.send({ results: fakeResult });
 });
-// TODO: Change routing to name params explicitly
-// app.get("/users/:userId/books/:bookId", function(req, res) {
-//   res.send(req.params);
-// });
+
+app.get("/api/:study/:sorter/:recording", (req, res) => {
+  let study = req.params.study;
+  let sorter = req.params.sorter;
+  let recording = req.params.recording;
+  res.send({ recordingDetails: recDetails });
+});
+
 app.post("/api/contact", (req, res) => {
   // TODO: Attach to mail server when credit card is available.
   console.log("🗺️", req.body);
