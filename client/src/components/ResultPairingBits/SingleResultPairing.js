@@ -4,6 +4,8 @@ import Preloader from "../Preloader/Preloader";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import ReactJson from "react-json-view";
 
+import HeatmapOptionsRow from "../Heatmap/HeatmapOptionsRow";
+
 // import spikeforestwidgets from "./SpikeforestWidgets";
 
 class SingleResultPairing extends Component {
@@ -11,7 +13,11 @@ class SingleResultPairing extends Component {
     super(props);
     this.state = {
       study: "",
-      sorter: ""
+      sorter: "",
+      format: "count",
+      metric: "accuracy",
+      sliderValue: 0,
+      activeSorter: 0
     };
   }
 
@@ -37,11 +43,33 @@ class SingleResultPairing extends Component {
     });
   }
 
+  handleFormatChange = value => {
+    this.setState({
+      format: value,
+      sliderValue: 0
+    });
+  };
+
+  handleMetricChange = value => {
+    this.setState({
+      metric: value
+    });
+  };
+
+  handleSliderChange = value => {
+    let round = Math.round(value * 100) / 100;
+    this.setState({
+      sliderValue: round
+    });
+  };
+
   render() {
     let results = isEmpty(this.props.pairing)
-      ? { results: "nada" }
+      ? { results: "NADA" }
       : this.props.pairing;
     let loading = isEmpty(this.state.study) || isEmpty(this.state.sorter);
+    // TODO: Does largeCols make sense here?
+    let largeCols = this.state.format === "cpu" ? 6 : 4;
     return (
       <div>
         <div className="page__body">
@@ -80,6 +108,14 @@ class SingleResultPairing extends Component {
                   </div>
                 </Col>
               </Row>
+              <HeatmapOptionsRow
+                handleFormatChange={this.handleFormatChange}
+                handleSliderChange={this.handleSliderChange}
+                handleMetricChange={this.handleMetricChange}
+                format={this.state.format}
+                metric={this.state.metric}
+                sliderValue={this.state.sliderValue}
+              />
               <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
                   <div className="card card--heatmap">
@@ -113,7 +149,7 @@ class SingleResultPairing extends Component {
 export default SingleResultPairing;
 
 // NOTES:
-// Sample url : http://localhost:3000/pairing/magland-synth-noise10-K10-C4/MountainSort4-thr3
+// Sample url : http://localhost:3000/results/magland-synth-noise10-K10-C4/MountainSort4-thr3
 //
 // TODO:
 // Pairing Page -> Study Results Page

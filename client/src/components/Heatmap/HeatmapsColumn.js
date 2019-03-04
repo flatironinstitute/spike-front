@@ -6,9 +6,7 @@ import HeatmapCPU from "./HeatmapCPU";
 import "react-rangeslider/lib/index.css";
 import { Col, Container, Row } from "react-bootstrap";
 
-import ModeCard from "../StatsCards/ModeCard";
-import MetricCard from "../StatsCards/MetricCard";
-import SliderCard from "../StatsCards/SliderCard";
+import HeatmapOptionsRow from "./HeatmapOptionsRow";
 
 import "./heatmap.css";
 
@@ -43,36 +41,16 @@ class HeatmapsColumn extends Component {
   };
 
   render() {
-    let largeCols = this.state.format === "cpu" ? 6 : 4;
     return (
       <div>
-        <Container className="container__heatmap">
-          <Row className="container__heatmap--row">
-            <Col lg={largeCols} sm={12}>
-              <ModeCard
-                format={this.state.format}
-                handleFormatChange={this.handleFormatChange}
-              />
-            </Col>
-            <Col lg={largeCols} sm={12}>
-              <SliderCard
-                format={this.state.format}
-                sliderValue={this.state.sliderValue}
-                handleSliderChange={this.handleSliderChange}
-              />
-            </Col>
-            {largeCols < 6 ? (
-              <Col lg={4} sm={12}>
-                <MetricCard
-                  metric={this.state.metric}
-                  handleMetricChange={this.handleMetricChange}
-                />
-              </Col>
-            ) : (
-              <div />
-            )}
-          </Row>
-        </Container>
+        <HeatmapOptionsRow
+          handleFormatChange={this.handleFormatChange}
+          handleSliderChange={this.handleSliderChange}
+          handleMetricChange={this.handleMetricChange}
+          format={this.state.format}
+          metric={this.state.metric}
+          sliderValue={this.state.sliderValue}
+        />
         {(() => {
           switch (this.state.format) {
             case "count":
