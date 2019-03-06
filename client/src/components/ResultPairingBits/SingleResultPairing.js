@@ -181,7 +181,7 @@ class SingleResultPairing extends Component {
                 </Col>
               </Row>
               {/* TODO: DO WE NEED THIS? */}
-              {/* <div>
+              <div>
                 <Badge
                   variant="primary"
                   onClick={() =>
@@ -200,7 +200,7 @@ class SingleResultPairing extends Component {
                     sliderValue={this.state.sliderValue}
                   />
                 </Collapse>
-              </div> */}
+              </div>
               <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
                   <div className="card card--stats">

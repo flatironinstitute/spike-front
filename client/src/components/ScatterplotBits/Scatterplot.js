@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import '../../../node_modules/react-vis/dist/style.css';
+import React, { Component } from "react";
+import "../../../node_modules/react-vis/dist/style.css";
 import {
   XYPlot,
   XAxis,
@@ -8,8 +8,8 @@ import {
   HorizontalGridLines,
   MarkSeries,
   LineSeries,
-  Hint,
-} from 'react-vis';
+  Hint
+} from "react-vis";
 
 class Scatterplot extends Component {
   constructor(props) {
@@ -17,10 +17,10 @@ class Scatterplot extends Component {
 
     this.state = {
       data: [],
-      colorType: 'typeA',
+      colorType: "typeA",
       hoveredNode: null,
       minSNR: 0,
-      maxSNR: 100,
+      maxSNR: 100
     };
   }
 
@@ -35,7 +35,7 @@ class Scatterplot extends Component {
       this.buildScatterData(this.props.selectedUnits);
     }
     if (this.state.hoveredNode !== prevState.hoveredNode) {
-      console.log('NEW NODE', this.state.hoveredNode);
+      console.log("NEW NODE", this.state.hoveredNode);
     }
   }
 
@@ -48,7 +48,7 @@ class Scatterplot extends Component {
       color: unit.unit_id * 10,
       opacity: unit.accuracy * 0.5 + 0.5,
       recording: unit.recording,
-      num_events: unit.num_events,
+      num_events: unit.num_events
     }));
     let min = this.getMinSNR(newUnits);
     let max = this.getMaxSNR(newUnits);
@@ -69,23 +69,24 @@ class Scatterplot extends Component {
   }
 
   render() {
+    console.log("💩", this.props);
     const { data, colorType, hoveredNode, minSNR, maxSNR } = this.state;
     const colorRanges = {
-      typeA: ['#59E4EC', '#0D676C'],
-      typeB: ['#EFC1E3', '#B52F93'],
+      typeA: ["#59E4EC", "#0D676C"],
+      typeB: ["#EFC1E3", "#B52F93"]
     };
-    const alignment = { vertical: 'top', horizontal: 'left' };
+    const alignment = { vertical: "top", horizontal: "left" };
     let valueObj = {
       recording: hoveredNode
         ? `${hoveredNode.recording}:${hoveredNode.color / 10}`
         : null,
       accuracy: hoveredNode ? hoveredNode.y : null,
       snr: hoveredNode ? hoveredNode.x : null,
-      num_events: hoveredNode ? hoveredNode.num_events : null,
+      num_events: hoveredNode ? hoveredNode.num_events : null
     };
     let lineObjArr = [
       { x: minSNR, y: this.props.accuracy },
-      { x: maxSNR, y: this.props.accuracy },
+      { x: maxSNR, y: this.props.accuracy }
     ];
     const tickValues = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
     return (

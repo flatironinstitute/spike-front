@@ -54,6 +54,8 @@ class SinglePairingRow extends Component {
   }
 
   render() {
+    // TODO: Add Selected Study Highlighting?
+    // TODO: What is the best default for this?
     const { data } = this.state;
     const loading = isEmpty(data);
     return (
@@ -97,7 +99,7 @@ class SinglePairingRow extends Component {
                 }}
               />
               <HeatmapSeries
-                colorRange={["#fafafd", "#384ca2"]}
+                colorRange={["#fafafd", "#712F79"]}
                 data={data}
                 style={{
                   text: {
