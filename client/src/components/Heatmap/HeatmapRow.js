@@ -55,6 +55,11 @@ class HeatmapRow extends Component {
   render() {
     const { data } = this.state;
     const loading = isEmpty(data);
+    const colorRange = {
+      count: ["#fff", "#384ca2"],
+      average: ["#fff", "#4D2C54"],
+      cpu: ["#fff", "#B23A2A"]
+    };
     return (
       <div>
         {loading ? (
@@ -96,7 +101,7 @@ class HeatmapRow extends Component {
                 }}
               />
               <HeatmapSeries
-                colorRange={["#fafafd", "#384ca2"]}
+                colorRange={colorRange[this.props.format]}
                 data={data}
                 style={{
                   text: {

@@ -88,7 +88,6 @@ class HeatmapSNR extends Component {
 
   render() {
     let loading = isEmpty(this.state.builtData);
-    console.log("🍋", this.props.selectedStudy);
     return (
       <div>
         {loading ? (

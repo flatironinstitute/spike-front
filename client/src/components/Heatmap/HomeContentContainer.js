@@ -20,10 +20,10 @@ class HomeContentContainer extends Component {
   handleFormatChange = value => {
     var sliderValue;
     switch (value) {
-      case "acccuracy":
+      case "count":
         sliderValue = 0.8;
         break;
-      case "snr":
+      case "average":
         sliderValue = 5;
         break;
       default:
