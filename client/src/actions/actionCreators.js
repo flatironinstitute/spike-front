@@ -213,7 +213,7 @@ export const fetchRecordingDetails = (study, sorter, recording) => {
     dispatch(startLoading());
     return createFetch(url)
       .then(res => {
-        dispatch(receiveRecordingDetails(res));
+        dispatch(receiveRecordingDetails(res.recordingDetails));
       })
       .then(() => {
         dispatch(endLoading());

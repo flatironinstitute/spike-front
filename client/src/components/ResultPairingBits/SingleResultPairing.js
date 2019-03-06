@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {
-  Badge,
+  Alert,
+  Button,
   ButtonToolbar,
   Card,
   Col,
@@ -42,6 +43,12 @@ class SingleResultPairing extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.state.study !== prevState.study) {
       this.props.fetchPairing(this.state.study, this.state.sorter);
+      // TODO: Tie this call to the scatterplot clicks
+      this.props.fetchRecordingDetails(
+        this.state.study,
+        this.state.sorter,
+        "test"
+      );
     }
   }
 
@@ -89,15 +96,13 @@ class SingleResultPairing extends Component {
       : this.props.pairing.filter(result => {
           return result.sorter && result.is_applied;
         });
+    console.log("🎙️", this.props.recordingDetails);
     let sorters = results.length ? results.map(result => result.sorter) : [];
     let loading =
       isEmpty(this.state.study) ||
       isEmpty(this.state.sorter) ||
       isEmpty(results);
     let toggleCopy = this.state.openIcon ? "Hide Options" : "Show Options";
-    let divStyle = {
-      marginBottom: "3rem"
-    };
     return (
       <div>
         <div className="page__body">
@@ -132,15 +137,21 @@ class SingleResultPairing extends Component {
                 <Col lg={4} sm={12}>
                   <div className="card card--stats">
                     <div className="content">
-                      <SinglePairingRow
-                        {...this.props}
-                        vizDatum={results}
-                        key={`hmrow${0}`}
-                        index={0}
-                        format={this.state.format}
-                        sorters={sorters.sort()}
-                        selectedSorter={this.state.sorter}
-                      />
+                      <div className="card__label">
+                        <p>Number of Units</p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <SinglePairingRow
+                          {...this.props}
+                          vizDatum={results}
+                          key={`hmrow${0}`}
+                          index={0}
+                          format={this.state.format}
+                          sorters={sorters.sort()}
+                          selectedSorter={this.state.sorter}
+                        />
+                      </div>
                     </div>
                   </div>
                 </Col>
@@ -178,26 +189,37 @@ class SingleResultPairing extends Component {
                   </div>
                 </Col>
               </Row>
-              {/* TODO: DO WE NEED THIS? */}
               <div>
-                <Badge
-                  variant="primary"
-                  onClick={() =>
-                    this.setState({ openIcon: !this.state.openIcon })
-                  }
+                <Alert
+                  variant="secondary"
+                  className="d-flex justify-content-between align-items-center"
                 >
-                  {toggleCopy}
-                </Badge>
-                <Collapse in={this.state.openIcon} style={divStyle}>
-                  <HeatmapOptionsRow
-                    handleFormatChange={this.handleFormatChange}
-                    handleSliderChange={this.handleSliderChange}
-                    handleMetricChange={this.handleMetricChange}
-                    format={this.state.format}
-                    metric={this.state.metric}
-                    sliderValue={this.state.sliderValue}
-                  />
-                </Collapse>
+                  Shall we show these controls for the heatmap/scatterplot?
+                  <Button
+                    variant="outline-dark"
+                    onClick={() =>
+                      this.setState({ openIcon: !this.state.openIcon })
+                    }
+                  >
+                    {toggleCopy}
+                  </Button>
+                </Alert>
+                {this.state.openIcon ? (
+                  <Collapse in={this.state.openIcon}>
+                    <div className="container__collapse">
+                      <HeatmapOptionsRow
+                        handleFormatChange={this.handleFormatChange}
+                        handleSliderChange={this.handleSliderChange}
+                        handleMetricChange={this.handleMetricChange}
+                        format={this.state.format}
+                        metric={this.state.metric}
+                        sliderValue={this.state.sliderValue}
+                      />
+                    </div>
+                  </Collapse>
+                ) : (
+                  <div />
+                )}
               </div>
               <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
@@ -224,7 +246,30 @@ class SingleResultPairing extends Component {
               <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
                   <div className="card card--heatmap">
-                    <ReactJson src={results} />
+                    <div className="content">
+                      <div className="card__label">
+                        <p>Recording Details JSON Dump 🛒</p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <ReactJson src={results} />
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="container__sorter--row">
+                <Col lg={12} sm={12}>
+                  <div className="card card--heatmap">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>Study + Sorter Result Pairing JSON Dump 🚚</p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <ReactJson src={results} />
+                      </div>
+                    </div>
                   </div>
                 </Col>
               </Row>

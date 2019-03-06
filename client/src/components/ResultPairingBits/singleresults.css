@@ -1,4 +1,3 @@
 .container__collapse {
-  margin-bottom: 3rem;
-  background-color: pink;
+  margin-bottom: 3rem !important;
 }

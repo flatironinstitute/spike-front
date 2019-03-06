@@ -98,8 +98,9 @@ class SinglePairingRow extends Component {
                   }
                 }}
               />
+              {/* TODO: I think I need a smarter way to handle this information*/}
               <HeatmapSeries
-                colorRange={["#fafafd", "#712F79"]}
+                colorRange={["#fff", "#564592"]}
                 data={data}
                 style={{
                   text: {
