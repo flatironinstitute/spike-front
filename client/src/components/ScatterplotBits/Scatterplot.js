@@ -69,7 +69,7 @@ class Scatterplot extends Component {
   }
 
   render() {
-    console.log("💩", this.props);
+    console.log("💩", this.state.data, this.state.hoveredNode);
     const { data, colorType, hoveredNode, minSNR, maxSNR } = this.state;
     const colorRanges = {
       typeA: ["#59E4EC", "#0D676C"],

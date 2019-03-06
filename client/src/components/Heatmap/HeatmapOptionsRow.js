@@ -7,7 +7,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import "react-rangeslider/lib/index.css";
 import "./heatmap.css";
 
-class HeatmapsColumn extends Component {
+class HeatmapOptionsRow extends Component {
   render() {
     let largeCols = this.props.format === "cpu" ? 6 : 4;
     return (
@@ -44,4 +44,4 @@ class HeatmapsColumn extends Component {
   }
 }
 
-export default HeatmapsColumn;
+export default HeatmapOptionsRow;

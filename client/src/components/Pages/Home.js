@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Preloader from "../Preloader/Preloader";
-import HeatmapsColumn from "../Heatmap/HeatmapsColumn";
+import HomeContentContainer from "../Heatmap/HomeContentContainer";
 import { flattenUnits, mapUnitsBySorterStudy } from "../../dataHandlers";
 import { isEmpty } from "../../utils";
 import { Container, Card } from "react-bootstrap";
@@ -77,7 +77,7 @@ class Home extends Component {
             </Card>
           </Container>
         ) : (
-          <HeatmapsColumn
+          <HomeContentContainer
             id="overview"
             {...this.props}
             shortStudies={studies}

@@ -7,20 +7,31 @@ import HeatmapOptionsRow from "./HeatmapOptionsRow";
 import "react-rangeslider/lib/index.css";
 import "./heatmap.css";
 
-class HeatmapsColumn extends Component {
+class HomeContentContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
       format: "count",
       metric: "accuracy",
-      sliderValue: 0
+      sliderValue: 0.8
     };
   }
 
   handleFormatChange = value => {
+    var sliderValue;
+    switch (value) {
+      case "acccuracy":
+        sliderValue = 0.8;
+        break;
+      case "snr":
+        sliderValue = 5;
+        break;
+      default:
+        sliderValue = 0;
+    }
     this.setState({
       format: value,
-      sliderValue: 0
+      sliderValue: sliderValue
     });
   };
 
@@ -85,4 +96,4 @@ class HeatmapsColumn extends Component {
   }
 }
 
-export default HeatmapsColumn;
+export default HomeContentContainer;

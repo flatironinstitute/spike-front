@@ -5,7 +5,7 @@ import { isEmpty } from "../../utils";
 import Preloader from "../Preloader/Preloader";
 import { Col, Container, Row } from "react-bootstrap";
 import HeatmapViz from "./HeatmapViz";
-import StudySorterSummary from "../ScatterplotBits/StudySorterSummary";
+import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
 // import { ContinuousColorLegend } from "react-vis";
 
 // Redux
@@ -108,7 +108,7 @@ class HeatmapSNR extends Component {
                 />
               </Col>
               <Col lg={6} sm={12}>
-                <StudySorterSummary
+                <ScatterplotCard
                   {...this.props}
                   sliderValue={this.props.snrMin}
                 />

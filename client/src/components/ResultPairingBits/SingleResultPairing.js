@@ -87,9 +87,7 @@ class SingleResultPairing extends Component {
     let results = isEmpty(this.props.pairing)
       ? []
       : this.props.pairing.filter(result => {
-          if (result.sorter && result.is_applied) {
-            return result;
-          }
+          return result.sorter && result.is_applied;
         });
     let sorters = results.length ? results.map(result => result.sorter) : [];
     let loading =
