@@ -1,10 +1,23 @@
 import React, { Component } from "react";
-import { isEmpty } from "../../utils";
+import {
+  Badge,
+  ButtonToolbar,
+  Card,
+  Col,
+  Collapse,
+  Container,
+  Row,
+  ToggleButtonGroup,
+  ToggleButton
+} from "react-bootstrap";
 import Preloader from "../Preloader/Preloader";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import HeatmapOptionsRow from "../Heatmap/HeatmapOptionsRow";
+import SinglePairingRow from "./SinglePairingRow";
 import ReactJson from "react-json-view";
 
-import HeatmapOptionsRow from "../Heatmap/HeatmapOptionsRow";
+import { isEmpty } from "../../utils";
+
+import "./singleresults.css";
 
 // import spikeforestwidgets from "./SpikeforestWidgets";
 
@@ -17,7 +30,8 @@ class SingleResultPairing extends Component {
       format: "count",
       metric: "accuracy",
       sliderValue: 0,
-      activeSorter: 0
+      activeSorter: 0,
+      openIcon: false
     };
   }
 
@@ -43,6 +57,12 @@ class SingleResultPairing extends Component {
     });
   }
 
+  handleSorterChange = value => {
+    this.setState({
+      sorter: value
+    });
+  };
+
   handleFormatChange = value => {
     this.setState({
       format: value,
@@ -65,11 +85,21 @@ class SingleResultPairing extends Component {
 
   render() {
     let results = isEmpty(this.props.pairing)
-      ? { results: "NADA" }
-      : this.props.pairing;
-    let loading = isEmpty(this.state.study) || isEmpty(this.state.sorter);
-    // TODO: Does largeCols make sense here?
-    let largeCols = this.state.format === "cpu" ? 6 : 4;
+      ? []
+      : this.props.pairing.filter(result => {
+          if (result.sorter && result.is_applied) {
+            return result;
+          }
+        });
+    let sorters = results.length ? results.map(result => result.sorter) : [];
+    let loading =
+      isEmpty(this.state.study) ||
+      isEmpty(this.state.sorter) ||
+      isEmpty(results);
+    let toggleCopy = this.state.openIcon ? "Hide Options" : "Show Options";
+    let divStyle = {
+      marginBottom: "3rem"
+    };
     return (
       <div>
         <div className="page__body">
@@ -84,23 +114,108 @@ class SingleResultPairing extends Component {
           ) : (
             <Container className="container__heatmap">
               <Row className="container__sorter--row">
-                <Col lg={12} sm={12}>
+                <Col lg={4} sm={6}>
                   <div className="card card--stats">
                     <div className="content">
                       <div className="card__label">
                         <p>
                           Study: <strong>{this.state.study}</strong>
                         </p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
                         <p>
                           Sorter: <strong>{this.state.sorter}</strong>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+                <Col lg={4} sm={12}>
+                  <div className="card card--stats">
+                    <div className="content">
+                      <SinglePairingRow
+                        {...this.props}
+                        vizDatum={results}
+                        key={`hmrow${0}`}
+                        index={0}
+                        format={this.state.format}
+                        sorters={sorters.sort()}
+                        selectedSorter={this.state.sorter}
+                      />
+                    </div>
+                  </div>
+                </Col>
+                <Col lg={4} sm={12}>
+                  <div className="card card--stats">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>Sorter Toggles</p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <ButtonToolbar>
+                          <ToggleButtonGroup
+                            type="radio"
+                            name="options"
+                            size="lg"
+                            value={this.state.sorter}
+                            onChange={this.handleSorterChange}
+                            className="metric_button_toggle"
+                          >
+                            {results.map((result, i) => (
+                              <ToggleButton
+                                size="lg"
+                                value={result.sorter}
+                                key={`toggle${i}`}
+                                variant="outline-dark"
+                              >
+                                {result.sorter}
+                              </ToggleButton>
+                            ))}
+                          </ToggleButtonGroup>
+                        </ButtonToolbar>
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+              {/* TODO: DO WE NEED THIS? */}
+              {/* <div>
+                <Badge
+                  variant="primary"
+                  onClick={() =>
+                    this.setState({ openIcon: !this.state.openIcon })
+                  }
+                >
+                  {toggleCopy}
+                </Badge>
+                <Collapse in={this.state.openIcon} style={divStyle}>
+                  <HeatmapOptionsRow
+                    handleFormatChange={this.handleFormatChange}
+                    handleSliderChange={this.handleSliderChange}
+                    handleMetricChange={this.handleMetricChange}
+                    format={this.state.format}
+                    metric={this.state.metric}
+                    sliderValue={this.state.sliderValue}
+                  />
+                </Collapse>
+              </div> */}
+              <Row className="container__sorter--row">
+                <Col lg={12} sm={12}>
+                  <div className="card card--stats">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>
+                          <strong>Scatterplot here</strong>
                         </p>
                       </div>
                       <div className="card__footer">
                         <hr />
                         <p>
-                          Hello what goes here?{" "}
+                          Hello anything go here?{" "}
                           <span role="img" aria-label="tropical drink">
-                            🍹
+                            ☎️
                           </span>
                         </p>
                       </div>
@@ -108,14 +223,6 @@ class SingleResultPairing extends Component {
                   </div>
                 </Col>
               </Row>
-              <HeatmapOptionsRow
-                handleFormatChange={this.handleFormatChange}
-                handleSliderChange={this.handleSliderChange}
-                handleMetricChange={this.handleMetricChange}
-                format={this.state.format}
-                metric={this.state.metric}
-                sliderValue={this.state.sliderValue}
-              />
               <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
                   <div className="card card--heatmap">

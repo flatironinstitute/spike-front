@@ -1,15 +1,10 @@
 import React, { Component } from "react";
-import HeatmapCount from "./HeatmapCount";
-import HeatmapSNR from "./HeatmapSNR";
-import HeatmapCPU from "./HeatmapCPU";
-
-import "react-rangeslider/lib/index.css";
-import { Col, Container, Row } from "react-bootstrap";
-
 import ModeCard from "../StatsCards/ModeCard";
 import MetricCard from "../StatsCards/MetricCard";
 import SliderCard from "../StatsCards/SliderCard";
+import { Col, Container, Row } from "react-bootstrap";
 
+import "react-rangeslider/lib/index.css";
 import "./heatmap.css";
 
 class HeatmapsColumn extends Component {
