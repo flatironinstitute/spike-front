@@ -15,6 +15,7 @@ import Preloader from "../Preloader/Preloader";
 import HeatmapOptionsRow from "../Heatmap/HeatmapOptionsRow";
 import SinglePairingRow from "./SinglePairingRow";
 import ReactJson from "react-json-view";
+import SpikeSprayV1 from "./SpikeSprayV1";
 
 import { isEmpty } from "../../utils";
 
@@ -96,7 +97,9 @@ class SingleResultPairing extends Component {
       : this.props.pairing.filter(result => {
           return result.sorter && result.is_applied;
         });
-    console.log("🎙️", this.props.recordingDetails);
+    let recDetails = this.props.recordingDetails
+      ? this.props.recordingDetails
+      : {};
     let sorters = results.length ? results.map(result => result.sorter) : [];
     let loading =
       isEmpty(this.state.study) ||
@@ -233,9 +236,9 @@ class SingleResultPairing extends Component {
                       <div className="card__footer">
                         <hr />
                         <p>
-                          Hello anything go here?{" "}
-                          <span role="img" aria-label="tropical drink">
-                            ☎️
+                          Hello Add a Scatterplot Liz{" "}
+                          <span role="img" aria-label="fireworks">
+                            🎆
                           </span>
                         </p>
                       </div>
@@ -248,11 +251,14 @@ class SingleResultPairing extends Component {
                   <div className="card card--heatmap">
                     <div className="content">
                       <div className="card__label">
-                        <p>Recording Details JSON Dump 🛒</p>
+                        <p>
+                          <strong>Spike Spray:</strong> Any label details
+                          needed?
+                        </p>
                       </div>
                       <div className="card__footer">
                         <hr />
-                        <ReactJson src={results} />
+                        <SpikeSprayV1 {...this.props} />
                       </div>
                     </div>
                   </div>
@@ -263,7 +269,32 @@ class SingleResultPairing extends Component {
                   <div className="card card--heatmap">
                     <div className="content">
                       <div className="card__label">
-                        <p>Study + Sorter Result Pairing JSON Dump 🚚</p>
+                        <p>
+                          Recording Details JSON Dump{" "}
+                          <span role="img" aria-label="truck">
+                            🗃️
+                          </span>
+                        </p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        {/* <ReactJson src={recDetails} /> */}
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="container__sorter--row">
+                <Col lg={12} sm={12}>
+                  <div className="card card--heatmap">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>
+                          Study + Sorter Result Pairing JSON Dump{" "}
+                          <span role="img" aria-label="truck">
+                            🚚
+                          </span>
+                        </p>
                       </div>
                       <div className="card__footer">
                         <hr />

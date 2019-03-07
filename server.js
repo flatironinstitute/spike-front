@@ -63,7 +63,9 @@ app.get("/api/:study/:sorter/:recording", (req, res) => {
   let study = req.params.study;
   let sorter = req.params.sorter;
   let recording = req.params.recording;
-  res.send({ recordingDetails: recDetails });
+  // TODO: Will I need to do this formatting from the server?
+  let formatted = formatSpikes(recDetails);
+  res.send({ recordingDetails: formatted });
 });
 
 app.post("/api/contact", (req, res) => {
@@ -73,6 +75,23 @@ app.post("/api/contact", (req, res) => {
     success: true
   });
 });
+
+function formatSpikes(recDetails) {
+  const keys = Object.keys(recDetails);
+  var formatted = new Object();
+  for (const key of keys) {
+    let newChannel = recDetails[key].map(spikeArr => {
+      return spikeArr.map(timepoints => {
+        return timepoints.map((timepoint, i) => {
+          let timeVal = 1.67 * i;
+          return { x: timeVal, y: timepoint };
+        });
+      });
+    });
+    formatted[key] = newChannel;
+  }
+  return formatted;
+}
 
 /* Client Server 
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -85,3 +104,12 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 app.listen(port, () => console.log(`🖥️  Server listening on port ${port}`));
+
+// spikes.forEach(timepoint, i) => {
+//   console.log(🎭, timepoint, i);
+// });
+// let XYcoords = spikeArr.map((spike, i) => {
+//   let timeVal = 1.67 * i;
+//   return { x: timeVal, y: spike };
+// });
+// console.log("🤟", XYcoords);
