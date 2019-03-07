@@ -162,7 +162,3 @@ class Sorters extends Component {
   }
 }
 export default Sorters;
-
-{
-  /* <p className="subsection__title">Sorters</p> */
-}

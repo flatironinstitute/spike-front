@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import StudySorterTable from "./StudySorterTable";
+import ScatterplotContainer from "./ScatterplotContainer";
 import { isEmpty } from "../../utils";
 
-class StudySorterSummary extends Component {
+class ScatterplotCard extends Component {
   constructor(props) {
     super(props);
 
@@ -83,7 +83,7 @@ class StudySorterSummary extends Component {
                   </span>
                 </div>
               </div>
-              <StudySorterTable
+              <ScatterplotContainer
                 study={this.state.study}
                 sorter={this.state.sorter}
                 selectedStudy={this.props.selectedStudy}
@@ -99,4 +99,4 @@ class StudySorterSummary extends Component {
     );
   }
 }
-export default StudySorterSummary;
+export default ScatterplotCard;

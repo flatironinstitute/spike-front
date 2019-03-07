@@ -5,7 +5,7 @@ import { isEmpty } from "../../utils";
 import Preloader from "../Preloader/Preloader";
 import Container from "react-bootstrap/Container";
 // import HeatmapViz from "./HeatmapViz";
-// import StudySorterSummary from "../ScatterplotBits/StudySorterSummary";
+// import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
 // import { ContinuousColorLegend } from "react-vis";
 // import Row from "react-bootstrap/Row";
 
@@ -114,7 +114,7 @@ class HeatmapCPU extends Component {
                   format={this.props.format}
                 />
                 {this.props.selectedStudy ? (
-                  <StudySorterSummary
+                  <ScatterplotCard
                     {...this.props}
                     accuracy={this.props.cpuMax}
                   />

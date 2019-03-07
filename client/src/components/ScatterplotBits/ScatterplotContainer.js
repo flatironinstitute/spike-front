@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Scatterplot from "./Scatterplot";
 
-class StudySorterTable extends Component {
+class ScatterplotContainer extends Component {
   render() {
     const { selectedStudy, accuracy, metric } = this.props;
     return (
@@ -20,4 +20,4 @@ class StudySorterTable extends Component {
     );
   }
 }
-export default StudySorterTable;
+export default ScatterplotContainer;

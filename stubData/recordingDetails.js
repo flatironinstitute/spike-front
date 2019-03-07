@@ -1,6 +1,17 @@
-// Each of the 4 arrays is a 3-d array of floats. Dimensions are 4x50xK where 4 is the number of channels, 50 is the number of timepoints, and K is the number of spikes.
+// Each of the 4 arrays is a 3-d array of floats.
+// Dimensions are 4x50xK where 4 is the number of channels,
+// 50 is the number of timepoints, and K is the number of spikes.
+// here K is 20 and it appears the shape is 4xKx50
+// Except for spikes4 which is 4x2x50
+// 1 over 30k seconds total time = millesecond
+// 1.67 milleseconds
 
-const pairing = {
+// 4 spike columns - columns
+// 20 spikes - line color groups
+// 4 channels - 4lines of 50 xys
+// 50 timepoints -> become 50 xy coordinates
+
+module.exports = {
   spikes1: [
     [
       [
@@ -13031,4 +13042,4 @@ const pairing = {
   ]
 };
 
-export default pairing;
+// x

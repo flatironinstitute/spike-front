@@ -4,7 +4,7 @@ import { XYPlot, XAxis, YAxis, HeatmapSeries, LabelSeries } from "react-vis";
 import Preloader from "../Preloader/Preloader";
 import { isEmpty } from "../../utils";
 
-class HeatmapRow extends Component {
+class SinglePairingRow extends Component {
   constructor(props) {
     super(props);
     this.state = { hoveredNode: null, data: null };
@@ -32,6 +32,7 @@ class HeatmapRow extends Component {
   }
 
   setData() {
+    //   TODO: Fix color map
     let colorMap = this.props.vizDatum.map(datum => datum.color);
     colorMap.sort((a, b) => a - b);
     let withColor = this.props.vizDatum.map(datum => {
@@ -53,14 +54,10 @@ class HeatmapRow extends Component {
   }
 
   render() {
+    // TODO: Add Selected Study Highlighting?
+    // TODO: What is the best default for this?
     const { data } = this.state;
     const loading = isEmpty(data);
-    // TODO: use the color range tool from the d3 test local repo to reset scales
-    const colorRange = {
-      count: ["#fff", "#384ca2"],
-      average: ["#fff", "#4D2C54"],
-      cpu: ["#fff", "#B23A2A"]
-    };
     return (
       <div>
         {loading ? (
@@ -101,8 +98,9 @@ class HeatmapRow extends Component {
                   }
                 }}
               />
+              {/* TODO: I think I need a smarter way to handle this information*/}
               <HeatmapSeries
-                colorRange={colorRange[this.props.format]}
+                colorRange={["#fff", "#564592"]}
                 data={data}
                 style={{
                   text: {
@@ -138,4 +136,4 @@ class HeatmapRow extends Component {
   }
 }
 
-export default HeatmapRow;
+export default SinglePairingRow;

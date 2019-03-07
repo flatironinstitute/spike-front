@@ -4,7 +4,7 @@ import { isEmpty } from "../../utils";
 
 // Components
 import Preloader from "../Preloader/Preloader";
-import StudySorterSummary from "../ScatterplotBits/StudySorterSummary";
+import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
 import { Col, Container, Row } from "react-bootstrap";
 // import { ContinuousColorLegend } from "react-vis";
 
@@ -72,7 +72,6 @@ class HeatmapCount extends Component {
           </Container>
         ) : (
           <Container className="container__heatmap">
-            {/* TODO: Add Scrollytelling formatting */}
             <Row className="container__heatmap--row">
               <Col lg={6} sm={12}>
                 <HeatmapViz
@@ -84,7 +83,7 @@ class HeatmapCount extends Component {
                 />
               </Col>
               <Col lg={6} sm={12}>
-                <StudySorterSummary
+                <ScatterplotCard
                   {...this.props}
                   sliderValue={this.props.accuracy}
                 />

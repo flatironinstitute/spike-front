@@ -10,6 +10,7 @@ import units from "./units";
 import loading from "./loading";
 import pairing from "./pairing";
 import contactSent from "./contactSent";
+import recordingDetails from "./recordingDetails";
 
 const rootReducer = history =>
   combineReducers({
@@ -22,6 +23,7 @@ const rootReducer = history =>
     loading,
     pairing,
     contactSent,
+    recordingDetails,
     router: connectRouter(history)
   });
 

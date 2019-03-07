@@ -2,30 +2,36 @@ import React, { Component } from "react";
 import HeatmapCount from "./HeatmapCount";
 import HeatmapSNR from "./HeatmapSNR";
 import HeatmapCPU from "./HeatmapCPU";
+import HeatmapOptionsRow from "./HeatmapOptionsRow";
 
 import "react-rangeslider/lib/index.css";
-import { Col, Container, Row } from "react-bootstrap";
-
-import ModeCard from "../StatsCards/ModeCard";
-import MetricCard from "../StatsCards/MetricCard";
-import SliderCard from "../StatsCards/SliderCard";
-
 import "./heatmap.css";
 
-class HeatmapsColumn extends Component {
+class HomeContentContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
       format: "count",
       metric: "accuracy",
-      sliderValue: 0
+      sliderValue: 0.8
     };
   }
 
   handleFormatChange = value => {
+    var sliderValue;
+    switch (value) {
+      case "count":
+        sliderValue = 0.8;
+        break;
+      case "average":
+        sliderValue = 5;
+        break;
+      default:
+        sliderValue = 0;
+    }
     this.setState({
       format: value,
-      sliderValue: 0
+      sliderValue: sliderValue
     });
   };
 
@@ -43,36 +49,16 @@ class HeatmapsColumn extends Component {
   };
 
   render() {
-    let largeCols = this.state.format === "cpu" ? 6 : 4;
     return (
       <div>
-        <Container className="container__heatmap">
-          <Row className="container__heatmap--row">
-            <Col lg={largeCols} sm={12}>
-              <ModeCard
-                format={this.state.format}
-                handleFormatChange={this.handleFormatChange}
-              />
-            </Col>
-            <Col lg={largeCols} sm={12}>
-              <SliderCard
-                format={this.state.format}
-                sliderValue={this.state.sliderValue}
-                handleSliderChange={this.handleSliderChange}
-              />
-            </Col>
-            {largeCols < 6 ? (
-              <Col lg={4} sm={12}>
-                <MetricCard
-                  metric={this.state.metric}
-                  handleMetricChange={this.handleMetricChange}
-                />
-              </Col>
-            ) : (
-              <div />
-            )}
-          </Row>
-        </Container>
+        <HeatmapOptionsRow
+          handleFormatChange={this.handleFormatChange}
+          handleSliderChange={this.handleSliderChange}
+          handleMetricChange={this.handleMetricChange}
+          format={this.state.format}
+          metric={this.state.metric}
+          sliderValue={this.state.sliderValue}
+        />
         {(() => {
           switch (this.state.format) {
             case "count":
@@ -110,4 +96,4 @@ class HeatmapsColumn extends Component {
   }
 }
 
-export default HeatmapsColumn;
+export default HomeContentContainer;

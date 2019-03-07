@@ -9,7 +9,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const app = express();
+var fs = require("fs");
 const port = process.env.PORT || 5000;
+const recDetails = require("./stubData/recordingDetails.js");
+const fakeResult = require("./stubData/fakeResult.js");
 // const mail = require("./email/mail");
 
 app.use(bodyParser.json());
@@ -48,9 +51,23 @@ kbclient.setPairioConfig({
 
 /* API 
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-app.get("/api/hello", (req, res) => {
-  res.send({ express: "Hello From Express" });
+// TODO: Convert this to the actual request for data from KBUCKET on the results controller
+// Currently pulling data from a stub data json
+app.get("/api/:study/:sorter", (req, res) => {
+  let study = req.params.study;
+  let sorter = req.params.sorter;
+  res.send({ results: fakeResult });
 });
+
+app.get("/api/:study/:sorter/:recording", (req, res) => {
+  let study = req.params.study;
+  let sorter = req.params.sorter;
+  let recording = req.params.recording;
+  // TODO: Will I need to do this formatting from the server?
+  let formatted = formatSpikes(recDetails);
+  res.send({ recordingDetails: formatted });
+});
+
 app.post("/api/contact", (req, res) => {
   // TODO: Attach to mail server when credit card is available.
   console.log("🗺️", req.body);
@@ -58,6 +75,23 @@ app.post("/api/contact", (req, res) => {
     success: true
   });
 });
+
+function formatSpikes(recDetails) {
+  const keys = Object.keys(recDetails);
+  var formatted = new Object();
+  for (const key of keys) {
+    let newChannel = recDetails[key].map(spikeArr => {
+      return spikeArr.map(timepoints => {
+        return timepoints.map((timepoint, i) => {
+          let timeVal = 1.67 * i;
+          return { x: timeVal, y: timepoint };
+        });
+      });
+    });
+    formatted[key] = newChannel;
+  }
+  return formatted;
+}
 
 /* Client Server 
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -70,3 +104,12 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 app.listen(port, () => console.log(`🖥️  Server listening on port ${port}`));
+
+// spikes.forEach(timepoint, i) => {
+//   console.log(🎭, timepoint, i);
+// });
+// let XYcoords = spikeArr.map((spike, i) => {
+//   let timeVal = 1.67 * i;
+//   return { x: timeVal, y: spike };
+// });
+// console.log("🤟", XYcoords);

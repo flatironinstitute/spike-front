@@ -1,102 +1,343 @@
 import React, { Component } from "react";
+import {
+  Alert,
+  Button,
+  ButtonToolbar,
+  Card,
+  Col,
+  Collapse,
+  Container,
+  Row,
+  ToggleButtonGroup,
+  ToggleButton
+} from "react-bootstrap";
+import Preloader from "../Preloader/Preloader";
+import HeatmapOptionsRow from "../Heatmap/HeatmapOptionsRow";
+import SinglePairingRow from "./SinglePairingRow";
+import ReactJson from "react-json-view";
+import SpikeSprayV1 from "./SpikeSprayV1";
 
-// Redux
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import * as actionCreators from "../../actions/actionCreators";
+import { isEmpty } from "../../utils";
 
-// import pairing from "../../data/stubData/pairing_sample";
+import "./singleresults.css";
 
 // import spikeforestwidgets from "./SpikeforestWidgets";
-
-// http://localhost:3000/pairing/magland-synth-noise10-K10-C4/MountainSort4-thr3
-
-// Individual Study Page:
-// Description of the Study just copy
-
-// Pairing Page -> Study Results Page
-// Links to the other sorters on the study (button row)
-// Row of the heatmap with toolbar from heatmap
-// Scatterplot
-// spike sprays from each unit on click (// Channels as a separate row)
-// Table of data on each unit
 
 class SingleResultPairing extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pairing: []
+      study: "",
+      sorter: "",
+      format: "count",
+      metric: "accuracy",
+      sliderValue: 0,
+      activeSorter: 0,
+      openIcon: false
     };
   }
 
   componentDidMount() {
-    this.props.fetchPairing();
+    this.getPageName();
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.selectedPairing !== prevProps.selectedPairing) {
-      console.log("🍐", this.props.selectedPairing);
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.study !== prevState.study) {
+      this.props.fetchPairing(this.state.study, this.state.sorter);
+      // TODO: Tie this call to the scatterplot clicks
+      this.props.fetchRecordingDetails(
+        this.state.study,
+        this.state.sorter,
+        "test"
+      );
     }
   }
 
+  getPageName() {
+    let activeRoute = this.props.router.location.pathname;
+    let activeArr = activeRoute.split("/").filter(item => item);
+    // TODO: Make this less fixed!
+    let study = activeArr[1];
+    let sorter = activeArr[2];
+    this.setState({
+      study,
+      sorter
+    });
+  }
+
+  handleSorterChange = value => {
+    this.setState({
+      sorter: value
+    });
+  };
+
+  handleFormatChange = value => {
+    this.setState({
+      format: value,
+      sliderValue: 0
+    });
+  };
+
+  handleMetricChange = value => {
+    this.setState({
+      metric: value
+    });
+  };
+
+  handleSliderChange = value => {
+    let round = Math.round(value * 100) / 100;
+    this.setState({
+      sliderValue: round
+    });
+  };
+
   render() {
+    let results = isEmpty(this.props.pairing)
+      ? []
+      : this.props.pairing.filter(result => {
+          return result.sorter && result.is_applied;
+        });
+    let sorters = results.length ? results.map(result => result.sorter) : [];
+    let loading =
+      isEmpty(this.state.study) ||
+      isEmpty(this.state.sorter) ||
+      isEmpty(results);
+    let toggleCopy = this.state.openIcon ? "Hide Options" : "Show Options";
     return (
       <div>
-        <div className="container container__body">
-          <div className="header">
-            <h2 className="header__title">
-              magland-synth-noise10-K10-C4{" "}
-              <span role="img" aria-label="pear">
-                🍐
-              </span>{" "}
-              MountainSort4-thr3
-            </h2>
-            <div className="header__copy" id="widget1">
-              {/* <p>
-                Some text about the study overall. A study is a collection of
-                recordings. Sorting results may be aggregated over a study.Doggo
-                ipsum stop it fren you are doin me a concern. Thicc doggorino
-                borkf long bois, floofs big ol extremely cuuuuuute.
-              </p>
-              <p>
-                Citation: Gratiy, Sergey L et al. “BioNet: A Python interface to
-                NEURON for modeling large-scale networks” PloS one vol. 13,8
-                e0201630. 2 Aug. 2018, doi:10.1371/journal.pone.0201630
-              </p>
-              <p>
-                Authors: Mario Speedwagon, Petey Cruiser, Anna Sthesia, Paul
-                Molive, and Anna Mull.
-              </p>
-              <p>Lab: Allen Institute, Seattle, WA.</p>
-              <p>Number of Recordings: 1234</p>
-              <p>Total File Size: 1234GB</p>
-              <p>Duration: 1234 seconds</p>
-              <p>Experiment: synthetic ( IN VIVO / IN VITRO)</p>
-              <p>Probe Type: tetrode</p>
-              <p>Brain Region: occipital lobe</p>
-              <p>Groundtruth Units: true</p> */}
-            </div>
-          </div>
-          <div className="recordings">
-            <h3 className="recordings__title">Recordings</h3>
-          </div>
+        <div className="page__body">
+          {loading ? (
+            <Container className="container__heatmap">
+              <Card>
+                <Card.Body>
+                  <Preloader />
+                </Card.Body>
+              </Card>
+            </Container>
+          ) : (
+            <Container className="container__heatmap">
+              <Row className="container__sorter--row">
+                <Col lg={4} sm={6}>
+                  <div className="card card--stats">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>
+                          Study: <strong>{this.state.study}</strong>
+                        </p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <p>
+                          Sorter: <strong>{this.state.sorter}</strong>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+                <Col lg={4} sm={12}>
+                  <div className="card card--stats">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>Number of Units</p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <SinglePairingRow
+                          {...this.props}
+                          vizDatum={results}
+                          key={`hmrow${0}`}
+                          index={0}
+                          format={this.state.format}
+                          sorters={sorters.sort()}
+                          selectedSorter={this.state.sorter}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+                <Col lg={4} sm={12}>
+                  <div className="card card--stats">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>Sorter Toggles</p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <ButtonToolbar>
+                          <ToggleButtonGroup
+                            type="radio"
+                            name="options"
+                            size="lg"
+                            value={this.state.sorter}
+                            onChange={this.handleSorterChange}
+                            className="metric_button_toggle"
+                          >
+                            {results.map((result, i) => (
+                              <ToggleButton
+                                size="lg"
+                                value={result.sorter}
+                                key={`toggle${i}`}
+                                variant="outline-dark"
+                              >
+                                {result.sorter}
+                              </ToggleButton>
+                            ))}
+                          </ToggleButtonGroup>
+                        </ButtonToolbar>
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+              <div>
+                <Alert
+                  variant="secondary"
+                  className="d-flex justify-content-between align-items-center"
+                >
+                  Shall we show these controls for the heatmap/scatterplot? Or
+                  use a default value?
+                  <Button
+                    variant="outline-dark"
+                    onClick={() =>
+                      this.setState({ openIcon: !this.state.openIcon })
+                    }
+                  >
+                    {toggleCopy}
+                  </Button>
+                </Alert>
+                {this.state.openIcon ? (
+                  <Collapse in={this.state.openIcon}>
+                    <div className="container__collapse">
+                      <HeatmapOptionsRow
+                        handleFormatChange={this.handleFormatChange}
+                        handleSliderChange={this.handleSliderChange}
+                        handleMetricChange={this.handleMetricChange}
+                        format={this.state.format}
+                        metric={this.state.metric}
+                        sliderValue={this.state.sliderValue}
+                      />
+                    </div>
+                  </Collapse>
+                ) : (
+                  <div />
+                )}
+              </div>
+              <Row className="container__sorter--row">
+                <Col lg={12} sm={12}>
+                  <div className="card card--stats">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>
+                          <strong>Scatterplot here</strong>
+                        </p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <p>
+                          Hello Add a Scatterplot Liz{" "}
+                          <span role="img" aria-label="fireworks">
+                            🎆
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="container__sorter--row">
+                <Col lg={12} sm={12}>
+                  <div className="card card--heatmap">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>
+                          <strong>Spike Spray:</strong> What label details are
+                          needed here?
+                        </p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <SpikeSprayV1 {...this.props} />
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="container__sorter--row">
+                <Col lg={12} sm={12}>
+                  <div className="card card--heatmap">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>
+                          Study + Sorter Result Pairing JSON Dump{" "}
+                          <span role="img" aria-label="truck">
+                            🚚
+                          </span>
+                        </p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <ReactJson src={results} />
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="container__sorter--row">
+                <Col lg={12} sm={12}>
+                  <div className="card card--heatmap">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>
+                          Recording Details JSON Dump{" "}
+                          <span role="img" aria-label="truck">
+                            🗃️
+                          </span>
+                        </p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <div>
+                          <span role="img" aria-label="watch">
+                            ⏰
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="container__sorter--row">
+                <Col lg={12} sm={12}>
+                  <div className="card card--heatmap text-center">
+                    <h2>
+                      <span role="img" aria-label="wave">
+                        🌊
+                      </span>
+                      Thar be monsters{" "}
+                      <span role="img" aria-label="squid">
+                        🦑
+                      </span>
+                    </h2>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          )}
         </div>
       </div>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    selectedPairing: state.pairing
-  };
-}
+export default SingleResultPairing;
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(actionCreators, dispatch);
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SingleResultPairing);
+// NOTES:
+// Sample url : http://localhost:3000/results/magland-synth-noise10-K10-C4/MountainSort4-thr3
+//
+// TODO:
+// Pairing Page -> Study Results Page
+// Links to the other sorters on the study (button row)
+// Row of the heatmap with toolbar from heatmap
+// Scatterplot
+// spike sprays from each unit on click (// Channels as a separate row)
+// Table of data on each unit
