@@ -97,9 +97,6 @@ class SingleResultPairing extends Component {
       : this.props.pairing.filter(result => {
           return result.sorter && result.is_applied;
         });
-    let recDetails = this.props.recordingDetails
-      ? this.props.recordingDetails
-      : {};
     let sorters = results.length ? results.map(result => result.sorter) : [];
     let loading =
       isEmpty(this.state.study) ||
@@ -197,7 +194,8 @@ class SingleResultPairing extends Component {
                   variant="secondary"
                   className="d-flex justify-content-between align-items-center"
                 >
-                  Shall we show these controls for the heatmap/scatterplot?
+                  Shall we show these controls for the heatmap/scatterplot? Or
+                  use a default value?
                   <Button
                     variant="outline-dark"
                     onClick={() =>
@@ -252,33 +250,13 @@ class SingleResultPairing extends Component {
                     <div className="content">
                       <div className="card__label">
                         <p>
-                          <strong>Spike Spray:</strong> Any label details
-                          needed?
+                          <strong>Spike Spray:</strong> What label details are
+                          needed here?
                         </p>
                       </div>
                       <div className="card__footer">
                         <hr />
                         <SpikeSprayV1 {...this.props} />
-                      </div>
-                    </div>
-                  </div>
-                </Col>
-              </Row>
-              <Row className="container__sorter--row">
-                <Col lg={12} sm={12}>
-                  <div className="card card--heatmap">
-                    <div className="content">
-                      <div className="card__label">
-                        <p>
-                          Recording Details JSON Dump{" "}
-                          <span role="img" aria-label="truck">
-                            🗃️
-                          </span>
-                        </p>
-                      </div>
-                      <div className="card__footer">
-                        <hr />
-                        {/* <ReactJson src={recDetails} /> */}
                       </div>
                     </div>
                   </div>
@@ -299,6 +277,30 @@ class SingleResultPairing extends Component {
                       <div className="card__footer">
                         <hr />
                         <ReactJson src={results} />
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="container__sorter--row">
+                <Col lg={12} sm={12}>
+                  <div className="card card--heatmap">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>
+                          Recording Details JSON Dump{" "}
+                          <span role="img" aria-label="truck">
+                            🗃️
+                          </span>
+                        </p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <div>
+                          <span role="img" aria-label="watch">
+                            ⏰
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>

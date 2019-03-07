@@ -24,6 +24,16 @@ class SpikeSprayV1 extends Component {
     }
   }
 
+  groupBy(arr, property) {
+    return arr.reduce(function(memo, x) {
+      if (!memo[x[property]]) {
+        memo[x[property]] = [];
+      }
+      memo[x[property]].push(x);
+      return memo;
+    }, {});
+  }
+
   buildSprayData(recDetails) {
     const entries = Object.entries(recDetails);
     let spikeCols = [];
@@ -35,7 +45,7 @@ class SpikeSprayV1 extends Component {
       let lines = [];
       spikes.forEach(channels => {
         channels.forEach((timepoints, i) => {
-          let colorArr = ["red", "yellow", "blue", "gray"];
+          let colorArr = ["#cd3b54", "#59b953", "#ba4fb9", "gray"];
           let colorLine = colorArr[i];
           lines.push({
             color: colorLine,
@@ -43,18 +53,22 @@ class SpikeSprayV1 extends Component {
           });
         });
       });
-      flatCols.push(lines);
+
+      let colorArr = ["#cd3b54", "#59b953", "#ba4fb9", "gray"];
+      let colorGroups = colorArr.map(color => {
+        let colorGroup = lines.filter(line => line.color === color);
+        return colorGroup;
+      });
+      flatCols.push(colorGroups);
     });
+
     this.setState({
       spikeCols: flatCols
     });
   }
 
   render() {
-    console.log("😮", this.props.recordingDetails);
     let loading = isEmpty(this.state.spikeCols);
-    let colorArr = ["red", "yellow", "blue", "gray"];
-    console.log("📎", this.state.spikeCols);
     return (
       <div>
         {loading ? (
@@ -67,20 +81,26 @@ class SpikeSprayV1 extends Component {
           </Container>
         ) : (
           <Row>
-            {this.state.spikeCols.map((lines, i) => (
+            {this.state.spikeCols.map((colorGroup, i) => (
               <Col lg={3} key={`spikecol-${Math.random(i)}`}>
-                <XYPlot width={300} height={300}>
-                  <HorizontalGridLines />
-                  {lines.map((line, i) => (
-                    <LineSeries
-                      key={`line-${Math.random(i)}`}
-                      color={line.color}
-                      data={line.data}
-                    />
-                  ))}
-                  <XAxis title={`Spikes-${i + 1}`} />
-                  <YAxis />
-                </XYPlot>
+                {colorGroup.map((lines, i) => (
+                  <XYPlot
+                    width={300}
+                    height={300}
+                    key={`spikeplot-${Math.random(i)}`}
+                  >
+                    <HorizontalGridLines />
+                    {lines.map((line, i) => (
+                      <LineSeries
+                        key={`line-${Math.random(i)}`}
+                        color={line.color}
+                        data={line.data}
+                      />
+                    ))}
+                    <XAxis title={`Channel-${i + 1}`} />
+                    <YAxis />
+                  </XYPlot>
+                ))}
               </Col>
             ))}
           </Row>
