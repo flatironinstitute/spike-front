@@ -69,6 +69,12 @@ class SpikeSprayV1 extends Component {
 
   render() {
     let loading = isEmpty(this.state.spikeCols);
+    let colTitles = [
+      "Groundtruth",
+      "Sorting",
+      "False Positive",
+      "False Negative"
+    ];
     return (
       <div>
         {loading ? (
@@ -83,6 +89,11 @@ class SpikeSprayV1 extends Component {
           <Row>
             {this.state.spikeCols.map((colorGroup, i) => (
               <Col lg={3} key={`spikecol-${Math.random(i)}`}>
+                <div className="card__label">
+                  <p>
+                    <strong>{colTitles[i]}</strong>
+                  </p>
+                </div>
                 {colorGroup.map((lines, i) => (
                   <XYPlot
                     width={300}
