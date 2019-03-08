@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
-const sortingResultSchema = new mongoose.Schema({
+const unitResultSchema = new mongoose.Schema({
   created: {
     type: Date,
     default: Date.now()
@@ -34,4 +34,4 @@ const sortingResultSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model("SortingResult", sortingResultSchema);
+module.exports = mongoose.model("UnitResult", unitResultSchema);
