@@ -119,7 +119,7 @@ p {
 /* Links
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 a {
-  border-bottom: 2px solid var(--fi-blue);
+  border-bottom: 1px solid var(--fi-blue);
   font-family: var(--sans);
   color: var(--black);
 }
