@@ -27,6 +27,7 @@
     "react-dom": "^16.6.0",
     "react-google-recaptcha": "^1.0.5",
     "react-json-view": "^1.19.1",
+    "react-mathjax": "^1.0.1",
     "react-rangeslider": "^2.2.0",
     "react-redux": "^6.0.0",
     "react-router": "^4.3.1",

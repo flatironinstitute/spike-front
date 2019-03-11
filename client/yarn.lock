@@ -6663,6 +6663,11 @@ load-json-file@^2.0.0:
     pify "^2.0.0"
     strip-bom "^3.0.0"
 
+load-script@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/load-script/-/load-script-1.0.0.tgz#0491939e0bee5643ee494a7e3da3d2bac70c6ca4"
+  integrity sha1-BJGTngvuVkPuSUp+PaPSuscMbKQ=
+
 loader-fs-cache@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/loader-fs-cache/-/loader-fs-cache-1.0.1.tgz#56e0bf08bd9708b26a765b68509840c8dec9fdbc"
@@ -9089,6 +9094,13 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
+
+react-mathjax@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-mathjax/-/react-mathjax-1.0.1.tgz#a8c282e75d277a201632dfd07edf41edda372b4b"
+  integrity sha512-+mjFcciZY3GQoqiQm3aRTyDjgBKuoaXpY+SCONX00jScuPpTKwnASeFMS5+pbTIzDf5zPT2Y9ZZfQ9U/d4CKtQ==
+  dependencies:
+    load-script "^1.0.0"
 
 react-motion@^0.5.2:
   version "0.5.2"
