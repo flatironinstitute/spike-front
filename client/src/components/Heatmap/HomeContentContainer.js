@@ -49,6 +49,7 @@ class HomeContentContainer extends Component {
   };
 
   render() {
+    console.log(this.props.units[0]);
     return (
       <div>
         <HeatmapOptionsRow
