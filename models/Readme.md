@@ -2,11 +2,11 @@
 
 The spike-front data structure is built on a MongoDB database and skinned on the front end with Mongoose ODM.
 
-Basics on Mongoose can be found (here)[https://mongoosejs.com/docs/index.html].
+Basics on Mongoose can be found [here](https://mongoosejs.com/docs/index.html).
 
-## Defining the schema
+## Defining the Schema
 
-Everything in Mongoose starts with a Schema. Each schema maps to a MongoDB collection and defines the shape of the documents within that collection. There are 6 schemas in this application:
+Everything in Mongoose starts with a Schema. Each Schema maps to a MongoDB collection and defines the shape of the documents within that collection. There are 6 Schemas in this application:
 
 - Study Set
 - Study
@@ -16,5 +16,4 @@ Everything in Mongoose starts with a Schema. Each schema maps to a MongoDB colle
 - Sorter
 
 Relationships between the items are indicated through related foreign keys, called here Schema.Types.ObjectId.
-The examples provided at the top of each schema doc demonstrate the data format that could be injested as a json.
-For injest, a single JSON representing each Schema is easily injested.
+The example objects provided at the top of each Schema demonstrate how the data can be formatted to be injested as a JSON.
