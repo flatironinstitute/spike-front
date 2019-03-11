@@ -2,6 +2,19 @@ const Sentry = require("@sentry/node");
 Sentry.init({
   dsn: "https://a7b7f1b624b44a9ea537ec1069859393@sentry.io/1365884"
 });
+// import environmental variables from our variables.env file
+require("dotenv").config({ path: ".env" });
+
+/* Mongoose DB setup
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+const mongoose = require("mongoose");
+
+// Connect to our Database and handle any bad connections
+mongoose.connect(process.env.DATABASE, { useNewUrlParser: true });
+mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
+mongoose.connection.on("error", err => {
+  console.error(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
+});
 
 /* Express Isomorphic
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -37,8 +50,8 @@ app.use(function(req, res, next) {
   next();
 });
 
-// TODO: Move to a controller
-/* KBucket  
+// TODO: Remove when mongoDB setup is in place
+/* KBucket
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 const KBucketClient = require("@magland/kbucket").KBucketClient;
 let kbclient = new KBucketClient();
@@ -49,7 +62,7 @@ kbclient.setPairioConfig({
   collections: ["spikeforest"]
 });
 
-/* API 
+/* API
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 // TODO: Convert this to the actual request for data from KBUCKET on the results controller
 // Currently pulling data from a stub data json
@@ -93,7 +106,7 @@ function formatSpikes(recDetails) {
   return formatted;
 }
 
-/* Client Server 
+/* Client Server
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 if (process.env.NODE_ENV === "production") {
   // Serve any static files
@@ -104,12 +117,3 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 app.listen(port, () => console.log(`🖥️  Server listening on port ${port}`));
-
-// spikes.forEach(timepoint, i) => {
-//   console.log(🎭, timepoint, i);
-// });
-// let XYcoords = spikeArr.map((spike, i) => {
-//   let timeVal = 1.67 * i;
-//   return { x: timeVal, y: spike };
-// });
-// console.log("🤟", XYcoords);
