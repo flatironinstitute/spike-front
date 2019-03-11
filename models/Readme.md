@@ -2,6 +2,8 @@
 
 The spike-front data structure is built on a MongoDB database and skinned on the front end with Mongoose ODM.
 
+Basics on Mongoose can be found (here)[https://mongoosejs.com/docs/index.html].
+
 ## Defining the schema
 
 Everything in Mongoose starts with a Schema. Each schema maps to a MongoDB collection and defines the shape of the documents within that collection. There are 6 schemas in this application:
