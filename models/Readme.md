@@ -15,4 +15,4 @@ Everything in Mongoose starts with a Schema. Each schema maps to a MongoDB colle
 
 Relationships between the items are indicated through related foreign keys, called here Schema.Types.ObjectId.
 The examples provided at the top of each schema doc demonstrate the data format that could be injested as a json.
-For injest, a single JSON representing each Schema is easily injested via the MongoDB commandline.
+For injest, a single JSON representing each Schema is easily injested.
