@@ -13,7 +13,7 @@
 //   snr: 12.173096066945002,
 //   study: "58c03ada8060197ca0b52d52",
 // }
-
+// Liz TODO: Determine if it is worth directly mapping here, or if via recording is enough.
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
@@ -39,7 +39,6 @@ const unitSchema = new mongoose.Schema({
     type: Number,
     required: "You must provide an snr."
   },
-  // Liz TODO: Determine if it is worth directly mapping here, or if via recording is enough.
   study: {
     type: Schema.Types.ObjectId,
     ref: "Study"
