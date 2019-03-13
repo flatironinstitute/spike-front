@@ -6,11 +6,12 @@ import "./pages.css";
 
 class Metrics extends Component {
   render() {
-    // const tex = `f(x) = \\int_{-\\infty}^\\infty
-    // \\hat f(\\xi)\\,e^{2 \\pi i \\xi x}
-    // \\,d\\xi`;
+    const tex = `f(x) = \\int_{-\\infty}^\\infty
+    \\hat f(\\xi)\\,e^{2 \\pi i \\xi x}
+    \\,d\\xi`;
 
-    const groundtruth = ` n_box{match}^k := # {i: |t_j^k-s_i| < \\Delta t mbox{ for some } j}`;
+    const groundtruth =
+      "n_{{ \\scriptsize match } }^k:=  i: |t_j^k-s_i| < \\Delta t  \\mbox{ for some }\\ j";
     let divStyle = {
       backgroundColor: "#fffdc0",
       borderRadius: "5px",
@@ -19,8 +20,8 @@ class Metrics extends Component {
     return (
       <div className="page__body">
         <Container className="container__heatmap">
-          <Row>
-            <Col lg={12} sm={12}>
+          <Row className="justify-content-md-center">
+            <Col lg={12} sm={12} xl={10}>
               <div className="intro">
                 <p className="big">Metrics</p>
                 <div className="dividerthick" />
@@ -35,8 +36,8 @@ class Metrics extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container__sorter--row">
-            <Col lg={12} sm={12}>
+          <Row className="container__sorter--row justify-content-md-center">
+            <Col lg={12} sm={12} xl={10}>
               <div className="card card--stats">
                 <div className="content">
                   <div className="card__label">
@@ -59,17 +60,20 @@ class Metrics extends Component {
                         <MathJax.Node inline formula={"k"} />. Let{"  "}
                         <MathJax.Node
                           inline
-                          formula={`t_j^k for j=1,\\dots,n_k`}
+                          formula={"t_j^k \\ `for` \\ j=1,\\dots,n_k"}
                         />{" "}
                         be the firing times of this unit from the sorter. Let
                         {"  "}
                         <MathJax.Node inline formula={`\\Delta t`} /> be an
                         acceptable firing time error, which we assume is shorter
-                        than half the refractory period of a true neuron. The
-                        number of matches of unit{" "}
+                        than half the refractory period of a true neuron.
+                      </p>{" "}
+                      <p>
+                        The number of matches of unit{" "}
                         <MathJax.Node inline formula={`k`} /> to the ground
-                        truth is: <MathJax.Node inline formula={groundtruth} />
+                        truth is:
                       </p>
+                      <MathJax.Node formula={groundtruth} />
                       <p>
                         Note that if more than one sorted event falls within{" "}
                         <MathJax.Node inline formula={`\\pm \\Delta t`} /> of a
@@ -77,48 +81,43 @@ class Metrics extends Component {
                         happen, by assumption.
                       </p>
                       <p>
-                        The number of missed events is{" "}
+                        The number of missed events is:{" "}
                         <MathJax.Node
-                          inline
-                          formula={`n_box{miss}^k := n_GT
-                        - n_box{match}^k.`}
+                          formula={`n_{{ \\scriptsize miss } }^k := n_{GT}
+                        - n_{{ \\scriptsize match } }^k.`}
                         />
-                        .
                       </p>
                       <p>
-                        The number of false positive events is{" "}
+                        The number of false positive events is:{" "}
                         <MathJax.Node
-                          inline
-                          formula={`n_box{fp}^k := n_k - n_box{match}^k`}
+                          formula={`n_{{ \\scriptsize fp } }^k := n_k - n_{{ \\scriptsize match } }^k`}
                         />
-                        .
+                      </p>
+                      <p style={divStyle}>
+                        Confirm citation style and see bottom section. Are other
+                        references needed on this page?
                       </p>
                       <p>
-                        To translate to the notation of Jun et al 2017,{" "}
+                        Translated to the notation of Jun et al, 2017[1] :
                         <MathJax.Node
-                          inline
-                          formula={`n_1 = n_box{miss}^k$, $n_2 = n_box{match}^k$, $n_3
-                        = n_box{fp}^k`}
+                          formula={`n_1 = n_{{ \\scriptsize miss } }^k,  \\ n_2 = n_{{ \\scriptsize match } }^k,  \\ n_3
+                        = n_{{ \\scriptsize fp } }^k`}
                         />
-                        .
                       </p>
                       <p>
-                        For code implementation, this matching of sorted events
-                        to ground-truth events uses{" "}
+                        In the code implementation, this matching of sorted
+                        events to ground-truth events uses{" "}
                         <a
                           target="_blank"
                           rel="noopener noreferrer"
-                          href="https://github.com/flatironinstitute/spikeforest/blob/dev/repos/spiketoolkit/spiketoolkit/comparison/sortingcomparison.py"
+                          href="https://github.com/flatironinstitute/spikeforest/blob/master/spikeforest/spikeforest/spiketoolkit/comparison/sortingcomparison.py"
                         >
                           a routine from spiketoolkit
                         </a>
-                        .
-                      </p>
-                      <p>
-                        The default{" "}
-                        <MathJax.Node inline formula={`\\Delta t`} />
-                        is set as <code>delta_tp</code> there, in sample units
-                        (note: the actual time thus depends on the sample rate).
+                        . In this routine, the default{" "}
+                        <MathJax.Node inline formula={`\\Delta t \\`} />
+                        is set as <code>delta_tp</code> in sample units. Note
+                        that the actual time thus depends on the sample rate.
                       </p>
                     </MathJax.Provider>
                   </div>
@@ -126,8 +125,8 @@ class Metrics extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container__sorter--row">
-            <Col lg={12} sm={12}>
+          <Row className="container__sorter--row justify-content-md-center">
+            <Col lg={12} sm={12} xl={10}>
               <div className="card card--stats">
                 <div className="content">
                   <div className="card__label">
@@ -187,8 +186,8 @@ class Metrics extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container__sorter--row">
-            <Col lg={12} sm={12}>
+          <Row className="container__sorter--row justify-content-md-center">
+            <Col lg={12} sm={12} xl={10}>
               <div className="card card--stats">
                 <div className="content">
                   <div className="card__label">
@@ -214,8 +213,8 @@ class Metrics extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container__sorter--row">
-            <Col lg={12} sm={12}>
+          <Row className="container__sorter--row justify-content-md-center">
+            <Col lg={12} sm={12} xl={10}>
               <div className="card card--stats">
                 <div className="content">
                   <div className="card__label">
@@ -312,6 +311,25 @@ class Metrics extends Component {
                         </a>
                       </p>
                     </MathJax.Provider>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+          <Row className="container__sorter--row justify-content-md-center">
+            <Col lg={12} sm={12} xl={10}>
+              <div className="card card--stats">
+                <div className="content">
+                  <div className="card__label">
+                    <p>
+                      <strong>References</strong>
+                    </p>
+                  </div>
+                  <div className="card__footer">
+                    <hr />
+                    [1] James Jun, Someone Else and Another Person,
+                    <i>The Name of this Article</i>, A Publication. (0) 00
+                    (2017), no. 0, 0000–0000, DOI 10.0000.
                   </div>
                 </div>
               </div>

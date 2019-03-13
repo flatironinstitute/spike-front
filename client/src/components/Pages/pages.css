@@ -214,3 +214,10 @@
   align-items: center;
   justify-content: center;
 }
+
+.metrics__inline {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: center;
+}
