@@ -1,0 +1,362 @@
+[
+  {
+    "name": "magland_synth_noise10_K10_C4",
+    "numRecordings": 10,
+    "durationSec": [600, 600],
+    "fileSizeBytes": [288000020, 288000020],
+    "numChannels": [4, 4],
+    "numGroundTruthUnits": [10, 10],
+    "samplerateHz": [30000, 30000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c833",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "magland_synth_noise10_K10_C8",
+    "numRecordings": 10,
+    "durationSec": [600, 600],
+    "fileSizeBytes": [576000020, 576000020],
+    "numChannels": [8, 8],
+    "numGroundTruthUnits": [10, 10],
+    "samplerateHz": [30000, 30000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c833",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "magland_synth_noise10_K20_C4",
+    "numRecordings": 10,
+    "durationSec": [600, 600],
+    "fileSizeBytes": [288000020, 288000020],
+    "numChannels": [4, 4],
+    "numGroundTruthUnits": [20, 20],
+    "samplerateHz": [30000, 30000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c833",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "magland_synth_noise10_K20_C8",
+    "numRecordings": 10,
+    "durationSec": [600, 600],
+    "fileSizeBytes": [576000020, 576000020],
+    "numChannels": [8, 8],
+    "numGroundTruthUnits": [20, 20],
+    "samplerateHz": [30000, 30000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c833",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "magland_synth_noise20_K10_C4",
+    "numRecordings": 10,
+    "durationSec": [600, 600],
+    "fileSizeBytes": [288000020, 288000020],
+    "numChannels": [4, 4],
+    "numGroundTruthUnits": [10, 10],
+    "samplerateHz": [30000, 30000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c833",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "magland_synth_noise20_K10_C8",
+    "numRecordings": 10,
+    "durationSec": [600, 600],
+    "fileSizeBytes": [576000020, 576000020],
+    "numChannels": [8, 8],
+    "numGroundTruthUnits": [10, 10],
+    "samplerateHz": [30000, 30000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c833",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "magland_synth_noise20_K20_C4",
+    "numRecordings": 10,
+    "durationSec": [600, 600],
+    "fileSizeBytes": [288000020, 288000020],
+    "numChannels": [4, 4],
+    "numGroundTruthUnits": [20, 20],
+    "samplerateHz": [30000, 30000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c833",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "magland_synth_noise20_K20_C8",
+    "numRecordings": 10,
+    "durationSec": [600, 600],
+    "fileSizeBytes": [576000020, 576000020],
+    "numChannels": [8, 8],
+    "numGroundTruthUnits": [20, 20],
+    "samplerateHz": [30000, 30000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c833",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "mearec_tetrode_noise10_K10_C4",
+    "numRecordings": 10,
+    "durationSec": [600, 600],
+    "fileSizeBytes": [288000020, 288000020],
+    "numChannels": [4, 4],
+    "numGroundTruthUnits": [10, 10],
+    "samplerateHz": [30000, 30000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c833",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "mearec_tetrode_noise10_K20_C4",
+    "numRecordings": 10,
+    "durationSec": [600, 600],
+    "fileSizeBytes": [288000020, 288000020],
+    "numChannels": [4, 4],
+    "numGroundTruthUnits": [20, 20],
+    "samplerateHz": [30000, 30000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c833",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "mearec_tetrode_noise20_K10_C4",
+    "numRecordings": 10,
+    "durationSec": [600, 600],
+    "fileSizeBytes": [288000020, 288000020],
+    "numChannels": [4, 4],
+    "numGroundTruthUnits": [10, 10],
+    "samplerateHz": [30000, 30000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c833",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "mearec_tetrode_noise20_K20_C4",
+    "numRecordings": 10,
+    "durationSec": [600, 600],
+    "fileSizeBytes": [288000020, 288000020],
+    "numChannels": [4, 4],
+    "numGroundTruthUnits": [20, 20],
+    "samplerateHz": [30000, 30000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c833",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "bionet_drift_8c",
+    "numRecordings": 12,
+    "durationSec": [960, 960],
+    "fileSizeBytes": [2304000020, 2304000020],
+    "numChannels": [8, 8],
+    "numGroundTruthUnits": [82, 92],
+    "samplerateHz": [20000, 20000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c832",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "bionet_shuffle_8c",
+    "numRecordings": 12,
+    "durationSec": [960, 960],
+    "fileSizeBytes": [2304000020, 2304000020],
+    "numChannels": [8, 8],
+    "numGroundTruthUnits": [82, 90],
+    "samplerateHz": [20000, 20000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c832",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "bionet_static_8c",
+    "numRecordings": 12,
+    "durationSec": [960, 960],
+    "fileSizeBytes": [2304000020, 2304000020],
+    "numChannels": [8, 8],
+    "numGroundTruthUnits": [79, 93],
+    "samplerateHz": [20000, 20000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c832",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "bionet_drift_32c",
+    "numRecordings": 12,
+    "durationSec": [960, 960],
+    "fileSizeBytes": [2304000020, 2304000020],
+    "numChannels": [32, 32],
+    "numGroundTruthUnits": [322, 374],
+    "samplerateHz": [20000, 20000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c832",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "bionet_shuffle_32c",
+    "numRecordings": 12,
+    "durationSec": [960, 960],
+    "fileSizeBytes": [2304000020, 2304000020],
+    "numChannels": [32, 32],
+    "numGroundTruthUnits": [318, 377],
+    "samplerateHz": [20000, 20000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c832",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "bionet_static_32c",
+    "numRecordings": 12,
+    "durationSec": [960, 960],
+    "fileSizeBytes": [2304000020, 2304000020],
+    "numChannels": [32, 32],
+    "numGroundTruthUnits": [316, 374],
+    "samplerateHz": [20000, 20000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c832",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "paired_neuropix32c",
+    "numRecordings": 15,
+    "durationSec": [540.0229666666667, 1215.0512666666666],
+    "fileSizeBytes": [1036844116, 2332898452],
+    "numChannels": [32, 32],
+    "numGroundTruthUnits": [1, 1],
+    "samplerateHz": [30000, 30000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c832",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "paired_mea64c",
+    "numRecordings": 18,
+    "durationSec": [180, 300],
+    "fileSizeBytes": [460800020, 768000020],
+    "numChannels": [64, 64],
+    "numGroundTruthUnits": [1, 1],
+    "samplerateHz": [20000, 20000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c832",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "paired_boyden32c",
+    "numRecordings": 19,
+    "durationSec": [464.5376, 604.027],
+    "fileSizeBytes": [1301889024, 2082275328],
+    "numChannels": [32, 32],
+    "numGroundTruthUnits": [1, 1],
+    "samplerateHz": [25000, 30000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c832",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "manual_tetrode_600s",
+    "numRecordings": 12,
+    "durationSec": [600, 600],
+    "fileSizeBytes": [144000020, 144000020],
+    "numChannels": [4, 4],
+    "numGroundTruthUnits": [7, 11],
+    "samplerateHz": [30000, 30000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c833",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "manual_tetrode_1200s",
+    "numRecordings": 6,
+    "durationSec": [1200, 1200],
+    "fileSizeBytes": [288000020, 288000020],
+    "numChannels": [4, 4],
+    "numGroundTruthUnits": [7, 11],
+    "samplerateHz": [30000, 30000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c833",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  },
+  {
+    "name": "manual_tetrode_2400s",
+    "numRecordings": 3,
+    "durationSec": [2400, 2400],
+    "fileSizeBytes": [576000020, 576000020],
+    "numChannels": [4, 4],
+    "numGroundTruthUnits": [7, 11],
+    "samplerateHz": [30000, 30000],
+    "sorters": [
+      "5c897d2a44dc6e8b2985c830",
+      "5c897d2a44dc6e8b2985c833",
+      "5c897d2a44dc6e8b2985c831",
+      "5c897d2a44dc6e8b2985c834"
+    ]
+  }
+]

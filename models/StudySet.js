@@ -17,7 +17,7 @@ const studySetSchema = new mongoose.Schema({
     type: String,
     required: "You must provide a name for the study set."
   },
-  studies: [{ type: Schema.Types.ObjectId, ref: "Study" }]
+  studies: [{ type: mongoose.Schema.ObjectId, ref: "Study" }]
 });
 
 module.exports = mongoose.model("StudySet", studySetSchema);

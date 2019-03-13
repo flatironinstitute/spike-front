@@ -16,6 +16,6 @@ Everything in Mongoose starts with a Schema. Each Schema maps to a MongoDB colle
 - Sorter
 
 At the top of each Schema file are notes about the implementation or contents of the Schema as well as an example object that demonstrates how the data could be formatted to be injested as a JSON.
-Relationships between the items are indicated through related foreign keys, called here Schema.Types.ObjectId.
+Relationships between the items are indicated through related foreign keys, called here mongoose.Schema.ObjectId.
 
 ObjectId's are presented as strings in the example for readability.

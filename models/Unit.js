@@ -32,7 +32,7 @@ const unitSchema = new mongoose.Schema({
     type: Number
   },
   recording: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.ObjectId,
     ref: "Recording"
   },
   snr: {
@@ -40,7 +40,7 @@ const unitSchema = new mongoose.Schema({
     required: "You must provide an snr."
   },
   study: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.ObjectId,
     ref: "Study"
   }
 });

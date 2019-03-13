@@ -24,7 +24,7 @@ const recordingSchema = new mongoose.Schema({
     required: "You must provide a recording name"
   },
   study: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.ObjectId,
     ref: "Study"
   },
   directory: {

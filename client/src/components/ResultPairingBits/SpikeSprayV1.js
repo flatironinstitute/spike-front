@@ -38,6 +38,7 @@ class SpikeSprayV1 extends Component {
     const entries = Object.entries(recDetails);
     let spikeCols = [];
     for (const [key, spikeCol] of entries) {
+      console.log(key);
       spikeCols.push(spikeCol);
     }
     let flatCols = [];

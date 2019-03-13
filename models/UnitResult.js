@@ -52,11 +52,11 @@ const unitResultSchema = new mongoose.Schema({
     type: Number
   },
   sorter: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.ObjectId,
     ref: "Sorter"
   },
   unit: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.ObjectId,
     ref: "Unit"
   },
 });

@@ -43,7 +43,7 @@ const studySchema = new mongoose.Schema({
   samplerateHz: {
     type: [Number]
   },
-  sorters: [{ type: Schema.Types.ObjectId, ref: "Sorter" }]
+  sorters: [{ type: mongoose.Schema.ObjectId, ref: "Sorter" }]
 });
 
 module.exports = mongoose.model("Study", studySchema);
