@@ -29,10 +29,6 @@ class Metrics extends Component {
                   Definitions of accuracy and other metrics used throughout
                   SpikeForest.
                 </p>
-                <p className="updated">
-                  Does the May 9, 2018 paper include these definitions? If so,
-                  should I link to it here?
-                </p>
               </div>
             </Col>
           </Row>
