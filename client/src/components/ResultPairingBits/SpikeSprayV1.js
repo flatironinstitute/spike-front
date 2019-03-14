@@ -18,7 +18,6 @@ class SpikeSprayV1 extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log("didUpdate");
     if (this.props.recordingDetails !== prevProps.recordingDetails) {
       this.buildSprayData(this.props.recordingDetails);
     }
@@ -38,7 +37,7 @@ class SpikeSprayV1 extends Component {
     const entries = Object.entries(recDetails);
     let spikeCols = [];
     for (const [key, spikeCol] of entries) {
-      console.log(key);
+      console.log("Spray being made", key);
       spikeCols.push(spikeCol);
     }
     let flatCols = [];

@@ -10,7 +10,7 @@ class SinglePairingRow extends Component {
     this.state = { hoveredNode: null, data: null };
     this.dims = {
       height: 50,
-      width: 620
+      width: 700
     };
     this.margin = { left: 190, right: 80, top: 5, bottom: 5 };
     if (this.props.index === 0) {
@@ -48,6 +48,7 @@ class SinglePairingRow extends Component {
   }
 
   conditionalSelectStudy(datum) {
+    console.log("🎊, conditional select", datum);
     if (this.props.format !== "average") {
       this.props.selectStudy(datum);
     }
@@ -58,6 +59,13 @@ class SinglePairingRow extends Component {
     // TODO: What is the best default for this?
     const { data } = this.state;
     const loading = isEmpty(data);
+    console.log(
+      "🌭",
+      this.props,
+      this.state.hoveredNode,
+      this.props.selectedStudy,
+      this.props.format
+    );
     return (
       <div>
         {loading ? (
