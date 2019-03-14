@@ -3,7 +3,6 @@ import HeatmapCount from "./HeatmapCount";
 import HeatmapSNR from "./HeatmapSNR";
 import HeatmapCPU from "./HeatmapCPU";
 import HeatmapOptionsRow from "./HeatmapOptionsRow";
-import { isEmpty } from "../../utils";
 
 import "react-rangeslider/lib/index.css";
 import "./heatmap.css";
@@ -49,32 +48,7 @@ class HomeContentContainer extends Component {
     });
   };
 
-  download(content, fileName, contentType) {
-    var a = document.createElement("a");
-    var file = new Blob([content], { type: contentType });
-    a.href = URL.createObjectURL(file);
-    a.download = fileName;
-    a.click();
-  }
-
   render() {
-    if (!isEmpty(this.props.studies) && !this.state.isDownloaded) {
-      let reformattedStudies = this.props.studies.map(study => {
-        return {
-          name: study.name,
-          numRecordings: study.num_recordings,
-          durationSec: study.recording_ranges.duration_sec,
-          fileSizeBytes: study.recording_ranges.file_size_bytes,
-          numChannels: study.recording_ranges.num_channels,
-          numGroundTruthUnits: study.recording_ranges.num_ground_truth_units,
-          samplerateHz: study.recording_ranges.samplerate_hz,
-          sorters: study.sorters
-        };
-      });
-      let studies = JSON.stringify(reformattedStudies);
-      this.download(studies, "studies.json", "application/json");
-      this.setState({ isDownloaded: true });
-    }
     return (
       <div>
         <HeatmapOptionsRow
