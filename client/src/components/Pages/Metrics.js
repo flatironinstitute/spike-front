@@ -6,12 +6,8 @@ import "./pages.css";
 
 class Metrics extends Component {
   render() {
-    // const tex = `f(x) = \\int_{-\\infty}^\\infty
-    // \\hat f(\\xi)\\,e^{2 \\pi i \\xi x}
-    // \\,d\\xi`;
-
     const groundtruth =
-      "n_{{ \\scriptsize match } }^k:=  i: |t_j^k-s_i| < \\Delta t  \\mbox{ for some }\\ j";
+      "n_{{ \\displaystyle match } }^k:= \\{ i: |t_j^k-s_i| < \\Delta t  \\mbox{ for some }\\ j \\}";
     let divStyle = {
       backgroundColor: "#fffdc0",
       borderRadius: "5px",
@@ -56,7 +52,7 @@ class Metrics extends Component {
                         <MathJax.Node inline formula={"k"} />. Let{"  "}
                         <MathJax.Node
                           inline
-                          formula={"t_j^k \\ `for` \\ j=1,\\dots,n_k"}
+                          formula={"t_j^k \\mbox{ where }\\ j=1,\\dots,n_k"}
                         />{" "}
                         be the firing times of this unit from the sorter. Let
                         {"  "}
@@ -79,27 +75,25 @@ class Metrics extends Component {
                       <p>
                         The number of missed events is:{" "}
                         <MathJax.Node
-                          formula={`n_{{ \\scriptsize miss } }^k := n_{GT}
-                        - n_{{ \\scriptsize match } }^k.`}
+                          formula={`n_{{ \\displaystyle miss } }^k := n_{GT}
+                        - n_{{ \\displaystyle match } }^k.`}
                         />
                       </p>
                       <p>
                         The number of false positive events is:{" "}
                         <MathJax.Node
-                          formula={`n_{{ \\scriptsize fp } }^k := n_k - n_{{ \\scriptsize match } }^k`}
+                          formula={`n_{{ \\displaystyle fp } }^k := n_k - n_{{ \\displaystyle match } }^k`}
                         />
                       </p>
-                      <p style={divStyle}>
-                        Confirm citation style and see bottom section. Are other
-                        references needed on this page?
-                      </p>
-                      <p>
-                        Translated to the notation of Jun et al, 2017[1] :
+                      <div>
+                        <p>
+                          Translated to the notation of Jun et al, 2017 [1] :
+                        </p>
                         <MathJax.Node
-                          formula={`n_1 = n_{{ \\scriptsize miss } }^k,  \\ n_2 = n_{{ \\scriptsize match } }^k,  \\ n_3
-                        = n_{{ \\scriptsize fp } }^k`}
+                          formula={`n_1 = n_{{ \\displaystyle miss } }^k,  \\ n_2 = n_{{ \\displaystyle match } }^k,  \\ n_3
+                        = n_{{ \\displaystyle fp } }^k`}
                         />
-                      </p>
+                      </div>
                       <p>
                         In the code implementation, this matching of sorted
                         events to ground-truth events uses{" "}
@@ -108,12 +102,23 @@ class Metrics extends Component {
                           rel="noopener noreferrer"
                           href="https://github.com/flatironinstitute/spikeforest/blob/master/spikeforest/spikeforest/spiketoolkit/comparison/sortingcomparison.py"
                         >
-                          a routine from spiketoolkit
+                          the sortingcomparison.py routine from spiketoolkit
                         </a>
                         . In this routine, the default{" "}
                         <MathJax.Node inline formula={`\\Delta t \\`} />
                         is set as <code>delta_tp</code> in sample units. Note
                         that the actual time thus depends on the sample rate.
+                        <MathJax.Node inline formula="\Delta t" /> is +/-20
+                        samples according to
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href="https://github.com/flatironinstitute/spikeforest/blob/master/spikeforest/spikeforest/spiketoolkit/comparison/sortingcomparison.py"
+                        >
+                          sortingcomparison.py
+                        </a>
+                        . For 10 samples, this ranges between 0.5 ms at 20 kHz
+                        to 0.333ms at 30 kHz.
                       </p>
                     </MathJax.Provider>
                   </div>
@@ -143,38 +148,40 @@ class Metrics extends Component {
                         <MathJax.Node
                           inline
                           formula={
-                            "p^k := \\frac{n_{ \\scriptsize match }^k}{n_{ \\scriptsize match }^k + n_{ \\scriptsize fp }^k} = \\frac{n_{ \\scriptsize match }^k}{n^k} = \\frac{n_2}{n_2+n_3}"
+                            "p^k := \\frac{n_{ \\displaystyle match }^k}{n_{ \\displaystyle match }^k + n_{ \\displaystyle fp }^k} = \\frac{n_{ \\displaystyle match }^k}{n^k} = \\frac{\\displaystyle n_2}{\\displaystyle n_2+n_3}"
                           }
                         />
                       </p>
-                      <p>
-                        <i>Precision = 1 - false positive rate.</i>
-                      </p>
+                      <p>Precision = 1 - (false positive rate).</p>
                       <p className="metrics__inline">
                         <span className="metrics__label">Recall:</span>
                         <MathJax.Node
                           inline
                           formula={
-                            "r_k := \\frac{n_{ \\scriptsize match }^k}{n_{ \\scriptsize miss }^k+n_{ \\scriptsize match }^k} = \\frac{n_{ \\scriptsize match }^k}{n_{GT}} = \\frac{n_2}{n_1+n_2}"
+                            "r_k := \\frac{n_{ \\displaystyle match }^k}{n_{ \\displaystyle miss }^k+n_{ \\displaystyle match }^k} = \\frac{n_{ \\displaystyle match }^k}{n_{GT}} = \\frac{\\displaystyle n_2}{\\displaystyle n_1+n_2}"
                           }
                         />
                       </p>
-                      <p>
-                        <i>Recall = 1 - false negative rate.</i>
-                      </p>
+                      <p>Recall = 1 - (false negative rate).</p>
                       <p className="metrics__inline">
                         <span className="metrics__label">Accuracy:</span>
                         <MathJax.Node
                           inline
                           formula={
-                            "a_k := \\frac{n_{ \\scriptsize match }^k}{n_{ \\scriptsize miss }^k+n_{ \\scriptsize match }^k + n_{ \\scriptsize fp }^k} = \\frac{n_{ \\scriptsize match }^k}{n^k + n_{GT}-n_{ \\scriptsize match }} = \\frac{n_2}{n_1+n_2+n_3}"
+                            "a_k := \\frac{n_{ \\displaystyle match }^k}{n_{ \\displaystyle miss }^k+n_{ \\displaystyle match }^k + n_{ \\displaystyle fp }^k} = \\frac{n_{ \\displaystyle match }^k}{n^k + n_{GT}-n_{ \\displaystyle match }} = \\frac{\\displaystyle n_2}{\\displaystyle n_1+n_2+n_3}"
                           }
                         />
                       </p>
                       <p>
                         Accuracy balances precision and recall. It is similar,
                         but not identical, to the clustering metric called the{" "}
-                        <MathJax.Node inline formula={"F_1"} /> score.
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href="https://en.wikipedia.org/wiki/F1_score"
+                        >
+                          <MathJax.Node inline formula={"F_1"} /> score.
+                        </a>
                       </p>
                       <p>
                         See the GenSortingComparisonTable class in{" "}
@@ -259,20 +266,20 @@ class Metrics extends Component {
                         Then,
                         <MathJax.Node
                           formula={
-                            "{SNR}_k := \\frac{max_{m=1,\\dots,\\ M, \\ t=1,\\dots,T}  |w_m^k(t)|}{sigma_m}"
+                            "\\mbox{ SNR}\\_k := \\frac{\\mbox{ max }\\_{m=1,\\dots,\\ M, \\ t=1,\\dots,T}  |w_m^k(t)|}{\\Sigma _m}"
                           }
                         />
                         {"   "}where a robust estimate of the
                         (Gaussian-standardized) standard deviation for the{" "}
                         <MathJax.Node inline formula={"m th"} /> channel is,{" "}
                         <MathJax.Node
-                          formula={"sigma_m = \\frac{{MAD}_m}{0.6745}"}
+                          formula={"\\Sigma a_m = \\frac{{MAD}_m}{0.6745}"}
                         />
                         where, for each channel{" "}
                         <MathJax.Node inline formula={"m"} /> , the median
                         absolute deviation of the filtered data is defined by{" "}
                         <MathJax.Node
-                          formula={`{MAD}_m = median(y_m(t) - \\overline{y_m})`}
+                          formula={`{MAD}_m = \\mbox{ median }\\ (y_m(t) - \\overline{y_m})`}
                         />
                         where{"  "}
                         <MathJax.Node
@@ -314,6 +321,7 @@ class Metrics extends Component {
                         >
                           compute_units_info.py
                         </a>
+                        .
                       </p>
                     </MathJax.Provider>
                   </div>
@@ -332,9 +340,20 @@ class Metrics extends Component {
                   </div>
                   <div className="card__footer">
                     <hr />
-                    [1] James Jun, Someone Else and Another Person,
-                    <i>The Name of this Article</i>, A Publication. (0) 00
-                    (2017), no. 0, 0000–0000, DOI 10.0000.
+                    [1] James Jaeyoon Jun, Catalin Mitelut, Chongxi Lai, Sergey
+                    Gratiy, Costas Anastassiou and Timothy D Harris,{" "}
+                    <i>
+                      <a href="https://www.biorxiv.org/content/10.1101/101030v2">
+                        Real-time spike sorting platform for high-density
+                        extracellular probes with ground-truth validation and
+                        drift correction
+                      </a>
+                    </i>
+                    , bioRxiv 101030 (2017), doi:{" "}
+                    <a href="https://doi.org/10.1101/101030">
+                      https://doi.org/10.1101/101030
+                    </a>
+                    .
                   </div>
                 </div>
               </div>
