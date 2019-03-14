@@ -66,6 +66,13 @@ kbclient.setPairioConfig({
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 // TODO: Convert this to the actual request for data from KBUCKET on the results controller
 // Currently pulling data from a stub data json
+
+// app.get("/api/studies", (req, res) => {
+//   const Study = require("../models/Study");
+//   const studies = await Study.find().sort({ name: 'desc' });
+//   res.send({ studies: studies });
+// });
+
 app.get("/api/:study/:sorter", (req, res) => {
   let study = req.params.study;
   let sorter = req.params.sorter;

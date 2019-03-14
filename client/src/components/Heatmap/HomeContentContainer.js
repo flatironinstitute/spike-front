@@ -18,7 +18,6 @@ class HomeContentContainer extends Component {
       isDownloaded: false
     };
   }
-
   handleFormatChange = value => {
     var sliderValue;
     switch (value) {

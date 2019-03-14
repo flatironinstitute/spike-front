@@ -1,60 +1,60 @@
 [
   {
-    "name": "001_synth",
+    "name": "001_magland_synth_noise10_K10_C4",
     "study": "magland_synth_noise10_K10_C4",
     "directory": "kbucket://15734439d8cf/groundtruth/magland_synth/datasets_noise10_K10_C4/001_synth",
     "description": "One of the recordings in the magland_synth_noise10_K10_C4 study"
   },
   {
-    "name": "002_synth",
+    "name": "002_magland_synth_noise10_K10_C4",
     "study": "magland_synth_noise10_K10_C4",
     "directory": "kbucket://15734439d8cf/groundtruth/magland_synth/datasets_noise10_K10_C4/002_synth",
     "description": "One of the recordings in the magland_synth_noise10_K10_C4 study"
   },
   {
-    "name": "003_synth",
+    "name": "003_magland_synth_noise10_K10_C4",
     "study": "magland_synth_noise10_K10_C4",
     "directory": "kbucket://15734439d8cf/groundtruth/magland_synth/datasets_noise10_K10_C4/003_synth",
     "description": "One of the recordings in the magland_synth_noise10_K10_C4 study"
   },
   {
-    "name": "004_synth",
+    "name": "004_magland_synth_noise10_K10_C4",
     "study": "magland_synth_noise10_K10_C4",
     "directory": "kbucket://15734439d8cf/groundtruth/magland_synth/datasets_noise10_K10_C4/004_synth",
     "description": "One of the recordings in the magland_synth_noise10_K10_C4 study"
   },
   {
-    "name": "005_synth",
+    "name": "005_magland_synth_noise10_K10_C4",
     "study": "magland_synth_noise10_K10_C4",
     "directory": "kbucket://15734439d8cf/groundtruth/magland_synth/datasets_noise10_K10_C4/005_synth",
     "description": "One of the recordings in the magland_synth_noise10_K10_C4 study"
   },
   {
-    "name": "006_synth",
+    "name": "006_magland_synth_noise10_K10_C4",
     "study": "magland_synth_noise10_K10_C4",
     "directory": "kbucket://15734439d8cf/groundtruth/magland_synth/datasets_noise10_K10_C4/006_synth",
     "description": "One of the recordings in the magland_synth_noise10_K10_C4 study"
   },
   {
-    "name": "007_synth",
+    "name": "007_magland_synth_noise10_K10_C4",
     "study": "magland_synth_noise10_K10_C4",
     "directory": "kbucket://15734439d8cf/groundtruth/magland_synth/datasets_noise10_K10_C4/007_synth",
     "description": "One of the recordings in the magland_synth_noise10_K10_C4 study"
   },
   {
-    "name": "008_synth",
+    "name": "008_magland_synth_noise10_K10_C4",
     "study": "magland_synth_noise10_K10_C4",
     "directory": "kbucket://15734439d8cf/groundtruth/magland_synth/datasets_noise10_K10_C4/008_synth",
     "description": "One of the recordings in the magland_synth_noise10_K10_C4 study"
   },
   {
-    "name": "009_synth",
+    "name": "009_magland_synth_noise10_K10_C4",
     "study": "magland_synth_noise10_K10_C4",
     "directory": "kbucket://15734439d8cf/groundtruth/magland_synth/datasets_noise10_K10_C4/009_synth",
     "description": "One of the recordings in the magland_synth_noise10_K10_C4 study"
   },
   {
-    "name": "010_synth",
+    "name": "009_magland_synth_noise10_K10_C4",
     "study": "magland_synth_noise10_K10_C4",
     "directory": "kbucket://15734439d8cf/groundtruth/magland_synth/datasets_noise10_K10_C4/010_synth",
     "description": "One of the recordings in the magland_synth_noise10_K10_C4 study"

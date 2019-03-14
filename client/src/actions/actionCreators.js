@@ -4,15 +4,17 @@ import {
   getSorters,
   getTrueUnits
 } from "../dataHandlers";
+// TODO: Replace these with API calls
 
 const fetch = require("node-fetch");
 const baseurl = process.env.API_URL || "http://localhost:5000";
 
-export const SELECT_STUDY = "SELECT_STUDY";
 export const SELECT_RECORDING = "SELECT_RECORDING";
 export const RECEIVE_RECORDINGS = "RECEIVE_RECORDINGS";
 export const RECEIVE_SORTERS = "RECEIVE_SORTERS";
 export const RECEIVE_UNITS = "RECEIVE_UNITS";
+// Studies
+export const SELECT_STUDY = "SELECT_STUDY";
 export const RECEIVE_STUDIES = "RECEIVE_STUDIES";
 export const RECEIVE_PAIRING = "RECEIVE_PAIRING";
 export const RECEIVE_RECORDING_DETAILS = "RECEIVE_RECORDING_DETAILS";
@@ -27,7 +29,6 @@ export const SEND_CONTACT_FAILURE = "SEND_CONTACT_FAILURE";
 // default API call function
 export const createFetch = async url => {
   const newUrl = baseurl + url;
-  console.log(" in fetch", newUrl);
   const response = await fetch(newUrl, {
     method: "GET",
     mode: "same-origin",
