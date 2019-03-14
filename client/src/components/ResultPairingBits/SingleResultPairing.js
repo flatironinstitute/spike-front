@@ -202,10 +202,10 @@ class SingleResultPairing extends Component {
 
     let title = this.getFormatCopy();
     let subtitle = toTitleCase(this.state.metric);
-    let loadScatterplot =
-      isEmpty(this.props.studies) ||
-      isEmpty(this.props.sorters) ||
-      isEmpty(this.props.selectedStudy);
+    let loadScatterplot = true;
+    // isEmpty(this.props.studies) ||
+    // isEmpty(this.props.sorters) ||
+    // isEmpty(this.props.selectedStudy);
     return (
       <div>
         <div className="page__body">

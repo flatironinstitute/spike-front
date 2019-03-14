@@ -20,6 +20,7 @@ const studySchema = new mongoose.Schema({
     required: "You must provide a description name"
   },
   sorters: [{ type: mongoose.Schema.ObjectId, ref: "Sorter" }]
+  // TODO: Add ranges from the component recordings
 });
 
 module.exports = mongoose.model("Study", studySchema);
