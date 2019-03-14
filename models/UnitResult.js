@@ -24,28 +24,20 @@ const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
 const unitResultSchema = new mongoose.Schema({
+  bestSortedUnitId: {
+    type: Number
+  },
+  spikeSprayUrl: {
+    type: String
+  },
   name: {
     type: String,
     required: "You must provide a name for the unit result."
   },
-  accuracy: {
+  numFalseNegatives: {
     type: Number
   },
-  bestUnit: {
-    // TODO: how is this unit distinguished?
-    type: Number
-  },
-  directory: {
-    type: String
-  }
-  falseNeg: {
-    type: Number
-  },
-  falsePos: {
-    type: Number
-  },
-  matchedUnit: {
-    // TODO: how is this unit distinguished?
+  numFalsePositives: {
     type: Number
   },
   numMatches: {
@@ -55,10 +47,10 @@ const unitResultSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "Sorter"
   },
-  unit: {
+  trueUnit: {
     type: mongoose.Schema.ObjectId,
-    ref: "Unit"
-  },
+    ref: "TrueUnit"
+  }
 });
 
 module.exports = mongoose.model("UnitResult", unitResultSchema);

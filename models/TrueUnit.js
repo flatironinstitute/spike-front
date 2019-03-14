@@ -1,4 +1,4 @@
-/* Example Unit
+/* Example True Unit
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 // Note: The name provided here is an example of a name that could be used
 // to parse data before injest.
@@ -6,7 +6,7 @@
 // {
 //   _id: "58c039938060197ca0b52d4d",
 //   name: "synth_10_K10_C4_001_1",
-//   firingRate: 2.33,
+//   meanFiringRateHz: 2.33,
 //   numEvents: 1398,
 //   peakChannel: 0,
 //   recording: "58c08bbed1d97c276fd56ce3",
@@ -17,12 +17,12 @@
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
-const unitSchema = new mongoose.Schema({
+const trueUnitSchema = new mongoose.Schema({
   name: {
     type: String,
     required: "You must provide a unit name"
   },
-  firingRate: {
+  meanFiringRateHz: {
     type: Number
   },
   numEvents: {
@@ -45,4 +45,4 @@ const unitSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model("Unit", unitSchema);
+module.exports = mongoose.model("TrueUnit", trueUnitSchema);

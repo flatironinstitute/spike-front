@@ -1,39 +1,55 @@
 /* Example Recording
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-// Note: Here I used the existing names, however new names could be applied if needed.
-// The string that represents study here is an ObjectId (foreign key) from the study document.
-// I can structure the document injest such that I can manually add the foreign keys.
-// Or, map the relationship properties later if the text names provided are sufficiently detailed.
-//
-// Also, what data is in the directory here that is not included elsewhere?
-//
 // {
 //   _id: "58c08bbed1d97c276fd56ce3",
-//   name: "001_synth",
-//   study: "58c03ada8060197ca0b52d52",
 //   directory: "kbucket://15734439d8cf/groundtruth/magland_synth/datasets_noise10_K10_C4/001_synth",
-//   description: "One of the recordings in the magland_synth_noise10_K10_C4 study"
+//   durationSec: 30,
+//   fileSizeBytes: 123,
+//   name: "001_synth",
+//   numChannels: 4,
+//   numTrueUnits: 100,
+//   sampleRateHz: 12.123,
+//   spikeSign: -1,
+//   study: "58c03ada8060197ca0b52d52",
 // }
 
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
 const recordingSchema = new mongoose.Schema({
-  name: {
+  description: {
     type: String,
-    required: "You must provide a recording name"
-  },
-  study: {
-    type: mongoose.Schema.ObjectId,
-    ref: "Study"
+    required: "You must provide a description name"
   },
   directory: {
     type: String,
     required: "You must provide a directory name"
   },
-  description: {
+  durationSec: {
+    type: Number
+  },
+  fileSizeBytes: {
+    type: Number
+  },
+  name: {
     type: String,
-    required: "You must provide a description name"
+    required: "You must provide a recording name"
+  },
+  numChannels: {
+    type: Number
+  },
+  numTruthUnits: {
+    type: Number
+  },
+  sampleRateHz: {
+    type: Number
+  },
+  spikeSign: {
+    type: Number
+  },
+  study: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Study"
   }
 });
 

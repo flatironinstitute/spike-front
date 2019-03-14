@@ -48,7 +48,6 @@ class SinglePairingRow extends Component {
   }
 
   conditionalSelectStudy(datum) {
-    console.log("🎊, conditional select", datum);
     if (this.props.format !== "average") {
       this.props.selectStudy(datum);
     }
@@ -59,13 +58,6 @@ class SinglePairingRow extends Component {
     // TODO: What is the best default for this?
     const { data } = this.state;
     const loading = isEmpty(data);
-    console.log(
-      "🌭",
-      this.props,
-      this.state.hoveredNode,
-      this.props.selectedStudy,
-      this.props.format
-    );
     return (
       <div>
         {loading ? (

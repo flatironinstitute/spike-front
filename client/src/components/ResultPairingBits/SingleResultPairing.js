@@ -1,17 +1,24 @@
 import React, { Component } from "react";
+
+// Components
 import { Card, Col, Container, Row } from "react-bootstrap";
-import Preloader from "../Preloader/Preloader";
 import HeatmapOptionsRow from "../Heatmap/HeatmapOptionsRow";
-import SinglePairingRow from "./SinglePairingRow";
+import Preloader from "../Preloader/Preloader";
 import ReactJson from "react-json-view";
+import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
+import SinglePairingRow from "./SinglePairingRow";
 import SpikeSprayV1 from "./SpikeSprayV1";
 
-import { isEmpty } from "../../utils";
+// Redux
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as actionCreators from "../../actions/actionCreators";
 
+// Utilities 💡
+import { isEmpty, toTitleCase } from "../../utils";
 import "./singleresults.css";
 
-// import spikeforestwidgets from "./SpikeforestWidgets";
-
+// TODO: Refactor class into smaller components please
 class SingleResultPairing extends Component {
   constructor(props) {
     super(props);
@@ -24,7 +31,8 @@ class SingleResultPairing extends Component {
       sliderValue: 0.8,
       activeSorter: 0,
       openIcon: false,
-      builtData: []
+      builtData: [],
+      selectedRecording: {}
     };
   }
 
@@ -33,6 +41,7 @@ class SingleResultPairing extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    // TODO: Swap selected study state for props
     if (this.state.study !== prevState.study) {
       this.props.fetchPairing(this.state.study, this.state.sorter);
       // TODO: Tie this call to the scatterplot clicks
@@ -58,14 +67,23 @@ class SingleResultPairing extends Component {
     let results = this.props.pairing.filter(result => {
       return result.sorter && result.is_applied;
     });
+    var builtData;
     switch (this.state.format) {
       case "count":
-        this.filterAccuracy(results);
+        builtData = this.filterAccuracy(results);
         break;
       case "average":
-        this.filterSNR(results);
+        builtData = this.filterSNR(results);
         break;
+      default:
+        builtData = results;
     }
+    let selectedRecording = builtData.filter(
+      recording => recording.sorter === this.state.sorter
+    );
+    // TODO: Swap this with selectedRecording everywhere
+    this.props.selectStudy(selectedRecording[0]);
+    this.setState({ builtData: builtData });
   }
 
   // Count functions for 'Number of groundtruth units above accuracy threshold'
@@ -78,7 +96,6 @@ class SingleResultPairing extends Component {
       sorter.color = above.length;
       return sorter;
     });
-    console.log("🌑", newArr, this.state.sliderValue);
     return newArr;
   }
 
@@ -100,7 +117,6 @@ class SingleResultPairing extends Component {
       sorter.color = Math.round(aboveAvg * 100) / 100;
       return sorter;
     });
-    console.log("🐌", newArr, this.state.sliderValue);
     return newArr;
   }
 
@@ -153,6 +169,24 @@ class SingleResultPairing extends Component {
     });
   };
 
+  getFormatCopy() {
+    let copy;
+    switch (this.state.format) {
+      case "count":
+        copy = `Number units found above ${this.state.metric} threshold`;
+        break;
+      case "average":
+        copy = `Average ${this.state.metric} above SNR threshold`;
+        break;
+      case "cpu":
+        copy = "Estimated CPU Time";
+        break;
+      default:
+        copy = "";
+    }
+    return copy;
+  }
+
   render() {
     let results = isEmpty(this.props.pairing)
       ? []
@@ -164,9 +198,14 @@ class SingleResultPairing extends Component {
     let loading =
       isEmpty(this.state.study) ||
       isEmpty(this.state.sorter) ||
-      isEmpty(results);
+      isEmpty(this.state.builtData);
 
-    console.log("👘", this.state.builtData);
+    let title = this.getFormatCopy();
+    let subtitle = toTitleCase(this.state.metric);
+    let loadScatterplot =
+      isEmpty(this.props.studies) ||
+      isEmpty(this.props.sorters) ||
+      isEmpty(this.props.selectedStudy);
     return (
       <div>
         <div className="page__body">
@@ -207,13 +246,17 @@ class SingleResultPairing extends Component {
                   <div className="card card--stats">
                     <div className="content">
                       <div className="card__label">
-                        <p>Number of Units</p>
+                        <p>{title}</p>
+                        <p className="card__category">
+                          <strong>{subtitle}:</strong>{" "}
+                          <span className="updated">ADD FORMULA HERE?</span>
+                        </p>
                       </div>
                       <div className="card__footer">
                         <hr />
                         <SinglePairingRow
                           {...this.props}
-                          vizDatum={results}
+                          vizDatum={this.state.builtData}
                           key={`hmrow${0}`}
                           index={0}
                           format={this.state.format}
@@ -239,24 +282,18 @@ class SingleResultPairing extends Component {
               </Row>
               <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
-                  <div className="card card--stats">
-                    <div className="content">
-                      <div className="card__label">
-                        <p>
-                          <strong>Scatterplot here</strong>
-                        </p>
-                      </div>
-                      <div className="card__footer">
-                        <hr />
-                        <p>
-                          Hello Add a Scatterplot Liz{" "}
-                          <span role="img" aria-label="fireworks">
-                            🎆
-                          </span>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                  {loadScatterplot ? (
+                    <Card>
+                      <Card.Body>
+                        <Preloader />
+                      </Card.Body>
+                    </Card>
+                  ) : (
+                    <ScatterplotCard
+                      {...this.props}
+                      sliderValue={this.state.sliderValue}
+                    />
+                  )}
                 </Col>
               </Row>
               <Row className="container__sorter--row">
@@ -344,7 +381,21 @@ class SingleResultPairing extends Component {
   }
 }
 
-export default SingleResultPairing;
+function mapStateToProps(state) {
+  return {
+    selectedStudy: state.selectedStudy,
+    selectedRecording: state.selectedRecording
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(actionCreators, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SingleResultPairing);
 
 // NOTES:
 // Sample url : http://localhost:3000/results/magland-synth-noise10-K10-C4/MountainSort4-thr3

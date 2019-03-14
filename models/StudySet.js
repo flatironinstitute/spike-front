@@ -6,6 +6,7 @@
 // {
 //   _id: "58c039018060197ca0b52d4c",
 //   name: "magland_synth",
+//   type: "synthetic",
 //   studies: ["58c03ada8060197ca0b52d52","58c03ada8060197ca0b52d53"]
 // }
 
@@ -17,6 +18,12 @@ const studySetSchema = new mongoose.Schema({
     type: String,
     required: "You must provide a name for the study set."
   },
+  type: {
+    type: String,
+  },
+  description: {
+    type: String,
+  }
   studies: [{ type: mongoose.Schema.ObjectId, ref: "Study" }]
 });
 

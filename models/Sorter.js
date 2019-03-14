@@ -7,9 +7,9 @@
 //   name: "MountainSort4-thr3",
 //   processorName: "MountainSort4",
 //   version: "4.1.0",
-//   detectSign: -1,
-//   adjacencyRadius: 50,
-//   detectThreshold: 3
+//   sortingParameters: {
+//      detectRadius: 1
+//   }
 // }
 
 const mongoose = require("mongoose");
@@ -20,6 +20,9 @@ const sorterSchema = new mongoose.Schema({
     type: String,
     required: "You must provide a name for the sorter."
   },
+  algorithm: {
+    type: String
+  },
   processorName: {
     type: String,
     required: "You must provide a processor name for the sorter."
@@ -28,17 +31,9 @@ const sorterSchema = new mongoose.Schema({
     type: String,
     required: "You must provide a version for the sorter."
   },
-  detectSign: {
-    type: Number
-    //   Is there a min/max for this?
-  },
-  adjacencyRadius: {
-    type: Number
-    //   Is there a min/max for this?
-  },
-  detectThreshold: {
-    type: Number
-    //   Is there a min/max for this?
+  sortingParameters: {
+    type: Object,
+    required: "You must provide sorting params please."
   }
 });
 

@@ -66,7 +66,7 @@ class HeatmapViz extends Component {
           <h4 className="card__title">{title}</h4>
           <p className="card__category">
             <strong>{subtitle}:</strong>{" "}
-            <span className="updated">ADD FORMULA HERE</span>
+            <span className="updated">Do you want FORMULAs here?</span>
           </p>
         </div>
         {loading ? (
