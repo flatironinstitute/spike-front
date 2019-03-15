@@ -1,39 +1,43 @@
 [
   {
+    "_id": "5c8bb7d572e97bcd197fa8fa",
     "name": "MountainSort4-thr3",
+    "algorithm": "MountainSort4",
     "processorName": "MountainSort4",
-    "version": "4.1.0",
-    "detectSign": -1,
-    "adjacencyRadius": 50,
-    "detectThreshold": 3
+    "processorVersion": "0",
+    "sorting_parameters": {
+      "detect_sign": -1,
+      "adjacency_radius": 50,
+      "detect_threshold": 3
+    }
   },
   {
+    "_id": "5c8bb7d572e97bcd197fa8fb",
     "name": "SpykingCircus",
+    "algorithm": "SpykingCircus",
     "processorName": "SpykingCircus",
-    "version": "0.1.7",
-    "detectSign": -1,
-    "adjacencyRadius": 50
+    "processorVersion": "0",
+    "sorting_parameters": { "detect_sign": -1, "adjacency_radius": 50 }
   },
   {
-    "name": "IronClust-drift",
+    "_id": "5c8bb7d572e97bcd197fa8fc",
+    "name": "Yass",
+    "algorithm": "Yass",
+    "processorName": "Yass",
+    "processorVersion": "0",
+    "sorting_parameters": { "detect_sign": -1, "adjacency_radius": 50 }
+  },
+  {
+    "_id": "5c8bb7d572e97bcd197fa8fd",
+    "name": "IronClust-static",
+    "algorithm": "IronClust",
     "processorName": "IronClust",
-    "version": "4.2.8",
-    "detectSign": -1,
-    "adjacencyRadius": 50
-  },
-  {
-    "name": "IronClust-tetrode",
-    "processorName": "IronClust",
-    "version": "4.2.8",
-    "detectSign": -1,
-    "adjacencyRadius": 50,
-    "detectThreshold": 5
-  },
-  {
-    "name": "KiloSort",
-    "processorName": "KiloSort",
-    "version": "0.1.0",
-    "detectSign": -1,
-    "adjacencyRadius": 50
+    "processorVersion": "0",
+    "sorting_parameters": {
+      "detect_sign": -1,
+      "adjacency_radius": 50,
+      "prm_template_name": "static_template.prm",
+      "detect_threshold": 5
+    }
   }
 ]

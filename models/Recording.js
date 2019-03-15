@@ -1,21 +1,19 @@
 /* Example Recording
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-// Note: Here I used the existing names, however new names could be applied if needed.
-// The string that represents study here is an ObjectId (foreign key) from the study document.
-// I can structure the document injest such that I can manually add the foreign keys.
-// Or, map the relationship properties later if the text names provided are sufficiently detailed.
-//
-// Also, what data is in the directory here that is not included elsewhere?
-//
 // {
 //   _id: "58c08bbed1d97c276fd56ce3",
-//   name: "001_synth",
-//   study: "58c03ada8060197ca0b52d52",
-//   directory: "kbucket://15734439d8cf/groundtruth/magland_synth/datasets_noise10_K10_C4/001_synth",
-//   description: "One of the recordings in the magland_synth_noise10_K10_C4 study"
-// }
+//   "study": "5c8bc0a3b6b5b4d964f8c125",
+//   "directory": "kbucket://15734439d8cf/groundtruth/visapy_mea/set1",
+//   "description": "One of the recordings in the visapy_mea study",
+//   "sampleRateHz": 32000.0,
+//   "numChannels": 30,
+//   "durationSec": 300.0,
+//   "numTrueUnits": 16,
+//   "spikeSign": -1
+// },
 
 const mongoose = require("mongoose");
+var Float = require("mongoose-float").loadType(mongoose);
 mongoose.Promise = global.Promise;
 
 const recordingSchema = new mongoose.Schema({
@@ -34,6 +32,21 @@ const recordingSchema = new mongoose.Schema({
   description: {
     type: String,
     required: "You must provide a description name"
+  },
+  sampleRateHz: {
+    type: Float
+  },
+  numChannels: {
+    type: Number
+  },
+  durationSec: {
+    type: Float
+  },
+  numTrueUnits: {
+    type: Number
+  },
+  spikeSign: {
+    type: Number
   }
 });
 

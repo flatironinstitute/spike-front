@@ -5,8 +5,7 @@
 //
 // {
 //   _id: "58c039018060197ca0b52d4c",
-//   name: "magland_synth",
-//   studies: ["58c03ada8060197ca0b52d52","58c03ada8060197ca0b52d53"]
+//   name: "magland_synth"
 // }
 
 const mongoose = require("mongoose");
@@ -16,8 +15,7 @@ const studySetSchema = new mongoose.Schema({
   name: {
     type: String,
     required: "You must provide a name for the study set."
-  },
-  studies: [{ type: mongoose.Schema.ObjectId, ref: "Study" }]
+  }
 });
 
 module.exports = mongoose.model("StudySet", studySetSchema);

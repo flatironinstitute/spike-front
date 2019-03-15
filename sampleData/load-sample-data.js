@@ -7,37 +7,44 @@ mongoose.Promise = global.Promise;
 
 // import all of our models - they need to be imported only once
 const Sorter = require("../models/Sorter");
-const Study = require("../models/Study");
 const StudySet = require("../models/StudySet");
-// const Recording = require("../models/Recording");
-// const Unit = require("../models/Unit");
-// const UnitResult = require("../models/UnitResult");
+const Study = require("../models/Study");
+const Recording = require("../models/Recording");
+const TrueUnit = require("../models/TrueUnit");
+const SortingResult = require("../models/SortingResult");
+const UnitResult = require("../models/UnitResult");
 
 const sorters = JSON.parse(
   fs.readFileSync(__dirname + "/sorters.json", "utf-8")
 );
-const studies = JSON.parse(
-  fs.readFileSync(__dirname + "/studies.json", "utf-8")
-);
 const studysets = JSON.parse(
   fs.readFileSync(__dirname + "/studysets.json", "utf-8")
 );
-// const recordings = JSON.parse(
-//   fs.readFileSync(__dirname + "/recordings.json", "utf-8")
-// );
-// const units = JSON.parse(fs.readFileSync(__dirname + "/units.json", "utf-8"));
-// const unitresults = JSON.parse(
-//   fs.readFileSync(__dirname + "/unitresults.json", "utf-8")
-// );
+const studies = JSON.parse(
+  fs.readFileSync(__dirname + "/studies.json", "utf-8")
+);
+const recordings = JSON.parse(
+  fs.readFileSync(__dirname + "/recordings.json", "utf-8")
+);
+const trueunits = JSON.parse(
+  fs.readFileSync(__dirname + "/trueunits.json", "utf-8")
+);
+const sortingresults = JSON.parse(
+  fs.readFileSync(__dirname + "/sortingresults.json", "utf-8")
+);
+const unitresults = JSON.parse(
+  fs.readFileSync(__dirname + "/unitresults.json", "utf-8")
+);
 
 async function deleteData() {
   console.log("😢😢 Goodbye Data...");
   await Sorter.remove();
-  await Study.remove();
   await StudySet.remove();
-  //   await Recording.remove();
-  //   await Unit.remove();
-  //   await UnitResult.remove();
+  await Study.remove();
+  await Recording.remove();
+  await TrueUnit.remove();
+  await SortingResult.remove();
+  await UnitResult.remove();
   console.log(
     "Data Deleted. To load sample data, run\n\n\t yarn run sample\n\n"
   );
@@ -47,11 +54,12 @@ async function deleteData() {
 async function loadData() {
   try {
     await Sorter.insertMany(sorters);
-    await Study.insertMany(studies);
     await StudySet.insertMany(studysets);
-    //   await Recording.insertMany(recordings);
-    //   await Unit.insertMany(units);
-    //   await UnitResult.insertMany(unitresults);
+    await Study.insertMany(studies);
+    await Recording.insertMany(recordings);
+    await TrueUnit.insertMany(trueunits);
+    await SortingResult.insertMany(sortingresults);
+    await UnitResult.insertMany(unitresults);
 
     console.log("👍👍👍👍👍👍👍👍 Done!");
     process.exit();
