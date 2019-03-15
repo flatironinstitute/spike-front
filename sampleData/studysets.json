@@ -1,51 +1,5 @@
 [
-  {
-    "name": "magland_synth",
-    "studies": [
-      "5c897ec867410d8c656a2a9e",
-      "5c897ec867410d8c656a2a9f",
-      "5c897ec867410d8c656a2aa0",
-      "5c897ec867410d8c656a2aa1",
-      "5c897ec867410d8c656a2aa2",
-      "5c897ec867410d8c656a2aa3",
-      "5c897ec867410d8c656a2aa4",
-      "5c897ec867410d8c656a2aa5"
-    ]
-  },
-  {
-    "name": "mearec_tetrode",
-    "studies": [
-      "5c897ec867410d8c656a2aa6",
-      "5c897ec867410d8c656a2aa7",
-      "5c897ec867410d8c656a2aa8",
-      "5c897ec867410d8c656a2aa9"
-    ]
-  },
-  {
-    "name": "bionet",
-    "studies": [
-      "5c897ec867410d8c656a2aaa",
-      "5c897ec867410d8c656a2aab",
-      "5c897ec867410d8c656a2aac",
-      "5c897ec867410d8c656a2aad",
-      "5c897ec867410d8c656a2aae",
-      "5c897ec867410d8c656a2aaf"
-    ]
-  },
-  {
-    "name": "paired",
-    "studies": [
-      "5c897ec867410d8c656a2ab0",
-      "5c897ec867410d8c656a2ab1",
-      "5c897ec867410d8c656a2ab2"
-    ]
-  },
-  {
-    "name": "manual_tetrode",
-    "studies": [
-      "5c897ec867410d8c656a2ab3",
-      "5c897ec867410d8c656a2ab4",
-      "5c897ec867410d8c656a2ab5"
-    ]
-  }
+  { "name": "visapy_mea" },
+  { "name": "magland_synth" },
+  { "name": "mearec_neuronexus" }
 ]

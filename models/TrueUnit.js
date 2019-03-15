@@ -1,19 +1,3 @@
-/* Example True Unit
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-// Note: The name provided here is an example of a name that could be used
-// to parse data before injest.
-//
-// {
-//   _id: "58c039938060197ca0b52d4d",
-//   name: "synth_10_K10_C4_001_1",
-//   meanFiringRateHz: 2.33,
-//   numEvents: 1398,
-//   peakChannel: 0,
-//   recording: "58c08bbed1d97c276fd56ce3",
-//   snr: 12.173096066945002,
-//   study: "58c03ada8060197ca0b52d52",
-// }
-// Liz TODO: Determine if it is worth directly mapping here, or if via recording is enough.
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
