@@ -146,7 +146,7 @@ class Metrics extends Component {
                         <span className="metrics__label">Precision:</span>
                         <MathJax.Node
                           formula={
-                            "p^k := \\frac{n_{  \\rm match }^k}{n_{  \\rm match }^k + n_{  \\rm fp }^k} = \\frac{n_{  \\rm match }^k}{n^k} = \\frac{ \\rm n_2}{ \\rm n_2+n_3}"
+                            "p_k := \\frac{n_{  \\rm match }^k}{n_{  \\rm match }^k + n_{  \\rm fp }^k} = \\frac{n_{  \\rm match }^k}{n^k} = \\frac{ \\rm n_2}{ \\rm n_2+n_3}"
                           }
                         />
                       </p>
@@ -263,7 +263,7 @@ class Metrics extends Component {
                         Then,
                         <MathJax.Node
                           formula={
-                            "\\mbox{ SNR} _k := \\frac{\\mbox{ max }\\_{m=1,\\dots,\\ M, \\ t=1,\\dots,T}  |w_m^k(t)|}{\\sigma _m}"
+                            "\\mbox{ SNR} _k := \\frac{\\mbox{ max }_{m=1,\\dots,\\ M, \\ t=1,\\dots,T}\\  |w_m^k(t)|}{\\sigma _m}"
                           }
                         />
                         {"   "}where a robust estimate of the
@@ -284,7 +284,7 @@ class Metrics extends Component {
                         <MathJax.Node
                           inline
                           formula={
-                            "\\overline{y_m} := \\frac{1}{T} \\sum_{(t = 1)}^T y_m(t)"
+                            "\\overline{y_m} := \\frac{1}{T} \\sum_{t = 1}^T y_m(t)"
                           }
                         />{" "}
                         is the channel average.
