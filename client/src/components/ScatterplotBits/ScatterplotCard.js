@@ -35,6 +35,7 @@ class ScatterplotCard extends Component {
   }
 
   render() {
+    console.log("🤳", this.props.selectedStudy);
     const study = this.props.selectedStudy
       ? this.props.selectedStudy.study
       : "";
@@ -61,11 +62,6 @@ class ScatterplotCard extends Component {
                 accuracies for the ground truth units are updated on a daily
                 basis as needed. Approximate CPU/GPU run times are also
                 reported.
-              </p>
-              <p className="card__category">
-                <br />
-                📝 There is space here to add more copy. Any thoughts on what
-                else I should include ?
               </p>
             </div>
           ) : (

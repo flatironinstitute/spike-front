@@ -17,20 +17,6 @@ import * as actionCreators from "../../actions/actionCreators";
 // Stylin'
 import "./heatmap.css";
 
-// TODO: re-incorporate legend
-// <Row>
-//   <div className="heatmap__legend">
-//     <ContinuousColorLegend
-//       width={580}
-//       startColor={"#fafafd"}
-//       endColor={"#384ca2"}
-//       startTitle={"Lowest Average Accuracy"}
-//       endTitle={"Highest Average Accuracy"}
-//       height={20}
-//     />
-//   </div>
-// </Row>
-
 class HeatmapCPU extends Component {
   constructor(props) {
     super(props);

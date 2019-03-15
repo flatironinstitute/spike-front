@@ -10,6 +10,7 @@ import {
   LineSeries,
   Hint
 } from "react-vis";
+import { toTitleCase } from "../../utils";
 
 class Scatterplot extends Component {
   constructor(props) {
@@ -71,8 +72,8 @@ class Scatterplot extends Component {
   render() {
     const { data, colorType, hoveredNode, minSNR, maxSNR } = this.state;
     const colorRanges = {
-      typeA: ["#59E4EC", "#0D676C"],
-      typeB: ["#EFC1E3", "#B52F93"]
+      count: ["#59E4EC", "#0D676C"],
+      average: ["#EFC1E3", "#B52F93"]
     };
     const alignment = { vertical: "top", horizontal: "left" };
     let valueObj = {
@@ -84,10 +85,11 @@ class Scatterplot extends Component {
       num_events: hoveredNode ? hoveredNode.num_events : null
     };
     let lineObjArr = [
-      { x: minSNR, y: this.props.accuracy },
-      { x: maxSNR, y: this.props.accuracy }
+      { x: minSNR, y: this.props.sliderValue },
+      { x: maxSNR, y: this.props.sliderValue }
     ];
     const tickValues = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
+    const yTitle = toTitleCase(this.props.metric);
     return (
       <div className="canvas-wrapper">
         <XYPlot
@@ -98,23 +100,25 @@ class Scatterplot extends Component {
           <VerticalGridLines />
           <HorizontalGridLines />
           <XAxis title="SNR" />
-          <YAxis title="Accuracy" tickValues={tickValues} />
+          <YAxis title={yTitle} tickValues={tickValues} />
           <MarkSeries
             animation={true}
             className="mark-series-example"
             sizeRange={[3, 15]}
             seriesId="my-example-scatterplot"
-            colorRange={colorRanges[colorType]}
+            colorRange={colorRanges[this.props.format]}
             opacityType="literal"
             data={data}
             onValueMouseOver={d => this.setState({ hoveredNode: d })}
             onValueClick={d => this.setState({ selectedRecording: d })}
           />
-          <LineSeries
-            className="fourth-series"
-            strokeDasharray="7, 3"
-            data={lineObjArr}
-          />
+          {this.props.format == "count" ? (
+            <LineSeries
+              className="fourth-series"
+              strokeDasharray="7, 3"
+              data={lineObjArr}
+            />
+          ) : null}
           {hoveredNode && <Hint value={valueObj} align={alignment} />}
         </XYPlot>
       </div>

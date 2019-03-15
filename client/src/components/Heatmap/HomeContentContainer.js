@@ -67,7 +67,7 @@ class HomeContentContainer extends Component {
                   {...this.props}
                   format={this.state.format}
                   metric={this.state.metric}
-                  accuracy={this.state.sliderValue}
+                  sliderValue={this.state.sliderValue}
                 />
               );
             case "average":

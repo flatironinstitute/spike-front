@@ -10,7 +10,7 @@ class SinglePairingRow extends Component {
     this.state = { hoveredNode: null, data: null };
     this.dims = {
       height: 50,
-      width: 620
+      width: 700
     };
     this.margin = { left: 190, right: 80, top: 5, bottom: 5 };
     if (this.props.index === 0) {

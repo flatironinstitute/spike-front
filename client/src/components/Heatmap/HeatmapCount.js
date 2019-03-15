@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import HeatmapViz from "./HeatmapViz";
 import { isEmpty } from "../../utils";
 
 // Components
+import { Col, Container, Row } from "react-bootstrap";
+import HeatmapViz from "./HeatmapViz";
 import Preloader from "../Preloader/Preloader";
 import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
-import { Col, Container, Row } from "react-bootstrap";
-// import { ContinuousColorLegend } from "react-vis";
 
 // Redux
 import { bindActionCreators } from "redux";
@@ -33,7 +32,7 @@ class HeatmapCount extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (
       this.props.unitsMap !== prevProps.unitsMap ||
-      this.props.accuracy !== prevProps.accuracy
+      this.props.sliderValue !== prevProps.sliderValue
     ) {
       this.filterAccuracyMap();
     }
@@ -43,7 +42,7 @@ class HeatmapCount extends Component {
   filterAccuracy(sorterArray) {
     let newArr = sorterArray.map(sorter => {
       let above = sorter.accuracies.filter(accu => {
-        return accu >= this.props.accuracy;
+        return accu >= this.props.sliderValue;
       });
       sorter.in_range = above.length;
       sorter.color = above.length;
@@ -85,7 +84,7 @@ class HeatmapCount extends Component {
               <Col lg={6} sm={12}>
                 <ScatterplotCard
                   {...this.props}
-                  sliderValue={this.props.accuracy}
+                  sliderValue={this.props.sliderValue}
                 />
               </Col>
             </Row>
