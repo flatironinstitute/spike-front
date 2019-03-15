@@ -18,7 +18,6 @@ class Scatterplot extends Component {
 
     this.state = {
       data: [],
-      colorType: "typeA",
       hoveredNode: null,
       minSNR: 0,
       maxSNR: 100
@@ -70,7 +69,7 @@ class Scatterplot extends Component {
   }
 
   render() {
-    const { data, colorType, hoveredNode, minSNR, maxSNR } = this.state;
+    const { data, hoveredNode, minSNR, maxSNR } = this.state;
     const colorRanges = {
       count: ["#59E4EC", "#0D676C"],
       average: ["#EFC1E3", "#B52F93"]
@@ -112,7 +111,7 @@ class Scatterplot extends Component {
             onValueMouseOver={d => this.setState({ hoveredNode: d })}
             onValueClick={d => this.setState({ selectedRecording: d })}
           />
-          {this.props.format == "count" ? (
+          {this.props.format === "count" ? (
             <LineSeries
               className="fourth-series"
               strokeDasharray="7, 3"
