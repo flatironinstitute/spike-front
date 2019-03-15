@@ -1,13 +1,14 @@
 const mongoose = require("mongoose");
+var Float = require("mongoose-float").loadType(mongoose);
 mongoose.Promise = global.Promise;
 
 const trueUnitSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: "You must provide a unit name"
+  unitId: {
+    type: Number,
+    required: "You must provide a unit id"
   },
   meanFiringRateHz: {
-    type: Number
+    type: Float
   },
   numEvents: {
     type: Number
@@ -20,7 +21,7 @@ const trueUnitSchema = new mongoose.Schema({
     ref: "Recording"
   },
   snr: {
-    type: Number,
+    type: Float,
     required: "You must provide an snr."
   },
   study: {

@@ -3,18 +3,19 @@ var Float = require("mongoose-float").loadType(mongoose);
 mongoose.Promise = global.Promise;
 
 const recordingSchema = new mongoose.Schema({
-  description: {
+  name: {
     type: String,
-    required: "You must provide a description name"
+    required: "You must provide a recording name"
+  },
+  study: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Study"
   },
   directory: {
     type: String,
     required: "You must provide a directory name"
   },
-  fileSizeBytes: {
-    type: Number
-  },
-  name: {
+  description: {
     type: String,
     required: "You must provide a description name"
   },
