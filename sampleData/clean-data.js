@@ -10,8 +10,11 @@ const studysets = JSON.parse(
 const studies = JSON.parse(
   fs.readFileSync(__dirname + "/studies.json", "utf-8")
 );
+const idRecordings = JSON.parse(
+  fs.readFileSync(__dirname + "/recordings_withId.json", "utf-8")
+);
 const recordings = JSON.parse(
-  fs.readFileSync(__dirname + "/recordings2.json", "utf-8")
+  fs.readFileSync(__dirname + "/recordings.json", "utf-8")
 );
 const trueunits = JSON.parse(
   fs.readFileSync(__dirname + "/trueunits.json", "utf-8")
@@ -50,9 +53,24 @@ function mapNewUnits() {
   });
 }
 
-function matchNamesToUnits() {
-  let newUnits = mapNewUnits();
-  fs.writeFile("./unitresults01.json", JSON.stringify(newUnits), err => {
+function AddIdsToUnits() {
+  return recordings.map(recording => {
+    let recordingsMatch = idRecordings.filter(idrecord => {
+      return (
+        idrecord.name === recording.name &&
+        idrecord.study.$oid === recording.study
+      );
+    });
+    if (recordingsMatch.length) {
+      recording._id = recordingsMatch[0]._id.$oid;
+    }
+    return recording;
+  });
+}
+
+function writeNewFile() {
+  let newUnits = AddIdsToUnits();
+  fs.writeFile("./recordings02.json", JSON.stringify(newUnits), err => {
     if (err) {
       console.log("😭👎😭", err);
       return;
@@ -73,5 +91,5 @@ function validateUnits() {
   console.log(boguses);
 }
 
-matchNamesToUnits();
+writeNewFile();
 // validateUnits();
