@@ -1,0 +1,86 @@
+import React, { Component } from "react";
+import { Col, Container, Row } from "react-bootstrap";
+import ReactJson from "react-json-view";
+
+import "./pages.css";
+import iggy from "./iggy2.jpg";
+
+const fetch = require("node-fetch");
+const baseurl = process.env.API_URL || "http://localhost:5000";
+
+class RawData extends Component {
+  constructor(props) {
+    super(props);
+
+    this.models = [
+      "recordings",
+      "sorters",
+      "sortingResults",
+      "studies",
+      "studySets",
+      "trueUnits",
+      "unitResults"
+    ];
+
+    this.state = {
+      recordings: [],
+      sorters: [],
+      sortingResults: [],
+      studies: [],
+      studySets: [],
+      trueUnits: [],
+      unitResults: []
+    };
+  }
+
+  async componentWillMount() {
+    this.models.map(model => this.createFetch(model));
+  }
+
+  async createFetch(model) {
+    const newUrl = baseurl + "/api/" + model;
+    const response = await fetch(newUrl, {
+      method: "GET",
+      mode: "same-origin",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    });
+    const body = await response.json();
+    if (response.status !== 200) {
+      throw Error(body.message);
+    } else {
+      this.setState(body);
+    }
+  }
+
+  render() {
+    return (
+      <div className="page__body">
+        <Container className="container__heatmap">
+          <div className="card card--heatmap text-center">
+            <h2>Raw Data from All Models</h2>
+            <Row className="justify-content-md-center">
+              <Col xs lg="12">
+                <img className="card__image" src={iggy} alt="iggypop" />
+              </Col>
+            </Row>
+          </div>
+          {this.models.map((model, i) => (
+            <div className="card card--heatmap" key={"jspretty" + model + i}>
+              <h2>{model.toUpperCase()}</h2>
+              <Row className="justify-content-md-center">
+                <Col lg="10">
+                  <ReactJson src={this.state[model]} />
+                </Col>
+              </Row>
+            </div>
+          ))}
+        </Container>
+      </div>
+    );
+  }
+}
+export default RawData;
