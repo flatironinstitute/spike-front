@@ -64,8 +64,6 @@ kbclient.setPairioConfig({
 
 /* API
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-// TODO: Convert this to the actual request for data from KBUCKET on the results controller
-// Currently pulling data from a stub data json
 
 // app.get("/api/studies", (req, res) => {
 //   const Study = require("../models/Study");
