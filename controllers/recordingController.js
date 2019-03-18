@@ -4,7 +4,7 @@ const Recording = mongoose.model("Recording"); //Singleton from mongoose
 exports.getRecordings = async (req, res) => {
   const recordingsPromise = Recording.find();
   const [recordings] = await Promise.all([recordingsPromise]);
-  res.json({ recordings: recordings });
+  res.send({ recordings: recordings });
 };
 
 exports.getRecordingById = async (req, res, next) => {
@@ -12,5 +12,5 @@ exports.getRecordingById = async (req, res, next) => {
   if (!recording) {
     return next();
   }
-  res.json({ recording: recording });
+  res.send({ recording: recording });
 };

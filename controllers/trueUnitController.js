@@ -4,7 +4,7 @@ const TrueUnit = mongoose.model("TrueUnit"); //Singleton from mongoose
 exports.getTrueUnits = async (req, res) => {
   const trueUnitsPromise = TrueUnit.find();
   const [trueUnits] = await Promise.all([trueUnitsPromise]);
-  res.json({ trueUnits: trueUnits });
+  res.send({ trueUnits: trueUnits });
 };
 
 exports.getTrueUnitById = async (req, res, next) => {
@@ -12,5 +12,5 @@ exports.getTrueUnitById = async (req, res, next) => {
   if (!trueUnit) {
     return next();
   }
-  res.json({ trueUnit: trueUnit });
+  res.send({ trueUnit: trueUnit });
 };

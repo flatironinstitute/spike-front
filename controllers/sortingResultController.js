@@ -4,7 +4,7 @@ const SortingResult = mongoose.model("SortingResult"); //Singleton from mongoose
 exports.getSortingResults = async (req, res) => {
   const sortingResultsPromise = SortingResult.find();
   const [sortingResults] = await Promise.all([sortingResultsPromise]);
-  res.json({ sortingResults: sortingResults });
+  res.send({ sortingResults: sortingResults });
 };
 
 exports.getSortingResultById = async (req, res, next) => {
@@ -12,5 +12,5 @@ exports.getSortingResultById = async (req, res, next) => {
   if (!sortingResult) {
     return next();
   }
-  res.json({ sortingResult: sortingResult });
+  res.send({ sortingResult: sortingResult });
 };

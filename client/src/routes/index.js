@@ -19,6 +19,7 @@ import Metrics from "../components/Pages/Metrics";
 import Contact from "../components/Contact/Contact";
 import SingleResultPairing from "../components/ResultPairingBits/SingleResultPairing";
 import FourOhFour from "../components/Pages/FourOhFour";
+import RawData from "../components/Pages/RawData";
 
 class Routes extends Component {
   async componentDidMount() {
@@ -58,6 +59,10 @@ class Routes extends Component {
           <Route
             path="/contact"
             render={props => <Contact {...this.props} />}
+          />
+          <Route
+            path="/rawdata"
+            render={props => <RawData {...this.props} />}
           />
           <Route
             path="/results/magland-synth-noise10-K10-C4/MountainSort4-thr3"

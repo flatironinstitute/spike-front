@@ -4,7 +4,7 @@ const StudySet = mongoose.model("StudySet"); //Singleton from mongoose
 exports.getStudySets = async (req, res) => {
   const studySetsPromise = StudySet.find();
   const [studySets] = await Promise.all([studySetsPromise]);
-  res.json({ studySets: studySets });
+  res.send({ studySets: studySets });
 };
 
 exports.getStudySetById = async (req, res, next) => {
@@ -12,5 +12,5 @@ exports.getStudySetById = async (req, res, next) => {
   if (!studySet) {
     return next();
   }
-  res.json({ studySet: studySet });
+  res.send({ studySet: studySet });
 };

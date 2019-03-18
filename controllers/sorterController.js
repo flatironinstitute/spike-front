@@ -4,7 +4,7 @@ const Sorter = mongoose.model("Sorter");
 exports.getSorters = async (req, res) => {
   const sortersPromise = Sorter.find();
   const [sorters] = await Promise.all([sortersPromise]);
-  res.json({ sorters: sorters });
+  res.send({ sorters: sorters });
 };
 
 exports.getSorterById = async (req, res, next) => {
@@ -12,5 +12,5 @@ exports.getSorterById = async (req, res, next) => {
   if (!sorter) {
     return next();
   }
-  res.json({ sorter: sorter });
+  res.send({ sorter: sorter });
 };
