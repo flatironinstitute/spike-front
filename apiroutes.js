@@ -9,6 +9,9 @@ const studySetController = require("./controllers/studySetController");
 const trueUnitController = require("./controllers/trueUnitController");
 const unitResultsController = require("./controllers/unitResultsController");
 
+const recDetails = require("./stubData/recordingDetails.js");
+const fakeResult = require("./stubData/fakeResult.js");
+
 // Recordings
 router.get("/api/recordings", recordingController.getRecordings);
 router.get("/api/recording/:id", recordingController.getRecordingById);
@@ -21,7 +24,7 @@ router.get("/api/storter/:id", sorterController.getSorterById);
 router.get("/api/sortingresults", sortingResultController.getSortingResults);
 router.get(
   "/api/sortingresult/:id",
-  sortingResultController.getSortingResultsById
+  sortingResultController.getSortingResultById
 );
 // TODO: write pairing routes
 // router.get(
@@ -89,5 +92,4 @@ function formatSpikes(recDetails) {
   }
   return formatted;
 }
-
 module.exports = router;

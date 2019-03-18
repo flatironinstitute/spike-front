@@ -7,7 +7,7 @@ exports.getStudySets = async (req, res) => {
   res.json({ studySets: studySets });
 };
 
-exports.getStudySetsById = async (req, res, next) => {
+exports.getStudySetById = async (req, res, next) => {
   const studySet = await StudySet.findOne({ id: req.params.id });
   if (!studySet) {
     return next();

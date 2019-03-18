@@ -15,6 +15,13 @@ mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 mongoose.connection.on("error", err => {
   console.error(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
 });
+require("./models/Recording");
+require("./models/Sorter");
+require("./models/SortingResult");
+require("./models/Study");
+require("./models/StudySet");
+require("./models/TrueUnit");
+require("./models/UnitResult");
 
 /* Express Isomorphic
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -22,10 +29,9 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const app = express();
-var fs = require("fs");
 const port = process.env.PORT || 5000;
-const recDetails = require("./stubData/recordingDetails.js");
-const fakeResult = require("./stubData/fakeResult.js");
+const apiroutes = require("./apiroutes");
+
 // const mail = require("./email/mail");
 
 app.use(bodyParser.json());
@@ -50,66 +56,10 @@ app.use(function(req, res, next) {
   next();
 });
 
-// TODO: Remove when mongoDB setup is in place
-/* KBucket
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-const KBucketClient = require("@magland/kbucket").KBucketClient;
-let kbclient = new KBucketClient();
-kbclient.setConfig({
-  share_ids: ["spikeforest.spikeforest1"]
-});
-kbclient.setPairioConfig({
-  collections: ["spikeforest"]
-});
-
 /* API
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-
-// app.get("/api/studies", (req, res) => {
-//   const Study = require("../models/Study");
-//   const studies = await Study.find().sort({ name: 'desc' });
-//   res.send({ studies: studies });
-// });
-
-app.get("/api/:study/:sorter", (req, res) => {
-  let study = req.params.study;
-  let sorter = req.params.sorter;
-  res.send({ results: fakeResult });
-});
-
-app.get("/api/:study/:sorter/:recording", (req, res) => {
-  let study = req.params.study;
-  let sorter = req.params.sorter;
-  let recording = req.params.recording;
-  // TODO: Will I need to do this formatting from the server?
-  let formatted = formatSpikes(recDetails);
-  res.send({ recordingDetails: formatted });
-});
-
-app.post("/api/contact", (req, res) => {
-  // TODO: Attach to mail server when credit card is available.
-  console.log("🗺️", req.body);
-  res.send({
-    success: true
-  });
-});
-
-function formatSpikes(recDetails) {
-  const keys = Object.keys(recDetails);
-  var formatted = new Object();
-  for (const key of keys) {
-    let newChannel = recDetails[key].map(spikeArr => {
-      return spikeArr.map(timepoints => {
-        return timepoints.map((timepoint, i) => {
-          let timeVal = 1.67 * i;
-          return { x: timeVal, y: timepoint };
-        });
-      });
-    });
-    formatted[key] = newChannel;
-  }
-  return formatted;
-}
+// Handle all the api routing!
+app.use("/", apiroutes);
 
 /* Client Server
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
