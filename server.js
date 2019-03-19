@@ -38,7 +38,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(function(req, res, next) {
   // Allow isomorphic requests
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+
+  let clientUri = process.env.API_URL || "https://localhost:3000";
+  res.setHeader("Access-Control-Allow-Origin", clientUri);
 
   // Request methods
   res.setHeader("Access-Control-Allow-Methods", "GET, POST");

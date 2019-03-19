@@ -3,7 +3,6 @@ import { Col, Container, Row } from "react-bootstrap";
 import ReactJson from "react-json-view";
 
 import "./pages.css";
-import iggy from "./iggy2.jpg";
 
 const fetch = require("node-fetch");
 const baseurl = process.env.API_URL || "http://localhost:5000";
@@ -41,7 +40,7 @@ class RawData extends Component {
     const newUrl = baseurl + "/api/" + model;
     const response = await fetch(newUrl, {
       method: "GET",
-      mode: "same-origin",
+      mode: "no-cors",
       credentials: "same-origin",
       headers: {
         Accept: "application/json",
@@ -57,6 +56,7 @@ class RawData extends Component {
   }
 
   render() {
+    console.log("API URI", baseurl);
     return (
       <div className="page__body">
         <Container className="container__heatmap">
