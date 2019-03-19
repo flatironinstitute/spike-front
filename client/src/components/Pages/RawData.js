@@ -60,16 +60,11 @@ class RawData extends Component {
     return (
       <div className="page__body">
         <Container className="container__heatmap">
-          <div className="card card--heatmap text-center">
-            <h2>Raw Data from All Models</h2>
-            <Row className="justify-content-md-center">
-              <Col xs lg="12">
-                <img className="card__image" src={iggy} alt="iggypop" />
-              </Col>
-            </Row>
+          <div className="card card--rawdata text-center">
+            <h1>Raw data from all models</h1>
           </div>
           {this.models.map((model, i) => (
-            <div className="card card--heatmap" key={"jspretty" + model + i}>
+            <div className="card card--rawdata" key={"jspretty" + model + i}>
               <h2>{model.toUpperCase()}</h2>
               <Row className="justify-content-md-center">
                 <Col lg="10">

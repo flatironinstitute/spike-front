@@ -227,3 +227,10 @@
   min-width: 7rem;
   margin-right: 8rem;
 }
+
+/* Raw Data
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.card--rawdata {
+  padding: 15px;
+  margin-bottom: 3rem;
+}
