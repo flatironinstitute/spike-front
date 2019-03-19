@@ -6,11 +6,13 @@ import "./pages.css";
 
 const fetch = require("node-fetch");
 var baseurl;
-if (process.env.NODE_ENV === "production") {
-  baseurl = process.env.API_URL;
-} else {
-  baseurl = "http://localhost:5000";
-}
+// if (process.env.NODE_ENV === "production") {
+//   baseurl = window.location.href;
+//   console.log(baseurl);
+// } else {
+console.log("🍊", window.location.href);
+baseurl = "http://localhost:5000";
+// }
 
 class RawData extends Component {
   constructor(props) {
@@ -46,7 +48,6 @@ class RawData extends Component {
     const response = await fetch(newUrl, {
       method: "GET",
       mode: "no-cors",
-      credentials: "same-origin",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
@@ -61,7 +62,7 @@ class RawData extends Component {
   }
 
   render() {
-    console.log("API URI", baseurl);
+    console.log("In Raw Render", baseurl);
     return (
       <div className="page__body">
         <Container className="container__heatmap">
