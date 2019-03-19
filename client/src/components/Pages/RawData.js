@@ -6,13 +6,12 @@ import "./pages.css";
 
 const fetch = require("node-fetch");
 var baseurl;
-// if (process.env.NODE_ENV === "production") {
-//   baseurl = window.location.href;
-//   console.log(baseurl);
-// } else {
-console.log("🍊", window.location.href);
-baseurl = "http://localhost:5000";
-// }
+if (process.env.NODE_ENV === "production") {
+  baseurl = window.location.href.replace("/rawdata", "");
+  console.log("🍊", baseurl);
+} else {
+  baseurl = "http://localhost:5000";
+}
 
 class RawData extends Component {
   constructor(props) {
