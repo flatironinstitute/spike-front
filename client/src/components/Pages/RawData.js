@@ -5,7 +5,12 @@ import ReactJson from "react-json-view";
 import "./pages.css";
 
 const fetch = require("node-fetch");
-const baseurl = process.env.API_URL || "http://localhost:5000";
+var baseurl;
+if (process.env.NODE_ENV === "production") {
+  baseurl = process.env.API_URL;
+} else {
+  baseurl = "http://localhost:5000";
+}
 
 class RawData extends Component {
   constructor(props) {
