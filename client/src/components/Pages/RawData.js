@@ -6,7 +6,7 @@ import "./pages.css";
 
 const fetch = require("node-fetch");
 var baseurl;
-console.log("🐨".process.env.NODE_ENV);
+console.log("🐨", process.env.NODE_ENV);
 if (process.env.NODE_ENV === "production") {
   baseurl = window.location.href.replace("/rawdata", "");
   console.log("🍊", baseurl);
