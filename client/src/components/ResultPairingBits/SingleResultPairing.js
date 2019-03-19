@@ -247,10 +247,6 @@ class SingleResultPairing extends Component {
                     <div className="content">
                       <div className="card__label">
                         <p>{title}</p>
-                        <p className="card__category">
-                          <strong>{subtitle}:</strong>{" "}
-                          <span className="updated">ADD FORMULA HERE?</span>
-                        </p>
                       </div>
                       <div className="card__footer">
                         <hr />
