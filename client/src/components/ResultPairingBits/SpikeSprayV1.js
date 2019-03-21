@@ -33,6 +33,23 @@ class SpikeSprayV1 extends Component {
     }, {});
   }
 
+  getMinY(data) {
+    return data.reduce((min, p) => (p.y < min ? p.y : min), data[0].y);
+  }
+
+  getMaxY(data) {
+    return data.reduce((max, p) => (p.y > max ? p.y : max), data[0].y);
+  }
+
+  // TODO: Refactor so these are consolidated
+  getMinMinY(data) {
+    return data.reduce((min, p) => (p.minY < min ? p.minY : min), data[0].minY);
+  }
+
+  getMaxMaxY(data) {
+    return data.reduce((max, p) => (p.maxY > max ? p.maxY : max), data[0].maxY);
+  }
+
   buildSprayData(recDetails) {
     const entries = Object.entries(recDetails);
     let spikeCols = [];
@@ -49,7 +66,9 @@ class SpikeSprayV1 extends Component {
           let colorLine = colorArr[i];
           lines.push({
             color: colorLine,
-            data: timepoints
+            data: timepoints,
+            maxY: this.getMaxY(timepoints),
+            minY: this.getMinY(timepoints)
           });
         });
       });
@@ -57,6 +76,10 @@ class SpikeSprayV1 extends Component {
       let colorArr = ["#cd3b54", "#59b953", "#ba4fb9", "gray"];
       let colorGroups = colorArr.map(color => {
         let colorGroup = lines.filter(line => line.color === color);
+        let minminY = this.getMinMinY(colorGroup);
+        let maxmaxY = this.getMaxMaxY(colorGroup);
+        let accurateOffset = Math.abs(minminY - maxmaxY) / 2 + 20;
+
         return colorGroup;
       });
       flatCols.push(colorGroups);
@@ -109,7 +132,6 @@ class SpikeSprayV1 extends Component {
                       />
                     ))}
                     <XAxis title={`Channel-${i + 1}`} />
-                    <YAxis />
                   </XYPlot>
                 ))}
               </Col>
