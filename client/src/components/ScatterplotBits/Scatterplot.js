@@ -71,8 +71,9 @@ class Scatterplot extends Component {
   render() {
     const { data, hoveredNode, minSNR, maxSNR } = this.state;
     const colorRanges = {
-      count: ["#59E4EC", "#0D676C"],
-      average: ["#EFC1E3", "#B52F93"]
+      count: ["#7AB6FF", "#152570"],
+      average: ["#EFC1E3", "#B52F93"],
+      cpu: ["#EFC1E3", "#B52F93"]
     };
     const alignment = { vertical: "top", horizontal: "left" };
     let valueObj = {
