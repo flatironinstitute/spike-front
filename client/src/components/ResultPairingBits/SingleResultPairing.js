@@ -15,7 +15,7 @@ import { connect } from "react-redux";
 import * as actionCreators from "../../actions/actionCreators";
 
 // Utilities 💡
-import { isEmpty, toTitleCase } from "../../utils";
+import { isEmpty } from "../../utils";
 import "./singleresults.css";
 
 // TODO: Refactor class into smaller components please
@@ -201,7 +201,6 @@ class SingleResultPairing extends Component {
       isEmpty(this.state.builtData);
 
     let title = this.getFormatCopy();
-    let subtitle = toTitleCase(this.state.metric);
     let loadScatterplot = true;
     // isEmpty(this.props.studies) ||
     // isEmpty(this.props.sorters) ||

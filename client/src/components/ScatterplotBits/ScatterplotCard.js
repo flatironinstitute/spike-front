@@ -35,7 +35,7 @@ class ScatterplotCard extends Component {
   }
 
   render() {
-    console.log("🤳", this.props.selectedStudy);
+    console.log("🤳selected study", this.props.selectedStudy);
     const study = this.props.selectedStudy
       ? this.props.selectedStudy.study
       : "";
