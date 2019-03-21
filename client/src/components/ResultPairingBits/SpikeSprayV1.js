@@ -82,11 +82,6 @@ class SpikeSprayV1 extends Component {
     });
   }
 
-  // getLineColor(data) {
-  //   console.log("hoveredNide", this.state.hoveredNode);
-  //   return this.state.hoveredNode === data ? "#f6cf3f" : "#807f84";
-  // }
-
   render() {
     let loading = isEmpty(this.state.spikeCols);
     let colTitles = [

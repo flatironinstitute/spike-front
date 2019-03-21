@@ -277,7 +277,7 @@ class SingleResultPairing extends Component {
                   />
                 </Col>
               </Row>
-              <Row className="container__sorter--row">
+              {/* <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
                   {loadScatterplot ? (
                     <Card>
@@ -292,7 +292,7 @@ class SingleResultPairing extends Component {
                     />
                   )}
                 </Col>
-              </Row>
+              </Row> */}
               <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
                   <div className="card card--heatmap">
