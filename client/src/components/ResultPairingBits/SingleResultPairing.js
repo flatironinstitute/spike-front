@@ -15,7 +15,7 @@ import { connect } from "react-redux";
 import * as actionCreators from "../../actions/actionCreators";
 
 // Utilities 💡
-import { isEmpty, toTitleCase } from "../../utils";
+import { isEmpty } from "../../utils";
 import "./singleresults.css";
 
 // TODO: Refactor class into smaller components please
@@ -201,7 +201,6 @@ class SingleResultPairing extends Component {
       isEmpty(this.state.builtData);
 
     let title = this.getFormatCopy();
-    let subtitle = toTitleCase(this.state.metric);
     let loadScatterplot = true;
     // isEmpty(this.props.studies) ||
     // isEmpty(this.props.sorters) ||
@@ -247,10 +246,6 @@ class SingleResultPairing extends Component {
                     <div className="content">
                       <div className="card__label">
                         <p>{title}</p>
-                        <p className="card__category">
-                          <strong>{subtitle}:</strong>{" "}
-                          <span className="updated">ADD FORMULA HERE?</span>
-                        </p>
                       </div>
                       <div className="card__footer">
                         <hr />
@@ -271,6 +266,7 @@ class SingleResultPairing extends Component {
               <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
                   <HeatmapOptionsRow
+                    showCPU={false}
                     handleFormatChange={this.handleFormatChange}
                     handleSliderChange={this.handleSliderChange}
                     handleMetricChange={this.handleMetricChange}

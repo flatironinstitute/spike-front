@@ -16,6 +16,7 @@ class HeatmapOptionsRow extends Component {
           <Row className="container__heatmap--row">
             <Col lg={largeCols} sm={12}>
               <ModeCard
+                showCPU={this.props.showCPU}
                 format={this.props.format}
                 handleFormatChange={this.props.handleFormatChange}
               />

@@ -58,6 +58,11 @@ class SinglePairingRow extends Component {
     // TODO: What is the best default for this?
     const { data } = this.state;
     const loading = isEmpty(data);
+    const colorRange = {
+      count: ["#fff", "#384ca2"],
+      cpu: ["#fff", "#6238a2"],
+      average: ["#fff", "#38a28f"]
+    };
     return (
       <div>
         {loading ? (
@@ -100,7 +105,7 @@ class SinglePairingRow extends Component {
               />
               {/* TODO: I think I need a smarter way to handle this information*/}
               <HeatmapSeries
-                colorRange={["#fff", "#564592"]}
+                colorRange={colorRange[this.props.format]}
                 data={data}
                 style={{
                   text: {
