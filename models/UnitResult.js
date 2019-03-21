@@ -51,7 +51,8 @@ const unitResultSchema = new mongoose.Schema({
   }
 });
 
-unitResultSchema.pre("insertMany", async function(next) {
+unitResultSchema.pre("save", async function(next) {
+  console.log("IN THE SAVE 🦓");
   this.precision = this.numMatches / (this.numMatches + this.numFalsePositives);
   this.recall = this.numMatches / (this.numMatches + this.numFalseNegatives);
   this.accuracy =
