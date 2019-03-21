@@ -58,8 +58,8 @@ class HeatmapRow extends Component {
     // TODO: use the color range tool from the d3 test local repo to reset scales
     const colorRange = {
       count: ["#fff", "#384ca2"],
-      average: ["#fff", "#4D2C54"],
-      cpu: ["#fff", "#B23A2A"]
+      cpu: ["#fff", "#6238a2"],
+      average: ["#fff", "#15423A"]
     };
     return (
       <div>

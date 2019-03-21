@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import Preloader from "../Preloader/Preloader";
 import {
+  Crosshair,
   XYPlot,
   XAxis,
-  YAxis,
   HorizontalGridLines,
   LineSeries
 } from "react-vis";
@@ -14,7 +14,7 @@ import { isEmpty } from "../../utils";
 class SpikeSprayV1 extends Component {
   constructor(props) {
     super(props);
-    this.state = { spikeCols: [] };
+    this.state = { splitSpikeCols: [], spikeCols: [], hoveredNode: null };
   }
 
   componentDidUpdate(prevProps) {
@@ -33,6 +33,19 @@ class SpikeSprayV1 extends Component {
     }, {});
   }
 
+  addOffset(timepoints, i) {
+    let offset = -200 * i;
+    let newTPs = [];
+    timepoints.forEach(timepoint => {
+      let newtp = {
+        x: timepoint.x,
+        y: timepoint.y + offset
+      };
+      newTPs.push(newtp);
+    });
+    return newTPs;
+  }
+
   buildSprayData(recDetails) {
     const entries = Object.entries(recDetails);
     let spikeCols = [];
@@ -40,7 +53,8 @@ class SpikeSprayV1 extends Component {
       console.log("Spray being made", key);
       spikeCols.push(spikeCol);
     }
-    let flatCols = [];
+    let testCols = [];
+    let splitCols = [];
     spikeCols.forEach(spikes => {
       let lines = [];
       spikes.forEach(channels => {
@@ -49,7 +63,7 @@ class SpikeSprayV1 extends Component {
           let colorLine = colorArr[i];
           lines.push({
             color: colorLine,
-            data: timepoints
+            data: this.addOffset(timepoints, i)
           });
         });
       });
@@ -59,11 +73,12 @@ class SpikeSprayV1 extends Component {
         let colorGroup = lines.filter(line => line.color === color);
         return colorGroup;
       });
-      flatCols.push(colorGroups);
+      splitCols.push(colorGroups);
+      testCols.push(lines);
     });
-
     this.setState({
-      spikeCols: flatCols
+      splitSpikeCols: splitCols,
+      spikeCols: testCols
     });
   }
 
@@ -86,35 +101,68 @@ class SpikeSprayV1 extends Component {
             </Card>
           </Container>
         ) : (
-          <Row>
-            {this.state.spikeCols.map((colorGroup, i) => (
-              <Col lg={3} key={`spikecol-${Math.random(i)}`}>
-                <div className="card__label">
-                  <p>
-                    <strong>{colTitles[i]}</strong>
-                  </p>
-                </div>
-                {colorGroup.map((lines, i) => (
+          <div>
+            <Row>
+              {this.state.spikeCols.map((column, i) => (
+                <Col lg={3} key={`spikecol-${Math.random(i)}`}>
+                  <div className="card__label">
+                    <p>
+                      <strong>{colTitles[i]}</strong>
+                    </p>
+                  </div>
                   <XYPlot
-                    width={300}
-                    height={300}
+                    width={350}
+                    height={350}
                     key={`spikeplot-${Math.random(i)}`}
                   >
+                    <XAxis title="Time units here" />
                     <HorizontalGridLines />
-                    {lines.map((line, i) => (
+                    {column.map((line, i) => (
                       <LineSeries
                         key={`line-${Math.random(i)}`}
-                        color={line.color}
+                        color={
+                          this.state.hoveredNode === line.data
+                            ? "#f6cf3f"
+                            : "#807f84"
+                        }
                         data={line.data}
+                        style={{ strokeWidth: 0.25 }}
+                        onNearestXY={d => this.setState({ hoveredNode: d })}
                       />
                     ))}
-                    <XAxis title={`Channel-${i + 1}`} />
-                    <YAxis />
                   </XYPlot>
-                ))}
-              </Col>
-            ))}
-          </Row>
+                </Col>
+              ))}
+            </Row>
+            <Row>
+              {this.state.splitSpikeCols.map((colorGroup, i) => (
+                <Col lg={3} key={`spikecol-${Math.random(i)}`}>
+                  <div className="card__label">
+                    <p>
+                      <strong>{colTitles[i]}</strong>
+                    </p>
+                  </div>
+                  {colorGroup.map((lines, i) => (
+                    <XYPlot
+                      width={300}
+                      height={300}
+                      key={`spikeplot-${Math.random(i)}`}
+                    >
+                      <HorizontalGridLines />
+                      {lines.map((line, i) => (
+                        <LineSeries
+                          key={`line-${Math.random(i)}`}
+                          color={line.color}
+                          data={line.data}
+                        />
+                      ))}
+                      <XAxis title={`Channel-${i + 1}`} />
+                    </XYPlot>
+                  ))}
+                </Col>
+              ))}
+            </Row>
+          </div>
         )}
       </div>
     );

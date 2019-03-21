@@ -58,6 +58,7 @@ class HomeContentContainer extends Component {
           format={this.state.format}
           metric={this.state.metric}
           sliderValue={this.state.sliderValue}
+          showCPU={true}
         />
         {(() => {
           switch (this.state.format) {

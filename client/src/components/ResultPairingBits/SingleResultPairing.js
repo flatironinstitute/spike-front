@@ -134,7 +134,7 @@ class SingleResultPairing extends Component {
 
   handleSorterChange = value => {
     this.setState({
-      sorter: value
+      sorter: value.sorter
     });
   };
 
@@ -257,6 +257,7 @@ class SingleResultPairing extends Component {
                           format={this.state.format}
                           sorters={sorters.sort()}
                           selectedSorter={this.state.sorter}
+                          handleSorterChange={this.handleSorterChange}
                         />
                       </div>
                     </div>
@@ -266,6 +267,7 @@ class SingleResultPairing extends Component {
               <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
                   <HeatmapOptionsRow
+                    showCPU={false}
                     handleFormatChange={this.handleFormatChange}
                     handleSliderChange={this.handleSliderChange}
                     handleMetricChange={this.handleMetricChange}
@@ -275,7 +277,7 @@ class SingleResultPairing extends Component {
                   />
                 </Col>
               </Row>
-              <Row className="container__sorter--row">
+              {/* <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
                   {loadScatterplot ? (
                     <Card>
@@ -290,7 +292,7 @@ class SingleResultPairing extends Component {
                     />
                   )}
                 </Col>
-              </Row>
+              </Row> */}
               <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
                   <div className="card card--heatmap">

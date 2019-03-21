@@ -45,9 +45,11 @@ export class ModeCard extends Component {
                 <option key={"average-1"} value={"average"}>
                   Average metric above SNR threshold
                 </option>
-                <option key={"cpu-1"} value={"cpu"}>
-                  Estimated CPU Time
-                </option>
+                {this.props.showCPU ? (
+                  <option key={"cpu-1"} value={"cpu"}>
+                    Estimated CPU Time
+                  </option>
+                ) : null}
               </Form.Control>
             </div>
           </div>
