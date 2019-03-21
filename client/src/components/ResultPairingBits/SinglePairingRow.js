@@ -26,7 +26,7 @@ class SinglePairingRow extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.selectedStudy !== prevProps.selectedStudy) {
+    if (this.props.selectedSorter !== prevProps.selectedSorter) {
       this.setData();
     }
   }
@@ -37,7 +37,10 @@ class SinglePairingRow extends Component {
     colorMap.sort((a, b) => a - b);
     let withColor = this.props.vizDatum.map(datum => {
       datum.style = colorMap.indexOf(datum.color) > 2 ? { fill: "white" } : {};
-      if (this.props.selectedStudy && this.props.selectedStudy === datum) {
+      if (
+        this.props.selectedSorter &&
+        this.props.selectedSorter === datum.sorter
+      ) {
         datum.style = { fill: "#F6782D" };
       }
       return datum;
@@ -45,12 +48,6 @@ class SinglePairingRow extends Component {
     this.setState({
       data: withColor
     });
-  }
-
-  conditionalSelectStudy(datum) {
-    if (this.props.format !== "average") {
-      this.props.selectStudy(datum);
-    }
   }
 
   render() {
@@ -119,7 +116,7 @@ class SinglePairingRow extends Component {
                   this.setState({ hoveredNode: d });
                 }}
                 onValueClick={d => {
-                  this.conditionalSelectStudy(d);
+                  this.props.handleSorterChange(d);
                 }}
               />
               <LabelSeries
@@ -127,7 +124,7 @@ class SinglePairingRow extends Component {
                 labelAnchorX="middle"
                 labelAnchorY="central"
                 onValueClick={d => {
-                  this.conditionalSelectStudy(d);
+                  this.props.handleSorterChange(d);
                 }}
                 getLabel={d => {
                   return d.in_range > 0 ? `${d.in_range}` : "";

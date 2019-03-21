@@ -134,7 +134,7 @@ class SingleResultPairing extends Component {
 
   handleSorterChange = value => {
     this.setState({
-      sorter: value
+      sorter: value.sorter
     });
   };
 
@@ -257,6 +257,7 @@ class SingleResultPairing extends Component {
                           format={this.state.format}
                           sorters={sorters.sort()}
                           selectedSorter={this.state.sorter}
+                          handleSorterChange={this.handleSorterChange}
                         />
                       </div>
                     </div>
