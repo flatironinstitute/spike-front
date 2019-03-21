@@ -38,12 +38,12 @@ const unitresults = JSON.parse(
 
 async function deleteData() {
   console.log("😢😢 Goodbye Data...");
-  await Sorter.remove();
-  await StudySet.remove();
-  await Study.remove();
-  await Recording.remove();
-  await TrueUnit.remove();
-  await SortingResult.remove();
+  // await Sorter.remove();
+  // await StudySet.remove();
+  // await Study.remove();
+  // await Recording.remove();
+  // await TrueUnit.remove();
+  // await SortingResult.remove();
   await UnitResult.remove();
   console.log(
     "Data Deleted. To load sample data, run\n\n\t yarn run sample\n\n"
@@ -53,12 +53,12 @@ async function deleteData() {
 
 async function loadData() {
   try {
-    await Sorter.insertMany(sorters);
-    await StudySet.insertMany(studysets);
-    await Study.insertMany(studies);
-    await Recording.insertMany(recordings);
-    await TrueUnit.insertMany(trueunits);
-    await SortingResult.insertMany(sortingresults);
+    // await Sorter.insertMany(sorters);
+    // await StudySet.insertMany(studysets);
+    // await Study.insertMany(studies);
+    // await Recording.insertMany(recordings);
+    // await TrueUnit.insertMany(trueunits);
+    // await SortingResult.insertMany(sortingresults);
     await UnitResult.insertMany(unitresults);
 
     console.log("👍👍👍👍👍👍👍👍 Done!");
