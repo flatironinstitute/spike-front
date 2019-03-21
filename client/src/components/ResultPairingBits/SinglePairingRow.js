@@ -57,8 +57,8 @@ class SinglePairingRow extends Component {
     const loading = isEmpty(data);
     const colorRange = {
       count: ["#fff", "#384ca2"],
-      cpu: ["#fff", "#6238a2"],
-      average: ["#fff", "#38a28f"]
+      average: ["#fff", "#15423A"],
+      cpu: ["#fff", "#6238a2"]
     };
     return (
       <div>

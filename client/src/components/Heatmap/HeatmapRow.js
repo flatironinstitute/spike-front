@@ -59,7 +59,7 @@ class HeatmapRow extends Component {
     const colorRange = {
       count: ["#fff", "#384ca2"],
       cpu: ["#fff", "#6238a2"],
-      average: ["#fff", "#38a28f"]
+      average: ["#fff", "#15423A"]
     };
     return (
       <div>
