@@ -26,7 +26,7 @@ class SinglePairingRow extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.selectedStudy !== prevProps.selectedStudy) {
+    if (this.props.selectedSorter !== prevProps.selectedSorter) {
       this.setData();
     }
   }
@@ -37,7 +37,10 @@ class SinglePairingRow extends Component {
     colorMap.sort((a, b) => a - b);
     let withColor = this.props.vizDatum.map(datum => {
       datum.style = colorMap.indexOf(datum.color) > 2 ? { fill: "white" } : {};
-      if (this.props.selectedStudy && this.props.selectedStudy === datum) {
+      if (
+        this.props.selectedSorter &&
+        this.props.selectedSorter === datum.sorter
+      ) {
         datum.style = { fill: "#F6782D" };
       }
       return datum;
@@ -47,17 +50,16 @@ class SinglePairingRow extends Component {
     });
   }
 
-  conditionalSelectStudy(datum) {
-    if (this.props.format !== "average") {
-      this.props.selectStudy(datum);
-    }
-  }
-
   render() {
     // TODO: Add Selected Study Highlighting?
     // TODO: What is the best default for this?
     const { data } = this.state;
     const loading = isEmpty(data);
+    const colorRange = {
+      count: ["#fff", "#384ca2"],
+      cpu: ["#fff", "#6238a2"],
+      average: ["#fff", "#15423A"]
+    };
     return (
       <div>
         {loading ? (
@@ -100,7 +102,7 @@ class SinglePairingRow extends Component {
               />
               {/* TODO: I think I need a smarter way to handle this information*/}
               <HeatmapSeries
-                colorRange={["#fff", "#564592"]}
+                colorRange={colorRange[this.props.format]}
                 data={data}
                 style={{
                   text: {
@@ -114,7 +116,7 @@ class SinglePairingRow extends Component {
                   this.setState({ hoveredNode: d });
                 }}
                 onValueClick={d => {
-                  this.conditionalSelectStudy(d);
+                  this.props.handleSorterChange(d);
                 }}
               />
               <LabelSeries
@@ -122,7 +124,7 @@ class SinglePairingRow extends Component {
                 labelAnchorX="middle"
                 labelAnchorY="central"
                 onValueClick={d => {
-                  this.conditionalSelectStudy(d);
+                  this.props.handleSorterChange(d);
                 }}
                 getLabel={d => {
                   return d.in_range > 0 ? `${d.in_range}` : "";
