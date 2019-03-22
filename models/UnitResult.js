@@ -31,15 +31,36 @@ const unitResultSchema = new mongoose.Schema({
   checkAccuracy: {
     type: Float
   },
+  accuracy: {
+    type: Float
+  },
   checkPrecision: {
     type: Float
   },
+  precision: {
+    type: Float
+  },
   checkRecall: {
+    type: Float
+  },
+  recall: {
     type: Float
   },
   bestSortedUnitId: {
     type: Number
   }
 });
+
+// function autopopulate(next) {
+//   console.log("In Unit Results autopopulate 🚗");
+//   this.precision = this.numMatches / (this.numMatches + this.numFalsePositives);
+//   this.recall = this.numMatches / (this.numMatches + this.numFalseNegatives);
+//   this.accuracy =
+//     this.numMatches /
+//     (this.numMatches + this.numFalsePositives + this.numFalseNegatives);
+// }
+
+// unitResultSchema.pre("find", autopopulate);
+// unitResultSchema.pre("findOne", autopopulate);
 
 module.exports = mongoose.model("UnitResult", unitResultSchema);

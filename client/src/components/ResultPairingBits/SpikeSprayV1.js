@@ -1,13 +1,7 @@
 import React, { Component } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import Preloader from "../Preloader/Preloader";
-import {
-  Crosshair,
-  XYPlot,
-  XAxis,
-  HorizontalGridLines,
-  LineSeries
-} from "react-vis";
+import { XYPlot, XAxis, HorizontalGridLines, LineSeries } from "react-vis";
 
 import { isEmpty } from "../../utils";
 
@@ -107,7 +101,7 @@ class SpikeSprayV1 extends Component {
                 <Col lg={3} key={`spikecol-${Math.random(i)}`}>
                   <div className="card__label">
                     <p>
-                      <strong>{colTitles[i]}</strong>
+                      <strong>{colTitles[i]} x of y spikes shown</strong>
                     </p>
                   </div>
                   <XYPlot
@@ -115,8 +109,7 @@ class SpikeSprayV1 extends Component {
                     height={350}
                     key={`spikeplot-${Math.random(i)}`}
                   >
-                    <XAxis title="Time units here" />
-                    <HorizontalGridLines />
+                    <XAxis title="Samples" />
                     {column.map((line, i) => (
                       <LineSeries
                         key={`line-${Math.random(i)}`}

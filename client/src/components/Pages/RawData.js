@@ -60,7 +60,6 @@ class RawData extends Component {
   }
 
   render() {
-    console.log("In Raw Render", baseurl);
     return (
       <div className="page__body">
         <Container className="container__heatmap">

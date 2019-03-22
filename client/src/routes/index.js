@@ -35,18 +35,10 @@ class Routes extends Component {
         <Header router={this.props.router} />
         <Switch>
           <Route exact path="/" render={props => <Home {...this.props} />} />
-          <Route
-            path="/sorters"
-            render={props => <Sorters {...this.props} />}
-          />
           <Route path="/about" render={props => <About {...this.props} />} />
           <Route
-            path="/recordings"
-            render={props => <Recordings {...this.props} />}
-          />
-          <Route
-            path="/studies"
-            render={props => <Studies {...this.props} />}
+            path="/contact"
+            render={props => <Contact {...this.props} />}
           />
           <Route
             path="/internals"
@@ -57,12 +49,20 @@ class Routes extends Component {
             render={props => <Metrics {...this.props} />}
           />
           <Route
-            path="/contact"
-            render={props => <Contact {...this.props} />}
-          />
-          <Route
             path="/rawdata"
             render={props => <RawData {...this.props} />}
+          />
+          <Route
+            path="/recordings"
+            render={props => <Recordings {...this.props} />}
+          />
+          <Route
+            path="/sorters"
+            render={props => <Sorters {...this.props} />}
+          />
+          <Route
+            path="/studies"
+            render={props => <Studies {...this.props} />}
           />
           <Route
             path="/results/magland-synth-noise10-K10-C4/MountainSort4-thr3"

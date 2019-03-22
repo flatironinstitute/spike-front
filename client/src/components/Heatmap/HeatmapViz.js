@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import HeatmapRow from "./HeatmapRow";
-import { isEmpty, toTitleCase } from "../../utils";
+import { isEmpty } from "../../utils";
 
 class HeatmapViz extends Component {
   constructor(props) {
@@ -59,15 +59,10 @@ class HeatmapViz extends Component {
   render() {
     const loading = isEmpty(this.state.vizData);
     const title = this.getFormatCopy();
-    let subtitle = toTitleCase(this.props.metric);
     return (
       <div className="card card--heatmap">
         <div className="card__header">
           <h4 className="card__title">{title}</h4>
-          <p className="card__category">
-            <strong>{subtitle}:</strong>{" "}
-            <span className="updated">Do you want FORMULAs here?</span>
-          </p>
         </div>
         {loading ? (
           <h4>...</h4>

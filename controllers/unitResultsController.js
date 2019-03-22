@@ -4,6 +4,13 @@ const UnitResult = mongoose.model("UnitResult"); //Singleton from mongoose
 exports.getUnitResults = async (req, res) => {
   const unitResultPromise = UnitResult.find();
   const [unitResults] = await Promise.all([unitResultPromise]);
+  const updatedURs = [];
+
+  unitResults.forEach(result => {
+    const ur = UnitResult(result).update();
+  });
+  console.log("🦄", updatedUnitResults);
+
   res.send({ unitResults: unitResults });
 };
 
