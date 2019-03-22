@@ -51,15 +51,16 @@ const unitResultSchema = new mongoose.Schema({
   }
 });
 
-unitResultSchema.pre("save", async function(next) {
-  console.log("IN THE SAVE 🦓");
-  this.precision = this.numMatches / (this.numMatches + this.numFalsePositives);
-  this.recall = this.numMatches / (this.numMatches + this.numFalseNegatives);
-  this.accuracy =
-    this.numMatches /
-    (this.numMatches + this.numFalsePositives + this.numFalseNegatives);
+// function autopopulate(next) {
+//   console.log("In Unit Results autopopulate 🚗");
+//   this.precision = this.numMatches / (this.numMatches + this.numFalsePositives);
+//   this.recall = this.numMatches / (this.numMatches + this.numFalseNegatives);
+//   this.accuracy =
+//     this.numMatches /
+//     (this.numMatches + this.numFalsePositives + this.numFalseNegatives);
+// }
 
-  next();
-});
+// unitResultSchema.pre("find", autopopulate);
+// unitResultSchema.pre("findOne", autopopulate);
 
 module.exports = mongoose.model("UnitResult", unitResultSchema);

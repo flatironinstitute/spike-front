@@ -36,4 +36,12 @@ const recordingSchema = new mongoose.Schema({
   }
 });
 
+function autopopulate(next) {
+  this.populate("study");
+  next();
+}
+
+recordingSchema.pre("find", autopopulate);
+recordingSchema.pre("findOne", autopopulate);
+
 module.exports = mongoose.model("Recording", recordingSchema);
