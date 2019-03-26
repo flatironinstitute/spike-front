@@ -71,6 +71,7 @@ async function loadData() {
     process.exit();
   }
 }
+
 if (process.argv.includes("--delete")) {
   deleteData();
 } else {

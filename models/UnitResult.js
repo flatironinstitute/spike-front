@@ -11,10 +11,6 @@ const unitResultSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "Recording"
   },
-  study: {
-    type: mongoose.Schema.ObjectId,
-    ref: "Study"
-  },
   sorter: {
     type: mongoose.Schema.ObjectId,
     ref: "Sorter"
@@ -31,19 +27,10 @@ const unitResultSchema = new mongoose.Schema({
   checkAccuracy: {
     type: Float
   },
-  accuracy: {
-    type: Float
-  },
   checkPrecision: {
     type: Float
   },
-  precision: {
-    type: Float
-  },
   checkRecall: {
-    type: Float
-  },
-  recall: {
     type: Float
   },
   bestSortedUnitId: {
@@ -51,10 +38,25 @@ const unitResultSchema = new mongoose.Schema({
   }
 });
 
+unitResultSchema.methods.getPrecision = function() {
+  return this.numMatches / (this.numMatches + this.numFalsePositives);
+};
+
+unitResultSchema.methods.getRecall = function() {
+  return this.numMatches / (this.numMatches + this.numFalseNegatives);
+};
+
+unitResultSchema.methods.getAccuracy = function() {
+  return (
+    this.numMatches /
+    (this.numMatches + this.numFalsePositives + this.numFalseNegatives)
+  );
+};
+
 // function autopopulate(next) {
 //   console.log("In Unit Results autopopulate 🚗");
-//   this.precision = this.numMatches / (this.numMatches + this.numFalsePositives);
-//   this.recall = this.numMatches / (this.numMatches + this.numFalseNegatives);
+//   this.precision =
+//   this.recall =
 //   this.accuracy =
 //     this.numMatches /
 //     (this.numMatches + this.numFalsePositives + this.numFalseNegatives);
