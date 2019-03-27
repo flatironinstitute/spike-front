@@ -36,6 +36,9 @@ const unitResultSchema = new mongoose.Schema(
     },
     bestSortedUnitId: {
       type: Number
+    },
+    snr: {
+      type: Float
     }
   },
   {
@@ -59,20 +62,5 @@ unitResultSchema.virtual("accuracy").get(function() {
     (this.numMatches + this.numFalsePositives + this.numFalseNegatives)
   );
 });
-
-// find trueunit where the recording trueunit unitId property === unit result unitId property
-unitResultSchema.virtual("trueunit", {
-  ref: "TrueUnit", // what model to link?
-  localField: "unitId", // which field on the store?
-  foreignField: "unitId" // which field on the review?
-});
-
-// function autopopulate(next) {
-//   this.populate("trueunit");
-//   console.log("In Unit Results autopopulate 🚗");
-// }
-
-// unitResultSchema.pre("find", autopopulate);
-// unitResultSchema.pre("findOne", autopopulate);
 
 module.exports = mongoose.model("UnitResult", unitResultSchema);

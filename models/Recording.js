@@ -33,15 +33,24 @@ const recordingSchema = new mongoose.Schema({
   },
   spikeSign: {
     type: Number
-  }
+  },
+  trueUnits: [{ type: mongoose.Schema.ObjectId, ref: "TrueUnit" }]
 });
 
-function autopopulate(next) {
-  this.populate("study");
-  next();
-}
+//find true units where the recordings _id property === true unit recording property
+// recordingSchema.virtual("trueUnits", {
+//   ref: "TrueUnit", // what model to link?
+//   localField: "_id", // which field on the recording?
+//   foreignField: "recording" // which field on the true unit?
+// });
 
-recordingSchema.pre("find", autopopulate);
-recordingSchema.pre("findOne", autopopulate);
+// function autopopulate(next) {
+//   // this.populate("study");
+//   this.populate("trueUnits");
+//   next();
+// }
+
+// recordingSchema.pre("find", autopopulate);
+// recordingSchema.pre("findOne", autopopulate);
 
 module.exports = mongoose.model("Recording", recordingSchema);
