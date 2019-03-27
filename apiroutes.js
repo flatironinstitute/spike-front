@@ -12,6 +12,11 @@ const unitResultsController = require("./controllers/unitResultsController");
 const recDetails = require("./stubData/recordingDetails.js");
 const fakeResult = require("./stubData/fakeResult.js");
 
+// Main Viz Routes
+// 1. Given a study, iterate through the sorters and return an array for each of the accuracy of all the unit results.
+// 2. Given a study, iterate through the sorters and return an array for each of the precision of all the unit results.
+// 3. Given a study, iterate through the sorters and return an array for each of the recall of all the unit results.
+
 // Recordings
 router.get("/api/recordings", recordingController.getRecordings);
 router.get("/api/recording/:id", recordingController.getRecordingById);

@@ -2,15 +2,9 @@ const mongoose = require("mongoose");
 const UnitResult = mongoose.model("UnitResult"); //Singleton from mongoose
 
 exports.getUnitResults = async (req, res) => {
-  const unitResultPromise = UnitResult.find();
-  const [unitResults] = await Promise.all([unitResultPromise]);
-  const updatedURs = [];
-
-  unitResults.forEach(result => {
-    const ur = UnitResult(result).update();
-  });
-  console.log("🦄", updatedUnitResults);
-
+  const unitResultsPromise = UnitResult.find();
+  const [unitResults] = await Promise.all([unitResultsPromise]);
+  console.log("👂heres");
   res.send({ unitResults: unitResults });
 };
 

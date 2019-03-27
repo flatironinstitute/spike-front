@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
-// TODO: Add ranges from the component recordings
 const studySchema = new mongoose.Schema({
   name: {
     type: String,
@@ -16,5 +15,13 @@ const studySchema = new mongoose.Schema({
   },
   sorters: [{ type: mongoose.Schema.ObjectId, ref: "Sorter" }]
 });
+
+function autopopulate(next) {
+  this.populate("sorters");
+  next();
+}
+
+studySchema.pre("find", autopopulate);
+studySchema.pre("findOne", autopopulate);
 
 module.exports = mongoose.model("Study", studySchema);
