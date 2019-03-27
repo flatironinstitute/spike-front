@@ -19,6 +19,15 @@ const trueUnitSchema = new mongoose.Schema({
   snr: {
     type: Float,
     required: "You must provide an snr."
+  },
+  recordingName: {
+    type: String
+  },
+  recordingExt: {
+    type: String
+  },
+  studyName: {
+    type: String
   }
 });
 
