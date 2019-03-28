@@ -351,16 +351,11 @@ async function fetchUnitResultsWithSNR(cleanUnitResults) {
   // for each of those unit result matches, add the snr property to match the true unit
   let unitResultsWithSNR = [];
   for(let i=0; i<trueunits.length; i++) {
-    for(let i=0; i<cleanUnitResults.length; i++) {
-      if (cleanUnitResults[i].recordingName === trueunits[i].recordingName && cleanUnitResults[i].studyName === trueunits[i].studyName && cleanUnitResults[i].unitId === trueunits[i].unitId) {
-        cleanUnitResults[i].snr = trueunits[i].snr;
-        unitResultsWithSNR.push(cleanUnitResults[i]);
-      } else {
-        console.log(
-          "\n 🛑🛑🛑🛑🛑🛑 Error! \n\n\t No true unit found for unit result \n",
-          cleanUnitResult
-        );
-        process.exit();
+    for(let index=0; index<cleanUnitResults.length; index++) {
+      if (cleanUnitResults[index].recordingName === trueunits[i].recordingName && cleanUnitResults[index].studyName === trueunits[i].studyName && cleanUnitResults[index].unitId === trueunits[i].unitId) {
+        cleanUnitResults[index].snr = trueunits[i].snr;
+        unitResultsWithSNR.push(cleanUnitResults[index]);
+        console.log("🥞", i, index);
       }
     }
   }
@@ -370,7 +365,7 @@ async function fetchUnitResultsWithSNR(cleanUnitResults) {
     );
     process.exit();
   }
-  
+  return unitResultsWithSNR;
   console.log("\t 🌱 Unit Results formatted.");
 }
 
@@ -416,7 +411,6 @@ async function formatAndLoadData() {
   let cleanSortingResults = await formatSortingResults();
   await loadSortingResults(cleanSortingResults);
   await writeCleanSortingResults();
-  
   // Unit Results
   let cleanUnitResults = await formatUnitResults();
   let unitResultsWithSNR = await fetchUnitResultsWithSNR(cleanUnitResults);
