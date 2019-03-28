@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 mongoose.connect(process.env.DATABASE, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 
-// import all of our models - they need to be imported only once
+// import all of the models
 const Sorter = require("../models/Sorter");
 const StudySet = require("../models/StudySet");
 const Study = require("../models/Study");
@@ -415,9 +415,7 @@ async function formatAndLoadData() {
   // Sorters
   await loadSorters();
   await writeCleanSorters();
-  const sorters = JSON.parse(
-    fs.readFileSync(__dirname + "/cleanedData/sorters.json", "utf-8")
-  );
+
   // Study Sets
   await loadStudySets();
   await writeCleanStudySets();
