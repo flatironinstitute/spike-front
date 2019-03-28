@@ -10,9 +10,8 @@
     "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "start": "node server.js",
-    "sample": "node ./sampleData/load-sample-data.js",
-    "blowitallaway": "node ./sampleData/load-sample-data.js --delete",
-    "clean": "node ./sampleData/clean-data.js",
+    "blowitallaway": "node ./data/load-data.js --delete",
+    "cleanthenload": "node ./data/format-and-load-data.js",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "dependencies": {

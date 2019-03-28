@@ -1,0 +1,39 @@
+[
+  {
+    "name": "MountainSort4-thr3",
+    "algorithm": "MountainSort4",
+    "processorName": "MountainSort4",
+    "processorVersion": "0",
+    "sorting_parameters": {
+      "detect_sign": -1,
+      "adjacency_radius": 50,
+      "detect_threshold": 3
+    }
+  },
+  {
+    "name": "SpykingCircus",
+    "algorithm": "SpykingCircus",
+    "processorName": "SpykingCircus",
+    "processorVersion": "0",
+    "sorting_parameters": { "detect_sign": -1, "adjacency_radius": 50 }
+  },
+  {
+    "name": "Yass",
+    "algorithm": "Yass",
+    "processorName": "Yass",
+    "processorVersion": "0",
+    "sorting_parameters": { "detect_sign": -1, "adjacency_radius": 50 }
+  },
+  {
+    "name": "IronClust-static",
+    "algorithm": "IronClust",
+    "processorName": "IronClust",
+    "processorVersion": "0",
+    "sorting_parameters": {
+      "detect_sign": -1,
+      "adjacency_radius": 50,
+      "prm_template_name": "static_template.prm",
+      "detect_threshold": 5
+    }
+  }
+]

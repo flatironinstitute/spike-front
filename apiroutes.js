@@ -12,6 +12,28 @@ const unitResultsController = require("./controllers/unitResultsController");
 const recDetails = require("./stubData/recordingDetails.js");
 const fakeResult = require("./stubData/fakeResult.js");
 
+/* Preload routes
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+// 1. Get all the studies - with virtual sorters. use virtual sorters to
+
+/* Main Viz Routes
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+// Count routes
+// 1. Given a study, iterate through the sorters and return an array for each of the accuracy of all the unit results.
+// 2. Given a study, iterate through the sorters and return an array for each of the precision of all the unit results.
+// 3. Given a study, iterate through the sorters and return an array for each of the recall of all the unit results.
+
+// Average SNR routes
+// * Get the SNR onto each unit result item
+
+// Combined approach
+// 1. Given a study, iterate through the sorters and return an array of objects containing:
+// unitResult _id,
+// accuracy,
+// precision,
+// recall,
+// SNR
+
 // Recordings
 router.get("/api/recordings", recordingController.getRecordings);
 router.get("/api/recording/:id", recordingController.getRecordingById);
