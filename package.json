@@ -4,7 +4,7 @@
   "description": "Benchmarking spike sorting algorithms. Seeing the spike forest for the trees",
   "private": true,
   "author": "Elizabeth Lovero",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "scripts": {
     "client": "cd client && yarn start",
     "server": "nodemon server.js",
