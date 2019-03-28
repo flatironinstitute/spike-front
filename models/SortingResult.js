@@ -11,6 +11,15 @@ const sortingResultSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "Sorter"
   },
+  recordingName: {
+    type: String
+  },
+  sorterName: {
+    type: String
+  },
+  studyName: {
+    type: String
+  },
   cpuTimeSec: {
     type: Float
   }

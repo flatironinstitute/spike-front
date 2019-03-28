@@ -11,6 +11,9 @@ const recordingSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "Study"
   },
+  studyName: {
+    type: String
+  },
   directory: {
     type: String,
     required: "You must provide a directory name"

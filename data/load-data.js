@@ -14,28 +14,6 @@ const TrueUnit = require("../models/TrueUnit");
 const SortingResult = require("../models/SortingResult");
 const UnitResult = require("../models/UnitResult");
 
-// const sorters = JSON.parse(
-//   fs.readFileSync(__dirname + "/sorters.json", "utf-8")
-// );
-// const studysets = JSON.parse(
-//   fs.readFileSync(__dirname + "/studysets.json", "utf-8")
-// );
-// const studies = JSON.parse(
-//   fs.readFileSync(__dirname + "/studies.json", "utf-8")
-// );
-// const recordings = JSON.parse(
-//   fs.readFileSync(__dirname + "/recordings.json", "utf-8")
-// );
-// const trueunits = JSON.parse(
-//   fs.readFileSync(__dirname + "/trueunits.json", "utf-8")
-// );
-// const sortingresults = JSON.parse(
-//   fs.readFileSync(__dirname + "/sortingresults.json", "utf-8")
-// );
-// const unitresults = JSON.parse(
-//   fs.readFileSync(__dirname + "/unitresults.json", "utf-8")
-// );
-
 async function deleteData() {
   console.log("😢😢 Goodbye Data...");
   await Sorter.remove();
@@ -46,30 +24,15 @@ async function deleteData() {
   await SortingResult.remove();
   await UnitResult.remove();
   console.log(
-    "Data Deleted. To load sample data, run\n\n\t yarn run sample\n\n"
+    "Data Deleted. To load data, run\n\n\t yarn run cleanthenload\n\n"
   );
   process.exit();
 }
 
 async function loadData() {
-  try {
-    await Sorter.insertMany(sorters);
-    await StudySet.insertMany(studysets);
-    await Study.insertMany(studies);
-    await Recording.insertMany(recordings);
-    await TrueUnit.insertMany(trueunits);
-    await SortingResult.insertMany(sortingresults);
-    await UnitResult.insertMany(unitresults);
-
-    console.log("👍👍👍👍👍👍👍👍 Done!");
-    process.exit();
-  } catch (e) {
-    console.log(
-      "\n👎👎👎👎👎👎👎👎 Error! The Error info is below but if you are importing sample data make sure to drop the existing database first with.\n\n\t yarn run blowitallaway\n\n\n"
+  console.log(
+      "\n👎👎👎👎👎👎👎👎 Error! This function has been depreciated. To format the raw spikeforest data and load the database run, \n\n\t yarn run cleanthenload\n\n\n"
     );
-    console.log(e);
-    process.exit();
-  }
 }
 
 if (process.argv.includes("--delete")) {
