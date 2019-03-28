@@ -355,7 +355,6 @@ async function fetchUnitResultsWithSNR(cleanUnitResults) {
       if (cleanUnitResults[index].recordingName === trueunits[i].recordingName && cleanUnitResults[index].studyName === trueunits[i].studyName && cleanUnitResults[index].unitId === trueunits[i].unitId) {
         cleanUnitResults[index].snr = trueunits[i].snr;
         unitResultsWithSNR.push(cleanUnitResults[index]);
-        console.log("🥞", i, index);
       }
     }
   }
@@ -417,7 +416,7 @@ async function formatAndLoadData() {
   await loadUnitResults(unitResultsWithSNR);
   await writeCleanUnitResults();
 
-  console.log("\n OMG girl 👍👍👍👍👍👍👍👍 it's Done! \n\n 🐧 Data formatted and loaded.🐧");
+  console.log("\n 👍👍👍👍👍👍👍👍 it's Done! \n\n 🐧 Data formatted and loaded.🐧");
   process.exit();
 }
 
