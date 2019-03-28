@@ -39,29 +39,6 @@ const rawUnitResults = JSON.parse(
   fs.readFileSync(__dirname + "/rawData/UnitResults.json", "utf-8")
 );
 
-// import all the blank clean data files
-const sorters = JSON.parse(
-  fs.readFileSync(__dirname + "/cleanedData/sorters.json", "utf-8")
-);
-const studysets = JSON.parse(
-  fs.readFileSync(__dirname + "/cleanedData/studysets.json", "utf-8")
-);
-const studies = JSON.parse(
-  fs.readFileSync(__dirname + "/cleanedData/studies.json", "utf-8")
-);
-const recordings = JSON.parse(
-  fs.readFileSync(__dirname + "/cleanedData/recordings.json", "utf-8")
-);
-const trueunits = JSON.parse(
-  fs.readFileSync(__dirname + "/cleanedData/trueunits.json", "utf-8")
-);
-const sortingresults = JSON.parse(
-  fs.readFileSync(__dirname + "/cleanedData/sortingresults.json", "utf-8")
-);
-const unitresults = JSON.parse(
-  fs.readFileSync(__dirname + "/cleanedData/unitresults.json", "utf-8")
-);
-
 async function writeNewFile(fileName, newData) {
   let newFileName = __dirname + `/cleanedData/${fileName}.json`;
   await fs_writeFile(newFileName, JSON.stringify(newData));
@@ -109,6 +86,9 @@ async function writeCleanStudySets() {
 async function formatStudies() {
   rawStudies.forEach(study => {
     // Add studySet id
+    const studysets = JSON.parse(
+      fs.readFileSync(__dirname + "/cleanedData/studysets.json", "utf-8")
+    );
     let [setId] = studysets.filter(set => set.name === study.studySet);
     if (setId) {
       study.studySet = setId._id;
@@ -121,6 +101,9 @@ async function formatStudies() {
     }
     // Add sorter id array based on sorterNames property
     let studySorters = [];
+    const sorters = JSON.parse(
+      fs.readFileSync(__dirname + "/cleanedData/sorters.json", "utf-8")
+    );
     sorters.forEach(sorter => {
       if (study.sorterNames.includes(sorter.name)) {
         studySorters.push(sorter._id);
@@ -192,6 +175,9 @@ async function formatRecordings() {
   rawRecordings.forEach(recording => {
     // Add study id from study name
     recording.studyName = recording.study;
+    const studies = JSON.parse(
+      fs.readFileSync(__dirname + "/cleanedData/studies.json", "utf-8")
+    );
     let [studyId] = studies.filter(study => study.name === recording.studyName);
     if (studyId) {
       recording.study = studyId._id;
@@ -206,6 +192,9 @@ async function formatRecordings() {
     recording.trueUnits = [];
   });
   // Collect true units
+  const trueunits = JSON.parse(
+    fs.readFileSync(__dirname + "/cleanedData/trueunits.json", "utf-8")
+  );
   trueunits.forEach(unit => {
     let [parentRecording] = rawRecordings.filter(
       recording =>
@@ -225,10 +214,13 @@ async function formatRecordings() {
   // Validate number of true units found
   rawRecordings.forEach(recording => {
     if (recording.numTrueUnits !== recording.trueUnits.length) {
-      console.log("\n 🛑🛑🛑🛑🛑🛑 Error! \n\n\t numTrueUnits does not match true units found \n", recording);
+      console.log(
+        "\n 🛑🛑🛑🛑🛑🛑 Error! \n\n\t numTrueUnits does not match true units found \n",
+        recording
+      );
       process.exit();
     }
-  })
+  });
   console.log("\t 🌱 Recordings formatted.");
   return rawRecordings;
 }
@@ -259,10 +251,17 @@ async function formatSortingResults() {
     sorting.studyName = sorting.study;
     sorting.sorterName = sorting.sorter;
     delete sorting.study;
-  })
+  });
   rawSortingResults.forEach(sorting => {
     // Match sorting.recording to the recording._id;
-    let [recordingId] = recordings.filter(recording => recording.studyName === sorting.studyName && recording.name === sorting.recordingName);
+    const recordings = JSON.parse(
+      fs.readFileSync(__dirname + "/cleanedData/recordings.json", "utf-8")
+    );
+    let [recordingId] = recordings.filter(
+      recording =>
+        recording.studyName === sorting.studyName &&
+        recording.name === sorting.recordingName
+    );
     if (recordingId) {
       sorting.recording = recordingId._id;
     } else {
@@ -273,7 +272,12 @@ async function formatSortingResults() {
       process.exit();
     }
     // Match sorting.sorter to the sorter._id;
-    let [sorterId] = sorters.filter(sorter => sorter.name === sorting.sorterName);
+    const sorters = JSON.parse(
+      fs.readFileSync(__dirname + "/cleanedData/sorters.json", "utf-8")
+    );
+    let [sorterId] = sorters.filter(
+      sorter => sorter.name === sorting.sorterName
+    );
     if (sorterId) {
       sorting.sorter = sorterId._id;
     } else {
@@ -289,7 +293,7 @@ async function formatSortingResults() {
 }
 
 async function loadSortingResults(cleanSortingResults) {
-    try {
+  try {
     await SortingResult.insertMany(cleanSortingResults);
     console.log(" 😎 😎 😎 Sorting Results in DB...");
   } catch (e) {
@@ -318,7 +322,14 @@ async function formatUnitResults() {
   });
   rawUnitResults.forEach(result => {
     // Match result.studyName && result.recordingName to a recording._id;
-    let [recordingId] = recordings.filter(recording => recording.studyName === result.studyName && recording.name === result.recordingName);
+    const recordings = JSON.parse(
+      fs.readFileSync(__dirname + "/cleanedData/recordings.json", "utf-8")
+    );
+    let [recordingId] = recordings.filter(
+      recording =>
+        recording.studyName === result.studyName &&
+        recording.name === result.recordingName
+    );
     if (recordingId) {
       result.recording = recordingId._id;
     } else {
@@ -330,7 +341,12 @@ async function formatUnitResults() {
     }
 
     // Match result.sorter to the sorter._id;
-    let [sorterId] = sorters.filter(sorter => sorter.name === result.sorterName);
+    const sorters = JSON.parse(
+      fs.readFileSync(__dirname + "/cleanedData/sorters.json", "utf-8")
+    );
+    let [sorterId] = sorters.filter(
+      sorter => sorter.name === result.sorterName
+    );
     if (sorterId) {
       result.sorter = sorterId._id;
     } else {
@@ -349,12 +365,20 @@ async function fetchUnitResultsWithSNR(cleanUnitResults) {
   // loop through every true unit
   // filter the clean unit results where the recordingName, studyName, and unitID match
   // for each of those unit result matches, add the snr property to match the true unit
+  const trueunits = JSON.parse(
+    fs.readFileSync(__dirname + "/cleanedData/trueunits.json", "utf-8")
+  );
   let unitResultsWithSNR = [];
-  for(let i=0; i<trueunits.length; i++) {
-    for(let index=0; index<cleanUnitResults.length; index++) {
-      if (cleanUnitResults[index].recordingName === trueunits[i].recordingName && cleanUnitResults[index].studyName === trueunits[i].studyName && cleanUnitResults[index].unitId === trueunits[i].unitId) {
+  for (let i = 0; i < trueunits.length; i++) {
+    for (let index = 0; index < cleanUnitResults.length; index++) {
+      if (
+        cleanUnitResults[index].recordingName === trueunits[i].recordingName &&
+        cleanUnitResults[index].studyName === trueunits[i].studyName &&
+        cleanUnitResults[index].unitId === trueunits[i].unitId
+      ) {
         cleanUnitResults[index].snr = trueunits[i].snr;
         unitResultsWithSNR.push(cleanUnitResults[index]);
+        console.log("🥞", cleanUnitResults[index].length, trueunits[i].length);
       }
     }
   }
@@ -369,7 +393,7 @@ async function fetchUnitResultsWithSNR(cleanUnitResults) {
 }
 
 async function loadUnitResults(unitResultsWithSNR) {
-    try {
+  try {
     await UnitResult.insertMany(unitResultsWithSNR);
     console.log(" 😎 😎 😎 Unit Results in DB...");
   } catch (e) {
@@ -391,32 +415,42 @@ async function formatAndLoadData() {
   // Sorters
   await loadSorters();
   await writeCleanSorters();
+  const sorters = JSON.parse(
+    fs.readFileSync(__dirname + "/cleanedData/sorters.json", "utf-8")
+  );
   // Study Sets
   await loadStudySets();
   await writeCleanStudySets();
+
   // Studies
   let cleanStudies = await formatStudies();
   await loadStudies(cleanStudies);
   await writeCleanStudies();
+
   // True Units
   let cleanTrueUnits = await formatTrueUnits();
   await loadTrueUnits(cleanTrueUnits);
   await writeCleanTrueUnits();
+
   // Recordings
   let cleanRecordings = await formatRecordings();
   await loadRecordings(cleanRecordings);
   await writeCleanRecordings();
+
   // Sorting Results
   let cleanSortingResults = await formatSortingResults();
   await loadSortingResults(cleanSortingResults);
   await writeCleanSortingResults();
+
   // Unit Results
   let cleanUnitResults = await formatUnitResults();
   let unitResultsWithSNR = await fetchUnitResultsWithSNR(cleanUnitResults);
   await loadUnitResults(unitResultsWithSNR);
   await writeCleanUnitResults();
 
-  console.log("\n 👍👍👍👍👍👍👍👍 it's Done! \n\n 🐧 Data formatted and loaded.🐧");
+  console.log(
+    "\n 👍👍👍👍👍👍👍👍 it's Done! \n\n 🐧 Data formatted and loaded.🐧"
+  );
   process.exit();
 }
 
