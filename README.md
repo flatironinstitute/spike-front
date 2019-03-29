@@ -22,13 +22,11 @@ You will also see any lint errors in the console.
 
 ### `yarn blowitallaway`
 
-This command clears the database entirely.
+This command clears the database entirely and is the essential first step of the data injest process. 
 
 ### `yarn cleanthenload`
 
-This command will clean and injest raw data from the pipeline.
-
-_To function properly, this command has one requirement:_ Data files for injest are stored in the `data/rawData` folder with capitalized titles.
+Assigns ids, formats, and injests raw data from the spikeforest pipeline into the website for visualization. Raw data files for injest should be stored in a local copy of the `data/rawData` folder with capitalized titles before running this command. After injest is complete, this script automatically deletes temp files generated in the process as well as the rawData files. 
 
 ## Authors
 
