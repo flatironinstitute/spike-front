@@ -1,7 +1,10 @@
 require("dotenv").config({ path: __dirname + "/../.env" });
 const fs = require("fs");
 const util = require("util");
+const path = require("path");
 const fs_writeFile = util.promisify(fs.writeFile);
+const fs_unlink = util.promisify(fs.unlinkSync);
+const fs_readdir = util.promisify(fs.readdir);
 
 const mongoose = require("mongoose");
 mongoose.connect(process.env.DATABASE, { useNewUrlParser: true });
@@ -45,42 +48,23 @@ async function writeNewFile(fileName, newData) {
   console.log(`Clean ${fileName}.json saved. 💾`);
 }
 
-async function loadSorters() {
+async function loadIntoDB(model, data, name) {
   try {
-    await Sorter.insertMany(rawSorters);
-    console.log(" 😎 😎 😎 Sorters in DB...");
+    await model.insertMany(data);
+    console.log(` 😎 😎 😎 ${name} in DB...`);
   } catch (e) {
     console.log(
-      "\n👎👎👎👎👎👎👎👎 Error! The Error info is below but if you are importing sample data make sure to drop the existing database first with.\n\n\t yarn run blowitallaway\n\n\n"
+      "\n👎👎👎👎👎👎👎👎 Error! The Error info is below but if you are importing data make sure to drop the existing database first with.\n\n\t yarn run blowitallaway\n\n\n"
     );
     console.log(e);
     process.exit();
   }
 }
 
-async function writeCleanSorters() {
-  const sortersPromise = Sorter.find();
-  const [sorters] = await Promise.all([sortersPromise]);
-  await writeNewFile("sorters", sorters);
-}
-
-async function loadStudySets() {
-  try {
-    await StudySet.insertMany(rawStudySets);
-    console.log(" 😎 😎 😎 Study Sets in DB...");
-  } catch (e) {
-    console.log(
-      "\n👎👎👎👎👎👎👎👎 Error! The Error info is below but if you are importing sample data make sure to drop the existing database first with.\n\n\t yarn run blowitallaway\n\n\n"
-    );
-    console.log(e);
-    process.exit();
-  }
-}
-
-async function writeCleanStudySets() {
-  const studySetsPromise = StudySet.find();
-  const [studysets] = await Promise.all([studySetsPromise]);
-  await writeNewFile("studysets", studysets);
+async function writeCleanData(model, name) {
+  const allEntries = model.find();
+  const [foundEntries] = await Promise.all([allEntries]);
+  await writeNewFile(name, foundEntries);
 }
 
 async function formatStudies() {
@@ -123,25 +107,6 @@ async function formatStudies() {
   return rawStudies;
 }
 
-async function loadStudies(cleanStudies) {
-  try {
-    await Study.insertMany(cleanStudies);
-    console.log(" 😎 😎 😎 Studies in DB...");
-  } catch (e) {
-    console.log(
-      "\n👎👎👎👎👎👎👎👎 Error! The Error info is below but if you are importing sample data make sure to drop the existing database first with.\n\n\t yarn run blowitallaway\n\n\n"
-    );
-    console.log(e);
-    process.exit();
-  }
-}
-
-async function writeCleanStudies() {
-  const studiesPromise = Study.find();
-  const [studies] = await Promise.all([studiesPromise]);
-  await writeNewFile("studies", studies);
-}
-
 async function formatTrueUnits() {
   rawTrueUnits.forEach(unit => {
     unit.recordingName = unit.recording;
@@ -151,24 +116,6 @@ async function formatTrueUnits() {
   });
   console.log("\t 🌱 True Units formatted.");
   return rawTrueUnits;
-}
-
-async function loadTrueUnits(cleanTrueUnits) {
-  try {
-    await TrueUnit.insertMany(cleanTrueUnits);
-    console.log(" 😎 😎 😎 TrueUnits in DB...");
-  } catch (e) {
-    console.log(
-      "\n👎👎👎👎👎👎👎👎 Error! The Error info is below but if you are importing sample data make sure to drop the existing database first with.\n\n\t yarn run blowitallaway\n\n\n"
-    );
-    console.log(e);
-    process.exit();
-  }
-}
-async function writeCleanTrueUnits() {
-  const trueUnitsPromise = TrueUnit.find();
-  const [trueunits] = await Promise.all([trueUnitsPromise]);
-  await writeNewFile("trueunits", trueunits);
 }
 
 async function formatRecordings() {
@@ -225,25 +172,6 @@ async function formatRecordings() {
   return rawRecordings;
 }
 
-async function loadRecordings(cleanRecordings) {
-  try {
-    await Recording.insertMany(cleanRecordings);
-    console.log(" 😎 😎 😎 Recordings in DB...");
-  } catch (e) {
-    console.log(
-      "\n👎👎👎👎👎👎👎👎 Error! The Error info is below but if you are importing sample data make sure to drop the existing database first with.\n\n\t yarn run blowitallaway\n\n\n"
-    );
-    console.log(e);
-    process.exit();
-  }
-}
-
-async function writeCleanRecordings() {
-  const recordingsPromise = Recording.find();
-  const [recordings] = await Promise.all([recordingsPromise]);
-  await writeNewFile("recordings", recordings);
-}
-
 async function formatSortingResults() {
   rawSortingResults.forEach(sorting => {
     // Move string names to string properties
@@ -290,25 +218,6 @@ async function formatSortingResults() {
   });
   console.log("\t 🌱 Sorting Results formatted.");
   return rawSortingResults;
-}
-
-async function loadSortingResults(cleanSortingResults) {
-  try {
-    await SortingResult.insertMany(cleanSortingResults);
-    console.log(" 😎 😎 😎 Sorting Results in DB...");
-  } catch (e) {
-    console.log(
-      "\n👎👎👎👎👎👎👎👎 Error! The Error info is below but if you are importing sample data make sure to drop the existing database first with.\n\n\t yarn run blowitallaway\n\n\n"
-    );
-    console.log(e);
-    process.exit();
-  }
-}
-
-async function writeCleanSortingResults() {
-  const sortingResultsPromise = SortingResult.find();
-  const [sortingresults] = await Promise.all([sortingResultsPromise]);
-  await writeNewFile("sortingresults", sortingresults);
 }
 
 async function formatUnitResults() {
@@ -362,13 +271,11 @@ async function formatUnitResults() {
 }
 
 async function fetchUnitResultsWithSNR(cleanUnitResults) {
-  // loop through every true unit
-  // filter the clean unit results where the recordingName, studyName, and unitID match
-  // for each of those unit result matches, add the snr property to match the true unit
   const trueunits = JSON.parse(
     fs.readFileSync(__dirname + "/cleanedData/trueunits.json", "utf-8")
   );
   let unitResultsWithSNR = [];
+  console.log("\n 🥞 Starting Unit Result SNR transfer.");
   for (let i = 0; i < trueunits.length; i++) {
     for (let index = 0; index < cleanUnitResults.length; index++) {
       if (
@@ -378,7 +285,6 @@ async function fetchUnitResultsWithSNR(cleanUnitResults) {
       ) {
         cleanUnitResults[index].snr = trueunits[i].snr;
         unitResultsWithSNR.push(cleanUnitResults[index]);
-        console.log("🥞", cleanUnitResults[index].length, trueunits[i].length);
       }
     }
   }
@@ -388,66 +294,68 @@ async function fetchUnitResultsWithSNR(cleanUnitResults) {
     );
     process.exit();
   }
-  return unitResultsWithSNR;
   console.log("\t 🌱 Unit Results formatted.");
+  return unitResultsWithSNR;
 }
 
-async function loadUnitResults(unitResultsWithSNR) {
+function deleteFile(file) {
   try {
-    await UnitResult.insertMany(unitResultsWithSNR);
-    console.log(" 😎 😎 😎 Unit Results in DB...");
+    fs.unlinkSync(file);
   } catch (e) {
-    console.log(
-      "\n👎👎👎👎👎👎👎👎 Error! The Error info is below but if you are importing sample data make sure to drop the existing database first with.\n\n\t yarn run blowitallaway\n\n\n"
-    );
-    console.log(e);
-    process.exit();
+    console.error(e);
   }
 }
 
-async function writeCleanUnitResults() {
-  const unitResultsPromise = UnitResult.find();
-  const [unitresults] = await Promise.all([unitResultsPromise]);
-  await writeNewFile("unitresults", unitresults);
+async function emptyDataFolder(directory) {
+  let files = await fs_readdir(directory);
+  let filePaths = files.map(file => path.join(directory, file));
+  filePaths.forEach(file => {
+    deleteFile(file);
+  });
 }
 
 async function formatAndLoadData() {
   // Sorters
-  await loadSorters();
-  await writeCleanSorters();
+  await loadIntoDB(Sorter, rawSorters, "Sorters");
+  await writeCleanData(Sorter, "sorters");
 
   // Study Sets
-  await loadStudySets();
-  await writeCleanStudySets();
+  await loadIntoDB(StudySet, rawStudySets, "Study sets");
+  await writeCleanData(StudySet, "studysets");
 
   // Studies
   let cleanStudies = await formatStudies();
-  await loadStudies(cleanStudies);
-  await writeCleanStudies();
+  await loadIntoDB(Study, cleanStudies);
+  await writeCleanData(Study, "studies");
 
   // True Units
   let cleanTrueUnits = await formatTrueUnits();
-  await loadTrueUnits(cleanTrueUnits);
-  await writeCleanTrueUnits();
+  await loadIntoDB(TrueUnit, cleanTrueUnits, "True units");
+  await writeCleanData(TrueUnit, "trueunits");
 
   // Recordings
   let cleanRecordings = await formatRecordings();
-  await loadRecordings(cleanRecordings);
-  await writeCleanRecordings();
+  await loadIntoDB(Recording, cleanRecordings, "Recordings");
+  await writeCleanData(Recording, "recordings");
 
   // Sorting Results
   let cleanSortingResults = await formatSortingResults();
-  await loadSortingResults(cleanSortingResults);
-  await writeCleanSortingResults();
+  await loadIntoDB(SortingResult, cleanSortingResults, "Sorting results");
+  await writeCleanData(SortingResult, "sortingresults");
 
   // Unit Results
   let cleanUnitResults = await formatUnitResults();
   let unitResultsWithSNR = await fetchUnitResultsWithSNR(cleanUnitResults);
-  await loadUnitResults(unitResultsWithSNR);
-  await writeCleanUnitResults();
+  await loadIntoDB(UnitResult, unitResultsWithSNR, "Unit results");
+  await writeCleanData(UnitResult, "unitresults");
+
+  // Delete WIP Files
+  await emptyDataFolder(__dirname + "/cleanedData");
+  await emptyDataFolder(__dirname + "/rawData");
+  console.log(`🗑️  All used data files in the trash.`);
 
   console.log(
-    "\n 👍👍👍👍👍👍👍👍 it's Done! \n\n 🐧 Data formatted and loaded.🐧"
+    "\n 👍👍👍👍👍👍👍👍 it's Done! \n\n 🐧 Data formatted, loaded into the DB, and deleted from the repo.🐧"
   );
   process.exit();
 }
