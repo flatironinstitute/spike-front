@@ -80,35 +80,35 @@ unitResultSchema.virtual("accuracy").get(function() {
 //   foreignField: "_id" // field on the study
 // });
 
-// unitResultSchema.statics.getUnitResultsByStudyAndSorter = function() {
-//   return this.aggregate([
-//     // lookup stories and populate their ratings
-//     {
-//       $lookup: {
-//         from: "studies",
-//         localField: "_id",
-//         foreignField: "story",
-//         as: "ratings"
-//       }
-//     },
-//     // filter for only items that have snr
-//     { $match: { snr: { $exists: true } } },
-//     {
-//       $group: {
-//         _id: {
-//           sorter: "$sorter"
-//         },
-//         unitResults: {
-//           $push: {
-//             _id: "$_id",
-//             accuracy: "$accuracy",
-//             sorter: "$sorter"
-//           }
-//         },
-//         count: { $sum: 1 }
-//       }
-//     }
-//   ]);
-// };
+unitResultSchema.statics.getUnitResultsByStudyAndSorter = function() {
+  return this.aggregate([
+    // filter for only items that have snr
+    { $match: { snr: { $exists: true } } },
+    {
+      $group: {
+        _id: {
+          sorterName: "$sorterName",
+          studyName: "$studyName"
+        },
+        // aggregate all snrs
+        snrs: {
+          $push: "$snr"
+        },
+        // aggregate all accuracies
+        // aggregate all recalls
+        // aggregate all precisions
+        unitResults: {
+          $push: {
+            _id: "$_id",
+            accuracy: "$accuracy",
+            sorter: "$sorter",
+            study: "$study"
+          }
+        },
+        count: { $sum: 1 }
+      }
+    }
+  ]);
+};
 
 module.exports = mongoose.model("UnitResult", unitResultSchema);
