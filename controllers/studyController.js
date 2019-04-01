@@ -4,6 +4,7 @@ const Study = mongoose.model("Study"); //Singleton from mongoose
 exports.getStudies = async (req, res) => {
   const studiesPromise = Study.find();
   const [studies] = await Promise.all([studiesPromise]);
+  console.log("study results", studies.length);
   res.send({ studies: studies });
 };
 

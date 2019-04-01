@@ -7,10 +7,12 @@ import selectedStudy from "./selectedStudy";
 import sorters from "./sorters";
 import studies from "./studies";
 import units from "./units";
-import loading from "./loading";
 import pairing from "./pairing";
-import contactSent from "./contactSent";
 import recordingDetails from "./recordingDetails";
+// V2 Data: Reducers
+import contactSent from "./contactSent";
+import cpus from "./cpus";
+import loading from "./loading";
 
 const rootReducer = history =>
   combineReducers({
@@ -18,12 +20,14 @@ const rootReducer = history =>
     selectedRecording,
     selectedStudy,
     sorters,
-    studies,
     units,
-    loading,
     pairing,
-    contactSent,
     recordingDetails,
+    // V2 Data: Reducers
+    contactSent,
+    cpus,
+    loading,
+    studies,
     router: connectRouter(history)
   });
 

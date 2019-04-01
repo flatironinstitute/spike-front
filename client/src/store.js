@@ -13,10 +13,12 @@ const defaultState = {
   sorters: null,
   studies: null,
   units: null,
+  pairing: null,
+  recordingDetails: null,
+  //V2 Data: States
   loading: null,
   contactSent: null,
-  pairing: null,
-  recordingDetails: null
+  cpus: null
 };
 
 export const history = createBrowserHistory();

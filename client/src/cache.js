@@ -15,8 +15,3 @@ export const set = (key, value) => {
 export const get = key => {
   return cache.get(key);
 };
-
-// export default {
-//   get,
-//   set
-// };

@@ -1,7 +1,4 @@
-import {
-  SEND_CONTACT_SUCCESS,
-  SEND_CONTACT_FAILURE
-} from "../actions/actionCreators";
+import { RECEIVE_CPUS } from "../actions/actionCreators";
 
 const initialState = {
   selectedRecording: null,
@@ -18,15 +15,13 @@ const initialState = {
   loading: null
 };
 
-const contactSent = (state = initialState, action) => {
+const cpus = (state = initialState, action) => {
   switch (action.type) {
-    case SEND_CONTACT_SUCCESS:
-      return action.contactSent;
-    case SEND_CONTACT_FAILURE:
-      return action.contactSent;
+    case RECEIVE_CPUS:
+      return action.cpus;
     default:
       return state;
   }
 };
 
-export default contactSent;
+export default cpus;

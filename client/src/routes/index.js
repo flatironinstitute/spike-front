@@ -10,6 +10,7 @@ import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 
 import Home from "../components/Pages/Home";
+import NewHome from "../components/Pages/NewHome";
 import About from "../components/Pages/About";
 import Recordings from "../components/Pages/Recordings";
 import Studies from "../components/Pages/Studies";
@@ -23,10 +24,13 @@ import RawData from "../components/Pages/RawData";
 
 class Routes extends Component {
   async componentDidMount() {
+    // V2 Data: Fetches
+    this.props.fetchCPUs();
     this.props.fetchStudies();
-    this.props.fetchSorters();
-    this.props.fetchRecordings();
-    this.props.fetchUnits();
+    console.log("Index routes fetch called");
+    // this.props.fetchSorters();
+    // this.props.fetchRecordings();
+    // this.props.fetchUnits();
   }
 
   render() {
@@ -43,6 +47,10 @@ class Routes extends Component {
           <Route
             path="/internals"
             render={props => <Internals {...this.props} />}
+          />
+          <Route
+            path="/newhome"
+            render={props => <NewHome {...this.props} />}
           />
           <Route
             path="/metrics"
@@ -86,7 +94,9 @@ function mapStateToProps(state) {
     contactSent: state.contactSent,
     router: state.router,
     pairing: state.pairing,
-    recordingDetails: state.recordingDetails
+    recordingDetails: state.recordingDetails,
+    // V2 Data: props
+    cpus: state.cpus
   };
 }
 

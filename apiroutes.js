@@ -12,9 +12,26 @@ const unitResultsController = require("./controllers/unitResultsController");
 const recDetails = require("./stubData/recordingDetails.js");
 const fakeResult = require("./stubData/fakeResult.js");
 
-/* Preload routes
+/* V2 Data: New Routes
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-// 1. Get all the studies - with virtual sorters. use virtual sorters to
+
+// CPU Routes
+router.get("/api/cpus", sortingResultController.getCPUs);
+
+// Studies
+router.get("/api/studies", studyController.getStudies);
+
+// Contact Routes
+router.post("/api/contact", (req, res) => {
+  // TODO: Attach to mail server
+  console.log("🗺️ Email sent fake", req.body);
+  res.send({
+    success: true
+  });
+});
+
+/* Old Shiz
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 /* Main Viz Routes
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -48,13 +65,6 @@ router.get(
   "/api/sortingresult/:id",
   sortingResultController.getSortingResultById
 );
-// TODO: write pairing routes
-// router.get(
-//   "/results/:studyId/:sorterId",
-//   sortingResultController(
-//     sortingResultController.getSortingResultsByStudySorter
-//   )
-// );
 
 // Studies
 router.get("/api/studies", studyController.getStudies);
@@ -88,14 +98,6 @@ router.get("/api/:study/:sorter/:recording", (req, res) => {
   // TODO: Will I need to do this formatting from the server?
   let formatted = formatSpikes(recDetails);
   res.send({ recordingDetails: formatted });
-});
-
-router.post("/api/contact", (req, res) => {
-  // TODO: Attach to mail server when credit card is available.
-  console.log("🗺️", req.body);
-  res.send({
-    success: true
-  });
 });
 
 function formatSpikes(recDetails) {

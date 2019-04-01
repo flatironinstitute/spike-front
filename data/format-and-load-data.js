@@ -199,6 +199,20 @@ async function formatSortingResults() {
       );
       process.exit();
     }
+    // Match sorting.studyName to the study.name and add the id;
+    const studies = JSON.parse(
+      fs.readFileSync(__dirname + "/cleanedData/studies.json", "utf-8")
+    );
+    let [studyId] = studies.filter(study => study.name === sorting.studyName);
+    if (studyId) {
+      sorting.study = studyId;
+    } else {
+      console.log(
+        "\n 🛑🛑🛑🛑🛑🛑 Error! \n\n\t No study found for sorting result \n",
+        sorting
+      );
+      process.exit();
+    }
     // Match sorting.sorter to the sorter._id;
     const sorters = JSON.parse(
       fs.readFileSync(__dirname + "/cleanedData/sorters.json", "utf-8")
@@ -227,9 +241,7 @@ async function formatUnitResults() {
     result.studyName = result.study;
     result.sorterName = result.sorter;
     result.snr = 0.0;
-    delete result.study;
-  });
-  rawUnitResults.forEach(result => {
+
     // Match result.studyName && result.recordingName to a recording._id;
     const recordings = JSON.parse(
       fs.readFileSync(__dirname + "/cleanedData/recordings.json", "utf-8")
@@ -245,6 +257,21 @@ async function formatUnitResults() {
       console.log(
         "\n 🛑🛑🛑🛑🛑🛑 Error! \n\n\t No recording found for unit result \n",
         result
+      );
+      process.exit();
+    }
+
+    // Match result.studyName to the study.name and add it;
+    const studies = JSON.parse(
+      fs.readFileSync(__dirname + "/cleanedData/studies.json", "utf-8")
+    );
+    let [studyId] = studies.filter(study => study.name === result.studyName);
+    if (studyId) {
+      result.study = studyId;
+    } else {
+      console.log(
+        "\n 🛑🛑🛑🛑🛑🛑 Error! \n\n\t No study found for sorting result \n",
+        sorting
       );
       process.exit();
     }

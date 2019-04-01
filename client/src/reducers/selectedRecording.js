@@ -1,14 +1,18 @@
-import { SELECT_RECORDING } from '../actions/actionCreators';
+import { SELECT_RECORDING } from "../actions/actionCreators";
 
 const initialState = {
-  selectedStudy: null,
   selectedRecording: null,
+  selectedStudy: null,
   recordings: null,
   sorters: null,
-  studies: null,
   units: null,
-  loading: null,
   pairing: null,
+  recordingDetails: null,
+  //V2 Data: States
+  contactSent: null,
+  cpus: null,
+  studies: null,
+  loading: null
 };
 
 const selectedRecording = (state = initialState, action) => {
