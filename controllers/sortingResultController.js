@@ -16,10 +16,7 @@ exports.getSortingResultById = async (req, res, next) => {
 };
 
 exports.getCPUs = async (req, res, next) => {
-  console.log("in get CPUS 🐃");
   const cpuPromise = await SortingResult.getCPUsByStudyAndSorter();
-  console.log(cpuPromise.length, "🐃 # cpu promises");
   const [cpuResults] = await Promise.all([cpuPromise]);
-  console.log("cpu results 🐃 #cpuResults", cpuResults.length);
   res.send({ cpus: cpuResults });
 };

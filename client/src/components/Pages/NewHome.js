@@ -14,6 +14,7 @@ class NewHome extends Component {
 
   render() {
     let loading = isEmpty(this.props.cpus, this.props.studies);
+    console.log("🐃", this.props.cpus);
     return (
       <div className="page__body">
         {loading ? (
@@ -30,18 +31,18 @@ class NewHome extends Component {
               <h1>CPU Data</h1>
             </div>
             <div className="card card--rawdata">
-              <h2>Study Datadump</h2>
-              <Row className="justify-content-md-center">
-                <Col lg="10">
-                  <ReactJson src={this.props.studies} />
-                </Col>
-              </Row>
-            </div>
-            <div className="card card--rawdata">
               <h2>CPU Datadump</h2>
               <Row className="justify-content-md-center">
                 <Col lg="10">
                   <ReactJson src={this.props.cpus} />
+                </Col>
+              </Row>
+            </div>
+            <div className="card card--rawdata">
+              <h2>Study Datadump</h2>
+              <Row className="justify-content-md-center">
+                <Col lg="10">
+                  <ReactJson src={this.props.studies} />
                 </Col>
               </Row>
             </div>

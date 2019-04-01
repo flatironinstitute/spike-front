@@ -30,7 +30,7 @@ const sortingResultSchema = new mongoose.Schema({
 });
 
 sortingResultSchema.statics.getCPUsByStudyAndSorter = function() {
-  // TODO: Do I need the study or sorter object ids here?
+  // TODO: Do I need the study or sorter object ids
   return this.aggregate([
     // filter for only items that have cpuTimeSec
     { $match: { cpuTimeSec: { $exists: true } } },
@@ -41,6 +41,13 @@ sortingResultSchema.statics.getCPUsByStudyAndSorter = function() {
           sorterName: "$sorterName"
         },
         averageCPU: { $avg: "$cpuTimeSec" },
+        sortingResults: {
+          $push: {
+            _id: "$_id",
+            study: "$study",
+            sorter: "$sorter"
+          }
+        },
         count: { $sum: 1 }
       }
     }
