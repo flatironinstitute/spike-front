@@ -16,6 +16,16 @@ const unitResultSchema = new mongoose.Schema(
       type: mongoose.Schema.ObjectId,
       ref: "Sorter"
     },
+    sorterName: {
+      type: String
+    },
+    study: {
+      type: mongoose.Schema.ObjectId,
+      ref: "Study"
+    },
+    studyName: {
+      type: String
+    },
     numMatches: {
       type: Number
     },
@@ -62,5 +72,43 @@ unitResultSchema.virtual("accuracy").get(function() {
     (this.numMatches + this.numFalsePositives + this.numFalseNegatives)
   );
 });
+
+// // find the paired recordign and get the study id
+// unitResultSchema.virtual("study", {
+//   ref: "Recording", // model to link
+//   localField: "recording", // field on the ur
+//   foreignField: "_id" // field on the study
+// });
+
+// unitResultSchema.statics.getUnitResultsByStudyAndSorter = function() {
+//   return this.aggregate([
+//     // lookup stories and populate their ratings
+//     {
+//       $lookup: {
+//         from: "studies",
+//         localField: "_id",
+//         foreignField: "story",
+//         as: "ratings"
+//       }
+//     },
+//     // filter for only items that have snr
+//     { $match: { snr: { $exists: true } } },
+//     {
+//       $group: {
+//         _id: {
+//           sorter: "$sorter"
+//         },
+//         unitResults: {
+//           $push: {
+//             _id: "$_id",
+//             accuracy: "$accuracy",
+//             sorter: "$sorter"
+//           }
+//         },
+//         count: { $sum: 1 }
+//       }
+//     }
+//   ]);
+// };
 
 module.exports = mongoose.model("UnitResult", unitResultSchema);

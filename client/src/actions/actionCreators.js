@@ -7,6 +7,8 @@ const baseurl = process.env.API_URL || "http://localhost:5000";
 /* V2 Data: New Actions
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 export const RECEIVE_CPUS = "RECEIVE_CPUS";
+export const RECEIVE_GROUPED_URS = "RECEIVE_GROUPED_URS";
+export const RECEIVE_STUDIES = "RECEIVE_STUDIES";
 
 export const START_LOADING = "START_LOADING";
 export const END_LOADING = "END_LOADING";
@@ -21,7 +23,6 @@ export const RECEIVE_RECORDINGS = "RECEIVE_RECORDINGS";
 export const RECEIVE_SORTERS = "RECEIVE_SORTERS";
 export const RECEIVE_UNITS = "RECEIVE_UNITS";
 export const SELECT_STUDY = "SELECT_STUDY";
-export const RECEIVE_STUDIES = "RECEIVE_STUDIES";
 export const RECEIVE_PAIRING = "RECEIVE_PAIRING";
 export const RECEIVE_RECORDING_DETAILS = "RECEIVE_RECORDING_DETAILS";
 
@@ -129,6 +130,29 @@ export const fetchCPUs = () => {
     return createFetch(url)
       .then(res => {
         dispatch(receiveCPUs(res.cpus));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      })
+      .catch(err => console.log(err));
+  };
+};
+
+// Grouped Unit Results
+export const receiveGroupedURs = groupedURs => {
+  return {
+    type: RECEIVE_GROUPED_URS,
+    groupedURs: groupedURs
+  };
+};
+
+export const fetchGroupedURs = () => {
+  let url = `/api/groupedurs`;
+  return function(dispatch) {
+    dispatch(startLoading());
+    return createFetch(url)
+      .then(res => {
+        dispatch(receiveGroupedURs(res.groupedURs));
       })
       .then(() => {
         dispatch(endLoading());

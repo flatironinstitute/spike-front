@@ -13,8 +13,11 @@ class NewHome extends Component {
   }
 
   render() {
-    let loading = isEmpty(this.props.cpus, this.props.studies);
-    console.log("🐃", this.props.cpus);
+    let loading = isEmpty(
+      this.props.groupedURs,
+      this.props.cpus,
+      this.props.studies
+    );
     return (
       <div className="page__body">
         {loading ? (
@@ -28,7 +31,15 @@ class NewHome extends Component {
         ) : (
           <Container className="container__heatmap">
             <div className="card card--rawdata text-center">
-              <h1>CPU Data</h1>
+              <h1>Main Viz Data</h1>
+            </div>
+            <div className="card card--rawdata">
+              <h2>Grouped Unit Results Datadump</h2>
+              <Row className="justify-content-md-center">
+                <Col lg="10">
+                  <ReactJson src={this.props.groupedURs} />
+                </Col>
+              </Row>
             </div>
             <div className="card card--rawdata">
               <h2>CPU Datadump</h2>

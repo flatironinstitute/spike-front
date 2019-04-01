@@ -14,3 +14,10 @@ exports.getUnitResultById = async (req, res, next) => {
   }
   res.send({ unitResult: unitResult });
 };
+
+exports.getGroupedUnitResults = async (req, res, next) => {
+  const groupedURPromise = await UnitResult.getUnitResultsByStudyAndSorter();
+  const [groupedURs] = await Promise.all([groupedURPromise]);
+  console.log("🦌 in controller return", groupedURs.length);
+  res.send({ groupedURs: groupedURs });
+};

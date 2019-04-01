@@ -12,6 +12,7 @@ import recordingDetails from "./recordingDetails";
 // V2 Data: Reducers
 import contactSent from "./contactSent";
 import cpus from "./cpus";
+import groupedURs from "./groupedURs";
 import loading from "./loading";
 
 const rootReducer = history =>
@@ -26,6 +27,7 @@ const rootReducer = history =>
     // V2 Data: Reducers
     contactSent,
     cpus,
+    groupedURs,
     loading,
     studies,
     router: connectRouter(history)

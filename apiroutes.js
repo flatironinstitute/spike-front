@@ -21,6 +21,9 @@ router.get("/api/cpus", sortingResultController.getCPUs);
 // Studies
 router.get("/api/studies", studyController.getStudies);
 
+// Grouped Unit Results
+router.get("/api/groupedurs", unitResultsController.getGroupedUnitResults);
+
 // Contact Routes
 router.post("/api/contact", (req, res) => {
   // TODO: Attach to mail server

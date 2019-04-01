@@ -11,8 +11,9 @@ const initialState = {
   //V2 Data: States
   contactSent: null,
   cpus: null,
-  studies: null,
-  loading: null
+  groupedURs: null,
+  loading: null,
+  studies: null
 };
 
 const studies = (state = initialState, action) => {

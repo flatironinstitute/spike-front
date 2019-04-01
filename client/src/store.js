@@ -11,14 +11,15 @@ const defaultState = {
   selectedStudy: null,
   recordings: null,
   sorters: null,
-  studies: null,
   units: null,
   pairing: null,
   recordingDetails: null,
   //V2 Data: States
   loading: null,
   contactSent: null,
-  cpus: null
+  cpus: null,
+  groupedURs: null,
+  studies: null
 };
 
 export const history = createBrowserHistory();
