@@ -59,30 +59,38 @@ const unitResultSchema = new mongoose.Schema(
 
 // create virtual properties for precision, recall, and accuracy
 unitResultSchema.virtual("precision").get(function() {
-  return this.numMatches / (this.numMatches + this.numFalsePositives);
+  if (this.numMatches + this.numFalsePositives > 1) {
+    return this.numMatches / (this.numMatches + this.numFalsePositives);
+  } else {
+    return 0;
+  }
 });
 
 unitResultSchema.virtual("recall").get(function() {
-  return this.numMatches / (this.numMatches + this.numFalseNegatives);
+  if (this.numMatches + this.numFalseNegatives > 1) {
+    return this.numMatches / (this.numMatches + this.numFalseNegatives);
+  } else {
+    return 0;
+  }
 });
 
 unitResultSchema.virtual("accuracy").get(function() {
-  return (
-    this.numMatches /
-    (this.numMatches + this.numFalsePositives + this.numFalseNegatives)
-  );
+  if (this.numMatches + this.numFalsePositives + this.numFalseNegatives > 1) {
+    return (
+      this.numMatches /
+      (this.numMatches + this.numFalsePositives + this.numFalseNegatives)
+    );
+  } else {
+    return 0;
+  }
 });
 
-// // find the paired recordign and get the study id
-// unitResultSchema.virtual("study", {
-//   ref: "Recording", // model to link
-//   localField: "recording", // field on the ur
-//   foreignField: "_id" // field on the study
-// });
-
 unitResultSchema.statics.getUnitResultsByStudyAndSorter = function() {
+  // filter for only items that have snr
+  // aggregate all accuracies
+  // aggregate all recalls
+  // aggregate all precisions
   return this.aggregate([
-    // filter for only items that have snr
     { $match: { snr: { $exists: true } } },
     {
       $group: {
@@ -90,19 +98,54 @@ unitResultSchema.statics.getUnitResultsByStudyAndSorter = function() {
           sorterName: "$sorterName",
           studyName: "$studyName"
         },
-        // aggregate all snrs
-        snrs: {
-          $push: "$snr"
-        },
-        // aggregate all accuracies
-        // aggregate all recalls
-        // aggregate all precisions
         unitResults: {
           $push: {
             _id: "$_id",
-            accuracy: "$accuracy",
             sorter: "$sorter",
-            study: "$study"
+            study: "$study",
+            checkAccuracy: "$checkAccuracy",
+            checkPrecision: "$checkPrecision",
+            checkRecall: "$checkRecall",
+            accuracy: {
+              $divide: [
+                "$numMatches",
+                {
+                  $add: [
+                    "$numMatches",
+                    "$numFalsePositives",
+                    "$numFalseNegatives"
+                  ]
+                }
+              ]
+            },
+            precision: {
+              $cond: {
+                if: { $gte: ["$numMatches", 5] },
+                then: {
+                  $divide: [
+                    "$numMatches",
+                    {
+                      $add: ["$numMatches", "$numFalsePositives"]
+                    }
+                  ]
+                },
+                else: 0
+              }
+            },
+            recall: {
+              $cond: {
+                if: { $gte: ["$numMatches", 5] },
+                then: {
+                  $divide: [
+                    "$numMatches",
+                    {
+                      $add: ["$numMatches", "$numFalseNegatives"]
+                    }
+                  ]
+                },
+                else: 0
+              }
+            }
           }
         },
         count: { $sum: 1 }

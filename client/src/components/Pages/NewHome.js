@@ -18,6 +18,9 @@ class NewHome extends Component {
       this.props.cpus,
       this.props.studies
     );
+    if (!isEmpty(this.props.groupedURs)) {
+      console.log(this.props.groupedURs);
+    }
     return (
       <div className="page__body">
         {loading ? (
