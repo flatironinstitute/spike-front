@@ -18,5 +18,10 @@ exports.getUnitResultById = async (req, res, next) => {
 exports.getGroupedUnitResults = async (req, res, next) => {
   const groupedURPromise = await UnitResult.getUnitResultsByStudyAndSorter();
   const [groupedURs] = await Promise.all([groupedURPromise]);
-  res.send({ groupedURs: groupedURs });
+  console.log("groupedURs done 🦓");
+  const sortedURs = await UnitResult.groupBy(
+    groupedURs,
+    unit => unit._id.studyName
+  );
+  res.send({ groupedURs: sortedURs });
 };

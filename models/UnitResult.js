@@ -85,6 +85,19 @@ unitResultSchema.virtual("accuracy").get(function() {
   }
 });
 
+unitResultSchema.statics.groupBy = function(list, keyGetter) {
+  const map = {};
+  list.forEach(item => {
+    const key = keyGetter(item);
+    if (!map[key]) {
+      map[key] = [item];
+    } else {
+      map[key].push(item);
+    }
+  });
+  return map;
+};
+
 unitResultSchema.statics.getUnitResultsByStudyAndSorter = function() {
   // filter for only items that have snr
   // aggregate all accuracies
