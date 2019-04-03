@@ -8,19 +8,14 @@ import ReactJson from "react-json-view";
 import "./pages.css";
 
 class NewHome extends Component {
-  constructor(props) {
-    super(props);
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.cpus !== prevProps.cpus) {
+      console.log("🦓 cpus", this.props.cpus);
+    }
   }
 
   render() {
-    let loading = isEmpty(
-      this.props.groupedURs,
-      this.props.cpus,
-      this.props.studies
-    );
-    if (!isEmpty(this.props.groupedURs)) {
-      console.log(this.props.groupedURs);
-    }
+    let loading = isEmpty(this.props.groupedURs, this.props.cpus);
     return (
       <div className="page__body">
         {loading ? (
@@ -49,14 +44,6 @@ class NewHome extends Component {
               <Row className="justify-content-md-center">
                 <Col lg="10">
                   <ReactJson src={this.props.cpus} />
-                </Col>
-              </Row>
-            </div>
-            <div className="card card--rawdata">
-              <h2>Study Datadump</h2>
-              <Row className="justify-content-md-center">
-                <Col lg="10">
-                  <ReactJson src={this.props.studies} />
                 </Col>
               </Row>
             </div>

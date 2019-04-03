@@ -85,17 +85,80 @@ unitResultSchema.virtual("accuracy").get(function() {
   }
 });
 
-unitResultSchema.statics.groupBy = function(list, keyGetter) {
-  const map = {};
-  list.forEach(item => {
-    const key = keyGetter(item);
-    if (!map[key]) {
-      map[key] = [item];
-    } else {
-      map[key].push(item);
+unitResultSchema.statics.getUnitResultsByStudy = function(study) {
+  // filter for only items that match the study
+  // aggregate all accuracies
+  // aggregate all recalls
+  // aggregate all precisions
+  var matchCriteria = {},
+    pipeline;
+  if (study) {
+    matchCriteria.study = study._id;
+  }
+  pipeline = [
+    { $match: matchCriteria },
+    {
+      $group: {
+        _id: {
+          sorterName: "$sorterName",
+          studyName: "$studyName"
+        },
+        unitResults: {
+          $push: {
+            _id: "$_id",
+            sorter: "$sorter",
+            study: "$study",
+            snr: "$snr",
+            checkAccuracy: "$checkAccuracy",
+            checkPrecision: "$checkPrecision",
+            checkRecall: "$checkRecall",
+            accuracy: {
+              $divide: [
+                "$numMatches",
+                {
+                  $add: [
+                    "$numMatches",
+                    "$numFalsePositives",
+                    "$numFalseNegatives"
+                  ]
+                }
+              ]
+            },
+            precision: {
+              $cond: {
+                if: { $gte: ["$numMatches", 5] },
+                then: {
+                  $divide: [
+                    "$numMatches",
+                    {
+                      $add: ["$numMatches", "$numFalsePositives"]
+                    }
+                  ]
+                },
+                else: 0
+              }
+            },
+            recall: {
+              $cond: {
+                if: { $gte: ["$numMatches", 5] },
+                then: {
+                  $divide: [
+                    "$numMatches",
+                    {
+                      $add: ["$numMatches", "$numFalseNegatives"]
+                    }
+                  ]
+                },
+                else: 0
+              }
+            }
+          }
+        },
+        count: { $sum: 1 }
+      }
     }
-  });
-  return map;
+  ];
+  return this.aggregate(pipeline);
 };
 
 unitResultSchema.statics.getUnitResultsByStudyAndSorter = function() {
@@ -116,6 +179,7 @@ unitResultSchema.statics.getUnitResultsByStudyAndSorter = function() {
             _id: "$_id",
             sorter: "$sorter",
             study: "$study",
+            snr: "$snr",
             checkAccuracy: "$checkAccuracy",
             checkPrecision: "$checkPrecision",
             checkRecall: "$checkRecall",
@@ -167,4 +231,134 @@ unitResultSchema.statics.getUnitResultsByStudyAndSorter = function() {
   ]);
 };
 
+unitResultSchema.statics.getAllUnitResultsByNestedStudySorter = function() {
+  return this.aggregate([
+    {
+      $group: {
+        _id: {
+          sorterName: "$sorterName",
+          studyName: "$studyName"
+        },
+        unitResults: {
+          $push: {
+            _id: "$_id",
+            sorter: "$sorter",
+            study: "$study",
+            snr: "$snr",
+            checkAccuracy: "$checkAccuracy",
+            checkPrecision: "$checkPrecision",
+            checkRecall: "$checkRecall",
+            accuracy: {
+              $divide: [
+                "$numMatches",
+                {
+                  $add: [
+                    "$numMatches",
+                    "$numFalsePositives",
+                    "$numFalseNegatives"
+                  ]
+                }
+              ]
+            },
+            precision: {
+              $cond: {
+                if: { $gte: ["$numMatches", 5] },
+                then: {
+                  $divide: [
+                    "$numMatches",
+                    {
+                      $add: ["$numMatches", "$numFalsePositives"]
+                    }
+                  ]
+                },
+                else: 0
+              }
+            },
+            recall: {
+              $cond: {
+                if: { $gte: ["$numMatches", 5] },
+                then: {
+                  $divide: [
+                    "$numMatches",
+                    {
+                      $add: ["$numMatches", "$numFalseNegatives"]
+                    }
+                  ]
+                },
+                else: 0
+              }
+            }
+          }
+        },
+        count: { $sum: 1 }
+      }
+    },
+    {
+      $group: {
+        _id: "$_id.studyName",
+        sorterGroup: {
+          $push: {
+            count: "$count",
+            sorterName: "$_id.sorterName",
+            unitResults: "$unitResults"
+          }
+        }
+      }
+    }
+  ]).allowDiskUse(true);
+};
+
 module.exports = mongoose.model("UnitResult", unitResultSchema);
+
+// unitResults: {
+//   $push: {
+//     _id: "$_id",
+//     sorter: "$sorter",
+//     study: "$study",
+//     snr: "$snr",
+//     checkAccuracy: "$checkAccuracy",
+//     checkPrecision: "$checkPrecision",
+//     checkRecall: "$checkRecall",
+//     accuracy: {
+//       $divide: [
+//         "$numMatches",
+//         {
+//           $add: [
+//             "$numMatches",
+//             "$numFalsePositives",
+//             "$numFalseNegatives"
+//           ]
+//         }
+//       ]
+//     },
+//     precision: {
+//       $cond: {
+//         if: { $gte: ["$numMatches", 5] },
+//         then: {
+//           $divide: [
+//             "$numMatches",
+//             {
+//               $add: ["$numMatches", "$numFalsePositives"]
+//             }
+//           ]
+//         },
+//         else: 0
+//       }
+//     },
+//     recall: {
+//       $cond: {
+//         if: { $gte: ["$numMatches", 5] },
+//         then: {
+//           $divide: [
+//             "$numMatches",
+//             {
+//               $add: ["$numMatches", "$numFalseNegatives"]
+//             }
+//           ]
+//         },
+//         else: 0
+//       }
+//     }
+//   }
+// },
+// count: { $sum: 1 }

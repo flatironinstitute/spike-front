@@ -41,14 +41,19 @@ sortingResultSchema.statics.getCPUsByStudyAndSorter = function() {
           sorterName: "$sorterName"
         },
         averageCPU: { $avg: "$cpuTimeSec" },
-        sortingResults: {
-          $push: {
-            _id: "$_id",
-            study: "$study",
-            sorter: "$sorter"
-          }
-        },
         count: { $sum: 1 }
+      }
+    },
+    {
+      $group: {
+        _id: "$_id.studyName",
+        sorterGroup: {
+          $push: {
+            count: "$count",
+            sorterName: "$_id.sorterName",
+            averageCPU: "$averageCPU"
+          }
+        }
       }
     }
   ]);
