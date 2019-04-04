@@ -36,7 +36,6 @@ class Home extends Component {
       this.props.groupedURs !== prevProps.groupedURs ||
       this.props.studies !== prevProps.studies
     ) {
-      console.log("🍔, both here~", this.props.groupedURs, this.props.studies);
       if (this.props.groupedURs && this.props.studies) {
         let flatUnits = flattenUnitResults(
           this.props.groupedURs,
@@ -94,7 +93,7 @@ class Home extends Component {
             shortStudies={studies}
             shortSorters={sorters}
             // TODO: Reorg
-            unitsMap={this.props.groupedURs}
+            unitsMap={this.state.unitsMap}
           />
         )}
       </div>
