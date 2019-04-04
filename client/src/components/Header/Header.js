@@ -83,9 +83,12 @@ class Header extends Component {
             <LinkContainer to="/metrics">
               <Nav.Link eventKey="/metrics">Metrics</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/internals">
-              <Nav.Link eventKey="/internals">Internals</Nav.Link>
+            <LinkContainer to="/rawdata">
+              <Nav.Link eventKey="/rawdata">Raw Data</Nav.Link>
             </LinkContainer>
+            {/* <LinkContainer to="/internals">
+              <Nav.Link eventKey="/internals">Internals</Nav.Link>
+            </LinkContainer> */}
           </Nav>
         </Nav>
       </div>

@@ -3,13 +3,14 @@ import Slider from "react-rangeslider";
 import "react-rangeslider/lib/index.css";
 
 import "./statscards.css";
+import { toTitleCase } from "../../utils";
 
 export class SliderCard extends Component {
   getSliderCopy() {
     let copy;
     switch (this.props.format) {
       case "count":
-        copy = "Minimum Accuracy";
+        copy = `Minimum ${toTitleCase(this.props.metric)}`;
         break;
       case "average":
         copy = "Minimum SNR";

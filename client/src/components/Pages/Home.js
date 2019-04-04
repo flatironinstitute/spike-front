@@ -76,6 +76,10 @@ class Home extends Component {
       isEmpty(this.props.sorters);
     let sorters = this.props.sorters ? this.getSorters() : null;
     let studies = this.props.studies ? this.getStudies() : null;
+    console.log("🍔grouped urs", this.props.groupedURs);
+    if (!isEmpty(this.state.unitsMap)) {
+      console.log("🍔 unitsmap", this.state.unitsMap);
+    }
     return (
       <div className="page__body">
         {loading ? (
