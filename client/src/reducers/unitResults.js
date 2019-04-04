@@ -1,11 +1,9 @@
-import { RECEIVE_UNITS } from "../actions/actionCreators";
+import { RECEIVE_UNIT_RESULTS } from "../actions/actionCreators";
 
 const initialState = {
   selectedRecording: null,
   selectedStudy: null,
   recordings: null,
-  sorters: null,
-  units: null,
   pairing: null,
   recordingDetails: null,
   //V2 Data: States
@@ -13,16 +11,18 @@ const initialState = {
   cpus: null,
   groupedURs: null,
   loading: null,
-  studies: null
+  studies: null,
+  sorters: null,
+  unitResults: null
 };
 
-const units = (state = initialState, action) => {
+const unitResults = (state = initialState, action) => {
   switch (action.type) {
-    case RECEIVE_UNITS:
-      return action.units;
+    case RECEIVE_UNIT_RESULTS:
+      return action.unitResults;
     default:
       return state;
   }
 };
 
-export default units;
+export default unitResults;

@@ -1,4 +1,4 @@
-import { getRecordings, getSorters, getTrueUnits } from "../dataHandlers";
+import { getRecordings } from "../dataHandlers";
 // TODO: Replace these with API calls
 
 const fetch = require("node-fetch");
@@ -9,6 +9,8 @@ const baseurl = process.env.API_URL || "http://localhost:5000";
 export const RECEIVE_CPUS = "RECEIVE_CPUS";
 export const RECEIVE_GROUPED_URS = "RECEIVE_GROUPED_URS";
 export const RECEIVE_STUDIES = "RECEIVE_STUDIES";
+export const RECEIVE_SORTERS = "RECEIVE_SORTERS";
+export const RECEIVE_UNIT_RESULTS = "RECEIVE_UNIT_RESULTS";
 
 export const START_LOADING = "START_LOADING";
 export const END_LOADING = "END_LOADING";
@@ -20,8 +22,6 @@ export const SEND_CONTACT_FAILURE = "SEND_CONTACT_FAILURE";
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 export const SELECT_RECORDING = "SELECT_RECORDING";
 export const RECEIVE_RECORDINGS = "RECEIVE_RECORDINGS";
-export const RECEIVE_SORTERS = "RECEIVE_SORTERS";
-export const RECEIVE_UNITS = "RECEIVE_UNITS";
 export const SELECT_STUDY = "SELECT_STUDY";
 export const RECEIVE_PAIRING = "RECEIVE_PAIRING";
 export const RECEIVE_RECORDING_DETAILS = "RECEIVE_RECORDING_DETAILS";
@@ -161,6 +161,52 @@ export const fetchGroupedURs = () => {
   };
 };
 
+// Unit Results
+export const receiveUnitResults = unitresults => {
+  return {
+    type: RECEIVE_UNIT_RESULTS,
+    unitresults
+  };
+};
+
+export const fetchUnitResults = () => {
+  let url = `/api/unitresults`;
+  return function(dispatch) {
+    dispatch(startLoading());
+    return createFetch(url)
+      .then(unitresults => {
+        console.log("🍔 GOT UNITS in fetch", unitresults.length);
+        dispatch(receiveUnitResults(unitresults));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      });
+  };
+};
+
+// Sorters
+export const receiveSorters = sorters => ({
+  type: RECEIVE_SORTERS,
+  sorters
+});
+
+export const fetchSorters = () => {
+  let url = `/api/sorters`;
+  return function(dispatch) {
+    dispatch(startLoading());
+    return createFetch(url)
+      .then(res => {
+        return res.sorters;
+      })
+      .then(sorters => {
+        dispatch(receiveSorters(sorters));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      });
+  };
+};
+
 // Loading
 export const startLoading = () => ({
   type: START_LOADING,
@@ -205,52 +251,6 @@ export const fetchRecordings = () => {
       })
       .then(recordings => {
         dispatch(receiveRecordings(recordings));
-      })
-      .then(() => {
-        dispatch(endLoading());
-      });
-  };
-};
-
-// Sorters
-export const receiveSorters = sorters => ({
-  type: RECEIVE_SORTERS,
-  sorters
-});
-
-export const fetchSorters = () => {
-  return function(dispatch) {
-    dispatch(startLoading());
-    return getSorters()
-      .then(res => {
-        return res.sorters;
-      })
-      .then(sorters => {
-        dispatch(receiveSorters(sorters));
-      })
-      .then(() => {
-        dispatch(endLoading());
-      });
-  };
-};
-
-// Units
-export const receiveUnits = units => {
-  return {
-    type: RECEIVE_UNITS,
-    units
-  };
-};
-
-export const fetchUnits = () => {
-  return function(dispatch) {
-    dispatch(startLoading());
-    return getTrueUnits()
-      .then(res => {
-        return res.true_units;
-      })
-      .then(units => {
-        dispatch(receiveUnits(units));
       })
       .then(() => {
         dispatch(endLoading());

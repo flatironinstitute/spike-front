@@ -30,7 +30,7 @@ function groupBy(list, keyGetter) {
 }
 
 exports.getGroupedUnitResults = async (req, res, next) => {
-  const groupedURPromises = UnitResult.getUnitAllResultsByNestedStudySorter();
+  const groupedURPromises = UnitResult.getAllUnitResultsByNestedStudySorter();
   const [groupedURs] = await Promise.all([groupedURPromises]);
   res.send({ groupedURs: groupedURs });
 };

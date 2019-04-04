@@ -24,6 +24,12 @@ router.get("/api/studies", studyController.getStudies);
 // Grouped Unit Results
 router.get("/api/groupedurs", unitResultsController.getGroupedUnitResults);
 
+// Sorters
+router.get("/api/sorters", sorterController.getSorters);
+
+// Unit Results
+router.get("/api/unitresults", unitResultsController.getUnitResults);
+
 // Contact Routes
 router.post("/api/contact", (req, res) => {
   // TODO: Attach to mail server

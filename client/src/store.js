@@ -10,8 +10,6 @@ const defaultState = {
   selectedRecording: null,
   selectedStudy: null,
   recordings: null,
-  sorters: null,
-  units: null,
   pairing: null,
   recordingDetails: null,
   //V2 Data: States
@@ -19,7 +17,9 @@ const defaultState = {
   contactSent: null,
   cpus: null,
   groupedURs: null,
-  studies: null
+  studies: null,
+  sorters: null,
+  unitResults: null
 };
 
 export const history = createBrowserHistory();

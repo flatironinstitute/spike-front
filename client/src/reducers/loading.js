@@ -4,8 +4,6 @@ const initialState = {
   selectedRecording: null,
   selectedStudy: null,
   recordings: null,
-  sorters: null,
-  units: null,
   pairing: null,
   recordingDetails: null,
   //V2 Data: States
@@ -13,7 +11,9 @@ const initialState = {
   cpus: null,
   groupedURs: null,
   loading: null,
-  studies: null
+  studies: null,
+  sorters: null,
+  unitResults: null
 };
 
 const loading = (state = initialState, action) => {
