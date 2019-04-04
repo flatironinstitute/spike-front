@@ -23,7 +23,19 @@ class Contact extends Component {
             >
               Github issues
             </a>{" "}
-            page to report website problems or contact us directly below.
+            page to report website problems.
+          </p>
+          <p className="byline">
+            Please use
+            <a
+              href="https://github.com/flatironinstitute/spikeforest"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Github issues
+            </a>{" "}
+            page to report issues with the data analysis or reach out via the
+            form below.
           </p>
           <div className="dividerthick" />
         </div>

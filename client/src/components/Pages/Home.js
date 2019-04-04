@@ -77,9 +77,12 @@ class Home extends Component {
     }
     return (
       <div className="page__body page__body--alert ">
+        {/* CPU - sum of all cpuTimeSec on every sorting result */}
+        {/* Ground truth - count of all true units */}
+        {/* Recording data - hard code*/}
         <Alert variant={"success"}>
           <b>Project Totals:</b> 111111 CPU Core Hours, 2222222 Ground Truth
-          Units, 33 Terrabytes of Recorded Data
+          Units, 1.2TB of recordings
         </Alert>
         {loading ? (
           <Container className="container__heatmap" id="overview">
