@@ -5,6 +5,10 @@
   max-width: 100vw;
 }
 
+.navbar__alert {
+  margin-top: 70px !important;
+}
+
 .navbar__white {
   background: #fff;
   position: fixed;

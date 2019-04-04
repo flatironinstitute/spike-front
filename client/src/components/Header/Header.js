@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
+import { Alert, Nav, Navbar } from "react-bootstrap";
 import logo from "./logo-no-icon.svg";
 import InfoPanel from "./InfoPanel";
 
@@ -86,9 +85,6 @@ class Header extends Component {
             <LinkContainer to="/rawdata">
               <Nav.Link eventKey="/rawdata">Raw Data</Nav.Link>
             </LinkContainer>
-            {/* <LinkContainer to="/internals">
-              <Nav.Link eventKey="/internals">Internals</Nav.Link>
-            </LinkContainer> */}
           </Nav>
         </Nav>
       </div>

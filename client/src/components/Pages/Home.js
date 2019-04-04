@@ -1,14 +1,9 @@
 import React, { Component } from "react";
 import Preloader from "../Preloader/Preloader";
 import HomeContentContainer from "../Heatmap/HomeContentContainer";
-import {
-  flattenUnits,
-  flattenUnitResults,
-  formatUnitResults,
-  mapUnitsBySorterStudy
-} from "../../dataHandlers";
+import { flattenUnitResults, formatUnitResults } from "../../dataHandlers";
 import { isEmpty } from "../../utils";
-import { Container, Card } from "react-bootstrap";
+import { Alert, Container, Card } from "react-bootstrap";
 
 import "./pages.css";
 
@@ -81,7 +76,11 @@ class Home extends Component {
       console.log("🍔 unitsmap", this.state.unitsMap);
     }
     return (
-      <div className="page__body">
+      <div className="page__body page__body--alert ">
+        <Alert variant={"success"}>
+          <b>Project Totals:</b> 111111 CPU Core Hours, 2222222 Ground Truth
+          Units, 33 Terrabytes of Recorded Data
+        </Alert>
         {loading ? (
           <Container className="container__heatmap" id="overview">
             <Card>

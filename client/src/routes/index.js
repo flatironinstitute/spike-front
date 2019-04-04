@@ -8,6 +8,7 @@ import * as actionCreators from "../actions/actionCreators";
 // import components
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
+import { Alert } from "react-bootstrap";
 
 import Home from "../components/Pages/Home";
 import NewHome from "../components/Pages/NewHome";
@@ -40,6 +41,10 @@ class Routes extends Component {
     return (
       <div className="wrapper">
         <Header router={this.props.router} />
+        <Alert variant={"success"}>
+          Project Totals: CPU Core Hours, Ground Truth Units, Terrabytes of
+          Recorded Data
+        </Alert>
         <Switch>
           <Route exact path="/" render={props => <Home {...this.props} />} />
           <Route path="/about" render={props => <About {...this.props} />} />
