@@ -17,6 +17,7 @@ class RawData extends Component {
     super(props);
 
     this.models = [
+      "cpus",
       "recordings",
       "sorters",
       "sortingResults",
@@ -27,6 +28,7 @@ class RawData extends Component {
     ];
 
     this.state = {
+      cpus: [],
       recordings: [],
       sorters: [],
       sortingResults: [],
