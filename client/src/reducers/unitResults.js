@@ -1,4 +1,4 @@
-import { RECEIVE_RECORDINGS } from "../actions/actionCreators";
+import { RECEIVE_UNIT_RESULTS } from "../actions/actionCreators";
 
 const initialState = {
   selectedRecording: null,
@@ -16,13 +16,13 @@ const initialState = {
   unitResults: null
 };
 
-const recordings = (state = initialState, action) => {
+const unitResults = (state = initialState, action) => {
   switch (action.type) {
-    case RECEIVE_RECORDINGS:
-      return action.recordings;
+    case RECEIVE_UNIT_RESULTS:
+      return action.unitResults;
     default:
       return state;
   }
 };
 
-export default recordings;
+export default unitResults;

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Preloader from "../Preloader/Preloader";
 import HomeContentContainer from "../Heatmap/HomeContentContainer";
-import { flattenUnits, mapUnitsBySorterStudy } from "../../dataHandlers";
+import { flattenUnitResults, formatUnitResults } from "../../dataHandlers";
 import { isEmpty } from "../../utils";
-import { Container, Card } from "react-bootstrap";
+import { Alert, Container, Card } from "react-bootstrap";
 
 import "./pages.css";
 
@@ -16,21 +16,26 @@ class Home extends Component {
     };
   }
 
-  // TODO: Move these unit pulls and calculations to a parent process?
   componentDidMount() {
-    if (this.props.units && this.props.studies) {
-      let flatUnits = flattenUnits(this.props.units, this.props.studies);
+    if (this.props.groupedURs && this.props.studies) {
+      let flatUnits = flattenUnitResults(
+        this.props.groupedURs,
+        this.props.studies
+      );
       this.setState({ flatUnits: flatUnits });
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      this.props.units !== prevProps.units ||
+      this.props.groupedURs !== prevProps.groupedURs ||
       this.props.studies !== prevProps.studies
     ) {
-      if (this.props.units && this.props.studies) {
-        let flatUnits = flattenUnits(this.props.units, this.props.studies);
+      if (this.props.groupedURs && this.props.studies) {
+        let flatUnits = flattenUnitResults(
+          this.props.groupedURs,
+          this.props.studies
+        );
         this.setState({ flatUnits: flatUnits });
       }
     }
@@ -40,7 +45,7 @@ class Home extends Component {
   }
 
   async mapUnits() {
-    let unitsMap = await mapUnitsBySorterStudy(
+    let unitsMap = await formatUnitResults(
       this.state.flatUnits,
       this.props.sorters
     );
@@ -66,8 +71,16 @@ class Home extends Component {
       isEmpty(this.props.sorters);
     let sorters = this.props.sorters ? this.getSorters() : null;
     let studies = this.props.studies ? this.getStudies() : null;
+    console.log("🍔grouped urs", this.props.groupedURs);
+    if (!isEmpty(this.state.unitsMap)) {
+      console.log("🍔 unitsmap", this.state.unitsMap);
+    }
     return (
-      <div className="page__body">
+      <div className="page__body page__body--alert ">
+        <Alert variant={"success"}>
+          <b>Project Totals:</b> 111111 CPU Core Hours, 2222222 Ground Truth
+          Units, 33 Terrabytes of Recorded Data
+        </Alert>
         {loading ? (
           <Container className="container__heatmap" id="overview">
             <Card>
@@ -82,6 +95,7 @@ class Home extends Component {
             {...this.props}
             shortStudies={studies}
             shortSorters={sorters}
+            // TODO: Reorg
             unitsMap={this.state.unitsMap}
           />
         )}

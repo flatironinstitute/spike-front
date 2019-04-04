@@ -4,15 +4,19 @@ import {
 } from "../actions/actionCreators";
 
 const initialState = {
-  selectedStudy: null,
   selectedRecording: null,
+  selectedStudy: null,
   recordings: null,
-  sorters: null,
-  studies: null,
-  units: null,
-  loading: null,
+  pairing: null,
+  recordingDetails: null,
+  //V2 Data: States
   contactSent: null,
-  pairing: null
+  cpus: null,
+  groupedURs: null,
+  loading: null,
+  studies: null,
+  sorters: null,
+  unitResults: null
 };
 
 const contactSent = (state = initialState, action) => {

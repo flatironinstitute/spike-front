@@ -1,32 +1,35 @@
-import {
-  getRecordings,
-  getStudies,
-  getSorters,
-  getTrueUnits
-} from "../dataHandlers";
+import { getRecordings } from "../dataHandlers";
 // TODO: Replace these with API calls
 
 const fetch = require("node-fetch");
 const baseurl = process.env.API_URL || "http://localhost:5000";
 
-export const SELECT_RECORDING = "SELECT_RECORDING";
-export const RECEIVE_RECORDINGS = "RECEIVE_RECORDINGS";
-export const RECEIVE_SORTERS = "RECEIVE_SORTERS";
-export const RECEIVE_UNITS = "RECEIVE_UNITS";
-// Studies
-export const SELECT_STUDY = "SELECT_STUDY";
+/* V2 Data: New Actions
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+export const RECEIVE_CPUS = "RECEIVE_CPUS";
+export const RECEIVE_GROUPED_URS = "RECEIVE_GROUPED_URS";
 export const RECEIVE_STUDIES = "RECEIVE_STUDIES";
-export const RECEIVE_PAIRING = "RECEIVE_PAIRING";
-export const RECEIVE_RECORDING_DETAILS = "RECEIVE_RECORDING_DETAILS";
+export const RECEIVE_SORTERS = "RECEIVE_SORTERS";
+export const RECEIVE_UNIT_RESULTS = "RECEIVE_UNIT_RESULTS";
+
 export const START_LOADING = "START_LOADING";
 export const END_LOADING = "END_LOADING";
-
-// Contact Form
 export const SEND_CONTACT = "SEND_CONTACT";
 export const SEND_CONTACT_SUCCESS = "SEND_CONTACT_SUCCESS";
 export const SEND_CONTACT_FAILURE = "SEND_CONTACT_FAILURE";
 
-// default API call function
+/* Old Shiz
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+export const SELECT_RECORDING = "SELECT_RECORDING";
+export const RECEIVE_RECORDINGS = "RECEIVE_RECORDINGS";
+export const SELECT_STUDY = "SELECT_STUDY";
+export const RECEIVE_PAIRING = "RECEIVE_PAIRING";
+export const RECEIVE_RECORDING_DETAILS = "RECEIVE_RECORDING_DETAILS";
+
+/* V2 Data: Functions
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+// Utilities
 export const createFetch = async url => {
   const newUrl = baseurl + url;
   const response = await fetch(newUrl, {
@@ -64,6 +67,160 @@ export const createFetchPost = async (url, options) => {
   }
 };
 
+// Contacts
+export function sendContactSuccess() {
+  return {
+    type: SEND_CONTACT_SUCCESS,
+    contactSent: true
+  };
+}
+
+export function sendContactFailure(error) {
+  return {
+    type: SEND_CONTACT_FAILURE,
+    contactSent: false
+  };
+}
+
+export const sendContact = options => {
+  return function(dispatch) {
+    return createFetchPost(`/api/contact`, options)
+      .then(res => {
+        dispatch(sendContactSuccess(res.success));
+      })
+      .catch(err => {
+        dispatch(sendContactFailure(err));
+      });
+  };
+};
+
+// Studies
+export const receiveStudies = studies => ({
+  type: RECEIVE_STUDIES,
+  studies
+});
+
+export const fetchStudies = () => {
+  let url = `/api/studies`;
+  return function(dispatch) {
+    dispatch(startLoading());
+    return createFetch(url)
+      .then(res => {
+        dispatch(receiveStudies(res.studies));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      })
+      .catch(err => console.log(err));
+  };
+};
+
+// CPUs
+export const receiveCPUs = cpus => {
+  return {
+    type: RECEIVE_CPUS,
+    cpus: cpus
+  };
+};
+
+export const fetchCPUs = () => {
+  let url = `/api/cpus`;
+  return function(dispatch) {
+    dispatch(startLoading());
+    return createFetch(url)
+      .then(res => {
+        dispatch(receiveCPUs(res.cpus));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      })
+      .catch(err => console.log(err));
+  };
+};
+
+// Grouped Unit Results
+export const receiveGroupedURs = groupedURs => {
+  return {
+    type: RECEIVE_GROUPED_URS,
+    groupedURs: groupedURs
+  };
+};
+
+export const fetchGroupedURs = () => {
+  let url = `/api/groupedurs`;
+  return function(dispatch) {
+    dispatch(startLoading());
+    return createFetch(url)
+      .then(res => {
+        dispatch(receiveGroupedURs(res.groupedURs));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      })
+      .catch(err => console.log(err));
+  };
+};
+
+// Unit Results
+export const receiveUnitResults = unitresults => {
+  return {
+    type: RECEIVE_UNIT_RESULTS,
+    unitresults
+  };
+};
+
+export const fetchUnitResults = () => {
+  let url = `/api/unitresults`;
+  return function(dispatch) {
+    dispatch(startLoading());
+    return createFetch(url)
+      .then(unitresults => {
+        console.log("🍔 GOT UNITS in fetch", unitresults.length);
+        dispatch(receiveUnitResults(unitresults));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      });
+  };
+};
+
+// Sorters
+export const receiveSorters = sorters => ({
+  type: RECEIVE_SORTERS,
+  sorters
+});
+
+export const fetchSorters = () => {
+  let url = `/api/sorters`;
+  return function(dispatch) {
+    dispatch(startLoading());
+    return createFetch(url)
+      .then(res => {
+        return res.sorters;
+      })
+      .then(sorters => {
+        dispatch(receiveSorters(sorters));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      });
+  };
+};
+
+// Loading
+export const startLoading = () => ({
+  type: START_LOADING,
+  loading: true
+});
+
+export const endLoading = () => ({
+  type: END_LOADING,
+  loading: false
+});
+
+/* Old Shiz
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
 // select study
 export const selectStudy = study => ({
   type: SELECT_STUDY,
@@ -100,85 +257,6 @@ export const fetchRecordings = () => {
       });
   };
 };
-
-// Sorters
-export const receiveSorters = sorters => ({
-  type: RECEIVE_SORTERS,
-  sorters
-});
-
-export const fetchSorters = () => {
-  return function(dispatch) {
-    dispatch(startLoading());
-    return getSorters()
-      .then(res => {
-        return res.sorters;
-      })
-      .then(sorters => {
-        dispatch(receiveSorters(sorters));
-      })
-      .then(() => {
-        dispatch(endLoading());
-      });
-  };
-};
-
-// Studies
-export const receiveStudies = studies => ({
-  type: RECEIVE_STUDIES,
-  studies
-});
-
-export const fetchStudies = () => {
-  return function(dispatch) {
-    dispatch(startLoading());
-    return getStudies()
-      .then(res => {
-        return res.studies;
-      })
-      .then(studies => {
-        dispatch(receiveStudies(studies));
-      })
-      .then(() => {
-        dispatch(endLoading());
-      });
-  };
-};
-
-// Units
-export const receiveUnits = units => {
-  return {
-    type: RECEIVE_UNITS,
-    units
-  };
-};
-
-export const fetchUnits = () => {
-  return function(dispatch) {
-    dispatch(startLoading());
-    return getTrueUnits()
-      .then(res => {
-        return res.true_units;
-      })
-      .then(units => {
-        dispatch(receiveUnits(units));
-      })
-      .then(() => {
-        dispatch(endLoading());
-      });
-  };
-};
-
-// loading
-export const startLoading = () => ({
-  type: START_LOADING,
-  loading: true
-});
-
-export const endLoading = () => ({
-  type: END_LOADING,
-  loading: false
-});
 
 // Pairing
 export const receivePairing = pairing => ({
@@ -220,31 +298,5 @@ export const fetchRecordingDetails = (study, sorter, recording) => {
         dispatch(endLoading());
       })
       .catch(err => console.log(err));
-  };
-};
-
-export function sendContactSuccess() {
-  return {
-    type: SEND_CONTACT_SUCCESS,
-    contactSent: true
-  };
-}
-
-export function sendContactFailure(error) {
-  return {
-    type: SEND_CONTACT_FAILURE,
-    contactSent: false
-  };
-}
-
-export const sendContact = options => {
-  return function(dispatch) {
-    return createFetchPost(`/api/contact`, options)
-      .then(res => {
-        dispatch(sendContactSuccess(res.success));
-      })
-      .catch(err => {
-        dispatch(sendContactFailure(err));
-      });
   };
 };

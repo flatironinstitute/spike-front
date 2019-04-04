@@ -102,63 +102,156 @@ export async function getTrueUnits() {
   return await loadData(s_targets, "true_units", "true_units");
 }
 
-export function flattenUnits(trueUnits, studies) {
-  let newUnits = [];
-  // TODO: Add new static list to replace sorters below
-  // TODO: Add this to redux and find a way to get rid of the need for studies?
-  if (studies.length) {
-    trueUnits.forEach(unit => {
-      const myStudy = studies.filter(study => study.name === unit.study);
-      const mySorters = myStudy[0].sorters
-        ? myStudy[0].sorters
-        : ["IronClust-tetrode", "MountainSort4-thr3", "SpykingCircus"];
-      for (const key of mySorters) {
-        if (unit.sorting_results[key]) {
-          let floatie = parseFloat(
-            unit.sorting_results[key].Accuracy ||
-              unit.sorting_results[key].accuracy
-          );
-          let sorterObj = {
-            firing_rate: unit.firing_rate,
-            num_events: unit.num_events,
-            peak_channel: unit.peak_channel,
-            recording: unit.recording,
-            snr: unit.snr,
-            study: unit.study,
-            unit_id: unit.unit_id,
-            sorter: key,
-            sorting_results: unit.sorting_results[key],
-            accuracy: floatie
-          };
-          newUnits.push(sorterObj);
-        } else {
-          let blankSorterObj = {
-            firing_rate: unit.firing_rate,
-            num_events: unit.num_events,
-            peak_channel: unit.peak_channel,
-            recording: unit.recording,
-            snr: unit.snr,
-            study: unit.study,
-            unit_id: unit.unit_id,
-            sorter: key,
-            sorting_results: {
-              num_matches: 0,
-              Accuracy: "0",
-              best_unit: 0,
-              matched_unit: 0,
-              unit_id: 0,
-              f_n: "0",
-              f_p: "0"
-            },
-            accuracy: 0
-          };
-          newUnits.push(blankSorterObj);
-        }
+export async function formatUnitResults(groupedURs, sorters) {
+  function groupBy(list, keyGetter) {
+    const map = {};
+    list.forEach(item => {
+      const key = keyGetter(item);
+      if (!map[key]) {
+        map[key] = [item];
+      } else {
+        map[key].push(item);
       }
     });
+    return map;
   }
-  return newUnits;
+
+  function groupBySorters(list, keyGetter) {
+    const map = {};
+    list.forEach(item => {
+      const key = keyGetter(item);
+      map[key] = item;
+    });
+    return map;
+  }
+
+  function sumAccuracies(allSorted, study) {
+    let formattedSorted = [];
+    for (var sorted in allSorted) {
+      let accuracies = allSorted[sorted].unitResults.map(
+        unit => unit.checkAccuracy
+      );
+      let snrs = allSorted[sorted].unitResults.map(unit => unit.snr);
+      let recalls = allSorted[sorted].unitResults.map(unit => unit.checkRecall);
+      let precisions = allSorted[sorted].unitResults.map(
+        unit => unit.precision
+      );
+      let newObj = {
+        study: study,
+        sorter: sorted,
+        y: study,
+        x: sorted,
+        true_units: allSorted[sorted].unitResults,
+        accuracies: accuracies,
+        snrs: snrs,
+        precisions: precisions,
+        recalls: recalls,
+        in_range: 0,
+        color: 0,
+        is_applied: true
+      };
+      formattedSorted.push(newObj);
+    }
+    if (sorters.length !== formattedSorted.length) {
+      sorters.forEach(sorter => {
+        if (
+          !formattedSorted.filter(
+            formattedSort => formattedSort.sorter === sorter.name
+          ).length
+        ) {
+          let dummyObj = {
+            study: study,
+            sorter: sorter.name,
+            y: study,
+            x: sorter.name,
+            true_units: [],
+            accuracies: [],
+            snrs: [],
+            color: 0,
+            in_range: null,
+            is_applied: false
+          };
+          formattedSorted.push(dummyObj);
+        }
+      });
+    }
+    return formattedSorted;
+  }
+
+  const byStudy = await groupBy(groupedURs, unit => unit._id.studyName);
+  const bySorter = [];
+  for (let study in byStudy) {
+    let allSorted = groupBySorters(
+      byStudy[study],
+      study => study._id.sorterName
+    );
+    let summedAcc = sumAccuracies(allSorted, study);
+    let obj = {
+      [study]: summedAcc
+    };
+    bySorter.push(obj);
+  }
+  return bySorter;
 }
+
+export function flattenUnitResults(groupedURs, studies) {
+  return groupedURs;
+}
+
+// export function flattenUnits(groupedURs, studies) {
+//   if (studies.length) {
+//     groupedURs.forEach(unit => {
+//       const myStudy = studies.filter(study => study.name === unit.study);
+//       const mySorters = myStudy[0].sorters
+//         ? myStudy[0].sorters
+//         : ["IronClust-tetrode", "MountainSort4-thr3", "SpykingCircus"];
+//       for (const key of mySorters) {
+//         if (unit.sorting_results[key]) {
+//           let floatie = parseFloat(
+//             unit.sorting_results[key].Accuracy ||
+//               unit.sorting_results[key].accuracy
+//           );
+//           let sorterObj = {
+//             firing_rate: unit.firing_rate,
+//             num_events: unit.num_events,
+//             peak_channel: unit.peak_channel,
+//             recording: unit.recording,
+//             snr: unit.snr,
+//             study: unit.study,
+//             unit_id: unit.unit_id,
+//             sorter: key,
+//             sorting_results: unit.sorting_results[key],
+//             accuracy: floatie
+//           };
+//           newUnits.push(sorterObj);
+//         } else {
+//           let blankSorterObj = {
+//             firing_rate: unit.firing_rate,
+//             num_events: unit.num_events,
+//             peak_channel: unit.peak_channel,
+//             recording: unit.recording,
+//             snr: unit.snr,
+//             study: unit.study,
+//             unit_id: unit.unit_id,
+//             sorter: key,
+//             sorting_results: {
+//               num_matches: 0,
+//               Accuracy: "0",
+//               best_unit: 0,
+//               matched_unit: 0,
+//               unit_id: 0,
+//               f_n: "0",
+//               f_p: "0"
+//             },
+//             accuracy: 0
+//           };
+//           newUnits.push(blankSorterObj);
+//         }
+//       }
+//     });
+//   }
+//   return newUnits;
+// }
 
 export async function mapUnitsBySorterStudy(allUnits, sorters) {
   // Filter sortmatted

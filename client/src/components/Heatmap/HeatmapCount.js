@@ -32,21 +32,80 @@ class HeatmapCount extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (
       this.props.unitsMap !== prevProps.unitsMap ||
-      this.props.sliderValue !== prevProps.sliderValue
+      this.props.sliderValue !== prevProps.sliderValue ||
+      this.props.metric !== prevProps.metric
     ) {
       this.filterAccuracyMap();
     }
   }
 
-  // Count functions for 'Number of groundtruth units above accuracy threshold'
+  getMetricKey() {
+    let metricKey;
+    switch (this.props.metric) {
+      case "accuracy":
+        metricKey = "accuracies";
+        break;
+      case "recall":
+        metricKey = "recalls";
+        break;
+      case "precision":
+        metricKey = "precisions";
+        break;
+    }
+    return metricKey;
+  }
+
+  // Count functions for 'Number of groundtruth units above metric threshold'
   filterAccuracy(sorterArray) {
     let newArr = sorterArray.map(sorter => {
-      let above = sorter.accuracies.filter(accu => {
-        return accu >= this.props.sliderValue;
-      });
-      sorter.in_range = above.length;
-      sorter.color = above.length;
-      return sorter;
+      if (!sorter.accuracies) {
+        console.log("🍔", sorter);
+      } else {
+        let above = sorter.accuracies.filter(accu => {
+          return accu >= this.props.sliderValue;
+        });
+        sorter.in_range = above.length;
+        sorter.color = above.length;
+        return sorter;
+      }
+    });
+    return newArr;
+  }
+
+  filterRecall(sorterArray) {
+    let newArr = sorterArray.map(sorter => {
+      if (!sorter.recalls) {
+        console.log("🍔 no recalls", sorter);
+        sorter.in_range = 0;
+        sorter.color = 0;
+        return sorter;
+      } else {
+        let above = sorter.recalls.filter(accu => {
+          return accu >= this.props.sliderValue;
+        });
+        sorter.in_range = above.length;
+        sorter.color = above.length;
+        return sorter;
+      }
+    });
+    return newArr;
+  }
+
+  filterPrecision(sorterArray) {
+    let newArr = sorterArray.map(sorter => {
+      if (!sorter.precisions) {
+        console.log("🍔 no precisions", sorter);
+        sorter.in_range = 0;
+        sorter.color = 0;
+        return sorter;
+      } else {
+        let above = sorter.precisions.filter(accu => {
+          return accu >= this.props.sliderValue;
+        });
+        sorter.in_range = above.length;
+        sorter.color = above.length;
+        return sorter;
+      }
     });
     return newArr;
   }
@@ -55,7 +114,18 @@ class HeatmapCount extends Component {
     let built = this.props.unitsMap.map(study => {
       let values = Object.values(study)[0];
       let key = Object.keys(study)[0];
-      let filtered = this.filterAccuracy(values);
+      let filtered;
+      switch (this.props.metric) {
+        case "accuracy":
+          filtered = this.filterAccuracy(values);
+          break;
+        case "recall":
+          filtered = this.filterRecall(values);
+          break;
+        case "precision":
+          filtered = this.filterPrecision(values);
+          break;
+      }
       return { [key]: filtered };
     });
     this.setState({ builtData: built });

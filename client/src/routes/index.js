@@ -8,8 +8,10 @@ import * as actionCreators from "../actions/actionCreators";
 // import components
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
+import { Alert } from "react-bootstrap";
 
 import Home from "../components/Pages/Home";
+import NewHome from "../components/Pages/NewHome";
 import About from "../components/Pages/About";
 import Recordings from "../components/Pages/Recordings";
 import Studies from "../components/Pages/Studies";
@@ -23,16 +25,26 @@ import RawData from "../components/Pages/RawData";
 
 class Routes extends Component {
   async componentDidMount() {
+    // V2 Data: Fetches
+    this.props.fetchCPUs();
     this.props.fetchStudies();
+    this.props.fetchGroupedURs();
     this.props.fetchSorters();
-    this.props.fetchRecordings();
-    this.props.fetchUnits();
+    console.log("🚦Index routes fetches called");
+    // this.props.fetchUnitResults();
+    // V1 Data: Fetches
+    // this.props.fetchRecordings();
+    // this.props.fetchUnits();
   }
 
   render() {
     return (
       <div className="wrapper">
         <Header router={this.props.router} />
+        <Alert variant={"success"}>
+          Project Totals: CPU Core Hours, Ground Truth Units, Terrabytes of
+          Recorded Data
+        </Alert>
         <Switch>
           <Route exact path="/" render={props => <Home {...this.props} />} />
           <Route path="/about" render={props => <About {...this.props} />} />
@@ -43,6 +55,10 @@ class Routes extends Component {
           <Route
             path="/internals"
             render={props => <Internals {...this.props} />}
+          />
+          <Route
+            path="/newhome"
+            render={props => <NewHome {...this.props} />}
           />
           <Route
             path="/metrics"
@@ -79,14 +95,17 @@ class Routes extends Component {
 function mapStateToProps(state) {
   return {
     recordings: state.recordings,
-    studies: state.studies,
-    sorters: state.sorters,
-    units: state.units,
-    loading: state.loading,
     contactSent: state.contactSent,
     router: state.router,
     pairing: state.pairing,
-    recordingDetails: state.recordingDetails
+    recordingDetails: state.recordingDetails,
+    // V2 Data: props
+    cpus: state.cpus,
+    groupedURs: state.groupedURs,
+    loading: state.loading,
+    studies: state.studies,
+    sorters: state.sorters,
+    unitResults: state.unitResults
   };
 }
 

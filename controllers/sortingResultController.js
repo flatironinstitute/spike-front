@@ -14,3 +14,9 @@ exports.getSortingResultById = async (req, res, next) => {
   }
   res.send({ sortingResult: sortingResult });
 };
+
+exports.getCPUs = async (req, res, next) => {
+  const cpuPromise = await SortingResult.getCPUsByStudyAndSorter();
+  const [cpuResults] = await Promise.all([cpuPromise]);
+  res.send({ cpus: cpuResults });
+};

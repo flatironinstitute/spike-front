@@ -7,6 +7,10 @@
   padding-bottom: 3rem;
 }
 
+.page__body--alert {
+  padding-top: 2rem;
+}
+
 /* About
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .about__body {
@@ -54,6 +58,14 @@
 
 .icon__link:hover {
   border-bottom: 2px solid #384ca2;
+}
+
+/* Sorters
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.container__home {
+  margin-top: 0.5rem;
+  padding-right: 0;
+  padding-left: 0;
 }
 
 /* TODO: REMOVE Intro Header Styling

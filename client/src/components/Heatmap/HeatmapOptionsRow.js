@@ -24,6 +24,7 @@ class HeatmapOptionsRow extends Component {
             <Col lg={largeCols} sm={12}>
               <SliderCard
                 format={this.props.format}
+                metric={this.props.metric}
                 sliderValue={this.props.sliderValue}
                 handleSliderChange={this.props.handleSliderChange}
               />

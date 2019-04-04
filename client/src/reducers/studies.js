@@ -1,14 +1,19 @@
-import { RECEIVE_STUDIES } from '../actions/actionCreators';
+import { RECEIVE_STUDIES } from "../actions/actionCreators";
 
 const initialState = {
-  selectedStudy: null,
   selectedRecording: null,
+  selectedStudy: null,
   recordings: null,
-  sorters: null,
-  studies: null,
-  units: null,
-  loading: null,
   pairing: null,
+  recordingDetails: null,
+  //V2 Data: States
+  contactSent: null,
+  cpus: null,
+  groupedURs: null,
+  loading: null,
+  studies: null,
+  sorters: null,
+  unitResults: null
 };
 
 const studies = (state = initialState, action) => {
