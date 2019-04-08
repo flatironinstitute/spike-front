@@ -12,7 +12,7 @@ class StatsAlert extends Component {
     let groundTruth = this.props.stats ? this.props.stats.groundTruth : "";
     return (
       <div>
-        <Alert variant={"warning"} className="alert__stats">
+        <Alert dismissible variant={"warning"} className="alert__stats">
           <div className="alert__ticker--wrapper">
             <div className="alert__ticker">
               <div className="ticker__item">
