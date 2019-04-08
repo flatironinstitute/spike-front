@@ -8,15 +8,22 @@ class StatsAlert extends Component {
     /* CPU - sum of all cpuTimeSec on every sorting result */
     /* Ground truth - count of all true units */
     /* Recording data - hard code*/
-
-    let stats = this.props.stats ? this.props.stats : "";
-    console.log("🖋️", stats);
+    let coreHours = this.props.stats ? this.props.stats.cpus : "";
+    let groundTruth = this.props.stats ? this.props.stats.groundTruth : "";
     return (
       <div>
         <Alert variant={"success"} className="alert__stats">
-          <div className="alert__ticker">
-            <b>Project Totals:</b> 11111 CPU core hours, 2222222 ground truth
-            units, 1.2TB of recordings
+          <div className="alert__ticker--wrapper">
+            <div className="alert__ticker">
+              <div className="ticker__item">
+                <b>Project Totals:</b>
+              </div>
+              <div className="ticker__item">{coreHours} CPU core hours</div>
+              <div className="ticker__item">
+                {groundTruth.toLocaleString()} ground truth units
+              </div>
+              <div className="ticker__item">1.2TB of recordings</div>
+            </div>
           </div>
         </Alert>
       </div>
