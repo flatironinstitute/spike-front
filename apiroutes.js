@@ -30,6 +30,8 @@ router.get("/api/sorters", sorterController.getSorters);
 // Unit Results
 router.get("/api/unitresults", unitResultsController.getUnitResults);
 
+router.get("/api/stats", sortingResultController.getStats);
+
 // Contact Routes
 router.post("/api/contact", (req, res) => {
   // TODO: Attach to mail server

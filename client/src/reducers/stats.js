@@ -1,7 +1,4 @@
-import {
-  SEND_CONTACT_SUCCESS,
-  SEND_CONTACT_FAILURE
-} from "../actions/actionCreators";
+import { RECEIVE_STATS } from "../actions/actionCreators";
 
 const initialState = {
   selectedRecording: null,
@@ -20,15 +17,13 @@ const initialState = {
   unitResults: null
 };
 
-const contactSent = (state = initialState, action) => {
+const sorters = (state = initialState, action) => {
   switch (action.type) {
-    case SEND_CONTACT_SUCCESS:
-      return action.contactSent;
-    case SEND_CONTACT_FAILURE:
-      return action.contactSent;
+    case RECEIVE_STATS:
+      return action.stats;
     default:
       return state;
   }
 };
 
-export default contactSent;
+export default sorters;

@@ -11,8 +11,9 @@ const initialState = {
   cpus: null,
   groupedURs: null,
   loading: null,
-  studies: null,
   sorters: null,
+  stats: null,
+  studies: null,
   unitResults: null
 };
 

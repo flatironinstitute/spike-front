@@ -14,6 +14,7 @@ import loading from "./loading";
 import unitResults from "./unitResults";
 import sorters from "./sorters";
 import studies from "./studies";
+import stats from "./stats";
 
 const rootReducer = history =>
   combineReducers({
@@ -27,6 +28,7 @@ const rootReducer = history =>
     cpus,
     groupedURs,
     loading,
+    stats,
     studies,
     sorters,
     unitResults,

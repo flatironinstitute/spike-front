@@ -67,3 +67,11 @@
   font-weight: bold;
   border-bottom: 2px solid var(--fi-blue);
 }
+
+.alert__stats {
+  margin-top: 50px;
+}
+
+.alert__ticker {
+  font-style: italic;
+}

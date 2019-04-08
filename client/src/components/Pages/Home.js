@@ -3,7 +3,8 @@ import Preloader from "../Preloader/Preloader";
 import HomeContentContainer from "../Heatmap/HomeContentContainer";
 import { flattenUnitResults, formatUnitResults } from "../../dataHandlers";
 import { isEmpty } from "../../utils";
-import { Alert, Container, Card } from "react-bootstrap";
+import { Container, Card } from "react-bootstrap";
+import StatsAlert from "../Header/StatsAlert";
 
 import "./pages.css";
 
@@ -71,19 +72,9 @@ class Home extends Component {
       isEmpty(this.props.sorters);
     let sorters = this.props.sorters ? this.getSorters() : null;
     let studies = this.props.studies ? this.getStudies() : null;
-    console.log("🍔grouped urs", this.props.groupedURs);
-    if (!isEmpty(this.state.unitsMap)) {
-      console.log("🍔 unitsmap", this.state.unitsMap);
-    }
     return (
       <div className="page__body page__body--alert ">
-        {/* CPU - sum of all cpuTimeSec on every sorting result */}
-        {/* Ground truth - count of all true units */}
-        {/* Recording data - hard code*/}
-        <Alert variant={"success"}>
-          <b>Project Totals:</b> 111111 CPU Core Hours, 2222222 Ground Truth
-          Units, 1.2TB of recordings
-        </Alert>
+        <StatsAlert {...this.props} />
         {loading ? (
           <Container className="container__heatmap" id="overview">
             <Card>

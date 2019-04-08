@@ -11,6 +11,7 @@ export const RECEIVE_GROUPED_URS = "RECEIVE_GROUPED_URS";
 export const RECEIVE_STUDIES = "RECEIVE_STUDIES";
 export const RECEIVE_SORTERS = "RECEIVE_SORTERS";
 export const RECEIVE_UNIT_RESULTS = "RECEIVE_UNIT_RESULTS";
+export const RECEIVE_STATS = "RECEIVE_STATS";
 
 export const START_LOADING = "START_LOADING";
 export const END_LOADING = "END_LOADING";
@@ -217,6 +218,29 @@ export const endLoading = () => ({
   type: END_LOADING,
   loading: false
 });
+
+// Summary Stats
+
+export const recieveStats = stats => {
+  return {
+    type: RECEIVE_STATS,
+    stats
+  };
+};
+
+export const fetchStats = () => {
+  let url = `/api/stats`;
+  return function(dispatch) {
+    dispatch(startLoading());
+    return createFetch(url)
+      .then(stats => {
+        dispatch(recieveStats(stats));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      });
+  };
+};
 
 /* Old Shiz
 –––––––––––––––––––––––––––––––––––––––––––––––––– */

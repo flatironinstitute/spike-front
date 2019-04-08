@@ -8,7 +8,6 @@ import * as actionCreators from "../actions/actionCreators";
 // import components
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
-import { Alert } from "react-bootstrap";
 
 import Home from "../components/Pages/Home";
 import NewHome from "../components/Pages/NewHome";
@@ -30,6 +29,7 @@ class Routes extends Component {
     this.props.fetchStudies();
     this.props.fetchGroupedURs();
     this.props.fetchSorters();
+    this.props.fetchStats();
     console.log("🚦Index routes fetches called");
     // this.props.fetchUnitResults();
     // V1 Data: Fetches
@@ -41,10 +41,6 @@ class Routes extends Component {
     return (
       <div className="wrapper">
         <Header router={this.props.router} />
-        <Alert variant={"success"}>
-          Project Totals: CPU Core Hours, Ground Truth Units, Terrabytes of
-          Recorded Data
-        </Alert>
         <Switch>
           <Route exact path="/" render={props => <Home {...this.props} />} />
           <Route path="/about" render={props => <About {...this.props} />} />
@@ -95,16 +91,17 @@ class Routes extends Component {
 function mapStateToProps(state) {
   return {
     recordings: state.recordings,
-    contactSent: state.contactSent,
     router: state.router,
     pairing: state.pairing,
     recordingDetails: state.recordingDetails,
     // V2 Data: props
+    contactSent: state.contactSent,
     cpus: state.cpus,
     groupedURs: state.groupedURs,
     loading: state.loading,
-    studies: state.studies,
     sorters: state.sorters,
+    stats: state.stats,
+    studies: state.studies,
     unitResults: state.unitResults
   };
 }
