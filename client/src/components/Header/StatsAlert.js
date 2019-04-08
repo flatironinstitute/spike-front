@@ -18,7 +18,9 @@ class StatsAlert extends Component {
               <div className="ticker__item">
                 <b>Project Totals:</b>
               </div>
-              <div className="ticker__item">{coreHours} CPU core hours</div>
+              <div className="ticker__item">
+                {Math.round(coreHours / 60)} CPU core hours
+              </div>
               <div className="ticker__item">
                 {groundTruth.toLocaleString()} ground truth units
               </div>
