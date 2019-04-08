@@ -11,7 +11,7 @@ class StatsAlert extends Component {
     let coreHours = this.props.stats ? this.props.stats.cpus : "";
     let groundTruth = this.props.stats ? this.props.stats.groundTruth : "";
     return (
-      <div>
+      <div className="alert__wrapper">
         <Alert dismissible variant={"warning"} className="alert__stats">
           <div className="alert__ticker--wrapper">
             <div className="alert__ticker">
