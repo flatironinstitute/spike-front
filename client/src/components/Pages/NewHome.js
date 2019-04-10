@@ -8,9 +8,9 @@ import "./pages.css";
 
 class NewHome extends Component {
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.cpus !== prevProps.cpus) {
-      console.log("🦓 cpus", this.props.cpus);
-    }
+    // if (this.props.cpus !== prevProps.cpus) {
+    //   console.log("🦓 cpus", this.props.cpus);
+    // }
   }
 
   render() {
