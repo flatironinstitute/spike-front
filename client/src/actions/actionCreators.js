@@ -12,6 +12,7 @@ export const RECEIVE_STUDIES = "RECEIVE_STUDIES";
 export const RECEIVE_SORTERS = "RECEIVE_SORTERS";
 export const RECEIVE_UNIT_RESULTS = "RECEIVE_UNIT_RESULTS";
 export const RECEIVE_STATS = "RECEIVE_STATS";
+export const RECEIVE_STUDY_SETS = "RECEIVE_STUDY_SETS";
 
 export const START_LOADING = "START_LOADING";
 export const END_LOADING = "END_LOADING";
@@ -176,7 +177,6 @@ export const fetchUnitResults = () => {
     dispatch(startLoading());
     return createFetch(url)
       .then(unitresults => {
-        console.log("🍔 GOT UNITS in fetch", unitresults.length);
         dispatch(receiveUnitResults(unitresults));
       })
       .then(() => {
@@ -235,6 +235,29 @@ export const fetchStats = () => {
     return createFetch(url)
       .then(stats => {
         dispatch(recieveStats(stats));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      });
+  };
+};
+
+// Study Sets
+
+export const recieveStudySets = stats => {
+  return {
+    type: RECEIVE_STUDY_SETS,
+    stats
+  };
+};
+
+export const fetchStudySets = () => {
+  let url = `/api/studysets`;
+  return function(dispatch) {
+    dispatch(startLoading());
+    return createFetch(url)
+      .then(stats => {
+        dispatch(recieveStudySets(stats));
       })
       .then(() => {
         dispatch(endLoading());

@@ -20,6 +20,7 @@ const defaultState = {
   sorters: null,
   stats: null,
   studies: null,
+  studysets: null,
   unitResults: null
 };
 

@@ -30,6 +30,7 @@ class Routes extends Component {
     this.props.fetchGroupedURs();
     this.props.fetchSorters();
     this.props.fetchStats();
+    this.props.fetchStudySets();
     console.log("🚦Index routes fetches called");
     // this.props.fetchUnitResults();
     // V1 Data: Fetches
@@ -102,6 +103,7 @@ function mapStateToProps(state) {
     sorters: state.sorters,
     stats: state.stats,
     studies: state.studies,
+    studysets: state.studysets,
     unitResults: state.unitResults
   };
 }

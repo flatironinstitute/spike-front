@@ -246,3 +246,12 @@
   padding: 15px;
   margin-bottom: 3rem;
 }
+
+.container__recording {
+  background: #f7f7f7;
+}
+
+.recording__table {
+  padding: 15px;
+  max-width: 95%;
+}

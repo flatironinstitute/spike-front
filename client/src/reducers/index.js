@@ -15,6 +15,7 @@ import unitResults from "./unitResults";
 import sorters from "./sorters";
 import studies from "./studies";
 import stats from "./stats";
+import studysets from "./studysets";
 
 const rootReducer = history =>
   combineReducers({
@@ -30,6 +31,7 @@ const rootReducer = history =>
     loading,
     stats,
     studies,
+    studysets,
     sorters,
     unitResults,
     router: connectRouter(history)

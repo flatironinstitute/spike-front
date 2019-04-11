@@ -32,6 +32,8 @@ router.get("/api/unitresults", unitResultsController.getUnitResults);
 
 router.get("/api/stats", sortingResultController.getStats);
 
+router.get("/api/studysets", studySetController.getStudySets);
+
 // Contact Routes
 router.post("/api/contact", (req, res) => {
   // TODO: Attach to mail server
@@ -82,7 +84,6 @@ router.get("/api/studies", studyController.getStudies);
 router.get("/api/study/:id", studyController.getStudyById);
 
 // Study Sets
-router.get("/api/studysets", studySetController.getStudySets);
 router.get("/api/studyset/:id", studySetController.getStudySetById);
 
 // True Units

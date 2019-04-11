@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import HeatmapCount from "./HeatmapCount";
-import HeatmapSNR from "./HeatmapSNR";
+// import HeatmapCount from "./HeatmapCount";
+// import HeatmapSNR from "./HeatmapSNR";
 import NewHeatmapCPU from "./NewHeatmapCPU";
 import HeatmapOptionsRow from "./HeatmapOptionsRow";
-import { Container, Jumbotron } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 import "react-rangeslider/lib/index.css";
 import "./heatmap.css";
