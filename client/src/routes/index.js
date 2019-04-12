@@ -31,10 +31,10 @@ class Routes extends Component {
     this.props.fetchSorters();
     this.props.fetchStats();
     this.props.fetchStudySets();
+    this.props.fetchRecordings();
     console.log("🚦Index routes fetches called");
-    // this.props.fetchUnitResults();
     // V1 Data: Fetches
-    // this.props.fetchRecordings();
+    // this.props.fetchUnitResults();
     // this.props.fetchUnits();
   }
 
@@ -91,7 +91,6 @@ class Routes extends Component {
 
 function mapStateToProps(state) {
   return {
-    recordings: state.recordings,
     router: state.router,
     pairing: state.pairing,
     recordingDetails: state.recordingDetails,
@@ -100,6 +99,7 @@ function mapStateToProps(state) {
     cpus: state.cpus,
     groupedURs: state.groupedURs,
     loading: state.loading,
+    recordings: state.recordings,
     sorters: state.sorters,
     stats: state.stats,
     studies: state.studies,

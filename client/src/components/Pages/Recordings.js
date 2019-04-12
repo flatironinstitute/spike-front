@@ -4,12 +4,52 @@ import { isEmpty } from "../../utils";
 import { Container } from "react-bootstrap";
 
 import "./pages.css";
-import TestRecordingsTable from "./TestRecordingsTable";
+import RecordingsTable from "../Recordings/RecordingsTable";
+import ExpandableRecordingsTable from "../Recordings/ExpandableRecordingsTable";
 
 class Recordings extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      groupedRecordings: {}
+    };
+  }
+  componentDidMount() {
+    if (this.props.recordings) {
+      let grouped = this.groupBy(
+        this.props.recordings,
+        recording => recording.recordings[0].studySetName
+      );
+      this.setState({ groupedRecordings: grouped });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.recordings !== this.props.recordings) {
+      let grouped = this.groupBy(
+        this.props.recordings,
+        recording => recording.recordings[0].studySetName
+      );
+      this.setState({ groupedRecordings: grouped });
+    }
+  }
+
+  groupBy(list, keyGetter) {
+    const map = {};
+    list.forEach(item => {
+      const key = keyGetter(item);
+      if (!map[key]) {
+        map[key] = [item];
+      } else {
+        map[key].push(item);
+      }
+    });
+    return map;
+  }
+
   render() {
-    let loading = isEmpty(this.props.studies);
-    console.log("🔺", this.props);
+    let loading =
+      isEmpty(this.state.groupedRecordings) && isEmpty(this.props.studies);
     return (
       <div>
         <div className="page__body recordings__body">
@@ -64,11 +104,14 @@ class Recordings extends Component {
             </div>
           </div>
           {loading ? (
-            <Preloader id="studies" />
+            <Preloader />
           ) : (
             <div className="container__recording">
               <Container fluid>
-                <TestRecordingsTable {...this.props} />
+                <ExpandableRecordingsTable
+                  {...this.props}
+                  groupedRecordings={this.state.groupedRecordings}
+                />
               </Container>
             </div>
           )}

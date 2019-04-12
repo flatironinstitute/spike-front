@@ -137,6 +137,21 @@ async function formatRecordings() {
     }
     // Add a true units object property
     recording.trueUnits = [];
+
+    // Add study set name
+    const studysets = JSON.parse(
+      fs.readFileSync(__dirname + "/cleanedData/studysets.json", "utf-8")
+    );
+    let [studySetId] = studysets.filter(set => set._id === studyId.studySet);
+    if (studySetId) {
+      recording.studySetName = studySetId.name;
+    } else {
+      console.log(
+        "\n 🛑🛑🛑🛑🛑🛑 Error! \n\n\t No studyset found for recording \n",
+        recording
+      );
+      process.exit();
+    }
   });
   // Collect true units
   const trueunits = JSON.parse(

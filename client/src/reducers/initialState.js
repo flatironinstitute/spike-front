@@ -1,7 +1,6 @@
 export const initialState = {
   selectedRecording: null,
   selectedStudy: null,
-  recordings: null,
   pairing: null,
   recordingDetails: null,
   //V2 Data: States
@@ -9,6 +8,7 @@ export const initialState = {
   cpus: null,
   groupedURs: null,
   loading: null,
+  recordings: null,
   sorters: null,
   stats: null,
   studies: null,
