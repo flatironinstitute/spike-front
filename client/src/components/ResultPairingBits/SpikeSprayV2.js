@@ -31,7 +31,7 @@ class SpikeSprayV2 extends Component {
   }
 
   addOffset(timepoints, i) {
-    let offset = -0.5 * i;
+    let offset = -0.2 * i;
     let newTPs = [];
     timepoints.forEach(timepoint => {
       let newtp = {
@@ -125,7 +125,12 @@ class SpikeSprayV2 extends Component {
       "False Positive",
       "False Negative"
     ];
-    console.log("🖱️", this.state.spikeCols, this.state.offsetSpikeCols);
+    console.log(
+      "🖱️",
+      newRecDetails,
+      this.state.spikeCols,
+      this.state.offsetSpikeCols
+    );
     return (
       <div>
         {loading ? (
@@ -148,7 +153,7 @@ class SpikeSprayV2 extends Component {
                   </div>
                   <XYPlot
                     width={350}
-                    height={350}
+                    height={700}
                     key={`spikeplot-${Math.random(i)}`}
                   >
                     <XAxis title="Samples" />
