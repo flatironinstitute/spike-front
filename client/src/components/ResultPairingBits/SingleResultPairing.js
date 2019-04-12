@@ -7,7 +7,7 @@ import Preloader from "../Preloader/Preloader";
 import ReactJson from "react-json-view";
 // import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
 import SinglePairingRow from "./SinglePairingRow";
-import SpikeSprayV1 from "./SpikeSprayV1";
+import SpikeSprayV2 from "./SpikeSprayV2";
 
 // Redux
 import { bindActionCreators } from "redux";
@@ -264,7 +264,7 @@ class SingleResultPairing extends Component {
                   </div>
                 </Col>
               </Row>
-              <Row className="container__sorter--row">
+              {/* <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
                   <HeatmapOptionsRow
                     showCPU={false}
@@ -276,7 +276,7 @@ class SingleResultPairing extends Component {
                     sliderValue={this.state.sliderValue}
                   />
                 </Col>
-              </Row>
+              </Row> */}
               {/* <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
                   {loadScatterplot ? (
@@ -305,13 +305,13 @@ class SingleResultPairing extends Component {
                       </div>
                       <div className="card__footer">
                         <hr />
-                        <SpikeSprayV1 {...this.props} />
+                        <SpikeSprayV2 {...this.props} />
                       </div>
                     </div>
                   </div>
                 </Col>
               </Row>
-              <Row className="container__sorter--row">
+              {/* <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
                   <div className="card card--heatmap">
                     <div className="content">
@@ -369,7 +369,7 @@ class SingleResultPairing extends Component {
                     </h2>
                   </div>
                 </Col>
-              </Row>
+              </Row> */}
             </Container>
           )}
         </div>

@@ -32,7 +32,6 @@ class SinglePairingRow extends Component {
   }
 
   setData() {
-    //   TODO: Fix color map
     let colorMap = this.props.vizDatum.map(datum => datum.color);
     colorMap.sort((a, b) => a - b);
     let withColor = this.props.vizDatum.map(datum => {
@@ -90,7 +89,8 @@ class SinglePairingRow extends Component {
                   }}
                 />
               ) : null}
-              <YAxis
+              {/* TODO: Reinstate with correct data*/}
+              {/* <YAxis
                 style={{
                   text: {
                     stroke: "none",
@@ -99,7 +99,7 @@ class SinglePairingRow extends Component {
                     fontSize: "11px"
                   }
                 }}
-              />
+              /> */}
               {/* TODO: I think I need a smarter way to handle this information*/}
               <HeatmapSeries
                 colorRange={colorRange[this.props.format]}
