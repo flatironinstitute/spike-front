@@ -16,6 +16,10 @@
   margin-bottom: 0;
 }
 
+.card__charttitle {
+  text-align: center;
+}
+
 .card__formlabel {
   font-size: 16px;
   line-height: 1.5;

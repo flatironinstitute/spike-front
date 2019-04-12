@@ -19,6 +19,7 @@ import Internals from "../components/Pages/Internals";
 import Metrics from "../components/Pages/Metrics";
 import Contact from "../components/Contact/Contact";
 import SingleResultPairing from "../components/ResultPairingBits/SingleResultPairing";
+import SingleResultPairingV2 from "../components/ResultPairingBits/SingleResultPairingV2";
 import FourOhFour from "../components/Pages/FourOhFour";
 import RawData from "../components/Pages/RawData";
 
@@ -80,6 +81,10 @@ class Routes extends Component {
           <Route
             path="/results/magland-synth-noise10-K10-C4/MountainSort4-thr3"
             render={props => <SingleResultPairing {...this.props} />}
+          />
+          <Route
+            path="/results/visapy_mea"
+            render={props => <SingleResultPairingV2 {...this.props} />}
           />
           <Route render={props => <FourOhFour {...this.props} />} />
         </Switch>

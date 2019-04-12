@@ -89,6 +89,11 @@ router.get("/api/:study/:sorter/:recording", (req, res) => {
   res.send({ recordingDetails: formatted });
 });
 
+// 4 spike columns - columns
+// 20 spikes - line color groups
+// 4 channels - 4lines of 50 xys
+// 50 timepoints -> become 50 xy coordinates
+
 function formatSpikes(recDetails) {
   const keys = Object.keys(recDetails);
   var formatted = new Object();

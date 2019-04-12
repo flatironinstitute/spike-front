@@ -24,7 +24,7 @@ class SingleResultPairing extends Component {
     super(props);
     this.state = {
       study: "",
-      sorter: "",
+      sorter: "KiloSort",
       sorterParams: {},
       format: "count",
       metric: "accuracy",
@@ -82,7 +82,7 @@ class SingleResultPairing extends Component {
       recording => recording.sorter === this.state.sorter
     );
     // TODO: Swap this with selectedRecording everywhere
-    this.props.selectStudy(selectedRecording[0]);
+    // this.props.selectStudy(selectedRecording[0]);
     this.setState({ builtData: builtData });
   }
 
@@ -125,7 +125,7 @@ class SingleResultPairing extends Component {
     let activeArr = activeRoute.split("/").filter(item => item);
     // TODO: Make this less fixed!
     let study = activeArr[1];
-    let sorter = activeArr[2];
+    let sorter = "KiloSort";
     this.setState({
       study,
       sorter
@@ -264,35 +264,6 @@ class SingleResultPairing extends Component {
                   </div>
                 </Col>
               </Row>
-              {/* <Row className="container__sorter--row">
-                <Col lg={12} sm={12}>
-                  <HeatmapOptionsRow
-                    showCPU={false}
-                    handleFormatChange={this.handleFormatChange}
-                    handleSliderChange={this.handleSliderChange}
-                    handleMetricChange={this.handleMetricChange}
-                    format={this.state.format}
-                    metric={this.state.metric}
-                    sliderValue={this.state.sliderValue}
-                  />
-                </Col>
-              </Row> */}
-              {/* <Row className="container__sorter--row">
-                <Col lg={12} sm={12}>
-                  {loadScatterplot ? (
-                    <Card>
-                      <Card.Body>
-                        <Preloader />
-                      </Card.Body>
-                    </Card>
-                  ) : (
-                    <ScatterplotCard
-                      {...this.props}
-                      sliderValue={this.state.sliderValue}
-                    />
-                  )}
-                </Col>
-              </Row> */}
               <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
                   <div className="card card--heatmap">
@@ -311,65 +282,6 @@ class SingleResultPairing extends Component {
                   </div>
                 </Col>
               </Row>
-              {/* <Row className="container__sorter--row">
-                <Col lg={12} sm={12}>
-                  <div className="card card--heatmap">
-                    <div className="content">
-                      <div className="card__label">
-                        <p>
-                          Study + Sorter Result Pairing JSON Dump{" "}
-                          <span role="img" aria-label="truck">
-                            🚚
-                          </span>
-                        </p>
-                      </div>
-                      <div className="card__footer">
-                        <hr />
-                        <ReactJson src={results} />
-                      </div>
-                    </div>
-                  </div>
-                </Col>
-              </Row>
-              <Row className="container__sorter--row">
-                <Col lg={12} sm={12}>
-                  <div className="card card--heatmap">
-                    <div className="content">
-                      <div className="card__label">
-                        <p>
-                          Recording Details JSON Dump{" "}
-                          <span role="img" aria-label="truck">
-                            🗃️
-                          </span>
-                        </p>
-                      </div>
-                      <div className="card__footer">
-                        <hr />
-                        <div>
-                          <span role="img" aria-label="watch">
-                            ⏰
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Col>
-              </Row>
-              <Row className="container__sorter--row">
-                <Col lg={12} sm={12}>
-                  <div className="card card--heatmap text-center">
-                    <h2>
-                      <span role="img" aria-label="wave">
-                        🌊
-                      </span>
-                      Thar be monsters{" "}
-                      <span role="img" aria-label="squid">
-                        🦑
-                      </span>
-                    </h2>
-                  </div>
-                </Col>
-              </Row> */}
             </Container>
           )}
         </div>
@@ -395,12 +307,4 @@ export default connect(
 )(SingleResultPairing);
 
 // NOTES:
-// Sample url : http://localhost:3000/results/magland-synth-noise10-K10-C4/MountainSort4-thr3
-//
-// TODO:
-// Pairing Page -> Study Results Page
-// Links to the other sorters on the study (button row)
-// Row of the heatmap with toolbar from heatmap
-// Scatterplot
-// spike sprays from each unit on click (// Channels as a separate row)
-// Table of data on each unit
+// Sample url : http://localhost:3000/results/visapy_mea
