@@ -175,7 +175,6 @@
 }
 
 .list__section {
-  max-width: 78rem;
   margin: 0 auto 1.9rem;
   width: 90%;
   color: #111;
@@ -247,11 +246,6 @@
   margin-bottom: 3rem;
 }
 
-.container__recording {
-  background: #f7f7f7;
-}
-
 .recording__table {
-  padding: 15px;
-  max-width: 95%;
+  background: #f7f7f7;
 }

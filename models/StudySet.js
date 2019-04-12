@@ -5,6 +5,9 @@ const studySetSchema = new mongoose.Schema({
   name: {
     type: String,
     required: "You must provide a name for the study set."
+  },
+  sortIndex: {
+    type: Number
   }
 });
 
