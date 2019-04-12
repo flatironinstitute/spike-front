@@ -1,10 +1,10 @@
-import { RECEIVE_SORTERS } from "../actions/actionCreators";
+import { RECEIVE_STATS } from "../actions/actionCreators";
 import { initialState } from "./initialState";
 
 const sorters = (state = initialState, action) => {
   switch (action.type) {
-    case RECEIVE_SORTERS:
-      return action.sorters;
+    case RECEIVE_STATS:
+      return action.stats;
     default:
       return state;
   }

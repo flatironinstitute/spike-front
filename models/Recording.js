@@ -14,6 +14,9 @@ const recordingSchema = new mongoose.Schema({
   studyName: {
     type: String
   },
+  studySetName: {
+    type: String
+  },
   directory: {
     type: String,
     required: "You must provide a directory name"
@@ -40,20 +43,37 @@ const recordingSchema = new mongoose.Schema({
   trueUnits: [{ type: mongoose.Schema.ObjectId, ref: "TrueUnit" }]
 });
 
-//find true units where the recordings _id property === true unit recording property
-// recordingSchema.virtual("trueUnits", {
-//   ref: "TrueUnit", // what model to link?
-//   localField: "_id", // which field on the recording?
-//   foreignField: "recording" // which field on the true unit?
-// });
+function autopopulate(next) {
+  this.populate("study");
+  next();
+}
 
-// function autopopulate(next) {
-//   // this.populate("study");
-//   this.populate("trueUnits");
-//   next();
-// }
+recordingSchema.pre("find", autopopulate);
+recordingSchema.pre("findOne", autopopulate);
 
-// recordingSchema.pre("find", autopopulate);
-// recordingSchema.pre("findOne", autopopulate);
+recordingSchema.statics.getRecordingsByStudy = function() {
+  return this.aggregate([
+    {
+      $group: {
+        _id: "$studyName",
+        recordings: {
+          $push: {
+            id: "$_id",
+            name: "$name",
+            studySetName: "$studySetName",
+            description: "$description",
+            sampleRateHz: "$sampleRateHz",
+            numChannels: "$numChannels",
+            durationSec: "$durationSec",
+            numTrueUnits: "$numTrueUnits",
+            spikeSign: "$spikeSign",
+            trueUnits: "$trueUnits",
+            study: "$study"
+          }
+        }
+      }
+    }
+  ]);
+};
 
 module.exports = mongoose.model("Recording", recordingSchema);

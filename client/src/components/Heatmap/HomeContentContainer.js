@@ -13,8 +13,7 @@ class HomeContentContainer extends Component {
     this.state = {
       format: "count",
       metric: "accuracy",
-      sliderValue: 0.8,
-      isDownloaded: false
+      sliderValue: 0.8
     };
   }
   handleFormatChange = value => {

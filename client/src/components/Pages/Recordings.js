@@ -1,112 +1,55 @@
 import React, { Component } from "react";
-import ReactCollapsingTable from "react-collapsing-table";
 import Preloader from "../Preloader/Preloader";
 import { isEmpty } from "../../utils";
-import { HashLink as Link } from "react-router-hash-link";
 import { Container } from "react-bootstrap";
 
 import "./pages.css";
+import RecordingsTable from "../Recordings/RecordingsTable";
+import ExpandableRecordingsTable from "../Recordings/ExpandableRecordingsTable";
 
 class Recordings extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      groupedRecordings: {}
+    };
+  }
+  componentDidMount() {
+    if (this.props.recordings) {
+      let grouped = this.groupBy(
+        this.props.recordings,
+        recording => recording.recordings[0].studySetName
+      );
+      this.setState({ groupedRecordings: grouped });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.recordings !== this.props.recordings) {
+      let grouped = this.groupBy(
+        this.props.recordings,
+        recording => recording.recordings[0].studySetName
+      );
+      this.setState({ groupedRecordings: grouped });
+    }
+  }
+
+  groupBy(list, keyGetter) {
+    const map = {};
+    list.forEach(item => {
+      const key = keyGetter(item);
+      if (!map[key]) {
+        map[key] = [item];
+      } else {
+        map[key].push(item);
+      }
+    });
+    return map;
+  }
+
   render() {
-    const studyColumns = [
-      {
-        accessor: "name",
-        label: "Study Name",
-        priorityLevel: 1,
-        position: 1,
-        minWidth: 100,
-        sortable: true
-      },
-      {
-        accessor: "number",
-        label: "Number of recordings",
-        priorityLevel: 3,
-        position: 3,
-        minWidth: 100
-      },
-      {
-        accessor: "filesize",
-        label: "Total file size",
-        priorityLevel: 4,
-        position: 4,
-        minWidth: 100
-      },
-      {
-        accessor: "channels",
-        label: "Channels",
-        priorityLevel: 5,
-        position: 5,
-        minWidth: 100
-      },
-      {
-        accessor: "duration",
-        label: "Duration (in seconds)",
-        priorityLevel: 6,
-        position: 6,
-        minWidth: 100
-      },
-      {
-        accessor: "type",
-        label: "Experiment type (synthetic / in vivo / in vitro)",
-        priorityLevel: 7,
-        position: 7,
-        minWidth: 100
-      },
-      {
-        accessor: "probetype",
-        label: "Probe type",
-        priorityLevel: 8,
-        position: 8,
-        minWidth: 100
-      },
-      {
-        accessor: "region",
-        label: "Brain region",
-        priorityLevel: 9,
-        position: 9,
-        minWidth: 100
-      },
-      {
-        accessor: "groundtruth",
-        label: "Groundtruth units",
-        priorityLevel: 10,
-        position: 10,
-        minWidth: 100
-      },
-      {
-        accessor: "description",
-        label: "Description",
-        priorityLevel: 11,
-        position: 11,
-        minWidth: 100
-      }
-    ];
-    const recordingColumns = [
-      {
-        accessor: "name",
-        label: "Recording Name",
-        priorityLevel: 1,
-        position: 1,
-        minWidth: 100,
-        sortable: true
-      },
-      {
-        accessor: "study",
-        label: "Study",
-        priorityLevel: 2,
-        position: 2,
-        minWidth: 100
-      },
-      {
-        accessor: "description",
-        label: "Description",
-        priorityLevel: 3,
-        position: 3,
-        minWidth: 100
-      }
-    ];
-    let loading = isEmpty(this.props.studies) || isEmpty(this.props.recordings);
+    let loading =
+      isEmpty(this.state.groupedRecordings) && isEmpty(this.props.studies);
     return (
       <div>
         <div className="page__body recordings__body">
@@ -116,11 +59,6 @@ class Recordings extends Component {
             <p className="updated-sub">
               Below is the current list of studies in SpikeForest. Click on each
               to see an expanded list of the recordings within each study.
-            </p>
-            <p className="jump-container">
-              <Link smooth to="/#studies" className="jump-link">
-                Jump to Studies
-              </Link>
             </p>
             <p className="subhead">
               Our hosted recordings include many popular probe geometries and
@@ -166,23 +104,13 @@ class Recordings extends Component {
             </div>
           </div>
           {loading ? (
-            <Preloader id="studies" />
+            <Preloader />
           ) : (
-            <div className="subsection">
-              <Container id="studies">
-                <p className="subsection__title">Studies</p>
-                <ReactCollapsingTable
-                  showPagination={true}
-                  rows={this.props.studies}
-                  columns={studyColumns}
-                  rowSize={15}
-                />
-                <p className="subsection__title">Recordings</p>
-                <ReactCollapsingTable
-                  showPagination={true}
-                  rows={this.props.recordings}
-                  columns={recordingColumns}
-                  rowSize={15}
+            <div className="container__recording">
+              <Container fluid>
+                <ExpandableRecordingsTable
+                  {...this.props}
+                  groupedRecordings={this.state.groupedRecordings}
                 />
               </Container>
             </div>

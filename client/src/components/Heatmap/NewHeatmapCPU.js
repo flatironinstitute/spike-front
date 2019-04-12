@@ -3,7 +3,8 @@ import { isEmpty } from "../../utils";
 
 // Components
 import Preloader from "../Preloader/Preloader";
-import { Container, Jumbotron } from "react-bootstrap";
+import { Col, Container, Jumbotron, Row } from "react-bootstrap";
+import NewHeatmapViz from "./NewHeatmapViz";
 
 // Redux
 import { bindActionCreators } from "redux";
@@ -13,7 +14,7 @@ import * as actionCreators from "../../actions/actionCreators";
 // Stylin'
 import "./heatmap.css";
 
-class HeatmapCPU extends Component {
+class NewHeatmapCPU extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -42,7 +43,7 @@ class HeatmapCPU extends Component {
 
   render() {
     let loading = isEmpty(this.state.builtData);
-    console.log("🦓", this.state);
+    console.log("🦓heatmap cpu state", this.state);
     return (
       <div>
         {loading ? (
@@ -52,18 +53,26 @@ class HeatmapCPU extends Component {
         ) : (
           <Jumbotron fluid>
             <Container fluid>
-              <h1>I am the entire viz</h1>
-              <p>
-                This is a modified jumbotron that occupies the entire horizontal
-                space of its parent.
-              </p>
-              <img
-                className="card__image"
-                width="480"
-                height="363"
-                src="https://media.giphy.com/media/3o72FkiKGMGauydfyg/giphy.gif"
-                alt="gif"
-              />
+              <Row fluid>
+                <Col lg={12} sm={12}>
+                  <NewHeatmapViz
+                    {...this.props}
+                    filteredData={this.state.builtData}
+                    sorters={this.props.shortSorters}
+                    format={this.props.format}
+                    metric={this.props.metric}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col lg={12} sm={12}>
+                  <h2>Scatterplot</h2>
+                  {/* <ScatterplotCard
+                    {...this.props}
+                    sliderValue={this.props.snrMin}
+                  /> */}
+                </Col>
+              </Row>
             </Container>
           </Jumbotron>
         )}
@@ -86,4 +95,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(HeatmapCPU);
+)(NewHeatmapCPU);

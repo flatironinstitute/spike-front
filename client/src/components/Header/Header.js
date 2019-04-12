@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 
-import { Alert, Nav, Navbar } from "react-bootstrap";
+import { Nav, Navbar } from "react-bootstrap";
 import logo from "./logo-no-icon.svg";
 import InfoPanel from "./InfoPanel";
 

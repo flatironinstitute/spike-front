@@ -59,4 +59,21 @@ sortingResultSchema.statics.getCPUsByStudyAndSorter = function() {
   ]);
 };
 
+sortingResultSchema.statics.getTotalCPU = function() {
+  return this.aggregate([
+    {
+      $group: {
+        _id: "",
+        cpuTimeSec: { $sum: "$cpuTimeSec" }
+      }
+    },
+    {
+      $project: {
+        _id: 0,
+        cpuTimeSec: "$cpuTimeSec"
+      }
+    }
+  ]);
+};
+
 module.exports = mongoose.model("SortingResult", sortingResultSchema);

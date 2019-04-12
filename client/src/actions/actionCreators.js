@@ -1,6 +1,3 @@
-import { getRecordings } from "../dataHandlers";
-// TODO: Replace these with API calls
-
 const fetch = require("node-fetch");
 const baseurl = process.env.API_URL || "http://localhost:5000";
 
@@ -11,6 +8,9 @@ export const RECEIVE_GROUPED_URS = "RECEIVE_GROUPED_URS";
 export const RECEIVE_STUDIES = "RECEIVE_STUDIES";
 export const RECEIVE_SORTERS = "RECEIVE_SORTERS";
 export const RECEIVE_UNIT_RESULTS = "RECEIVE_UNIT_RESULTS";
+export const RECEIVE_STATS = "RECEIVE_STATS";
+export const RECEIVE_STUDY_SETS = "RECEIVE_STUDY_SETS";
+export const RECEIVE_RECORDINGS = "RECEIVE_RECORDINGS";
 
 export const START_LOADING = "START_LOADING";
 export const END_LOADING = "END_LOADING";
@@ -21,7 +21,6 @@ export const SEND_CONTACT_FAILURE = "SEND_CONTACT_FAILURE";
 /* Old Shiz
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 export const SELECT_RECORDING = "SELECT_RECORDING";
-export const RECEIVE_RECORDINGS = "RECEIVE_RECORDINGS";
 export const SELECT_STUDY = "SELECT_STUDY";
 export const RECEIVE_PAIRING = "RECEIVE_PAIRING";
 export const RECEIVE_RECORDING_DETAILS = "RECEIVE_RECORDING_DETAILS";
@@ -175,7 +174,6 @@ export const fetchUnitResults = () => {
     dispatch(startLoading());
     return createFetch(url)
       .then(unitresults => {
-        console.log("🍔 GOT UNITS in fetch", unitresults.length);
         dispatch(receiveUnitResults(unitresults));
       })
       .then(() => {
@@ -218,6 +216,72 @@ export const endLoading = () => ({
   loading: false
 });
 
+// Summary Stats
+export const recieveStats = stats => {
+  return {
+    type: RECEIVE_STATS,
+    stats
+  };
+};
+
+export const fetchStats = () => {
+  let url = `/api/stats`;
+  return function(dispatch) {
+    dispatch(startLoading());
+    return createFetch(url)
+      .then(stats => {
+        dispatch(recieveStats(stats));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      });
+  };
+};
+
+// Study Sets
+export const recieveStudySets = studysets => {
+  return {
+    type: RECEIVE_STUDY_SETS,
+    studysets
+  };
+};
+
+export const fetchStudySets = () => {
+  let url = `/api/studysets`;
+  return function(dispatch) {
+    dispatch(startLoading());
+    return createFetch(url)
+      .then(studysets => {
+        dispatch(recieveStudySets(studysets));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      });
+  };
+};
+
+// Recordings
+export const receiveRecordings = recordings => {
+  return {
+    type: RECEIVE_RECORDINGS,
+    recordings: recordings
+  };
+};
+
+export const fetchRecordings = () => {
+  let url = `/api/recordings`;
+  return function(dispatch) {
+    dispatch(startLoading());
+    return createFetch(url)
+      .then(recordings => {
+        dispatch(receiveRecordings(recordings));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      });
+  };
+};
+
 /* Old Shiz
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -231,30 +295,6 @@ export const selectRecording = recording => {
   return {
     type: SELECT_RECORDING,
     recording
-  };
-};
-
-// Recordings
-export const receiveRecordings = recordings => {
-  return {
-    type: RECEIVE_RECORDINGS,
-    recordings: recordings
-  };
-};
-
-export const fetchRecordings = () => {
-  return function(dispatch) {
-    dispatch(startLoading());
-    return getRecordings()
-      .then(res => {
-        return res.recordings;
-      })
-      .then(recordings => {
-        dispatch(receiveRecordings(recordings));
-      })
-      .then(() => {
-        dispatch(endLoading());
-      });
   };
 };
 

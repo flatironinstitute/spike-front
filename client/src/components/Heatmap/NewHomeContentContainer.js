@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import HeatmapCount from "./HeatmapCount";
-import HeatmapSNR from "./HeatmapSNR";
-import HeatmapCPU from "./HeatmapCPU";
+// import HeatmapCount from "./HeatmapCount";
+// import HeatmapSNR from "./HeatmapSNR";
+import NewHeatmapCPU from "./NewHeatmapCPU";
 import HeatmapOptionsRow from "./HeatmapOptionsRow";
-import { Container, Jumbotron } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 import "react-rangeslider/lib/index.css";
 import "./heatmap.css";
@@ -14,10 +14,10 @@ class HomeContentContainer extends Component {
     this.state = {
       format: "cpu",
       metric: "accuracy",
-      sliderValue: 0.8,
-      isDownloaded: false
+      sliderValue: 0.8
     };
   }
+
   handleFormatChange = value => {
     var sliderValue;
     switch (value) {
@@ -50,6 +50,7 @@ class HomeContentContainer extends Component {
   };
 
   render() {
+    console.log("🦓", this.state);
     return (
       <Container fluid className="container__home">
         <HeatmapOptionsRow
@@ -61,15 +62,12 @@ class HomeContentContainer extends Component {
           sliderValue={this.state.sliderValue}
           showCPU={true}
         />
-        <Jumbotron fluid>
-          <Container fluid>
-            <h1>I am the entire viz</h1>
-            <p>
-              This is a modified jumbotron that occupies the entire horizontal
-              space of its parent.
-            </p>
-          </Container>
-        </Jumbotron>
+        <NewHeatmapCPU
+          {...this.props}
+          format={this.state.format}
+          metric={this.state.metric}
+          cpuMax={this.state.sliderValue}
+        />
       </Container>
     );
   }

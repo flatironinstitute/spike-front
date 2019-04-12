@@ -51,6 +51,9 @@ class HeatmapCount extends Component {
       case "precision":
         metricKey = "precisions";
         break;
+      default:
+        metricKey = "accuracies";
+        break;
     }
     return metricKey;
   }
@@ -59,7 +62,8 @@ class HeatmapCount extends Component {
   filterAccuracy(sorterArray) {
     let newArr = sorterArray.map(sorter => {
       if (!sorter.accuracies) {
-        console.log("🍔", sorter);
+        console.log("🍔 no accuracies", sorter);
+        return sorter;
       } else {
         let above = sorter.accuracies.filter(accu => {
           return accu >= this.props.sliderValue;
@@ -124,6 +128,9 @@ class HeatmapCount extends Component {
           break;
         case "precision":
           filtered = this.filterPrecision(values);
+          break;
+        default:
+          filtered = this.filterAccuracy(values);
           break;
       }
       return { [key]: filtered };

@@ -1,20 +1,5 @@
 import { SELECT_RECORDING } from "../actions/actionCreators";
-
-const initialState = {
-  selectedRecording: null,
-  selectedStudy: null,
-  recordings: null,
-  pairing: null,
-  recordingDetails: null,
-  //V2 Data: States
-  contactSent: null,
-  cpus: null,
-  groupedURs: null,
-  loading: null,
-  studies: null,
-  sorters: null,
-  unitResults: null
-};
+import { initialState } from "./initialState";
 
 const selectedRecording = (state = initialState, action) => {
   switch (action.type) {

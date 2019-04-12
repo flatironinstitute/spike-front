@@ -5,7 +5,7 @@ import { Card, Col, Container, Row } from "react-bootstrap";
 import HeatmapOptionsRow from "../Heatmap/HeatmapOptionsRow";
 import Preloader from "../Preloader/Preloader";
 import ReactJson from "react-json-view";
-import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
+// import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
 import SinglePairingRow from "./SinglePairingRow";
 import SpikeSprayV1 from "./SpikeSprayV1";
 
@@ -201,7 +201,7 @@ class SingleResultPairing extends Component {
       isEmpty(this.state.builtData);
 
     let title = this.getFormatCopy();
-    let loadScatterplot = true;
+    // let loadScatterplot = true;
     // isEmpty(this.props.studies) ||
     // isEmpty(this.props.sorters) ||
     // isEmpty(this.props.selectedStudy);

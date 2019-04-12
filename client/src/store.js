@@ -13,12 +13,14 @@ const defaultState = {
   pairing: null,
   recordingDetails: null,
   //V2 Data: States
-  loading: null,
   contactSent: null,
   cpus: null,
   groupedURs: null,
-  studies: null,
+  loading: null,
   sorters: null,
+  stats: null,
+  studies: null,
+  studysets: null,
   unitResults: null
 };
 

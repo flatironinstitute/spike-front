@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import Preloader from "../Preloader/Preloader";
 import { isEmpty } from "../../utils";
-import { Card, Col, Container, Jumbotron, Row } from "react-bootstrap";
+import { Card, Container } from "react-bootstrap";
 import NewHomeContentContainer from "../Heatmap/NewHomeContentContainer";
 
 import "./pages.css";
 
 class NewHome extends Component {
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.cpus !== prevProps.cpus) {
-      console.log("🦓 cpus", this.props.cpus);
-    }
+    // if (this.props.cpus !== prevProps.cpus) {
+    //   console.log("🦓 cpus", this.props.cpus);
+    // }
   }
 
   render() {
