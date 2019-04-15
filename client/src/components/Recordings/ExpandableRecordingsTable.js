@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Collapse, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import StudySetRow from "./StudySetRow";
 
 class ExpandableRecordingsTable extends Component {
@@ -7,8 +7,7 @@ class ExpandableRecordingsTable extends Component {
     super();
 
     this.state = {
-      tableData: [],
-      open: false
+      tableData: []
     };
   }
 
@@ -38,9 +37,6 @@ class ExpandableRecordingsTable extends Component {
   }
 
   render() {
-    console.log("🔺", this.state.tableData);
-    const { open } = this.state;
-
     return (
       <Table striped bordered hover className="recording__table">
         <thead>
@@ -58,26 +54,6 @@ class ExpandableRecordingsTable extends Component {
           {this.state.tableData.map(studySet => (
             <StudySetRow key={studySet.id.toString()} value={studySet} />
           ))}
-          {/* <tr onClick={() => this.setState({ open: !open })}>
-            <td>OBS Name</td>
-            <td>OBS Description</td>
-            <td>hpcloud</td>
-            <td>nova</td>
-            <td>created</td>
-            <td />
-            <td />
-          </tr>
-          <Collapse in={this.state.open}>
-            <tr>
-              <td>Hi from the hiddenRow</td>
-              <td />
-              <td />
-              <td />
-              <td />
-              <td />
-              <td />
-            </tr>
-          </Collapse> */}
         </tbody>
       </Table>
     );
@@ -85,12 +61,3 @@ class ExpandableRecordingsTable extends Component {
 }
 
 export default ExpandableRecordingsTable;
-
-// Study Set Data:
-// name, studies(count) arrow
-// Study Data:
-// name, sorterNames(array)
-// Recording Data:
-// description, durationSec, name, numChannels, numTrueUnits, sampleRateHz, spikeSign
-// True Units:
-// DO WE WANT THESE? RIGHT NOW ITS JUST THE IDS?

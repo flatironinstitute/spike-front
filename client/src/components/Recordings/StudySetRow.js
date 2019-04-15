@@ -13,44 +13,40 @@ class StudySetRow extends Component {
   }
 
   render() {
-    const studyset = this.props.value;
     const open = this.state.open;
-    const listItems = studyset.studies.map(study => (
-      // <StudyRow key={study._id} value={study} />
-      <tr>
-        <td>{study._id}</td>
-        <td>{study.recordings.length}</td>
-        <td />
-        <td />
-        <td />
-        <td />
-        <td />
-      </tr>
+    let arrow = this.state.open ? "🔽" : "▶️";
+    const studiesRows = this.props.value.studies.map(study => (
+      <StudyRow key={study._id.toString()} value={study} />
     ));
+    const headRow = (
+      <tr key={"study-header"}>
+        <th />
+        <th>Study Name</th>
+        <th>Number of Recordings</th>
+        <th />
+        <th />
+        <th />
+        <th />
+      </tr>
+    );
+    studiesRows.unshift(headRow);
     return (
       <React.Fragment>
         <tr onClick={() => this.setState({ open: !open })}>
-          <td>{studyset.name}</td>
-          <td>{studyset.studies.length}</td>
+          <td>
+            {this.props.value.name} {arrow}
+          </td>
+          <td>{this.props.value.studies.length}</td>
           <td />
           <td />
           <td />
           <td />
           <td />
         </tr>
-        {/* <Collapse in={this.state.open}>{listItems}</Collapse> */}
+        {open ? studiesRows : null}
       </React.Fragment>
     );
   }
 }
 
 export default StudySetRow;
-
-// Study Set Data:
-// name, studies(count) arrow
-// Study Data:
-// name, sorterNames(array)
-// Recording Data:
-// description, durationSec, name, numChannels, numTrueUnits, sampleRateHz, spikeSign
-// True Units:
-// DO WE WANT THESE? RIGHT NOW ITS JUST THE IDS?

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Collapse, Table } from "react-bootstrap";
+import RecordingRow from "./RecordingRow";
 
 class StudyRow extends Component {
   constructor() {
@@ -13,23 +13,36 @@ class StudyRow extends Component {
   render() {
     const study = this.props.value;
     const open = this.state.open;
+    let arrow = this.state.open ? "🔽" : "▶️";
+    const recordingsRows = this.props.value.recordings.map(recording => (
+      <RecordingRow key={recording.name.toString()} value={recording} />
+    ));
+    const headRow = (
+      <tr key={"recording-header"}>
+        <th />
+        <th>Recording Name</th>
+        <th>Description</th>
+        <th>Number of Channels</th>
+        <th>Number of True Units</th>
+        <th>Sample Rate in Hz</th>
+        <th>Spike sign</th>
+      </tr>
+    );
+    recordingsRows.unshift(headRow);
     return (
       <React.Fragment>
-        <div>value.name</div>
         <tr onClick={() => this.setState({ open: !open })}>
-          <td>{study._id}</td>
+          <td />
+          <td>
+            {study._id} {arrow}
+          </td>
           <td>{study.recordings.length}</td>
           <td />
           <td />
           <td />
           <td />
-          <td />
         </tr>
-        {/* <Collapse in={this.state.open}>
-          {studyset.map(study => (
-            <StudyRow key={study._id.toString()} value={study} />
-          ))}
-        </Collapse> */}
+        {open ? recordingsRows : null}
       </React.Fragment>
     );
   }
