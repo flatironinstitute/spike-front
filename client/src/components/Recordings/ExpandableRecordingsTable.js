@@ -1,14 +1,16 @@
 import React, { Component } from "react";
-import { Collapse, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import StudySetRow from "./StudySetRow";
+import { isEmpty } from "../../utils";
+
+import "./recordings.css";
 
 class ExpandableRecordingsTable extends Component {
   constructor() {
     super();
 
     this.state = {
-      tableData: [],
-      open: false
+      tableData: []
     };
   }
 
@@ -19,12 +21,15 @@ class ExpandableRecordingsTable extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.groupedRecordings !== this.props.groupedRecordings) {
+    if (
+      prevProps.groupedRecordings !== this.props.groupedRecordings ||
+      prevProps.studies !== this.props.studies
+    ) {
       this.formatFlatData(this.props.groupedRecordings);
     }
   }
 
-  formatFlatData(recordings) {
+  async flattenAndFormat(recordings) {
     let mapped = Object.keys(recordings);
     let grArr = [];
     mapped.forEach((map, i) => {
@@ -32,65 +37,60 @@ class ExpandableRecordingsTable extends Component {
       obj.id = i + "-" + map;
       obj.name = map;
       obj.studies = recordings[map];
+      obj.studies.forEach(flatstudy => {
+        let [studyMatch] = this.props.studies.filter(
+          study => study.name === flatstudy._id
+        );
+        flatstudy.sorterNames = studyMatch.sorterNames;
+        flatstudy.sorters = studyMatch.sorters;
+        flatstudy.name = studyMatch.name;
+        flatstudy._id = studyMatch._id;
+      });
       grArr.push(obj);
     });
-    this.setState({ tableData: grArr });
+    return grArr;
+  }
+
+  async formatFlatData(recordings) {
+    if (!isEmpty(this.props.studies)) {
+      let flatData = await this.flattenAndFormat(recordings);
+      this.setState({ tableData: flatData });
+    }
   }
 
   render() {
-    console.log("🔺", this.state.tableData);
-    const { open } = this.state;
-
+    let loading = isEmpty(this.state.tableData) || isEmpty(this.props.studies);
+    let studysetrows = this.state.tableData.map(studySet => (
+      <StudySetRow key={studySet.id.toString()} value={studySet} />
+    ));
+    let placeholder = (
+      <tr>
+        <td />
+        <td>
+          <em>Loading...</em>
+        </td>
+      </tr>
+    );
     return (
-      <Table striped bordered hover className="recording__table">
-        <thead>
-          <tr>
-            <th>Study Sets</th>
-            <th>Number of Studies</th>
-            <th />
-            <th />
-            <th />
-            <th />
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          {this.state.tableData.map(studySet => (
-            <StudySetRow key={studySet.id.toString()} value={studySet} />
-          ))}
-          {/* <tr onClick={() => this.setState({ open: !open })}>
-            <td>OBS Name</td>
-            <td>OBS Description</td>
-            <td>hpcloud</td>
-            <td>nova</td>
-            <td>created</td>
-            <td />
-            <td />
-          </tr>
-          <Collapse in={this.state.open}>
+      <div>
+        <Table
+          hover
+          bordered
+          responsive
+          className="recording__table-expandable"
+        >
+          <thead>
             <tr>
-              <td>Hi from the hiddenRow</td>
-              <td />
-              <td />
-              <td />
-              <td />
-              <td />
-              <td />
+              <th className="arrow__heading">+/-</th>
+              <th>Study Sets</th>
+              <th>Number of Studies</th>
             </tr>
-          </Collapse> */}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>{loading ? placeholder : studysetrows}</tbody>
+        </Table>
+      </div>
     );
   }
 }
 
 export default ExpandableRecordingsTable;
-
-// Study Set Data:
-// name, studies(count) arrow
-// Study Data:
-// name, sorterNames(array)
-// Recording Data:
-// description, durationSec, name, numChannels, numTrueUnits, sampleRateHz, spikeSign
-// True Units:
-// DO WE WANT THESE? RIGHT NOW ITS JUST THE IDS?
