@@ -11,7 +11,6 @@ class RecordingRow extends Component {
 
   render() {
     const recording = this.props.value;
-    console.log("🔺", recording);
     return (
       <React.Fragment>
         <tr>

@@ -63,13 +63,6 @@ class ExpandableRecordingsTable extends Component {
     let studysetrows = this.state.tableData.map(studySet => (
       <StudySetRow key={studySet.id.toString()} value={studySet} />
     ));
-    console.log(
-      "🔺",
-      loading,
-      this.state.tableData,
-      this.props.studies,
-      this.props.groupedRecordings
-    );
     let placeholder = (
       <tr>
         <td />

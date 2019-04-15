@@ -11,7 +11,6 @@ class StudySetRow extends Component {
   }
 
   render() {
-    console.log("🔺", this.props.value);
     const open = this.state.open;
     let arrow = this.state.open ? "-" : "+";
     let rowClass = this.state.open ? "row__expanded-header" : "";
