@@ -38,7 +38,7 @@ class ExpandableRecordingsTable extends Component {
 
   render() {
     return (
-      <Table striped bordered hover className="recording__table">
+      <Table hover bordered className="recording__table">
         <thead>
           <tr>
             <th>Study Sets</th>
