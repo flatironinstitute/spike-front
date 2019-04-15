@@ -1,3 +1,19 @@
 .recording__table-expandable {
   background: #fff;
 }
+
+.arrow__row {
+  font-weight: 700;
+  font-size: 2rem;
+  color: var(--black);
+  color: var(--fi-blue);
+  text-align: center;
+}
+
+.arrow__heading {
+  text-align: center;
+}
+
+.row__expanded-header {
+  background-color: rgba(0, 0, 0, 0.05);
+}

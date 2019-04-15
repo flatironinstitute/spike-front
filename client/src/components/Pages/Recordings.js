@@ -50,7 +50,7 @@ class Recordings extends Component {
     let loading =
       isEmpty(this.state.groupedRecordings) && isEmpty(this.props.studies);
     return (
-      <div className="page__body recordings__body">
+      <div className="page__body">
         <Container className="container__heatmap">
           <Row className="justify-content-md-center">
             <Col lg={12} sm={12} xl={10}>

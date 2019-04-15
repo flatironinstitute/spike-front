@@ -15,18 +15,21 @@ class ExpandableRecordingsTable extends Component {
   }
 
   componentDidMount() {
-    if (this.props.groupedRecordings && !isEmpty(this.props.studies)) {
+    if (this.props.groupedRecordings) {
       this.formatFlatData(this.props.groupedRecordings);
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.groupedRecordings !== this.props.groupedRecordings) {
+    if (
+      prevProps.groupedRecordings !== this.props.groupedRecordings ||
+      prevProps.studies !== this.props.studies
+    ) {
       this.formatFlatData(this.props.groupedRecordings);
     }
   }
 
-  formatFlatData(recordings) {
+  async flattenAndFormat(recordings) {
     let mapped = Object.keys(recordings);
     let grArr = [];
     mapped.forEach((map, i) => {
@@ -45,39 +48,49 @@ class ExpandableRecordingsTable extends Component {
       });
       grArr.push(obj);
     });
-    this.setState({ tableData: grArr });
+    return grArr;
+  }
+
+  async formatFlatData(recordings) {
+    if (!isEmpty(this.props.studies)) {
+      let flatData = await this.flattenAndFormat(recordings);
+      this.setState({ tableData: flatData });
+    }
   }
 
   render() {
-    let loading = isEmpty(this.state.tableData) && isEmpty(this.props.studies);
+    let loading = isEmpty(this.state.tableData) || isEmpty(this.props.studies);
     let studysetrows = this.state.tableData.map(studySet => (
       <StudySetRow key={studySet.id.toString()} value={studySet} />
     ));
+    console.log(
+      "🔺",
+      loading,
+      this.state.tableData,
+      this.props.studies,
+      this.props.groupedRecordings
+    );
     let placeholder = (
       <tr>
+        <td />
         <td>
           <em>Loading...</em>
         </td>
-        <td />
-        <td />
-        <td />
-        <td />
-        <td />
-        <td />
       </tr>
     );
     return (
       <div>
-        <Table hover className="recording__table-expandable">
+        <Table
+          hover
+          bordered
+          responsive
+          className="recording__table-expandable"
+        >
           <thead>
             <tr>
+              <th className="arrow__heading">+/-</th>
               <th>Study Sets</th>
               <th>Number of Studies</th>
-              <th />
-              <th />
-              <th />
-              <th />
-              <th />
             </tr>
           </thead>
           <tbody>{loading ? placeholder : studysetrows}</tbody>
