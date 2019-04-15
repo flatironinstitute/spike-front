@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { Collapse, Table } from "react-bootstrap";
 import StudyRow from "./StudyRow";
-import { isEmpty } from "../../utils";
 
 class StudySetRow extends Component {
   constructor() {
@@ -13,23 +11,24 @@ class StudySetRow extends Component {
   }
 
   render() {
+    console.log("🔺", this.props.value);
     const open = this.state.open;
     let arrow = this.state.open ? "🔽" : "▶️";
     const studiesRows = this.props.value.studies.map(study => (
       <StudyRow key={study._id.toString()} value={study} />
     ));
-    const headRow = (
+    const headStudyRow = (
       <tr key={"study-header"}>
         <th />
         <th>Study Name</th>
         <th>Number of Recordings</th>
-        <th />
+        <th>Sorters Applied</th>
         <th />
         <th />
         <th />
       </tr>
     );
-    studiesRows.unshift(headRow);
+    studiesRows.unshift(headStudyRow);
     return (
       <React.Fragment>
         <tr onClick={() => this.setState({ open: !open })}>

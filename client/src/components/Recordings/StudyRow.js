@@ -34,10 +34,10 @@ class StudyRow extends Component {
         <tr onClick={() => this.setState({ open: !open })}>
           <td />
           <td>
-            {study._id} {arrow}
+            {study.name} {arrow}
           </td>
           <td>{study.recordings.length}</td>
-          <td />
+          <td>{study.sorterNames.join(", ")}</td>
           <td />
           <td />
           <td />
