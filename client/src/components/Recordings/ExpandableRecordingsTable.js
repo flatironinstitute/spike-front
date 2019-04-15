@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Table } from "react-bootstrap";
 import StudySetRow from "./StudySetRow";
 import { isEmpty } from "../../utils";
-import Preloader from "../Preloader/Preloader";
+
+import "./recordings.css";
 
 class ExpandableRecordingsTable extends Component {
   constructor() {
@@ -20,10 +21,7 @@ class ExpandableRecordingsTable extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (
-      prevProps.groupedRecordings !== this.props.groupedRecordings &&
-      !isEmpty(this.props.studies)
-    ) {
+    if (prevProps.groupedRecordings !== this.props.groupedRecordings) {
       this.formatFlatData(this.props.groupedRecordings);
     }
   }
@@ -70,7 +68,7 @@ class ExpandableRecordingsTable extends Component {
     );
     return (
       <div>
-        <Table hover bordered className="recording__table">
+        <Table hover className="recording__table-expandable">
           <thead>
             <tr>
               <th>Study Sets</th>

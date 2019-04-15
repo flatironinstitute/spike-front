@@ -37,7 +37,7 @@ class StudyRow extends Component {
             {study.name} {arrow}
           </td>
           <td>{study.recordings.length}</td>
-          <td>{study.sorterNames.join(", ")}</td>
+          <td>{study.sorterNames ? study.sorterNames.join(", ") : ""}</td>
           <td />
           <td />
           <td />
