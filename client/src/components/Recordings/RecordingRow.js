@@ -11,6 +11,7 @@ class RecordingRow extends Component {
 
   render() {
     const recording = this.props.value;
+    console.log("🔺", recording);
     return (
       <React.Fragment>
         <tr>
@@ -19,7 +20,7 @@ class RecordingRow extends Component {
           <td>{recording.description}</td>
           <td>{recording.numChannels}</td>
           <td>{recording.numTrueUnits}</td>
-          <td>sample rate in hz</td>
+          <td>{recording.sampleRateHz}</td>
           <td>{recording.spikeSign}</td>
         </tr>
       </React.Fragment>

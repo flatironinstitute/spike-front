@@ -45,12 +45,3 @@ class StudyRow extends Component {
 }
 
 export default StudyRow;
-
-// Study Set Data:
-// name, studies(count) arrow
-// Study Data:
-// name, sorterNames(array)
-// Recording Data:
-// description, durationSec, name, numChannels, numTrueUnits, sampleRateHz, spikeSign
-// True Units:
-// DO WE WANT THESE? RIGHT NOW ITS JUST THE IDS?
