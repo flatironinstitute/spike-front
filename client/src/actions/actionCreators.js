@@ -1,4 +1,6 @@
 const fetch = require("node-fetch");
+console.log("💾", process.env);
+
 const baseurl = process.env.API_URL || "http://localhost:5000";
 
 /* V2 Data: New Actions
