@@ -7,6 +7,7 @@ function print_usage() {
   // used below
   console.info('USAGE:');
   console.info('./delete-data.js [database_url]');
+  console.info('If --database-from-env is specified, the DATABASE environment variable (from .env) will be used for the database url.')
 }
 
 // parse the arguments
@@ -14,11 +15,17 @@ let arg1 = process.argv[2] || null;
 
 let database_url = arg1;
 
+if (process.argv.includes('--database-from-env')) {
+  database_url = process.env.DATABASE;
+}
+
 // print usage if insufficient args
 if (!database_url) {
   print_usage();
   process.exit(-1);
 }
+
+console.info(`USING DATABASE: ${database_url}`);
 
 const mongoose = require("mongoose");
 mongoose.connect(database_url, { useNewUrlParser: true });

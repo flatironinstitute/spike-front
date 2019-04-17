@@ -13,6 +13,7 @@ function print_usage() {
   // used below
   console.info('USAGE:');
   console.info('./format-and-load-data.js [data_directory] [database_url]');
+  console.info('If --database-from-env is specified, the DATABASE environment variable (from .env) will be used for the database url.')
 }
 
 // parse the arguments
@@ -22,11 +23,17 @@ let arg2 = process.argv[3] || null;
 let data_directory = arg1;
 let database_url = arg2;
 
+if (process.argv.includes('--database-from-env')) {
+  database_url = process.env.DATABASE;
+}
+
 // print usage if insufficient args
 if ((!data_directory) || (!database_url)) {
   print_usage();
   process.exit(-1);
 }
+
+console.info(`USING DATABASE: ${database_url}`);
 
 // checks
 assert(fs.lstatSync(data_directory).isDirectory(), `Not a directory: ${data_directory}`);
@@ -91,12 +98,15 @@ async function loadIntoDB(model, data, name) {
 }
 
 async function writeCleanData(model, name) {
+  console.info(`Writing ${name}...`);
   const allEntries = model.find();
   const [foundEntries] = await Promise.all([allEntries]);
   await writeNewFile(name, foundEntries);
+  console.info(`Done writing ${name}.`);
 }
 
 async function formatStudies() {
+  console.info('Formatting studies...');
   rawStudies.forEach(study => {
     // Add studySet id
     const studysets = JSON.parse(
@@ -137,6 +147,7 @@ async function formatStudies() {
 }
 
 async function formatTrueUnits() {
+  console.info('Formatting true units...');
   rawTrueUnits.forEach(unit => {
     unit.recordingName = unit.recording;
     unit.studyName = unit.study;
@@ -148,12 +159,19 @@ async function formatTrueUnits() {
 }
 
 async function formatRecordings() {
+  console.info('Formatting recordings...');
+  const studies = JSON.parse(
+    fs.readFileSync(data_directory + "/cleanedData/studies.json", "utf-8")
+  );
+  const studysets = JSON.parse(
+    fs.readFileSync(data_directory + "/cleanedData/studysets.json", "utf-8")
+  );
+  const trueunits = JSON.parse(
+    fs.readFileSync(data_directory + "/cleanedData/trueunits.json", "utf-8")
+  );
   rawRecordings.forEach(recording => {
     // Add study id from study name
     recording.studyName = recording.study;
-    const studies = JSON.parse(
-      fs.readFileSync(data_directory + "/cleanedData/studies.json", "utf-8")
-    );
     let [studyId] = studies.filter(study => study.name === recording.studyName);
     if (studyId) {
       recording.study = studyId._id;
@@ -168,9 +186,6 @@ async function formatRecordings() {
     recording.trueUnits = [];
 
     // Add study set name
-    const studysets = JSON.parse(
-      fs.readFileSync(data_directory + "/cleanedData/studysets.json", "utf-8")
-    );
     let [studySetId] = studysets.filter(set => set._id === studyId.studySet);
     if (studySetId) {
       recording.studySetName = studySetId.name;
@@ -183,9 +198,6 @@ async function formatRecordings() {
     }
   });
   // Collect true units
-  const trueunits = JSON.parse(
-    fs.readFileSync(data_directory + "/cleanedData/trueunits.json", "utf-8")
-  );
   trueunits.forEach(unit => {
     let [parentRecording] = rawRecordings.filter(
       recording =>
@@ -217,6 +229,7 @@ async function formatRecordings() {
 }
 
 async function formatSortingResults() {
+  console.info('Formatting sorting results...');
   rawSortingResults.forEach(sorting => {
     // Move string names to string properties
     sorting.recordingName = sorting.recording;
@@ -279,6 +292,19 @@ async function formatSortingResults() {
 }
 
 async function formatUnitResults() {
+  console.info('Formatting unit results...');
+
+  // move these outside loop
+  const recordings = JSON.parse(
+    fs.readFileSync(data_directory + "/cleanedData/recordings.json", "utf-8")
+  );
+  const studies = JSON.parse(
+    fs.readFileSync(data_directory + "/cleanedData/studies.json", "utf-8")
+  );
+  const sorters = JSON.parse(
+    fs.readFileSync(data_directory + "/cleanedData/sorters.json", "utf-8")
+  );
+
   rawUnitResults.forEach(result => {
     // Move string names to string properties
     result.recordingName = result.recording;
@@ -287,9 +313,6 @@ async function formatUnitResults() {
     result.snr = 0.0;
 
     // Match result.studyName && result.recordingName to a recording._id;
-    const recordings = JSON.parse(
-      fs.readFileSync(data_directory + "/cleanedData/recordings.json", "utf-8")
-    );
     let [recordingId] = recordings.filter(
       recording =>
         recording.studyName === result.studyName &&
@@ -306,9 +329,6 @@ async function formatUnitResults() {
     }
 
     // Match result.studyName to the study.name and add it;
-    const studies = JSON.parse(
-      fs.readFileSync(data_directory + "/cleanedData/studies.json", "utf-8")
-    );
     let [studyId] = studies.filter(study => study.name === result.studyName);
     if (studyId) {
       result.study = studyId;
@@ -321,9 +341,6 @@ async function formatUnitResults() {
     }
 
     // Match result.sorter to the sorter._id;
-    const sorters = JSON.parse(
-      fs.readFileSync(data_directory + "/cleanedData/sorters.json", "utf-8")
-    );
     let [sorterId] = sorters.filter(
       sorter => sorter.name === result.sorterName
     );
@@ -342,21 +359,31 @@ async function formatUnitResults() {
 }
 
 async function fetchUnitResultsWithSNR(cleanUnitResults) {
+  console.info('Fetching unit results with SNR...');
   const trueunits = JSON.parse(
     fs.readFileSync(data_directory + "/cleanedData/trueunits.json", "utf-8")
   );
   let unitResultsWithSNR = [];
   console.log("\n 🥞 Starting Unit Result SNR transfer.");
+
+  // this is to avoid the previous double-for-loop
+  let true_units_by_code = {};
   for (let i = 0; i < trueunits.length; i++) {
-    for (let index = 0; index < cleanUnitResults.length; index++) {
-      if (
-        cleanUnitResults[index].recordingName === trueunits[i].recordingName &&
-        cleanUnitResults[index].studyName === trueunits[i].studyName &&
-        cleanUnitResults[index].unitId === trueunits[i].unitId
-      ) {
-        cleanUnitResults[index].snr = trueunits[i].snr;
-        unitResultsWithSNR.push(cleanUnitResults[index]);
-      }
+    tu = trueunits[i];
+    let code0 = tu.recordingName+'--'+tu.studyName+'--'+tu.unitId;
+    true_units_by_code[code0] = tu;
+  }
+  for (let index = 0; index < cleanUnitResults.length; index++) {
+    let ur = cleanUnitResults[index];
+    let true_unit_code = ur.recordingName+'--'+ur.studyName+'--'+ur.unitId;
+    if (true_unit_code in true_units_by_code) {
+      let tu = true_units_by_code[true_unit_code];
+      ur.snr = tu.snr;
+      unitResultsWithSNR.push(ur);
+    }
+    else {
+      console.error('Unable to find true unit for unit result.', true_unit_code, ur);
+      process.exit(-1);
     }
   }
   if (unitResultsWithSNR.length !== cleanUnitResults.length) {
