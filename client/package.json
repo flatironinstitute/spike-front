@@ -27,6 +27,7 @@
     "react-burger-menu": "^2.6.3",
     "react-collapsing-table": "^0.4.2",
     "react-dom": "^16.6.0",
+    "react-ga": "^2.5.7",
     "react-google-recaptcha": "^1.0.5",
     "react-json-pretty": "^2.1.0",
     "react-json-view": "^1.19.1",
