@@ -1,49 +1,78 @@
-require("dotenv").config({ path: __dirname + "/../.env" });
+#!/usr/bin/env node
+
+require("dotenv").config({ path: __dirname + "/../../.env" });
 const fs = require("fs");
 const util = require("util");
 const path = require("path");
 const fs_writeFile = util.promisify(fs.writeFile);
 const fs_unlink = util.promisify(fs.unlinkSync);
 const fs_readdir = util.promisify(fs.readdir);
+const assert = require('assert');
+
+function print_usage() {
+  // used below
+  console.info('USAGE:');
+  console.info('./format-and-load-data.js [data_directory] [database_url]');
+}
+
+// parse the arguments
+let arg1 = process.argv[2] || null;
+let arg2 = process.argv[3] || null;
+
+let data_directory = arg1;
+let database_url = arg2;
+
+// print usage if insufficient args
+if ((!data_directory) || (!database_url)) {
+  print_usage();
+  process.exit(-1);
+}
+
+// checks
+assert(fs.lstatSync(data_directory).isDirectory(), `Not a directory: ${data_directory}`);
+
+if (!fs.existsSync(data_directory+'/cleanedData')) {
+  fs.mkdirSync(data_directory+'/cleanedData');
+}
 
 const mongoose = require("mongoose");
-mongoose.connect(process.env.DATABASE, { useNewUrlParser: true });
+mongoose.connect(database_url, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 
 // import all of the models
-const Sorter = require("../models/Sorter");
-const StudySet = require("../models/StudySet");
-const Study = require("../models/Study");
-const Recording = require("../models/Recording");
-const TrueUnit = require("../models/TrueUnit");
-const SortingResult = require("../models/SortingResult");
-const UnitResult = require("../models/UnitResult");
+const Sorter = require("../../models/Sorter");
+const StudySet = require("../../models/StudySet");
+const Study = require("../../models/Study");
+const Recording = require("../../models/Recording");
+const TrueUnit = require("../../models/TrueUnit");
+const SortingResult = require("../../models/SortingResult");
+const UnitResult = require("../../models/UnitResult");
 
 // import all the raw data
 const rawSorters = JSON.parse(
-  fs.readFileSync(__dirname + "/rawData/Sorters.json", "utf-8")
+  fs.readFileSync(data_directory + "/Sorters.json", "utf-8")
 );
 const rawStudySets = JSON.parse(
-  fs.readFileSync(__dirname + "/rawData/StudySets.json", "utf-8")
+  fs.readFileSync(data_directory + "/StudySets.json", "utf-8")
 );
 const rawStudies = JSON.parse(
-  fs.readFileSync(__dirname + "/rawData/Studies.json", "utf-8")
+  fs.readFileSync(data_directory + "/Studies.json", "utf-8")
 );
 const rawRecordings = JSON.parse(
-  fs.readFileSync(__dirname + "/rawData/Recordings.json", "utf-8")
+  fs.readFileSync(data_directory + "/Recordings.json", "utf-8")
 );
 const rawTrueUnits = JSON.parse(
-  fs.readFileSync(__dirname + "/rawData/TrueUnits.json", "utf-8")
+  fs.readFileSync(data_directory + "/TrueUnits.json", "utf-8")
 );
 const rawSortingResults = JSON.parse(
-  fs.readFileSync(__dirname + "/rawData/SortingResults.json", "utf-8")
+  fs.readFileSync(data_directory + "/SortingResults.json", "utf-8")
 );
 const rawUnitResults = JSON.parse(
-  fs.readFileSync(__dirname + "/rawData/UnitResults.json", "utf-8")
+  fs.readFileSync(data_directory + "/UnitResults.json", "utf-8")
 );
 
 async function writeNewFile(fileName, newData) {
-  let newFileName = __dirname + `/cleanedData/${fileName}.json`;
+  let newFileName = data_directory + `/cleanedData/${fileName}.json`;
   await fs_writeFile(newFileName, JSON.stringify(newData));
   console.log(`Clean ${fileName}.json saved. 💾`);
 }
@@ -71,7 +100,7 @@ async function formatStudies() {
   rawStudies.forEach(study => {
     // Add studySet id
     const studysets = JSON.parse(
-      fs.readFileSync(__dirname + "/cleanedData/studysets.json", "utf-8")
+      fs.readFileSync(data_directory + "/cleanedData/studysets.json", "utf-8")
     );
     let [setId] = studysets.filter(set => set.name === study.studySet);
     if (setId) {
@@ -86,7 +115,7 @@ async function formatStudies() {
     // Add sorter id array based on sorterNames property
     let studySorters = [];
     const sorters = JSON.parse(
-      fs.readFileSync(__dirname + "/cleanedData/sorters.json", "utf-8")
+      fs.readFileSync(data_directory + "/cleanedData/sorters.json", "utf-8")
     );
     sorters.forEach(sorter => {
       if (study.sorterNames.includes(sorter.name)) {
@@ -123,7 +152,7 @@ async function formatRecordings() {
     // Add study id from study name
     recording.studyName = recording.study;
     const studies = JSON.parse(
-      fs.readFileSync(__dirname + "/cleanedData/studies.json", "utf-8")
+      fs.readFileSync(data_directory + "/cleanedData/studies.json", "utf-8")
     );
     let [studyId] = studies.filter(study => study.name === recording.studyName);
     if (studyId) {
@@ -140,7 +169,7 @@ async function formatRecordings() {
 
     // Add study set name
     const studysets = JSON.parse(
-      fs.readFileSync(__dirname + "/cleanedData/studysets.json", "utf-8")
+      fs.readFileSync(data_directory + "/cleanedData/studysets.json", "utf-8")
     );
     let [studySetId] = studysets.filter(set => set._id === studyId.studySet);
     if (studySetId) {
@@ -155,7 +184,7 @@ async function formatRecordings() {
   });
   // Collect true units
   const trueunits = JSON.parse(
-    fs.readFileSync(__dirname + "/cleanedData/trueunits.json", "utf-8")
+    fs.readFileSync(data_directory + "/cleanedData/trueunits.json", "utf-8")
   );
   trueunits.forEach(unit => {
     let [parentRecording] = rawRecordings.filter(
@@ -198,7 +227,7 @@ async function formatSortingResults() {
   rawSortingResults.forEach(sorting => {
     // Match sorting.recording to the recording._id;
     const recordings = JSON.parse(
-      fs.readFileSync(__dirname + "/cleanedData/recordings.json", "utf-8")
+      fs.readFileSync(data_directory + "/cleanedData/recordings.json", "utf-8")
     );
     let [recordingId] = recordings.filter(
       recording =>
@@ -216,7 +245,7 @@ async function formatSortingResults() {
     }
     // Match sorting.studyName to the study.name and add the id;
     const studies = JSON.parse(
-      fs.readFileSync(__dirname + "/cleanedData/studies.json", "utf-8")
+      fs.readFileSync(data_directory + "/cleanedData/studies.json", "utf-8")
     );
     let [studyId] = studies.filter(study => study.name === sorting.studyName);
     if (studyId) {
@@ -230,7 +259,7 @@ async function formatSortingResults() {
     }
     // Match sorting.sorter to the sorter._id;
     const sorters = JSON.parse(
-      fs.readFileSync(__dirname + "/cleanedData/sorters.json", "utf-8")
+      fs.readFileSync(data_directory + "/cleanedData/sorters.json", "utf-8")
     );
     let [sorterId] = sorters.filter(
       sorter => sorter.name === sorting.sorterName
@@ -259,7 +288,7 @@ async function formatUnitResults() {
 
     // Match result.studyName && result.recordingName to a recording._id;
     const recordings = JSON.parse(
-      fs.readFileSync(__dirname + "/cleanedData/recordings.json", "utf-8")
+      fs.readFileSync(data_directory + "/cleanedData/recordings.json", "utf-8")
     );
     let [recordingId] = recordings.filter(
       recording =>
@@ -278,7 +307,7 @@ async function formatUnitResults() {
 
     // Match result.studyName to the study.name and add it;
     const studies = JSON.parse(
-      fs.readFileSync(__dirname + "/cleanedData/studies.json", "utf-8")
+      fs.readFileSync(data_directory + "/cleanedData/studies.json", "utf-8")
     );
     let [studyId] = studies.filter(study => study.name === result.studyName);
     if (studyId) {
@@ -293,7 +322,7 @@ async function formatUnitResults() {
 
     // Match result.sorter to the sorter._id;
     const sorters = JSON.parse(
-      fs.readFileSync(__dirname + "/cleanedData/sorters.json", "utf-8")
+      fs.readFileSync(data_directory + "/cleanedData/sorters.json", "utf-8")
     );
     let [sorterId] = sorters.filter(
       sorter => sorter.name === result.sorterName
@@ -314,7 +343,7 @@ async function formatUnitResults() {
 
 async function fetchUnitResultsWithSNR(cleanUnitResults) {
   const trueunits = JSON.parse(
-    fs.readFileSync(__dirname + "/cleanedData/trueunits.json", "utf-8")
+    fs.readFileSync(data_directory + "/cleanedData/trueunits.json", "utf-8")
   );
   let unitResultsWithSNR = [];
   console.log("\n 🥞 Starting Unit Result SNR transfer.");
@@ -392,8 +421,8 @@ async function formatAndLoadData() {
   await writeCleanData(UnitResult, "unitresults");
 
   // Delete WIP Files
-  await emptyDataFolder(__dirname + "/cleanedData");
-  await emptyDataFolder(__dirname + "/rawData");
+  await emptyDataFolder(data_directory + "/cleanedData");
+  // await emptyDataFolder(data_directory + "/rawData");
   console.log(`🗑️  All used data files in the trash.`);
 
   console.log(
