@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 var baseurl;
 if (process.env.NODE_ENV === "production") {
-  baseurl = "https://spikeforestfront.herokuapp.com/"
+  baseurl = "https://spikeforestfront.herokuapp.com"
 } else {
   baseurl = "http://localhost:5000";
 }
