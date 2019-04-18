@@ -41,37 +41,6 @@ router.post("/api/contact", (req, res) => {
   });
 });
 
-/* Route Stubs
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-// // Recordings
-// router.get("/api/recording/:id", recordingController.getRecordingById);
-
-// // Sorters
-// router.get("/api/sorters", sorterController.getSorters);
-// router.get("/api/storter/:id", sorterController.getSorterById);
-
-// // Sorting Results
-// router.get("/api/sortingresults", sortingResultController.getSortingResults);
-// router.get(
-//   "/api/sortingresult/:id",
-//   sortingResultController.getSortingResultById
-// );
-
-// // Studies
-// router.get("/api/studies", studyController.getStudies);
-// router.get("/api/study/:id", studyController.getStudyById);
-
-// // Study Sets
-// router.get("/api/studyset/:id", studySetController.getStudySetById);
-
-// // True Units
-// router.get("/api/trueunits", trueUnitController.getTrueUnits);
-// router.get("/api/trueunit/:id", trueUnitController.getTrueUnitById);
-
-// // Unit Results
-// router.get("/api/unitresults", unitResultsController.getUnitResults);
-// router.get("/api/unitresult/:id", unitResultsController.getUnitResultById);
-
 /* Old Shiz & Existing Routes
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 router.get("/api/:study/:sorter", (req, res) => {
@@ -111,3 +80,34 @@ function formatSpikes(recDetails) {
   return formatted;
 }
 module.exports = router;
+
+/* Route Stubs
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+// // Recordings
+// router.get("/api/recording/:id", recordingController.getRecordingById);
+
+// // Sorters
+// router.get("/api/sorters", sorterController.getSorters);
+// router.get("/api/storter/:id", sorterController.getSorterById);
+
+// // Sorting Results
+// router.get("/api/sortingresults", sortingResultController.getSortingResults);
+// router.get(
+//   "/api/sortingresult/:id",
+//   sortingResultController.getSortingResultById
+// );
+
+// // Studies
+// router.get("/api/studies", studyController.getStudies);
+// router.get("/api/study/:id", studyController.getStudyById);
+
+// // Study Sets
+// router.get("/api/studyset/:id", studySetController.getStudySetById);
+
+// // True Units
+// router.get("/api/trueunits", trueUnitController.getTrueUnits);
+// router.get("/api/trueunit/:id", trueUnitController.getTrueUnitById);
+
+// // Unit Results
+// router.get("/api/unitresults", unitResultsController.getUnitResults);
+// router.get("/api/unitresult/:id", unitResultsController.getUnitResultById);

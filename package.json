@@ -12,7 +12,7 @@
     "start": "node server.js",
     "blowitallaway": "node ./data/load-data.js --delete",
     "cleanthenload": "node ./data/format-and-load-data.js",
-    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+    "heroku-postbuild": "cd client && yarn && yarn run build"
   },
   "dependencies": {
     "@magland/kbucket": "^0.12.5",
