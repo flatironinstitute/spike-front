@@ -5,12 +5,11 @@ const htmlToText = require("html-to-text");
 const promisify = require("es6-promisify");
 
 const transport = nodemailer.createTransport({
-  host: process.env.MAIL_HOST,
-  port: process.env.MAIL_PORT,
+  service: 'gmail',
   auth: {
-    user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASS
-  }
+         user: 'youremail@address.com',
+         pass: 'yourpassword'
+     }
 });
 
 const generateHTML = (options = {}) => {
@@ -27,8 +26,8 @@ export const send = async options => {
   console.log = ("📎", text);
 
   const mailOptions = {
-    from: `Spikeforest <noreply@flatironinstitute.org>`,
-    to: `Elizabeth Lovero <elovero@flatironinstitute.org>`,
+    from: `Spikeforest <elovero@flatironinstitute.org>`,
+    to: `Spikeforest <spikeforest@flatironinstitute.org>`,
     subject: `Thank you for contacting SpikeForest`,
     html,
     text
