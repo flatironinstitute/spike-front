@@ -4,7 +4,7 @@ Benchmarking of spike sorting algorithms. Seeing the spike forest for the trees.
 
 ## Available Scripts
 
-To install software and packages, you can run:
+To install software and packages, you will need to first run in *both* the root and /client folder:
 
 ### `yarn install`
 
