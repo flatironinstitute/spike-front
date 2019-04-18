@@ -18,15 +18,31 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
-## Adding New Data
+## Loading data into the database
 
-### `yarn blowitallaway`
+**Step 1: delete the data (clear the database)**
 
-This command clears the database entirely and is the essential first step of the data injest process. 
+```
+admin/bin/delete-data.js [database_url] --delete
+or
+admin/bin/delete-data.js --database-from-env --delete
+```
 
-### `yarn cleanthenload`
+This command clears the database entirely and is the essential first step of the data injest process.
 
-Assigns ids, formats, and injests raw data from the spikeforest pipeline into the website for visualization. Raw data files for injest should be stored in a local copy of the `data/rawData` folder with capitalized titles before running this command. After injest is complete, this script automatically deletes temp files generated in the process as well as the rawData files. 
+If `--database-from-env` is specified, the DATABASE environment variable (from .env) will be used for the database url.
+
+**Step 2: format and load data into database**
+
+```
+admin/bin/format-and-load-data.js [data_directory] [database_url]
+or
+admin/bin/format-and-load-data.js [data_directory] --database-from-env
+```
+
+Assigns ids, formats, and injests raw data from the spikeforest pipeline into the website for visualization. Raw data files for injest should be stored in [data_directory] with capitalized titles. After injest is complete, this script automatically deletes temp files generated in the process. 
+
+If `--database-from-env` is specified, the DATABASE environment variable (from .env) will be used for the database url.
 
 ## Authors
 
