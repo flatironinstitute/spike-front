@@ -6,9 +6,9 @@ import PropTypes from "prop-types";
 import { ConnectedRouter } from "connected-react-router";
 import Routes from "./routes";
 
-const gaTag = process.env.REACT_APP_GA;
+const gaTag = 'UA-138500572-1';
 
-ReactGA.initialize(gatag);
+ReactGA.initialize(gaTag);
 
 const App = ({ history }) => {
   return (

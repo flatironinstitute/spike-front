@@ -1,5 +1,10 @@
 const fetch = require("node-fetch");
-const baseurl = process.env.REACT_APP_API_URL || "http://localhost:5000";
+var baseurl;
+if (process.env.NODE_ENV === "production") {
+  baseurl = "https://spikeforestfront.herokuapp.com/"
+} else {
+  baseurl = "http://localhost:5000";
+}
 
 /* V2 Data: New Actions
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
