@@ -183,6 +183,7 @@ unitResultSchema.statics.getUnitResultsByStudyAndSorter = function() {
             checkAccuracy: "$checkAccuracy",
             checkPrecision: "$checkPrecision",
             checkRecall: "$checkRecall",
+            unitId: "$unitId",
             accuracy: {
               $divide: [
                 "$numMatches",
@@ -247,6 +248,10 @@ unitResultSchema.statics.getAllUnitResultsByNestedStudySorter = function() {
             snr: "$snr",
             checkAccuracy: "$checkAccuracy",
             checkRecall: "$checkRecall",
+            unitId: "$unitId",
+            numMatches: "$numMatches",
+            recording: "$recording",
+            bestSortedUnitId: "$bestSortedUnitId",
             precision: {
               $cond: {
                 if: { $gte: ["$numMatches", 5] },
@@ -266,94 +271,9 @@ unitResultSchema.statics.getAllUnitResultsByNestedStudySorter = function() {
         count: { $sum: 1 }
       }
     }
-    // {
-    //   $group: {
-    //     _id: "$_id.studyName",
-    //     sorterGroup: {
-    //       $push: {
-    //         count: "$count",
-    //         sorterName: "$_id.sorterName",
-    //         unitResults: "$unitResults"
-    //       }
-    //     }
-    //   }
-    // }
   ]).allowDiskUse(true);
 };
 
 module.exports = mongoose.model("UnitResult", unitResultSchema);
 
-// return this.aggregate([
-//   {
-//     $group: {
-//       _id: {
-//         sorterName: "$sorterName",
-//         studyName: "$studyName"
-//       },
-//       unitResults: {
-//         $push: {
-//           _id: "$_id",
-//           sorter: "$sorter",
-//           study: "$study",
-//           snr: "$snr",
-//           checkAccuracy: "$checkAccuracy",
-//           checkPrecision: "$checkPrecision",
-//           checkRecall: "$checkRecall",
-//           accuracy: {
-//             $divide: [
-//               "$numMatches",
-//               {
-//                 $add: [
-//                   "$numMatches",
-//                   "$numFalsePositives",
-//                   "$numFalseNegatives"
-//                 ]
-//               }
-//             ]
-//           },
-//           precision: {
-//             $cond: {
-//               if: { $gte: ["$numMatches", 5] },
-//               then: {
-//                 $divide: [
-//                   "$numMatches",
-//                   {
-//                     $add: ["$numMatches", "$numFalsePositives"]
-//                   }
-//                 ]
-//               },
-//               else: 0
-//             }
-//           },
-//           recall: {
-//             $cond: {
-//               if: { $gte: ["$numMatches", 5] },
-//               then: {
-//                 $divide: [
-//                   "$numMatches",
-//                   {
-//                     $add: ["$numMatches", "$numFalseNegatives"]
-//                   }
-//                 ]
-//               },
-//               else: 0
-//             }
-//           }
-//         }
-//       },
-//       count: { $sum: 1 }
-//     }
-//   }
-//   {
-//     $group: {
-//       _id: "$_id.studyName",
-//       sorterGroup: {
-//         $push: {
-//           count: "$count",
-//           sorterName: "$_id.sorterName",
-//           unitResults: "$unitResults"
-//         }
-//       }
-//     }
-//   }
-// ]).allowDiskUse(true);
+

@@ -12,7 +12,7 @@ import {
 } from "react-vis";
 import { toTitleCase } from "../../utils";
 
-class Scatterplot extends Component {
+class ScatterplotCount extends Component {
   constructor(props) {
     super(props);
 
@@ -26,34 +26,55 @@ class Scatterplot extends Component {
 
   componentDidMount() {
     if (this.props.selectedUnits) {
-      this.buildScatterData(this.props.selectedUnits);
+      this.buildCountData();
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.selectedUnits !== prevProps.selectedUnits) {
-      this.buildScatterData(this.props.selectedUnits);
+    if (this.props.selectedUnits !== prevProps.selectedUnits || 
+      this.props.metric !== prevProps.metric) {
+      this.buildCountData();
     }
     if (this.state.hoveredNode !== prevState.hoveredNode) {
-      console.log("NEW NODE", this.state.hoveredNode);
+      console.log("NEW NODE 🐶", this.state.hoveredNode);
     }
   }
 
-  buildScatterData() {
-    let newUnits = this.props.selectedUnits.map(unit => ({
+  getYValue(unit){
+      let yValue;
+      switch (this.props.metric) {
+        case "accuracy":
+          yValue = unit.checkAccuracy;
+          break;
+        case "recall":
+          yValue = unit.checkRecall;
+          break;
+        case "precision":
+          yValue = unit.precision;
+          break;
+        default:
+          yValue = unit.checkAccuracy;
+          break;
+      }
+      return yValue;
+  }
+
+  buildCountData() {
+    let newUnits = this.props.selectedUnits.map((unit, index) => ({
       u: unit,
       x: Math.round(unit.snr * 100) / 100,
-      y: unit.accuracy,
-      size: Math.max(1, this.getSqrt(unit.num_events)),
-      color: unit.unit_id * 10,
-      opacity: unit.accuracy * 0.5 + 0.5,
+      y: this.getYValue(unit),
+      size: Math.max(1, this.getSqrt(unit.numMatches)),
+      color: unit.unitId * 10,
+      opacity: unit.checkAccuracy * 0.5 + 0.5,
       recording: unit.recording,
-      num_events: unit.num_events
+      num_events: unit.numMatches
     }));
     let min = this.getMinSNR(newUnits);
     let max = this.getMaxSNR(newUnits);
     this.setState({ data: newUnits, minSNR: min, maxSNR: max });
   }
+
 
   getSqrt(num_events) {
     return Math.sqrt(num_events);
@@ -70,11 +91,6 @@ class Scatterplot extends Component {
 
   render() {
     const { data, hoveredNode, minSNR, maxSNR } = this.state;
-    const colorRanges = {
-      count: ["#6B7CC4", "#102BA3"],
-      cpu: ["#EFC1E3", "#B52F93"],
-      average: ["#00CEA8", "#0C4F42"]
-    };
     const alignment = { vertical: "top", horizontal: "left" };
     let valueObj = {
       recording: hoveredNode
@@ -90,6 +106,7 @@ class Scatterplot extends Component {
     ];
     const tickValues = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
     const yTitle = toTitleCase(this.props.metric);
+
     return (
       <div className="canvas-wrapper">
         <XYPlot
@@ -106,19 +123,17 @@ class Scatterplot extends Component {
             className="mark-series-example"
             sizeRange={[3, 15]}
             seriesId="my-example-scatterplot"
-            colorRange={colorRanges[this.props.format]}
+            colorRange={["#6B7CC4", "#102BA3"]}
             opacityType="literal"
             data={data}
             onValueMouseOver={d => this.setState({ hoveredNode: d })}
             onValueClick={d => this.setState({ selectedRecording: d })}
           />
-          {this.props.format === "count" ? (
-            <LineSeries
-              className="fourth-series"
-              strokeDasharray="7, 3"
-              data={lineObjArr}
-            />
-          ) : null}
+          <LineSeries
+            className="fourth-series"
+            strokeDasharray="7, 3"
+            data={lineObjArr}
+          />
           {hoveredNode && <Hint value={valueObj} align={alignment} />}
         </XYPlot>
       </div>
@@ -126,4 +141,4 @@ class Scatterplot extends Component {
   }
 }
 
-export default Scatterplot;
+export default ScatterplotCount;

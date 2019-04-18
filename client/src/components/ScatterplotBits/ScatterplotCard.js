@@ -35,7 +35,6 @@ class ScatterplotCard extends Component {
   }
 
   render() {
-    console.log("🤳selected study", this.props.selectedStudy);
     const study = this.props.selectedStudy
       ? this.props.selectedStudy.study
       : "";
@@ -68,7 +67,6 @@ class ScatterplotCard extends Component {
             <div>
               <div className="card__header">
                 <div className="card__category--div">
-                  {/* TODO: add proper routes */}
                   <span className="card__title--link">
                     Study:
                     <a href="/study">{study}</a>

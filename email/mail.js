@@ -7,9 +7,9 @@ const promisify = require("es6-promisify");
 const transport = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-         user: 'youremail@address.com',
+         user: 'elovero@flatironinstitute.org',
          pass: 'yourpassword'
-     }
+  }
 });
 
 const generateHTML = (options = {}) => {

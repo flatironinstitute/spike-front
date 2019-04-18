@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import Scatterplot from "./Scatterplot";
+import ScatterplotCount from "./ScatterplotCount";
+import ScatterplotAverage from "./ScatterplotAverage";
 
 class ScatterplotContainer extends Component {
   getHeaderCopy(value) {
@@ -19,7 +20,6 @@ class ScatterplotContainer extends Component {
 
   render() {
     const { selectedStudy, sliderValue, metric, format } = this.props;
-    console.log("🐶", selectedStudy, sliderValue, metric, format);
     const copy = this.getHeaderCopy(this.props.format);
     return (
       <div>
@@ -27,13 +27,39 @@ class ScatterplotContainer extends Component {
           {copy}
           {selectedStudy ? selectedStudy.in_range : ""}
         </p>
-        <Scatterplot
-          {...this.props}
-          selectedUnits={selectedStudy.true_units}
-          sliderValue={sliderValue}
-          format={format}
-          metric={metric}
-        />
+        {(() => {
+          switch (format) {
+            case "count":
+              return (
+                <ScatterplotCount
+                {...this.props}
+                selectedUnits={selectedStudy.true_units}
+                sliderValue={sliderValue}
+                format={format}
+                metric={metric}
+              />
+              );
+            case "average":
+              return (
+                <ScatterplotAverage
+                  {...this.props}
+                  selectedUnits={selectedStudy.true_units}
+                  sliderValue={sliderValue}
+                  format={format}
+                  metric={metric}
+                />
+              );
+            case "cpu":
+              return (
+              <p className="card__category">
+                <br />
+                Scatterplot data is not available for CPU
+              </p>
+              );
+            default:
+              return null;
+          }
+        })()}
       </div>
     );
   }
