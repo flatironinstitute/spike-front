@@ -19,8 +19,8 @@ class ScatterplotAverage extends Component {
     this.state = {
       data: [],
       hoveredNode: null,
-      minSNR: 0,
-      maxSNR: 100
+      minY: 0,
+      maxY: 10
     };
   }
 
@@ -88,9 +88,8 @@ class ScatterplotAverage extends Component {
       num_events: unit.numMatches
     }));
     let min = this.getMinY(newUnits);
-    let max = this.getMinY(newUnits);
-    console.log(min, "Min Y", max, "MaxY")
-    this.setState({ data: newUnits, minSNR: min, maxSNR: max });
+    let max = this.getMaxY(newUnits);
+    this.setState({ data: newUnits, minY: min, maxY: max });
   }
 
 
@@ -107,7 +106,7 @@ class ScatterplotAverage extends Component {
   }
 
   render() {
-    const { data, hoveredNode, minSNR, maxSNR } = this.state;
+    const { data, hoveredNode, minY, maxY } = this.state;
     const colorRanges = {
       count: ["#6B7CC4", "#102BA3"],
       cpu: ["#EFC1E3", "#B52F93"],
@@ -123,12 +122,11 @@ class ScatterplotAverage extends Component {
       num_events: hoveredNode ? hoveredNode.num_events : null
     };
     let lineObjArr = [
-      { x: minSNR, y: this.props.sliderValue },
-      { x: maxSNR, y: this.props.sliderValue }
+      { x: this.props.sliderValue, y: minY },
+      { x: this.props.sliderValue, y: maxY }
     ];
     const tickValues = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
     const yTitle = toTitleCase(this.props.metric);
-
     return (
       <div className="canvas-wrapper">
         <XYPlot
@@ -139,7 +137,7 @@ class ScatterplotAverage extends Component {
           <VerticalGridLines />
           <HorizontalGridLines />
           <XAxis title="SNR" />
-          <YAxis title={yTitle} tickValues={tickValues} />
+          <YAxis title={yTitle} />
           <MarkSeries
             animation={true}
             className="mark-series-example"
@@ -151,13 +149,11 @@ class ScatterplotAverage extends Component {
             onValueMouseOver={d => this.setState({ hoveredNode: d })}
             onValueClick={d => this.setState({ selectedRecording: d })}
           />
-          {this.props.format === "count" ? (
             <LineSeries
               className="fourth-series"
               strokeDasharray="7, 3"
               data={lineObjArr}
             />
-          ) : null}
           {hoveredNode && <Hint value={valueObj} align={alignment} />}
         </XYPlot>
       </div>
