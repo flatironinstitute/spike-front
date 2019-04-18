@@ -47,6 +47,7 @@ If `--database-from-env` is specified, the DATABASE environment variable (from .
 ## Authors
 
 - **Liz Lovero** - [elovero](https://github.com/elovero)
+- **Jeremy Magland** - [magland](https://github.com/magland)
 
 ## Acknowledgments
 
