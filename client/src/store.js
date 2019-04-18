@@ -7,7 +7,6 @@ import rootReducer from "./reducers";
 import thunk from "redux-thunk";
 
 const gaTag = 'UA-138500572-1';
-
 ReactGA.initialize(gaTag);
 
 // create an object for the default data
