@@ -40,7 +40,7 @@ or
 admin/bin/format-and-load-data.js [data_directory] --database-from-env
 ```
 
-Assigns ids, formats, and injests raw data from the spikeforest pipeline into the website for visualization. Raw data files for injest should be stored in a local copy of the `data/rawData` folder with capitalized titles before running this command. After injest is complete, this script automatically deletes temp files generated in the process as well as the rawData files. 
+Assigns ids, formats, and injests raw data from the spikeforest pipeline into the website for visualization. Raw data files for injest should be stored in [data_directory] with capitalized titles. After injest is complete, this script automatically deletes temp files generated in the process. 
 
 If `--database-from-env` is specified, the DATABASE environment variable (from .env) will be used for the database url.
 
