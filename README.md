@@ -51,4 +51,4 @@ If `--database-from-env` is specified, the DATABASE environment variable (from .
 
 ## Acknowledgments
 
-- [Lenny](https://www.instagram.com/lillenlen/) 
+- - **Lenny** - [lillenlen](https://www.instagram.com/lillenlen/) 
