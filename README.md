@@ -51,8 +51,4 @@ If `--database-from-env` is specified, the DATABASE environment variable (from .
 
 ## Acknowledgments
 
-This site was bootstrapped with [Create React App](https://facebook.github.io/create-react-app/docs/getting-started).
-
-Thanks to the following:
-
-- [Lenny](https://www.instagram.com/lillenlen/) for canine awesomeness
+- [Lenny](https://www.instagram.com/lillenlen/) 
