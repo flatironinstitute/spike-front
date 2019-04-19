@@ -26,6 +26,7 @@ yarn-error.log*
 /client/build
 
 # misc
+.eslintrc
 .DS_Store
 */.DS_Store
 .vscode/

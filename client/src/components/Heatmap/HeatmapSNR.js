@@ -70,7 +70,7 @@ class HeatmapSNR extends Component {
       let aboveAvg = 0;
       if (overMin.length) {
         let sum = overMin.reduce((a, b) => a + b);
-        aboveAvg = sum/overMin.length;
+        aboveAvg = sum / overMin.length;
       }
       // This just prints the output to 2 digits
       sorter.in_range = Math.round(aboveAvg * 100) / 100;
@@ -91,7 +91,7 @@ class HeatmapSNR extends Component {
       let aboveAvg = 0;
       if (overMin.length) {
         let sum = overMin.reduce((a, b) => a + b);
-        aboveAvg = sum/overMin.length;
+        aboveAvg = sum / overMin.length;
       }
       // This just prints the output to 2 digits
       sorter.in_range = Math.round(aboveAvg * 100) / 100;
@@ -112,7 +112,7 @@ class HeatmapSNR extends Component {
       let aboveAvg = 0;
       if (overMin.length) {
         let sum = overMin.reduce((a, b) => a + b);
-        aboveAvg = sum/overMin.length;
+        aboveAvg = sum / overMin.length;
       }
       // This just prints the output to 2 digits
       sorter.in_range = Math.round(aboveAvg * 100) / 100;

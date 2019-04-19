@@ -89,7 +89,7 @@ class Home extends Component {
             {...this.props}
             shortStudies={studies}
             shortSorters={sorters}
-            // TODO: Reorg
+            // TODO: Swap units map for another value?
             unitsMap={this.state.unitsMap}
           />
         )}

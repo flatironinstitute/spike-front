@@ -3,7 +3,8 @@ import { isEmpty } from "../../utils";
 
 // Components
 import Preloader from "../Preloader/Preloader";
-import { Container, Jumbotron } from "react-bootstrap";
+import CPUBarChart from "../CPUBarChart/CPUBarChart";
+import { Col, Container, Row } from "react-bootstrap";
 
 // Redux
 import { bindActionCreators } from "redux";
@@ -41,8 +42,8 @@ class HeatmapCPU extends Component {
   }
 
   render() {
-    let loading = isEmpty(this.state.builtData);
-    console.log("🦓", this.state);
+    let loading = isEmpty(this.state.builtData) || isEmpty(this.props.sorters);
+    console.log("🦓", loading, this.props);
     return (
       <div>
         {loading ? (
@@ -50,22 +51,18 @@ class HeatmapCPU extends Component {
             <Preloader />
           </Container>
         ) : (
-          <Jumbotron fluid>
-            <Container fluid>
-              <h1>I am the entire viz</h1>
-              <p>
-                This is a modified jumbotron that occupies the entire horizontal
-                space of its parent.
-              </p>
-              <img
-                className="card__image"
-                width="480"
-                height="363"
-                src="https://media.giphy.com/media/3o72FkiKGMGauydfyg/giphy.gif"
-                alt="gif"
-              />
-            </Container>
-          </Jumbotron>
+          <Container className="container__heatmap">
+            <Row className="container__heatmap--row">
+              <Col lg={12} sm={12}>
+                <div className="card card--heatmap">
+                  <div className="card__header">
+                    <h4 className="card__title">Estimated CPU Time</h4>
+                  </div>
+                  <CPUBarChart data={this.state.builtData} {...this.props} />
+                </div>
+              </Col>
+            </Row>
+          </Container>
         )}
       </div>
     );
