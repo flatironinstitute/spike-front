@@ -7,56 +7,51 @@ import {
   VerticalGridLines,
   HorizontalGridLines,
   VerticalBarSeries,
-  VerticalBarSeriesCanvas,
-  LabelSeries
+  DiscreteColorLegend
 } from "react-vis";
 
-import {
-  ButtonToolbar,
-  ToggleButton,
-  ToggleButtonGroup
-} from "react-bootstrap";
+// Stylin'
+import "./barchart.css";
 
 class CPUBarChart extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sorter: "all"
-    };
-  }
-  handleSorterChange = value => {
-    this.setState({
-      sorter: value
-    });
-  };
-
   render() {
+    console.log("🦓", this.props.data);
+    let width =
+      Math.max(document.documentElement.clientWidth, window.innerWidth || 0) *
+        0.95 -
+      60;
+    let legendItems = this.props.sorters.map(sorter => sorter.name);
     return (
-      <div className="card__body">
-        <ButtonToolbar>
-          <ToggleButtonGroup
-            type="radio"
-            name="options"
-            size="lg"
-            value={this.state.sorter}
-            onChange={this.handleSorterChange}
-            className="metric_button_toggle"
-          >
-            <ToggleButton size="lg" value={"all"} variant="outline-dark">
-              All
-            </ToggleButton>
-            {this.props.sorters.map((sorter, i) => (
-              <ToggleButton
-                key={sorter._id}
-                size="lg"
-                value={sorter.name}
-                variant="outline-dark"
-              >
-                {sorter.name}
-              </ToggleButton>
-            ))}
-          </ToggleButtonGroup>
-        </ButtonToolbar>
+      <div className="barchart">
+        <XYPlot xType="ordinal" width={width} height={500} xPadding={30}>
+          <DiscreteColorLegend
+            height={100}
+            orientation="horizontal"
+            items={legendItems}
+            className="barchart__legend"
+          />
+          <VerticalGridLines />
+          <HorizontalGridLines />
+          <XAxis
+            tickLabelAngle={-15}
+            style={{
+              text: {
+                stroke: "none",
+                fill: "#222",
+                fontWeight: 600,
+                fontSize: "10px"
+              }
+            }}
+          />
+          <YAxis />
+          {this.props.data.map((sorter, i) => (
+            <VerticalBarSeries
+              key={sorter + "-" + i}
+              className="vertical-bar-series-example"
+              data={sorter.studyGroup}
+            />
+          ))}
+        </XYPlot>
       </div>
     );
   }

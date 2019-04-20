@@ -4,7 +4,14 @@ import { isEmpty } from "../../utils";
 // Components
 import Preloader from "../Preloader/Preloader";
 import CPUBarChart from "../CPUBarChart/CPUBarChart";
-import { Col, Container, Row } from "react-bootstrap";
+import {
+  ButtonToolbar,
+  ToggleButton,
+  ToggleButtonGroup,
+  Col,
+  Container,
+  Row
+} from "react-bootstrap";
 
 // Redux
 import { bindActionCreators } from "redux";
@@ -18,7 +25,8 @@ class HeatmapCPU extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      builtData: []
+      builtData: [],
+      sorter: "all"
     };
   }
 
@@ -31,19 +39,31 @@ class HeatmapCPU extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (
       this.props.cpus !== prevProps.cpus ||
-      this.props.sliderValue !== prevProps.sliderValue
+      this.props.sliderValue !== prevProps.sliderValue ||
+      this.state.sorter !== prevState.sorter
     ) {
       this.filterAndMap();
     }
   }
 
   filterAndMap() {
-    this.setState({ builtData: this.props.cpus });
+    let builtData = this.props.cpus;
+    if (this.state.sorter !== "all") {
+      builtData = this.props.cpus.filter(
+        sorter => sorter._id === this.state.sorter
+      );
+    }
+    this.setState({ builtData: builtData });
   }
+
+  handleSorterChange = value => {
+    this.setState({
+      sorter: value
+    });
+  };
 
   render() {
     let loading = isEmpty(this.state.builtData) || isEmpty(this.props.sorters);
-    console.log("🦓", loading, this.props);
     return (
       <div>
         {loading ? (
@@ -58,7 +78,37 @@ class HeatmapCPU extends Component {
                   <div className="card__header">
                     <h4 className="card__title">Estimated CPU Time</h4>
                   </div>
-                  <CPUBarChart data={this.state.builtData} {...this.props} />
+                  <div className="card__footer">
+                    <ButtonToolbar>
+                      <ToggleButtonGroup
+                        type="radio"
+                        name="options"
+                        size="lg"
+                        value={this.state.sorter}
+                        onChange={this.handleSorterChange}
+                        className="metric_button_toggle"
+                      >
+                        <ToggleButton
+                          size="lg"
+                          value={"all"}
+                          variant="outline-dark"
+                        >
+                          All
+                        </ToggleButton>
+                        {this.props.sorters.map((sorter, i) => (
+                          <ToggleButton
+                            key={sorter._id}
+                            size="lg"
+                            value={sorter.name}
+                            variant="outline-dark"
+                          >
+                            {sorter.name}
+                          </ToggleButton>
+                        ))}
+                      </ToggleButtonGroup>
+                    </ButtonToolbar>
+                    <CPUBarChart data={this.state.builtData} {...this.props} />
+                  </div>
                 </div>
               </Col>
             </Row>
