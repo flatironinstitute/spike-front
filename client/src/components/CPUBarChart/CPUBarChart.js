@@ -15,7 +15,6 @@ import "./barchart.css";
 
 class CPUBarChart extends Component {
   render() {
-    console.log("🦓", this.props.data);
     let width =
       Math.max(document.documentElement.clientWidth, window.innerWidth || 0) *
         0.95 -
