@@ -16,7 +16,6 @@ import "./barchart.css";
 class CPUBarChart extends Component {
   render() {
     let legendItems = this.props.data.map(sorter => sorter._id);
-    console.log("🤩", this.props.data);
     return (
       <div className="barchart">
         <FlexibleWidthXYPlot xType="ordinal" height={500} xPadding={30}>

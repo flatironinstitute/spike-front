@@ -19,6 +19,9 @@ class HomeContentContainer extends Component {
   handleFormatChange = value => {
     var sliderValue;
     switch (value) {
+      case "cpu":
+        sliderValue = 300;
+        break;
       case "count":
         sliderValue = 0.8;
         break;
@@ -84,7 +87,7 @@ class HomeContentContainer extends Component {
                 <HeatmapCPU
                   {...this.props}
                   format={this.state.format}
-                  cpuMax={this.state.sliderValue}
+                  sliderValue={this.state.sliderValue}
                 />
               );
             default:

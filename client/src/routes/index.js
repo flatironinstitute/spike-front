@@ -10,7 +10,6 @@ import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 
 import Home from "../components/Pages/Home";
-import NewHome from "../components/Pages/NewHome";
 import About from "../components/Pages/About";
 import Recordings from "../components/Pages/Recordings";
 import Studies from "../components/Pages/Studies";
@@ -33,7 +32,6 @@ class Routes extends Component {
     this.props.fetchStats();
     this.props.fetchStudySets();
     this.props.fetchRecordings();
-    console.log("🚦Index routes fetches called");
     // V1 Data: Fetches
     // this.props.fetchUnitResults();
     // this.props.fetchUnits();
@@ -53,10 +51,6 @@ class Routes extends Component {
           <Route
             path="/internals"
             render={props => <Internals {...this.props} />}
-          />
-          <Route
-            path="/newhome"
-            render={props => <NewHome {...this.props} />}
           />
           <Route
             path="/metrics"

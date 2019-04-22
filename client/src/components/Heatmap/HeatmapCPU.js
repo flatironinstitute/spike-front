@@ -34,12 +34,10 @@ class HeatmapCPU extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (
       this.props.cpus !== prevProps.cpus ||
-      this.props.sliderValue !== prevProps.sliderValue
+      this.props.sliderValue !== prevProps.sliderValue ||
+      this.state.checkboxes !== prevState.checkboxes
     ) {
-      this.filterCpuData();
-    }
-    if (this.state.checkboxes !== prevState.checkboxes) {
-      this.filterSorters();
+      this.filterData();
     }
   }
   resetAllSorters() {
@@ -50,7 +48,7 @@ class HeatmapCPU extends Component {
     this.setState({ checkboxes: checkboxes });
   }
 
-  filterSorters() {
+  filterData() {
     let newData = [];
     this.state.checkboxes.forEach(checkbox => {
       if (checkbox.checked) {
@@ -58,18 +56,17 @@ class HeatmapCPU extends Component {
         newData.push(built);
       }
     });
-    this.setState({ builtData: newData });
-  }
-
-  filterCpuData() {
-    // let builtData = this.props.cpus;
-    // if (this.state.checkboxes.length) {
-    //   console.log("🤩 DIFFERENT LENGTHS");
-    //   // builtData = this.props.cpus.filter(
-    //   //   sorter => sorter._id === this.state.sorter
-    //   // );
-    // }
-    // this.setState({ builtData: builtData });
+    let cpuFiltered = [];
+    newData.forEach(data => {
+      let newStudyGroup = data.studyGroup.filter(
+        study => study.averageCPU < this.props.sliderValue
+      );
+      if (newStudyGroup.length) {
+        data.studyGroup = newStudyGroup;
+        cpuFiltered.push(data);
+      }
+    });
+    this.setState({ builtData: cpuFiltered });
   }
 
   handleChange(e) {
