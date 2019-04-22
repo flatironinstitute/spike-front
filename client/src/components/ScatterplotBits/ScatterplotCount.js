@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../../../node_modules/react-vis/dist/style.css";
 import {
-  XYPlot,
+  FlexibleWidthXYPlot,
   XAxis,
   YAxis,
   VerticalGridLines,
@@ -31,32 +31,31 @@ class ScatterplotCount extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.selectedUnits !== prevProps.selectedUnits || 
-      this.props.metric !== prevProps.metric) {
+    if (
+      this.props.selectedUnits !== prevProps.selectedUnits ||
+      this.props.metric !== prevProps.metric
+    ) {
       this.buildCountData();
-    }
-    if (this.state.hoveredNode !== prevState.hoveredNode) {
-      console.log("NEW NODE 🐶", this.state.hoveredNode);
     }
   }
 
-  getYValue(unit){
-      let yValue;
-      switch (this.props.metric) {
-        case "accuracy":
-          yValue = unit.checkAccuracy;
-          break;
-        case "recall":
-          yValue = unit.checkRecall;
-          break;
-        case "precision":
-          yValue = unit.precision;
-          break;
-        default:
-          yValue = unit.checkAccuracy;
-          break;
-      }
-      return yValue;
+  getYValue(unit) {
+    let yValue;
+    switch (this.props.metric) {
+      case "accuracy":
+        yValue = unit.checkAccuracy;
+        break;
+      case "recall":
+        yValue = unit.checkRecall;
+        break;
+      case "precision":
+        yValue = unit.precision;
+        break;
+      default:
+        yValue = unit.checkAccuracy;
+        break;
+    }
+    return yValue;
   }
 
   buildCountData() {
@@ -74,7 +73,6 @@ class ScatterplotCount extends Component {
     let max = this.getMaxSNR(newUnits);
     this.setState({ data: newUnits, minSNR: min, maxSNR: max });
   }
-
 
   getSqrt(num_events) {
     return Math.sqrt(num_events);
@@ -109,9 +107,9 @@ class ScatterplotCount extends Component {
 
     return (
       <div className="canvas-wrapper">
-        <XYPlot
+        <FlexibleWidthXYPlot
           onMouseLeave={() => this.setState({ hoveredNode: null })}
-          width={500}
+          xPadding={30}
           height={400}
         >
           <VerticalGridLines />
@@ -135,7 +133,7 @@ class ScatterplotCount extends Component {
             data={lineObjArr}
           />
           {hoveredNode && <Hint value={valueObj} align={alignment} />}
-        </XYPlot>
+        </FlexibleWidthXYPlot>
       </div>
     );
   }

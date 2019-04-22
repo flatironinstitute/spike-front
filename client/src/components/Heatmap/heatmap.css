@@ -41,6 +41,18 @@
   padding: 15px;
 }
 
+.card--barchart {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: flex-start;
+}
+
+.card__label--barchart {
+  margin-right: 10px;
+  margin-bottom: 0;
+}
+
 .card__image {
   margin: 0 auto;
 }
@@ -48,6 +60,17 @@
 .card__header {
   margin-bottom: 15px;
 }
+
+.card__header--cpu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+/* .card__header--checkboxes {
+  background-color: pink;
+} */
 
 .card__title {
   margin: 0;

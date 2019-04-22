@@ -106,7 +106,6 @@
 .alert__ticker--wrapper {
   width: 100%;
   overflow: hidden;
-  padding-left: 100%;
   box-sizing: content-box;
 }
 .alert__ticker {
@@ -114,14 +113,6 @@
   white-space: nowrap;
   padding-right: 100%;
   box-sizing: content-box;
-  -webkit-animation-iteration-count: infinite;
-  animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear;
-  animation-timing-function: linear;
-  -webkit-animation-name: ticker;
-  animation-name: ticker;
-  -webkit-animation-duration: 30s;
-  animation-duration: 30s;
 }
 .ticker__item {
   display: inline-block;
@@ -130,7 +121,7 @@
 
 .alert-dismissible .close {
   background-color: #fff3cd;
-  z-index: 10000;
+  z-index: 1000;
   opacity: 1;
   font-size: 2.5rem;
   padding: 0.75rem 2rem;

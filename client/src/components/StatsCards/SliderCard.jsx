@@ -34,7 +34,7 @@ export class SliderCard extends Component {
         max = 50;
         break;
       case "cpu":
-        max = 100000;
+        max = 1000;
         break;
       default:
         max = 1;
@@ -52,7 +52,7 @@ export class SliderCard extends Component {
         step = 1;
         break;
       case "cpu":
-        step = 100;
+        step = 5;
         break;
       default:
         step = 1;
