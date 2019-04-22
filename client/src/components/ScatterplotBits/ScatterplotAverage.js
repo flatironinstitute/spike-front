@@ -113,6 +113,7 @@ class ScatterplotAverage extends Component {
         <FlexibleWidthXYPlot
           onMouseLeave={() => this.setState({ hoveredNode: null })}
           height={400}
+          xPadding={30}
         >
           <VerticalGridLines />
           <HorizontalGridLines />

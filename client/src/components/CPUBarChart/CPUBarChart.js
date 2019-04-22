@@ -15,24 +15,22 @@ import "./barchart.css";
 
 class CPUBarChart extends Component {
   render() {
-    let width =
-      Math.max(document.documentElement.clientWidth, window.innerWidth || 0) *
-        0.95 -
-      60;
-    let legendItems = this.props.sorters.map(sorter => sorter.name);
+    let legendItems = this.props.data.map(sorter => sorter._id);
+    console.log("🤩", this.props.data);
     return (
       <div className="barchart">
         <FlexibleWidthXYPlot xType="ordinal" height={500} xPadding={30}>
           <DiscreteColorLegend
             height={100}
-            orientation="vertical"
+            position="top"
+            orientation="horizontal"
             items={legendItems}
             className="barchart__legend"
           />
           <VerticalGridLines />
           <HorizontalGridLines />
           <XAxis
-            tickLabelAngle={-15}
+            tickLabelAngle={-6}
             style={{
               text: {
                 stroke: "none",

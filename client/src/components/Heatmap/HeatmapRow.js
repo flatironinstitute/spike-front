@@ -78,7 +78,7 @@ class HeatmapRow extends Component {
               yType="ordinal"
               onMouseLeave={() => this.setState({ hoveredNode: null })}
               height={this.dims.height}
-              // width={this.dims.width}
+              xPadding={30}
               margin={this.margin}
             >
               {this.props.index === 0 ? (

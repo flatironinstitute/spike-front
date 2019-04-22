@@ -5,14 +5,7 @@ import { Form } from "react-bootstrap";
 // Components
 import Preloader from "../Preloader/Preloader";
 import CPUBarChart from "../CPUBarChart/CPUBarChart";
-import {
-  ButtonToolbar,
-  ToggleButton,
-  ToggleButtonGroup,
-  Col,
-  Container,
-  Row
-} from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 
 // Redux
 import { bindActionCreators } from "redux";
@@ -27,46 +20,70 @@ class HeatmapCPU extends Component {
     super(props);
     this.state = {
       builtData: [],
-      sorters: []
+      checkboxes: []
     };
   }
 
   componentDidMount() {
     if (this.props.cpus && this.props.cpus.length) {
-      this.filterAndMap();
+      this.setState({ builtData: this.props.cpus });
     }
-    this.setState({ sorters: this.props.sorters });
+    this.resetAllSorters();
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (
       this.props.cpus !== prevProps.cpus ||
-      this.props.sliderValue !== prevProps.sliderValue ||
-      this.state.sorter !== prevState.sorter
+      this.props.sliderValue !== prevProps.sliderValue
     ) {
-      this.filterAndMap();
+      this.filterCpuData();
+    }
+    if (this.state.checkboxes !== prevState.checkboxes) {
+      this.filterSorters();
     }
   }
-
-  filterAndMap() {
-    let builtData = this.props.cpus;
-    // if (this.state.sorters.length !== this.props.sorters.length) {
-    //   builtData = this.props.cpus.filter(
-    //     sorter => sorter._id === this.state.sorter
-    //   );
-    // }
-    this.setState({ builtData: builtData });
+  resetAllSorters() {
+    let checkboxes = this.props.sorters.map(sorter => ({
+      ...sorter,
+      checked: true
+    }));
+    this.setState({ checkboxes: checkboxes });
   }
 
-  // handleSorterChange = value => {
-  //   this.setState({
-  //     sorter: value
-  //   });
-  // };
+  filterSorters() {
+    let newData = [];
+    this.state.checkboxes.forEach(checkbox => {
+      if (checkbox.checked) {
+        let built = this.props.cpus.find(data => data._id === checkbox.name);
+        newData.push(built);
+      }
+    });
+    this.setState({ builtData: newData });
+  }
+
+  filterCpuData() {
+    // let builtData = this.props.cpus;
+    // if (this.state.checkboxes.length) {
+    //   console.log("🤩 DIFFERENT LENGTHS");
+    //   // builtData = this.props.cpus.filter(
+    //   //   sorter => sorter._id === this.state.sorter
+    //   // );
+    // }
+    // this.setState({ builtData: builtData });
+  }
+
+  handleChange(e) {
+    let updatedChecks = this.state.checkboxes.map(checkbox => {
+      if (checkbox._id === e.target.id) {
+        checkbox.checked = !checkbox.checked;
+      }
+      return checkbox;
+    });
+    this.setState({ checkboxes: updatedChecks });
+  }
 
   render() {
     let loading = isEmpty(this.state.builtData) || isEmpty(this.props.sorters);
-    console.log(this.state.builtData, this.state.sorters);
     return (
       <div>
         {loading ? (
@@ -82,17 +99,24 @@ class HeatmapCPU extends Component {
                     <h4 className="card__title">Estimated CPU Time</h4>
                     <div
                       key={`inline-radio`}
-                      className="card__header--checkboxes"
+                      className="card card--heatmap card--barchart"
                     >
-                      {this.props.sorters.map((sorter, i) => (
-                        <Form.Check
-                          inline
-                          label={sorter.name}
-                          type="checkbox"
-                          key={sorter._id}
-                          id={sorter._id}
-                        />
-                      ))}
+                      <p className="card__label card__label--barchart">
+                        Filter:{" "}
+                      </p>
+                      <Form>
+                        {this.state.checkboxes.map((sorter, i) => (
+                          <Form.Check
+                            inline
+                            label={sorter.name}
+                            checked={sorter.checked}
+                            type="checkbox"
+                            key={sorter._id}
+                            id={sorter._id}
+                            onChange={this.handleChange.bind(this)}
+                          />
+                        ))}
+                      </Form>
                     </div>
                   </div>
                   <div className="card__footer">

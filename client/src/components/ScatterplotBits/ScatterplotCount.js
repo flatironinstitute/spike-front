@@ -109,6 +109,7 @@ class ScatterplotCount extends Component {
       <div className="canvas-wrapper">
         <FlexibleWidthXYPlot
           onMouseLeave={() => this.setState({ hoveredNode: null })}
+          xPadding={30}
           height={400}
         >
           <VerticalGridLines />
