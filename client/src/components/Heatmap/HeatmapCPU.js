@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { isEmpty } from "../../utils";
+import { Form } from "react-bootstrap";
 
 // Components
 import Preloader from "../Preloader/Preloader";
@@ -26,7 +27,7 @@ class HeatmapCPU extends Component {
     super(props);
     this.state = {
       builtData: [],
-      sorter: "all"
+      sorters: []
     };
   }
 
@@ -34,6 +35,7 @@ class HeatmapCPU extends Component {
     if (this.props.cpus && this.props.cpus.length) {
       this.filterAndMap();
     }
+    this.setState({ sorters: this.props.sorters });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -48,22 +50,23 @@ class HeatmapCPU extends Component {
 
   filterAndMap() {
     let builtData = this.props.cpus;
-    if (this.state.sorter !== "all") {
-      builtData = this.props.cpus.filter(
-        sorter => sorter._id === this.state.sorter
-      );
-    }
+    // if (this.state.sorters.length !== this.props.sorters.length) {
+    //   builtData = this.props.cpus.filter(
+    //     sorter => sorter._id === this.state.sorter
+    //   );
+    // }
     this.setState({ builtData: builtData });
   }
 
-  handleSorterChange = value => {
-    this.setState({
-      sorter: value
-    });
-  };
+  // handleSorterChange = value => {
+  //   this.setState({
+  //     sorter: value
+  //   });
+  // };
 
   render() {
     let loading = isEmpty(this.state.builtData) || isEmpty(this.props.sorters);
+    console.log(this.state.builtData, this.state.sorters);
     return (
       <div>
         {loading ? (
@@ -75,38 +78,24 @@ class HeatmapCPU extends Component {
             <Row className="container__heatmap--row">
               <Col lg={12} sm={12}>
                 <div className="card card--heatmap">
-                  <div className="card__header">
+                  <div className="card__header card__header--cpu">
                     <h4 className="card__title">Estimated CPU Time</h4>
+                    <div
+                      key={`inline-radio`}
+                      className="card__header--checkboxes"
+                    >
+                      {this.props.sorters.map((sorter, i) => (
+                        <Form.Check
+                          inline
+                          label={sorter.name}
+                          type="checkbox"
+                          key={sorter._id}
+                          id={sorter._id}
+                        />
+                      ))}
+                    </div>
                   </div>
                   <div className="card__footer">
-                    <ButtonToolbar>
-                      <ToggleButtonGroup
-                        type="radio"
-                        name="options"
-                        size="lg"
-                        value={this.state.sorter}
-                        onChange={this.handleSorterChange}
-                        className="metric_button_toggle"
-                      >
-                        <ToggleButton
-                          size="lg"
-                          value={"all"}
-                          variant="outline-dark"
-                        >
-                          All
-                        </ToggleButton>
-                        {this.props.sorters.map((sorter, i) => (
-                          <ToggleButton
-                            key={sorter._id}
-                            size="lg"
-                            value={sorter.name}
-                            variant="outline-dark"
-                          >
-                            {sorter.name}
-                          </ToggleButton>
-                        ))}
-                      </ToggleButtonGroup>
-                    </ButtonToolbar>
                     <CPUBarChart data={this.state.builtData} {...this.props} />
                   </div>
                 </div>

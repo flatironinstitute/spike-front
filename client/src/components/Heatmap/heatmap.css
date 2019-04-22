@@ -49,6 +49,17 @@
   margin-bottom: 15px;
 }
 
+.card__header--cpu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.card__header--checkboxes {
+  background-color: pink;
+}
+
 .card__title {
   margin: 0;
   color: #333;

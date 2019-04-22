@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import "../../../node_modules/react-vis/dist/style.css";
-import { XYPlot, XAxis, YAxis, HeatmapSeries, LabelSeries } from "react-vis";
+import {
+  FlexibleWidthXYPlot,
+  XAxis,
+  YAxis,
+  HeatmapSeries,
+  LabelSeries
+} from "react-vis";
 import Preloader from "../Preloader/Preloader";
 import { isEmpty } from "../../utils";
 
@@ -67,12 +73,12 @@ class HeatmapRow extends Component {
           <Preloader />
         ) : (
           <div className="App heatmap-row">
-            <XYPlot
+            <FlexibleWidthXYPlot
               xType="ordinal"
               yType="ordinal"
               onMouseLeave={() => this.setState({ hoveredNode: null })}
               height={this.dims.height}
-              width={this.dims.width}
+              // width={this.dims.width}
               margin={this.margin}
             >
               {this.props.index === 0 ? (
@@ -130,7 +136,7 @@ class HeatmapRow extends Component {
                   return d.in_range > 0 ? `${d.in_range}` : "";
                 }}
               />
-            </XYPlot>
+            </FlexibleWidthXYPlot>
           </div>
         )}
       </div>

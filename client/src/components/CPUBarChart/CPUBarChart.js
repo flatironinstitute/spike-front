@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../../../node_modules/react-vis/dist/style.css";
 import {
-  XYPlot,
+  FlexibleWidthXYPlot,
   XAxis,
   YAxis,
   VerticalGridLines,
@@ -22,10 +22,10 @@ class CPUBarChart extends Component {
     let legendItems = this.props.sorters.map(sorter => sorter.name);
     return (
       <div className="barchart">
-        <XYPlot xType="ordinal" width={width} height={500} xPadding={30}>
+        <FlexibleWidthXYPlot xType="ordinal" height={500} xPadding={30}>
           <DiscreteColorLegend
             height={100}
-            orientation="horizontal"
+            orientation="vertical"
             items={legendItems}
             className="barchart__legend"
           />
@@ -50,7 +50,7 @@ class CPUBarChart extends Component {
               data={sorter.studyGroup}
             />
           ))}
-        </XYPlot>
+        </FlexibleWidthXYPlot>
       </div>
     );
   }
