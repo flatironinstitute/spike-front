@@ -25,49 +25,60 @@ class HeatmapCPU extends Component {
   }
 
   componentDidMount() {
-    if (this.props.cpus && this.props.cpus.length) {
-      this.setState({ builtData: this.props.cpus });
+    if (this.props.cpus.length) {
+      this.filterCPUMap();
     }
-    this.resetAllSorters();
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (
       this.props.cpus !== prevProps.cpus ||
-      this.props.sliderValue !== prevProps.sliderValue ||
-      this.state.checkboxes !== prevState.checkboxes
+      this.props.sliderValue !== prevProps.sliderValue
     ) {
-      this.filterData();
+      this.filterCPUMap();
     }
   }
-  resetAllSorters() {
-    let checkboxes = this.props.sorters.map(sorter => ({
+  filterCPUMap() {
+    let colorArr = ["#70D6FF", "#FF70A6", "#FF9770", "#FFD670", "#E9FF70"];
+    let checkboxes = this.props.sorters.map((sorter, i) => ({
       ...sorter,
-      checked: true
+      checked: true,
+      color: colorArr[i]
     }));
-    this.setState({ checkboxes: checkboxes });
+    let withColorsData = this.props.cpus.map((sorterGroup, i) => {
+      let barColor = colorArr[i];
+      let withColorStudy = sorterGroup.studyGroup.map(study => ({
+        ...study,
+        color: barColor
+      }));
+      return {
+        ...sorterGroup,
+        colorGroup: withColorStudy
+      }
+    })
+    this.setState({ builtData: withColorsData, checkboxes: checkboxes });
   }
 
-  filterData() {
-    let newData = [];
-    this.state.checkboxes.forEach(checkbox => {
-      if (checkbox.checked) {
-        let built = this.props.cpus.find(data => data._id === checkbox.name);
-        newData.push(built);
-      }
-    });
-    let cpuFiltered = [];
-    newData.forEach(data => {
-      let newStudyGroup = data.studyGroup.filter(
-        study => study.averageCPU < this.props.sliderValue
-      );
-      if (newStudyGroup.length) {
-        data.studyGroup = newStudyGroup;
-        cpuFiltered.push(data);
-      }
-    });
-    this.setState({ builtData: cpuFiltered });
-  }
+  // filterData() {
+  //   let newData = [];
+  //   this.state.checkboxes.forEach(checkbox => {
+  //     if (checkbox.checked) {
+  //       let built = this.props.cpus.find(data => data._id === checkbox.name);
+  //       newData.push(built);
+  //     }
+  //   });
+  //   let cpuFiltered = [];
+  //   newData.forEach(data => {
+  //     let newStudyGroup = data.colorGroup.filter(
+  //       study => study.averageCPU < this.props.sliderValue
+  //     );
+  //     if (newStudyGroup.length) {
+  //       data.colorGroup = newStudyGroup;
+  //       cpuFiltered.push(data);
+  //     }
+  //   });
+  //   this.setState({ builtData: cpuFiltered });
+  // }
 
   handleChange(e) {
     let updatedChecks = this.state.checkboxes.map(checkbox => {
@@ -88,42 +99,43 @@ class HeatmapCPU extends Component {
             <Preloader />
           </Container>
         ) : (
-          <Container className="container__heatmap">
-            <Row className="container__heatmap--row">
-              <Col lg={12} sm={12}>
-                <div className="card card--heatmap">
-                  <div className="card__header card__header--cpu">
-                    <h4 className="card__title">Estimated CPU Time</h4>
-                    <div
-                      key={`inline-radio`}
-                      className="card card--heatmap card--barchart"
-                    >
-                      <p className="card__label card__label--barchart">
-                        Filter:{" "}
-                      </p>
-                      <Form>
-                        {this.state.checkboxes.map((sorter, i) => (
-                          <Form.Check
-                            inline
-                            label={sorter.name}
-                            checked={sorter.checked}
-                            type="checkbox"
-                            key={sorter._id}
-                            id={sorter._id}
-                            onChange={this.handleChange.bind(this)}
-                          />
-                        ))}
-                      </Form>
+            <Container className="container__heatmap">
+              <Row className="container__heatmap--row">
+                <Col lg={12} sm={12}>
+                  <div className="card card--heatmap">
+                    <div className="card__header card__header--cpu">
+                      <h4 className="card__title">Estimated CPU Time</h4>
+                      <div
+                        key={`inline-radio`}
+                        className="card card--heatmap card--barchart"
+                      >
+                        <p className="card__label card__label--barchart">
+                          Filter:{" "}
+                        </p>
+                        <Form>
+                          {this.state.checkboxes.map((sorter, i) => (
+                            <Form.Check
+                              inline
+                              label={sorter.name}
+                              checked={sorter.checked}
+                              type="checkbox"
+                              key={sorter._id}
+                              id={sorter._id}
+                              style={{ borderBottom: `2px solid ${sorter.color}` }}
+                              onChange={this.handleChange.bind(this)}
+                            />
+                          ))}
+                        </Form>
+                      </div>
+                    </div>
+                    <div className="card__footer">
+                      <CPUBarChart data={this.state.builtData} {...this.props} />
                     </div>
                   </div>
-                  <div className="card__footer">
-                    <CPUBarChart data={this.state.builtData} {...this.props} />
-                  </div>
-                </div>
-              </Col>
-            </Row>
-          </Container>
-        )}
+                </Col>
+              </Row>
+            </Container>
+          )}
       </div>
     );
   }

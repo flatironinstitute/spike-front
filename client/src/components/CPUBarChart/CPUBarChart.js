@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../../../node_modules/react-vis/dist/style.css";
 import {
+  Crosshair,
   FlexibleWidthXYPlot,
   XAxis,
   YAxis,
@@ -14,18 +15,38 @@ import {
 import "./barchart.css";
 
 class CPUBarChart extends Component {
-  render() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      legendItems: []
+    };
+    let colorArr = ["#70D6FF", "#FF70A6", "#FF9770", "#FFD670", "#E9FF70"];
+  }
+
+  componentDidMount() {
     let legendItems = this.props.data.map(sorter => sorter._id);
+    this.setState({ legendItems: legendItems })
+  }
+
+  legendClickHandler = (item, i) => {
+    console.log("legend click 🍔", item, i);
+    // const { series } = this.state;
+    // series[i].disabled = !series[i].disabled;
+    // this.setState({ series });
+  };
+
+  render() {
+    console.log("data 🍔", this.props.data);
     return (
-      <div className="barchart">
+      <div className="cpu-barchart">
+        <DiscreteColorLegend
+          width={180}
+          items={this.state.legendItems}
+          colors={this.colorArr}
+          className="barchart__legend"
+          onItemClick={this.legendClickHandler}
+        />
         <FlexibleWidthXYPlot xType="ordinal" height={500} xPadding={30}>
-          <DiscreteColorLegend
-            height={100}
-            position="top"
-            orientation="horizontal"
-            items={legendItems}
-            className="barchart__legend"
-          />
           <VerticalGridLines />
           <HorizontalGridLines />
           <XAxis
@@ -42,9 +63,10 @@ class CPUBarChart extends Component {
           <YAxis />
           {this.props.data.map((sorter, i) => (
             <VerticalBarSeries
+              colorType="literal"
               key={sorter + "-" + i}
               className="vertical-bar-series-example"
-              data={sorter.studyGroup}
+              data={sorter.colorGroup}
             />
           ))}
         </FlexibleWidthXYPlot>
