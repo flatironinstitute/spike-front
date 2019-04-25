@@ -36,16 +36,16 @@ class CPUBarChart extends Component {
   };
 
   render() {
-    console.log("data 🍔", this.props.data);
+    console.log(this.props.data, "🍔");
     return (
       <div className="cpu-barchart">
-        <DiscreteColorLegend
+        {/* <DiscreteColorLegend
           width={180}
           items={this.state.legendItems}
           colors={this.colorArr}
           className="barchart__legend"
           onItemClick={this.legendClickHandler}
-        />
+        /> */}
         <FlexibleWidthXYPlot xType="ordinal" height={500} xPadding={30}>
           <VerticalGridLines />
           <HorizontalGridLines />
@@ -66,7 +66,7 @@ class CPUBarChart extends Component {
               colorType="literal"
               key={sorter + "-" + i}
               className="vertical-bar-series-example"
-              data={sorter.colorGroup}
+              data={sorter.studyGroup}
             />
           ))}
         </FlexibleWidthXYPlot>
