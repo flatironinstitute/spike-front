@@ -15,7 +15,7 @@ import { connect } from "react-redux";
 import * as actionCreators from "../../actions/actionCreators";
 
 // Utilities 💡
-import { isEmpty } from "../../utils";
+import { isEmpty, toTitleCase } from "../../utils";
 import "./singleresults.css";
 
 // TODO: Refactor class into smaller components please
@@ -83,9 +83,9 @@ class SingleResultPairingV2 extends Component {
       default:
         builtData = results;
     }
-    let selectedRecording = builtData.filter(
-      recording => recording.sorter === this.state.sorter
-    );
+    // let selectedRecording = builtData.filter(
+    //   recording => recording.sorter === this.state.sorter
+    // );
     // TODO: Swap this with selectedRecording everywhere
     // this.props.selectStudy(selectedRecording[0]);
     this.setState({ builtData: builtData });
@@ -202,7 +202,8 @@ class SingleResultPairingV2 extends Component {
       isEmpty(this.state.sorter) ||
       isEmpty(this.state.builtData);
 
-    let title = this.getFormatCopy();
+    let heatmapTitle = this.getFormatCopy();
+    let pageTitle = toTitleCase(this.state.study.replace(/_/g, " "));
 
     console.log("🤩", this.props);
     return (
@@ -218,6 +219,19 @@ class SingleResultPairingV2 extends Component {
             </Container>
           ) : (
               <Container className="container__heatmap">
+                <Row className="justify-content-md-center">
+                  <Col lg={12} sm={12} xl={10}>
+                    <div className="intro">
+                      <h4 className="page__title">{pageTitle}</h4>
+                      <div className="dividerthick" />
+                      {/* <p className="subhead">
+                        Below is the current list of studies in SpikeForest. Click on
+                        each to see an expanded list of the recordings within each
+                        study.
+                      </p> */}
+                    </div>
+                  </Col>
+                </Row>
                 <Row className="container__sorter--row">
                   <Col lg={5} sm={6}>
                     <div className="card card--stats">
@@ -245,7 +259,7 @@ class SingleResultPairingV2 extends Component {
                     <div className="card card--stats">
                       <div className="content">
                         <div className="card__label">
-                          <p>{title}</p>
+                          <p>{heatmapTitle}</p>
                         </div>
                         <div className="card__footer">
                           <hr />

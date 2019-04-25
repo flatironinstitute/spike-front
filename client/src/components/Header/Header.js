@@ -31,10 +31,12 @@ class Header extends Component {
   getPageName() {
     let activeRoute = this.props.router.location.pathname;
     let activeArr = activeRoute.split("/").filter(item => item);
-    if (activeArr.length) {
+    if (activeArr[0] === "study") {
+      let str = activeArr[1].replace(/_/g, " ");
+      return toTitleCase(str);
+    } else if (activeArr.length) {
       return toTitleCase(activeArr.join(" "));
     } else {
-      // TODO: Add name of vis currently up here
       return "Overview";
     }
   }
