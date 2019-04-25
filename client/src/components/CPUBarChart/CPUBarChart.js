@@ -18,9 +18,8 @@ class CPUBarChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      legendItems: []
+      crosshairValues: []
     };
-    let colorArr = ["#70D6FF", "#FF70A6", "#FF9770", "#FFD670", "#E9FF70"];
   }
 
   componentDidMount() {
@@ -28,24 +27,17 @@ class CPUBarChart extends Component {
     this.setState({ legendItems: legendItems })
   }
 
-  legendClickHandler = (item, i) => {
-    console.log("legend click 🍔", item, i);
-    // const { series } = this.state;
-    // series[i].disabled = !series[i].disabled;
-    // this.setState({ series });
+  nearestXHandler = (value, { index }) => {
+    console.log(value, index, "🍔");
+    this.setState({
+      crosshairValues: [value]
+    });
   };
 
   render() {
-    console.log(this.props.data, "🍔");
+    console.log(this.state.crosshairValues, "🍔");
     return (
       <div className="cpu-barchart">
-        {/* <DiscreteColorLegend
-          width={180}
-          items={this.state.legendItems}
-          colors={this.colorArr}
-          className="barchart__legend"
-          onItemClick={this.legendClickHandler}
-        /> */}
         <FlexibleWidthXYPlot xType="ordinal" height={500} xPadding={30}>
           <VerticalGridLines />
           <HorizontalGridLines />
@@ -67,8 +59,12 @@ class CPUBarChart extends Component {
               key={sorter + "-" + i}
               className="vertical-bar-series-example"
               data={sorter.studyGroup}
+              onNearestX={this.nearestXHandler}
             />
           ))}
+          <Crosshair
+            values={this.state.crosshairValues}
+          />
         </FlexibleWidthXYPlot>
       </div>
     );
