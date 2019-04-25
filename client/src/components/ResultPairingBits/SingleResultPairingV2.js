@@ -19,20 +19,22 @@ import { isEmpty } from "../../utils";
 import "./singleresults.css";
 
 // TODO: Refactor class into smaller components please
-class SingleResultPairing extends Component {
+class SingleResultPairingV2 extends Component {
   constructor(props) {
     super(props);
     this.state = {
       study: "",
-      sorter: "KiloSort",
-      sorterParams: {},
       format: "count",
       metric: "accuracy",
       sliderValue: 0.8,
+      // TODO: SET NEW DEFAULT
+      sorter: "KiloSort",
+      sorterParams: {},
       activeSorter: 0,
       openIcon: false,
       builtData: [],
-      selectedRecording: {}
+      selectedRecording: {},
+      // new data properties
     };
   }
 
@@ -41,6 +43,9 @@ class SingleResultPairing extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    // New Data Gathering from Existing files
+
+
     // TODO: Swap selected study state for props
     if (this.state.study !== prevState.study) {
       this.props.fetchPairing(this.state.study, this.state.sorter);
@@ -123,8 +128,8 @@ class SingleResultPairing extends Component {
   getPageName() {
     let activeRoute = this.props.router.location.pathname;
     let activeArr = activeRoute.split("/").filter(item => item);
-    // TODO: Make this less fixed!
     let study = activeArr[1];
+    // TODO: Swap sorter to default index 0 from API call.
     let sorter = "KiloSort";
     this.setState({
       study,
@@ -173,13 +178,10 @@ class SingleResultPairing extends Component {
     let copy;
     switch (this.state.format) {
       case "count":
-        copy = `Number units found above ${this.state.metric} threshold`;
+        copy = `Number of units found above ${this.state.metric} threshold`;
         break;
       case "average":
         copy = `Average ${this.state.metric} above SNR threshold`;
-        break;
-      case "cpu":
-        copy = "Estimated CPU Time";
         break;
       default:
         copy = "";
@@ -191,8 +193,8 @@ class SingleResultPairing extends Component {
     let results = isEmpty(this.props.pairing)
       ? []
       : this.props.pairing.filter(result => {
-          return result.sorter && result.is_applied;
-        });
+        return result.sorter && result.is_applied;
+      });
     let sorters = results.length ? results.map(result => result.sorter) : [];
 
     let loading =
@@ -201,10 +203,8 @@ class SingleResultPairing extends Component {
       isEmpty(this.state.builtData);
 
     let title = this.getFormatCopy();
-    // let loadScatterplot = true;
-    // isEmpty(this.props.studies) ||
-    // isEmpty(this.props.sorters) ||
-    // isEmpty(this.props.selectedStudy);
+
+    console.log("🤩", this.props);
     return (
       <div>
         <div className="page__body">
@@ -217,73 +217,122 @@ class SingleResultPairing extends Component {
               </Card>
             </Container>
           ) : (
-            <Container className="container__heatmap">
-              <Row className="container__sorter--row">
-                <Col lg={5} sm={6}>
-                  <div className="card card--stats">
-                    <div className="content">
-                      <div className="card__label">
-                        <p>
-                          Study: <strong>{this.state.study}</strong>
+              <Container className="container__heatmap">
+                <Row className="container__sorter--row">
+                  <Col lg={5} sm={6}>
+                    <div className="card card--stats">
+                      <div className="content">
+                        <div className="card__label">
+                          <p>
+                            Study: <strong>{this.state.study}</strong>
+                          </p>
+                          <p>
+                            Sorter: <strong>{this.state.sorter}</strong>
+                          </p>
+                        </div>
+                        <div className="card__footer">
+                          <hr />
+                          <p>Sorting Params:</p>
+                          <p>
+                            Adjacency radius: 50, Detect sign: -1, Detect
+                            threshold: 3
                         </p>
-                        <p>
-                          Sorter: <strong>{this.state.sorter}</strong>
-                        </p>
-                      </div>
-                      <div className="card__footer">
-                        <hr />
-                        <p>Sorting Params:</p>
-                        <p>
-                          Adjacency radius: 50, Detect sign: -1, Detect
-                          threshold: 3
-                        </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Col>
-                <Col lg={7} sm={12}>
-                  <div className="card card--stats">
-                    <div className="content">
-                      <div className="card__label">
-                        <p>{title}</p>
-                      </div>
-                      <div className="card__footer">
-                        <hr />
-                        <SinglePairingRow
-                          {...this.props}
-                          vizDatum={this.state.builtData}
-                          key={`hmrow${0}`}
-                          index={0}
-                          format={this.state.format}
-                          sorters={sorters.sort()}
-                          selectedSorter={this.state.sorter}
-                          handleSorterChange={this.handleSorterChange}
-                        />
+                  </Col>
+                  <Col lg={7} sm={12}>
+                    <div className="card card--stats">
+                      <div className="content">
+                        <div className="card__label">
+                          <p>{title}</p>
+                        </div>
+                        <div className="card__footer">
+                          <hr />
+                          <SinglePairingRow
+                            {...this.props}
+                            vizDatum={this.state.builtData}
+                            key={`hmrow${0}`}
+                            index={0}
+                            format={this.state.format}
+                            sorters={sorters.sort()}
+                            selectedSorter={this.state.sorter}
+                            handleSorterChange={this.handleSorterChange}
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Col>
-              </Row>
-              <Row className="container__sorter--row">
+                  </Col>
+                </Row>
+                <Row className="container__sorter--row">
+                  <Col lg={12} sm={12}>
+                    <HeatmapOptionsRow
+                      showCPU={false}
+                      handleFormatChange={this.handleFormatChange}
+                      handleSliderChange={this.handleSliderChange}
+                      handleMetricChange={this.handleMetricChange}
+                      format={this.state.format}
+                      metric={this.state.metric}
+                      sliderValue={this.state.sliderValue}
+                    />
+                  </Col>
+                </Row>
+                {/* <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
-                  <div className="card card--heatmap">
-                    <div className="content">
-                      <div className="card__label">
-                        <p>
-                          <strong>Spike Spray:</strong> What label details are
-                          needed here?
-                        </p>
-                      </div>
-                      <div className="card__footer">
-                        <hr />
-                        <SpikeSprayV2 {...this.props} />
+                  {loadScatterplot ? (
+                    <Card>
+                      <Card.Body>
+                        <Preloader />
+                      </Card.Body>
+                    </Card>
+                  ) : (
+                    <ScatterplotCard
+                      {...this.props}
+                      sliderValue={this.state.sliderValue}
+                    />
+                  )}
+                </Col>
+              </Row> */}
+                <Row className="container__sorter--row">
+                  <Col lg={12} sm={12}>
+                    <div className="card card--heatmap">
+                      <div className="content">
+                        <div className="card__label">
+                          <p>
+                            Study + Sorter Result Pairing JSON Dump{" "}
+                            <span role="img" aria-label="truck">
+                              🚚
+                          </span>
+                          </p>
+                        </div>
+                        <div className="card__footer">
+                          <hr />
+                          <ReactJson src={results} />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Col>
-              </Row>
-            </Container>
-          )}
+                  </Col>
+                </Row>
+                <Row className="container__sorter--row">
+                  <Col lg={12} sm={12}>
+                    <div className="card card--heatmap">
+                      <div className="content">
+                        <div className="card__label">
+                          <p>
+                            <strong>Spike Spray:</strong> What label details are
+                            needed here?
+                        </p>
+                        </div>
+                        <div className="card__footer">
+                          <hr />
+                          <SpikeSprayV2 {...this.props} />
+                        </div>
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
+              </Container>
+            )}
         </div>
       </div>
     );
@@ -304,7 +353,5 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SingleResultPairing);
+)(SingleResultPairingV2);
 
-// NOTES:
-// Sample url : http://localhost:3000/results/visapy_mea

@@ -8,6 +8,9 @@ const studySetSchema = new mongoose.Schema({
   },
   sortIndex: {
     type: Number
+  },
+  description: {
+    type: String
   }
 });
 

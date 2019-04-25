@@ -126,7 +126,7 @@ class SpikeSprayV2 extends Component {
       "False Negative"
     ];
     console.log(
-      "🖱️",
+      "🤩spikespray v2",
       newRecDetails,
       this.state.spikeCols,
       this.state.offsetSpikeCols
@@ -142,63 +142,63 @@ class SpikeSprayV2 extends Component {
             </Card>
           </Container>
         ) : (
-          <div>
-            <Row>
-              {this.state.offsetSpikeCols.map((column, i) => (
-                <Col lg={3} key={`spikecol-${Math.random(i)}`}>
-                  <div className="card__label">
-                    <p className="card__charttitle">
-                      {colTitles[i]} <br />x of y spikes shown
+            <div>
+              <Row>
+                {this.state.offsetSpikeCols.map((column, i) => (
+                  <Col lg={3} key={`spikecol-${Math.random(i)}`}>
+                    <div className="card__label">
+                      <p className="card__charttitle">
+                        {colTitles[i]} <br />x of y spikes shown
                     </p>
-                  </div>
-                  <XYPlot
-                    width={350}
-                    height={700}
-                    key={`spikeplot-${Math.random(i)}`}
-                  >
-                    <XAxis title="Samples" />
-                    {column.map((line, i) => (
-                      <LineSeries
-                        key={`line-${Math.random(i)}`}
-                        color={line.color}
-                        data={line.data}
-                        style={{ strokeWidth: 0.25 }}
-                      />
-                    ))}
-                  </XYPlot>
-                </Col>
-              ))}
-            </Row>
-            <Row>
-              {this.state.spikeCols.map((column, i) => (
-                <Col lg={3} key={`spikecol-${Math.random(i)}`}>
-                  <div className="card__label">
-                    <p className="card__charttitle">
-                      {colTitles[i]} x of y spikes shown
+                    </div>
+                    <XYPlot
+                      width={350}
+                      height={700}
+                      key={`spikeplot-${Math.random(i)}`}
+                    >
+                      <XAxis title="Samples" />
+                      {column.map((line, i) => (
+                        <LineSeries
+                          key={`line-${Math.random(i)}`}
+                          color={line.color}
+                          data={line.data}
+                          style={{ strokeWidth: 0.25 }}
+                        />
+                      ))}
+                    </XYPlot>
+                  </Col>
+                ))}
+              </Row>
+              <Row>
+                {this.state.spikeCols.map((column, i) => (
+                  <Col lg={3} key={`spikecol-${Math.random(i)}`}>
+                    <div className="card__label">
+                      <p className="card__charttitle">
+                        {colTitles[i]} x of y spikes shown
                     </p>
-                  </div>
-                  <XYPlot
-                    width={350}
-                    height={350}
-                    key={`spikeplot-${Math.random(i)}`}
-                  >
-                    <XAxis title="Samples" />
-                    <YAxis title="Y TITLE?" />
-                    {column.map((line, i) => (
-                      <LineSeries
-                        key={`line-${Math.random(i)}`}
-                        color={line.color}
-                        data={line.data}
-                        style={{ strokeWidth: 0.25 }}
-                        onNearestXY={d => this.setState({ hoveredNode: d })}
-                      />
-                    ))}
-                  </XYPlot>
-                </Col>
-              ))}
-            </Row>
-          </div>
-        )}
+                    </div>
+                    <XYPlot
+                      width={350}
+                      height={350}
+                      key={`spikeplot-${Math.random(i)}`}
+                    >
+                      <XAxis title="Samples" />
+                      <YAxis title="Y TITLE?" />
+                      {column.map((line, i) => (
+                        <LineSeries
+                          key={`line-${Math.random(i)}`}
+                          color={line.color}
+                          data={line.data}
+                          style={{ strokeWidth: 0.25 }}
+                          onNearestXY={d => this.setState({ hoveredNode: d })}
+                        />
+                      ))}
+                    </XYPlot>
+                  </Col>
+                ))}
+              </Row>
+            </div>
+          )}
       </div>
     );
   }
