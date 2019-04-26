@@ -118,7 +118,7 @@ class ScatterplotCount extends Component {
           <XAxis title="SNR" />
           <YAxis title={yTitle} />
           <MarkSeries
-            animation={true}
+            // animation={true}
             className="mark-series-example"
             sizeRange={[3, 15]}
             seriesId="my-example-scatterplot"
