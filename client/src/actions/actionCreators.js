@@ -26,7 +26,7 @@ export const SEND_CONTACT_FAILURE = "SEND_CONTACT_FAILURE";
 /* Old Shiz
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 export const SELECT_RECORDING = "SELECT_RECORDING";
-export const SELECT_STUDY = "SELECT_STUDY";
+export const SELECT_STUDY_SORTING_RESULT = "SELECT_STUDY_SORTING_RESULT";
 export const RECEIVE_PAIRING = "RECEIVE_PAIRING";
 export const RECEIVE_RECORDING_DETAILS = "RECEIVE_RECORDING_DETAILS";
 
@@ -87,7 +87,7 @@ export function sendContactFailure(error) {
 }
 
 export const sendContact = options => {
-  return function(dispatch) {
+  return function (dispatch) {
     return createFetchPost(`/api/contact`, options)
       .then(res => {
         dispatch(sendContactSuccess(res.success));
@@ -106,7 +106,7 @@ export const receiveStudies = studies => ({
 
 export const fetchStudies = () => {
   let url = `/api/studies`;
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(startLoading());
     return createFetch(url)
       .then(res => {
@@ -129,7 +129,7 @@ export const receiveCPUs = cpus => {
 
 export const fetchCPUs = () => {
   let url = `/api/cpus`;
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(startLoading());
     return createFetch(url)
       .then(res => {
@@ -152,7 +152,7 @@ export const receiveGroupedURs = groupedURs => {
 
 export const fetchGroupedURs = () => {
   let url = `/api/groupedurs`;
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(startLoading());
     return createFetch(url)
       .then(res => {
@@ -175,7 +175,7 @@ export const receiveUnitResults = unitresults => {
 
 export const fetchUnitResults = () => {
   let url = `/api/unitresults`;
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(startLoading());
     return createFetch(url)
       .then(unitresults => {
@@ -195,7 +195,7 @@ export const receiveSorters = sorters => ({
 
 export const fetchSorters = () => {
   let url = `/api/sorters`;
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(startLoading());
     return createFetch(url)
       .then(res => {
@@ -231,7 +231,7 @@ export const recieveStats = stats => {
 
 export const fetchStats = () => {
   let url = `/api/stats`;
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(startLoading());
     return createFetch(url)
       .then(stats => {
@@ -253,7 +253,7 @@ export const recieveStudySets = studysets => {
 
 export const fetchStudySets = () => {
   let url = `/api/studysets`;
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(startLoading());
     return createFetch(url)
       .then(studysets => {
@@ -275,7 +275,7 @@ export const receiveRecordings = recordings => {
 
 export const fetchRecordings = () => {
   let url = `/api/recordings`;
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(startLoading());
     return createFetch(url)
       .then(recordings => {
@@ -292,7 +292,7 @@ export const fetchRecordings = () => {
 
 // select study
 export const selectStudy = study => ({
-  type: SELECT_STUDY,
+  type: SELECT_STUDY_SORTING_RESULT,
   study
 });
 
@@ -311,7 +311,7 @@ export const receivePairing = pairing => ({
 
 export const fetchPairing = (study, sorter) => {
   let url = `/api/${study}/${sorter}`;
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(startLoading());
     return createFetch(url)
       .then(res => {
@@ -333,7 +333,7 @@ export const receiveRecordingDetails = recordingDetails => ({
 
 export const fetchRecordingDetails = (study, sorter, recording) => {
   let url = `/api/${study}/${sorter}/${recording}`;
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(startLoading());
     return createFetch(url)
       .then(res => {

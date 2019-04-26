@@ -13,36 +13,36 @@ class ScatterplotCard extends Component {
   }
 
   componentDidMount() {
-    if (this.props.selectedStudy) {
+    if (this.props.selectedStudySortingResult) {
       this.findStudyAndSorter();
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.selectedStudy !== prevProps.selectedStudy) {
+    if (this.props.selectedStudySortingResult !== prevProps.selectedStudySortingResult) {
       this.findStudyAndSorter();
     }
   }
 
   findStudyAndSorter() {
     let study = this.props.studies.filter(
-      study => study.name === this.props.selectedStudy.study
+      study => study.name === this.props.selectedStudySortingResult.study
     );
     let sorter = this.props.sorters.filter(
-      sorter => sorter.name === this.props.selectedStudy.sorter
+      sorter => sorter.name === this.props.selectedStudySortingResult.sorter
     );
     this.setState({ study: study[0], sorter: sorter[0] });
   }
 
   render() {
-    const study = this.props.selectedStudy
-      ? this.props.selectedStudy.study
+    const study = this.props.selectedStudySortingResult
+      ? this.props.selectedStudySortingResult.study
       : "";
-    const sorter = this.props.selectedStudy
-      ? this.props.selectedStudy.sorter
+    const sorter = this.props.selectedStudySortingResult
+      ? this.props.selectedStudySortingResult.sorter
       : "";
     const loading =
-      isEmpty(this.props.selectedStudy) ||
+      isEmpty(this.props.selectedStudySortingResult) ||
       isEmpty(this.state.study) ||
       isEmpty(this.state.sorter);
     return (
@@ -80,7 +80,7 @@ class ScatterplotCard extends Component {
               <ScatterplotContainer
                 study={this.state.study}
                 sorter={this.state.sorter}
-                selectedStudy={this.props.selectedStudy}
+                selectedStudySortingResult={this.props.selectedStudySortingResult}
                 sliderValue={this.props.sliderValue}
                 format={this.props.format}
                 metric={this.state.metric}

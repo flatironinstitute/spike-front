@@ -204,7 +204,7 @@ class SingleResultPairing extends Component {
     // let loadScatterplot = true;
     // isEmpty(this.props.studies) ||
     // isEmpty(this.props.sorters) ||
-    // isEmpty(this.props.selectedStudy);
+    // isEmpty(this.props.selectedStudySortingResult);
     return (
       <div>
         <div className="page__body">
@@ -292,7 +292,7 @@ class SingleResultPairing extends Component {
 
 function mapStateToProps(state) {
   return {
-    selectedStudy: state.selectedStudy,
+    selectedStudySortingResult: state.selectedStudySortingResult,
     selectedRecording: state.selectedRecording
   };
 }
