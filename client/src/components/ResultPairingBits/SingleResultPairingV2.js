@@ -72,8 +72,6 @@ class SingleResultPairingV2 extends Component {
 
     builtData = results
 
-    // no longer necessary to do the following
-    /*
     switch (this.state.format) {
       case "count":
         builtData = this.filterAccuracy(results);
@@ -84,7 +82,6 @@ class SingleResultPairingV2 extends Component {
       default:
         builtData = results;
     }
-    */
 
     let selectedRecording = builtData.filter(
       recording => recording.sorter === this.state.sorter
@@ -94,7 +91,6 @@ class SingleResultPairingV2 extends Component {
     this.setState({ builtData: builtData });
   }
 
-  /*
   // Count functions for 'Number of groundtruth units above accuracy threshold'
   filterAccuracy(sorterArray) {
     let newArr = sorterArray.map(sorter => {
@@ -128,7 +124,6 @@ class SingleResultPairingV2 extends Component {
     });
     return newArr;
   }
-  */
 
   getPageName() {
     let activeRoute = this.props.router.location.pathname;

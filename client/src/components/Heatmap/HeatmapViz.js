@@ -26,8 +26,8 @@ class HeatmapViz extends Component {
 
   buildVizData(studiesWithResults) {
     if (studiesWithResults) {
+      // jfm will rework this section
       // alphabetize
-      // Liz: i'm not sure I understand what this is doing (jfm)
       let data1 = studiesWithResults.map(study => {
         let values = Object.values(study)[0];
         return values.sort((a, b) => {

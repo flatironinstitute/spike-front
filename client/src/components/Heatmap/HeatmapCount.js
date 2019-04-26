@@ -152,12 +152,9 @@ class HeatmapCount extends Component {
             <Row className="container__heatmap--row">
               <Col lg={6} sm={12}>
                 <HeatmapViz
-                  // {...this.props}
                   selectStudySortingResult={this.props.selectStudySortingResult}
                   selectedStudySortingResult={this.props.selectedStudySortingResult}
                   studiesWithResults={this.state.builtData}
-                  // doesn't seem to be necessary to pass in the sorters (jfm)
-                  //sorters={this.props.shortSorters}
                   format={this.props.format}
                   metric={this.props.metric}
                   threshold={this.props.sliderValue}

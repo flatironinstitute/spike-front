@@ -18,9 +18,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    // This is called once the component mounts, which happens before the data is fetched
     if (this.props.groupedURs && this.props.studies) {
-      // usually this code is not executed because the data hase not been fetched yet
       let flatUnits = flattenUnitResults(
         this.props.groupedURs,
         this.props.studies
@@ -30,15 +28,11 @@ class Home extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // This is called once the component updates, which happens after the data is fetched
     if (
       this.props.groupedURs !== prevProps.groupedURs ||
       this.props.studies !== prevProps.studies
     ) {
-      // something has changed
       if (this.props.groupedURs && this.props.studies) {
-        // This component requires the groupedURs (grouped unit results) and the studies
-        // Here we create flatUnits and set the state
         let flatUnits = flattenUnitResults(
           this.props.groupedURs,
           this.props.studies
@@ -47,13 +41,11 @@ class Home extends Component {
       }
     }
     if (this.state.flatUnits !== prevState.flatUnits) {
-      // something has changed
       this.mapUnits();
     }
   }
 
   async mapUnits() {
-    // Create unitsMap and set the state
     let unitsMap = await formatUnitResults(
       this.state.flatUnits,
       this.props.sorters
@@ -76,9 +68,6 @@ class Home extends Component {
   }
 
   render() {
-    // check if we are still loading
-    // if so, we will show the preloader
-    // otherwise, we will show the HomeContentContainer from Heatmap/HomeContentContainer
     let loading =
       isEmpty(this.state.flatUnits) ||
       isEmpty(this.props.studies) ||
