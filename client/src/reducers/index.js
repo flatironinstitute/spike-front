@@ -3,7 +3,7 @@ import { connectRouter } from "connected-react-router";
 
 import recordings from "./recordings";
 import selectedRecording from "./selectedRecording";
-import selectedStudy from "./selectedStudy";
+import selectedStudySortingResult from "./selectedStudySortingResult";
 import pairing from "./pairing";
 import recordingDetails from "./recordingDetails";
 // V2 Data: Reducers
@@ -21,7 +21,7 @@ const rootReducer = history =>
   combineReducers({
     recordings,
     selectedRecording,
-    selectedStudy,
+    selectedStudySortingResult,
     pairing,
     recordingDetails,
     // V2 Data: Reducers

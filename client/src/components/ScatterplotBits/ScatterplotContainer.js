@@ -19,13 +19,13 @@ class ScatterplotContainer extends Component {
   }
 
   render() {
-    const { selectedStudy, sliderValue, metric, format } = this.props;
+    const { selectedStudySortingResult, sliderValue, metric, format } = this.props;
     const copy = this.getHeaderCopy(this.props.format);
     return (
       <div>
         <p>
           {copy}
-          {selectedStudy ? selectedStudy.in_range : ""}
+          {selectedStudySortingResult ? selectedStudySortingResult.in_range : ""}
         </p>
         {(() => {
           switch (format) {
@@ -33,7 +33,7 @@ class ScatterplotContainer extends Component {
               return (
                 <ScatterplotCount
                 {...this.props}
-                selectedUnits={selectedStudy.true_units}
+                selectedUnits={selectedStudySortingResult.true_units}
                 sliderValue={sliderValue}
                 format={format}
                 metric={metric}
@@ -43,7 +43,7 @@ class ScatterplotContainer extends Component {
               return (
                 <ScatterplotAverage
                   {...this.props}
-                  selectedUnits={selectedStudy.true_units}
+                  selectedUnits={selectedStudySortingResult.true_units}
                   sliderValue={sliderValue}
                   format={format}
                   metric={metric}

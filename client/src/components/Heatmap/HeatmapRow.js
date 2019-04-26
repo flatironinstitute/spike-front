@@ -32,7 +32,7 @@ class HeatmapRow extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.selectedStudy !== prevProps.selectedStudy) {
+    if (this.props.selectedStudySortingResult !== prevProps.selectedStudySortingResult) {
       this.setData();
     }
   }
@@ -42,7 +42,7 @@ class HeatmapRow extends Component {
     colorMap.sort((a, b) => a - b);
     let withColor = this.props.vizDatum.map(datum => {
       datum.style = colorMap.indexOf(datum.color) > 2 ? { fill: "white" } : {};
-      if (this.props.selectedStudy && this.props.selectedStudy === datum) {
+      if (this.props.selectedStudySortingResult && this.props.selectedStudySortingResult === datum) {
         datum.style = { fill: "#F6782D" };
       }
       return datum;
