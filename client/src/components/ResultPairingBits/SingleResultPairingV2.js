@@ -16,7 +16,6 @@ import * as actionCreators from "../../actions/actionCreators";
 
 // Utilities 💡
 import { isEmpty, toTitleCase } from "../../utils";
-import "./singleresults.css";
 
 // TODO: Refactor class into smaller components please
 class SingleResultPairingV2 extends Component {

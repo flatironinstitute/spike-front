@@ -51,7 +51,6 @@ class Header extends Component {
   }
 
   render() {
-    let activeRoute = this.props.router.location.pathname;
     return (
       <div className="navbar__container">
         <InfoPanel width={this.state.width} height={this.state.height} />
@@ -67,10 +66,6 @@ class Header extends Component {
           </Navbar.Brand>
           <Nav
             className="navbar__right"
-          // activeKey={activeRoute}
-          // onSelect={selectedKey => {
-          //   console.log("Route to 🗺️", selectedKey);
-          // }}
           >
             <LinkContainer exact to="/">
               <Nav.Link eventKey="/">Home</Nav.Link>

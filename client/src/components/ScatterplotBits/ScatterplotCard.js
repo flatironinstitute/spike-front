@@ -64,30 +64,30 @@ class ScatterplotCard extends Component {
               </p>
             </div>
           ) : (
-            <div>
-              <div className="card__header">
-                <div className="card__category--div">
-                  <span className="card__title--link">
-                    Study:
-                    <a href="/study">{study}</a>
-                  </span>
-                  <span className="card__title--link">
-                    Sorter:
+              <div>
+                <div className="card__header">
+                  <div className="card__category--div">
+                    <span className="card__title--link">
+                      Study:
+                    <a href={`/study/${study}`}>{study}</a>
+                    </span>
+                    <span className="card__title--link">
+                      Sorter:
                     <a href="/sorters">{sorter}</a>
-                  </span>
+                    </span>
+                  </div>
                 </div>
+                <ScatterplotContainer
+                  study={this.state.study}
+                  sorter={this.state.sorter}
+                  selectedStudySortingResult={this.props.selectedStudySortingResult}
+                  sliderValue={this.props.sliderValue}
+                  format={this.props.format}
+                  metric={this.state.metric}
+                  {...this.props}
+                />
               </div>
-              <ScatterplotContainer
-                study={this.state.study}
-                sorter={this.state.sorter}
-                selectedStudySortingResult={this.props.selectedStudySortingResult}
-                sliderValue={this.props.sliderValue}
-                format={this.props.format}
-                metric={this.state.metric}
-                {...this.props}
-              />
-            </div>
-          )}
+            )}
         </div>
       </div>
     );
