@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../../../node_modules/react-vis/dist/style.css";
 import {
-  FlexibleWidthXYPlot,
+  XYPlot,
   XAxis,
   YAxis,
   VerticalGridLines,
@@ -99,23 +99,24 @@ class ScatterplotCount extends Component {
       num_events: hoveredNode ? hoveredNode.num_events : null
     };
     let lineObjArr = [
-      { x: minSNR, y: this.props.sliderValue },
+      { x: 0, y: this.props.sliderValue },
       { x: maxSNR, y: this.props.sliderValue }
     ];
-    const tickValues = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
     const yTitle = toTitleCase(this.props.metric);
-
     return (
       <div className="canvas-wrapper">
-        <FlexibleWidthXYPlot
+        <XYPlot
           onMouseLeave={() => this.setState({ hoveredNode: null })}
-          xPadding={30}
           height={400}
+          xPadding={30}
+          width={600}
+          yDomain={[0, 1]}
+          xDomain={[0, maxSNR]}
         >
           <VerticalGridLines />
           <HorizontalGridLines />
           <XAxis title="SNR" />
-          <YAxis title={yTitle} tickValues={tickValues} />
+          <YAxis title={yTitle} />
           <MarkSeries
             animation={true}
             className="mark-series-example"
@@ -133,7 +134,7 @@ class ScatterplotCount extends Component {
             data={lineObjArr}
           />
           {hoveredNode && <Hint value={valueObj} align={alignment} />}
-        </FlexibleWidthXYPlot>
+        </XYPlot>
       </div>
     );
   }

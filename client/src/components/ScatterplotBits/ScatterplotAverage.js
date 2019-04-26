@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../../../node_modules/react-vis/dist/style.css";
 import {
-  FlexibleWidthXYPlot,
+  XYPlot,
   XAxis,
   YAxis,
   VerticalGridLines,
@@ -110,10 +110,13 @@ class ScatterplotAverage extends Component {
     const yTitle = toTitleCase(this.props.metric);
     return (
       <div className="canvas-wrapper">
-        <FlexibleWidthXYPlot
+        <XYPlot
           onMouseLeave={() => this.setState({ hoveredNode: null })}
           height={400}
+          width={600}
           xPadding={30}
+          yDomain={[0, 1]}
+        // xDomain={[0, 500]}
         >
           <VerticalGridLines />
           <HorizontalGridLines />
@@ -136,7 +139,7 @@ class ScatterplotAverage extends Component {
             data={lineObjArr}
           />
           {hoveredNode && <Hint value={valueObj} align={alignment} />}
-        </FlexibleWidthXYPlot>
+        </XYPlot>
       </div>
     );
   }
