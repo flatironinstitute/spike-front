@@ -52,12 +52,6 @@ class HeatmapRow extends Component {
     });
   }
 
-  conditionalSelectStudy(datum) {
-    if (this.props.format !== "average") {
-      this.props.selectStudy(datum);
-    }
-  }
-
   render() {
     const { data } = this.state;
     const loading = isEmpty(data);
@@ -72,73 +66,73 @@ class HeatmapRow extends Component {
         {loading ? (
           <Preloader />
         ) : (
-          <div className="App heatmap-row">
-            <FlexibleWidthXYPlot
-              xType="ordinal"
-              yType="ordinal"
-              onMouseLeave={() => this.setState({ hoveredNode: null })}
-              height={this.dims.height}
-              xPadding={30}
-              margin={this.margin}
-            >
-              {this.props.index === 0 ? (
-                <XAxis
-                  orientation={"top"}
-                  tickLabelAngle={-25}
-                  position={"start"}
-                  title="Count above accuracy threshold"
+            <div className="App heatmap-row">
+              <FlexibleWidthXYPlot
+                xType="ordinal"
+                yType="ordinal"
+                onMouseLeave={() => this.setState({ hoveredNode: null })}
+                height={this.dims.height}
+                xPadding={30}
+                margin={this.margin}
+              >
+                {this.props.index === 0 ? (
+                  <XAxis
+                    orientation={"top"}
+                    tickLabelAngle={-25}
+                    position={"start"}
+                    title="Count above accuracy threshold"
+                    style={{
+                      text: {
+                        stroke: "none",
+                        fill: "#222",
+                        fontWeight: 600,
+                        fontSize: "12px"
+                      }
+                    }}
+                  />
+                ) : null}
+                <YAxis
                   style={{
                     text: {
                       stroke: "none",
                       fill: "#222",
                       fontWeight: 600,
-                      fontSize: "12px"
+                      fontSize: "11px"
                     }
                   }}
                 />
-              ) : null}
-              <YAxis
-                style={{
-                  text: {
-                    stroke: "none",
-                    fill: "#222",
-                    fontWeight: 600,
-                    fontSize: "11px"
-                  }
-                }}
-              />
-              <HeatmapSeries
-                colorRange={colorRange[this.props.format]}
-                data={data}
-                style={{
-                  text: {
-                    stroke: "none",
-                    fill: "#222",
-                    fontWeight: 600,
-                    fontSize: "14px"
-                  }
-                }}
-                onValueMouseOver={d => {
-                  this.setState({ hoveredNode: d });
-                }}
-                onValueClick={d => {
-                  this.conditionalSelectStudy(d);
-                }}
-              />
-              <LabelSeries
-                data={data}
-                labelAnchorX="middle"
-                labelAnchorY="central"
-                onValueClick={d => {
-                  this.conditionalSelectStudy(d);
-                }}
-                getLabel={d => {
-                  return d.in_range > 0 ? `${d.in_range}` : "";
-                }}
-              />
-            </FlexibleWidthXYPlot>
-          </div>
-        )}
+                <HeatmapSeries
+                  colorRange={colorRange[this.props.format]}
+                  data={data}
+                  style={{
+                    text: {
+                      stroke: "none",
+                      fill: "#222",
+                      fontWeight: 600,
+                      fontSize: "14px"
+                    }
+                  }}
+                  onValueMouseOver={d => {
+                    this.setState({ hoveredNode: d });
+                  }}
+                  onValueClick={d => {
+                    this.props.selectStudy(d);
+                  }}
+                />
+                <LabelSeries
+                  data={data}
+                  labelAnchorX="middle"
+                  labelAnchorY="central"
+                  onValueClick={d => {
+                    this.props.selectStudy(d);
+                  }}
+                  getLabel={d => {
+                    return d.in_range > 0 ? `${d.in_range}` : "";
+                  }}
+                />
+              </FlexibleWidthXYPlot>
+            </div>
+          )}
       </div>
     );
   }

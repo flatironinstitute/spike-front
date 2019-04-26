@@ -287,14 +287,14 @@ export const fetchRecordings = () => {
   };
 };
 
-/* Old Shiz
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-
-// select study
+// Selected Study for Scatterplot
 export const selectStudy = study => ({
   type: SELECT_STUDY_SORTING_RESULT,
   study
 });
+
+/* Old Shiz
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 export const selectRecording = recording => {
   return {
