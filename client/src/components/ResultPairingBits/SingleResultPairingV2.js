@@ -19,7 +19,7 @@ import { isEmpty } from "../../utils";
 import "./singleresults.css";
 
 // TODO: Refactor class into smaller components please
-class SingleResultPairing extends Component {
+class SingleResultPairingV2 extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -201,8 +201,8 @@ class SingleResultPairing extends Component {
     let results = isEmpty(this.props.pairing)
       ? []
       : this.props.pairing.filter(result => {
-          return result.sorter && result.is_applied;
-        });
+        return result.sorter && result.is_applied;
+      });
     let sorters = results.length ? results.map(result => result.sorter) : [];
 
     let loading =
@@ -227,73 +227,73 @@ class SingleResultPairing extends Component {
               </Card>
             </Container>
           ) : (
-            <Container className="container__heatmap">
-              <Row className="container__sorter--row">
-                <Col lg={5} sm={6}>
-                  <div className="card card--stats">
-                    <div className="content">
-                      <div className="card__label">
-                        <p>
-                          Study: <strong>{this.state.study}</strong>
+              <Container className="container__heatmap">
+                <Row className="container__sorter--row">
+                  <Col lg={5} sm={6}>
+                    <div className="card card--stats">
+                      <div className="content">
+                        <div className="card__label">
+                          <p>
+                            Study: <strong>{this.state.study}</strong>
+                          </p>
+                          <p>
+                            Sorter: <strong>{this.state.sorter}</strong>
+                          </p>
+                        </div>
+                        <div className="card__footer">
+                          <hr />
+                          <p>Sorting Params:</p>
+                          <p>
+                            Adjacency radius: 50, Detect sign: -1, Detect
+                            threshold: 3
                         </p>
-                        <p>
-                          Sorter: <strong>{this.state.sorter}</strong>
-                        </p>
-                      </div>
-                      <div className="card__footer">
-                        <hr />
-                        <p>Sorting Params:</p>
-                        <p>
-                          Adjacency radius: 50, Detect sign: -1, Detect
-                          threshold: 3
-                        </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Col>
-                <Col lg={7} sm={12}>
-                  <div className="card card--stats">
-                    <div className="content">
-                      <div className="card__label">
-                        <p>{title}</p>
-                      </div>
-                      <div className="card__footer">
-                        <hr />
-                        <SinglePairingRow
-                          {...this.props}
-                          vizDatum={this.state.builtData}
-                          key={`hmrow${0}`}
-                          index={0}
-                          format={this.state.format}
-                          sorters={sorters.sort()}
-                          selectedSorter={this.state.sorter}
-                          handleSorterChange={this.handleSorterChange}
-                        />
+                  </Col>
+                  <Col lg={7} sm={12}>
+                    <div className="card card--stats">
+                      <div className="content">
+                        <div className="card__label">
+                          <p>{title}</p>
+                        </div>
+                        <div className="card__footer">
+                          <hr />
+                          <SinglePairingRow
+                            {...this.props}
+                            vizDatum={this.state.builtData}
+                            key={`hmrow${0}`}
+                            index={0}
+                            format={this.state.format}
+                            sorters={sorters.sort()}
+                            selectedSorter={this.state.sorter}
+                            handleSorterChange={this.handleSorterChange}
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Col>
-              </Row>
-              <Row className="container__sorter--row">
-                <Col lg={12} sm={12}>
-                  <div className="card card--heatmap">
-                    <div className="content">
-                      <div className="card__label">
-                        <p>
-                          <strong>Spike Spray:</strong> What label details are
-                          needed here?
+                  </Col>
+                </Row>
+                <Row className="container__sorter--row">
+                  <Col lg={12} sm={12}>
+                    <div className="card card--heatmap">
+                      <div className="content">
+                        <div className="card__label">
+                          <p>
+                            <strong>Spike Spray:</strong> What label details are
+                            needed here?
                         </p>
-                      </div>
-                      <div className="card__footer">
-                        <hr />
-                        <SpikeSprayV2 {...this.props} />
+                        </div>
+                        <div className="card__footer">
+                          <hr />
+                          <SpikeSprayV2 {...this.props} />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Col>
-              </Row>
-            </Container>
-          )}
+                  </Col>
+                </Row>
+              </Container>
+            )}
         </div>
       </div>
     );
@@ -314,7 +314,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SingleResultPairing);
-
-// NOTES:
-// Sample url : http://localhost:3000/results/visapy_mea
+)(SingleResultPairingV2);

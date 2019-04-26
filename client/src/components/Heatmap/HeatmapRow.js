@@ -20,7 +20,6 @@ class HeatmapRow extends Component {
     };
     this.margin = { left: 190, right: 80, top: 5, bottom: 5 };
     if (this.props.index === 0) {
-      // Liz: is this making room for the top labels? (jfm)
       this.dims.height = 110;
       this.margin.top = 65;
     }
@@ -33,12 +32,8 @@ class HeatmapRow extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    // not sure about this condition -- why selectedCell rather than cells (jfm)
-    // if (this.props.selectedCell !== prevProps.selectedCell) {
-    //   this.setData();
-    // }
-    if (this.props.cells !== prevProps.cells) {
-      this.setData()
+    if (this.props.selectedCell !== prevProps.selectedCell) {
+      this.setData();
     }
   }
 
@@ -83,74 +78,73 @@ class HeatmapRow extends Component {
         {loading ? (
           <Preloader />
         ) : (
-          <div className="App heatmap-row">
-            <FlexibleWidthXYPlot
-              xType="ordinal"
-              yType="ordinal"
-              onMouseLeave={() => this.setState({ hoveredNode: null })}
-              height={this.dims.height}
-              xPadding={30}
-              margin={this.margin}
-            >
-              {this.props.index === 0 ? (
-                <XAxis
-                  orientation={"top"}
-                  tickLabelAngle={-25}
-                  position={"start"}
-                  title="Count above accuracy threshold"
+            <div className="App heatmap-row">
+              <FlexibleWidthXYPlot
+                xType="ordinal"
+                yType="ordinal"
+                onMouseLeave={() => this.setState({ hoveredNode: null })}
+                height={this.dims.height}
+                xPadding={30}
+                margin={this.margin}
+              >
+                {this.props.index === 0 ? (
+                  <XAxis
+                    orientation={"top"}
+                    tickLabelAngle={-25}
+                    position={"start"}
+                    title="Count above accuracy threshold"
+                    style={{
+                      text: {
+                        stroke: "none",
+                        fill: "#222",
+                        fontWeight: 600,
+                        fontSize: "12px"
+                      }
+                    }}
+                  />
+                ) : null}
+                <YAxis
                   style={{
                     text: {
                       stroke: "none",
                       fill: "#222",
                       fontWeight: 600,
-                      fontSize: "12px"
+                      fontSize: "11px"
                     }
                   }}
                 />
-              ) : null}
-              <YAxis
-                style={{
-                  text: {
-                    stroke: "none",
-                    fill: "#222",
-                    fontWeight: 600,
-                    fontSize: "11px"
-                  }
-                }}
-              />
-              <HeatmapSeries
-                colorRange={colorRange[this.props.format]}
-                data={data}
-                style={{
-                  text: {
-                    stroke: "none",
-                    fill: "#222",
-                    fontWeight: 600,
-                    fontSize: "14px"
-                  }
-                }}
-                onValueMouseOver={d => {
-                  this.setState({ hoveredNode: d });
-                }}
-                onValueClick={d => {
-                  // TODO: fix: this doesn't get called when user is hovering over the actual text in the cell.
-                  this.selectCell(d);
-                }}
-              />
-              <LabelSeries
-                data={data}
-                labelAnchorX="middle"
-                labelAnchorY="central"
-                onValueClick={d => {
-                  this.selectLabel();
-                }}
-                getLabel={d => {
-                  return d.text;
-                }}
-              />
-            </FlexibleWidthXYPlot>
-          </div>
-        )}
+                <HeatmapSeries
+                  colorRange={colorRange[this.props.format]}
+                  data={data}
+                  style={{
+                    text: {
+                      stroke: "none",
+                      fill: "#222",
+                      fontWeight: 600,
+                      fontSize: "14px"
+                    }
+                  }}
+                  onValueMouseOver={d => {
+                    this.setState({ hoveredNode: d });
+                  }}
+                  onValueClick={d => {
+                    this.props.selectCell(d);
+                  }}
+                />
+                <LabelSeries
+                  data={data}
+                  labelAnchorX="middle"
+                  labelAnchorY="central"
+                  onValueClick={d => {
+                    this.props.selectLabel();
+                  }}
+                  getLabel={d => {
+                    return d.in_range > 0 ? `${d.in_range}` : "";
+                  }}
+                />
+              </FlexibleWidthXYPlot>
+            </div>
+          )}
       </div>
     );
   }

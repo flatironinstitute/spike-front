@@ -1,4 +1,6 @@
+import * as Sentry from "@sentry/browser";
 const fetch = require("node-fetch");
+
 var baseurl;
 if (process.env.NODE_ENV === "production") {
   baseurl = "https://spikeforestfront.herokuapp.com"
@@ -115,7 +117,7 @@ export const fetchStudies = () => {
       .then(() => {
         dispatch(endLoading());
       })
-      .catch(err => console.log(err));
+      .catch(err => Sentry.captureException(err));
   };
 };
 
@@ -138,7 +140,7 @@ export const fetchCPUs = () => {
       .then(() => {
         dispatch(endLoading());
       })
-      .catch(err => console.log(err));
+      .catch(err => Sentry.captureException(err));
   };
 };
 
@@ -161,7 +163,7 @@ export const fetchGroupedURs = () => {
       .then(() => {
         dispatch(endLoading());
       })
-      .catch(err => console.log(err));
+      .catch(err => Sentry.captureException(err));
   };
 };
 
@@ -287,14 +289,14 @@ export const fetchRecordings = () => {
   };
 };
 
-/* Old Shiz
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-
-// select study
+// Selected Study for Scatterplot
 export const selectStudySortingResult = study_sorting_result => ({
   type: SELECT_STUDY_SORTING_RESULT,
   study_sorting_result
 });
+
+/* Old Shiz
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 export const selectRecording = recording => {
   return {
@@ -321,7 +323,7 @@ export const fetchPairing = (study, sorter) => {
       .then(() => {
         dispatch(endLoading());
       })
-      .catch(err => console.log(err));
+      .catch(err => Sentry.captureException(err));
   };
 };
 
@@ -342,6 +344,6 @@ export const fetchRecordingDetails = (study, sorter, recording) => {
       .then(() => {
         dispatch(endLoading());
       })
-      .catch(err => console.log(err));
+      .catch(err => Sentry.captureException(err));
   };
 };
