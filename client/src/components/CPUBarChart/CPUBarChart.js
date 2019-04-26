@@ -28,14 +28,12 @@ class CPUBarChart extends Component {
   }
 
   nearestXHandler = (value, { index }) => {
-    console.log(value, index, "🍔");
     this.setState({
       crosshairValues: [value]
     });
   };
 
   render() {
-    console.log(this.state.crosshairValues, "🍔");
     return (
       <div className="cpu-barchart">
         <FlexibleWidthXYPlot xType="ordinal" height={500} xPadding={30}>

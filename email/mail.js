@@ -7,8 +7,8 @@ const promisify = require("es6-promisify");
 const transport = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-         user: 'elovero@flatironinstitute.org',
-         pass: 'yourpassword'
+    user: 'elovero@flatironinstitute.org',
+    pass: 'yourpassword'
   }
 });
 
@@ -22,8 +22,6 @@ const generateHTML = (options = {}) => {
 export const send = async options => {
   const html = generateHTML(options);
   const text = htmlToText.fromString(html);
-
-  console.log = ("📎", text);
 
   const mailOptions = {
     from: `Spikeforest <elovero@flatironinstitute.org>`,

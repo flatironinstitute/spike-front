@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { isEmpty } from "../../utils";
-import { Form } from "react-bootstrap";
 
 // Components
 import Preloader from "../Preloader/Preloader";
@@ -63,7 +62,6 @@ class HeatmapCPU extends Component {
 
   render() {
     let loading = isEmpty(this.state.builtData) || isEmpty(this.state.checkboxes);
-    console.log('in the heatmap cpu')
     return (
       <div>
         {loading ? (
@@ -80,7 +78,7 @@ class HeatmapCPU extends Component {
 
 function mapStateToProps(state) {
   return {
-    selectedStudy: state.selectedStudy,
+    selectedStudySortingResult: state.selectedStudySortingResult,
     selectedRecording: state.selectedRecording
   };
 }

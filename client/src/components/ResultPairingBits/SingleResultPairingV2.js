@@ -355,7 +355,7 @@ class SingleResultPairingV2 extends Component {
 
 function mapStateToProps(state) {
   return {
-    selectedStudy: state.selectedStudy,
+    selectedStudySortingResult: state.selectedStudySortingResult,
     selectedRecording: state.selectedRecording
   };
 }
@@ -368,4 +368,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(SingleResultPairingV2);
-

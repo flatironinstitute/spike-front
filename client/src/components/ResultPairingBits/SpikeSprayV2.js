@@ -125,12 +125,6 @@ class SpikeSprayV2 extends Component {
       "False Positive",
       "False Negative"
     ];
-    console.log(
-      "🤩spikespray v2",
-      newRecDetails,
-      this.state.spikeCols,
-      this.state.offsetSpikeCols
-    );
     return (
       <div>
         {loading ? (

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../../../node_modules/react-vis/dist/style.css";
 import {
-  FlexibleWidthXYPlot,
+  FlexibleXYPlot,
   XAxis,
   YAxis,
   VerticalGridLines,
@@ -19,8 +19,7 @@ class ScatterplotAverage extends Component {
     this.state = {
       data: [],
       hoveredNode: null,
-      minY: 0,
-      maxY: 10
+      maxSNR: 100
     };
   }
 
@@ -51,9 +50,8 @@ class ScatterplotAverage extends Component {
       recording: unit.recording,
       num_events: unit.numMatches
     }));
-    let min = this.getMinY(newUnits);
-    let max = this.getMaxY(newUnits);
-    this.setState({ data: newUnits, minSNR: min, maxSNR: max });
+    let max = this.getMaxSNR(newUnits);
+    this.setState({ data: newUnits, maxSNR: max });
   }
 
   getYValue(unit) {
@@ -79,16 +77,13 @@ class ScatterplotAverage extends Component {
     return Math.sqrt(num_events);
   }
 
-  getMinY(data) {
-    return data.reduce((min, p) => (p.y < min ? p.y : min), data[0].y);
-  }
-
-  getMaxY(data) {
-    return data.reduce((max, p) => (p.y > max ? p.y : max), data[0].y);
+  getMaxSNR(data) {
+    let max = data.reduce((max, p) => (p.x > max ? p.x : max), data[0].y);
+    return Math.round(max * 100) / 100;
   }
 
   render() {
-    const { data, hoveredNode, minY, maxY } = this.state;
+    const { data, hoveredNode, maxSNR } = this.state;
     const colorRanges = {
       count: ["#6B7CC4", "#102BA3"],
       cpu: ["#EFC1E3", "#B52F93"],
@@ -104,23 +99,25 @@ class ScatterplotAverage extends Component {
       num_events: hoveredNode ? hoveredNode.num_events : null
     };
     let lineObjArr = [
-      { x: this.props.sliderValue, y: minY },
-      { x: this.props.sliderValue, y: maxY }
+      { x: this.props.sliderValue, y: 0 },
+      { x: this.props.sliderValue, y: 1 }
     ];
     const yTitle = toTitleCase(this.props.metric);
     return (
       <div className="canvas-wrapper">
-        <FlexibleWidthXYPlot
+        <FlexibleXYPlot
           onMouseLeave={() => this.setState({ hoveredNode: null })}
           height={400}
           xPadding={30}
+          yDomain={[0, 1]}
+          xDomain={[0, maxSNR]}
         >
           <VerticalGridLines />
           <HorizontalGridLines />
           <XAxis title="SNR" />
           <YAxis title={yTitle} />
           <MarkSeries
-            animation={true}
+            // animation={true}
             className="mark-series-example"
             sizeRange={[3, 15]}
             seriesId="my-example-scatterplot"
@@ -136,7 +133,7 @@ class ScatterplotAverage extends Component {
             data={lineObjArr}
           />
           {hoveredNode && <Hint value={valueObj} align={alignment} />}
-        </FlexibleWidthXYPlot>
+        </FlexibleXYPlot>
       </div>
     );
   }
