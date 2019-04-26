@@ -128,7 +128,7 @@ class HeatmapRow extends Component {
                     this.setState({ hoveredNode: d });
                   }}
                   onValueClick={d => {
-                    this.props.selectCell(d);
+                    this.props.onSelectCell(d);
                   }}
                 />
                 <LabelSeries
@@ -136,10 +136,10 @@ class HeatmapRow extends Component {
                   labelAnchorX="middle"
                   labelAnchorY="central"
                   onValueClick={d => {
-                    this.props.selectLabel();
+                    this.props.onSelectLabel();
                   }}
                   getLabel={d => {
-                    return d.in_range > 0 ? `${d.in_range}` : "";
+                    return d.text;
                   }}
                 />
               </FlexibleWidthXYPlot>
