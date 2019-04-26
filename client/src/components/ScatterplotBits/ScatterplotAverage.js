@@ -87,11 +87,6 @@ class ScatterplotAverage extends Component {
     return data.reduce((max, p) => (p.y > max ? p.y : max), data[0].y);
   }
 
-  getMaxSNR(data) {
-    let max = data.reduce((max, p) => (p.x > max ? p.x : max), data[0].y);
-    return Math.round(max * 100) / 100;
-  }
-
   render() {
     const { data, hoveredNode, minY, maxY } = this.state;
     const colorRanges = {
@@ -118,8 +113,10 @@ class ScatterplotAverage extends Component {
         <XYPlot
           onMouseLeave={() => this.setState({ hoveredNode: null })}
           height={400}
+          width={600}
           xPadding={30}
           yDomain={[0, 1]}
+        // xDomain={[0, 500]}
         >
           <VerticalGridLines />
           <HorizontalGridLines />
