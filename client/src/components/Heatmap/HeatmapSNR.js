@@ -155,26 +155,27 @@ class HeatmapSNR extends Component {
             <Preloader />
           </Container>
         ) : (
-            <Container className="container__heatmap">
-              <Row className="container__heatmap--row">
-                <Col lg={6} sm={12}>
-                  <HeatmapViz
-                    {...this.props}
-                    filteredData={this.state.builtData}
-                    sorters={this.props.shortSorters}
-                    format={this.props.format}
-                    metric={this.props.metric}
-                  />
-                </Col>
-                <Col lg={6} sm={12}>
-                  <ScatterplotCard
-                    {...this.props}
-                    sliderValue={this.props.sliderValue}
-                  />
-                </Col>
-              </Row>
-            </Container>
-          )}
+          <Container className="container__heatmap">
+            <Row className="container__heatmap--row">
+              <Col lg={6} sm={12}>
+                <HeatmapViz
+                  selectStudySortingResult={this.props.selectStudySortingResult}
+                  selectedStudySortingResult={this.props.selectedStudySortingResult}
+                  studiesWithResults={this.state.builtData}
+                  format={this.props.format}
+                  metric={this.props.metric}
+                  threshold={this.props.snrMin}
+                />
+              </Col>
+              <Col lg={6} sm={12}>
+                <ScatterplotCard
+                  {...this.props}
+                  sliderValue={this.props.snrMin}
+                />
+              </Col>
+            </Row>
+          </Container>
+        )}
       </div>
     );
   }

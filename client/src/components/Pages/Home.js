@@ -54,12 +54,14 @@ class Home extends Component {
   }
 
   getStudies() {
+    // returns the unique names of the studies
     return this.props.studies
       .map(item => item.name)
       .filter((value, index, self) => self.indexOf(value) === index);
   }
 
   getSorters() {
+    // returns the unique names of the sorters
     return this.props.sorters
       .map(item => item.name)
       .filter((value, index, self) => self.indexOf(value) === index);

@@ -63,11 +63,15 @@ class SingleResultPairingV2 extends Component {
     }
   }
 
+
   filterResults() {
     let results = this.props.pairing.filter(result => {
       return result.sorter && result.is_applied;
     });
     var builtData;
+
+    builtData = results
+
     switch (this.state.format) {
       case "count":
         builtData = this.filterAccuracy(results);
@@ -78,6 +82,7 @@ class SingleResultPairingV2 extends Component {
       default:
         builtData = results;
     }
+
     let selectedRecording = builtData.filter(
       recording => recording.sorter === this.state.sorter
     );
