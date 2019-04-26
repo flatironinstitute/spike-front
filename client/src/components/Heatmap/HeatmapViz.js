@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import HeatmapRow from "./HeatmapRow";
 import { isEmpty } from "../../utils";
+import { SentryError } from "@sentry/core";
+import * as Sentry from "@sentry/browser";
 
 class HeatmapViz extends Component {
   constructor(props) {
@@ -135,13 +137,13 @@ class HeatmapViz extends Component {
         }
       }
       else {
-        text = 'unsup-format'
+        Sentry.captureMessage('Unsupported format in compute_row_cell_data', format)
       }
       return {
         color:color,
         text:text,
         selected:(study_sorting_result==selected_study_sorting_result),
-        x:study_sorting_result.sorter, // I am not sure what these do.. but apparently they are needed
+        x:study_sorting_result.sorter,
         y:study_sorting_result.study,
         study_sorting_result:study_sorting_result // needed in onSelectCell -> selectStudySortingResult
       }
@@ -166,11 +168,9 @@ class HeatmapViz extends Component {
                 onSelectCell={(this.props.format!='cpu') ? (d) => {this.props.selectStudySortingResult(d.study_sorting_result);} : null}
                 onSelectLabel={(this.props.format!='cpu') ? () => {/*do nothing for now*/} : null}
                 cells={row['cell_data']}
-                key={`hmrow${i}`} // unique keys are apparently needed by HeatmapViz
+                key={`hmrow${i}`}
                 index={i} // the index of this row (matters whether it is zero or not -- see comment in HeatmapRow)
                 format={this.props.format}
-                // doesn't seem to be necessary to pass in the sorter names
-                //sorters={this.props.sorters.sort()}
               />
             ))}
           </div>
