@@ -18,7 +18,7 @@ class SpikeSprayV1 extends Component {
   }
 
   groupBy(arr, property) {
-    return arr.reduce(function(memo, x) {
+    return arr.reduce(function (memo, x) {
       if (!memo[x[property]]) {
         memo[x[property]] = [];
       }
@@ -44,7 +44,6 @@ class SpikeSprayV1 extends Component {
     const entries = Object.entries(recDetails);
     let spikeCols = [];
     for (const [key, spikeCol] of entries) {
-      console.log("Spray being made", key);
       spikeCols.push(spikeCol);
     }
     let testCols = [];
@@ -95,68 +94,68 @@ class SpikeSprayV1 extends Component {
             </Card>
           </Container>
         ) : (
-          <div>
-            <Row>
-              {this.state.spikeCols.map((column, i) => (
-                <Col lg={3} key={`spikecol-${Math.random(i)}`}>
-                  <div className="card__label">
-                    <p>
-                      <strong>{colTitles[i]} x of y spikes shown</strong>
-                    </p>
-                  </div>
-                  <XYPlot
-                    width={350}
-                    height={350}
-                    key={`spikeplot-${Math.random(i)}`}
-                  >
-                    <XAxis title="Samples" />
-                    {column.map((line, i) => (
-                      <LineSeries
-                        key={`line-${Math.random(i)}`}
-                        color={
-                          this.state.hoveredNode === line.data
-                            ? "#f6cf3f"
-                            : "#807f84"
-                        }
-                        data={line.data}
-                        style={{ strokeWidth: 0.25 }}
-                        onNearestXY={d => this.setState({ hoveredNode: d })}
-                      />
-                    ))}
-                  </XYPlot>
-                </Col>
-              ))}
-            </Row>
-            <Row>
-              {this.state.splitSpikeCols.map((colorGroup, i) => (
-                <Col lg={3} key={`spikecol-${Math.random(i)}`}>
-                  <div className="card__label">
-                    <p>
-                      <strong>{colTitles[i]}</strong>
-                    </p>
-                  </div>
-                  {colorGroup.map((lines, i) => (
+            <div>
+              <Row>
+                {this.state.spikeCols.map((column, i) => (
+                  <Col lg={3} key={`spikecol-${Math.random(i)}`}>
+                    <div className="card__label">
+                      <p>
+                        <strong>{colTitles[i]} x of y spikes shown</strong>
+                      </p>
+                    </div>
                     <XYPlot
-                      width={300}
-                      height={300}
+                      width={350}
+                      height={350}
                       key={`spikeplot-${Math.random(i)}`}
                     >
-                      <HorizontalGridLines />
-                      {lines.map((line, i) => (
+                      <XAxis title="Samples" />
+                      {column.map((line, i) => (
                         <LineSeries
                           key={`line-${Math.random(i)}`}
-                          color={line.color}
+                          color={
+                            this.state.hoveredNode === line.data
+                              ? "#f6cf3f"
+                              : "#807f84"
+                          }
                           data={line.data}
+                          style={{ strokeWidth: 0.25 }}
+                          onNearestXY={d => this.setState({ hoveredNode: d })}
                         />
                       ))}
-                      <XAxis title={`Channel-${i + 1}`} />
                     </XYPlot>
-                  ))}
-                </Col>
-              ))}
-            </Row>
-          </div>
-        )}
+                  </Col>
+                ))}
+              </Row>
+              <Row>
+                {this.state.splitSpikeCols.map((colorGroup, i) => (
+                  <Col lg={3} key={`spikecol-${Math.random(i)}`}>
+                    <div className="card__label">
+                      <p>
+                        <strong>{colTitles[i]}</strong>
+                      </p>
+                    </div>
+                    {colorGroup.map((lines, i) => (
+                      <XYPlot
+                        width={300}
+                        height={300}
+                        key={`spikeplot-${Math.random(i)}`}
+                      >
+                        <HorizontalGridLines />
+                        {lines.map((line, i) => (
+                          <LineSeries
+                            key={`line-${Math.random(i)}`}
+                            color={line.color}
+                            data={line.data}
+                          />
+                        ))}
+                        <XAxis title={`Channel-${i + 1}`} />
+                      </XYPlot>
+                    ))}
+                  </Col>
+                ))}
+              </Row>
+            </div>
+          )}
       </div>
     );
   }

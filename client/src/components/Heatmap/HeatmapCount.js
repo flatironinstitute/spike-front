@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { isEmpty } from "../../utils";
+import * as Sentry from "@sentry/browser";
 
 // Components
 import { Col, Container, Row } from "react-bootstrap";
@@ -62,7 +63,7 @@ class HeatmapCount extends Component {
   filterAccuracy(sorterArray) {
     let newArr = sorterArray.map(sorter => {
       if (!sorter.accuracies) {
-        console.log("🍔 no accuracies", sorter);
+        Sentry.captureMessage("No accuracy values for this sorter: ", sorter);
         return sorter;
       } else {
         let above = sorter.accuracies.filter(accu => {
@@ -79,7 +80,7 @@ class HeatmapCount extends Component {
   filterRecall(sorterArray) {
     let newArr = sorterArray.map(sorter => {
       if (!sorter.recalls) {
-        console.log("🍔 no recalls", sorter);
+        Sentry.captureMessage("No recall values for this sorter: ", sorter);
         sorter.in_range = 0;
         sorter.color = 0;
         return sorter;
@@ -98,7 +99,7 @@ class HeatmapCount extends Component {
   filterPrecision(sorterArray) {
     let newArr = sorterArray.map(sorter => {
       if (!sorter.precisions) {
-        console.log("🍔 no precisions", sorter);
+        Sentry.captureMessage("No precision values for this sorter: ", sorter);
         sorter.in_range = 0;
         sorter.color = 0;
         return sorter;
@@ -147,26 +148,26 @@ class HeatmapCount extends Component {
             <Preloader />
           </Container>
         ) : (
-          <Container className="container__heatmap">
-            <Row className="container__heatmap--row">
-              <Col lg={6} sm={12}>
-                <HeatmapViz
-                  {...this.props}
-                  filteredData={this.state.builtData}
-                  sorters={this.props.shortSorters}
-                  format={this.props.format}
-                  metric={this.props.metric}
-                />
-              </Col>
-              <Col lg={6} sm={12}>
-                <ScatterplotCard
-                  {...this.props}
-                  sliderValue={this.props.sliderValue}
-                />
-              </Col>
-            </Row>
-          </Container>
-        )}
+            <Container className="container__heatmap">
+              <Row className="container__heatmap--row">
+                <Col lg={6} sm={12}>
+                  <HeatmapViz
+                    {...this.props}
+                    filteredData={this.state.builtData}
+                    sorters={this.props.shortSorters}
+                    format={this.props.format}
+                    metric={this.props.metric}
+                  />
+                </Col>
+                <Col lg={6} sm={12}>
+                  <ScatterplotCard
+                    {...this.props}
+                    sliderValue={this.props.sliderValue}
+                  />
+                </Col>
+              </Row>
+            </Container>
+          )}
       </div>
     );
   }

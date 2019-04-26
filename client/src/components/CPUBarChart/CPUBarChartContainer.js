@@ -74,7 +74,6 @@ class CPUBarChartContainer extends Component {
   }
 
   render() {
-    console.log('in the chart container', this.state.checkboxes);
     let loading = isEmpty(this.state.filteredData) || isEmpty(this.state.checkboxes);
     return (
       <div>

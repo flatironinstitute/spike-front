@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../../../node_modules/react-vis/dist/style.css";
 import {
-  XYPlot,
+  FlexibleXYPlot,
   XAxis,
   YAxis,
   VerticalGridLines,
@@ -88,7 +88,7 @@ class ScatterplotCount extends Component {
   }
 
   render() {
-    const { data, hoveredNode, minSNR, maxSNR } = this.state;
+    const { data, hoveredNode, maxSNR } = this.state;
     const alignment = { vertical: "top", horizontal: "left" };
     let valueObj = {
       recording: hoveredNode
@@ -105,11 +105,11 @@ class ScatterplotCount extends Component {
     const yTitle = toTitleCase(this.props.metric);
     return (
       <div className="canvas-wrapper">
-        <XYPlot
+        <FlexibleXYPlot
           onMouseLeave={() => this.setState({ hoveredNode: null })}
           height={400}
           xPadding={30}
-          width={600}
+          yPadding={30}
           yDomain={[0, 1]}
           xDomain={[0, maxSNR]}
         >
@@ -118,7 +118,7 @@ class ScatterplotCount extends Component {
           <XAxis title="SNR" />
           <YAxis title={yTitle} />
           <MarkSeries
-            animation={true}
+            // animation={true}
             className="mark-series-example"
             sizeRange={[3, 15]}
             seriesId="my-example-scatterplot"
@@ -134,7 +134,7 @@ class ScatterplotCount extends Component {
             data={lineObjArr}
           />
           {hoveredNode && <Hint value={valueObj} align={alignment} />}
-        </XYPlot>
+        </FlexibleXYPlot>
       </div>
     );
   }

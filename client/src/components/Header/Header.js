@@ -65,10 +65,10 @@ class Header extends Component {
           </Navbar.Brand>
           <Nav
             className="navbar__right"
-            activeKey={activeRoute}
-            onSelect={selectedKey => {
-              console.log("Route to 🗺️", selectedKey);
-            }}
+          // activeKey={activeRoute}
+          // onSelect={selectedKey => {
+          //   console.log("Route to 🗺️", selectedKey);
+          // }}
           >
             <LinkContainer exact to="/">
               <Nav.Link eventKey="/">Home</Nav.Link>
