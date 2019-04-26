@@ -36,7 +36,7 @@ const apiroutes = require("./apiroutes");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   // Allow isomorphic requests
   let clientUri = process.env.CLIENT_URI || "http://localhost:3000";
   res.setHeader("Access-Control-Allow-Origin", clientUri);
@@ -64,12 +64,12 @@ app.use("/", apiroutes);
 
 /* Client Server
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-if (process.env.NODE_ENV === "production") {
-  // Serve any static files
-  app.use(express.static(path.join(__dirname, "client/build")));
-  // Handle React routing, return all requests to React app
-  app.get("*", function(req, res) {
-    res.sendFile(path.join(__dirname, "client/build", "index.html"));
-  });
-}
+// if (process.env.NODE_ENV === "production") {
+//   // Serve any static files
+//   app.use(express.static(path.join(__dirname, "client/build")));
+//   // Handle React routing, return all requests to React app
+//   app.get("*", function(req, res) {
+//     res.sendFile(path.join(__dirname, "client/build", "index.html"));
+//   });
+// }
 app.listen(port, () => console.log(`🖥️  Server listening on port ${port}`));
