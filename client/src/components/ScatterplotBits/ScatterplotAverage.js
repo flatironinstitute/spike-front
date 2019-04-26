@@ -78,6 +78,7 @@ class ScatterplotAverage extends Component {
   }
 
   getMaxSNR(data) {
+    if (data.length == 0) return 0;
     let max = data.reduce((max, p) => (p.x > max ? p.x : max), data[0].y);
     return Math.round(max * 100) / 100;
   }

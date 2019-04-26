@@ -4,7 +4,7 @@ import { initialState } from "./initialState";
 const selectedStudySortingResult = (state = initialState, action) => {
   switch (action.type) {
     case SELECT_STUDY_SORTING_RESULT:
-      return action.study;
+      return action.study_sorting_result;
     default:
       return state;
   }

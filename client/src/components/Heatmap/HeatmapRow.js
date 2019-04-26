@@ -26,23 +26,23 @@ class HeatmapRow extends Component {
   }
 
   componentDidMount() {
-    if (this.props.vizDatum) {
+    if (this.props.cells) {
       this.setData();
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.selectedStudySortingResult !== prevProps.selectedStudySortingResult) {
+    if ((this.props.selectedCell !== prevProps.selectedCell) || (this.props.cells !== prevProps.cells )) {
       this.setData();
     }
   }
 
   setData() {
-    let colorMap = this.props.vizDatum.map(datum => datum.color);
+    let colorMap = this.props.cells.map(datum => datum.color);
     colorMap.sort((a, b) => a - b);
-    let withColor = this.props.vizDatum.map(datum => {
+    let withColor = this.props.cells.map(datum => {
       datum.style = colorMap.indexOf(datum.color) > 2 ? { fill: "white" } : {};
-      if (this.props.selectedStudySortingResult && this.props.selectedStudySortingResult === datum) {
+      if (datum.selected) {
         datum.style = { fill: "#F6782D" };
       }
       return datum;
@@ -50,6 +50,18 @@ class HeatmapRow extends Component {
     this.setState({
       data: withColor
     });
+  }
+
+  selectCell(datum) {
+    if (this.props.onSelectCell) {
+      this.props.onSelectCell(datum);
+    }
+  }
+
+  selectLabel() {
+    if (this.props.onSelectLabel) {
+      this.props.onSelectLabel();
+    }
   }
 
   render() {
@@ -116,7 +128,7 @@ class HeatmapRow extends Component {
                     this.setState({ hoveredNode: d });
                   }}
                   onValueClick={d => {
-                    this.props.selectStudy(d);
+                    this.props.onSelectCell(d);
                   }}
                 />
                 <LabelSeries
@@ -124,10 +136,10 @@ class HeatmapRow extends Component {
                   labelAnchorX="middle"
                   labelAnchorY="central"
                   onValueClick={d => {
-                    this.props.selectStudy(d);
+                    this.props.onSelectLabel();
                   }}
                   getLabel={d => {
-                    return d.in_range > 0 ? `${d.in_range}` : "";
+                    return d.text;
                   }}
                 />
               </FlexibleWidthXYPlot>

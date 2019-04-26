@@ -290,9 +290,9 @@ export const fetchRecordings = () => {
 };
 
 // Selected Study for Scatterplot
-export const selectStudy = study => ({
+export const selectStudySortingResult = study_sorting_result => ({
   type: SELECT_STUDY_SORTING_RESULT,
-  study
+  study_sorting_result
 });
 
 /* Old Shiz
