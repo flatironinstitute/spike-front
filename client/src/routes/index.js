@@ -24,6 +24,8 @@ import RawData from "../components/Pages/RawData";
 
 class Routes extends Component {
   async componentDidMount() {
+    // This is called only once on page reload
+    // The below fetches are defined in actionCreators()
     // V2 Data: Fetches
     this.props.fetchCPUs();
     this.props.fetchStudies();
@@ -38,6 +40,7 @@ class Routes extends Component {
   }
 
   render() {
+    // This top route is the main (home) page -- see components/Pages/Home.js
     return (
       <div className="wrapper">
         <Header router={this.props.router} />
