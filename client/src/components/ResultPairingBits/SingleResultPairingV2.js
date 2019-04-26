@@ -214,7 +214,7 @@ class SingleResultPairing extends Component {
     // let loadScatterplot = true;
     // isEmpty(this.props.studies) ||
     // isEmpty(this.props.sorters) ||
-    // isEmpty(this.props.selectedStudy);
+    // isEmpty(this.props.selectedStudySortingResult);
     return (
       <div>
         <div className="page__body">

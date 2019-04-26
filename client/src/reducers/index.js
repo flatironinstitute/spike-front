@@ -3,7 +3,7 @@ import { connectRouter } from "connected-react-router";
 
 import recordings from "./recordings";
 import selectedRecording from "./selectedRecording";
-import selectedStudySortingResult from "./selectedStudy";
+import selectedStudySortingResult from "./selectedStudySortingResult";
 import pairing from "./pairing";
 import recordingDetails from "./recordingDetails";
 // V2 Data: Reducers

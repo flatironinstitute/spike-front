@@ -16,6 +16,9 @@ class StatsAlert extends Component {
           <div className="alert__ticker--wrapper">
             <div className="alert__ticker">
               <div className="ticker__item">
+                <b>Site Preview for France Lab</b>
+              </div>
+              <div className="ticker__item">
                 <b>Project Totals:</b>
               </div>
               <div className="ticker__item">
