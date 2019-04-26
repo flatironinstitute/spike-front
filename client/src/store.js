@@ -12,7 +12,7 @@ ReactGA.initialize(gaTag);
 // create an object for the default data
 const defaultState = {
   selectedRecording: null,
-  selectedStudy: null,
+  selectedStudySortingResult: null,
   recordings: null,
   pairing: null,
   recordingDetails: null,

@@ -151,11 +151,15 @@ class HeatmapCount extends Component {
             <Row className="container__heatmap--row">
               <Col lg={6} sm={12}>
                 <HeatmapViz
-                  {...this.props}
-                  filteredData={this.state.builtData}
-                  sorters={this.props.shortSorters}
+                  // {...this.props}
+                  selectStudySortingResult={this.props.selectStudySortingResult}
+                  selectedStudySortingResult={this.props.selectedStudySortingResult}
+                  studiesWithResults={this.state.builtData}
+                  // doesn't seem to be necessary to pass in the sorters (jfm)
+                  //sorters={this.props.shortSorters}
                   format={this.props.format}
                   metric={this.props.metric}
+                  threshold={this.props.sliderValue}
                 />
               </Col>
               <Col lg={6} sm={12}>
@@ -174,7 +178,7 @@ class HeatmapCount extends Component {
 
 function mapStateToProps(state) {
   return {
-    selectedStudy: state.selectedStudy,
+    selectedStudySortingResult: state.selectedStudySortingResult,
     selectedRecording: state.selectedRecording
   };
 }

@@ -19,30 +19,36 @@ class HeatmapRow extends Component {
       width: 620
     };
     this.margin = { left: 190, right: 80, top: 5, bottom: 5 };
+    console.log(this.props.index);
     if (this.props.index === 0) {
+      // Liz: is this making room for the top labels? (jfm)
       this.dims.height = 110;
       this.margin.top = 65;
     }
   }
 
   componentDidMount() {
-    if (this.props.vizDatum) {
+    if (this.props.cells) {
       this.setData();
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.selectedStudy !== prevProps.selectedStudy) {
-      this.setData();
+    // not sure about this condition -- why selectedCell rather than cells (jfm)
+    // if (this.props.selectedCell !== prevProps.selectedCell) {
+    //   this.setData();
+    // }
+    if (this.props.cells !== prevProps.cells) {
+      this.setData()
     }
   }
 
   setData() {
-    let colorMap = this.props.vizDatum.map(datum => datum.color);
+    let colorMap = this.props.cells.map(datum => datum.color);
     colorMap.sort((a, b) => a - b);
-    let withColor = this.props.vizDatum.map(datum => {
+    let withColor = this.props.cells.map(datum => {
       datum.style = colorMap.indexOf(datum.color) > 2 ? { fill: "white" } : {};
-      if (this.props.selectedStudy && this.props.selectedStudy === datum) {
+      if (datum.selected) {
         datum.style = { fill: "#F6782D" };
       }
       return datum;
@@ -52,9 +58,15 @@ class HeatmapRow extends Component {
     });
   }
 
-  conditionalSelectStudy(datum) {
-    if (this.props.format !== "average") {
-      this.props.selectStudy(datum);
+  selectCell(datum) {
+    if (this.props.onSelectCell) {
+      this.props.onSelectCell(datum);
+    }
+  }
+
+  selectLabel() {
+    if (this.props.onSelectLabel) {
+      this.props.onSelectLabel();
     }
   }
 
@@ -122,7 +134,8 @@ class HeatmapRow extends Component {
                   this.setState({ hoveredNode: d });
                 }}
                 onValueClick={d => {
-                  this.conditionalSelectStudy(d);
+                  // TODO: fix: this doesn't get called when user is hovering over the actual text in the cell.
+                  this.selectCell(d);
                 }}
               />
               <LabelSeries
@@ -130,10 +143,10 @@ class HeatmapRow extends Component {
                 labelAnchorX="middle"
                 labelAnchorY="central"
                 onValueClick={d => {
-                  this.conditionalSelectStudy(d);
+                  this.selectLabel();
                 }}
                 getLabel={d => {
-                  return d.in_range > 0 ? `${d.in_range}` : "";
+                  return d.text;
                 }}
               />
             </FlexibleWidthXYPlot>

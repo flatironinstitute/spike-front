@@ -82,7 +82,8 @@ class SingleResultPairing extends Component {
       recording => recording.sorter === this.state.sorter
     );
     // TODO: Swap this with selectedRecording everywhere
-    this.props.selectStudy(selectedRecording[0]);
+    // jfm removed the following line for now, wasn't sure what it was doing (i renamed selectStudy to selectStudySortingResult)
+    //this.props.selectStudy(selectedRecording[0]);
     this.setState({ builtData: builtData });
   }
 
@@ -380,7 +381,7 @@ class SingleResultPairing extends Component {
 
 function mapStateToProps(state) {
   return {
-    selectedStudy: state.selectedStudy,
+    selectedStudySortingResult: state.selectedStudySortingResult,
     selectedRecording: state.selectedRecording
   };
 }

@@ -26,7 +26,7 @@ export const SEND_CONTACT_FAILURE = "SEND_CONTACT_FAILURE";
 /* Old Shiz
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 export const SELECT_RECORDING = "SELECT_RECORDING";
-export const SELECT_STUDY = "SELECT_STUDY";
+export const SELECT_STUDY_SORTING_RESULT = "SELECT_STUDY_SORTING_RESULT";
 export const RECEIVE_PAIRING = "RECEIVE_PAIRING";
 export const RECEIVE_RECORDING_DETAILS = "RECEIVE_RECORDING_DETAILS";
 
@@ -290,11 +290,13 @@ export const fetchRecordings = () => {
 /* Old Shiz
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-// select study
-export const selectStudy = study => ({
-  type: SELECT_STUDY,
-  study
-});
+// select study sorting result
+export const selectStudySortingResult = study_sorting_result => {
+  return {
+    type: SELECT_STUDY_SORTING_RESULT,
+    study_sorting_result
+  }
+};
 
 export const selectRecording = recording => {
   return {

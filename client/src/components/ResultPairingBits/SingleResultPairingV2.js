@@ -63,11 +63,17 @@ class SingleResultPairing extends Component {
     }
   }
 
+
   filterResults() {
     let results = this.props.pairing.filter(result => {
       return result.sorter && result.is_applied;
     });
     var builtData;
+
+    builtData = results
+
+    // no longer necessary to do the following
+    /*
     switch (this.state.format) {
       case "count":
         builtData = this.filterAccuracy(results);
@@ -78,6 +84,8 @@ class SingleResultPairing extends Component {
       default:
         builtData = results;
     }
+    */
+
     let selectedRecording = builtData.filter(
       recording => recording.sorter === this.state.sorter
     );
@@ -86,6 +94,7 @@ class SingleResultPairing extends Component {
     this.setState({ builtData: builtData });
   }
 
+  /*
   // Count functions for 'Number of groundtruth units above accuracy threshold'
   filterAccuracy(sorterArray) {
     let newArr = sorterArray.map(sorter => {
@@ -119,6 +128,7 @@ class SingleResultPairing extends Component {
     });
     return newArr;
   }
+  */
 
   getPageName() {
     let activeRoute = this.props.router.location.pathname;
@@ -292,7 +302,7 @@ class SingleResultPairing extends Component {
 
 function mapStateToProps(state) {
   return {
-    selectedStudy: state.selectedStudy,
+    selectedStudySortingResult: state.selectedStudySortingResult,
     selectedRecording: state.selectedRecording
   };
 }
