@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import HeatmapRow from "./HeatmapRow";
 import { isEmpty } from "../../utils";
-import { SentryError } from "@sentry/core";
 import * as Sentry from "@sentry/browser";
 
 class HeatmapViz extends Component {
@@ -16,11 +15,11 @@ class HeatmapViz extends Component {
 
   componentDidUpdate(prevProps) {
     if (
-        (this.props.studiesWithResults !== prevProps.studiesWithResults)
-        || (this.props.threshold !== prevProps.threshold)
-        || (this.props.format !== prevProps.format)
-        || (this.props.metric !== prevProps.metric)
-        || (this.props.selectedStudySortingResult != prevProps.selectedStudySortingResult )
+      (this.props.studiesWithResults !== prevProps.studiesWithResults)
+      || (this.props.threshold !== prevProps.threshold)
+      || (this.props.format !== prevProps.format)
+      || (this.props.metric !== prevProps.metric)
+      || (this.props.selectedStudySortingResult !== prevProps.selectedStudySortingResult)
     ) {
       this.buildVizData(this.props.studiesWithResults);
     }
@@ -97,14 +96,14 @@ class HeatmapViz extends Component {
           metric_vals = study_sorting_result.precisions;
           break;
         default:
-          throw Error('Unexpected metric: '+metric);
+          throw Error('Unexpected metric: ' + metric);
       }
-      if (format == 'count') {
-        if ((metric_vals) && (metric_vals.length>0)) {
+      if (format === 'count') {
+        if ((metric_vals) && (metric_vals.length > 0)) {
           let num_above = metric_vals.filter(val => {
             return val >= threshold; // metric threshold
           });
-          text = num_above.length+'';
+          text = num_above.length + '';
           color = num_above.length;
         }
         else {
@@ -112,10 +111,10 @@ class HeatmapViz extends Component {
           color = 0;
         }
       }
-      else if (format == 'average') {
-        if ((metric_vals) && (metric_vals.length>0)) {
+      else if (format === 'average') {
+        if ((metric_vals) && (metric_vals.length > 0)) {
           let vals_to_use = [];
-          for (let i=0; i<study_sorting_result.snrs.length; i++) {
+          for (let i = 0; i < study_sorting_result.snrs.length; i++) {
             if (study_sorting_result.snrs[i] > threshold) {
               vals_to_use.push(metric_vals[i]);
             }
@@ -127,7 +126,7 @@ class HeatmapViz extends Component {
           }
           // This just prints the output to 2 digits
           let avg_rounded = Math.round(aboveAvg * 100) / 100
-          
+
           text = avg_rounded + '';
           color = avg_rounded;
         }
@@ -140,16 +139,16 @@ class HeatmapViz extends Component {
         Sentry.captureMessage('Unsupported format in compute_row_cell_data', format)
       }
       return {
-        color:color,
-        text:text,
-        selected:(study_sorting_result==selected_study_sorting_result),
-        x:study_sorting_result.sorter,
-        y:study_sorting_result.study,
-        study_sorting_result:study_sorting_result // needed in onSelectCell -> selectStudySortingResult
+        color: color,
+        text: text,
+        selected: (study_sorting_result === selected_study_sorting_result),
+        x: study_sorting_result.sorter,
+        y: study_sorting_result.study,
+        study_sorting_result: study_sorting_result // needed in onSelectCell -> selectStudySortingResult
       }
     });
   }
-  
+
   render() {
     const loading = isEmpty(this.state.rows);
     const title = this.getFormatCopy();
@@ -161,20 +160,20 @@ class HeatmapViz extends Component {
         {loading ? (
           <h4>...</h4>
         ) : (
-          <div className="heatmap__column">
-            {this.state.rows.map((row, i) => (
-              <HeatmapRow
-                //{...this.props}
-                onSelectCell={(this.props.format!='cpu') ? (d) => {this.props.selectStudySortingResult(d.study_sorting_result);} : null}
-                onSelectLabel={(this.props.format!='cpu') ? () => {/*do nothing for now*/} : null}
-                cells={row['cell_data']}
-                key={`hmrow${i}`}
-                index={i} // the index of this row (matters whether it is zero or not -- see comment in HeatmapRow)
-                format={this.props.format}
-              />
-            ))}
-          </div>
-        )}
+            <div className="heatmap__column">
+              {this.state.rows.map((row, i) => (
+                <HeatmapRow
+                  //{...this.props}
+                  onSelectCell={(this.props.format !== 'cpu') ? (d) => { this.props.selectStudySortingResult(d.study_sorting_result); } : null}
+                  onSelectLabel={(this.props.format !== 'cpu') ? () => {/*do nothing for now*/ } : null}
+                  cells={row['cell_data']}
+                  key={`hmrow${i}`}
+                  index={i} // the index of this row (matters whether it is zero or not -- see comment in HeatmapRow)
+                  format={this.props.format}
+                />
+              ))}
+            </div>
+          )}
       </div>
     );
   }
