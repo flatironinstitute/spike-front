@@ -32,7 +32,7 @@ class HeatmapRow extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.selectedCell !== prevProps.selectedCell) {
+    if ((this.props.selectedCell !== prevProps.selectedCell) || (this.props.cells !== prevProps.cells )) {
       this.setData();
     }
   }
