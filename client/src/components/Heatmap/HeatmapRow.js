@@ -19,7 +19,6 @@ class HeatmapRow extends Component {
       width: 620
     };
     this.margin = { left: 190, right: 80, top: 5, bottom: 5 };
-    console.log(this.props.index);
     if (this.props.index === 0) {
       // Liz: is this making room for the top labels? (jfm)
       this.dims.height = 110;
