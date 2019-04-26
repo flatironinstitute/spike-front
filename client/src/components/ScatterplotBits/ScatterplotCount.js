@@ -102,20 +102,19 @@ class ScatterplotCount extends Component {
       { x: minSNR, y: this.props.sliderValue },
       { x: maxSNR, y: this.props.sliderValue }
     ];
-    const tickValues = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
     const yTitle = toTitleCase(this.props.metric);
-
     return (
       <div className="canvas-wrapper">
         <FlexibleWidthXYPlot
           onMouseLeave={() => this.setState({ hoveredNode: null })}
-          xPadding={30}
           height={400}
+          xPadding={30}
+          yDomain={[0, 1]}
         >
           <VerticalGridLines />
           <HorizontalGridLines />
           <XAxis title="SNR" />
-          <YAxis title={yTitle} tickValues={tickValues} />
+          <YAxis title={yTitle} />
           <MarkSeries
             animation={true}
             className="mark-series-example"
