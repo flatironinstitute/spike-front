@@ -94,7 +94,7 @@ class HeatmapRow extends Component {
                 xPadding={30}
                 margin={this.margin}
               >
-                {this.props.showXLabels === 0 ? (
+                {this.props.showXLabels ? (
                   <XAxis
                     orientation={"top"}
                     tickLabelAngle={-25}
