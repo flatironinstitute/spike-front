@@ -7,20 +7,22 @@ import * as Sentry from "@sentry/browser";
 class HeatmapViz extends Component {
   constructor(props) {
     super(props);
-    this.state = { rows: [] };
+    this.state = { row_group_data: [], expanded_study_sets: {} };
+    this.handleSelectStudyCell = this.handleSelectStudyCell.bind(this);
+    this.handleSelectStudySetCell = this.handleSelectStudySetCell.bind(this);
   }
 
   componentDidMount() {
     this.buildVizData(this.props.studiesWithResults);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (
         (this.props.studiesWithResults !== prevProps.studiesWithResults)
         || (this.props.threshold !== prevProps.threshold)
         || (this.props.format !== prevProps.format)
         || (this.props.metric !== prevProps.metric)
-        || (this.props.selectedStudySortingResult != prevProps.selectedStudySortingResult )
+        || (this.props.selectedStudySortingResult !== prevProps.selectedStudySortingResult )
     ) {
       this.buildVizData(this.props.studiesWithResults);
     }
@@ -28,72 +30,54 @@ class HeatmapViz extends Component {
 
   buildVizData(studiesWithResults) {
     let that = this;
-    console.log('------------------------------- props', this.props);
-    console.log('------------------------------- studies', this.props.studies);
-    console.log('------------------------------- studiesWithResults', studiesWithResults);
     if (studiesWithResults) {
-      /*
-      // alphabetize
-      // Liz: i'm not sure I understand what this is doing (jfm)
-      let data1 = studiesWithResults.map(study => {
-        let values = Object.values(study)[0];
-        return values.sort((a, b) => {
-          let textA = a.sorter.toUpperCase();
-          let textB = b.sorter.toUpperCase();
-          return textA < textB ? -1 : textA > textB ? 1 : 0;
-        });
-        // TODO: Allow for other sorting
-      });
 
-      // alphabetize the studies
-      let data2 = data1.sort((a, b) => {
-        let textA = a[0].study.toUpperCase();
-        let textB = b[0].study.toUpperCase();
-        return textA < textB ? -1 : textA > textB ? 1 : 0;
+      let study_set_names_by_id = {};
+      this.props.studysets.forEach(function(x) {
+        study_set_names_by_id[x._id] = x.name;
       });
-      console.log('------------------data2', data2);
-      */
 
       let study_set_by_study = {};
       let study_set_names = {};
       this.props.studies.forEach(function(study) {
-        study_set_by_study[study.name] = study.studySet;
-        study_set_names[study.studySet] = true;
+        let study_set_name = study_set_names_by_id[study.studySet];
+        study_set_by_study[study.name] = study_set_name;
+        study_set_names[study_set_name] = true;
       });
       study_set_names = Object.keys(study_set_names);
       study_set_names.sort();
-      console.log(study_set_names);
-      console.log(study_set_by_study);
 
-      let rows = [];
+      let row_group_data = [];
       study_set_names.forEach(function(study_set) {
         let studies_in_study_set = [];
         studiesWithResults.forEach(function(x) {
           let study_name = Object.keys(x)[0];
-          if (study_set_by_study[study_name] == study_set) {
-            studies_in_study_set.push(x[study_name]);
+          if (study_set_by_study[study_name] === study_set) {
+            let y = x[study_name]
+            // important to sort the results by sorter so they all line up
+            y.sort((a, b) => {
+              let textA = a.sorter.toUpperCase();
+              let textB = b.sorter.toUpperCase();
+              return textA < textB ? -1 : textA > textB ? 1 : 0;
+            })
+            studies_in_study_set.push(y);
           }
         });
-        rows.push({
-          cell_data: that.compute_row_cell_data_for_study_set(studies_in_study_set, study_set)
-        });
+        let row_group_datum = {
+          study_set: study_set,
+          cell_data: that.compute_row_cell_data_for_study_set(studies_in_study_set, study_set),
+          subrows: []
+        }
         studies_in_study_set.forEach(function(study) {
-          rows.push({
-            cell_data: that.compute_row_cell_data(study)
+          row_group_datum.subrows.push({
+            cell_data: that.compute_row_cell_data(study, study_set)
           });
         });
+        row_group_data.push(row_group_datum);
       });
-
-      /*
-      let rows = data2.map(study => {
-        return {
-          cell_data: this.compute_row_cell_data(study)
-        };
-      });
-      */
 
       this.setState({
-        rows: rows
+        row_group_data: row_group_data
       });
     }
   }
@@ -116,7 +100,7 @@ class HeatmapViz extends Component {
     return copy;
   }
 
-  compute_row_cell_data_for_study_set(list,study_set) {
+  compute_row_cell_data_for_study_set(list, study_set) {
     let num_sorters = list[0].length;
     let aggregated = [];
     for (let i=0; i<num_sorters; i++) {
@@ -135,15 +119,15 @@ class HeatmapViz extends Component {
         aggregated[i].recalls = aggregated[i].recalls.concat(list[j][i].recalls);
         aggregated[i].precisions = aggregated[i].precisions.concat(list[j][i].accuracies);
         aggregated[i].snrs = aggregated[i].snrs.concat(list[j][i].snrs);
-        if (list[j][i].sorter!=aggregated[i].sorter) {
+        if (list[j][i].sorter !== aggregated[i].sorter) {
           throw Error('Unexpected... sorter does not match in compute_row_cell_data_for_study_set.');
         }
       }
     }
-    return this.compute_row_cell_data(aggregated);
+    return this.compute_row_cell_data(aggregated, study_set);
   }
 
-  compute_row_cell_data(study_sorting_results) {
+  compute_row_cell_data(study_sorting_results, study_set) {
     let format = this.props.format;
     let metric = this.props.metric;
     let selected_study_sorting_result = this.props.selectedStudySortingResult;
@@ -165,7 +149,7 @@ class HeatmapViz extends Component {
         default:
           throw Error('Unexpected metric: '+metric);
       }
-      if (format == 'count') {
+      if (format === 'count') {
         if ((metric_vals) && (metric_vals.length>0)) {
           let num_above = metric_vals.filter(val => {
             return val >= threshold; // metric threshold
@@ -178,7 +162,7 @@ class HeatmapViz extends Component {
           color = 0;
         }
       }
-      else if (format == 'average') {
+      else if (format === 'average') {
         if ((metric_vals) && (metric_vals.length>0)) {
           let vals_to_use = [];
           for (let i=0; i<study_sorting_result.snrs.length; i++) {
@@ -208,16 +192,38 @@ class HeatmapViz extends Component {
       return {
         color:color,
         text:text,
-        selected:(study_sorting_result==selected_study_sorting_result),
+        selected:(study_sorting_result === selected_study_sorting_result),
         x:study_sorting_result.sorter,
         y:study_sorting_result.study,
-        study_sorting_result:study_sorting_result // needed in onSelectCell -> selectStudySortingResult
+        study_sorting_result:study_sorting_result, // needed in onSelectCell -> selectStudySortingResult
+        study_set:study_set
       }
     });
   }
+
+  handleSelectStudyCell(d) {
+    this.props.selectStudySortingResult(d.study_sorting_result);
+  }
+
+  handleSelectStudySetCell(d) {
+    let a = this.state.expanded_study_sets;
+    a[d.study_set] = !(a[d.study_set])
+    this.setState({expanded_study_sets: a});
+  }
   
   render() {
-    const loading = isEmpty(this.state.rows);
+    for (let i=0; i<this.state.row_group_data.length; i++) {
+      let x = this.state.row_group_data[i];
+      if (this.state.expanded_study_sets[x.study_set]) {
+        x.subrows_to_show = x.subrows;
+        x.expanded = true;
+      }
+      else {
+        x.subrows_to_show = [];
+        x.expanded = false;
+      }
+    }
+    const loading = isEmpty(this.state.row_group_data);
     const title = this.getFormatCopy();
     return (
       <div className="card card--heatmap">
@@ -228,16 +234,40 @@ class HeatmapViz extends Component {
           <h4>...</h4>
         ) : (
           <div className="heatmap__column">
-            {this.state.rows.map((row, i) => (
-              <HeatmapRow
-                //{...this.props}
-                onSelectCell={(this.props.format!='cpu') ? (d) => {this.props.selectStudySortingResult(d.study_sorting_result);} : null}
-                onSelectLabel={(this.props.format!='cpu') ? () => {/*do nothing for now*/} : null}
-                cells={row['cell_data']}
-                key={`hmrow${i}`}
-                index={i} // the index of this row (matters whether it is zero or not -- see comment in HeatmapRow)
-                format={this.props.format}
-              />
+            {this.state.row_group_data.map((row_group, i) => (
+              <span>
+                <HeatmapRow
+                  onSelectCell={this.handleSelectStudySetCell}
+                  onSelectLabel={this.handleSelectStudySetCell}
+                  cells={row_group['cell_data']}
+                  rowtype={'large'}
+                  key={`study-set-${row_group.study_set}-${i}`} // make sure it gets a unique key
+                  showXLabels={(i==0)}
+                  format={this.props.format}
+                />
+                <span>
+                  {
+                    row_group.expanded ? (
+                      <span>
+                        <span>
+                          {row_group.subrows.map((subrow, j) => (
+                            <HeatmapRow
+                              onSelectCell={this.handleSelectStudyCell}
+                              onSelectLabel={this.handleSelectStudyCell}
+                              cells={subrow['cell_data']}
+                              rowtype={'small'}
+                              key={`study-${row_group.study_set}-${i}-${j}`} // make sure it gets a unique key
+                              showXLabels={false}
+                              format={this.props.format}
+                            />
+                          ))}
+                        </span>
+                        <div style={{height:'40px'}}></div>
+                      </span>
+                    ) : <span></span>
+                  }
+                </span>
+              </span>
             ))}
           </div>
         )}

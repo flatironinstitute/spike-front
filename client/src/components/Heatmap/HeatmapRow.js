@@ -15,14 +15,21 @@ class HeatmapRow extends Component {
     super(props);
     this.state = { hoveredNode: null, data: null };
     this.dims = {
-      height: 50,
+      height: 70,
       width: 620
     };
+    this.data_fontsize = '14px';
+    if (props.rowtype === 'small') {
+      this.dims.height = 40;
+      this.data_fontsize = '11px';
+    }
     this.margin = { left: 190, right: 80, top: 5, bottom: 5 };
-    if (this.props.index === 0) {
-      this.dims.height = 110;
+    if (this.props.showXLabels) {
+      // make room for the labels above
+      this.dims.height = this.dims.height + 60;
       this.margin.top = 65;
     }
+    console.log(this.dims, props.rowtype);
   }
 
   componentDidMount() {
@@ -58,9 +65,9 @@ class HeatmapRow extends Component {
     }
   }
 
-  selectLabel() {
+  selectLabel(datum) {
     if (this.props.onSelectLabel) {
-      this.props.onSelectLabel();
+      this.props.onSelectLabel(datum);
     }
   }
 
@@ -87,7 +94,7 @@ class HeatmapRow extends Component {
                 xPadding={30}
                 margin={this.margin}
               >
-                {this.props.index === 0 ? (
+                {this.props.showXLabels === 0 ? (
                   <XAxis
                     orientation={"top"}
                     tickLabelAngle={-25}
@@ -109,7 +116,7 @@ class HeatmapRow extends Component {
                       stroke: "none",
                       fill: "#222",
                       fontWeight: 600,
-                      fontSize: "11px"
+                      fontSize: "14px"
                     }
                   }}
                 />
@@ -121,7 +128,7 @@ class HeatmapRow extends Component {
                       stroke: "none",
                       fill: "#222",
                       fontWeight: 600,
-                      fontSize: "14px"
+                      fontSize: '14px'
                     }
                   }}
                   onValueMouseOver={d => {
@@ -136,7 +143,7 @@ class HeatmapRow extends Component {
                   labelAnchorX="middle"
                   labelAnchorY="central"
                   onValueClick={d => {
-                    this.props.onSelectLabel();
+                    this.props.onSelectLabel(d);
                   }}
                   getLabel={d => {
                     return d.text;
