@@ -1,5 +1,6 @@
-// import * as Sentry from "@sentry/browser";
-const fetch = require("node-fetch");
+import * as Sentry from "@sentry/browser";
+// const fetch = require("node-fetch");
+const axios = require('axios');
 
 var baseurl;
 if (process.env.NODE_ENV === "production") {
@@ -117,7 +118,7 @@ export const fetchStudies = () => {
       .then(() => {
         dispatch(endLoading());
       })
-      .catch(err => console.log(err));
+      .catch(err => Sentry.captureException(err));
   };
 };
 
@@ -140,7 +141,7 @@ export const fetchCPUs = () => {
       .then(() => {
         dispatch(endLoading());
       })
-      .catch(err => console.log(err));
+      .catch(err => Sentry.captureException(err));
   };
 };
 
@@ -163,7 +164,7 @@ export const fetchGroupedURs = () => {
       .then(() => {
         dispatch(endLoading());
       })
-      .catch(err => console.log(err));
+      .catch(err => Sentry.captureException(err));
   };
 };
 
@@ -323,7 +324,7 @@ export const fetchPairing = (study, sorter) => {
       .then(() => {
         dispatch(endLoading());
       })
-      .catch(err => console.log(err));
+      .catch(err => Sentry.captureException(err));
   };
 };
 
@@ -344,6 +345,6 @@ export const fetchRecordingDetails = (study, sorter, recording) => {
       .then(() => {
         dispatch(endLoading());
       })
-      .catch(err => console.log(err));
+      .catch(err => Sentry.captureException(err));
   };
 };
