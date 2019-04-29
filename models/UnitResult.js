@@ -58,7 +58,7 @@ const unitResultSchema = new mongoose.Schema(
 );
 
 // create virtual properties for precision, recall, and accuracy
-unitResultSchema.virtual("precision").get(function() {
+unitResultSchema.virtual("precision").get(function () {
   if (this.numMatches + this.numFalsePositives > 1) {
     return this.numMatches / (this.numMatches + this.numFalsePositives);
   } else {
@@ -66,7 +66,7 @@ unitResultSchema.virtual("precision").get(function() {
   }
 });
 
-unitResultSchema.virtual("recall").get(function() {
+unitResultSchema.virtual("recall").get(function () {
   if (this.numMatches + this.numFalseNegatives > 1) {
     return this.numMatches / (this.numMatches + this.numFalseNegatives);
   } else {
@@ -74,7 +74,7 @@ unitResultSchema.virtual("recall").get(function() {
   }
 });
 
-unitResultSchema.virtual("accuracy").get(function() {
+unitResultSchema.virtual("accuracy").get(function () {
   if (this.numMatches + this.numFalsePositives + this.numFalseNegatives > 1) {
     return (
       this.numMatches /
@@ -85,7 +85,7 @@ unitResultSchema.virtual("accuracy").get(function() {
   }
 });
 
-unitResultSchema.statics.getUnitResultsByStudy = function(study) {
+unitResultSchema.statics.getUnitResultsByStudy = function (study) {
   // filter for only items that match the study
   // aggregate all accuracies
   // aggregate all recalls
@@ -161,7 +161,7 @@ unitResultSchema.statics.getUnitResultsByStudy = function(study) {
   return this.aggregate(pipeline);
 };
 
-unitResultSchema.statics.getUnitResultsByStudyAndSorter = function() {
+unitResultSchema.statics.getUnitResultsByStudyAndSorter = function () {
   // filter for only items that have snr
   // aggregate all accuracies
   // aggregate all recalls
@@ -232,7 +232,7 @@ unitResultSchema.statics.getUnitResultsByStudyAndSorter = function() {
   ]);
 };
 
-unitResultSchema.statics.getAllUnitResultsByNestedStudySorter = function() {
+unitResultSchema.statics.getAllUnitResultsByNestedStudySorter = function () {
   return this.aggregate([
     {
       $group: {
@@ -250,25 +250,11 @@ unitResultSchema.statics.getAllUnitResultsByNestedStudySorter = function() {
             checkRecall: "$checkRecall",
             unitId: "$unitId",
             numMatches: "$numMatches",
+            numFalsePositives: "$numFalsePositives",
             recording: "$recording",
-            bestSortedUnitId: "$bestSortedUnitId",
-            precision: {
-              $cond: {
-                if: { $gte: ["$numMatches", 5] },
-                then: {
-                  $divide: [
-                    "$numMatches",
-                    {
-                      $add: ["$numMatches", "$numFalsePositives"]
-                    }
-                  ]
-                },
-                else: 0
-              }
-            }
+            bestSortedUnitId: "$bestSortedUnitId"
           }
-        },
-        count: { $sum: 1 }
+        }
       }
     }
   ]).allowDiskUse(true);

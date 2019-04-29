@@ -1,4 +1,4 @@
-import * as Sentry from "@sentry/browser";
+// import * as Sentry from "@sentry/browser";
 const fetch = require("node-fetch");
 
 var baseurl;
@@ -117,7 +117,7 @@ export const fetchStudies = () => {
       .then(() => {
         dispatch(endLoading());
       })
-      .catch(err => Sentry.captureException(err));
+      .catch(err => console.log(err));
   };
 };
 
@@ -140,7 +140,7 @@ export const fetchCPUs = () => {
       .then(() => {
         dispatch(endLoading());
       })
-      .catch(err => Sentry.captureException(err));
+      .catch(err => console.log(err));
   };
 };
 
@@ -163,7 +163,7 @@ export const fetchGroupedURs = () => {
       .then(() => {
         dispatch(endLoading());
       })
-      .catch(err => Sentry.captureException(err));
+      .catch(err => console.log(err));
   };
 };
 
@@ -323,7 +323,7 @@ export const fetchPairing = (study, sorter) => {
       .then(() => {
         dispatch(endLoading());
       })
-      .catch(err => Sentry.captureException(err));
+      .catch(err => console.log(err));
   };
 };
 
@@ -344,6 +344,6 @@ export const fetchRecordingDetails = (study, sorter, recording) => {
       .then(() => {
         dispatch(endLoading());
       })
-      .catch(err => Sentry.captureException(err));
+      .catch(err => console.log(err));
   };
 };
