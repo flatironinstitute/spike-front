@@ -72,7 +72,7 @@ class Routes extends Component {
             render={props => <Studies {...this.props} />}
           />
           <Route
-            path="/study/:study_id"
+            path="/study/:studyName"
             render={props => <SingleResultPairingV2 {...this.props} />}
           />
           <Route render={props => <FourOhFour {...this.props} />} />

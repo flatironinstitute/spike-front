@@ -21,7 +21,6 @@ const rootReducer = history =>
   combineReducers({
     recordings,
     selectedRecording,
-    selectedStudySortingResult,
     pairing,
     recordingDetails,
     // V2 Data: Reducers
@@ -29,6 +28,7 @@ const rootReducer = history =>
     cpus,
     groupedURs,
     loading,
+    selectedStudySortingResult,
     stats,
     studies,
     studysets,

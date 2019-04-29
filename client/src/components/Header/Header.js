@@ -31,10 +31,12 @@ class Header extends Component {
   getPageName() {
     let activeRoute = this.props.router.location.pathname;
     let activeArr = activeRoute.split("/").filter(item => item);
-    if (activeArr.length) {
+    if (activeArr[0] === "study") {
+      let str = activeArr[1].replace(/_/g, " ");
+      return toTitleCase(str);
+    } else if (activeArr.length) {
       return toTitleCase(activeArr.join(" "));
     } else {
-      // TODO: Add name of vis currently up here
       return "Overview";
     }
   }
@@ -49,7 +51,6 @@ class Header extends Component {
   }
 
   render() {
-    let activeRoute = this.props.router.location.pathname;
     return (
       <div className="navbar__container">
         <InfoPanel width={this.state.width} height={this.state.height} />
@@ -65,10 +66,6 @@ class Header extends Component {
           </Navbar.Brand>
           <Nav
             className="navbar__right"
-          // activeKey={activeRoute}
-          // onSelect={selectedKey => {
-          //   console.log("Route to 🗺️", selectedKey);
-          // }}
           >
             <LinkContainer exact to="/">
               <Nav.Link eventKey="/">Home</Nav.Link>

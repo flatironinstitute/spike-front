@@ -7,8 +7,7 @@ import {
   YAxis,
   VerticalGridLines,
   HorizontalGridLines,
-  VerticalBarSeries,
-  DiscreteColorLegend
+  VerticalBarSeries
 } from "react-vis";
 
 // Stylin'

@@ -15,8 +15,7 @@ import { connect } from "react-redux";
 import * as actionCreators from "../../actions/actionCreators";
 
 // Utilities 💡
-import { isEmpty } from "../../utils";
-import "./singleresults.css";
+import { isEmpty, toTitleCase } from "../../utils";
 
 // TODO: Refactor class into smaller components please
 class SingleResultPairingV2 extends Component {
@@ -24,15 +23,17 @@ class SingleResultPairingV2 extends Component {
     super(props);
     this.state = {
       study: "",
-      sorter: "KiloSort",
-      sorterParams: {},
       format: "count",
       metric: "accuracy",
       sliderValue: 0.8,
+      // TODO: SET NEW DEFAULT
+      sorter: "KiloSort",
+      sorterParams: {},
       activeSorter: 0,
       openIcon: false,
       builtData: [],
-      selectedRecording: {}
+      selectedRecording: {},
+      // new data properties
     };
   }
 
@@ -41,6 +42,9 @@ class SingleResultPairingV2 extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    // New Data Gathering from Existing files
+
+
     // TODO: Swap selected study state for props
     if (this.state.study !== prevState.study) {
       this.props.fetchPairing(this.state.study, this.state.sorter);
@@ -83,9 +87,9 @@ class SingleResultPairingV2 extends Component {
         builtData = results;
     }
 
-    let selectedRecording = builtData.filter(
-      recording => recording.sorter === this.state.sorter
-    );
+    // let selectedRecording = builtData.filter(
+    //   recording => recording.sorter === this.state.sorter
+    // );
     // TODO: Swap this with selectedRecording everywhere
     // this.props.selectStudy(selectedRecording[0]);
     this.setState({ builtData: builtData });
@@ -128,8 +132,8 @@ class SingleResultPairingV2 extends Component {
   getPageName() {
     let activeRoute = this.props.router.location.pathname;
     let activeArr = activeRoute.split("/").filter(item => item);
-    // TODO: Make this less fixed!
     let study = activeArr[1];
+    // TODO: Swap sorter to default index 0 from API call.
     let sorter = "KiloSort";
     this.setState({
       study,
@@ -178,13 +182,10 @@ class SingleResultPairingV2 extends Component {
     let copy;
     switch (this.state.format) {
       case "count":
-        copy = `Number units found above ${this.state.metric} threshold`;
+        copy = `Number of units found above ${this.state.metric} threshold`;
         break;
       case "average":
         copy = `Average ${this.state.metric} above SNR threshold`;
-        break;
-      case "cpu":
-        copy = "Estimated CPU Time";
         break;
       default:
         copy = "";
@@ -205,11 +206,10 @@ class SingleResultPairingV2 extends Component {
       isEmpty(this.state.sorter) ||
       isEmpty(this.state.builtData);
 
-    let title = this.getFormatCopy();
-    // let loadScatterplot = true;
-    // isEmpty(this.props.studies) ||
-    // isEmpty(this.props.sorters) ||
-    // isEmpty(this.props.selectedStudySortingResult);
+    let heatmapTitle = this.getFormatCopy();
+    let pageTitle = toTitleCase(this.state.study.replace(/_/g, " "));
+
+    console.log("🤩", this.props);
     return (
       <div>
         <div className="page__body">
@@ -223,6 +223,19 @@ class SingleResultPairingV2 extends Component {
             </Container>
           ) : (
               <Container className="container__heatmap">
+                <Row className="justify-content-md-center">
+                  <Col lg={12} sm={12} xl={10}>
+                    <div className="intro">
+                      <h4 className="page__title">{pageTitle}</h4>
+                      <div className="dividerthick" />
+                      {/* <p className="subhead">
+                        Below is the current list of studies in SpikeForest. Click on
+                        each to see an expanded list of the recordings within each
+                        study.
+                      </p> */}
+                    </div>
+                  </Col>
+                </Row>
                 <Row className="container__sorter--row">
                   <Col lg={5} sm={6}>
                     <div className="card card--stats">
@@ -250,7 +263,7 @@ class SingleResultPairingV2 extends Component {
                     <div className="card card--stats">
                       <div className="content">
                         <div className="card__label">
-                          <p>{title}</p>
+                          <p>{heatmapTitle}</p>
                         </div>
                         <div className="card__footer">
                           <hr />
@@ -264,6 +277,55 @@ class SingleResultPairingV2 extends Component {
                             selectedSorter={this.state.sorter}
                             handleSorterChange={this.handleSorterChange}
                           />
+                        </div>
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
+                <Row className="container__sorter--row">
+                  <Col lg={12} sm={12}>
+                    <HeatmapOptionsRow
+                      showCPU={false}
+                      handleFormatChange={this.handleFormatChange}
+                      handleSliderChange={this.handleSliderChange}
+                      handleMetricChange={this.handleMetricChange}
+                      format={this.state.format}
+                      metric={this.state.metric}
+                      sliderValue={this.state.sliderValue}
+                    />
+                  </Col>
+                </Row>
+                {/* <Row className="container__sorter--row">
+                <Col lg={12} sm={12}>
+                  {loadScatterplot ? (
+                    <Card>
+                      <Card.Body>
+                        <Preloader />
+                      </Card.Body>
+                    </Card>
+                  ) : (
+                    <ScatterplotCard
+                      {...this.props}
+                      sliderValue={this.state.sliderValue}
+                    />
+                  )}
+                </Col>
+              </Row> */}
+                <Row className="container__sorter--row">
+                  <Col lg={12} sm={12}>
+                    <div className="card card--heatmap">
+                      <div className="content">
+                        <div className="card__label">
+                          <p>
+                            Study + Sorter Result Pairing JSON Dump{" "}
+                            <span role="img" aria-label="truck">
+                              🚚
+                          </span>
+                          </p>
+                        </div>
+                        <div className="card__footer">
+                          <hr />
+                          <ReactJson src={results} />
                         </div>
                       </div>
                     </div>

@@ -24,6 +24,6 @@ exports.getCPUs = async (req, res, next) => {
 
 exports.getStats = async (req, res, next) => {
   const [cpuPromise] = await SortingResult.getTotalCPU();
-  const truePromise = await TrueUnit.count();
+  const truePromise = await TrueUnit.countDocuments();
   res.send({ cpus: cpuPromise.cpuTimeSec, groundTruth: truePromise });
 };
