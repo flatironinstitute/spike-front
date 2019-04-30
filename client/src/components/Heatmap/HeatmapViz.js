@@ -72,6 +72,10 @@ class HeatmapViz extends Component {
           });
         }, this);
         table_rows.push(table_row);
+        // spacer
+        table_rows.push({
+          cells:this.compute_empty_table_row_cells_from_study(studies_in_study_set[0]),
+        });
       }, this);
 
       /*
@@ -179,10 +183,28 @@ class HeatmapViz extends Component {
       }
     }
 
-    return this.compute_table_row_cells_from_study(aggregated, true);
+    return this.compute_table_row_cells_from_study(aggregated, true, study_set);
   }
 
-  compute_table_row_cells_from_study(study_sorting_results, is_study_set) {
+  compute_empty_table_row_cells_from_study(study_sorting_results) {
+    let ret = [];
+    ret.push({
+      text: '',
+      spacer: true,
+      selectable: false
+    })
+    study_sorting_results.map(function (study_sorting_result) {
+      ret.push({
+        text: '',
+        spacer: true,
+        selectable: false
+      });
+      return null;
+    }, this);
+    return ret;
+  }
+
+  compute_table_row_cells_from_study(study_sorting_results, is_study_set, expand_id_on_click) {
     let format = this.props.format;
     let metric = this.props.metric;
     let selected_study_sorting_result = this.props.selectedStudySortingResult;
@@ -190,6 +212,7 @@ class HeatmapViz extends Component {
     let ret = [];
     ret.push({
       text: (study_sorting_results[0]||{}).study,
+      expand_id_on_click: expand_id_on_click,
       selectable: false
     })
     study_sorting_results.map(function (study_sorting_result) {
@@ -251,9 +274,12 @@ class HeatmapViz extends Component {
       }
       ret.push({
         id: study_sorting_result.study+'--'+study_sorting_result.sorter,
-        color: color,
+        expand_id_on_click: expand_id_on_click,
+        color: this.compute_fg_color(color),
+        bgcolor: this.compute_bg_color(color),
         text: text,
-        result_column: true,
+        border_left: true,
+        border_right: true,
         selectable: is_study_set ? false : true,
         //selected: (study_sorting_result === selected_study_sorting_result),
         //x: study_sorting_result.sorter,
@@ -261,8 +287,15 @@ class HeatmapViz extends Component {
         study_sorting_result: study_sorting_result // needed in onCellSelected -> selectStudySortingResult
       });
       return null;
-    });
+    }, this);
     return ret;
+  }
+
+  compute_bg_color(val) {
+    return 'pink';
+  }
+  compute_fg_color(val) {
+    return 'blue';
   }
 
   handleCellSelected(cell) {

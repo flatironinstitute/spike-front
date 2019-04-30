@@ -11,6 +11,9 @@ class ExpandingHeatmapTable extends React.Component {
     this.handleExpand = this.handleExpand.bind(this);
   }
   handleCellSelected(cell) {
+    if (cell.expand_id_on_click) {
+      this.handleToggle(cell.expand_id_on_click);
+    }
     if (!cell.selectable) return;
     this.setState({
       selectedCellId: cell["id"]
@@ -22,8 +25,10 @@ class ExpandingHeatmapTable extends React.Component {
     let classes0 = [];
     if (cell["id"] === this.state.selectedCellId) classes0.push("selected");
     if (cell["rotate"]) classes0.push("rotate");
-    if (cell["result_column"]) classes0.push("result_column");
+    if (cell["border_right"]) classes0.push("border_right");
+    if (cell["border_top"]) classes0.push("border_top");
     if (cell["selectable"]) classes0.push("selectable");
+    if (cell["spacer"]) classes0.push("spacer");
     let class0 = classes0.join(" ");
     return (
       <td
@@ -78,6 +83,13 @@ class ExpandingHeatmapTable extends React.Component {
   handleExpand(id) {
     let x = this.state.expandedRowIds;
     x[id] = true;
+    this.setState({
+      expandedRowIds: x
+    });
+  }
+  handleToggle(id) {
+    let x = this.state.expandedRowIds;
+    x[id] = !(x[id]);
     this.setState({
       expandedRowIds: x
     });

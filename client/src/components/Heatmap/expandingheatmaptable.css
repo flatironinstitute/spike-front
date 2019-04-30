@@ -5,20 +5,31 @@
     text-align: center;
     border-style: solid;
     border-width: 2px;
-    border-color: white;
+    border-color: transparent;
   }
-  .expandingheatmaptable td.result_column {
+  .expandingheatmaptable td.border_left {
     border-left-color: lightgray;
+  }
+  .expandingheatmaptable td.border_right {
     border-right-color: lightgray;
+  }
+  .expandingheatmaptable td.border_top {
+    border-top-color: lightgray;
+  }
+  .expandingheatmaptable td.border_bottom {
+    border-bottom-color: lightgray;
   }
   .expandingheatmaptable td.selectable:hover {
     border-style: solid;
-    border-width: 2px;
+    border-width: 3px;
     border-color: gold;
   }
   .expandingheatmaptable td.selected {
-    border-width: 2px;
+    border-width: 3px;
     border-color: black !important;
+  }
+  .expandingheatmaptable td.spacer {
+    height:4px;
   }
   
   /* Thanks: https://css-tricks.com/rotated-table-column-headers/ */
