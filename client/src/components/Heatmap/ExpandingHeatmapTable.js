@@ -30,6 +30,7 @@ class ExpandingHeatmapTable extends React.Component {
         bgcolor={cell.bgcolor || ""}
         onClick={() => this.handleCellSelected(cell)}
         class={class0}
+        style={{color:cell['color']||'black'}}
       >
         <div>
           <span>{cell.text}</span>

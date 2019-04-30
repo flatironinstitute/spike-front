@@ -12,9 +12,6 @@ class HeatmapViz extends Component {
   }
 
   componentDidMount() {
-    console.log('-------------', this.props.studiesWithResults);
-    console.log('-------------', this.props.studies);
-    console.log('-------------', this.props.studySets);
     this.buildVizData(this.props.studiesWithResults);
   }
 
@@ -71,7 +68,7 @@ class HeatmapViz extends Component {
         };
         studies_in_study_set.map(function(study, kk) {
           table_row.subrows.push({
-            cells: this.compute_table_row_cells_from_study(study, study_set)
+            cells: this.compute_table_row_cells_from_study(study, false)
           });
         }, this);
         table_rows.push(table_row);
@@ -111,7 +108,6 @@ class HeatmapViz extends Component {
         return z.sorter;
       });
 
-      console.log('--- =======================================', sorter_names);
       let header_cells = [];
       header_cells.push({
         text:''
@@ -152,16 +148,41 @@ class HeatmapViz extends Component {
     return copy;
   }
 
-  compute_table_row_cells_from_study_set(studies_in_study_set, study_set) {
+  compute_table_row_cells_from_study_set(list, study_set) {
     let ret = [];
     ret.push({
       text: study_set,
       selectable: false
     });
-    return ret;
+
+    let num_sorters = list[0].length;
+    let aggregated = [];
+    for (let i=0; i<num_sorters; i++) {
+      aggregated.push({
+        accuracies:[],
+        recalls:[],
+        precisions:[],
+        snrs:[],
+        sorter:list[0][i].sorter,
+        study:study_set
+      });
+    }
+    for (let j=0; j<list.length; j++) {
+      for (let i=0; i<num_sorters; i++) {
+        aggregated[i].accuracies = aggregated[i].accuracies.concat(list[j][i].accuracies);  
+        aggregated[i].recalls = aggregated[i].recalls.concat(list[j][i].recalls);
+        aggregated[i].precisions = aggregated[i].precisions.concat(list[j][i].accuracies);
+        aggregated[i].snrs = aggregated[i].snrs.concat(list[j][i].snrs);
+        if (list[j][i].sorter !== aggregated[i].sorter) {
+          throw Error('Unexpected... sorter does not match in compute_row_cell_data_for_study_set.');
+        }
+      }
+    }
+
+    return this.compute_table_row_cells_from_study(aggregated, true);
   }
 
-  compute_table_row_cells_from_study(study_sorting_results) {
+  compute_table_row_cells_from_study(study_sorting_results, is_study_set) {
     let format = this.props.format;
     let metric = this.props.metric;
     let selected_study_sorting_result = this.props.selectedStudySortingResult;
@@ -233,7 +254,7 @@ class HeatmapViz extends Component {
         color: color,
         text: text,
         result_column: true,
-        selectable: true,
+        selectable: is_study_set ? false : true,
         //selected: (study_sorting_result === selected_study_sorting_result),
         //x: study_sorting_result.sorter,
         //y: study_sorting_result.study,
