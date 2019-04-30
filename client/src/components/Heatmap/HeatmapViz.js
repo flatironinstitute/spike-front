@@ -12,6 +12,9 @@ class HeatmapViz extends Component {
   }
 
   componentDidMount() {
+    console.log('-------------', this.props.studiesWithResults);
+    console.log('-------------', this.props.studies);
+    console.log('-------------', this.props.studySets);
     this.buildVizData(this.props.studiesWithResults);
   }
 
@@ -29,7 +32,52 @@ class HeatmapViz extends Component {
 
   buildVizData(studiesWithResults) {
     if (studiesWithResults) {
-      // jfm will rework this section
+      
+      let study_set_names_by_id = {};
+      this.props.studysets.map(function(x, i) {
+        study_set_names_by_id[x._id] = x.name;
+      }, this);
+
+      let study_set_by_study = {};
+      let study_set_names = {};
+      this.props.studies.map(function(study, i) {
+        let study_set_name = study_set_names_by_id[study.studySet];
+        study_set_by_study[study.name] = study_set_name;
+        study_set_names[study_set_name] = true;
+      }, this);
+      study_set_names = Object.keys(study_set_names);
+      study_set_names.sort();
+
+      let table_rows = [];
+      study_set_names.map(function(study_set, ii) {
+        let studies_in_study_set = [];
+        studiesWithResults.map(function(x, jj) {
+          let study_name = Object.keys(x)[0];
+          if (study_set_by_study[study_name] === study_set) {
+            let y = x[study_name]
+            // important to sort the results by sorter so they all line up
+            y.sort((a, b) => {
+              let textA = a.sorter.toUpperCase();
+              let textB = b.sorter.toUpperCase();
+              return textA < textB ? -1 : textA > textB ? 1 : 0;
+            })
+            studies_in_study_set.push(y);
+          }
+        }, this);
+        let table_row = {
+          id: study_set,
+          cells: this.compute_table_row_cells_from_study_set(studies_in_study_set, study_set),
+          subrows: []
+        };
+        studies_in_study_set.map(function(study, kk) {
+          table_row.subrows.push({
+            cells: this.compute_table_row_cells_from_study(study, study_set)
+          });
+        }, this);
+        table_rows.push(table_row);
+      }, this);
+
+      /*
       // alphabetize
       let data1 = studiesWithResults.map(study => {
         let values = Object.values(study)[0];
@@ -54,8 +102,30 @@ class HeatmapViz extends Component {
           cells: this.compute_table_row_from_study(study)
         };
       });
+      */
 
-      let table_header = [];
+      let x = studiesWithResults[0]; // first study
+      let study_name = Object.keys(x)[0];
+      let y = x[study_name];
+      let sorter_names = y.map(function(z) {
+        return z.sorter;
+      });
+
+      console.log('--- =======================================', sorter_names);
+      let header_cells = [];
+      header_cells.push({
+        text:''
+      });
+      sorter_names.map(function(sorter_name) {
+        header_cells.push({
+          text:sorter_name,
+          rotate:true}
+        );
+        return null;
+      }, this);
+      let table_header = {
+        cells: header_cells
+      };
 
       this.setState({
         table_rows: table_rows,
@@ -82,7 +152,16 @@ class HeatmapViz extends Component {
     return copy;
   }
 
-  compute_table_row_from_study(study_sorting_results) {
+  compute_table_row_cells_from_study_set(studies_in_study_set, study_set) {
+    let ret = [];
+    ret.push({
+      text: study_set,
+      selectable: false
+    });
+    return ret;
+  }
+
+  compute_table_row_cells_from_study(study_sorting_results) {
     let format = this.props.format;
     let metric = this.props.metric;
     let selected_study_sorting_result = this.props.selectedStudySortingResult;
@@ -153,6 +232,7 @@ class HeatmapViz extends Component {
         id: study_sorting_result.study+'--'+study_sorting_result.sorter,
         color: color,
         text: text,
+        result_column: true,
         selectable: true,
         //selected: (study_sorting_result === selected_study_sorting_result),
         //x: study_sorting_result.sorter,
@@ -172,45 +252,6 @@ class HeatmapViz extends Component {
     const loading = isEmpty(this.state.table_rows);
     const title = this.getFormatCopy();
 
-    let header_cells = [];
-    header_cells.push({label:''}); // study (or study set) name
-    
-    let header = {
-      cells: header_cells
-    };
-
-    let rows = [];
-    for (let i = 0; i < 10; i++) {
-      let subrows = [];
-      for (let j = 0; j < i; j++) {
-        subrows.push({
-          id: "row" + i + "-" + j,
-          cells: [
-            {
-              label: "content1a",
-              bgcolor: "pink",
-              id: "row-" + i + "-" + j + "-cell1",
-              selectable: true
-            },
-            {
-              label: "content2a",
-              id: "row-" + i + "-" + j + "-cell2",
-              selectable: true
-            }
-          ],
-          subrows: null
-        });
-      }
-      rows.push({
-        id: "row" + i,
-        cells: [
-          { label: "content1", bgcolor: "yellow", id: "row-" + i + "-cell1" },
-          { label: "content2", bgcolor: "lightgreen", id: "row-" + i + "-cell2" }
-        ],
-        subrows: subrows
-      });
-    }
-
     return (
       <div className="card card--heatmap">
         <div className="card__header">
@@ -222,7 +263,7 @@ class HeatmapViz extends Component {
             <div className="heatmap__column">
               <span>
               <ExpandingHeatmapTable
-                header={header}
+                header={this.state.table_header}
                 rows={this.state.table_rows}
                 onCellSelected={this.handleCellSelected}
               />

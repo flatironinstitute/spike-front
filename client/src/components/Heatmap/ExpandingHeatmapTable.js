@@ -22,6 +22,7 @@ class ExpandingHeatmapTable extends React.Component {
     let classes0 = [];
     if (cell["id"] === this.state.selectedCellId) classes0.push("selected");
     if (cell["rotate"]) classes0.push("rotate");
+    if (cell["result_column"]) classes0.push("result_column");
     if (cell["selectable"]) classes0.push("selectable");
     let class0 = classes0.join(" ");
     return (

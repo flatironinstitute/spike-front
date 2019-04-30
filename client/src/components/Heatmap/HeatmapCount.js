@@ -155,6 +155,8 @@ class HeatmapCount extends Component {
                   selectStudySortingResult={this.props.selectStudySortingResult}
                   selectedStudySortingResult={this.props.selectedStudySortingResult}
                   studiesWithResults={this.state.builtData}
+                  studies={this.props.studies}
+                  studysets={this.props.studysets}
                   format={this.props.format}
                   metric={this.props.metric}
                   threshold={this.props.sliderValue}
