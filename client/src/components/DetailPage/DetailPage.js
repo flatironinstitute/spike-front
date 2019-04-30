@@ -5,9 +5,9 @@ import { Card, Col, Container, Row } from "react-bootstrap";
 import HeatmapOptionsRow from "../Heatmap/HeatmapOptionsRow";
 import Preloader from "../Preloader/Preloader";
 import ReactJson from "react-json-view";
-// import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
-import SinglePairingRow from "./SinglePairingRow";
+import DetailPageRow from "./DetailPageRow";
 import SpikeSprayV2 from "./SpikeSprayV2";
+// import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
 
 // Redux
 import { bindActionCreators } from "redux";
@@ -18,7 +18,7 @@ import * as actionCreators from "../../actions/actionCreators";
 import { isEmpty, toTitleCase } from "../../utils";
 
 // TODO: Refactor class into smaller components please
-class SingleResultPairingV2 extends Component {
+class DetailPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -227,7 +227,6 @@ class SingleResultPairingV2 extends Component {
                   <Col lg={12} sm={12} xl={10}>
                     <div className="intro">
                       <h4 className="page__title">{pageTitle}</h4>
-                      <div className="dividerthick" />
                       {/* <p className="subhead">
                         Below is the current list of studies in SpikeForest. Click on
                         each to see an expanded list of the recordings within each
@@ -267,7 +266,7 @@ class SingleResultPairingV2 extends Component {
                         </div>
                         <div className="card__footer">
                           <hr />
-                          <SinglePairingRow
+                          <DetailPageRow
                             {...this.props}
                             vizDatum={this.state.builtData}
                             key={`hmrow${0}`}
@@ -371,4 +370,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SingleResultPairingV2);
+)(DetailPage);

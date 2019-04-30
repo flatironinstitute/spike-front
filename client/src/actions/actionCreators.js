@@ -38,15 +38,13 @@ export const RECEIVE_RECORDING_DETAILS = "RECEIVE_RECORDING_DETAILS";
 // Utilities
 export const createFetch = async url => {
   const newUrl = baseurl + url;
-  console.log('in create fetch ' + url);
   try {
     const response = await axios.get(newUrl);
     const returned = await response.data;
-    console.log(url + 'returns ' + typeof returned);
-    if (response.status !== 200) console.error(returned.message);
+    if (response.status !== 200) Sentry.captureException(returned.message);
     return returned;
   } catch (error) {
-    console.error(error);
+    Sentry.captureException(error);
   }
 }
 
@@ -57,10 +55,10 @@ export const createFetchPost = async (url, options) => {
     const body = JSON.stringify(options);
     const response = await axios.post(newUrl, body);
     const returned = await response.data;
-    console.log(url + 'post returns ' + typeof returned);
+    if (response.status !== 200) Sentry.captureException(returned.message);
     return returned;
   } catch (error) {
-    console.error(error);
+    Sentry.captureException(error);
   }
 };
 
