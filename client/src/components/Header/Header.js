@@ -55,18 +55,18 @@ class Header extends Component {
       <div className="navbar__container">
         <InfoPanel width={this.state.width} height={this.state.height} />
         <Nav className="navbar__white">
-          <Navbar.Brand href="/" className="navbar__left">
-            <img
-              alt="spikeforest logo"
-              src={logo}
-              height="48"
-              className="d-inline-block align-top"
-            />
-            <p className="navbar__pagename">{this.getPageName()}</p>
-          </Navbar.Brand>
-          <Nav
-            className="navbar__right"
-          >
+          <LinkContainer exact to="/">
+            <Navbar.Brand className="navbar__left">
+              <img
+                alt="spikeforest logo"
+                src={logo}
+                height="48"
+                className="d-inline-block align-top"
+              />
+              <p className="navbar__pagename">{this.getPageName()}</p>
+            </Navbar.Brand>
+          </LinkContainer>
+          <Nav className="navbar__right">
             <LinkContainer exact to="/">
               <Nav.Link eventKey="/">Home</Nav.Link>
             </LinkContainer>
@@ -81,7 +81,7 @@ class Header extends Component {
             </LinkContainer>
           </Nav>
         </Nav>
-      </div>
+      </div >
     );
   }
 }

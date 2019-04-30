@@ -4,7 +4,7 @@ import { XYPlot, XAxis, HeatmapSeries, LabelSeries } from "react-vis";
 import Preloader from "../Preloader/Preloader";
 import { isEmpty } from "../../utils";
 
-class SinglePairingRow extends Component {
+class DetailPageRow extends Component {
   constructor(props) {
     super(props);
     this.state = { hoveredNode: null, data: null };
@@ -138,4 +138,4 @@ class SinglePairingRow extends Component {
   }
 }
 
-export default SinglePairingRow;
+export default DetailPageRow;

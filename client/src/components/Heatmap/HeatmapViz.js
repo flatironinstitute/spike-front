@@ -81,19 +81,19 @@ class HeatmapViz extends Component {
     let metric = this.props.metric;
     let selected_study_sorting_result = this.props.selectedStudySortingResult;
     let threshold = this.props.threshold;
-    return study_sorting_results.map(function (study_sorting_result) {
+    return study_sorting_results.map(function (studySortingResult) {
       let text;
       let color;
       let metric_vals;
       switch (metric) {
         case "accuracy":
-          metric_vals = study_sorting_result.accuracies;
+          metric_vals = studySortingResult.accuracies;
           break;
         case "recall":
-          metric_vals = study_sorting_result.recalls;
+          metric_vals = studySortingResult.recalls;
           break;
         case "precision":
-          metric_vals = study_sorting_result.precisions;
+          metric_vals = studySortingResult.precisions;
           break;
         default:
           throw Error('Unexpected metric: ' + metric);
@@ -114,8 +114,8 @@ class HeatmapViz extends Component {
       else if (format === 'average') {
         if ((metric_vals) && (metric_vals.length > 0)) {
           let vals_to_use = [];
-          for (let i = 0; i < study_sorting_result.snrs.length; i++) {
-            if (study_sorting_result.snrs[i] > threshold) {
+          for (let i = 0; i < studySortingResult.snrs.length; i++) {
+            if (studySortingResult.snrs[i] > threshold) {
               vals_to_use.push(metric_vals[i]);
             }
           }
@@ -141,10 +141,10 @@ class HeatmapViz extends Component {
       return {
         color: color,
         text: text,
-        selected: (study_sorting_result === selected_study_sorting_result),
-        x: study_sorting_result.sorter,
-        y: study_sorting_result.study,
-        study_sorting_result: study_sorting_result // needed in onSelectCell -> selectStudySortingResult
+        selected: (studySortingResult === selected_study_sorting_result),
+        x: studySortingResult.sorter,
+        y: studySortingResult.study,
+        studySortingResult: studySortingResult // needed in onSelectCell -> selectStudySortingResult
       }
     });
   }
@@ -164,7 +164,7 @@ class HeatmapViz extends Component {
               {this.state.rows.map((row, i) => (
                 <HeatmapRow
                   //{...this.props}
-                  onSelectCell={(this.props.format !== 'cpu') ? (d) => { this.props.selectStudySortingResult(d.study_sorting_result); } : null}
+                  onSelectCell={(this.props.format !== 'cpu') ? (d) => { this.props.selectStudySortingResult(d.studySortingResult); } : null}
                   onSelectLabel={(this.props.format !== 'cpu') ? () => {/*do nothing for now*/ } : null}
                   cells={row['cell_data']}
                   key={`hmrow${i}`}
