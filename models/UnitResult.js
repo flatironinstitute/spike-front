@@ -252,7 +252,21 @@ unitResultSchema.statics.getAllUnitResultsByNestedStudySorter = function () {
             numMatches: "$numMatches",
             numFalsePositives: "$numFalsePositives",
             recording: "$recording",
-            bestSortedUnitId: "$bestSortedUnitId"
+            bestSortedUnitId: "$bestSortedUnitId",
+            precision: {
+              $cond: {
+                if: { $gte: ["$numMatches", 1] },
+                then: {
+                  $divide: [
+                    "$numMatches",
+                    {
+                      $add: ["$numMatches", "$numFalsePositives"]
+                    }
+                  ]
+                },
+                else: 0
+              }
+            }
           }
         }
       }
