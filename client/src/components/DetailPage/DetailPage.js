@@ -8,6 +8,7 @@ import ReactJson from "react-json-view";
 import DetailPageRow from "./DetailPageRow";
 import SpikeSprayV2 from "./SpikeSprayV2";
 // import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
+import "./detailpage.css";
 
 // Redux
 import { bindActionCreators } from "redux";
@@ -32,8 +33,7 @@ class DetailPage extends Component {
       activeSorter: 0,
       openIcon: false,
       builtData: [],
-      selectedRecording: {},
-      // new data properties
+      selectedRecording: {}
     };
   }
 
@@ -43,7 +43,6 @@ class DetailPage extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     // New Data Gathering from Existing files
-
 
     // TODO: Swap selected study state for props
     if (this.state.study !== prevState.study) {
@@ -226,12 +225,7 @@ class DetailPage extends Component {
                 <Row className="justify-content-md-center">
                   <Col lg={12} sm={12} xl={10}>
                     <div className="intro">
-                      <h4 className="page__title">{pageTitle}</h4>
-                      {/* <p className="subhead">
-                        Below is the current list of studies in SpikeForest. Click on
-                        each to see an expanded list of the recordings within each
-                        study.
-                      </p> */}
+                      <h4 className="intro__title">{pageTitle}</h4>
                     </div>
                   </Col>
                 </Row>
