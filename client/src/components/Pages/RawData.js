@@ -46,18 +46,16 @@ class RawData extends Component {
 
   async createFetch(model) {
     const newUrl = baseurl + "/api/" + model;
-    console.log('in fetch ' + model);
     try {
       const response = await axios.get(newUrl);
+      console.log('Data received ', model, response.data);
       if (response.status !== 200) {
-        // throw Error(response.message);
         console.error(model, response);
       } else {
-        console.log(model, response);
         this.setState(response.data);
       }
     } catch (error) {
-      console.error(error);
+      console.error(model, error);
     }
   }
 
