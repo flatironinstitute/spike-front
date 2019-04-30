@@ -23,12 +23,16 @@ router.get("/api/groupedurs", unitResultsController.getGroupedUnitResults);
 router.get("/api/recordings", recordingController.getRecordings);
 // Sorters
 router.get("/api/sorters", sorterController.getSorters);
+// Sorting Results
+router.get("/api/sortingresults", sortingResultController.getSortingResults);
 // Studies
 router.get("/api/studies", studyController.getStudies);
 // Study Sets
 router.get("/api/studysets", studySetController.getStudySets);
 // Summary Stats
 router.get("/api/stats", sortingResultController.getStats);
+// True Units
+router.get("/api/trueunits", trueUnitController.getTrueUnits);
 // Unit Results
 router.get("/api/unitresults", unitResultsController.getUnitResults);
 
@@ -91,7 +95,6 @@ module.exports = router;
 // router.get("/api/storter/:id", sorterController.getSorterById);
 
 // // Sorting Results
-// router.get("/api/sortingresults", sortingResultController.getSortingResults);
 // router.get(
 //   "/api/sortingresult/:id",
 //   sortingResultController.getSortingResultById
@@ -105,7 +108,6 @@ module.exports = router;
 // router.get("/api/studyset/:id", studySetController.getStudySetById);
 
 // // True Units
-// router.get("/api/trueunits", trueUnitController.getTrueUnits);
 // router.get("/api/trueunit/:id", trueUnitController.getTrueUnitById);
 
 // // Unit Results

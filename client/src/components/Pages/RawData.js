@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import ReactJson from "react-json-view";
+import "./pages.css";
+
 const axios = require('axios');
 
-import "./pages.css";
 
 var baseurl;
 if (process.env.NODE_ENV === "production") {
@@ -45,19 +46,18 @@ class RawData extends Component {
 
   async createFetch(model) {
     const newUrl = baseurl + "/api/" + model;
-    const response = await fetch(newUrl, {
-      method: "GET",
-      mode: "no-cors",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
+    console.log('in fetch ' + model);
+    try {
+      const response = await axios.get(newUrl);
+      if (response.status !== 200) {
+        // throw Error(response.message);
+        console.error(model, response);
+      } else {
+        console.log(model, response);
+        this.setState(response.data);
       }
-    });
-    const body = await response.json();
-    if (response.status !== 200) {
-      throw Error(body.message);
-    } else {
-      this.setState(body);
+    } catch (error) {
+      console.error(error);
     }
   }
 

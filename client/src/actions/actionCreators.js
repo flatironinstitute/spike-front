@@ -1,5 +1,4 @@
 import * as Sentry from "@sentry/browser";
-// const fetch = require("node-fetch");
 const axios = require('axios');
 
 var baseurl;
@@ -39,38 +38,29 @@ export const RECEIVE_RECORDING_DETAILS = "RECEIVE_RECORDING_DETAILS";
 // Utilities
 export const createFetch = async url => {
   const newUrl = baseurl + url;
-  const response = await fetch(newUrl, {
-    method: "GET",
-    mode: "same-origin",
-    credentials: "same-origin",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    }
-  });
-  const body = await response.json();
-  if (response.status !== 200) throw Error(body.message);
-  return body;
-};
+  console.log('in create fetch ' + url);
+  try {
+    const response = await axios.get(newUrl);
+    const returned = await response.data;
+    console.log(url + 'returns ' + typeof returned);
+    if (response.status !== 200) console.error(returned.message);
+    return returned;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 
 export const createFetchPost = async (url, options) => {
-  const newUrl = baseurl + url;
-  const body = JSON.stringify(options);
-  const request = await fetch(newUrl, {
-    method: "POST",
-    mode: "same-origin",
-    credentials: "same-origin",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    },
-    body: body
-  });
-  const response = await request.json();
-  if (request.status !== 200) {
-    throw Error(response.message);
-  } else {
-    return response;
+  try {
+    const newUrl = baseurl + url;
+    const body = JSON.stringify(options);
+    const response = await axios.post(newUrl, body);
+    const returned = await response.data;
+    console.log(url + 'post returns ' + typeof returned);
+    return returned;
+  } catch (error) {
+    console.error(error);
   }
 };
 
