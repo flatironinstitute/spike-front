@@ -1,0 +1,34 @@
+.expandingheatmaptable td {
+    margin: 0px;
+    padding: 0px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: white;
+  }
+  .expandingheatmaptable td.selectable:hover {
+    border-style: solid;
+    border-width: 2px;
+    border-color: gold;
+  }
+  .expandingheatmaptable td.selected {
+    border-width: 2px;
+    border-color: black !important;
+  }
+  
+  /* Thanks: https://css-tricks.com/rotated-table-column-headers/ */
+  .expandingheatmaptable td.rotate {
+    /* Something you can count on */
+    height: 140px;
+    white-space: nowrap;
+  }
+  .expandingheatmaptable td.rotate > div {
+    transform: 
+      /* Magic Numbers */ translate(25px, 51px)
+      /* 45 is really 360 - 45 */ rotate(315deg);
+    width: 30px;
+  }
+  .expandingheatmaptable td.rotate > div > span {
+    border-bottom: 1px solid #ccc;
+    padding: 5px 10px;
+  }
+  

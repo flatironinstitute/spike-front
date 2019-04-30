@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import HeatmapRow from "./HeatmapRow";
 import { isEmpty } from "../../utils";
 import * as Sentry from "@sentry/browser";
+import ExpandingHeatmapTable from "./ExpandingHeatmapTable"
 
 class HeatmapViz extends Component {
   constructor(props) {
     super(props);
-    this.state = { rows: [] };
+    this.state = { table_rows: [], table_header: [] };
+    this.handleCellSelected = this.handleCellSelected.bind(this);
   }
 
   componentDidMount() {
@@ -46,14 +48,18 @@ class HeatmapViz extends Component {
         return textA < textB ? -1 : textA > textB ? 1 : 0;
       });
 
-      let rows = data2.map(study => {
+      let table_rows = data2.map(study => {
         return {
-          cell_data: this.compute_row_cell_data(study)
+          id: (study[0]||{}).study,
+          cells: this.compute_table_row_from_study(study)
         };
       });
 
+      let table_header = [];
+
       this.setState({
-        rows: rows
+        table_rows: table_rows,
+        table_header: table_header
       });
     }
   }
@@ -76,12 +82,17 @@ class HeatmapViz extends Component {
     return copy;
   }
 
-  compute_row_cell_data(study_sorting_results) {
+  compute_table_row_from_study(study_sorting_results) {
     let format = this.props.format;
     let metric = this.props.metric;
     let selected_study_sorting_result = this.props.selectedStudySortingResult;
     let threshold = this.props.threshold;
-    return study_sorting_results.map(function (study_sorting_result) {
+    let ret = [];
+    ret.push({
+      text: (study_sorting_results[0]||{}).study,
+      selectable: false
+    })
+    study_sorting_results.map(function (study_sorting_result) {
       let text;
       let color;
       let metric_vals;
@@ -138,20 +149,68 @@ class HeatmapViz extends Component {
       else {
         Sentry.captureMessage('Unsupported format in compute_row_cell_data', format)
       }
-      return {
+      ret.push({
+        id: study_sorting_result.study+'--'+study_sorting_result.sorter,
         color: color,
         text: text,
-        selected: (study_sorting_result === selected_study_sorting_result),
-        x: study_sorting_result.sorter,
-        y: study_sorting_result.study,
-        study_sorting_result: study_sorting_result // needed in onSelectCell -> selectStudySortingResult
-      }
+        selectable: true,
+        //selected: (study_sorting_result === selected_study_sorting_result),
+        //x: study_sorting_result.sorter,
+        //y: study_sorting_result.study,
+        study_sorting_result: study_sorting_result // needed in onCellSelected -> selectStudySortingResult
+      });
+      return null;
     });
+    return ret;
+  }
+
+  handleCellSelected(cell) {
+    this.props.selectStudySortingResult(cell.study_sorting_result);
   }
 
   render() {
-    const loading = isEmpty(this.state.rows);
+    const loading = isEmpty(this.state.table_rows);
     const title = this.getFormatCopy();
+
+    let header_cells = [];
+    header_cells.push({label:''}); // study (or study set) name
+    
+    let header = {
+      cells: header_cells
+    };
+
+    let rows = [];
+    for (let i = 0; i < 10; i++) {
+      let subrows = [];
+      for (let j = 0; j < i; j++) {
+        subrows.push({
+          id: "row" + i + "-" + j,
+          cells: [
+            {
+              label: "content1a",
+              bgcolor: "pink",
+              id: "row-" + i + "-" + j + "-cell1",
+              selectable: true
+            },
+            {
+              label: "content2a",
+              id: "row-" + i + "-" + j + "-cell2",
+              selectable: true
+            }
+          ],
+          subrows: null
+        });
+      }
+      rows.push({
+        id: "row" + i,
+        cells: [
+          { label: "content1", bgcolor: "yellow", id: "row-" + i + "-cell1" },
+          { label: "content2", bgcolor: "lightgreen", id: "row-" + i + "-cell2" }
+        ],
+        subrows: subrows
+      });
+    }
+
     return (
       <div className="card card--heatmap">
         <div className="card__header">
@@ -161,17 +220,24 @@ class HeatmapViz extends Component {
           <h4>...</h4>
         ) : (
             <div className="heatmap__column">
-              {this.state.rows.map((row, i) => (
+              <span>
+              <ExpandingHeatmapTable
+                header={header}
+                rows={this.state.table_rows}
+                onCellSelected={this.handleCellSelected}
+              />
+              {/*this.state.rows.map((row, i) => (
                 <HeatmapRow
                   //{...this.props}
                   onSelectCell={(this.props.format !== 'cpu') ? (d) => { this.props.selectStudySortingResult(d.study_sorting_result); } : null}
-                  onSelectLabel={(this.props.format !== 'cpu') ? () => {/*do nothing for now*/ } : null}
+                  onSelectLabel={(this.props.format !== 'cpu') ? () => {return 'do-nothing'; } : null}
                   cells={row['cell_data']}
                   key={`hmrow${i}`}
                   index={i} // the index of this row (matters whether it is zero or not -- see comment in HeatmapRow)
                   format={this.props.format}
                 />
-              ))}
+              ))*/}
+              </span>
             </div>
           )}
       </div>
