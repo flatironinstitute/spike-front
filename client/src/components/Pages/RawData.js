@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import ReactJson from "react-json-view";
+const axios = require('axios');
 
 import "./pages.css";
 
-const fetch = require("node-fetch");
 var baseurl;
 if (process.env.NODE_ENV === "production") {
   baseurl = window.location.href.replace("/rawdata", "");

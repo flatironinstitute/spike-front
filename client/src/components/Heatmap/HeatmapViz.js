@@ -147,14 +147,14 @@ class HeatmapViz extends Component {
           metric_vals = study_sorting_result.precisions;
           break;
         default:
-          throw Error('Unexpected metric: '+metric);
+          throw Error('Unexpected metric: ' + metric);
       }
       if (format === 'count') {
-        if ((metric_vals) && (metric_vals.length>0)) {
+        if ((metric_vals) && (metric_vals.length > 0)) {
           let num_above = metric_vals.filter(val => {
             return val >= threshold; // metric threshold
           });
-          text = num_above.length+'';
+          text = num_above.length + '';
           color = num_above.length;
         }
         else {
@@ -163,9 +163,9 @@ class HeatmapViz extends Component {
         }
       }
       else if (format === 'average') {
-        if ((metric_vals) && (metric_vals.length>0)) {
+        if ((metric_vals) && (metric_vals.length > 0)) {
           let vals_to_use = [];
-          for (let i=0; i<study_sorting_result.snrs.length; i++) {
+          for (let i = 0; i < study_sorting_result.snrs.length; i++) {
             if (study_sorting_result.snrs[i] > threshold) {
               vals_to_use.push(metric_vals[i]);
             }
@@ -177,7 +177,7 @@ class HeatmapViz extends Component {
           }
           // This just prints the output to 2 digits
           let avg_rounded = Math.round(aboveAvg * 100) / 100
-          
+
           text = avg_rounded + '';
           color = avg_rounded;
         }

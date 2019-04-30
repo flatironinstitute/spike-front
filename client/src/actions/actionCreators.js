@@ -1,5 +1,6 @@
 import * as Sentry from "@sentry/browser";
-const fetch = require("node-fetch");
+// const fetch = require("node-fetch");
+const axios = require('axios');
 
 var baseurl;
 if (process.env.NODE_ENV === "production") {
