@@ -17,7 +17,7 @@ import Sorters from "../components/Pages/Sorters";
 import Internals from "../components/Pages/Internals";
 import Metrics from "../components/Pages/Metrics";
 import Contact from "../components/Contact/Contact";
-import SingleResultPairingV2 from "../components/ResultPairingBits/SingleResultPairingV2";
+import DetailPage from "../components/DetailPage/DetailPage";
 import FourOhFour from "../components/Pages/FourOhFour";
 import RawData from "../components/Pages/RawData";
 
@@ -73,7 +73,7 @@ class Routes extends Component {
           />
           <Route
             path="/study/:studyName"
-            render={props => <SingleResultPairingV2 {...this.props} />}
+            render={props => <DetailPage {...this.props} />}
           />
           <Route render={props => <FourOhFour {...this.props} />} />
         </Switch>
