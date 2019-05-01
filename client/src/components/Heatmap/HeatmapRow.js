@@ -32,7 +32,7 @@ class HeatmapRow extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if ((this.props.selectedCell !== prevProps.selectedCell) || (this.props.cells !== prevProps.cells )) {
+    if ((this.props.selectedCell !== prevProps.selectedCell) || (this.props.cells !== prevProps.cells)) {
       this.setData();
     }
   }
@@ -67,7 +67,6 @@ class HeatmapRow extends Component {
   render() {
     const { data } = this.state;
     const loading = isEmpty(data);
-    // TODO: use the color range tool from the d3 test local repo to reset scales
     const colorRange = {
       count: ["#fff", "#384ca2"],
       cpu: ["#fff", "#6238a2"],

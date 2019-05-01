@@ -16,8 +16,8 @@ const ActiveIcon = ({ row, accessor }) => {
           />
         </a>
       ) : (
-        <div />
-      )}
+          <div />
+        )}
     </div>
   );
 };

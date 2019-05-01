@@ -32,12 +32,12 @@ class ScatterplotContainer extends Component {
             case "count":
               return (
                 <ScatterplotCount
-                {...this.props}
-                selectedUnits={selectedStudySortingResult.true_units}
-                sliderValue={sliderValue}
-                format={format}
-                metric={metric}
-              />
+                  {...this.props}
+                  selectedUnits={selectedStudySortingResult.true_units}
+                  sliderValue={sliderValue}
+                  format={format}
+                  metric={metric}
+                />
               );
             case "average":
               return (
@@ -51,9 +51,9 @@ class ScatterplotContainer extends Component {
               );
             case "cpu":
               return (
-              <p className="card__category">
-                <br />
-                Scatterplot data is not available for CPU
+                <p className="card__category">
+                  <br />
+                  Scatterplot data is not available for CPU
               </p>
               );
             default:
