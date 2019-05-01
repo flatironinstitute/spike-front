@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import HeatmapRow from "./HeatmapRow";
 import { isEmpty } from "../../utils";
 import * as Sentry from "@sentry/browser";
 import ExpandingHeatmapTable from "./ExpandingHeatmapTable"
@@ -7,7 +6,7 @@ import ExpandingHeatmapTable from "./ExpandingHeatmapTable"
 class HeatmapViz extends Component {
   constructor(props) {
     super(props);
-    this.state = { table_rows: [], table_header: [] };
+    this.state = { tableRows: [], tableHeader: [] };
     this.handleCellSelected = this.handleCellSelected.bind(this);
   }
 
@@ -30,106 +29,91 @@ class HeatmapViz extends Component {
   buildVizData(studiesWithResults) {
     if (studiesWithResults) {
       
-      let study_set_names_by_id = {};
+      // assemble a lookup: study_set_id -> study_set_name which we will need later
+      let studySetNamesById = {};
       this.props.studysets.map(function(x, i) {
-        study_set_names_by_id[x._id] = x.name;
+        studySetNamesById[x._id] = x.name;
       }, this);
 
-      let study_set_by_study = {};
-      let study_set_names = {};
+      // assemble a lookup: study_name -> study_set_name
+      // and a collection of study set names
+      let studySetByStudy = {}; // lookup study_name -> study_set_name
+      let studySetNames = {}; // collection of study set names (will be sorted list below)
       this.props.studies.map(function(study, i) {
-        let study_set_name = study_set_names_by_id[study.studySet];
-        study_set_by_study[study.name] = study_set_name;
-        study_set_names[study_set_name] = true;
+        let studySetName = studySetNamesById[study.studySet];
+        studySetByStudy[study.name] = studySetName;
+        studySetNames[studySetName] = true;
       }, this);
-      study_set_names = Object.keys(study_set_names);
-      study_set_names.sort();
+      // make it a sorted list
+      studySetNames = Object.keys(studySetNames); 
+      studySetNames.sort();
 
-      let table_rows = [];
-      study_set_names.map(function(study_set, ii) {
-        let studies_in_study_set = [];
-        studiesWithResults.map(function(x, jj) {
-          let study_name = Object.keys(x)[0];
-          if (study_set_by_study[study_name] === study_set) {
-            let y = x[study_name]
+      // Assemble the table rows (list of objects that will be passed to the ExpandingHeatmapTable component)
+      let tableRows = [];
+      studySetNames.map(function(studySet, ii) { // loop through the study sets
+        // prepare a list of the studies in the study set (formatted properly for convenience)
+        let studiesInStudySet = [];
+        studiesWithResults.map(function(studyWithResults, jj) { // loop through the studies with results looking for the ones that match the study set
+          let studyName = Object.keys(studyWithResults)[0];
+          if (studySetByStudy[studyName] === studySet) {
+            let studyWithResults0 = studyWithResults[studyName] // this is necessary because of the somewhat difficult structure of studyWithResults
             // important to sort the results by sorter so they all line up
-            y.sort((a, b) => {
+            studyWithResults0.sort((a, b) => {
               let textA = a.sorter.toUpperCase();
               let textB = b.sorter.toUpperCase();
               return textA < textB ? -1 : textA > textB ? 1 : 0;
             })
-            studies_in_study_set.push(y);
+            studiesInStudySet.push(studyWithResults0);
           }
+          return null;
         }, this);
-        let table_row = {
-          id: study_set,
-          cells: this.compute_table_row_cells_from_study_set(studies_in_study_set, study_set),
+        // Here's the table row associated with the study set
+        let tableRow = {
+          id: studySet,
+          cells: this.computeTableRowCellsFromStudySet(studiesInStudySet, studySet),
           subrows: []
         };
-        studies_in_study_set.map(function(study, kk) {
-          table_row.subrows.push({
-            cells: this.compute_table_row_cells_from_study(study, false)
+        // loop through the studies in the study set and add a row for each
+        studiesInStudySet.map(function(study, kk) {
+          tableRow.subrows.push({
+            cells: this.computeTableRowCellsFromStudy(study, false)
           });
+          return null
         }, this);
-        table_rows.push(table_row);
-        // spacer
-        table_rows.push({
-          cells:this.compute_empty_table_row_cells_from_study(studies_in_study_set[0]),
+        tableRows.push(tableRow);
+
+        // add a spacer row -- which should have the same number of cells and perhaps some formatting associated with the study set
+        tableRows.push({
+          cells:this.computeEmptyTableRowCellsFromStudy(studiesInStudySet[0]),
         });
+        return null;
       }, this);
 
-      /*
-      // alphabetize
-      let data1 = studiesWithResults.map(study => {
-        let values = Object.values(study)[0];
-        return values.sort((a, b) => {
-          let textA = a.sorter.toUpperCase();
-          let textB = b.sorter.toUpperCase();
-          return textA < textB ? -1 : textA > textB ? 1 : 0;
-        });
-        // TODO: Allow for other sorting
-      });
-
-      // alphabetize the studies
-      let data2 = data1.sort((a, b) => {
-        let textA = a[0].study.toUpperCase();
-        let textB = b[0].study.toUpperCase();
-        return textA < textB ? -1 : textA > textB ? 1 : 0;
-      });
-
-      let table_rows = data2.map(study => {
-        return {
-          id: (study[0]||{}).study,
-          cells: this.compute_table_row_from_study(study)
-        };
-      });
-      */
-
       let x = studiesWithResults[0]; // first study
-      let study_name = Object.keys(x)[0];
-      let y = x[study_name];
-      let sorter_names = y.map(function(z) {
+      let studyName = Object.keys(x)[0];
+      let y = x[studyName];
+      let sorterNames = y.map(function(z) {
         return z.sorter;
       });
 
-      let header_cells = [];
-      header_cells.push({
+      let headerCells = [];
+      headerCells.push({
         text:''
       });
-      sorter_names.map(function(sorter_name) {
-        header_cells.push({
-          text:sorter_name,
+      sorterNames.map(function(sorterName) {
+        headerCells.push({
+          text:sorterName,
           rotate:true}
         );
         return null;
       }, this);
-      let table_header = {
-        cells: header_cells
+      let tableHeader = {
+        cells: headerCells
       };
 
       this.setState({
-        table_rows: table_rows,
-        table_header: table_header
+        tableRows: tableRows,
+        tableHeader: tableHeader
       });
     }
   }
@@ -152,48 +136,48 @@ class HeatmapViz extends Component {
     return copy;
   }
 
-  compute_table_row_cells_from_study_set(list, study_set) {
+  computeTableRowCellsFromStudySet(list, studySet) {
     let ret = [];
     ret.push({
-      text: study_set,
+      text: studySet,
       selectable: false
     });
 
-    let num_sorters = list[0].length;
+    let numSorters = list[0].length;
     let aggregated = [];
-    for (let i=0; i<num_sorters; i++) {
+    for (let i=0; i<numSorters; i++) {
       aggregated.push({
         accuracies:[],
         recalls:[],
         precisions:[],
         snrs:[],
         sorter:list[0][i].sorter,
-        study:study_set
+        study:studySet
       });
     }
     for (let j=0; j<list.length; j++) {
-      for (let i=0; i<num_sorters; i++) {
+      for (let i=0; i<numSorters; i++) {
         aggregated[i].accuracies = aggregated[i].accuracies.concat(list[j][i].accuracies);  
         aggregated[i].recalls = aggregated[i].recalls.concat(list[j][i].recalls);
         aggregated[i].precisions = aggregated[i].precisions.concat(list[j][i].accuracies);
         aggregated[i].snrs = aggregated[i].snrs.concat(list[j][i].snrs);
         if (list[j][i].sorter !== aggregated[i].sorter) {
-          throw Error('Unexpected... sorter does not match in compute_row_cell_data_for_study_set.');
+          throw Error('Unexpected... sorter does not match in computeTableRowCellsFromStudySet.');
         }
       }
     }
 
-    return this.compute_table_row_cells_from_study(aggregated, true, study_set);
+    return this.computeTableRowCellsFromStudy(aggregated, true, studySet);
   }
 
-  compute_empty_table_row_cells_from_study(study_sorting_results) {
+  computeEmptyTableRowCellsFromStudy(studySortingResults) {
     let ret = [];
     ret.push({
       text: '',
       spacer: true,
       selectable: false
     })
-    study_sorting_results.map(function (study_sorting_result) {
+    studySortingResults.map(function (studySortingResult) {
       ret.push({
         text: '',
         spacer: true,
@@ -204,91 +188,98 @@ class HeatmapViz extends Component {
     return ret;
   }
 
-  compute_table_row_cells_from_study(study_sorting_results, is_study_set, expand_id_on_click) {
+  computeTableRowCellsFromStudy(studySortingResults, isStudySet, expandIdOnClick) {
+    // Compute the table row cells from a study (or for the aggregated results in a study set)
     let format = this.props.format;
     let metric = this.props.metric;
-    let selected_study_sorting_result = this.props.selectedStudySortingResult;
     let threshold = this.props.threshold;
-    let ret = [];
+    let ret = []; // the cells to return
+    // the first cell is the name of the study
     ret.push({
-      text: (study_sorting_results[0]||{}).study,
-      expand_id_on_click: expand_id_on_click,
+      text: (studySortingResults[0]||{}).study,
+      expand_id_on_click: expandIdOnClick,
       text_align: 'right',
       selectable: false
     });
-    let row_normalize;
+    let rowNormalize; // whether to normalize the rows
     switch (metric) {
       case 'count':
-        row_normalize = true;
+        rowNormalize = true;
         break;
       case 'average':
-        row_normalize = false;
+        rowNormalize = false;
+        break;
       default:
-        row_normalize = true;
+        rowNormalize = true;
     }
-    let metric_list = study_sorting_results.map(function(study_sorting_result) {
-      let metric_vals;
+    // loop through the sorting results for the study, and get the metrics (e.g., counts) to display
+    let metricList = studySortingResults.map(function(studySortingResult) {
+      let metricVals;
       switch (metric) {
         case "accuracy":
-          metric_vals = study_sorting_result.accuracies;
+          metricVals = studySortingResult.accuracies;
           break;
         case "recall":
-          metric_vals = study_sorting_result.recalls;
+          metricVals = studySortingResult.recalls;
           break;
         case "precision":
-          metric_vals = study_sorting_result.precisions;
+          metricVals = studySortingResult.precisions;
           break;
         default:
           throw Error('Unexpected metric: ' + metric);
       }
       if (format === 'count') {
-        if ((metric_vals) && (metric_vals.length > 0)) {
-          let num_above = metric_vals.filter(val => {
+        if ((metricVals) && (metricVals.length > 0)) {
+          let numAbove = metricVals.filter(val => {
             return val >= threshold; // metric threshold
           });
-          return num_above.length;
+          return numAbove.length;
         }
         else {
           return undefined;
         }
       }
       else if (format === 'average') {
-        if ((metric_vals) && (metric_vals.length > 0)) {
-          let vals_to_use = [];
-          for (let i = 0; i < study_sorting_result.snrs.length; i++) {
-            if (study_sorting_result.snrs[i] > threshold) {
-              vals_to_use.push(metric_vals[i]);
+        if ((metricVals) && (metricVals.length > 0)) {
+          let valsToUse = [];
+          for (let i = 0; i < studySortingResult.snrs.length; i++) {
+            if (studySortingResult.snrs[i] > threshold) {
+              valsToUse.push(metricVals[i]);
             }
           }
           let aboveAvg = 0;
-          if (vals_to_use.length) {
-            let sum = vals_to_use.reduce((a, b) => a + b);
-            aboveAvg = sum / vals_to_use.length;
+          if (valsToUse.length) {
+            let sum = valsToUse.reduce((a, b) => a + b);
+            aboveAvg = sum / valsToUse.length;
           }
           // This just prints the output to 2 digits
-          let avg_rounded = Math.round(aboveAvg * 100) / 100
+          let avgRounded = Math.round(aboveAvg * 100) / 100
 
-          return avg_rounded;
+          return avgRounded;
         }
         else {
           return undefined;
         }
       }
       else {
-        Sentry.captureMessage('Unsupported format in compute_row_cell_data', format)
+        Sentry.captureMessage('Unsupported format in computeTableRowCellsFromStudy', format)
         return undefined;
       }
     }, this);
-    let max_metric_val = 0;
-    metric_list.map(function(val0) {
-      if ((val0 !== undefined) && (val0 > max_metric_val))
-        max_metric_val = val0;
+
+    // compute the max metric value for row normalization
+    let maxMetricVal = 0;
+    metricList.map(function(val0) {
+      if ((val0 !== undefined) && (val0 > maxMetricVal))
+        maxMetricVal = val0;
     }, this);
-    if (!row_normalize) {
-      max_metric_val = 1;
+    if (!rowNormalize) {
+      maxMetricVal = 1;
     }
-    study_sorting_results.map(function(study_sorting_result, i) {
-      let val0 = metric_list[i];
+
+    // For each result, we can now determin the color and text
+    studySortingResults.map(function(studySortingResult, i) {
+      let val0 = metricList[i];
       let text, color, bgcolor;
       if (val0 === undefined) {
         text = '';
@@ -297,116 +288,41 @@ class HeatmapViz extends Component {
       }
       else {
         text = val0;
-        if (max_metric_val) {
-          color = this.compute_fg_color(val0/max_metric_val);
-          bgcolor = this.compute_bg_color(val0/max_metric_val);
+        if (maxMetricVal) {
+          color = this.computeForegroundColor(val0/maxMetricVal);
+          bgcolor = this.computeBackgroundColor(val0/maxMetricVal);
         }
         else {
           color = 'black';
           bgcolor = 'white';
         }
       }
+      // add a cell corresponding to a sorting result
       ret.push({
-        id: study_sorting_result.study+'--'+study_sorting_result.sorter,
-        expand_id_on_click: expand_id_on_click,
+        id: studySortingResult.study+'--'+studySortingResult.sorter,
+        expand_id_on_click: expandIdOnClick,
         color: color,
         bgcolor: bgcolor,
         text: text,
         border_left: true,
         border_right: true,
         text_align: 'center',
-        selectable: is_study_set ? false : true,
-        //selected: (study_sorting_result === selected_study_sorting_result),
-        //x: study_sorting_result.sorter,
-        //y: study_sorting_result.study,
-        study_sorting_result: study_sorting_result // needed in onCellSelected -> selectStudySortingResult
+        selectable: isStudySet ? false : true,
+        study_sorting_result: studySortingResult // needed in onCellSelected -> selectStudySortingResult
       });
     }, this);
-    /*
-    study_sorting_results.map(function (study_sorting_result) {
-      let text;
-      let color;
-      let metric_vals;
-      switch (metric) {
-        case "accuracy":
-          metric_vals = study_sorting_result.accuracies;
-          break;
-        case "recall":
-          metric_vals = study_sorting_result.recalls;
-          break;
-        case "precision":
-          metric_vals = study_sorting_result.precisions;
-          break;
-        default:
-          throw Error('Unexpected metric: ' + metric);
-      }
-      if (format === 'count') {
-        if ((metric_vals) && (metric_vals.length > 0)) {
-          let num_above = metric_vals.filter(val => {
-            return val >= threshold; // metric threshold
-          });
-          text = num_above.length + '';
-          color = num_above.length;
-        }
-        else {
-          text = '';
-          color = 0;
-        }
-      }
-      else if (format === 'average') {
-        if ((metric_vals) && (metric_vals.length > 0)) {
-          let vals_to_use = [];
-          for (let i = 0; i < study_sorting_result.snrs.length; i++) {
-            if (study_sorting_result.snrs[i] > threshold) {
-              vals_to_use.push(metric_vals[i]);
-            }
-          }
-          let aboveAvg = 0;
-          if (vals_to_use.length) {
-            let sum = vals_to_use.reduce((a, b) => a + b);
-            aboveAvg = sum / vals_to_use.length;
-          }
-          // This just prints the output to 2 digits
-          let avg_rounded = Math.round(aboveAvg * 100) / 100
-
-          text = avg_rounded + '';
-          color = avg_rounded;
-        }
-        else {
-          text = '';
-          color = 0;
-        }
-      }
-      else {
-        Sentry.captureMessage('Unsupported format in compute_row_cell_data', format)
-      }
-      ret.push({
-        id: study_sorting_result.study+'--'+study_sorting_result.sorter,
-        expand_id_on_click: expand_id_on_click,
-        color: this.compute_fg_color(color),
-        bgcolor: this.compute_bg_color(color),
-        text: text,
-        border_left: true,
-        border_right: true,
-        selectable: is_study_set ? false : true,
-        //selected: (study_sorting_result === selected_study_sorting_result),
-        //x: study_sorting_result.sorter,
-        //y: study_sorting_result.study,
-        study_sorting_result: study_sorting_result // needed in onCellSelected -> selectStudySortingResult
-      });
-      return null;
-    }, this);
-    */
     return ret;
   }
 
-  compute_bg_color(val) {
+  computeBackgroundColor(val) {
+    // The following formula will need to be replaced
+    // val will be between 0 and 1
     let r=Math.floor(255*(1-val));
     let g=Math.floor(255*(1-val));
     let b=Math.floor(255*(Math.abs(val-0.5)*2));
     return `rgb(${r},${g},${b})`;
   }
-  compute_fg_color(val) {
+  computeForegroundColor(val) {
     return (val<0.5) ? 'black' : 'white';
   }
 
@@ -415,7 +331,7 @@ class HeatmapViz extends Component {
   }
 
   render() {
-    const loading = isEmpty(this.state.table_rows);
+    const loading = isEmpty(this.state.tableRows);
     const title = this.getFormatCopy();
 
     return (
@@ -427,24 +343,11 @@ class HeatmapViz extends Component {
           <h4>...</h4>
         ) : (
             <div className="heatmap__column">
-              <span>
               <ExpandingHeatmapTable
-                header={this.state.table_header}
-                rows={this.state.table_rows}
+                header={this.state.tableHeader}
+                rows={this.state.tableRows}
                 onCellSelected={this.handleCellSelected}
               />
-              {/*this.state.rows.map((row, i) => (
-                <HeatmapRow
-                  //{...this.props}
-                  onSelectCell={(this.props.format !== 'cpu') ? (d) => { this.props.selectStudySortingResult(d.study_sorting_result); } : null}
-                  onSelectLabel={(this.props.format !== 'cpu') ? () => {return 'do-nothing'; } : null}
-                  cells={row['cell_data']}
-                  key={`hmrow${i}`}
-                  index={i} // the index of this row (matters whether it is zero or not -- see comment in HeatmapRow)
-                  format={this.props.format}
-                />
-              ))*/}
-              </span>
             </div>
           )}
       </div>
