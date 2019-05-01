@@ -11,27 +11,27 @@ class HeatmapViz extends Component {
   }
 
   componentDidMount() {
-    this.buildVizData(this.props.studiesWithResults);
+    this.buildVizData(this.props.groupedUnitResults);
   }
 
   componentDidUpdate(prevProps) {
     if (
-      (this.props.studiesWithResults !== prevProps.studiesWithResults)
+      (this.props.groupedUnitResults !== prevProps.groupedUnitResults)
       || (this.props.threshold !== prevProps.threshold)
       || (this.props.format !== prevProps.format)
       || (this.props.metric !== prevProps.metric)
       || (this.props.selectedStudySortingResult !== prevProps.selectedStudySortingResult)
     ) {
-      this.buildVizData(this.props.studiesWithResults);
+      this.buildVizData(this.props.groupedUnitResults);
     }
   }
 
-  buildVizData(studiesWithResults) {
-    if (studiesWithResults) {
+  buildVizData(groupedUnitResults) {
+    if (groupedUnitResults) {
       
       // assemble a lookup: study_set_id -> study_set_name which we will need later
       let studySetNamesById = {};
-      this.props.studysets.map(function(x, i) {
+      this.props.studysets.forEach(function(x, i) {
         studySetNamesById[x._id] = x.name;
       }, this);
 
@@ -39,7 +39,7 @@ class HeatmapViz extends Component {
       // and a collection of study set names
       let studySetByStudy = {}; // lookup study_name -> study_set_name
       let studySetNames = {}; // collection of study set names (will be sorted list below)
-      this.props.studies.map(function(study, i) {
+      this.props.studies.forEach(function(study, i) {
         let studySetName = studySetNamesById[study.studySet];
         studySetByStudy[study.name] = studySetName;
         studySetNames[studySetName] = true;
@@ -50,10 +50,10 @@ class HeatmapViz extends Component {
 
       // Assemble the table rows (list of objects that will be passed to the ExpandingHeatmapTable component)
       let tableRows = [];
-      studySetNames.map(function(studySet, ii) { // loop through the study sets
+      studySetNames.forEach(function(studySet, ii) { // loop through the study sets
         // prepare a list of the studies in the study set (formatted properly for convenience)
         let studiesInStudySet = [];
-        studiesWithResults.map(function(studyWithResults, jj) { // loop through the studies with results looking for the ones that match the study set
+        groupedUnitResults.forEach(function(studyWithResults, jj) { // loop through the studies with results looking for the ones that match the study set
           let studyName = Object.keys(studyWithResults)[0];
           if (studySetByStudy[studyName] === studySet) {
             let studyWithResults0 = studyWithResults[studyName] // this is necessary because of the somewhat difficult structure of studyWithResults
@@ -74,7 +74,7 @@ class HeatmapViz extends Component {
           subrows: []
         };
         // loop through the studies in the study set and add a row for each
-        studiesInStudySet.map(function(study, kk) {
+        studiesInStudySet.forEach(function(study, kk) {
           tableRow.subrows.push({
             cells: this.computeTableRowCellsFromStudy(study, false)
           });
@@ -89,7 +89,7 @@ class HeatmapViz extends Component {
         return null;
       }, this);
 
-      let x = studiesWithResults[0]; // first study
+      let x = groupedUnitResults[0]; // first study
       let studyName = Object.keys(x)[0];
       let y = x[studyName];
       let sorterNames = y.map(function(z) {
@@ -100,7 +100,7 @@ class HeatmapViz extends Component {
       headerCells.push({
         text:''
       });
-      sorterNames.map(function(sorterName) {
+      sorterNames.forEach(function(sorterName) {
         headerCells.push({
           text:sorterName,
           rotate:true}
@@ -177,7 +177,7 @@ class HeatmapViz extends Component {
       spacer: true,
       selectable: false
     })
-    studySortingResults.map(function (studySortingResult) {
+    studySortingResults.forEach(function (studySortingResult) {
       ret.push({
         text: '',
         spacer: true,
@@ -269,7 +269,7 @@ class HeatmapViz extends Component {
 
     // compute the max metric value for row normalization
     let maxMetricVal = 0;
-    metricList.map(function(val0) {
+    metricList.forEach(function(val0) {
       if ((val0 !== undefined) && (val0 > maxMetricVal))
         maxMetricVal = val0;
     }, this);
@@ -278,7 +278,7 @@ class HeatmapViz extends Component {
     }
 
     // For each result, we can now determin the color and text
-    studySortingResults.map(function(studySortingResult, i) {
+    studySortingResults.forEach(function(studySortingResult, i) {
       let val0 = metricList[i];
       let text, color, bgcolor;
       if (val0 === undefined) {
