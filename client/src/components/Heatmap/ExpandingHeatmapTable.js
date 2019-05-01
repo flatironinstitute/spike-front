@@ -29,13 +29,17 @@ class ExpandingHeatmapTable extends React.Component {
     if (cell["border_top"]) classes0.push("border_top");
     if (cell["selectable"]) classes0.push("selectable");
     if (cell["spacer"]) classes0.push("spacer");
+    if (cell.expand_id_on_click) classes0.push("expandable");
     let class0 = classes0.join(" ");
+    let style0 = {color:cell['color']||'black', 'background-color':cell.bgcolor||'white', 'text-align': cell.text_align||'left'};
+    if (cell.text_align === 'right')
+      style0['padding-right'] = '4px';
     return (
       <td
-        bgcolor={cell.bgcolor || ""}
+        //bgcolor={cell.bgcolor || ""}
         onClick={() => this.handleCellSelected(cell)}
         class={class0}
-        style={{color:cell['color']||'black'}}
+        style={style0}
       >
         <div>
           <span>{cell.text}</span>
@@ -95,10 +99,10 @@ class ExpandingHeatmapTable extends React.Component {
     });
   }
   createCollapseButton(id) {
-    return <button onClick={() => this.handleCollapse(id)}>{"-"}</button>;
+    return <div onClick={() => this.handleCollapse(id)}>{"-"}</div>;
   }
   createExpandButton(id) {
-    return <button onClick={() => this.handleExpand(id)}>{"+"}</button>;
+    return <div onClick={() => this.handleExpand(id)}>{"+"}</div>;
   }
   render() {
     let trs = [];

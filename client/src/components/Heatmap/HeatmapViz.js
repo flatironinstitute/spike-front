@@ -213,8 +213,116 @@ class HeatmapViz extends Component {
     ret.push({
       text: (study_sorting_results[0]||{}).study,
       expand_id_on_click: expand_id_on_click,
+      text_align: 'right',
       selectable: false
-    })
+    });
+    let row_normalize;
+    switch (metric) {
+      case 'count':
+        row_normalize = true;
+        break;
+      case 'average':
+        row_normalize = false;
+      default:
+        row_normalize = true;
+    }
+    let metric_list = study_sorting_results.map(function(study_sorting_result) {
+      let metric_vals;
+      switch (metric) {
+        case "accuracy":
+          metric_vals = study_sorting_result.accuracies;
+          break;
+        case "recall":
+          metric_vals = study_sorting_result.recalls;
+          break;
+        case "precision":
+          metric_vals = study_sorting_result.precisions;
+          break;
+        default:
+          throw Error('Unexpected metric: ' + metric);
+      }
+      if (format === 'count') {
+        if ((metric_vals) && (metric_vals.length > 0)) {
+          let num_above = metric_vals.filter(val => {
+            return val >= threshold; // metric threshold
+          });
+          return num_above.length;
+        }
+        else {
+          return undefined;
+        }
+      }
+      else if (format === 'average') {
+        if ((metric_vals) && (metric_vals.length > 0)) {
+          let vals_to_use = [];
+          for (let i = 0; i < study_sorting_result.snrs.length; i++) {
+            if (study_sorting_result.snrs[i] > threshold) {
+              vals_to_use.push(metric_vals[i]);
+            }
+          }
+          let aboveAvg = 0;
+          if (vals_to_use.length) {
+            let sum = vals_to_use.reduce((a, b) => a + b);
+            aboveAvg = sum / vals_to_use.length;
+          }
+          // This just prints the output to 2 digits
+          let avg_rounded = Math.round(aboveAvg * 100) / 100
+
+          return avg_rounded;
+        }
+        else {
+          return undefined;
+        }
+      }
+      else {
+        Sentry.captureMessage('Unsupported format in compute_row_cell_data', format)
+        return undefined;
+      }
+    }, this);
+    let max_metric_val = 0;
+    metric_list.map(function(val0) {
+      if ((val0 !== undefined) && (val0 > max_metric_val))
+        max_metric_val = val0;
+    }, this);
+    if (!row_normalize) {
+      max_metric_val = 1;
+    }
+    study_sorting_results.map(function(study_sorting_result, i) {
+      let val0 = metric_list[i];
+      let text, color, bgcolor;
+      if (val0 === undefined) {
+        text = '';
+        color = 'black';
+        bgcolor = 'white';
+      }
+      else {
+        text = val0;
+        if (max_metric_val) {
+          color = this.compute_fg_color(val0/max_metric_val);
+          bgcolor = this.compute_bg_color(val0/max_metric_val);
+        }
+        else {
+          color = 'black';
+          bgcolor = 'white';
+        }
+      }
+      ret.push({
+        id: study_sorting_result.study+'--'+study_sorting_result.sorter,
+        expand_id_on_click: expand_id_on_click,
+        color: color,
+        bgcolor: bgcolor,
+        text: text,
+        border_left: true,
+        border_right: true,
+        text_align: 'center',
+        selectable: is_study_set ? false : true,
+        //selected: (study_sorting_result === selected_study_sorting_result),
+        //x: study_sorting_result.sorter,
+        //y: study_sorting_result.study,
+        study_sorting_result: study_sorting_result // needed in onCellSelected -> selectStudySortingResult
+      });
+    }, this);
+    /*
     study_sorting_results.map(function (study_sorting_result) {
       let text;
       let color;
@@ -288,14 +396,18 @@ class HeatmapViz extends Component {
       });
       return null;
     }, this);
+    */
     return ret;
   }
 
   compute_bg_color(val) {
-    return 'pink';
+    let r=Math.floor(255*(1-val));
+    let g=Math.floor(255*(1-val));
+    let b=Math.floor(255*(Math.abs(val-0.5)*2));
+    return `rgb(${r},${g},${b})`;
   }
   compute_fg_color(val) {
-    return 'blue';
+    return (val<0.5) ? 'black' : 'white';
   }
 
   handleCellSelected(cell) {
