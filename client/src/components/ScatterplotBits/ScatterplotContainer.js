@@ -21,7 +21,6 @@ class ScatterplotContainer extends Component {
   render() {
     const { selectedStudySortingResult, sliderValue, metric, format } = this.props;
     const copy = this.getHeaderCopy(this.props.format);
-    console.log(selectedStudySortingResult, 'selected study sorting result');
     return (
       <div>
         <p>

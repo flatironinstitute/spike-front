@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { LinkContainer } from "react-router-bootstrap";
+import { Link } from "react-router-dom";
 
 import "./footer.css";
 import github from "./github-white.svg";
@@ -19,9 +19,9 @@ class Footer extends Component {
 
         <ul className="footer__links x-small">
           <li className="x-small">
-            <LinkContainer exact to="/about">
-              <a>About</a>
-            </LinkContainer>
+            <Link exact="true" to="/about">
+              About
+            </Link>
           </li>
           <li className="x-small">
             <a
@@ -51,11 +51,9 @@ class Footer extends Component {
             </a>
           </li>
           <li className="x-small">
-            <LinkContainer exact to="/contact">
-              <a target="_blank" rel="noopener noreferrer" href="/contact">
-                Contact
-            </a>
-            </LinkContainer>
+            <Link exact="true" to="/contact">
+              Contact
+            </Link>
           </li>
         </ul>
         <div className="footer__interwebs">

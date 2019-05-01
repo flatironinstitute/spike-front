@@ -1,5 +1,4 @@
 import React from "react";
-import { LinkContainer } from "react-router-bootstrap";
 import icon from "./active.svg";
 
 const ActiveIcon = ({ row, accessor }) => {
@@ -7,17 +6,15 @@ const ActiveIcon = ({ row, accessor }) => {
   return (
     <div>
       {isActive ? (
-        <LinkContainer exact to="/">
-          <a className="icon__link">
-            <img
-              src={icon}
-              className="algos__icon"
-              width="25"
-              height="25"
-              alt="active icon"
-            />
-          </a>
-        </LinkContainer>
+        <a className="icon__link" href={"./home"}>
+          <img
+            src={icon}
+            className="algos__icon"
+            width="25"
+            height="25"
+            alt="active icon"
+          />
+        </a>
       ) : (
           <div />
         )}
