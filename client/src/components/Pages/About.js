@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class About extends Component {
   render() {
     return (
-      <div className="page__body about__body">
+      <div className="page__body">
         <div className="intro">
           <p className="big">About SpikeForest</p>
           <div className="dividerthick" />
@@ -21,7 +22,7 @@ class About extends Component {
               Github issues
             </a>{" "}
             page to report website problems or
-            <a href="/contact">contact</a> us directly.
+            <Link exact="true" to="/contact">contact</Link> us directly.
           </p>
         </div>
         <div className="opener">
@@ -34,16 +35,14 @@ class About extends Component {
               testing, and recording wrangling and simulation) Alex Barnett
               (concept and site design, testing)
             </p>
-            <p>
-              We are grateful for many collaborators at other institutions for
-              their vital help:
-              <ul>
-                <li>Jason Chung (UCSD) </li>
-                <li>Dan English (VT)</li>
-                <li>Loren Frank (UCSD)</li>
-                <li>Catalin Mitelut (Columbia)</li>
-              </ul>
-            </p>
+            <p>We are grateful for many collaborators at other institutions for
+            their vital help:</p>
+            <ul>
+              <li>Jason Chung (UCSD) </li>
+              <li>Dan English (VT)</li>
+              <li>Loren Frank (UCSD)</li>
+              <li>Catalin Mitelut (Columbia)</li>
+            </ul>
             <h3>History and Future</h3>
             <p>
               This project is the fruition of a long-term goal within the spike
@@ -146,16 +145,14 @@ class About extends Component {
             <h3>Changelog for website</h3>
             <p>June 2019 : release v 1.0</p>
             <h3>Future plans</h3>
-            <p>
-              <ul>
-                <li>Hybrid recordings</li>
-                <li>
-                  Expansion of SNR to other surrogate metrics: noise overlap,
-                  etc.
+            <ul>
+              <li>Hybrid recordings</li>
+              <li>
+                Expansion of SNR to other surrogate metrics: noise overlap,
+                etc.
                 </li>
-                <li>Stability-based quality metrics.</li>
-              </ul>
-            </p>
+              <li>Stability-based quality metrics.</li>
+            </ul>
             <h3>Related Projects</h3>
             <p>[Links to other repos]</p>
             <h3>Contact</h3>

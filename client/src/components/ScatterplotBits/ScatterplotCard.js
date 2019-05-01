@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ScatterplotContainer from "./ScatterplotContainer";
 import { isEmpty } from "../../utils";
+import { Link } from "react-router-dom";
 
 class ScatterplotCard extends Component {
   constructor(props) {
@@ -69,11 +70,11 @@ class ScatterplotCard extends Component {
                   <div className="card__category--div">
                     <span className="card__title--link">
                       Study:
-                    <a href={`/study/${study}`}>{study}</a>
+                      <Link to={`/study/${study}`}>{study}</Link>
                     </span>
                     <span className="card__title--link">
                       Sorter:
-                    <a href="/sorters">{sorter}</a>
+                      <Link to="/sorters">{sorter}</Link>
                     </span>
                   </div>
                 </div>

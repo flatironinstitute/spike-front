@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+
 import "./footer.css";
 import github from "./github-white.svg";
 
@@ -17,7 +19,9 @@ class Footer extends Component {
 
         <ul className="footer__links x-small">
           <li className="x-small">
-            <a href="/about">About</a>
+            <Link exact="true" to="/about">
+              About
+            </Link>
           </li>
           <li className="x-small">
             <a
@@ -47,9 +51,9 @@ class Footer extends Component {
             </a>
           </li>
           <li className="x-small">
-            <a target="_blank" rel="noopener noreferrer" href="/contact">
+            <Link exact="true" to="/contact">
               Contact
-            </a>
+            </Link>
           </li>
         </ul>
         <div className="footer__interwebs">
