@@ -38,8 +38,8 @@ console.info(`USING DATABASE: ${database_url}`);
 // checks
 assert(fs.lstatSync(data_directory).isDirectory(), `Not a directory: ${data_directory}`);
 
-if (!fs.existsSync(data_directory+'/cleanedData')) {
-  fs.mkdirSync(data_directory+'/cleanedData');
+if (!fs.existsSync(data_directory + '/cleanedData')) {
+  fs.mkdirSync(data_directory + '/cleanedData');
 }
 
 const mongoose = require("mongoose");
@@ -115,6 +115,7 @@ async function formatStudies() {
     let [setId] = studysets.filter(set => set.name === study.studySet);
     if (setId) {
       study.studySet = setId._id;
+      study.studySetName = setId.name;
     } else {
       console.log(
         "\n 🛑🛑🛑🛑🛑🛑 Error! \n\n\t No study set found for study \n",
@@ -370,12 +371,12 @@ async function fetchUnitResultsWithSNR(cleanUnitResults) {
   let true_units_by_code = {};
   for (let i = 0; i < trueunits.length; i++) {
     tu = trueunits[i];
-    let code0 = tu.recordingName+'--'+tu.studyName+'--'+tu.unitId;
+    let code0 = tu.recordingName + '--' + tu.studyName + '--' + tu.unitId;
     true_units_by_code[code0] = tu;
   }
   for (let index = 0; index < cleanUnitResults.length; index++) {
     let ur = cleanUnitResults[index];
-    let true_unit_code = ur.recordingName+'--'+ur.studyName+'--'+ur.unitId;
+    let true_unit_code = ur.recordingName + '--' + ur.studyName + '--' + ur.unitId;
     if (true_unit_code in true_units_by_code) {
       let tu = true_units_by_code[true_unit_code];
       ur.snr = tu.snr;

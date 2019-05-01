@@ -41,12 +41,10 @@ class DetailPage extends Component {
   }
 
   // Get Study from Page Name
-  // Determine if a Study/Sorter pairing has been pre-selected - it will be in the 
-  // Fetch all the study unit results
+  // Determine if a Study/Sorter pairing has been pre-selected - if so load it first
+  // Find all the other study/sorter pairings from groupedURs
+  // TBD: What do I need for the 
   // 
-
-
-
 
   componentDidUpdate(prevProps, prevState) {
     // New Data Gathering from Existing files
