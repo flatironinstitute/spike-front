@@ -5,6 +5,8 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as actionCreators from "../actions/actionCreators";
 
+import _Stub_Algorithms from "./StubAlgorithms.js"
+
 // import components
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
@@ -13,7 +15,7 @@ import Home from "../components/Pages/Home";
 import About from "../components/Pages/About";
 import Recordings from "../components/Pages/Recordings";
 import Studies from "../components/Pages/Studies";
-import Sorters from "../components/Pages/Sorters";
+import Algorithms from "../components/Pages/Algorithms";
 import Internals from "../components/Pages/Internals";
 import Metrics from "../components/Pages/Metrics";
 import Contact from "../components/Contact/Contact";
@@ -66,7 +68,7 @@ class Routes extends Component {
           />
           <Route
             path="/sorters"
-            render={props => <Sorters {...this.props} />}
+            render={props => <Algorithms algorithms={_Stub_Algorithms} />}
           />
           <Route
             path="/studies"
