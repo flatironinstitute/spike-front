@@ -109,53 +109,53 @@ class Sorters extends Component {
               </Card>
             </Container>
           ) : (
-            <Container className="container__heatmap">
-              <Row className="container__sorter--row">
-                <Col lg={12} sm={12}>
-                  <div className="card card--stats">
-                    <div className="content">
-                      <div className="card__label">
-                        <p>
-                          Sorters:{" "}
-                          <strong>
-                            Spike sorting algorithms tested in this project
+              <Container className="container__heatmap">
+                <Row className="container__sorter--row">
+                  <Col lg={12} sm={12}>
+                    <div className="card card--stats">
+                      <div className="content">
+                        <div className="card__label">
+                          <p>
+                            Sorters:{" "}
+                            <strong>
+                              Spike sorting algorithms tested in this project
                           </strong>
+                          </p>
+                        </div>
+                        <div className="card__footer">
+                          <hr />
+                          <p>
+                            {" "}
+                            Generally speaking, spike sorting algorithms take in
+                            an unfiltered multi-channel timeseries (aka,
+                            recording) and a list of algorithm parameters and
+                            output a list of firing times and associated integer
+                            unit labels. This page lists the spike sorting codes
+                            we run, as well as some that have yet to be
+                            incorporated. Most of the codes were developed at
+                            other institutions; two of them are in-house.
                         </p>
-                      </div>
-                      <div className="card__footer">
-                        <hr />
-                        <p>
-                          {" "}
-                          Generally speaking, spike sorting algorithms take in
-                          an unfiltered multi-channel timeseries (aka,
-                          recording) and a list of algorithm parameters and
-                          output a list of firing times and associated integer
-                          unit labels. This page lists the spike sorting codes
-                          we run, as well as some that have yet to be
-                          incorporated. Most of the codes were developed at
-                          other institutions; two of them are in-house.
+                          <p className="updated">Link to documentation?</p>
+                          <p className="updated">
+                            Embedded Notebooks / Scripts with Configs?
                         </p>
-                        <p className="updated">Link to documentation?</p>
-                        <p className="updated">
-                          Embedded Notebooks / Scripts with Configs?
-                        </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Col>
-              </Row>
-              <Row className="container__sorter--row">
-                <Col lg={12} sm={12}>
-                  <div className="card card--stats">
-                    <ReactCollapsingTable
-                      columns={algosColumns}
-                      rows={this.state.rows}
-                    />
-                  </div>
-                </Col>
-              </Row>
-            </Container>
-          )}
+                  </Col>
+                </Row>
+                <Row className="container__sorter--row">
+                  <Col lg={12} sm={12}>
+                    <div className="card card--stats">
+                      <ReactCollapsingTable
+                        columns={algosColumns}
+                        rows={this.state.rows}
+                      />
+                    </div>
+                  </Col>
+                </Row>
+              </Container>
+            )}
         </div>
       </div>
     );

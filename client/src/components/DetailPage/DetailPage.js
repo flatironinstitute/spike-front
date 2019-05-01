@@ -4,10 +4,11 @@ import React, { Component } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import HeatmapOptionsRow from "../Heatmap/HeatmapOptionsRow";
 import Preloader from "../Preloader/Preloader";
-import ReactJson from "react-json-view";
 import DetailPageRow from "./DetailPageRow";
-import SpikeSprayV2 from "./SpikeSprayV2";
-// import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
+// import ReactJson from "react-json-view";
+// import SpikeSprayV2 from "./SpikeSprayV2";
+import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
+import "./detailpage.css";
 
 // Redux
 import { bindActionCreators } from "redux";
@@ -17,7 +18,6 @@ import * as actionCreators from "../../actions/actionCreators";
 // Utilities 💡
 import { isEmpty, toTitleCase } from "../../utils";
 
-// TODO: Refactor class into smaller components please
 class DetailPage extends Component {
   constructor(props) {
     super(props);
@@ -32,8 +32,7 @@ class DetailPage extends Component {
       activeSorter: 0,
       openIcon: false,
       builtData: [],
-      selectedRecording: {},
-      // new data properties
+      selectedRecording: {}
     };
   }
 
@@ -41,9 +40,14 @@ class DetailPage extends Component {
     this.getPageName();
   }
 
+  // Get Study from Page Name
+  // Determine if a Study/Sorter pairing has been pre-selected - if so load it first
+  // Find all the other study/sorter pairings from groupedURs
+  // TBD: What do I need for the 
+  // 
+
   componentDidUpdate(prevProps, prevState) {
     // New Data Gathering from Existing files
-
 
     // TODO: Swap selected study state for props
     if (this.state.study !== prevState.study) {
@@ -209,7 +213,7 @@ class DetailPage extends Component {
     let heatmapTitle = this.getFormatCopy();
     let pageTitle = toTitleCase(this.state.study.replace(/_/g, " "));
 
-    console.log("🤩", this.props);
+    console.log("🤩", this.props.selectedStudySortingResult);
     return (
       <div>
         <div className="page__body">
@@ -226,39 +230,13 @@ class DetailPage extends Component {
                 <Row className="justify-content-md-center">
                   <Col lg={12} sm={12} xl={10}>
                     <div className="intro">
-                      <h4 className="page__title">{pageTitle}</h4>
-                      {/* <p className="subhead">
-                        Below is the current list of studies in SpikeForest. Click on
-                        each to see an expanded list of the recordings within each
-                        study.
-                      </p> */}
+                      <h4 className="intro__title">{pageTitle}</h4>
+                      <p className="intro__title"><em>sorter</em></p>
                     </div>
                   </Col>
                 </Row>
                 <Row className="container__sorter--row">
-                  <Col lg={5} sm={6}>
-                    <div className="card card--stats">
-                      <div className="content">
-                        <div className="card__label">
-                          <p>
-                            Study: <strong>{this.state.study}</strong>
-                          </p>
-                          <p>
-                            Sorter: <strong>{this.state.sorter}</strong>
-                          </p>
-                        </div>
-                        <div className="card__footer">
-                          <hr />
-                          <p>Sorting Params:</p>
-                          <p>
-                            Adjacency radius: 50, Detect sign: -1, Detect
-                            threshold: 3
-                        </p>
-                        </div>
-                      </div>
-                    </div>
-                  </Col>
-                  <Col lg={7} sm={12}>
+                  <Col lg={6} sm={12}>
                     <div className="card card--stats">
                       <div className="content">
                         <div className="card__label">
@@ -280,6 +258,20 @@ class DetailPage extends Component {
                       </div>
                     </div>
                   </Col>
+                  <Col lg={6} sm={12}>
+                    <ScatterplotCard
+                      {...this.props}
+                      sliderValue={this.state.sliderValue}
+
+                    // study={this.state.study}
+                    // sorter={this.state.sorter}
+                    // selectedStudySortingResult={this.props.selectedStudySortingResult}
+                    // sliderValue={this.props.sliderValue}
+                    // format={this.props.format}
+                    // metric={this.state.metric}
+                    // {...this.props}
+                    />
+                  </Col>
                 </Row>
                 <Row className="container__sorter--row">
                   <Col lg={12} sm={12}>
@@ -295,22 +287,6 @@ class DetailPage extends Component {
                   </Col>
                 </Row>
                 {/* <Row className="container__sorter--row">
-                <Col lg={12} sm={12}>
-                  {loadScatterplot ? (
-                    <Card>
-                      <Card.Body>
-                        <Preloader />
-                      </Card.Body>
-                    </Card>
-                  ) : (
-                    <ScatterplotCard
-                      {...this.props}
-                      sliderValue={this.state.sliderValue}
-                    />
-                  )}
-                </Col>
-              </Row> */}
-                <Row className="container__sorter--row">
                   <Col lg={12} sm={12}>
                     <div className="card card--heatmap">
                       <div className="content">
@@ -347,7 +323,7 @@ class DetailPage extends Component {
                       </div>
                     </div>
                   </Col>
-                </Row>
+                </Row> */}
               </Container>
             )}
         </div>

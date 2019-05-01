@@ -10,6 +10,9 @@ const studySchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "StudySet"
   },
+  studySetName: {
+    type: String
+  },
   sorterNames: {
     type: [String]
   },

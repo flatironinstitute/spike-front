@@ -28,32 +28,26 @@ class HeatmapViz extends Component {
 
   buildVizData(studiesWithResults) {
     if (studiesWithResults) {
-      
-      // assemble a lookup: study_set_id -> study_set_name which we will need later
-      let studySetNamesById = {};
-      this.props.studysets.map(function(x, i) {
-        studySetNamesById[x._id] = x.name;
-      }, this);
 
       // assemble a lookup: study_name -> study_set_name
       // and a collection of study set names
       let studySetByStudy = {}; // lookup study_name -> study_set_name
       let studySetNames = {}; // collection of study set names (will be sorted list below)
-      this.props.studies.map(function(study, i) {
-        let studySetName = studySetNamesById[study.studySet];
+      this.props.studies.map(function (study, i) {
+        let studySetName = study.studySetName;
         studySetByStudy[study.name] = studySetName;
         studySetNames[studySetName] = true;
       }, this);
       // make it a sorted list
-      studySetNames = Object.keys(studySetNames); 
+      studySetNames = Object.keys(studySetNames);
       studySetNames.sort();
 
       // Assemble the table rows (list of objects that will be passed to the ExpandingHeatmapTable component)
       let tableRows = [];
-      studySetNames.map(function(studySet, ii) { // loop through the study sets
+      studySetNames.map(function (studySet, ii) { // loop through the study sets
         // prepare a list of the studies in the study set (formatted properly for convenience)
         let studiesInStudySet = [];
-        studiesWithResults.map(function(studyWithResults, jj) { // loop through the studies with results looking for the ones that match the study set
+        studiesWithResults.map(function (studyWithResults, jj) { // loop through the studies with results looking for the ones that match the study set
           let studyName = Object.keys(studyWithResults)[0];
           if (studySetByStudy[studyName] === studySet) {
             let studyWithResults0 = studyWithResults[studyName] // this is necessary because of the somewhat difficult structure of studyWithResults
@@ -74,7 +68,7 @@ class HeatmapViz extends Component {
           subrows: []
         };
         // loop through the studies in the study set and add a row for each
-        studiesInStudySet.map(function(study, kk) {
+        studiesInStudySet.map(function (study, kk) {
           tableRow.subrows.push({
             cells: this.computeTableRowCellsFromStudy(study, false)
           });
@@ -84,7 +78,7 @@ class HeatmapViz extends Component {
 
         // add a spacer row -- which should have the same number of cells and perhaps some formatting associated with the study set
         tableRows.push({
-          cells:this.computeEmptyTableRowCellsFromStudy(studiesInStudySet[0]),
+          cells: this.computeEmptyTableRowCellsFromStudy(studiesInStudySet[0]),
         });
         return null;
       }, this);
@@ -92,18 +86,19 @@ class HeatmapViz extends Component {
       let x = studiesWithResults[0]; // first study
       let studyName = Object.keys(x)[0];
       let y = x[studyName];
-      let sorterNames = y.map(function(z) {
+      let sorterNames = y.map(function (z) {
         return z.sorter;
       });
 
       let headerCells = [];
       headerCells.push({
-        text:''
+        text: ''
       });
-      sorterNames.map(function(sorterName) {
+      sorterNames.map(function (sorterName) {
         headerCells.push({
-          text:sorterName,
-          rotate:true}
+          text: sorterName,
+          rotate: true
+        }
         );
         return null;
       }, this);
@@ -145,19 +140,19 @@ class HeatmapViz extends Component {
 
     let numSorters = list[0].length;
     let aggregated = [];
-    for (let i=0; i<numSorters; i++) {
+    for (let i = 0; i < numSorters; i++) {
       aggregated.push({
-        accuracies:[],
-        recalls:[],
-        precisions:[],
-        snrs:[],
-        sorter:list[0][i].sorter,
-        study:studySet
+        accuracies: [],
+        recalls: [],
+        precisions: [],
+        snrs: [],
+        sorter: list[0][i].sorter,
+        study: studySet
       });
     }
-    for (let j=0; j<list.length; j++) {
-      for (let i=0; i<numSorters; i++) {
-        aggregated[i].accuracies = aggregated[i].accuracies.concat(list[j][i].accuracies);  
+    for (let j = 0; j < list.length; j++) {
+      for (let i = 0; i < numSorters; i++) {
+        aggregated[i].accuracies = aggregated[i].accuracies.concat(list[j][i].accuracies);
         aggregated[i].recalls = aggregated[i].recalls.concat(list[j][i].recalls);
         aggregated[i].precisions = aggregated[i].precisions.concat(list[j][i].accuracies);
         aggregated[i].snrs = aggregated[i].snrs.concat(list[j][i].snrs);
@@ -196,7 +191,7 @@ class HeatmapViz extends Component {
     let ret = []; // the cells to return
     // the first cell is the name of the study
     ret.push({
-      text: (studySortingResults[0]||{}).study,
+      text: (studySortingResults[0] || {}).study,
       expand_id_on_click: expandIdOnClick,
       text_align: 'right',
       selectable: false
@@ -213,7 +208,7 @@ class HeatmapViz extends Component {
         rowNormalize = true;
     }
     // loop through the sorting results for the study, and get the metrics (e.g., counts) to display
-    let metricList = studySortingResults.map(function(studySortingResult) {
+    let metricList = studySortingResults.map(function (studySortingResult) {
       let metricVals;
       switch (metric) {
         case "accuracy":
@@ -269,7 +264,7 @@ class HeatmapViz extends Component {
 
     // compute the max metric value for row normalization
     let maxMetricVal = 0;
-    metricList.map(function(val0) {
+    metricList.map(function (val0) {
       if ((val0 !== undefined) && (val0 > maxMetricVal))
         maxMetricVal = val0;
     }, this);
@@ -278,7 +273,7 @@ class HeatmapViz extends Component {
     }
 
     // For each result, we can now determin the color and text
-    studySortingResults.map(function(studySortingResult, i) {
+    studySortingResults.map(function (studySortingResult, i) {
       let val0 = metricList[i];
       let text, color, bgcolor;
       if (val0 === undefined) {
@@ -289,8 +284,8 @@ class HeatmapViz extends Component {
       else {
         text = val0;
         if (maxMetricVal) {
-          color = this.computeForegroundColor(val0/maxMetricVal);
-          bgcolor = this.computeBackgroundColor(val0/maxMetricVal);
+          color = this.computeForegroundColor(val0 / maxMetricVal);
+          bgcolor = this.computeBackgroundColor(val0 / maxMetricVal);
         }
         else {
           color = 'black';
@@ -299,7 +294,7 @@ class HeatmapViz extends Component {
       }
       // add a cell corresponding to a sorting result
       ret.push({
-        id: studySortingResult.study+'--'+studySortingResult.sorter,
+        id: studySortingResult.study + '--' + studySortingResult.sorter,
         expand_id_on_click: expandIdOnClick,
         color: color,
         bgcolor: bgcolor,
@@ -317,13 +312,13 @@ class HeatmapViz extends Component {
   computeBackgroundColor(val) {
     // The following formula will need to be replaced
     // val will be between 0 and 1
-    let r=Math.floor(255*(1-val));
-    let g=Math.floor(255*(1-val));
-    let b=Math.floor(255*(Math.abs(val-0.5)*2));
+    let r = Math.floor(255 * (1 - val));
+    let g = Math.floor(255 * (1 - val));
+    let b = Math.floor(255 * (Math.abs(val - 0.5) * 2));
     return `rgb(${r},${g},${b})`;
   }
   computeForegroundColor(val) {
-    return (val<0.5) ? 'black' : 'white';
+    return (val < 0.5) ? 'black' : 'white';
   }
 
   handleCellSelected(cell) {
