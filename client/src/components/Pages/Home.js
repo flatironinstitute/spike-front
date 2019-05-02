@@ -32,11 +32,14 @@ class Home extends Component {
   }
 
   async mapUnits() {
-    let unitsMap = await formatUnitResults(
-      this.props.groupedURs,
-      this.props.sorters
-    );
-    this.setState({ unitsMap: unitsMap });
+    console.log('in map units');
+    if (this.props.sorters && this.props.groupedURs) {
+      let unitsMap = await formatUnitResults(
+        this.props.groupedURs,
+        this.props.sorters
+      );
+      this.setState({ unitsMap: unitsMap });
+    }
   }
 
   getStudies() {
@@ -60,6 +63,7 @@ class Home extends Component {
       isEmpty(this.props.sorters);
     let sorters = this.props.sorters ? this.getSorters() : null;
     let studies = this.props.studies ? this.getStudies() : null;
+    console.log(this.props.sorters, this.props.groupedURs);
     return (
       <div className="page__body page__body--alert ">
         <StatsAlert {...this.props} />

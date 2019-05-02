@@ -46,7 +46,7 @@ class ExpandingHeatmapTable extends React.Component {
       </td>
     );
   }
-  createTableRows(row) {
+  createTableRows(row, isSubrow) {
     let ret = [];
     let id0 = row.id || null;
     let expanded = this.state.expandedRowIds[id0];
@@ -64,11 +64,11 @@ class ExpandingHeatmapTable extends React.Component {
       tds.push(this.createTableCell(c));
       return null;
     }, this);
-    ret.push(<tr>{tds}</tr>);
+    ret.push(<tr className={isSubrow ? "subrow" : "toprow"}>{tds}</tr>);
     if (expanded) {
       if ((row.subrows) && (row.subrows.length > 0)) {
-        row.subrows.forEach(function(subrow, i) {
-          let trs0 = this.createTableRows(subrow);
+        row.subrows.forEach(function (subrow, i) {
+          let trs0 = this.createTableRows(subrow, true);
           ret = ret.concat(trs0);
           return null;
         }, this);
@@ -106,7 +106,7 @@ class ExpandingHeatmapTable extends React.Component {
   render() {
     let trs = [];
     trs = trs.concat(this.createTableRows(this.props.header));
-    this.props.rows.forEach(function(row) {
+    this.props.rows.forEach(function (row) {
       let trs0 = this.createTableRows(row);
       trs = trs.concat(trs0);
       return null;
