@@ -227,7 +227,7 @@ class DetailPage extends Component {
                   <Col lg={12} sm={12} xl={10}>
                     <div className="intro">
                       <h4 className="intro__title">{pageTitle}</h4>
-                      <p className="intro__title"><em>sorter</em></p>
+                      <p className="intro__title"><em>{this.state.sorter}</em></p>
                     </div>
                   </Col>
                 </Row>
