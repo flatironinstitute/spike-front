@@ -43,7 +43,8 @@ class DetailPage extends Component {
   }
 
   getStudyAndSorter() {
-    let study, sorter = "";
+    let study,
+      sorter = "";
     if (this.props.selectedStudySortingResult) {
       study = this.props.selectedStudySortingResult.study;
       sorter = this.props.selectedStudySortingResult.sorter;
@@ -89,13 +90,10 @@ class DetailPage extends Component {
   }
 
   async mapUnits() {
-    let unitsMap = await formatUnitResultsByStudy(
-      this.props.ursByStudy
-    );
+    let unitsMap = await formatUnitResultsByStudy(this.props.ursByStudy);
     let sorter = this.state.sorter ? this.state.sorter : unitsMap[0].sorter;
     this.setState({ unitsMap: unitsMap, sorter: sorter });
   }
-
 
   applyResultFilters() {
     var filteredData;
@@ -107,7 +105,7 @@ class DetailPage extends Component {
         filteredData = this.filterSNR(this.state.unitsMap);
         break;
       default:
-        filteredData = this.state.unitsMap;;
+        filteredData = this.state.unitsMap;
     }
     this.setState({ filteredData: filteredData });
   }
@@ -199,7 +197,9 @@ class DetailPage extends Component {
   }
 
   render() {
-    let sorters = this.state.unitsMap ? this.state.unitsMap.map(result => result.sorter) : [];
+    let sorters = this.state.unitsMap
+      ? this.state.unitsMap.map(result => result.sorter)
+      : [];
     let loading =
       isEmpty(this.state.study) ||
       isEmpty(this.state.sorter) ||
@@ -208,8 +208,9 @@ class DetailPage extends Component {
     let heatmapTitle = this.getFormatCopy();
     let pageTitle = toTitleCase(this.state.study.replace(/_/g, " "));
 
-    console.log("🤩 selectedStudySortingResult", this.props.selectedStudySortingResult);
-    console.log("🤩 unitsMap", this.state.unitsMap)
+    // console.log("🤩 selectedStudySortingResult", this.props.selectedStudySortingResult);
+    // console.log("🤩 unitsMap", this.state.unitsMap);
+    // console.log("🤩 ursByStudy", this.props.ursByStudy);
     return (
       <div>
         <div className="page__body">
@@ -222,42 +223,44 @@ class DetailPage extends Component {
               </Card>
             </Container>
           ) : (
-              <Container className="container__heatmap">
-                <Row className="justify-content-md-center">
-                  <Col lg={12} sm={12} xl={10}>
-                    <div className="intro">
-                      <h4 className="intro__title">{pageTitle}</h4>
-                      <p className="intro__title"><em>{this.state.sorter}</em></p>
-                    </div>
-                  </Col>
-                </Row>
-                <Row className="container__sorter--row">
-                  <Col lg={6} sm={12}>
-                    <div className="card card--stats">
-                      <div className="content">
-                        <div className="card__label">
-                          <p>{heatmapTitle}</p>
-                        </div>
-                        <div className="card__footer">
-                          <hr />
-                          <DetailPageRow
-                            {...this.props}
-                            vizDatum={this.state.filteredData}
-                            key={`hmrow${0}`}
-                            index={0}
-                            format={this.state.format}
-                            sorters={sorters.sort()}
-                            selectedSorter={this.state.sorter}
-                            handleSorterChange={this.handleSorterChange}
-                          />
-                        </div>
+            <Container className="container__heatmap">
+              <Row className="justify-content-md-center">
+                <Col lg={12} sm={12} xl={10}>
+                  <div className="intro">
+                    <h4 className="intro__title">{pageTitle}</h4>
+                    <p className="intro__title">
+                      <em>{this.state.sorter}</em>
+                    </p>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="container__sorter--row">
+                <Col lg={6} sm={12}>
+                  <div className="card card--stats">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>{heatmapTitle}</p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <DetailPageRow
+                          {...this.props}
+                          vizDatum={this.state.filteredData}
+                          key={`hmrow${0}`}
+                          index={0}
+                          format={this.state.format}
+                          sorters={sorters.sort()}
+                          selectedSorter={this.state.sorter}
+                          handleSorterChange={this.handleSorterChange}
+                        />
                       </div>
                     </div>
-                  </Col>
-                  <Col lg={6} sm={12}>
-                    <ScatterplotCard
-                      {...this.props}
-                      sliderValue={this.state.sliderValue}
+                  </div>
+                </Col>
+                <Col lg={6} sm={12}>
+                  <ScatterplotCard
+                    {...this.props}
+                    sliderValue={this.state.sliderValue}
 
                     // study={this.state.study}
                     // sorter={this.state.sorter}
@@ -266,23 +269,23 @@ class DetailPage extends Component {
                     // format={this.props.format}
                     // metric={this.state.metric}
                     // {...this.props}
-                    />
-                  </Col>
-                </Row>
-                <Row className="container__sorter--row">
-                  <Col lg={12} sm={12}>
-                    <HeatmapOptionsRow
-                      showCPU={false}
-                      handleFormatChange={this.handleFormatChange}
-                      handleSliderChange={this.handleSliderChange}
-                      handleMetricChange={this.handleMetricChange}
-                      format={this.state.format}
-                      metric={this.state.metric}
-                      sliderValue={this.state.sliderValue}
-                    />
-                  </Col>
-                </Row>
-                {/* <Row className="container__sorter--row">
+                  />
+                </Col>
+              </Row>
+              <Row className="container__sorter--row">
+                <Col lg={12} sm={12}>
+                  <HeatmapOptionsRow
+                    showCPU={false}
+                    handleFormatChange={this.handleFormatChange}
+                    handleSliderChange={this.handleSliderChange}
+                    handleMetricChange={this.handleMetricChange}
+                    format={this.state.format}
+                    metric={this.state.metric}
+                    sliderValue={this.state.sliderValue}
+                  />
+                </Col>
+              </Row>
+              {/* <Row className="container__sorter--row">
                   <Col lg={12} sm={12}>
                     <div className="card card--heatmap">
                       <div className="content">
@@ -320,8 +323,8 @@ class DetailPage extends Component {
                     </div>
                   </Col>
                 </Row> */}
-              </Container>
-            )}
+            </Container>
+          )}
         </div>
       </div>
     );

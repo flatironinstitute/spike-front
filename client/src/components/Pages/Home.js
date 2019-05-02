@@ -32,7 +32,6 @@ class Home extends Component {
   }
 
   async mapUnits() {
-    console.log('in map units');
     if (this.props.sorters && this.props.groupedURs) {
       let unitsMap = await formatUnitResults(
         this.props.groupedURs,
@@ -63,7 +62,7 @@ class Home extends Component {
       isEmpty(this.props.sorters);
     let sorters = this.props.sorters ? this.getSorters() : null;
     let studies = this.props.studies ? this.getStudies() : null;
-    console.log(this.props.sorters, this.props.groupedURs);
+    console.log("🤩 props", this.props);
     return (
       <div className="page__body page__body--alert ">
         <StatsAlert {...this.props} />
@@ -76,14 +75,14 @@ class Home extends Component {
             </Card>
           </Container>
         ) : (
-            <HomeContentContainer
-              id="overview"
-              {...this.props}
-              shortStudies={studies}
-              shortSorters={sorters}
-              unitsMap={this.state.unitsMap}
-            />
-          )}
+          <HomeContentContainer
+            id="overview"
+            {...this.props}
+            shortStudies={studies}
+            shortSorters={sorters}
+            unitsMap={this.state.unitsMap}
+          />
+        )}
       </div>
     );
   }

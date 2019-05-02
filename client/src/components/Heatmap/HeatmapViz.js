@@ -28,7 +28,7 @@ class HeatmapViz extends Component {
 
   buildVizData(groupedUnitResults) {
     if (groupedUnitResults) {
-      
+
       // assemble a lookup: study_set_id -> study_set_name which we will need later
       let studySetNamesById = {};
       this.props.studysets.forEach(function(x, i) {

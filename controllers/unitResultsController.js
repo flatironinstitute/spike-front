@@ -36,6 +36,8 @@ exports.getGroupedUnitResults = async (req, res, next) => {
 };
 
 exports.getUnitResultsByStudy = async (req, res, next) => {
-  const ursByStudy = await UnitResult.getUnitResultsByStudy({ name: req.params.name });
+  const ursByStudy = await UnitResult.getUnitResultsByStudy({
+    name: req.params.name
+  });
   res.send({ ursByStudy: ursByStudy });
 };
