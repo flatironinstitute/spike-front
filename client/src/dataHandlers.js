@@ -102,48 +102,75 @@ export async function getTrueUnits() {
   return await loadData(s_targets, "true_units", "true_units");
 }
 
-export async function formatUnitResultsByStudy(ursByStudy) {
-  function groupBySorters(list, keyGetter) {
-    const map = {};
-    list.forEach(item => {
-      const key = keyGetter(item);
-      map[key] = item;
-    });
-    return map;
-  }
-
-  function sumAccuracies(allSorted, study) {
-    let formattedSorted = [];
-    for (var sorted in allSorted) {
-      let accuracies = allSorted[sorted].unitResults.map(
-        unit => unit.checkAccuracy
-      );
-      let snrs = allSorted[sorted].unitResults.map(unit => unit.snr);
-      let recalls = allSorted[sorted].unitResults.map(unit => unit.checkRecall);
-      let precisions = allSorted[sorted].unitResults.map(
-        unit => unit.precision
-      );
-      let newObj = {
-        study: study,
-        sorter: sorted,
-        y: study,
-        x: sorted,
-        true_units: allSorted[sorted].unitResults,
-        accuracies: accuracies,
-        snrs: snrs,
-        precisions: precisions,
-        recalls: recalls,
-        in_range: 0,
-        color: 0,
-        is_applied: true
-      };
-      formattedSorted.push(newObj);
+function groupBy(list, keyGetter) {
+  const map = {};
+  list.forEach(item => {
+    const key = keyGetter(item);
+    if (!map[key]) {
+      map[key] = [item];
+    } else {
+      map[key].push(item);
     }
-    return formattedSorted;
-  }
+  });
+  return map;
+}
 
-  let allSortered = await groupBySorters(ursByStudy, unit => unit._id.sorterName);
+function groupBySorters(list, keyGetter) {
+  const map = {};
+  list.forEach(item => {
+    const key = keyGetter(item);
+    map[key] = item;
+  });
+  return map;
+}
+
+function sumAccuracies(allSorted, study) {
+  let formattedSorted = [];
+  for (var sorted in allSorted) {
+    let accuracies = allSorted[sorted].unitResults.map(
+      unit => unit.checkAccuracy
+    );
+    let snrs = allSorted[sorted].unitResults.map(unit => unit.snr);
+    let recalls = allSorted[sorted].unitResults.map(unit => unit.checkRecall);
+    let precisions = allSorted[sorted].unitResults.map(unit => unit.precision);
+    let newObj = {
+      study: study,
+      sorter: sorted,
+      y: study,
+      x: sorted,
+      true_units: allSorted[sorted].unitResults,
+      accuracies: accuracies,
+      snrs: snrs,
+      precisions: precisions,
+      recalls: recalls,
+      in_range: 0,
+      color: 0,
+      is_applied: true
+    };
+    formattedSorted.push(newObj);
+  }
+  return formattedSorted;
+}
+
+export async function formatUnitResultsByStudy(ursByStudy) {
+  // const byStudy = await groupBy(ursByStudy, unit => unit.studyName);
+  let allSortered = await groupBySorters(
+    ursByStudy,
+    unit => unit._id.sorterName
+  );
+  // All sortered
+  //{
+  // IronClust-s: {
+  //    unitResults: (18) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}],
+  //    _id: {sorterName: "IronClust-s", studyName: "paired_mea64c"}
+  //  },
+  // KiloSort: {_id: {…}, unitResults: Array(18)},
+  // MountainSort4: {_id: {…}, unitResults: Array(18)},
+  // Yass: {_id: {…}, unitResults: Array(18)},
+  // }
+  console.log("allSortered", allSortered);
   let summedAccs = sumAccuracies(allSortered, ursByStudy[0]._id.studyName);
+  console.log("summedAccs", summedAccs);
   return summedAccs;
 }
 

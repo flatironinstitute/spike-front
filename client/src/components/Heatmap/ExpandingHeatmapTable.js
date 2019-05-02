@@ -85,7 +85,7 @@ class ExpandingHeatmapTable extends React.Component {
       tds.push(<td key={"empty-cell-" + getRandomKeyInt(index)} />);
     }
     // Create the Other Cells
-    row.cells.map((c, i) => {
+    row.cells.forEach((c, i) => {
       tds.push(this.createTableCell(c, i));
     });
     // Create Rows and put cells in

@@ -88,7 +88,47 @@ unitResultSchema.virtual("accuracy").get(function() {
 });
 
 unitResultSchema.statics.getUnitResultsByStudy = function(study) {
-  return this.find({ studyName: study.name });
+  // return this.find({ studyName: study.name });
+  return this.aggregate([
+    { $match: { studyName: study.name } },
+    {
+      $group: {
+        _id: {
+          sorterName: "$sorterName",
+          studyName: "$studyName"
+        },
+        unitResults: {
+          $push: {
+            _id: "$_id",
+            sorter: "$sorter",
+            study: "$study",
+            snr: "$snr",
+            checkAccuracy: "$checkAccuracy",
+            checkRecall: "$checkRecall",
+            unitId: "$unitId",
+            numMatches: "$numMatches",
+            numFalsePositives: "$numFalsePositives",
+            recording: "$recording",
+            bestSortedUnitId: "$bestSortedUnitId",
+            precision: {
+              $cond: {
+                if: { $gte: ["$numMatches", 1] },
+                then: {
+                  $divide: [
+                    "$numMatches",
+                    {
+                      $add: ["$numMatches", "$numFalsePositives"]
+                    }
+                  ]
+                },
+                else: 0
+              }
+            }
+          }
+        }
+      }
+    }
+  ]).allowDiskUse(true);
 };
 
 unitResultSchema.statics.getAllUnitResultsByNestedStudySorter = function() {
