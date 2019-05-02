@@ -14,6 +14,7 @@ export const RECEIVE_CPUS = "RECEIVE_CPUS";
 export const RECEIVE_GROUPED_URS = "RECEIVE_GROUPED_URS";
 export const RECEIVE_STUDIES = "RECEIVE_STUDIES";
 export const RECEIVE_SORTERS = "RECEIVE_SORTERS";
+export const RECEIVE_ALGORITHMS = "RECEIVE_ALGORITHMS";
 export const RECEIVE_UNIT_RESULTS = "RECEIVE_UNIT_RESULTS";
 export const RECEIVE_STATS = "RECEIVE_STATS";
 export const RECEIVE_STUDY_SETS = "RECEIVE_STUDY_SETS";
@@ -194,6 +195,29 @@ export const fetchSorters = () => {
       })
       .then(sorters => {
         dispatch(receiveSorters(sorters));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      });
+  };
+};
+
+// Algorithms
+export const receiveAlgorithms = algorithms => ({
+  type: RECEIVE_ALGORITHMS,
+  algorithms
+});
+
+export const fetchAlgorithms = () => {
+  let url = `/api/algorithms`;
+  return function (dispatch) {
+    dispatch(startLoading());
+    return createFetch(url)
+      .then(res => {
+        return res.algorithms;
+      })
+      .then(algorithms => {
+        dispatch(receiveAlgorithms(algorithms));
       })
       .then(() => {
         dispatch(endLoading());
