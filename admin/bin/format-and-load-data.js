@@ -48,6 +48,7 @@ mongoose.Promise = global.Promise;
 
 // import all of the models
 const Sorter = require("../../models/Sorter");
+const Algorithm = require("../../models/Algorithm");
 const StudySet = require("../../models/StudySet");
 const Study = require("../../models/Study");
 const Recording = require("../../models/Recording");
@@ -58,6 +59,9 @@ const UnitResult = require("../../models/UnitResult");
 // import all the raw data
 const rawSorters = JSON.parse(
   fs.readFileSync(data_directory + "/Sorters.json", "utf-8")
+);
+const rawAlgorithms = JSON.parse(
+  fs.readFileSync(data_directory + "/Algorithms.json", "utf-8")
 );
 const rawStudySets = JSON.parse(
   fs.readFileSync(data_directory + "/StudySets.json", "utf-8")
@@ -417,6 +421,10 @@ async function formatAndLoadData() {
   // Sorters
   await loadIntoDB(Sorter, rawSorters, "Sorters");
   await writeCleanData(Sorter, "sorters");
+
+  // Algorithms
+  await loadIntoDB(Algorithm, rawAlgorithms, "Algorithms");
+  await writeCleanData(Algorithm, "algorithms");
 
   // Study Sets
   await loadIntoDB(StudySet, rawStudySets, "Study sets");

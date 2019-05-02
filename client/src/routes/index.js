@@ -5,8 +5,6 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as actionCreators from "../actions/actionCreators";
 
-import _Stub_Algorithms from "./StubAlgorithms.js"
-
 // import components
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
@@ -31,6 +29,7 @@ class Routes extends Component {
     this.props.fetchStudies();
     this.props.fetchGroupedURs();
     this.props.fetchSorters();
+    this.props.fetchAlgorithms();
     this.props.fetchStats();
     this.props.fetchStudySets();
     this.props.fetchRecordings();
@@ -68,7 +67,7 @@ class Routes extends Component {
           />
           <Route
             path="/sorters"
-            render={props => <Algorithms algorithms={_Stub_Algorithms} />}
+            render={props => <Algorithms algorithms={this.props.algorithms} />}
           />
           <Route
             path="/studies"
@@ -98,6 +97,7 @@ function mapStateToProps(state) {
     loading: state.loading,
     recordings: state.recordings,
     sorters: state.sorters,
+    algorithms: state.algorithms,
     stats: state.stats,
     studies: state.studies,
     studysets: state.studysets,

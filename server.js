@@ -17,6 +17,7 @@ mongoose.connection.on("error", err => {
 });
 require("./models/Recording");
 require("./models/Sorter");
+require("./models/Algorithm");
 require("./models/SortingResult");
 require("./models/Study");
 require("./models/StudySet");

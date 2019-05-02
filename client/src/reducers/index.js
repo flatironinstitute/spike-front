@@ -13,6 +13,7 @@ import groupedURs from "./groupedURs";
 import loading from "./loading";
 import unitResults from "./unitResults";
 import sorters from "./sorters";
+import algorithms from "./algorithms";
 import studies from "./studies";
 import stats from "./stats";
 import studysets from "./studysets";
@@ -33,6 +34,7 @@ const rootReducer = history =>
     studies,
     studysets,
     sorters,
+    algorithms,
     unitResults,
     router: connectRouter(history)
   });
