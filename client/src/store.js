@@ -25,7 +25,8 @@ const defaultState = {
   stats: null,
   studies: null,
   studysets: null,
-  unitResults: null
+  unitResults: null,
+  ursByStudy: null
 };
 
 export const history = createBrowserHistory();

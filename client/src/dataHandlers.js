@@ -102,6 +102,51 @@ export async function getTrueUnits() {
   return await loadData(s_targets, "true_units", "true_units");
 }
 
+export async function formatUnitResultsByStudy(ursByStudy) {
+  function groupBySorters(list, keyGetter) {
+    const map = {};
+    list.forEach(item => {
+      const key = keyGetter(item);
+      map[key] = item;
+    });
+    return map;
+  }
+
+  function sumAccuracies(allSorted, study) {
+    let formattedSorted = [];
+    for (var sorted in allSorted) {
+      let accuracies = allSorted[sorted].unitResults.map(
+        unit => unit.checkAccuracy
+      );
+      let snrs = allSorted[sorted].unitResults.map(unit => unit.snr);
+      let recalls = allSorted[sorted].unitResults.map(unit => unit.checkRecall);
+      let precisions = allSorted[sorted].unitResults.map(
+        unit => unit.precision
+      );
+      let newObj = {
+        study: study,
+        sorter: sorted,
+        y: study,
+        x: sorted,
+        true_units: allSorted[sorted].unitResults,
+        accuracies: accuracies,
+        snrs: snrs,
+        precisions: precisions,
+        recalls: recalls,
+        in_range: 0,
+        color: 0,
+        is_applied: true
+      };
+      formattedSorted.push(newObj);
+    }
+    return formattedSorted;
+  }
+
+  let allSortered = await groupBySorters(ursByStudy, unit => unit._id.sorterName);
+  let summedAccs = sumAccuracies(allSortered, ursByStudy[0]._id.studyName);
+  return summedAccs;
+}
+
 export async function formatUnitResults(groupedURs, sorters) {
   function groupBy(list, keyGetter) {
     const map = {};
@@ -194,65 +239,6 @@ export async function formatUnitResults(groupedURs, sorters) {
   return bySorter;
 }
 
-export function flattenUnitResults(groupedURs, studies) {
-  return groupedURs;
-}
-
-// export function flattenUnits(groupedURs, studies) {
-//   if (studies.length) {
-//     groupedURs.forEach(unit => {
-//       const myStudy = studies.filter(study => study.name === unit.study);
-//       const mySorters = myStudy[0].sorters
-//         ? myStudy[0].sorters
-//         : ["IronClust-tetrode", "MountainSort4-thr3", "SpykingCircus"];
-//       for (const key of mySorters) {
-//         if (unit.sorting_results[key]) {
-//           let floatie = parseFloat(
-//             unit.sorting_results[key].Accuracy ||
-//               unit.sorting_results[key].accuracy
-//           );
-//           let sorterObj = {
-//             firing_rate: unit.firing_rate,
-//             num_events: unit.num_events,
-//             peak_channel: unit.peak_channel,
-//             recording: unit.recording,
-//             snr: unit.snr,
-//             study: unit.study,
-//             unit_id: unit.unit_id,
-//             sorter: key,
-//             sorting_results: unit.sorting_results[key],
-//             accuracy: floatie
-//           };
-//           newUnits.push(sorterObj);
-//         } else {
-//           let blankSorterObj = {
-//             firing_rate: unit.firing_rate,
-//             num_events: unit.num_events,
-//             peak_channel: unit.peak_channel,
-//             recording: unit.recording,
-//             snr: unit.snr,
-//             study: unit.study,
-//             unit_id: unit.unit_id,
-//             sorter: key,
-//             sorting_results: {
-//               num_matches: 0,
-//               Accuracy: "0",
-//               best_unit: 0,
-//               matched_unit: 0,
-//               unit_id: 0,
-//               f_n: "0",
-//               f_p: "0"
-//             },
-//             accuracy: 0
-//           };
-//           newUnits.push(blankSorterObj);
-//         }
-//       }
-//     });
-//   }
-//   return newUnits;
-// }
-
 export async function mapUnitsBySorterStudy(allUnits, sorters) {
   // Filter sortmatted
   function filterFormats(formattedSorted, sorters, sorter) {
@@ -326,92 +312,3 @@ export async function mapUnitsBySorterStudy(allUnits, sorters) {
   }
   return bySorter;
 }
-
-
-// const sampleUnitMap = {
-//   magland_synth_noise10_K10_C4: [
-//     {
-//       accuracies: [1, 0.99, 0.98, 0.98, 0.61, 0.98, 0.99, 0.98, 0.99],
-//       color: 89,
-//       in_range: 89,
-//       is_applied: true,
-//       snrs: [
-//         12.173096066945002,
-//         7.922575105423556,
-//         4.998194515488062,
-//         5.889166112522549,
-//         4.6560610581424235,
-//         5.936354250253983,
-//         7.882829627604207,
-//         5.020894526246758
-//       ],
-//       sorter: "MountainSort4-thr3",
-//       study: "magland_synth_noise10_K10_C4",
-//       style: { fill: "white" },
-//       true_units: [
-//         {
-//           accuracy: 1,
-//           firing_rate: 2.33,
-//           num_events: 1398,
-//           peak_channel: 0,
-//           recording: "001_synth",
-//           snr: 12.173096066945002,
-//           sorter: "MountainSort4-thr3",
-//           sorting_results: {
-//             accuracy: "1.00",
-//             best_unit: 2,
-//             f_n: "0.00",
-//             f_p: "0.00",
-//             matched_unit: 2,
-//             num_matches: 1398,
-//             unit_id: 1
-//           },
-//           study: "magland_synth_noise10_K10_C4",
-//           unit_id: 1
-//         },
-//         {
-//           accuracy: 1,
-//           firing_rate: 2.33,
-//           num_events: 1398,
-//           peak_channel: 0,
-//           recording: "001_synth",
-//           snr: 12.173096066945002,
-//           sorter: "MountainSort4-thr3",
-//           sorting_results: {
-//             accuracy: "1.00",
-//             best_unit: 2,
-//             f_n: "0.00",
-//             f_p: "0.00",
-//             matched_unit: 2,
-//             num_matches: 1398,
-//             unit_id: 1
-//           },
-//           study: "magland_synth_noise10_K10_C4",
-//           unit_id: 1
-//         },
-//         {
-//           accuracy: 1,
-//           firing_rate: 2.33,
-//           num_events: 1398,
-//           peak_channel: 0,
-//           recording: "001_synth",
-//           snr: 12.173096066945002,
-//           sorter: "MountainSort4-thr3",
-//           sorting_results: {
-//             accuracy: "1.00",
-//             best_unit: 2,
-//             f_n: "0.00",
-//             f_p: "0.00",
-//             matched_unit: 2,
-//             num_matches: 1398,
-//             unit_id: 1
-//           },
-//           study: "magland_synth_noise10_K10_C4",
-//           unit_id: 1
-//         }
-//       ],
-//       x: "MountainSort4-thr3",
-//       y: "magland_synth_noise10_K10_C4"
-//     }
-//   ]
-// };

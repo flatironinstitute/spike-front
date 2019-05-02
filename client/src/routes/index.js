@@ -100,7 +100,8 @@ function mapStateToProps(state) {
     studies: state.studies,
     studysets: state.studysets,
     selectedStudySortingResult: state.selectedStudySortingResult,
-    unitResults: state.unitResults
+    unitResults: state.unitResults,
+    ursByStudy: state.ursByStudy
   };
 }
 

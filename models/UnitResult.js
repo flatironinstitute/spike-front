@@ -86,17 +86,8 @@ unitResultSchema.virtual("accuracy").get(function () {
 });
 
 unitResultSchema.statics.getUnitResultsByStudy = function (study) {
-  // filter for only items that match the study
-  // aggregate all accuracies
-  // aggregate all recalls
-  // aggregate all precisions
-  var matchCriteria = {},
-    pipeline;
-  if (study) {
-    matchCriteria.study = study._id;
-  }
-  pipeline = [
-    { $match: matchCriteria },
+  return this.aggregate([
+    { $match: { studyName: study.name } },
     {
       $group: {
         _id: {
@@ -110,23 +101,15 @@ unitResultSchema.statics.getUnitResultsByStudy = function (study) {
             study: "$study",
             snr: "$snr",
             checkAccuracy: "$checkAccuracy",
-            checkPrecision: "$checkPrecision",
             checkRecall: "$checkRecall",
-            accuracy: {
-              $divide: [
-                "$numMatches",
-                {
-                  $add: [
-                    "$numMatches",
-                    "$numFalsePositives",
-                    "$numFalseNegatives"
-                  ]
-                }
-              ]
-            },
+            unitId: "$unitId",
+            numMatches: "$numMatches",
+            numFalsePositives: "$numFalsePositives",
+            recording: "$recording",
+            bestSortedUnitId: "$bestSortedUnitId",
             precision: {
               $cond: {
-                if: { $gte: ["$numMatches", 5] },
+                if: { $gte: ["$numMatches", 1] },
                 then: {
                   $divide: [
                     "$numMatches",
@@ -137,28 +120,12 @@ unitResultSchema.statics.getUnitResultsByStudy = function (study) {
                 },
                 else: 0
               }
-            },
-            recall: {
-              $cond: {
-                if: { $gte: ["$numMatches", 5] },
-                then: {
-                  $divide: [
-                    "$numMatches",
-                    {
-                      $add: ["$numMatches", "$numFalseNegatives"]
-                    }
-                  ]
-                },
-                else: 0
-              }
             }
           }
-        },
-        count: { $sum: 1 }
+        }
       }
     }
-  ];
-  return this.aggregate(pipeline);
+  ]).allowDiskUse(true);
 };
 
 unitResultSchema.statics.getUnitResultsByStudyAndSorter = function () {

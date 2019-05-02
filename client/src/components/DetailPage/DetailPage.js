@@ -5,9 +5,9 @@ import { Card, Col, Container, Row } from "react-bootstrap";
 import HeatmapOptionsRow from "../Heatmap/HeatmapOptionsRow";
 import Preloader from "../Preloader/Preloader";
 import DetailPageRow from "./DetailPageRow";
+import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
 // import ReactJson from "react-json-view";
 // import SpikeSprayV2 from "./SpikeSprayV2";
-import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
 import "./detailpage.css";
 
 // Redux
@@ -17,6 +17,7 @@ import * as actionCreators from "../../actions/actionCreators";
 
 // Utilities 💡
 import { isEmpty, toTitleCase } from "../../utils";
+import { formatUnitResultsByStudy } from "../../dataHandlers";
 
 class DetailPage extends Component {
   constructor(props) {
@@ -26,77 +27,89 @@ class DetailPage extends Component {
       format: "count",
       metric: "accuracy",
       sliderValue: 0.8,
+      sorter: "",
+      unitsMap: [],
       // TODO: SET NEW DEFAULT
-      sorter: "KiloSort",
+      filteredData: [],
       sorterParams: {},
       activeSorter: 0,
       openIcon: false,
-      builtData: [],
       selectedRecording: {}
     };
   }
 
   componentDidMount() {
-    this.getPageName();
+    this.getStudyAndSorter();
   }
 
-  // Get Study from Page Name
-  // Determine if a Study/Sorter pairing has been pre-selected - if so load it first
-  // Find all the other study/sorter pairings from groupedURs
-  // TBD: What do I need for the 
-  // 
+  getStudyAndSorter() {
+    let study, sorter = "";
+    if (this.props.selectedStudySortingResult) {
+      study = this.props.selectedStudySortingResult.study;
+      sorter = this.props.selectedStudySortingResult.sorter;
+    } else {
+      let activeRoute = this.props.router.location.pathname;
+      let activeArr = activeRoute.split("/").filter(item => item);
+      study = activeArr[1];
+    }
+    this.setState({
+      study,
+      sorter
+    });
+  }
 
   componentDidUpdate(prevProps, prevState) {
-    // New Data Gathering from Existing files
-
-    // TODO: Swap selected study state for props
     if (this.state.study !== prevState.study) {
-      this.props.fetchPairing(this.state.study, this.state.sorter);
-      // TODO: Tie this call to the scatterplot clicks
-      this.props.fetchRecordingDetails(
-        this.state.study,
-        this.state.sorter,
-        "test"
-      );
+      // Fetch the unit results for this study and all sorters
+      this.props.fetchURsByStudy(this.state.study);
     }
-    if (this.props.pairing !== prevProps.pairing) {
-      this.filterResults();
+
+    if (this.props.ursByStudy !== prevProps.ursByStudy) {
+      this.mapUnits();
     }
+
+    if (this.state.unitsMap !== prevState.unitsMap) {
+      this.applyResultFilters();
+    }
+
+    // TODO: Tie this call to the scatterplot clicks
+    //   this.props.fetchRecordingDetails(
+    //     this.state.study,
+    //     this.state.sorter,
+    //     "test"
+    //   );
+
     let optionsChanged =
       this.state.format !== prevState.format ||
       this.state.metric !== prevState.metric ||
       this.state.sliderValue !== prevState.sliderValue;
     if (optionsChanged) {
-      this.filterResults();
+      this.applyResultFilters();
     }
   }
 
+  async mapUnits() {
+    let unitsMap = await formatUnitResultsByStudy(
+      this.props.ursByStudy
+    );
+    let sorter = this.state.sorter ? this.state.sorter : unitsMap[0].sorter;
+    this.setState({ unitsMap: unitsMap, sorter: sorter });
+  }
 
-  filterResults() {
-    let results = this.props.pairing.filter(result => {
-      return result.sorter && result.is_applied;
-    });
-    var builtData;
 
-    builtData = results
-
+  applyResultFilters() {
+    var filteredData;
     switch (this.state.format) {
       case "count":
-        builtData = this.filterAccuracy(results);
+        filteredData = this.filterAccuracy(this.state.unitsMap);
         break;
       case "average":
-        builtData = this.filterSNR(results);
+        filteredData = this.filterSNR(this.state.unitsMap);
         break;
       default:
-        builtData = results;
+        filteredData = this.state.unitsMap;;
     }
-
-    // let selectedRecording = builtData.filter(
-    //   recording => recording.sorter === this.state.sorter
-    // );
-    // TODO: Swap this with selectedRecording everywhere
-    // this.props.selectStudy(selectedRecording[0]);
-    this.setState({ builtData: builtData });
+    this.setState({ filteredData: filteredData });
   }
 
   // Count functions for 'Number of groundtruth units above accuracy threshold'
@@ -131,18 +144,6 @@ class DetailPage extends Component {
       return sorter;
     });
     return newArr;
-  }
-
-  getPageName() {
-    let activeRoute = this.props.router.location.pathname;
-    let activeArr = activeRoute.split("/").filter(item => item);
-    let study = activeArr[1];
-    // TODO: Swap sorter to default index 0 from API call.
-    let sorter = "KiloSort";
-    this.setState({
-      study,
-      sorter
-    });
   }
 
   handleSorterChange = value => {
@@ -198,22 +199,17 @@ class DetailPage extends Component {
   }
 
   render() {
-    let results = isEmpty(this.props.pairing)
-      ? []
-      : this.props.pairing.filter(result => {
-        return result.sorter && result.is_applied;
-      });
-    let sorters = results.length ? results.map(result => result.sorter) : [];
-
+    let sorters = this.state.unitsMap ? this.state.unitsMap.map(result => result.sorter) : [];
     let loading =
       isEmpty(this.state.study) ||
       isEmpty(this.state.sorter) ||
-      isEmpty(this.state.builtData);
+      isEmpty(this.state.filteredData);
 
     let heatmapTitle = this.getFormatCopy();
     let pageTitle = toTitleCase(this.state.study.replace(/_/g, " "));
 
-    console.log("🤩", this.props.selectedStudySortingResult);
+    console.log("🤩 selectedStudySortingResult", this.props.selectedStudySortingResult);
+    console.log("🤩 unitsMap", this.state.unitsMap)
     return (
       <div>
         <div className="page__body">
@@ -246,7 +242,7 @@ class DetailPage extends Component {
                           <hr />
                           <DetailPageRow
                             {...this.props}
-                            vizDatum={this.state.builtData}
+                            vizDatum={this.state.filteredData}
                             key={`hmrow${0}`}
                             index={0}
                             format={this.state.format}
