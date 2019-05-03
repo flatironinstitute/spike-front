@@ -86,11 +86,11 @@
 }
 
 .card__category {
-  font-size: 14px;
+  font-size: 1.7rem;
+  line-height: 1.5;
   font-weight: 400;
   color: #495057;
   margin-bottom: 0;
-  line-height: 1.5;
 }
 
 .card__category--div {

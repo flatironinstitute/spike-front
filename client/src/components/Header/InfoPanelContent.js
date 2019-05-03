@@ -1,16 +1,14 @@
 import React, { Component } from "react";
-import Menu from "react-burger-menu/lib/menus/slide";
 import { Link } from "react-router-dom";
 
 import "./infopanel.css";
-import icon from "./infoicon.svg";
 
 class InfoPanel extends Component {
   render() {
     let className = this.props.sidebar ? "info info__inset" : "info";
     return (
       <div className={className}>
-        <h5>SpikeForest</h5>
+        <h5>About SpikeForest</h5>
         <p>
           Electrical recording from extracellular probes is a popular and
           affordable method to capture the simultaneous activity of many neurons

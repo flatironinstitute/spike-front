@@ -128,7 +128,7 @@ class HeatmapViz extends Component {
     let copy;
     switch (this.props.format) {
       case "count":
-        copy = `Number units found above ${this.props.metric} threshold`;
+        copy = `Number of units found above ${this.props.metric} threshold`;
         break;
       case "average":
         copy = `Average ${this.props.metric} above SNR threshold`;
@@ -332,10 +332,12 @@ class HeatmapViz extends Component {
     let color;
     switch (this.props.format) {
       case "count":
-        color = d3.interpolateBlues(val);
+        // color = d3.interpolateBlues(val);
+        color = d3.interpolateYlGnBu(val);
         break;
       case "average":
         color = d3.interpolateGreens(val);
+        // color = d3.interpolateInferno(val);
         break;
       case "cpu":
         color = d3.interpolateYlOrRd(val);
@@ -363,6 +365,11 @@ class HeatmapViz extends Component {
       <div className="card card--heatmap">
         <div className="card__header">
           <h4 className="card__title">{title}</h4>
+          <p className="card__category">
+            <br />
+            Click on the rows to expand the study sets and see component study
+            data. Select individual cells to see corresponding scatterplot data.
+          </p>
         </div>
         {loading ? (
           <h4>...</h4>

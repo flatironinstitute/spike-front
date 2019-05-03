@@ -44,7 +44,6 @@ class ExpandingHeatmapTable extends React.Component {
     if (cell.text_align === "right") style0.paddingRight = "4px";
     return (
       <td
-        //bgcolor={cell.bgcolor || ""}
         onClick={() => this.handleCellSelected(cell)}
         className={class0}
         style={style0}
