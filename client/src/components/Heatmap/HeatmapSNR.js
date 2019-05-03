@@ -160,7 +160,9 @@ class HeatmapSNR extends Component {
               <Col lg={6} sm={12}>
                 <HeatmapViz
                   selectStudySortingResult={this.props.selectStudySortingResult}
-                  selectedStudySortingResult={this.props.selectedStudySortingResult}
+                  selectedStudySortingResult={
+                    this.props.selectedStudySortingResult
+                  }
                   groupedUnitResults={this.state.builtData}
                   studies={this.props.studies}
                   studysets={this.props.studysets}

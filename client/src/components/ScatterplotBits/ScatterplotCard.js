@@ -20,7 +20,10 @@ class ScatterplotCard extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.selectedStudySortingResult !== prevProps.selectedStudySortingResult) {
+    if (
+      this.props.selectedStudySortingResult !==
+      prevProps.selectedStudySortingResult
+    ) {
       this.findStudyAndSorter();
     }
   }
@@ -46,6 +49,7 @@ class ScatterplotCard extends Component {
       isEmpty(this.props.selectedStudySortingResult) ||
       isEmpty(this.state.study) ||
       isEmpty(this.state.sorter);
+    console.log("🤩 state and props in card", this.state, this.props);
     return (
       <div className="card card--heatmap">
         <div className="detail__column">
@@ -65,30 +69,32 @@ class ScatterplotCard extends Component {
               </p>
             </div>
           ) : (
-              <div>
-                <div className="card__header">
-                  <div className="card__category--div">
-                    <span className="card__title--link">
-                      Study:
-                      <Link to={`/study/${study}`}>{study}</Link>
-                    </span>
-                    <span className="card__title--link">
-                      Sorter:
-                      <Link to="/sorters">{sorter}</Link>
-                    </span>
-                  </div>
+            <div>
+              <div className="card__header">
+                <div className="card__category--div">
+                  <span className="card__title--link">
+                    Study:
+                    <Link to={`/study/${study}`}>{study}</Link>
+                  </span>
+                  <span className="card__title--link">
+                    Sorter:
+                    <Link to="/sorters">{sorter}</Link>
+                  </span>
                 </div>
-                <ScatterplotContainer
-                  study={this.state.study}
-                  sorter={this.state.sorter}
-                  selectedStudySortingResult={this.props.selectedStudySortingResult}
-                  sliderValue={this.props.sliderValue}
-                  format={this.props.format}
-                  metric={this.state.metric}
-                  {...this.props}
-                />
               </div>
-            )}
+              <ScatterplotContainer
+                study={this.state.study}
+                sorter={this.state.sorter}
+                selectedStudySortingResult={
+                  this.props.selectedStudySortingResult
+                }
+                sliderValue={this.props.sliderValue}
+                format={this.props.format}
+                metric={this.props.metric}
+                {...this.props}
+              />
+            </div>
+          )}
         </div>
       </div>
     );

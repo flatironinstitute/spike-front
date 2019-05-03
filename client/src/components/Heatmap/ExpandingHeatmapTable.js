@@ -1,14 +1,25 @@
 import React from "react";
 import "./expandingheatmaptable.css";
+import { getRandomKeyInt } from "../../utils.js";
 
 class ExpandingHeatmapTable extends React.Component {
   // props are rows and header
   constructor(props) {
     super(props);
-    this.state = { expandedRowIds: {}, selectedCellId: null };
+    this.state = {
+      expandedRowIds: {},
+      selectedCellId: null
+    };
+
     this.handleCollapse = this.handleCollapse.bind(this);
     this.handleExpand = this.handleExpand.bind(this);
+    const colorRange = {
+      count: ["#fff", "#384ca2"],
+      cpu: ["#fff", "#6238a2"],
+      average: ["#fff", "#15423A"]
+    };
   }
+
   handleCellSelected(cell) {
     if (cell.expand_id_on_click) {
       this.handleToggle(cell.expand_id_on_click);
@@ -17,10 +28,10 @@ class ExpandingHeatmapTable extends React.Component {
     this.setState({
       selectedCellId: cell["id"]
     });
-    if (this.props.onCellSelected)
-      this.props.onCellSelected(cell);
+    if (this.props.onCellSelected) this.props.onCellSelected(cell);
   }
-  createTableCell(cell) {
+
+  createTableCell(cell, index) {
     let classes0 = [];
     if (cell["id"] === this.state.selectedCellId) classes0.push("selected");
     if (cell["rotate"]) classes0.push("rotate");
@@ -30,15 +41,19 @@ class ExpandingHeatmapTable extends React.Component {
     if (cell["spacer"]) classes0.push("spacer");
     if (cell.expand_id_on_click) classes0.push("expandable");
     let class0 = classes0.join(" ");
-    let style0 = { color: cell.color || 'black', backgroundColor: cell.bgcolor || 'white', textAlign: cell.text_align || 'left' };
-    if (cell.text_align === 'right')
-      style0.paddingRight = '4px';
+    let style0 = {
+      color: cell.color || "black",
+      backgroundColor: cell.bgcolor || "white",
+      textAlign: cell.text_align || "left"
+    };
+    if (cell.text_align === "right") style0.paddingRight = "4px";
     return (
       <td
         //bgcolor={cell.bgcolor || ""}
         onClick={() => this.handleCellSelected(cell)}
         className={class0}
         style={style0}
+        key={"table-cell-" + getRandomKeyInt(0)}
       >
         <div>
           <span>{cell.text}</span>
@@ -46,29 +61,52 @@ class ExpandingHeatmapTable extends React.Component {
       </td>
     );
   }
-  createTableRows(row) {
+
+  createTableRows(row, isSubrow, index) {
+    // Return map
     let ret = [];
+    // Row Id
     let id0 = row.id || null;
-    let expanded = this.state.expandedRowIds[id0];
+    // isExpanded
+    let isExpanded = this.state.expandedRowIds[id0];
+    // Table cells
     let tds = [];
-    if ((row.subrows) && (row.subrows.length > 0)) {
-      if (expanded) {
-        tds.push(<td>{this.createCollapseButton(id0)}</td>);
+    // Create collapse button cells
+    if (row.subrows && row.subrows.length > 0) {
+      if (isExpanded) {
+        tds.push(
+          <td key={"collapse-button-" + getRandomKeyInt(index)}>
+            {this.createCollapseButton(id0)}
+          </td>
+        );
       } else {
-        tds.push(<td>{this.createExpandButton(id0)}</td>);
+        tds.push(
+          <td key={"expand-button-" + getRandomKeyInt(index)}>
+            {this.createExpandButton(id0)}
+          </td>
+        );
       }
     } else {
-      tds.push(<td />);
+      tds.push(<td key={"empty-cell-" + getRandomKeyInt(index)} />);
     }
-    row.cells.map(function (c, i) {
-      tds.push(this.createTableCell(c));
-      return null;
-    }, this);
-    ret.push(<tr>{tds}</tr>);
-    if (expanded) {
-      if ((row.subrows) && (row.subrows.length > 0)) {
+    // Create the Other Cells
+    row.cells.forEach((c, i) => {
+      tds.push(this.createTableCell(c, i));
+    });
+    // Create Rows and put cells in
+    ret.push(
+      <tr
+        className={isSubrow ? "subrow" : "toprow"}
+        key={"row-key" + getRandomKeyInt(index)}
+      >
+        {tds}
+      </tr>
+    );
+    // Add the Expanded Rows
+    if (isExpanded) {
+      if (row.subrows && row.subrows.length > 0) {
         row.subrows.forEach(function(subrow, i) {
-          let trs0 = this.createTableRows(subrow);
+          let trs0 = this.createTableRows(subrow, true, i);
           ret = ret.concat(trs0);
           return null;
         }, this);
@@ -76,6 +114,7 @@ class ExpandingHeatmapTable extends React.Component {
     }
     return ret;
   }
+
   handleCollapse(id) {
     let x = this.state.expandedRowIds;
     x[id] = false;
@@ -83,6 +122,7 @@ class ExpandingHeatmapTable extends React.Component {
       expandedRowIds: x
     });
   }
+
   handleExpand(id) {
     let x = this.state.expandedRowIds;
     x[id] = true;
@@ -90,28 +130,44 @@ class ExpandingHeatmapTable extends React.Component {
       expandedRowIds: x
     });
   }
+
   handleToggle(id) {
     let x = this.state.expandedRowIds;
-    x[id] = !(x[id]);
+    x[id] = !x[id];
     this.setState({
       expandedRowIds: x
     });
   }
+
   createCollapseButton(id) {
-    return <div onClick={() => this.handleCollapse(id)}><span style={{ cursor: 'pointer' }}>{"-"}</span></div>;
+    return (
+      <div onClick={() => this.handleCollapse(id)}>
+        <span style={{ cursor: "pointer" }}>{"-"}</span>
+      </div>
+    );
   }
+
   createExpandButton(id) {
-    return <div onClick={() => this.handleExpand(id)}><span style={{ cursor: 'pointer' }}>{"+"}</span></div>;
+    return (
+      <div onClick={() => this.handleExpand(id)}>
+        <span style={{ cursor: "pointer" }}>{"+"}</span>
+      </div>
+    );
   }
+
   render() {
-    let trs = [];
-    trs = trs.concat(this.createTableRows(this.props.header));
-    this.props.rows.forEach(function(row) {
-      let trs0 = this.createTableRows(row);
-      trs = trs.concat(trs0);
-      return null;
-    }, this);
-    return <table className="expandingheatmaptable">{trs}</table>;
+    let trhead = this.createTableRows(this.props.header, false, 0);
+    let trs = this.props.rows.map((row, i) => {
+      return this.createTableRows(row, false, i);
+    });
+    return (
+      <div>
+        <table className="expandingheatmaptable">
+          <thead>{trhead}</thead>
+          <tbody>{trs}</tbody>
+        </table>
+      </div>
+    );
   }
 }
 

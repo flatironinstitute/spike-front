@@ -1,10 +1,14 @@
+.expandingheatmaptable tr {
+  padding: 2px;
+}
+.toprow {
+  background-color: rgba(0,0,0,.125);
+}
 .expandingheatmaptable td {
     margin: 0px;
     padding: 0px;
     width: 44px;
-    border-style: solid;
-    border-width: 2px;
-    border-color: transparent;
+    border: 2px solid transparent;
   }
   .expandingheatmaptable td.border_left {
     border-left-color: lightgray;
@@ -26,11 +30,11 @@
   }
   .expandingheatmaptable td.selectable:hover {
     border-style: solid;
-    border-width: 3px;
-    border-color: gold;
+    border-width: 2px;
+    border-color: #f28b00;
   }
   .expandingheatmaptable td.selected {
-    border-width: 3px;
+    border-width: 2px;
     border-color: black !important;
   }
   .expandingheatmaptable td.spacer {

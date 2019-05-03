@@ -3,8 +3,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import ReactJson from "react-json-view";
 import "./pages.css";
 
-const axios = require('axios');
-
+const axios = require("axios");
 
 var baseurl;
 if (process.env.NODE_ENV === "production") {
@@ -48,7 +47,6 @@ class RawData extends Component {
     const newUrl = baseurl + "/api/" + model;
     try {
       const response = await axios.get(newUrl);
-      console.log('Data received ', model, response.data);
       if (response.status !== 200) {
         console.error(model, response);
       } else {

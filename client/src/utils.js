@@ -14,3 +14,7 @@ exports.toTitleCase = str => {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   });
 };
+
+exports.getRandomKeyInt = index => {
+  return Math.floor(Math.random() * 100000) + index;
+};

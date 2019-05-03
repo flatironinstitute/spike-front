@@ -12,6 +12,7 @@ if (process.env.NODE_ENV === "production") {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 export const RECEIVE_CPUS = "RECEIVE_CPUS";
 export const RECEIVE_GROUPED_URS = "RECEIVE_GROUPED_URS";
+export const RECEIVE_URS_BY_STUDY = "RECEIVE_URS_BY_STUDY";
 export const RECEIVE_STUDIES = "RECEIVE_STUDIES";
 export const RECEIVE_SORTERS = "RECEIVE_SORTERS";
 export const RECEIVE_ALGORITHMS = "RECEIVE_ALGORITHMS";
@@ -156,6 +157,30 @@ export const fetchGroupedURs = () => {
       .catch(err => Sentry.captureException(err));
   };
 };
+
+// Unit Results By Study
+export const receiveURsByStudy = ursByStudy => {
+  return {
+    type: RECEIVE_URS_BY_STUDY,
+    ursByStudy: ursByStudy
+  };
+};
+
+export const fetchURsByStudy = (name) => {
+  let url = `/api/ursbystudy/` + name;
+  return function (dispatch) {
+    dispatch(startLoading());
+    return createFetch(url)
+      .then(res => {
+        dispatch(receiveURsByStudy(res.ursByStudy));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      })
+      .catch(err => Sentry.captureException(err));
+  };
+};
+
 
 // Unit Results
 export const receiveUnitResults = unitresults => {

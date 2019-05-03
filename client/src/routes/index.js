@@ -23,7 +23,6 @@ import RawData from "../components/Pages/RawData";
 
 class Routes extends Component {
   async componentDidMount() {
-    console.log('mounting routes component')
     // V2 Data: Fetches
     this.props.fetchCPUs();
     this.props.fetchStudies();
@@ -34,6 +33,7 @@ class Routes extends Component {
     this.props.fetchStudySets();
     this.props.fetchRecordings();
     // V1 Data: Fetches
+    // TODO: REMOVE?
     // this.props.fetchUnitResults();
     // this.props.fetchUnits();
   }
@@ -102,7 +102,8 @@ function mapStateToProps(state) {
     studies: state.studies,
     studysets: state.studysets,
     selectedStudySortingResult: state.selectedStudySortingResult,
-    unitResults: state.unitResults
+    unitResults: state.unitResults,
+    ursByStudy: state.ursByStudy
   };
 }
 

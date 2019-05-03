@@ -11,6 +11,7 @@ import {
   Hint
 } from "react-vis";
 import { toTitleCase } from "../../utils";
+import "./scatterplot.css";
 
 class ScatterplotCount extends Component {
   constructor(props) {
@@ -20,7 +21,8 @@ class ScatterplotCount extends Component {
       data: [],
       hoveredNode: null,
       minSNR: 0,
-      maxSNR: 100
+      maxSNR: 100,
+      selectedRecording: null
     };
   }
 
@@ -36,6 +38,15 @@ class ScatterplotCount extends Component {
       this.props.metric !== prevProps.metric
     ) {
       this.buildCountData();
+    }
+    if (this.state.selectedRecording !== prevState.selectedRecording) {
+      if (this.state.selectedRecording !== prevState.selectedRecording) {
+        console.log(
+          "NEW SELECTED RECORDING",
+          this.state.selectedRecording,
+          this.props.selectedStudySortingResult
+        );
+      }
     }
   }
 
@@ -88,7 +99,7 @@ class ScatterplotCount extends Component {
 
   getMaxSNR(data) {
     if (data.length === 0) {
-      return 0
+      return 0;
     } else {
       let max = data.reduce((max, p) => (p.x > max ? p.x : max), data[0].y);
       return Math.round(max * 100) / 100;
@@ -97,14 +108,16 @@ class ScatterplotCount extends Component {
 
   render() {
     const { data, hoveredNode, maxSNR } = this.state;
-    const alignment = { vertical: "top", horizontal: "left" };
-    let valueObj = {
-      recording: hoveredNode
-        ? `${hoveredNode.recording}:${hoveredNode.color / 10}`
-        : null,
-      accuracy: hoveredNode ? hoveredNode.y : null,
-      snr: hoveredNode ? hoveredNode.x : null,
-      num_events: hoveredNode ? hoveredNode.num_events : null
+    let metricObj = {};
+    metricObj[this.props.metric] = hoveredNode ? hoveredNode.y : 0;
+    let otherObj = {
+      snr: hoveredNode ? hoveredNode.x : 0,
+      num_events: hoveredNode ? hoveredNode.num_events : 0
+    };
+    let valueObj = { ...metricObj, ...otherObj };
+    let alignment = {
+      horizontal: "rightEdge",
+      vertical: "topEdge"
     };
     let lineObjArr = [
       { x: 0, y: this.props.sliderValue },
@@ -136,12 +149,12 @@ class ScatterplotCount extends Component {
             onValueMouseOver={d => this.setState({ hoveredNode: d })}
             onValueClick={d => this.setState({ selectedRecording: d })}
           />
+          {hoveredNode && <Hint value={valueObj} align={alignment} />}
           <LineSeries
             className="fourth-series"
             strokeDasharray="7, 3"
             data={lineObjArr}
           />
-          {hoveredNode && <Hint value={valueObj} align={alignment} />}
         </FlexibleXYPlot>
       </div>
     );

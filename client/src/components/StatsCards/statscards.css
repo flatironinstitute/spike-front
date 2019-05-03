@@ -39,6 +39,18 @@
   justify-content: center;
 }
 
+.card__stats {
+  margin-bottom: 0;
+}
+
+.card__stats-col {
+  margin-bottom: 1rem;
+}
+
+.card__stats-top {
+  margin-top: 1rem;
+}
+
 /* Range Slider
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
