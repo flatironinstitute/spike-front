@@ -5,6 +5,7 @@ import { formatUnitResults } from "../../dataHandlers";
 import { isEmpty } from "../../utils";
 import { Container, Card } from "react-bootstrap";
 import StatsAlert from "../Header/StatsAlert";
+import InfoPanelContent from "../Header/InfoPanelContent";
 
 import "./pages.css";
 
@@ -82,6 +83,13 @@ class Home extends Component {
             unitsMap={this.state.unitsMap}
           />
         )}
+        <Container className="container__heatmap">
+          <Card>
+            <Card.Body>
+              <InfoPanelContent sidebar={false} />
+            </Card.Body>
+          </Card>
+        </Container>
       </div>
     );
   }
