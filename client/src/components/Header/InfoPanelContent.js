@@ -31,7 +31,9 @@ class InfoPanel extends Component {
           data. Use the links on the navbar to learn about{" "}
           <Link to="/recordings">recordings</Link>,{" "}
           <Link to="/sorters">sorters</Link>, and{" "}
-          <Link to="/metrics">metric definitions</Link>.
+          <Link to="/metrics">metric definitions</Link>. For more detailed
+          information on this project, please consult the{" "}
+          <Link to="/about">About</Link> page.
         </p>
         <p className="info__byline">
           Project of{" "}
