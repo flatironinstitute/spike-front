@@ -6,6 +6,7 @@ import selectedRecording from "./selectedRecording";
 import pairing from "./pairing";
 import recordingDetails from "./recordingDetails";
 // V2 Data: Reducers
+import algorithms from "./algorithms";
 import contactSent from "./contactSent";
 import cpus from "./cpus";
 import groupedURs from "./groupedURs";
@@ -25,6 +26,7 @@ const rootReducer = history =>
     pairing,
     recordingDetails,
     // V2 Data: Reducers
+    algorithms,
     contactSent,
     cpus,
     groupedURs,

@@ -33,6 +33,7 @@ mongoose.Promise = global.Promise;
 
 // import all of our models - they need to be imported only once
 const Sorter = require("../../models/Sorter");
+const Algorithm = require("../../models/Algorithm");
 const StudySet = require("../../models/StudySet");
 const Study = require("../../models/Study");
 const Recording = require("../../models/Recording");
@@ -43,6 +44,7 @@ const UnitResult = require("../../models/UnitResult");
 async function deleteData() {
   console.log("😢😢 Goodbye Data...");
   await Sorter.remove();
+  await Algorithm.remove();
   await StudySet.remove();
   await Study.remove();
   await Recording.remove();
