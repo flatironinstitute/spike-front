@@ -332,12 +332,11 @@ class HeatmapViz extends Component {
     let color;
     switch (this.props.format) {
       case "count":
-        // color = d3.interpolateBlues(val);
-        color = d3.interpolateYlGnBu(val);
+        color = d3.interpolateBlues(val);
         break;
       case "average":
-        color = d3.interpolateGreens(val);
-        // color = d3.interpolateInferno(val);
+        // color = d3.interpolateGreens(val);
+        color = d3.interpolateInferno(val);
         break;
       case "cpu":
         color = d3.interpolateYlOrRd(val);

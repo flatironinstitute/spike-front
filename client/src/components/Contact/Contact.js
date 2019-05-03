@@ -15,7 +15,7 @@ class Contact extends Component {
             soon.
           </p>
           <p className="byline">
-            Please use the
+            Please use this
             <a
               href="https://github.com/elovero/spike-front/issues"
               target="_blank"
@@ -26,7 +26,7 @@ class Contact extends Component {
             page to report website problems.
           </p>
           <p className="byline">
-            Please use
+            Please use this
             <a
               href="https://github.com/flatironinstitute/spikeforest"
               target="_blank"
