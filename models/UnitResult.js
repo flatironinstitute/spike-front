@@ -88,6 +88,7 @@ unitResultSchema.virtual("accuracy").get(function() {
 });
 
 unitResultSchema.statics.getUnitResultsByStudy = function(study) {
+  // TODO: Switch to this more efficient DB Call
   // return this.find({ studyName: study.name });
   return this.aggregate([
     { $match: { studyName: study.name } },

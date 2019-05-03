@@ -32,6 +32,7 @@ class Routes extends Component {
     this.props.fetchStudySets();
     this.props.fetchRecordings();
     // V1 Data: Fetches
+    // TODO: REMOVE?
     // this.props.fetchUnitResults();
     // this.props.fetchUnits();
   }

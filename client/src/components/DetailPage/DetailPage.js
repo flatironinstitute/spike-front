@@ -148,6 +148,7 @@ class DetailPage extends Component {
     this.setState({
       sorter: value.sorter
     });
+    this.props.selectStudySortingResult(value);
   };
 
   handleFormatChange = value => {
@@ -208,11 +209,11 @@ class DetailPage extends Component {
     let heatmapTitle = this.getFormatCopy();
     let pageTitle = toTitleCase(this.state.study.replace(/_/g, " "));
 
-    console.log(
-      "🤩 selectedStudySortingResult",
-      this.props.selectedStudySortingResult
-    );
-    console.log("🤩 unitsMap", this.state.unitsMap);
+    // console.log(
+    //   "🤩 selectedStudySortingResult",
+    //   this.props.selectedStudySortingResult
+    // );
+    // console.log("🤩 unitsMap", this.state.unitsMap);
     return (
       <div>
         <div className="page__body">
@@ -263,14 +264,8 @@ class DetailPage extends Component {
                   <ScatterplotCard
                     {...this.props}
                     sliderValue={this.state.sliderValue}
-
-                    // study={this.state.study}
-                    // sorter={this.state.sorter}
-                    // selectedStudySortingResult={this.props.selectedStudySortingResult}
-                    // sliderValue={this.props.sliderValue}
-                    // format={this.props.format}
-                    // metric={this.state.metric}
-                    // {...this.props}
+                    format={this.state.format}
+                    metric={this.state.metric}
                   />
                 </Col>
               </Row>

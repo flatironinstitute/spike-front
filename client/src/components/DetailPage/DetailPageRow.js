@@ -64,33 +64,33 @@ class DetailPageRow extends Component {
         {loading ? (
           <Preloader />
         ) : (
-            <div className="App heatmap-row">
-              <XYPlot
-                xType="ordinal"
-                yType="ordinal"
-                onMouseLeave={() => this.setState({ hoveredNode: null })}
-                height={this.dims.height}
-                width={this.dims.width}
-                margin={this.margin}
-              >
-                {this.props.index === 0 ? (
-                  <XAxis
-                    orientation={"top"}
-                    tickLabelAngle={-25}
-                    position={"start"}
-                    title="Count above accuracy threshold"
-                    style={{
-                      text: {
-                        stroke: "none",
-                        fill: "#222",
-                        fontWeight: 600,
-                        fontSize: "12px"
-                      }
-                    }}
-                  />
-                ) : null}
-                {/* TODO: Reinstate with correct data*/}
-                {/* <YAxis
+          <div className="App heatmap-row">
+            <XYPlot
+              xType="ordinal"
+              yType="ordinal"
+              onMouseLeave={() => this.setState({ hoveredNode: null })}
+              height={this.dims.height}
+              width={this.dims.width}
+              margin={this.margin}
+            >
+              {this.props.index === 0 ? (
+                <XAxis
+                  orientation={"top"}
+                  tickLabelAngle={-25}
+                  position={"start"}
+                  title="Count above accuracy threshold"
+                  style={{
+                    text: {
+                      stroke: "none",
+                      fill: "#222",
+                      fontWeight: 600,
+                      fontSize: "12px"
+                    }
+                  }}
+                />
+              ) : null}
+              {/* TODO: Reinstate with correct data*/}
+              {/* <YAxis
                 style={{
                   text: {
                     stroke: "none",
@@ -100,39 +100,39 @@ class DetailPageRow extends Component {
                   }
                 }}
               /> */}
-                {/* TODO: I think I need a smarter way to handle this information*/}
-                <HeatmapSeries
-                  colorRange={colorRange[this.props.format]}
-                  data={data}
-                  style={{
-                    text: {
-                      stroke: "none",
-                      fill: "#222",
-                      fontWeight: 600,
-                      fontSize: "14px"
-                    }
-                  }}
-                  onValueMouseOver={d => {
-                    this.setState({ hoveredNode: d });
-                  }}
-                  onValueClick={d => {
-                    this.props.handleSorterChange(d);
-                  }}
-                />
-                <LabelSeries
-                  data={data}
-                  labelAnchorX="middle"
-                  labelAnchorY="central"
-                  onValueClick={d => {
-                    this.props.handleSorterChange(d);
-                  }}
-                  getLabel={d => {
-                    return d.in_range > 0 ? `${d.in_range}` : "";
-                  }}
-                />
-              </XYPlot>
-            </div>
-          )}
+              {/* TODO: I think I need a smarter way to handle this information*/}
+              <HeatmapSeries
+                colorRange={colorRange[this.props.format]}
+                data={data}
+                style={{
+                  text: {
+                    stroke: "none",
+                    fill: "#222",
+                    fontWeight: 600,
+                    fontSize: "14px"
+                  }
+                }}
+                onValueMouseOver={d => {
+                  this.setState({ hoveredNode: d });
+                }}
+                onValueClick={d => {
+                  this.props.handleSorterChange(d);
+                }}
+              />
+              <LabelSeries
+                data={data}
+                labelAnchorX="middle"
+                labelAnchorY="central"
+                onValueClick={d => {
+                  this.props.handleSorterChange(d);
+                }}
+                getLabel={d => {
+                  return d.in_range > 0 ? `${d.in_range}` : "";
+                }}
+              />
+            </XYPlot>
+          </div>
+        )}
       </div>
     );
   }

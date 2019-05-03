@@ -20,6 +20,7 @@ async function fetchBackupJSON(url) {
   return X.data;
 }
 
+// TODO: CAN I REMOVE THESE KBUCKET CALLS?
 const target_base = "spikeforest_website_12_20_2018";
 const s_targets = [
   target_base + "_magland_synth",
@@ -152,52 +153,27 @@ function sumAccuracies(allSorted, study) {
   return formattedSorted;
 }
 
+// Ex obj: All sortered
+//{
+// IronClust-s: {
+//    unitResults: (18) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}],
+//    _id: {sorterName: "IronClust-s", studyName: "paired_mea64c"}
+//  },
+// KiloSort: {_id: {…}, unitResults: Array(18)},
+// MountainSort4: {_id: {…}, unitResults: Array(18)},
+// Yass: {_id: {…}, unitResults: Array(18)},
+// }
 export async function formatUnitResultsByStudy(ursByStudy) {
-  // const byStudy = await groupBy(ursByStudy, unit => unit.studyName);
   let allSortered = await groupBySorters(
     ursByStudy,
     unit => unit._id.sorterName
   );
-  // All sortered
-  //{
-  // IronClust-s: {
-  //    unitResults: (18) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}],
-  //    _id: {sorterName: "IronClust-s", studyName: "paired_mea64c"}
-  //  },
-  // KiloSort: {_id: {…}, unitResults: Array(18)},
-  // MountainSort4: {_id: {…}, unitResults: Array(18)},
-  // Yass: {_id: {…}, unitResults: Array(18)},
-  // }
-  console.log("allSortered", allSortered);
   let summedAccs = sumAccuracies(allSortered, ursByStudy[0]._id.studyName);
-  console.log("summedAccs", summedAccs);
   return summedAccs;
 }
 
 export async function formatUnitResults(groupedURs, sorters) {
-  function groupBy(list, keyGetter) {
-    const map = {};
-    list.forEach(item => {
-      const key = keyGetter(item);
-      if (!map[key]) {
-        map[key] = [item];
-      } else {
-        map[key].push(item);
-      }
-    });
-    return map;
-  }
-
-  function groupBySorters(list, keyGetter) {
-    const map = {};
-    list.forEach(item => {
-      const key = keyGetter(item);
-      map[key] = item;
-    });
-    return map;
-  }
-
-  function sumAccuracies(allSorted, study) {
+  function sumAccuraciesAddBlanks(allSorted, study) {
     let formattedSorted = [];
     for (var sorted in allSorted) {
       let accuracies = allSorted[sorted].unitResults.map(
@@ -257,81 +233,7 @@ export async function formatUnitResults(groupedURs, sorters) {
       byStudy[study],
       study => study._id.sorterName
     );
-    let summedAcc = sumAccuracies(allSorted, study);
-    let obj = {
-      [study]: summedAcc
-    };
-    bySorter.push(obj);
-  }
-  return bySorter;
-}
-
-export async function mapUnitsBySorterStudy(allUnits, sorters) {
-  // Filter sortmatted
-  function filterFormats(formattedSorted, sorters, sorter) {
-    return formattedSorted.filter(
-      formatted => formatted.sorter === sorters[sorter].name
-    );
-  }
-
-  function sumAccuracies(allSorted, study) {
-    let formattedSorted = [];
-    for (var sorted in allSorted) {
-      let accuracies = allSorted[sorted].map(unit => unit.accuracy);
-      let snrs = allSorted[sorted].map(unit => unit.snr);
-      let newObj = {
-        study: study,
-        sorter: sorted,
-        y: study,
-        x: sorted,
-        true_units: allSorted[sorted],
-        accuracies: accuracies,
-        snrs: snrs,
-        in_range: 0,
-        color: 0,
-        is_applied: true
-      };
-      formattedSorted.push(newObj);
-    }
-    for (var sorter in sorters) {
-      let thisSorting = filterFormats(formattedSorted, sorters, sorter);
-      let dummyObj = {
-        study: study,
-        sorter: sorters[sorter].name,
-        y: study,
-        x: sorters[sorter].name,
-        true_units: [],
-        accuracies: [],
-        snrs: [],
-        color: 0,
-        in_range: null,
-        is_applied: false
-      };
-      if (!thisSorting.length) {
-        formattedSorted.push(dummyObj);
-      }
-    }
-    return formattedSorted;
-  }
-
-  function groupBy(list, keyGetter) {
-    const map = {};
-    list.forEach(item => {
-      const key = keyGetter(item);
-      if (!map[key]) {
-        map[key] = [item];
-      } else {
-        map[key].push(item);
-      }
-    });
-    return map;
-  }
-
-  const byStudy = await groupBy(allUnits, unit => unit.study);
-  const bySorter = [];
-  for (let study in byStudy) {
-    let allSorted = groupBy(byStudy[study], study => study.sorter);
-    let summedAcc = sumAccuracies(allSorted, study);
+    let summedAcc = sumAccuraciesAddBlanks(allSorted, study);
     let obj = {
       [study]: summedAcc
     };

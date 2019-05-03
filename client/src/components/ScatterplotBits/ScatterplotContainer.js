@@ -19,13 +19,21 @@ class ScatterplotContainer extends Component {
   }
 
   render() {
-    const { selectedStudySortingResult, sliderValue, metric, format } = this.props;
+    const {
+      selectedStudySortingResult,
+      sliderValue,
+      metric,
+      format
+    } = this.props;
     const copy = this.getHeaderCopy(this.props.format);
+    console.log("🤩 state and props in container", this.state, this.props);
     return (
       <div>
         <p>
           {copy}
-          {selectedStudySortingResult ? selectedStudySortingResult.in_range : ""}
+          {selectedStudySortingResult
+            ? selectedStudySortingResult.in_range
+            : ""}
         </p>
         {(() => {
           switch (format) {
@@ -54,7 +62,7 @@ class ScatterplotContainer extends Component {
                 <p className="card__category">
                   <br />
                   Scatterplot data is not available for CPU
-              </p>
+                </p>
               );
             default:
               return null;
