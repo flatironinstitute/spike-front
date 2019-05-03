@@ -290,11 +290,6 @@ class DetailPage extends Component {
     let heatmapTitle = this.getFormatCopy();
     let pageTitle = toTitleCase(this.state.study.replace(/_/g, " "));
 
-    // console.log(
-    //   "🤩 selectedStudySortingResult",
-    //   this.props.selectedStudySortingResult
-    // );
-    console.log("🤩 unitsMap", this.state.unitsMap, this.state.filteredData);
     return (
       <div>
         <div className="page__body">

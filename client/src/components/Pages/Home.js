@@ -62,7 +62,6 @@ class Home extends Component {
       isEmpty(this.props.sorters);
     let sorters = this.props.sorters ? this.getSorters() : null;
     let studies = this.props.studies ? this.getStudies() : null;
-    console.log("🤩 props", this.props);
     return (
       <div className="page__body page__body--alert ">
         <StatsAlert {...this.props} />
