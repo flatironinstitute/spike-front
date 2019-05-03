@@ -50,8 +50,6 @@ class DetailPageRow extends Component {
   }
 
   render() {
-    // TODO: Add Selected Study Highlighting?
-    // TODO: What is the best default for this?
     const { data } = this.state;
     const loading = isEmpty(data);
     const colorRange = {

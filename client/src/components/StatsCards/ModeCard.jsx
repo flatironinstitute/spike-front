@@ -22,8 +22,11 @@ export class ModeCard extends Component {
     return copy;
   }
   render() {
+    let primaryClass = this.props.bottomMargin
+      ? "card card__stats-col card__stats-top"
+      : "card card__stats";
     return (
-      <div className="card card--stats">
+      <div className={primaryClass}>
         <div className="content">
           <div className="card__label">
             <p>

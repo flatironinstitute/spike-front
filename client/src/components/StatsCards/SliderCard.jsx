@@ -72,8 +72,11 @@ export class SliderCard extends Component {
   render() {
     let max = this.getSliderMax();
     let step = this.getSliderStep();
+    let primaryClass = this.props.bottomMargin
+      ? "card card__stats-col"
+      : "card card__stats";
     return (
-      <div className="card card--stats">
+      <div className={primaryClass}>
         <div className="content">
           <div className="card__label">
             <p>

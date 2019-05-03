@@ -12,8 +12,11 @@ import "./statscards.css";
 export class MetricCard extends Component {
   render() {
     let title = toTitleCase(this.props.metric);
+    let primaryClass = this.props.bottomMargin
+      ? "card card__stats-col"
+      : "card card__stats";
     return (
-      <div className="card card--stats">
+      <div className={primaryClass}>
         <div className="content">
           <div className="card__label">
             <p>

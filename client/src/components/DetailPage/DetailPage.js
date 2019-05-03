@@ -3,12 +3,13 @@ import * as Sentry from "@sentry/browser";
 
 // Components
 import { Card, Col, Container, Row } from "react-bootstrap";
-import HeatmapOptionsRow from "../Heatmap/HeatmapOptionsRow";
+import HeatmapOptionsCol from "../Heatmap/HeatmapOptionsCol";
 import Preloader from "../Preloader/Preloader";
 import DetailPageRow from "./DetailPageRow";
 import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
+import SpikeSprayV2 from "./SpikeSprayV2";
 // import ReactJson from "react-json-view";
-// import SpikeSprayV2 from "./SpikeSprayV2";
+
 import "./detailpage.css";
 
 // Redux
@@ -322,7 +323,9 @@ class DetailPage extends Component {
                   <div className="card card--stats">
                     <div className="content">
                       <div className="card__label">
-                        <p>{heatmapTitle}</p>
+                        <p>
+                          <b>{heatmapTitle}</b>
+                        </p>
                       </div>
                       <div className="card__footer">
                         <hr />
@@ -339,6 +342,15 @@ class DetailPage extends Component {
                       </div>
                     </div>
                   </div>
+                  <HeatmapOptionsCol
+                    showCPU={false}
+                    handleFormatChange={this.handleFormatChange}
+                    handleSliderChange={this.handleSliderChange}
+                    handleMetricChange={this.handleMetricChange}
+                    format={this.state.format}
+                    metric={this.state.metric}
+                    sliderValue={this.state.sliderValue}
+                  />
                 </Col>
                 <Col lg={6} sm={12}>
                   <ScatterplotCard
@@ -351,55 +363,22 @@ class DetailPage extends Component {
               </Row>
               <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
-                  <HeatmapOptionsRow
-                    showCPU={false}
-                    handleFormatChange={this.handleFormatChange}
-                    handleSliderChange={this.handleSliderChange}
-                    handleMetricChange={this.handleMetricChange}
-                    format={this.state.format}
-                    metric={this.state.metric}
-                    sliderValue={this.state.sliderValue}
-                  />
+                  <div className="card card--heatmap">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>
+                          <strong>Spike Spray:</strong> What label details are
+                          needed here?
+                        </p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <SpikeSprayV2 {...this.props} />
+                      </div>
+                    </div>
+                  </div>
                 </Col>
               </Row>
-              {/* <Row className="container__sorter--row">
-                  <Col lg={12} sm={12}>
-                    <div className="card card--heatmap">
-                      <div className="content">
-                        <div className="card__label">
-                          <p>
-                            Study + Sorter Result Pairing JSON Dump{" "}
-                            <span role="img" aria-label="truck">
-                              🚚
-                          </span>
-                          </p>
-                        </div>
-                        <div className="card__footer">
-                          <hr />
-                          <ReactJson src={results} />
-                        </div>
-                      </div>
-                    </div>
-                  </Col>
-                </Row>
-                <Row className="container__sorter--row">
-                  <Col lg={12} sm={12}>
-                    <div className="card card--heatmap">
-                      <div className="content">
-                        <div className="card__label">
-                          <p>
-                            <strong>Spike Spray:</strong> What label details are
-                            needed here?
-                        </p>
-                        </div>
-                        <div className="card__footer">
-                          <hr />
-                          <SpikeSprayV2 {...this.props} />
-                        </div>
-                      </div>
-                    </div>
-                  </Col>
-                </Row> */}
             </Container>
           )}
         </div>
