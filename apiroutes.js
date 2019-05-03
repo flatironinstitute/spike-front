@@ -35,7 +35,10 @@ router.get("/api/stats", sortingResultController.getStats);
 router.get("/api/trueunits", trueUnitController.getTrueUnits);
 // Unit Results
 router.get("/api/unitresults", unitResultsController.getUnitResults);
-router.get("/api/ursbystudy/:name", unitResultsController.getUnitResultsByStudy);
+router.get(
+  "/api/ursbystudy/:name",
+  unitResultsController.getUnitResultsByStudy
+);
 
 // Contact Routes
 router.post("/api/contact", (req, res) => {
@@ -56,6 +59,7 @@ router.get("/api/:study/:sorter/:recording", (req, res) => {
   let formatted = formatSpikes(recDetails);
   res.send({ recordingDetails: formatted });
 });
+//https://users.flatironinstitute.org/~magland/spikeforest_website_data/spikesprays/visapy_mea/visapy_mea/
 
 // 4 spike columns - columns
 // 20 spikes - line color groups

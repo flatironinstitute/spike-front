@@ -30,6 +30,10 @@ class ScatterplotContainer extends Component {
     return (
       <div>
         <p>
+          Click marks below to see detailed information on the study and
+          recording
+        </p>
+        <p>
           {copy}
           {selectedStudySortingResult
             ? selectedStudySortingResult.in_range

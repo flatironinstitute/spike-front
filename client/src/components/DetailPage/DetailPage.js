@@ -367,8 +367,7 @@ class DetailPage extends Component {
                     <div className="content">
                       <div className="card__label">
                         <p>
-                          <strong>Spike Spray:</strong> What label details are
-                          needed here?
+                          <strong>Spike Spray:</strong> Recording ID
                         </p>
                       </div>
                       <div className="card__footer">
