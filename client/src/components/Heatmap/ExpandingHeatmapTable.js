@@ -13,6 +13,11 @@ class ExpandingHeatmapTable extends React.Component {
 
     this.handleCollapse = this.handleCollapse.bind(this);
     this.handleExpand = this.handleExpand.bind(this);
+    const colorRange = {
+      count: ["#fff", "#384ca2"],
+      cpu: ["#fff", "#6238a2"],
+      average: ["#fff", "#15423A"]
+    };
   }
 
   handleCellSelected(cell) {
