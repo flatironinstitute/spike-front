@@ -290,11 +290,6 @@ class DetailPage extends Component {
     let heatmapTitle = this.getFormatCopy();
     let pageTitle = toTitleCase(this.state.study.replace(/_/g, " "));
 
-    // console.log(
-    //   "🤩 selectedStudySortingResult",
-    //   this.props.selectedStudySortingResult
-    // );
-    console.log("🤩 unitsMap", this.state.unitsMap, this.state.filteredData);
     return (
       <div>
         <div className="page__body">
@@ -308,7 +303,7 @@ class DetailPage extends Component {
             </Container>
           ) : (
             <Container className="container__heatmap">
-              <Row className="justify-content-md-center">
+              {/* <Row className="justify-content-md-center">
                 <Col lg={12} sm={12} xl={10}>
                   <div className="intro">
                     <h4 className="intro__title">{pageTitle}</h4>
@@ -317,7 +312,7 @@ class DetailPage extends Component {
                     </p>
                   </div>
                 </Col>
-              </Row>
+              </Row> */}
               <Row className="container__sorter--row">
                 <Col lg={6} sm={12}>
                   <div className="card card--stats">

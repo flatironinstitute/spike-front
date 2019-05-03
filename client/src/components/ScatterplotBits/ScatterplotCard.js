@@ -49,7 +49,6 @@ class ScatterplotCard extends Component {
       isEmpty(this.props.selectedStudySortingResult) ||
       isEmpty(this.state.study) ||
       isEmpty(this.state.sorter);
-    console.log("🤩 state and props in card", this.state, this.props);
     return (
       <div className="card card--heatmap">
         <div className="detail__column">

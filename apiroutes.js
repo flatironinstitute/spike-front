@@ -62,6 +62,7 @@ router.get("/api/:study/:sorter/:recording", (req, res) => {
   let formatted = formatSpikes(recDetails);
   res.send({ recordingDetails: formatted });
 });
+// Current URL
 //https://users.flatironinstitute.org/~magland/spikeforest_website_data/spikesprays/visapy_mea/visapy_mea/
 
 // 4 spike columns - columns

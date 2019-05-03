@@ -5,6 +5,7 @@ import { formatUnitResults } from "../../dataHandlers";
 import { isEmpty } from "../../utils";
 import { Container, Card } from "react-bootstrap";
 import StatsAlert from "../Header/StatsAlert";
+import InfoPanelContent from "../Header/InfoPanelContent";
 
 import "./pages.css";
 
@@ -62,7 +63,6 @@ class Home extends Component {
       isEmpty(this.props.sorters);
     let sorters = this.props.sorters ? this.getSorters() : null;
     let studies = this.props.studies ? this.getStudies() : null;
-    console.log("🤩 props", this.props);
     return (
       <div className="page__body page__body--alert ">
         <StatsAlert {...this.props} />
@@ -83,6 +83,13 @@ class Home extends Component {
             unitsMap={this.state.unitsMap}
           />
         )}
+        <Container className="container__heatmap">
+          <Card>
+            <Card.Body>
+              <InfoPanelContent sidebar={false} />
+            </Card.Body>
+          </Card>
+        </Container>
       </div>
     );
   }

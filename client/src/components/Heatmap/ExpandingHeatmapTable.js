@@ -13,11 +13,6 @@ class ExpandingHeatmapTable extends React.Component {
 
     this.handleCollapse = this.handleCollapse.bind(this);
     this.handleExpand = this.handleExpand.bind(this);
-    const colorRange = {
-      count: ["#fff", "#384ca2"],
-      cpu: ["#fff", "#6238a2"],
-      average: ["#fff", "#15423A"]
-    };
   }
 
   handleCellSelected(cell) {
@@ -49,7 +44,6 @@ class ExpandingHeatmapTable extends React.Component {
     if (cell.text_align === "right") style0.paddingRight = "4px";
     return (
       <td
-        //bgcolor={cell.bgcolor || ""}
         onClick={() => this.handleCellSelected(cell)}
         className={class0}
         style={style0}

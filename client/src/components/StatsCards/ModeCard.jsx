@@ -8,7 +8,7 @@ export class ModeCard extends Component {
     let copy;
     switch (this.props.format) {
       case "count":
-        copy = "Number units found above metric threshold";
+        copy = "Number of units found above metric threshold";
         break;
       case "average":
         copy = "Average metric above SNR threshold";
@@ -43,7 +43,7 @@ export class ModeCard extends Component {
                 onChange={e => this.props.handleFormatChange(e.target.value)}
               >
                 <option key={"count-1"} value={"count"}>
-                  Number units found above metric threshold
+                  Number of units found above metric threshold
                 </option>
                 <option key={"average-1"} value={"average"}>
                   Average metric above SNR threshold

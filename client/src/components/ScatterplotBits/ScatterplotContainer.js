@@ -26,7 +26,6 @@ class ScatterplotContainer extends Component {
       format
     } = this.props;
     const copy = this.getHeaderCopy(this.props.format);
-    console.log("🤩 state and props in container", this.state, this.props);
     return (
       <div>
         <p>
