@@ -88,7 +88,7 @@ class ScatterplotCount extends Component {
 
   getMaxSNR(data) {
     if (data.length === 0) {
-      return 0
+      return 0;
     } else {
       let max = data.reduce((max, p) => (p.x > max ? p.x : max), data[0].y);
       return Math.round(max * 100) / 100;
@@ -99,9 +99,6 @@ class ScatterplotCount extends Component {
     const { data, hoveredNode, maxSNR } = this.state;
     const alignment = { vertical: "top", horizontal: "left" };
     let valueObj = {
-      recording: hoveredNode
-        ? `${hoveredNode.recording}:${hoveredNode.color / 10}`
-        : null,
       accuracy: hoveredNode ? hoveredNode.y : null,
       snr: hoveredNode ? hoveredNode.x : null,
       num_events: hoveredNode ? hoveredNode.num_events : null

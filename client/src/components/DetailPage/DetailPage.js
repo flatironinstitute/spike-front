@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import * as Sentry from "@sentry/browser";
 
 // Components
 import { Card, Col, Container, Row } from "react-bootstrap";
@@ -29,8 +30,8 @@ class DetailPage extends Component {
       sliderValue: 0.8,
       sorter: "",
       unitsMap: [],
-      // TODO: SET NEW DEFAULT
       filteredData: [],
+      // TODO: REMOVE
       sorterParams: {},
       activeSorter: 0,
       openIcon: false,
@@ -99,10 +100,10 @@ class DetailPage extends Component {
     var filteredData;
     switch (this.state.format) {
       case "count":
-        filteredData = this.filterAccuracy(this.state.unitsMap);
+        filteredData = this.filterCountMap();
         break;
       case "average":
-        filteredData = this.filterSNR(this.state.unitsMap);
+        filteredData = this.filterAverageMap();
         break;
       default:
         filteredData = this.state.unitsMap;
@@ -110,36 +111,158 @@ class DetailPage extends Component {
     this.setState({ filteredData: filteredData });
   }
 
-  // Count functions for 'Number of groundtruth units above accuracy threshold'
-  filterAccuracy(sorterArray) {
-    let newArr = sorterArray.map(sorter => {
-      let above = sorter.accuracies.filter(accu => {
-        return accu >= this.state.sliderValue;
-      });
-      sorter.in_range = above.length;
-      sorter.color = above.length;
-      return sorter;
-    });
-    return newArr;
+  filterAverageMap() {
+    let filteredData;
+    switch (this.state.metric) {
+      case "accuracy":
+        filteredData = this.filterAccuracyAverage(this.state.unitsMap);
+        break;
+      case "recall":
+        filteredData = this.filterRecallAverage(this.state.unitsMap);
+        break;
+      case "precision":
+        filteredData = this.filterPrecisionAverage(this.state.unitsMap);
+        break;
+      default:
+        filteredData = this.filterAccuracyAverage(this.state.unitsMap);
+        break;
+    }
+    return filteredData;
   }
 
-  filterSNR(sorterArray) {
+  filterCountMap() {
+    let filteredData;
+    switch (this.state.metric) {
+      case "accuracy":
+        filteredData = this.filterAccuracyCount(this.state.unitsMap);
+        break;
+      case "recall":
+        filteredData = this.filterRecallCount(this.state.unitsMap);
+        break;
+      case "precision":
+        filteredData = this.filterPrecisionCount(this.state.unitsMap);
+        break;
+      default:
+        filteredData = this.filterAccuracyCount(this.state.unitsMap);
+        break;
+    }
+    return filteredData;
+  }
+
+  filterAccuracyAverage(sorterArray) {
     let newArr = sorterArray.map(sorter => {
-      let accs = [];
+      let overMin = [];
       sorter.true_units.forEach(unit => {
         if (unit.snr > this.state.sliderValue) {
-          accs.push(unit.accuracy);
+          overMin.push(unit.checkAccuracy);
         }
       });
       let aboveAvg = 0;
-      if (accs.length) {
-        let sum = accs.reduce((a, b) => a + b);
-        aboveAvg = sum / accs.length;
+      if (overMin.length) {
+        let sum = overMin.reduce((a, b) => a + b);
+        aboveAvg = sum / overMin.length;
       }
       // This just prints the output to 2 digits
       sorter.in_range = Math.round(aboveAvg * 100) / 100;
       sorter.color = Math.round(aboveAvg * 100) / 100;
       return sorter;
+    });
+    return newArr;
+  }
+
+  filterAccuracyCount(sorterArray) {
+    let newArr = sorterArray.map(sorter => {
+      if (!sorter.accuracies) {
+        Sentry.captureMessage("No accuracy values for this sorter: ", sorter);
+        return sorter;
+      } else {
+        let above = sorter.accuracies.filter(accu => {
+          return accu >= this.state.sliderValue;
+        });
+        sorter.in_range = above.length;
+        sorter.color = above.length;
+        return sorter;
+      }
+    });
+    return newArr;
+  }
+
+  filterRecallAverage(sorterArray) {
+    let newArr = sorterArray.map(sorter => {
+      let overMin = [];
+      sorter.true_units.forEach(unit => {
+        if (unit.snr > this.state.sliderValue) {
+          overMin.push(unit.checkRecall);
+        }
+      });
+      let aboveAvg = 0;
+      if (overMin.length) {
+        let sum = overMin.reduce((a, b) => a + b);
+        aboveAvg = sum / overMin.length;
+      }
+      // This just prints the output to 2 digits
+      sorter.in_range = Math.round(aboveAvg * 100) / 100;
+      sorter.color = Math.round(aboveAvg * 100) / 100;
+      return sorter;
+    });
+    return newArr;
+  }
+
+  filterRecallCount(sorterArray) {
+    let newArr = sorterArray.map(sorter => {
+      if (!sorter.recalls) {
+        Sentry.captureMessage("No recall values for this sorter: ", sorter);
+        sorter.in_range = 0;
+        sorter.color = 0;
+        return sorter;
+      } else {
+        let above = sorter.recalls.filter(accu => {
+          return accu >= this.state.sliderValue;
+        });
+        sorter.in_range = above.length;
+        sorter.color = above.length;
+        return sorter;
+      }
+    });
+    return newArr;
+  }
+
+  filterPrecisionAverage(sorterArray) {
+    let newArr = sorterArray.map(sorter => {
+      let overMin = [];
+      sorter.true_units.forEach(unit => {
+        if (unit.snr > this.state.sliderValue) {
+          overMin.push(unit.precision);
+        }
+      });
+      let aboveAvg = 0;
+      if (overMin.length) {
+        let sum = overMin.reduce((a, b) => a + b);
+        aboveAvg = sum / overMin.length;
+      }
+      // This just prints the output to 2 digits
+      sorter.in_range = Math.round(aboveAvg * 100) / 100;
+      sorter.color = Math.round(aboveAvg * 100) / 100;
+      return sorter;
+    });
+    return newArr;
+  }
+
+  filterPrecisionCount(sorterArray) {
+    let newArr = sorterArray.map(sorter => {
+      if (!sorter.precisions) {
+        Sentry.captureMessage("No precision values for this sorter: ", sorter);
+        sorter.in_range = 0;
+        sorter.color = 0;
+        return sorter;
+      } else {
+        let above = sorter.precisions.filter(accu => {
+          return accu >= this.state.sliderValue;
+        });
+        sorter.in_range = above.length;
+        sorter.color = above.length;
+        return sorter;
+      }
     });
     return newArr;
   }
@@ -213,7 +336,7 @@ class DetailPage extends Component {
     //   "🤩 selectedStudySortingResult",
     //   this.props.selectedStudySortingResult
     // );
-    // console.log("🤩 unitsMap", this.state.unitsMap);
+    console.log("🤩 unitsMap", this.state.unitsMap, this.state.filteredData);
     return (
       <div>
         <div className="page__body">
