@@ -31,10 +31,7 @@ class DetailPage extends Component {
       sorter: "",
       unitsMap: [],
       filteredData: [],
-      // TODO: REMOVE
-      sorterParams: {},
-      activeSorter: 0,
-      openIcon: false,
+      // TODO: Integrate
       selectedRecording: {}
     };
   }
@@ -112,49 +109,51 @@ class DetailPage extends Component {
   }
 
   filterAverageMap() {
-    let filteredData;
+    let property;
     switch (this.state.metric) {
       case "accuracy":
-        filteredData = this.filterAccuracyAverage(this.state.unitsMap);
+        property = "checkAccuracy";
         break;
       case "recall":
-        filteredData = this.filterRecallAverage(this.state.unitsMap);
+        property = "checkRecall";
         break;
       case "precision":
-        filteredData = this.filterPrecisionAverage(this.state.unitsMap);
+        property = "precision";
         break;
       default:
-        filteredData = this.filterAccuracyAverage(this.state.unitsMap);
+        property = "checkAccuracy";
         break;
     }
+    let filteredData = this.filterAverage(this.state.unitsMap, property);
     return filteredData;
   }
 
   filterCountMap() {
-    let filteredData;
+    let property;
     switch (this.state.metric) {
       case "accuracy":
-        filteredData = this.filterAccuracyCount(this.state.unitsMap);
+        property = "accuracies";
         break;
       case "recall":
-        filteredData = this.filterRecallCount(this.state.unitsMap);
+        property = "recalls";
         break;
       case "precision":
-        filteredData = this.filterPrecisionCount(this.state.unitsMap);
+        property = "precisions";
         break;
       default:
-        filteredData = this.filterAccuracyCount(this.state.unitsMap);
+        property = "accuracies";
         break;
     }
+    let filteredData = this.filterCount(this.state.unitsMap, property);
     return filteredData;
   }
 
-  filterAccuracyAverage(sorterArray) {
+  filterAverage(sorterArray, property) {
     let newArr = sorterArray.map(sorter => {
       let overMin = [];
       sorter.true_units.forEach(unit => {
         if (unit.snr > this.state.sliderValue) {
-          overMin.push(unit.checkAccuracy);
+          overMin.push(unit[property]);
         }
       });
       let aboveAvg = 0;
@@ -170,40 +169,19 @@ class DetailPage extends Component {
     return newArr;
   }
 
-  filterAccuracyCount(sorterArray) {
+  filterCount(sorterArray, property) {
     let newArr = sorterArray.map(sorter => {
-      if (!sorter.accuracies) {
+      if (!sorter[property]) {
         Sentry.captureMessage("No accuracy values for this sorter: ", sorter);
         return sorter;
       } else {
-        let above = sorter.accuracies.filter(accu => {
+        let above = sorter[property].filter(accu => {
           return accu >= this.state.sliderValue;
         });
         sorter.in_range = above.length;
         sorter.color = above.length;
         return sorter;
       }
-    });
-    return newArr;
-  }
-
-  filterRecallAverage(sorterArray) {
-    let newArr = sorterArray.map(sorter => {
-      let overMin = [];
-      sorter.true_units.forEach(unit => {
-        if (unit.snr > this.state.sliderValue) {
-          overMin.push(unit.checkRecall);
-        }
-      });
-      let aboveAvg = 0;
-      if (overMin.length) {
-        let sum = overMin.reduce((a, b) => a + b);
-        aboveAvg = sum / overMin.length;
-      }
-      // This just prints the output to 2 digits
-      sorter.in_range = Math.round(aboveAvg * 100) / 100;
-      sorter.color = Math.round(aboveAvg * 100) / 100;
-      return sorter;
     });
     return newArr;
   }
@@ -223,27 +201,6 @@ class DetailPage extends Component {
         sorter.color = above.length;
         return sorter;
       }
-    });
-    return newArr;
-  }
-
-  filterPrecisionAverage(sorterArray) {
-    let newArr = sorterArray.map(sorter => {
-      let overMin = [];
-      sorter.true_units.forEach(unit => {
-        if (unit.snr > this.state.sliderValue) {
-          overMin.push(unit.precision);
-        }
-      });
-      let aboveAvg = 0;
-      if (overMin.length) {
-        let sum = overMin.reduce((a, b) => a + b);
-        aboveAvg = sum / overMin.length;
-      }
-      // This just prints the output to 2 digits
-      sorter.in_range = Math.round(aboveAvg * 100) / 100;
-      sorter.color = Math.round(aboveAvg * 100) / 100;
-      return sorter;
     });
     return newArr;
   }
