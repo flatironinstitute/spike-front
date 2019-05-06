@@ -30,11 +30,7 @@ class HeatmapCPU2 extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (
-      this.props.unitsMap !== prevProps.unitsMap ||
-      this.props.sliderValue !== prevProps.sliderValue ||
-      this.props.metric !== prevProps.metric
-    ) {
+    if (this.props.unitsMap !== prevProps.unitsMap) {
       this.filterCPUMap();
     }
   }
@@ -54,7 +50,7 @@ class HeatmapCPU2 extends Component {
         ) : (
           <Container className="container__heatmap">
             <Row className="container__heatmap--row">
-              <Col lg={6} sm={12}>
+              <Col lg={12} sm={12}>
                 <HeatmapViz
                   cpus={this.props.cpus}
                   selectStudySortingResult={this.props.selectStudySortingResult}
@@ -67,12 +63,6 @@ class HeatmapCPU2 extends Component {
                   format={this.props.format}
                   metric={this.props.metric}
                   threshold={this.props.sliderValue}
-                />
-              </Col>
-              <Col lg={6} sm={12}>
-                <ScatterplotCard
-                  {...this.props}
-                  sliderValue={this.props.sliderValue}
                 />
               </Col>
             </Row>
