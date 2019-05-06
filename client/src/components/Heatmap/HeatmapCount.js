@@ -148,30 +148,29 @@ class HeatmapCount extends Component {
             <Preloader />
           </Container>
         ) : (
-          <Container className="container__heatmap">
-            <Row className="container__heatmap--row">
-              <Col lg={6} sm={12}>
-                <HeatmapViz
-                  cpus={this.props.cpus}
-                  selectStudySortingResult={this.props.selectStudySortingResult}
-                  selectedStudySortingResult={this.props.selectedStudySortingResult}
-                  groupedUnitResults={this.state.builtData}
-                  studies={this.props.studies}
-                  studysets={this.props.studysets}
-                  format={this.props.format}
-                  metric={this.props.metric}
-                  threshold={this.props.sliderValue}
-                />
-              </Col>
-              <Col lg={6} sm={12}>
-                <ScatterplotCard
-                  {...this.props}
-                  sliderValue={this.props.sliderValue}
-                />
-              </Col>
-            </Row>
-          </Container>
-        )}
+            <Container className="container__heatmap">
+              <Row className="container__heatmap--row">
+                <Col lg={6} sm={12}>
+                  <HeatmapViz
+                    selectStudySortingResult={this.props.selectStudySortingResult}
+                    selectedStudySortingResult={this.props.selectedStudySortingResult}
+                    groupedUnitResults={this.state.builtData}
+                    studies={this.props.studies}
+                    studysets={this.props.studysets}
+                    format={this.props.format}
+                    metric={this.props.metric}
+                    threshold={this.props.sliderValue}
+                  />
+                </Col>
+                <Col lg={6} sm={12}>
+                  <ScatterplotCard
+                    {...this.props}
+                    sliderValue={this.props.sliderValue}
+                  />
+                </Col>
+              </Row>
+            </Container>
+          )}
       </div>
     );
   }

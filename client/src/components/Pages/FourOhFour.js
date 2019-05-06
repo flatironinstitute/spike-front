@@ -10,23 +10,19 @@ class FourOhFour extends Component {
       <div className="page__body">
         <Container className="container__heatmap">
           <div className="card card--heatmap text-center">
-            <h2>Uh-oh! We can't find that page.</h2>
+            <h2> It seems you are lost</h2>
             <Row className="justify-content-md-center">
               <Col xs lg="2">
                 <Link to="/">
-                  Go Home{" "}
-                  <span role="img" aria-label="golf-hole">
-                    ⛳
-                  </span>
-                  <br />
+                  Let's go Home <br />
                 </Link>
               </Col>
             </Row>
             <img
               className="card__image"
-              width="480"
-              height="363"
-              src="https://media.giphy.com/media/3o7aCTPPm4OHfRLSH6/giphy.gif"
+              width="auto"
+              height="auto"
+              src="https://media.giphy.com/media/xTiN0L7EW5trfOvEk0/giphy.gif"
               alt="gif"
             />
           </div>

@@ -1,13 +1,15 @@
 import React, { Component } from "react";
+import * as Sentry from "@sentry/browser";
 
 // Components
 import { Card, Col, Container, Row } from "react-bootstrap";
-import HeatmapOptionsRow from "../Heatmap/HeatmapOptionsRow";
+import HeatmapOptionsCol from "../Heatmap/HeatmapOptionsCol";
 import Preloader from "../Preloader/Preloader";
 import DetailPageRow from "./DetailPageRow";
-// import ReactJson from "react-json-view";
-// import SpikeSprayV2 from "./SpikeSprayV2";
 import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
+import SpikeSprayV2 from "./SpikeSprayV2";
+// import ReactJson from "react-json-view";
+
 import "./detailpage.css";
 
 // Redux
@@ -17,6 +19,7 @@ import * as actionCreators from "../../actions/actionCreators";
 
 // Utilities 💡
 import { isEmpty, toTitleCase } from "../../utils";
+import { formatUnitResultsByStudy } from "../../dataHandlers";
 
 class DetailPage extends Component {
   constructor(props) {
@@ -26,104 +29,138 @@ class DetailPage extends Component {
       format: "count",
       metric: "accuracy",
       sliderValue: 0.8,
-      // TODO: SET NEW DEFAULT
-      sorter: "KiloSort",
-      sorterParams: {},
-      activeSorter: 0,
-      openIcon: false,
-      builtData: [],
+      sorter: "",
+      unitsMap: [],
+      filteredData: [],
+      // TODO: Integrate
       selectedRecording: {}
     };
   }
 
   componentDidMount() {
-    this.getPageName();
+    this.getStudyAndSorter();
   }
 
-  // Get Study from Page Name
-  // Determine if a Study/Sorter pairing has been pre-selected - if so load it first
-  // Find all the other study/sorter pairings from groupedURs
-  // TBD: What do I need for the 
-  // 
+  getStudyAndSorter() {
+    let study,
+      sorter = "";
+    if (this.props.selectedStudySortingResult) {
+      study = this.props.selectedStudySortingResult.study;
+      sorter = this.props.selectedStudySortingResult.sorter;
+    } else {
+      let activeRoute = this.props.router.location.pathname;
+      let activeArr = activeRoute.split("/").filter(item => item);
+      study = activeArr[1];
+    }
+    this.setState({
+      study,
+      sorter
+    });
+  }
 
   componentDidUpdate(prevProps, prevState) {
-    // New Data Gathering from Existing files
-
-    // TODO: Swap selected study state for props
     if (this.state.study !== prevState.study) {
-      this.props.fetchPairing(this.state.study, this.state.sorter);
-      // TODO: Tie this call to the scatterplot clicks
-      this.props.fetchRecordingDetails(
-        this.state.study,
-        this.state.sorter,
-        "test"
-      );
+      // Fetch the unit results for this study and all sorters
+      this.props.fetchURsByStudy(this.state.study);
     }
-    if (this.props.pairing !== prevProps.pairing) {
-      this.filterResults();
+
+    if (this.props.ursByStudy !== prevProps.ursByStudy) {
+      this.mapUnits();
     }
+
+    if (this.state.unitsMap !== prevState.unitsMap) {
+      this.applyResultFilters();
+    }
+
+    // TODO: Tie this call to the scatterplot clicks
+    //   this.props.fetchRecordingDetails(
+    //     this.state.study,
+    //     this.state.sorter,
+    //     "test"
+    //   );
+
     let optionsChanged =
       this.state.format !== prevState.format ||
       this.state.metric !== prevState.metric ||
       this.state.sliderValue !== prevState.sliderValue;
     if (optionsChanged) {
-      this.filterResults();
+      this.applyResultFilters();
     }
   }
 
+  async mapUnits() {
+    let unitsMap = await formatUnitResultsByStudy(this.props.ursByStudy);
+    let sorter = this.state.sorter ? this.state.sorter : unitsMap[0].sorter;
+    this.setState({ unitsMap: unitsMap, sorter: sorter });
+  }
 
-  filterResults() {
-    let results = this.props.pairing.filter(result => {
-      return result.sorter && result.is_applied;
-    });
-    var builtData;
-
-    builtData = results
-
+  applyResultFilters() {
+    var filteredData;
     switch (this.state.format) {
       case "count":
-        builtData = this.filterAccuracy(results);
+        filteredData = this.filterCountMap();
         break;
       case "average":
-        builtData = this.filterSNR(results);
+        filteredData = this.filterAverageMap();
         break;
       default:
-        builtData = results;
+        filteredData = this.state.unitsMap;
     }
-
-    // let selectedRecording = builtData.filter(
-    //   recording => recording.sorter === this.state.sorter
-    // );
-    // TODO: Swap this with selectedRecording everywhere
-    // this.props.selectStudy(selectedRecording[0]);
-    this.setState({ builtData: builtData });
+    this.setState({ filteredData: filteredData });
   }
 
-  // Count functions for 'Number of groundtruth units above accuracy threshold'
-  filterAccuracy(sorterArray) {
-    let newArr = sorterArray.map(sorter => {
-      let above = sorter.accuracies.filter(accu => {
-        return accu >= this.state.sliderValue;
-      });
-      sorter.in_range = above.length;
-      sorter.color = above.length;
-      return sorter;
-    });
-    return newArr;
+  filterAverageMap() {
+    let property;
+    switch (this.state.metric) {
+      case "accuracy":
+        property = "checkAccuracy";
+        break;
+      case "recall":
+        property = "checkRecall";
+        break;
+      case "precision":
+        property = "precision";
+        break;
+      default:
+        property = "checkAccuracy";
+        break;
+    }
+    let filteredData = this.filterAverage(this.state.unitsMap, property);
+    return filteredData;
   }
 
-  filterSNR(sorterArray) {
+  filterCountMap() {
+    let property;
+    switch (this.state.metric) {
+      case "accuracy":
+        property = "accuracies";
+        break;
+      case "recall":
+        property = "recalls";
+        break;
+      case "precision":
+        property = "precisions";
+        break;
+      default:
+        property = "accuracies";
+        break;
+    }
+    let filteredData = this.filterCount(this.state.unitsMap, property);
+    return filteredData;
+  }
+
+  filterAverage(sorterArray, property) {
     let newArr = sorterArray.map(sorter => {
-      let accs = [];
+      let overMin = [];
       sorter.true_units.forEach(unit => {
         if (unit.snr > this.state.sliderValue) {
-          accs.push(unit.accuracy);
+          overMin.push(unit[property]);
         }
       });
       let aboveAvg = 0;
-      if (accs.length) {
-        let sum = accs.reduce((a, b) => a + b);
-        aboveAvg = sum / accs.length;
+      if (overMin.length) {
+        let sum = overMin.reduce((a, b) => a + b);
+        aboveAvg = sum / overMin.length;
       }
       // This just prints the output to 2 digits
       sorter.in_range = Math.round(aboveAvg * 100) / 100;
@@ -133,22 +170,66 @@ class DetailPage extends Component {
     return newArr;
   }
 
-  getPageName() {
-    let activeRoute = this.props.router.location.pathname;
-    let activeArr = activeRoute.split("/").filter(item => item);
-    let study = activeArr[1];
-    // TODO: Swap sorter to default index 0 from API call.
-    let sorter = "KiloSort";
-    this.setState({
-      study,
-      sorter
+  filterCount(sorterArray, property) {
+    let newArr = sorterArray.map(sorter => {
+      if (!sorter[property]) {
+        Sentry.captureMessage("No accuracy values for this sorter: ", sorter);
+        return sorter;
+      } else {
+        let above = sorter[property].filter(accu => {
+          return accu >= this.state.sliderValue;
+        });
+        sorter.in_range = above.length;
+        sorter.color = above.length;
+        return sorter;
+      }
     });
+    return newArr;
+  }
+
+  filterRecallCount(sorterArray) {
+    let newArr = sorterArray.map(sorter => {
+      if (!sorter.recalls) {
+        Sentry.captureMessage("No recall values for this sorter: ", sorter);
+        sorter.in_range = 0;
+        sorter.color = 0;
+        return sorter;
+      } else {
+        let above = sorter.recalls.filter(accu => {
+          return accu >= this.state.sliderValue;
+        });
+        sorter.in_range = above.length;
+        sorter.color = above.length;
+        return sorter;
+      }
+    });
+    return newArr;
+  }
+
+  filterPrecisionCount(sorterArray) {
+    let newArr = sorterArray.map(sorter => {
+      if (!sorter.precisions) {
+        Sentry.captureMessage("No precision values for this sorter: ", sorter);
+        sorter.in_range = 0;
+        sorter.color = 0;
+        return sorter;
+      } else {
+        let above = sorter.precisions.filter(accu => {
+          return accu >= this.state.sliderValue;
+        });
+        sorter.in_range = above.length;
+        sorter.color = above.length;
+        return sorter;
+      }
+    });
+    return newArr;
   }
 
   handleSorterChange = value => {
     this.setState({
       sorter: value.sorter
     });
+    this.props.selectStudySortingResult(value);
   };
 
   handleFormatChange = value => {
@@ -198,22 +279,17 @@ class DetailPage extends Component {
   }
 
   render() {
-    let results = isEmpty(this.props.pairing)
-      ? []
-      : this.props.pairing.filter(result => {
-        return result.sorter && result.is_applied;
-      });
-    let sorters = results.length ? results.map(result => result.sorter) : [];
-
+    let sorters = this.state.unitsMap
+      ? this.state.unitsMap.map(result => result.sorter)
+      : [];
     let loading =
       isEmpty(this.state.study) ||
       isEmpty(this.state.sorter) ||
-      isEmpty(this.state.builtData);
+      isEmpty(this.state.filteredData);
 
     let heatmapTitle = this.getFormatCopy();
     let pageTitle = toTitleCase(this.state.study.replace(/_/g, " "));
 
-    console.log("🤩", this.props.selectedStudySortingResult);
     return (
       <div>
         <div className="page__body">
@@ -226,106 +302,79 @@ class DetailPage extends Component {
               </Card>
             </Container>
           ) : (
-              <Container className="container__heatmap">
-                <Row className="justify-content-md-center">
-                  <Col lg={12} sm={12} xl={10}>
-                    <div className="intro">
-                      <h4 className="intro__title">{pageTitle}</h4>
-                      <p className="intro__title"><em>sorter</em></p>
-                    </div>
-                  </Col>
-                </Row>
-                <Row className="container__sorter--row">
-                  <Col lg={6} sm={12}>
-                    <div className="card card--stats">
-                      <div className="content">
-                        <div className="card__label">
-                          <p>{heatmapTitle}</p>
-                        </div>
-                        <div className="card__footer">
-                          <hr />
-                          <DetailPageRow
-                            {...this.props}
-                            vizDatum={this.state.builtData}
-                            key={`hmrow${0}`}
-                            index={0}
-                            format={this.state.format}
-                            sorters={sorters.sort()}
-                            selectedSorter={this.state.sorter}
-                            handleSorterChange={this.handleSorterChange}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </Col>
-                  <Col lg={6} sm={12}>
-                    <ScatterplotCard
-                      {...this.props}
-                      sliderValue={this.state.sliderValue}
-
-                    // study={this.state.study}
-                    // sorter={this.state.sorter}
-                    // selectedStudySortingResult={this.props.selectedStudySortingResult}
-                    // sliderValue={this.props.sliderValue}
-                    // format={this.props.format}
-                    // metric={this.state.metric}
-                    // {...this.props}
-                    />
-                  </Col>
-                </Row>
-                <Row className="container__sorter--row">
-                  <Col lg={12} sm={12}>
-                    <HeatmapOptionsRow
-                      showCPU={false}
-                      handleFormatChange={this.handleFormatChange}
-                      handleSliderChange={this.handleSliderChange}
-                      handleMetricChange={this.handleMetricChange}
-                      format={this.state.format}
-                      metric={this.state.metric}
-                      sliderValue={this.state.sliderValue}
-                    />
-                  </Col>
-                </Row>
-                {/* <Row className="container__sorter--row">
-                  <Col lg={12} sm={12}>
-                    <div className="card card--heatmap">
-                      <div className="content">
-                        <div className="card__label">
-                          <p>
-                            Study + Sorter Result Pairing JSON Dump{" "}
-                            <span role="img" aria-label="truck">
-                              🚚
-                          </span>
-                          </p>
-                        </div>
-                        <div className="card__footer">
-                          <hr />
-                          <ReactJson src={results} />
-                        </div>
-                      </div>
-                    </div>
-                  </Col>
-                </Row>
-                <Row className="container__sorter--row">
-                  <Col lg={12} sm={12}>
-                    <div className="card card--heatmap">
-                      <div className="content">
-                        <div className="card__label">
-                          <p>
-                            <strong>Spike Spray:</strong> What label details are
-                            needed here?
+            <Container className="container__heatmap">
+              {/* <Row className="justify-content-md-center">
+                <Col lg={12} sm={12} xl={10}>
+                  <div className="intro">
+                    <h4 className="intro__title">{pageTitle}</h4>
+                    <p className="intro__title">
+                      <em>{this.state.sorter}</em>
+                    </p>
+                  </div>
+                </Col>
+              </Row> */}
+              <Row className="container__sorter--row">
+                <Col lg={6} sm={12}>
+                  <div className="card card--stats">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>
+                          <b>{heatmapTitle}</b>
                         </p>
-                        </div>
-                        <div className="card__footer">
-                          <hr />
-                          <SpikeSprayV2 {...this.props} />
-                        </div>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <DetailPageRow
+                          {...this.props}
+                          vizDatum={this.state.filteredData}
+                          key={`hmrow${0}`}
+                          index={0}
+                          format={this.state.format}
+                          sorters={sorters.sort()}
+                          selectedSorter={this.state.sorter}
+                          handleSorterChange={this.handleSorterChange}
+                        />
                       </div>
                     </div>
-                  </Col>
-                </Row> */}
-              </Container>
-            )}
+                  </div>
+                  <HeatmapOptionsCol
+                    showCPU={false}
+                    handleFormatChange={this.handleFormatChange}
+                    handleSliderChange={this.handleSliderChange}
+                    handleMetricChange={this.handleMetricChange}
+                    format={this.state.format}
+                    metric={this.state.metric}
+                    sliderValue={this.state.sliderValue}
+                  />
+                </Col>
+                <Col lg={6} sm={12}>
+                  <ScatterplotCard
+                    {...this.props}
+                    sliderValue={this.state.sliderValue}
+                    format={this.state.format}
+                    metric={this.state.metric}
+                  />
+                </Col>
+              </Row>
+              <Row className="container__sorter--row">
+                <Col lg={12} sm={12}>
+                  <div className="card card--heatmap">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>
+                          <strong>Spike Spray:</strong> Recording ID
+                        </p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <SpikeSprayV2 {...this.props} />
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          )}
         </div>
       </div>
     );

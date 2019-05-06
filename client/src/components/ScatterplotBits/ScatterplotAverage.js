@@ -11,6 +11,7 @@ import {
   Hint
 } from "react-vis";
 import { toTitleCase } from "../../utils";
+import "./scatterplot.css";
 
 class ScatterplotAverage extends Component {
   constructor(props) {
@@ -19,13 +20,14 @@ class ScatterplotAverage extends Component {
     this.state = {
       data: [],
       hoveredNode: null,
-      maxSNR: 100
+      maxSNR: 100,
+      selectedRecording: null
     };
   }
 
   componentDidMount() {
     if (this.props.selectedUnits) {
-      this.buildCountData();
+      this.buildAveragetData();
     }
   }
 
@@ -35,11 +37,18 @@ class ScatterplotAverage extends Component {
       this.props.metric !== prevProps.metric ||
       this.props.format !== prevProps.format
     ) {
-      this.buildCountData();
+      this.buildAveragetData();
+    }
+    if (this.state.selectedRecording !== prevState.selectedRecording) {
+      console.log(
+        "NEW SELECTED RECORDING",
+        this.state.selectedRecording,
+        this.props.selectedStudySortingResult
+      );
     }
   }
 
-  buildCountData() {
+  buildAveragetData() {
     let newUnits = this.props.selectedUnits.map((unit, index) => ({
       u: unit,
       x: Math.round(unit.snr * 100) / 100,
@@ -90,14 +99,16 @@ class ScatterplotAverage extends Component {
       cpu: ["#EFC1E3", "#B52F93"],
       average: ["#00CEA8", "#0C4F42"]
     };
-    const alignment = { vertical: "top", horizontal: "left" };
-    let valueObj = {
-      recording: hoveredNode
-        ? `${hoveredNode.recording}:${hoveredNode.color / 10}`
-        : null,
-      accuracy: hoveredNode ? hoveredNode.y : null,
-      snr: hoveredNode ? hoveredNode.x : null,
-      num_events: hoveredNode ? hoveredNode.num_events : null
+    let metricObj = {};
+    metricObj[this.props.metric] = hoveredNode ? hoveredNode.y : 0;
+    let otherObj = {
+      snr: hoveredNode ? hoveredNode.x : 0,
+      num_events: hoveredNode ? hoveredNode.num_events : 0
+    };
+    let valueObj = { ...metricObj, ...otherObj };
+    let alignment = {
+      horizontal: "rightEdge",
+      vertical: "topEdge"
     };
     let lineObjArr = [
       { x: this.props.sliderValue, y: 0 },
@@ -128,12 +139,12 @@ class ScatterplotAverage extends Component {
             onValueMouseOver={d => this.setState({ hoveredNode: d })}
             onValueClick={d => this.setState({ selectedRecording: d })}
           />
+          {hoveredNode && <Hint value={valueObj} align={alignment} />}
           <LineSeries
             className="fourth-series"
             strokeDasharray="7, 3"
             data={lineObjArr}
           />
-          {hoveredNode && <Hint value={valueObj} align={alignment} />}
         </FlexibleXYPlot>
       </div>
     );

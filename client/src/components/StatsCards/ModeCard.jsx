@@ -8,7 +8,7 @@ export class ModeCard extends Component {
     let copy;
     switch (this.props.format) {
       case "count":
-        copy = "Number units found above metric threshold";
+        copy = "Number of units found above metric threshold";
         break;
       case "average":
         copy = "Average metric above SNR threshold";
@@ -22,8 +22,11 @@ export class ModeCard extends Component {
     return copy;
   }
   render() {
+    let primaryClass = this.props.bottomMargin
+      ? "card card__stats-col card__stats-top"
+      : "card card__stats";
     return (
-      <div className="card card--stats">
+      <div className={primaryClass}>
         <div className="content">
           <div className="card__label">
             <p>
@@ -40,7 +43,7 @@ export class ModeCard extends Component {
                 onChange={e => this.props.handleFormatChange(e.target.value)}
               >
                 <option key={"count-1"} value={"count"}>
-                  Number units found above metric threshold
+                  Number of units found above metric threshold
                 </option>
                 <option key={"average-1"} value={"average"}>
                   Average metric above SNR threshold

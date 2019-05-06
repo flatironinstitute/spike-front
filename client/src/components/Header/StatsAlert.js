@@ -16,10 +16,10 @@ class StatsAlert extends Component {
           <div className="alert__ticker--wrapper">
             <div className="alert__ticker">
               <div className="ticker__item">
-                <b>Beta disclaimer:</b>
+                <b>Beta notice:</b>
               </div>
               <div className="ticker__item">
-                Please note that we are currenty in our beta test phase and we are updating the site on a regular basis.
+                Please note we are updating the site on a regular basis.
               </div>
               <div className="ticker__item">
                 <b>Project Totals:</b>

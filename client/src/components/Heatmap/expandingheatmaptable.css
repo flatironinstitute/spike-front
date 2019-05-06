@@ -1,56 +1,65 @@
+.expandingheatmaptable tr {
+  padding: 2px;
+  margin: 4px;
+}
+.toprow {
+  /* border-bottom: 2px solid rgba(0, 0, 0, 0.125); */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  height: 1vh;
+}
 .expandingheatmaptable td {
-    margin: 0px;
-    padding: 0px;
-    width: 44px;
-    border-style: solid;
-    border-width: 2px;
-    border-color: transparent;
-  }
-  .expandingheatmaptable td.border_left {
-    border-left-color: lightgray;
-  }
-  .expandingheatmaptable td.border_right {
-    border-right-color: lightgray;
-  }
-  .expandingheatmaptable td.border_top {
-    border-top-color: lightgray;
-  }
-  .expandingheatmaptable td.border_bottom {
-    border-bottom-color: lightgray;
-  }
-  .expandingheatmaptable td.expandable {
-    cursor: pointer;
-  }
-  .expandingheatmaptable td.selectable {
-    cursor: cell;
-  }
-  .expandingheatmaptable td.selectable:hover {
-    border-style: solid;
-    border-width: 3px;
-    border-color: gold;
-  }
-  .expandingheatmaptable td.selected {
-    border-width: 3px;
-    border-color: black !important;
-  }
-  .expandingheatmaptable td.spacer {
-    height:4px;
-  }
-  
-  /* Thanks: https://css-tricks.com/rotated-table-column-headers/ */
-  .expandingheatmaptable td.rotate {
-    /* Something you can count on */
-    height: 100px;
-    white-space: nowrap;
-  }
-  .expandingheatmaptable td.rotate > div {
-    transform: 
+  padding: 2px;
+  margin: 4px;
+  width: calc(35vw / 6);
+  font-size: 1.7rem;
+  line-height: 1.5;
+}
+.expandingheatmaptable td.border_left {
+  /* border-left-color: lightgray; */
+}
+.expandingheatmaptable td.border_right {
+  /* border-right-color: lightgray; */
+}
+.expandingheatmaptable td.border_top {
+  /* border-top-color: lightgray; */
+}
+.expandingheatmaptable td.border_bottom {
+  /* border-bottom-color: lightgray; */
+}
+.expandingheatmaptable td.expandable {
+  cursor: pointer;
+}
+.expandingheatmaptable td.selectable {
+  cursor: cell;
+}
+.expandingheatmaptable td.selectable:hover {
+  border-style: solid;
+  border-width: 2px;
+  border-color: #f28b00;
+}
+.expandingheatmaptable td.selected {
+  border-style: solid;
+  border-width: 2px;
+  border-color: #f28b00 !important;
+}
+.expandingheatmaptable td.spacer {
+  height: 4px;
+}
+
+/* Thanks: https://css-tricks.com/rotated-table-column-headers/ */
+.expandingheatmaptable td.rotate {
+  /* Something you can count on */
+  height: 100px;
+  white-space: nowrap;
+  padding-bottom: 10px;
+}
+.expandingheatmaptable td.rotate > div {
+  transform:
       /* Magic Numbers */ translate(28px, 28px)
-      /* 45 is really 360 - 45 */ rotate(315deg);
-    width: 44px;
-  }
-  .expandingheatmaptable td.rotate > div > span {
-    border-bottom: 1px solid lightgray;
-    padding: 5px 10px;
-  }
-  
+    /* 45 is really 360 - 45 */ rotate(315deg);
+  width: 44px;
+}
+.expandingheatmaptable td.rotate > div > span {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 5px 10px;
+}

@@ -38,6 +38,10 @@ router.get("/api/stats", sortingResultController.getStats);
 router.get("/api/trueunits", trueUnitController.getTrueUnits);
 // Unit Results
 router.get("/api/unitresults", unitResultsController.getUnitResults);
+router.get(
+  "/api/ursbystudy/:name",
+  unitResultsController.getUnitResultsByStudy
+);
 
 // Contact Routes
 router.post("/api/contact", (req, res) => {
@@ -48,14 +52,8 @@ router.post("/api/contact", (req, res) => {
   });
 });
 
-/* Old Shiz & Existing Routes
+/* Old Stuff & Existing Routes
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-router.get("/api/:study/:sorter", (req, res) => {
-  let study = req.params.study;
-  let sorter = req.params.sorter;
-  res.send({ results: fakeResult });
-});
-
 router.get("/api/:study/:sorter/:recording", (req, res) => {
   let study = req.params.study;
   let sorter = req.params.sorter;
@@ -64,6 +62,8 @@ router.get("/api/:study/:sorter/:recording", (req, res) => {
   let formatted = formatSpikes(recDetails);
   res.send({ recordingDetails: formatted });
 });
+// Current URL
+//https://users.flatironinstitute.org/~magland/spikeforest_website_data/spikesprays/visapy_mea/visapy_mea/
 
 // 4 spike columns - columns
 // 20 spikes - line color groups
@@ -88,7 +88,7 @@ function formatSpikes(recDetails) {
 }
 module.exports = router;
 
-/* Route Stubs
+/* Unused Route Stubs
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 // // Recordings
 // router.get("/api/recording/:id", recordingController.getRecordingById);

@@ -20,6 +20,7 @@ async function fetchBackupJSON(url) {
   return X.data;
 }
 
+// TODO: CAN I REMOVE THESE KBUCKET CALLS?
 const target_base = "spikeforest_website_12_20_2018";
 const s_targets = [
   target_base + "_magland_synth",
@@ -102,30 +103,77 @@ export async function getTrueUnits() {
   return await loadData(s_targets, "true_units", "true_units");
 }
 
+function groupBy(list, keyGetter) {
+  const map = {};
+  list.forEach(item => {
+    const key = keyGetter(item);
+    if (!map[key]) {
+      map[key] = [item];
+    } else {
+      map[key].push(item);
+    }
+  });
+  return map;
+}
+
+function groupBySorters(list, keyGetter) {
+  const map = {};
+  list.forEach(item => {
+    const key = keyGetter(item);
+    map[key] = item;
+  });
+  return map;
+}
+
+function sumAccuracies(allSorted, study) {
+  let formattedSorted = [];
+  for (var sorted in allSorted) {
+    let accuracies = allSorted[sorted].unitResults.map(
+      unit => unit.checkAccuracy
+    );
+    let snrs = allSorted[sorted].unitResults.map(unit => unit.snr);
+    let recalls = allSorted[sorted].unitResults.map(unit => unit.checkRecall);
+    let precisions = allSorted[sorted].unitResults.map(unit => unit.precision);
+    let newObj = {
+      study: study,
+      sorter: sorted,
+      y: study,
+      x: sorted,
+      true_units: allSorted[sorted].unitResults,
+      accuracies: accuracies,
+      snrs: snrs,
+      precisions: precisions,
+      recalls: recalls,
+      in_range: 0,
+      color: 0,
+      is_applied: true
+    };
+    formattedSorted.push(newObj);
+  }
+  return formattedSorted;
+}
+
+// Ex obj: All sortered
+//{
+// IronClust-s: {
+//    unitResults: (18) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}],
+//    _id: {sorterName: "IronClust-s", studyName: "paired_mea64c"}
+//  },
+// KiloSort: {_id: {…}, unitResults: Array(18)},
+// MountainSort4: {_id: {…}, unitResults: Array(18)},
+// Yass: {_id: {…}, unitResults: Array(18)},
+// }
+export async function formatUnitResultsByStudy(ursByStudy) {
+  let allSortered = await groupBySorters(
+    ursByStudy,
+    unit => unit._id.sorterName
+  );
+  let summedAccs = sumAccuracies(allSortered, ursByStudy[0]._id.studyName);
+  return summedAccs;
+}
+
 export async function formatUnitResults(groupedURs, sorters) {
-  function groupBy(list, keyGetter) {
-    const map = {};
-    list.forEach(item => {
-      const key = keyGetter(item);
-      if (!map[key]) {
-        map[key] = [item];
-      } else {
-        map[key].push(item);
-      }
-    });
-    return map;
-  }
-
-  function groupBySorters(list, keyGetter) {
-    const map = {};
-    list.forEach(item => {
-      const key = keyGetter(item);
-      map[key] = item;
-    });
-    return map;
-  }
-
-  function sumAccuracies(allSorted, study) {
+  function sumAccuraciesAddBlanks(allSorted, study) {
     let formattedSorted = [];
     for (var sorted in allSorted) {
       let accuracies = allSorted[sorted].unitResults.map(
@@ -185,7 +233,7 @@ export async function formatUnitResults(groupedURs, sorters) {
       byStudy[study],
       study => study._id.sorterName
     );
-    let summedAcc = sumAccuracies(allSorted, study);
+    let summedAcc = sumAccuraciesAddBlanks(allSorted, study);
     let obj = {
       [study]: summedAcc
     };
@@ -193,225 +241,3 @@ export async function formatUnitResults(groupedURs, sorters) {
   }
   return bySorter;
 }
-
-export function flattenUnitResults(groupedURs, studies) {
-  return groupedURs;
-}
-
-// export function flattenUnits(groupedURs, studies) {
-//   if (studies.length) {
-//     groupedURs.forEach(unit => {
-//       const myStudy = studies.filter(study => study.name === unit.study);
-//       const mySorters = myStudy[0].sorters
-//         ? myStudy[0].sorters
-//         : ["IronClust-tetrode", "MountainSort4-thr3", "SpykingCircus"];
-//       for (const key of mySorters) {
-//         if (unit.sorting_results[key]) {
-//           let floatie = parseFloat(
-//             unit.sorting_results[key].Accuracy ||
-//               unit.sorting_results[key].accuracy
-//           );
-//           let sorterObj = {
-//             firing_rate: unit.firing_rate,
-//             num_events: unit.num_events,
-//             peak_channel: unit.peak_channel,
-//             recording: unit.recording,
-//             snr: unit.snr,
-//             study: unit.study,
-//             unit_id: unit.unit_id,
-//             sorter: key,
-//             sorting_results: unit.sorting_results[key],
-//             accuracy: floatie
-//           };
-//           newUnits.push(sorterObj);
-//         } else {
-//           let blankSorterObj = {
-//             firing_rate: unit.firing_rate,
-//             num_events: unit.num_events,
-//             peak_channel: unit.peak_channel,
-//             recording: unit.recording,
-//             snr: unit.snr,
-//             study: unit.study,
-//             unit_id: unit.unit_id,
-//             sorter: key,
-//             sorting_results: {
-//               num_matches: 0,
-//               Accuracy: "0",
-//               best_unit: 0,
-//               matched_unit: 0,
-//               unit_id: 0,
-//               f_n: "0",
-//               f_p: "0"
-//             },
-//             accuracy: 0
-//           };
-//           newUnits.push(blankSorterObj);
-//         }
-//       }
-//     });
-//   }
-//   return newUnits;
-// }
-
-export async function mapUnitsBySorterStudy(allUnits, sorters) {
-  // Filter sortmatted
-  function filterFormats(formattedSorted, sorters, sorter) {
-    return formattedSorted.filter(
-      formatted => formatted.sorter === sorters[sorter].name
-    );
-  }
-
-  function sumAccuracies(allSorted, study) {
-    let formattedSorted = [];
-    for (var sorted in allSorted) {
-      let accuracies = allSorted[sorted].map(unit => unit.accuracy);
-      let snrs = allSorted[sorted].map(unit => unit.snr);
-      let newObj = {
-        study: study,
-        sorter: sorted,
-        y: study,
-        x: sorted,
-        true_units: allSorted[sorted],
-        accuracies: accuracies,
-        snrs: snrs,
-        in_range: 0,
-        color: 0,
-        is_applied: true
-      };
-      formattedSorted.push(newObj);
-    }
-    for (var sorter in sorters) {
-      let thisSorting = filterFormats(formattedSorted, sorters, sorter);
-      let dummyObj = {
-        study: study,
-        sorter: sorters[sorter].name,
-        y: study,
-        x: sorters[sorter].name,
-        true_units: [],
-        accuracies: [],
-        snrs: [],
-        color: 0,
-        in_range: null,
-        is_applied: false
-      };
-      if (!thisSorting.length) {
-        formattedSorted.push(dummyObj);
-      }
-    }
-    return formattedSorted;
-  }
-
-  function groupBy(list, keyGetter) {
-    const map = {};
-    list.forEach(item => {
-      const key = keyGetter(item);
-      if (!map[key]) {
-        map[key] = [item];
-      } else {
-        map[key].push(item);
-      }
-    });
-    return map;
-  }
-
-  const byStudy = await groupBy(allUnits, unit => unit.study);
-  const bySorter = [];
-  for (let study in byStudy) {
-    let allSorted = groupBy(byStudy[study], study => study.sorter);
-    let summedAcc = sumAccuracies(allSorted, study);
-    let obj = {
-      [study]: summedAcc
-    };
-    bySorter.push(obj);
-  }
-  return bySorter;
-}
-
-
-// const sampleUnitMap = {
-//   magland_synth_noise10_K10_C4: [
-//     {
-//       accuracies: [1, 0.99, 0.98, 0.98, 0.61, 0.98, 0.99, 0.98, 0.99],
-//       color: 89,
-//       in_range: 89,
-//       is_applied: true,
-//       snrs: [
-//         12.173096066945002,
-//         7.922575105423556,
-//         4.998194515488062,
-//         5.889166112522549,
-//         4.6560610581424235,
-//         5.936354250253983,
-//         7.882829627604207,
-//         5.020894526246758
-//       ],
-//       sorter: "MountainSort4-thr3",
-//       study: "magland_synth_noise10_K10_C4",
-//       style: { fill: "white" },
-//       true_units: [
-//         {
-//           accuracy: 1,
-//           firing_rate: 2.33,
-//           num_events: 1398,
-//           peak_channel: 0,
-//           recording: "001_synth",
-//           snr: 12.173096066945002,
-//           sorter: "MountainSort4-thr3",
-//           sorting_results: {
-//             accuracy: "1.00",
-//             best_unit: 2,
-//             f_n: "0.00",
-//             f_p: "0.00",
-//             matched_unit: 2,
-//             num_matches: 1398,
-//             unit_id: 1
-//           },
-//           study: "magland_synth_noise10_K10_C4",
-//           unit_id: 1
-//         },
-//         {
-//           accuracy: 1,
-//           firing_rate: 2.33,
-//           num_events: 1398,
-//           peak_channel: 0,
-//           recording: "001_synth",
-//           snr: 12.173096066945002,
-//           sorter: "MountainSort4-thr3",
-//           sorting_results: {
-//             accuracy: "1.00",
-//             best_unit: 2,
-//             f_n: "0.00",
-//             f_p: "0.00",
-//             matched_unit: 2,
-//             num_matches: 1398,
-//             unit_id: 1
-//           },
-//           study: "magland_synth_noise10_K10_C4",
-//           unit_id: 1
-//         },
-//         {
-//           accuracy: 1,
-//           firing_rate: 2.33,
-//           num_events: 1398,
-//           peak_channel: 0,
-//           recording: "001_synth",
-//           snr: 12.173096066945002,
-//           sorter: "MountainSort4-thr3",
-//           sorting_results: {
-//             accuracy: "1.00",
-//             best_unit: 2,
-//             f_n: "0.00",
-//             f_p: "0.00",
-//             matched_unit: 2,
-//             num_matches: 1398,
-//             unit_id: 1
-//           },
-//           study: "magland_synth_noise10_K10_C4",
-//           unit_id: 1
-//         }
-//       ],
-//       x: "MountainSort4-thr3",
-//       y: "magland_synth_noise10_K10_C4"
-//     }
-//   ]
-// };

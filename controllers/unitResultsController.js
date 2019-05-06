@@ -35,12 +35,9 @@ exports.getGroupedUnitResults = async (req, res, next) => {
   res.send({ groupedURs: groupedURs });
 };
 
-exports.getGroupedUnitResultsByStudy = async (req, res, next) => {
-  const studiesPromise = Study.find();
-  const [studies] = await Promise.all([studiesPromise]);
-  const groupedURPromiseMap = studies.map(study =>
-    UnitResult.getUnitResultsByStudy(study)
-  );
-  const groupedURs = await Promise.all(groupedURPromiseMap);
-  res.send({ groupedURs: groupedURs });
+exports.getUnitResultsByStudy = async (req, res, next) => {
+  const ursByStudy = await UnitResult.getUnitResultsByStudy({
+    name: req.params.name
+  });
+  res.send({ ursByStudy: ursByStudy });
 };

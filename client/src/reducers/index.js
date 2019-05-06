@@ -3,20 +3,21 @@ import { connectRouter } from "connected-react-router";
 
 import recordings from "./recordings";
 import selectedRecording from "./selectedRecording";
-import selectedStudySortingResult from "./selectedStudySortingResult";
 import pairing from "./pairing";
 import recordingDetails from "./recordingDetails";
 // V2 Data: Reducers
+import algorithms from "./algorithms";
 import contactSent from "./contactSent";
 import cpus from "./cpus";
 import groupedURs from "./groupedURs";
 import loading from "./loading";
-import unitResults from "./unitResults";
+import selectedStudySortingResult from "./selectedStudySortingResult";
 import sorters from "./sorters";
-import algorithms from "./algorithms";
-import studies from "./studies";
 import stats from "./stats";
+import studies from "./studies";
 import studysets from "./studysets";
+import unitResults from "./unitResults";
+import ursByStudy from "./ursByStudy";
 
 const rootReducer = history =>
   combineReducers({
@@ -25,17 +26,18 @@ const rootReducer = history =>
     pairing,
     recordingDetails,
     // V2 Data: Reducers
+    algorithms,
     contactSent,
     cpus,
     groupedURs,
     loading,
     selectedStudySortingResult,
+    sorters,
     stats,
     studies,
     studysets,
-    sorters,
-    algorithms,
     unitResults,
+    ursByStudy,
     router: connectRouter(history)
   });
 
