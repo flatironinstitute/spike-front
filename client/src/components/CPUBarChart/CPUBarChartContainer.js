@@ -87,7 +87,7 @@ class CPUBarChartContainer extends Component {
                 <Col lg={12} sm={12}>
                   <div className="card card--heatmap">
                     <div className="card__header card__header--cpu">
-                      <h4 className="card__title">Estimated CPU Time</h4>
+                      <h4 className="card__title">Estimated compute Time</h4>
                       <div
                         key={`inline-radio`}
                         className="card card--heatmap card--barchart"

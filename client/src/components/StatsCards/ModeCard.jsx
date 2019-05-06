@@ -14,7 +14,7 @@ export class ModeCard extends Component {
         copy = "Average metric above SNR threshold";
         break;
       case "cpu":
-        copy = "Estimated CPU Time";
+        copy = "Estimated avg. compute time";
         break;
       default:
         copy = "";
@@ -50,7 +50,7 @@ export class ModeCard extends Component {
                 </option>
                 {this.props.showCPU ? (
                   <option key={"cpu-1"} value={"cpu"}>
-                    Estimated CPU Time
+                    Estimated avg. compute time
                   </option>
                 ) : null}
               </Form.Control>

@@ -134,7 +134,7 @@ class HeatmapViz extends Component {
         copy = `Average ${this.props.metric} above SNR threshold`;
         break;
       case "cpu":
-        copy = "Estimated avg. compute Time";
+        copy = "Estimated avg. compute time";
         break;
       default:
         copy = "";
@@ -156,6 +156,7 @@ class HeatmapViz extends Component {
         accuracies: [],
         recalls: [],
         precisions: [],
+        cpus: [],
         snrs: [],
         sorter: list[0][i].sorter,
         study: studySet
@@ -173,6 +174,10 @@ class HeatmapViz extends Component {
           list[j][i].accuracies
         );
         aggregated[i].snrs = aggregated[i].snrs.concat(list[j][i].snrs);
+        if (this.props.format === 'cpu') {
+          let cpus0 = get_cpu_times_for_study_sorter(this.props.cpus, list[j][i].study, list[j][i].sorter);
+          aggregated[i].cpus = aggregated[i].cpus.concat(cpus0);
+        }
         if (list[j][i].sorter !== aggregated[i].sorter) {
           throw Error(
             "Unexpected... sorter does not match in computeTableRowCellsFromStudySet."
@@ -248,8 +253,14 @@ class HeatmapViz extends Component {
             throw Error("Unexpected metric: " + metric);
         }
       }
-      else if (format == 'cpu') {
-        metricVals = get_cpu_times_for_study_sorter(this.props.cpus, studySortingResult.study, studySortingResult.sorter);
+      else if (format === 'cpu') {
+        if (isStudySet) {
+          // this logic is messy and needs to be cleaned up
+          metricVals = studySortingResult.cpus;
+        }
+        else {
+          metricVals = get_cpu_times_for_study_sorter(this.props.cpus, studySortingResult.study, studySortingResult.sorter);
+        }
       }
       if (format === "count") {
         if (metricVals && metricVals.length > 0) {
@@ -407,7 +418,7 @@ function get_cpu_times_for_study_sorter(cpus, study, sorter) {
   cpus.forEach(function(cpu) {
     if (cpu._id === sorter) {
       cpu.studyGroup.forEach(function(x) {
-        if (x.studyName == study) {
+        if (x.studyName === study) {
           for (let i=0; i<x.count; i++) {
             ret.push(x.averageCPU);
           }
