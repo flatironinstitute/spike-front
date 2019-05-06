@@ -12,7 +12,7 @@ class Footer extends Component {
         <div className="outro">
           <p className="footer__description">
             SpikeForest is a website and open source computing framework for
-            evaluating and comparing spike-sorting algorithms for
+            evaluating and comparing spike sorting algorithms for
             neurophysiology data analysis.
           </p>
         </div>

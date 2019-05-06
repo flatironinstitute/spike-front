@@ -134,7 +134,7 @@ class HeatmapViz extends Component {
         copy = `Average ${this.props.metric} above SNR threshold`;
         break;
       case "cpu":
-        copy = "Estimated CPU Time";
+        copy = "Estimated average compute time";
         break;
       default:
         copy = "";
@@ -156,6 +156,7 @@ class HeatmapViz extends Component {
         accuracies: [],
         recalls: [],
         precisions: [],
+        cpus: [],
         snrs: [],
         sorter: list[0][i].sorter,
         study: studySet
@@ -173,6 +174,14 @@ class HeatmapViz extends Component {
           list[j][i].accuracies
         );
         aggregated[i].snrs = aggregated[i].snrs.concat(list[j][i].snrs);
+        if (this.props.format === "cpu") {
+          let cpus0 = get_cpu_times_for_study_sorter(
+            this.props.cpus,
+            list[j][i].study,
+            list[j][i].sorter
+          );
+          aggregated[i].cpus = aggregated[i].cpus.concat(cpus0);
+        }
         if (list[j][i].sorter !== aggregated[i].sorter) {
           throw Error(
             "Unexpected... sorter does not match in computeTableRowCellsFromStudySet."
@@ -233,18 +242,31 @@ class HeatmapViz extends Component {
     // loop through the sorting results for the study, and get the metrics (e.g., counts) to display
     let metricList = studySortingResults.map(function(studySortingResult) {
       let metricVals;
-      switch (metric) {
-        case "accuracy":
-          metricVals = studySortingResult.accuracies;
-          break;
-        case "recall":
-          metricVals = studySortingResult.recalls;
-          break;
-        case "precision":
-          metricVals = studySortingResult.precisions;
-          break;
-        default:
-          throw Error("Unexpected metric: " + metric);
+      if (format === "count" || format === "average") {
+        switch (metric) {
+          case "accuracy":
+            metricVals = studySortingResult.accuracies;
+            break;
+          case "recall":
+            metricVals = studySortingResult.recalls;
+            break;
+          case "precision":
+            metricVals = studySortingResult.precisions;
+            break;
+          default:
+            throw Error("Unexpected metric: " + metric);
+        }
+      } else if (format === "cpu") {
+        if (isStudySet) {
+          // this logic is messy and needs to be cleaned up
+          metricVals = studySortingResult.cpus;
+        } else {
+          metricVals = get_cpu_times_for_study_sorter(
+            this.props.cpus,
+            studySortingResult.study,
+            studySortingResult.sorter
+          );
+        }
       }
       if (format === "count") {
         if (metricVals && metricVals.length > 0) {
@@ -271,6 +293,15 @@ class HeatmapViz extends Component {
           // This just prints the output to 2 digits
           let avgRounded = Math.round(aboveAvg * 100) / 100;
 
+          return avgRounded;
+        } else {
+          return undefined;
+        }
+      } else if (format === "cpu") {
+        if (metricVals && metricVals.length > 0) {
+          let sum = metricVals.reduce((a, b) => a + b);
+          let avg = sum / metricVals.length;
+          let avgRounded = Math.round(avg);
           return avgRounded;
         } else {
           return undefined;
@@ -335,8 +366,7 @@ class HeatmapViz extends Component {
         color = d3.interpolateBlues(val);
         break;
       case "average":
-        // color = d3.interpolateGreens(val);
-        color = d3.interpolateInferno(val);
+        color = d3.interpolateGreens(val);
         break;
       case "cpu":
         color = d3.interpolateYlOrRd(val);
@@ -359,7 +389,6 @@ class HeatmapViz extends Component {
   render() {
     const loading = isEmpty(this.state.tableRows);
     const title = this.getFormatCopy();
-    console.log(":fire: HEATMAP VIz", this.props);
     return (
       <div className="card card--heatmap">
         <div className="card__header">
@@ -384,6 +413,23 @@ class HeatmapViz extends Component {
       </div>
     );
   }
+}
+
+function get_cpu_times_for_study_sorter(cpus, study, sorter) {
+  let ret = [];
+  cpus.forEach(function(cpu) {
+    if (cpu._id === sorter) {
+      cpu.studyGroup.forEach(function(x) {
+        if (x.studyName === study) {
+          for (let i = 0; i < x.count; i++) {
+            ret.push(x.averageCPU);
+          }
+          return ret;
+        }
+      });
+    }
+  });
+  return ret;
 }
 
 export default HeatmapViz;
