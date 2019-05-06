@@ -96,7 +96,7 @@ class Metrics extends Component {
                       </div>
                       <p>
                         In the code implementation, this matching of sorted
-                        events to ground-truth events uses{" "}
+                        events to ground truth events uses{" "}
                         <a
                           target="_blank"
                           rel="noopener noreferrer"
@@ -344,7 +344,7 @@ class Metrics extends Component {
                     <i>
                       <a href="https://www.biorxiv.org/content/10.1101/101030v2">
                         Real-time spike sorting platform for high-density
-                        extracellular probes with ground-truth validation and
+                        extracellular probes with ground truth validation and
                         drift correction
                       </a>
                     </i>
