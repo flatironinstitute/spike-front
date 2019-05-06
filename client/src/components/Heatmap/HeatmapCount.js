@@ -152,6 +152,7 @@ class HeatmapCount extends Component {
             <Row className="container__heatmap--row">
               <Col lg={6} sm={12}>
                 <HeatmapViz
+                  cpus={this.props.cpus}
                   selectStudySortingResult={this.props.selectStudySortingResult}
                   selectedStudySortingResult={this.props.selectedStudySortingResult}
                   groupedUnitResults={this.state.builtData}

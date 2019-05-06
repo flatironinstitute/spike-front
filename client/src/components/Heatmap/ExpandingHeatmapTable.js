@@ -111,7 +111,7 @@ class ExpandingHeatmapTable extends React.Component {
       trs = trs.concat(trs0);
       return null;
     }, this);
-    return <table className="expandingheatmaptable">{trs}</table>;
+    return <table className="expandingheatmaptable"><tbody>{trs}</tbody></table>;
   }
 }
 
