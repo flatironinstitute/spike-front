@@ -10,7 +10,6 @@ import "./heatmap.css";
 class HeatmapOptionsRow extends Component {
   render() {
     let isCPU = this.props.format === "cpu";
-    console.info("🚀 isCPU", isCPU);
     return (
       <div>
         <Container className="container__heatmap">

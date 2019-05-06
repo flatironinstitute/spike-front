@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { isEmpty } from "../../utils";
-import * as Sentry from "@sentry/browser";
 
 // Components
 import { Col, Container, Row } from "react-bootstrap";
@@ -30,7 +29,7 @@ class HeatmapCPU2 extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (
       this.props.unitsMap !== prevProps.unitsMap ||
       this.props.sliderValue !== prevProps.sliderValue ||
