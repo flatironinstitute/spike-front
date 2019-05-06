@@ -2,7 +2,8 @@
 import React, { Component } from "react";
 import HeatmapCount from "./HeatmapCount";
 import HeatmapSNR from "./HeatmapSNR";
-import HeatmapCPU from "./HeatmapCPU";
+// import HeatmapCPU from "./HeatmapCPU";
+import HeatmapCPU2 from "./HeatmapCPU2";
 import HeatmapOptionsRow from "./HeatmapOptionsRow";
 
 import "react-rangeslider/lib/index.css";
@@ -85,7 +86,7 @@ class HomeContentContainer extends Component {
               );
             case "cpu":
               return (
-                <HeatmapCPU
+                <HeatmapCPU2
                   {...this.props}
                   format={this.state.format}
                   sliderValue={this.state.sliderValue}

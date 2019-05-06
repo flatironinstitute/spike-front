@@ -288,7 +288,7 @@ class DetailPage extends Component {
       isEmpty(this.state.filteredData);
 
     let heatmapTitle = this.getFormatCopy();
-    let pageTitle = toTitleCase(this.state.study.replace(/_/g, " "));
+    // let pageTitle = toTitleCase(this.state.study.replace(/_/g, " "));
 
     return (
       <div>

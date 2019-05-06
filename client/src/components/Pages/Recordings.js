@@ -113,7 +113,7 @@ class Recordings extends Component {
                       <span className="list__body">
                         Recordings from various laboratories where an
                         independent intra- or juxta-cellular probe provides
-                        reliable ground-truth firing events, usually for one
+                        reliable ground truth firing events, usually for one
                         neuron per recording.
                       </span>
                     </div>

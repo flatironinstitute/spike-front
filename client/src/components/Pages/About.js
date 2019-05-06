@@ -107,7 +107,7 @@ class About extends Component {
                       >
                         white paper
                       </a>{" "}
-                      of May 2018. This was inspired in part a spike-sorting
+                      of May 2018. This was inspired in part a spike sorting
                       community discussion at the Janelia spike sorting meeting
                       of 3/22/18.
                     </p>
