@@ -50,7 +50,7 @@ export class ModeCard extends Component {
                 </option>
                 {this.props.showCPU ? (
                   <option key={"cpu-1"} value={"cpu"}>
-                    Estimated avg. compute time
+                    Estimated average compute time
                   </option>
                 ) : null}
               </Form.Control>

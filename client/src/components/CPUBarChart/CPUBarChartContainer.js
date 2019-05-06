@@ -33,7 +33,9 @@ class CPUBarChartContainer extends Component {
   }
 
   setInitialCheckboxes() {
-    let alphaboxes = this.props.checkboxes.sort((a, b) => a.name.localeCompare(b.name));
+    let alphaboxes = this.props.checkboxes.sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
     this.setState({
       checkboxes: alphaboxes
     });
@@ -44,7 +46,9 @@ class CPUBarChartContainer extends Component {
     this.state.checkboxes.forEach(checkbox => {
       if (checkbox.checked) {
         // Use props builtData to avoid losing toggled sorter data
-        let built = this.props.builtData.find(data => data._id === checkbox.name);
+        let built = this.props.builtData.find(
+          data => data._id === checkbox.name
+        );
         checkboxFiltered.push(built);
       }
     });
@@ -74,7 +78,8 @@ class CPUBarChartContainer extends Component {
   }
 
   render() {
-    let loading = isEmpty(this.state.filteredData) || isEmpty(this.state.checkboxes);
+    let loading =
+      isEmpty(this.state.filteredData) || isEmpty(this.state.checkboxes);
     return (
       <div>
         {loading ? (
@@ -82,43 +87,48 @@ class CPUBarChartContainer extends Component {
             <Preloader />
           </Container>
         ) : (
-            <Container className="container__heatmap">
-              <Row className="container__heatmap--row">
-                <Col lg={12} sm={12}>
-                  <div className="card card--heatmap">
-                    <div className="card__header card__header--cpu">
-                      <h4 className="card__title">Estimated compute Time</h4>
-                      <div
-                        key={`inline-radio`}
-                        className="card card--heatmap card--barchart"
-                      >
-                        <p className="card__label card__label--barchart">
-                          Filter:{" "}
-                        </p>
-                        <Form>
-                          {this.state.checkboxes.map((sorter, i) => (
-                            <Form.Check
-                              inline
-                              label={sorter.name}
-                              checked={sorter.checked}
-                              type="checkbox"
-                              key={sorter._id}
-                              id={sorter._id}
-                              style={{ borderBottom: `2px solid ${sorter.color}` }}
-                              onChange={this.handleChange.bind(this)}
-                            />
-                          ))}
-                        </Form>
-                      </div>
-                    </div>
-                    <div className="card__footer">
-                      <CPUBarChart data={this.state.filteredData} {...this.props} />
+          <Container className="container__heatmap">
+            <Row className="container__heatmap--row">
+              <Col lg={12} sm={12}>
+                <div className="card card--heatmap">
+                  <div className="card__header card__header--cpu">
+                    <h4 className="card__title">Estimated Compute Time</h4>
+                    <div
+                      key={`inline-radio`}
+                      className="card card--heatmap card--barchart"
+                    >
+                      <p className="card__label card__label--barchart">
+                        Filter:{" "}
+                      </p>
+                      <Form>
+                        {this.state.checkboxes.map((sorter, i) => (
+                          <Form.Check
+                            inline
+                            label={sorter.name}
+                            checked={sorter.checked}
+                            type="checkbox"
+                            key={sorter._id}
+                            id={sorter._id}
+                            style={{
+                              borderBottom: `2px solid ${sorter.color}`
+                            }}
+                            onChange={this.handleChange.bind(this)}
+                          />
+                        ))}
+                      </Form>
                     </div>
                   </div>
-                </Col>
-              </Row>
-            </Container>
-          )}
+                  <div className="card__footer">
+                    <CPUBarChart
+                      data={this.state.filteredData}
+                      {...this.props}
+                    />
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        )}
       </div>
     );
   }

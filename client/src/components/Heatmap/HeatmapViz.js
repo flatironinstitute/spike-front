@@ -134,7 +134,7 @@ class HeatmapViz extends Component {
         copy = `Average ${this.props.metric} above SNR threshold`;
         break;
       case "cpu":
-        copy = "Estimated avg. compute time";
+        copy = "Estimated average compute time";
         break;
       default:
         copy = "";
