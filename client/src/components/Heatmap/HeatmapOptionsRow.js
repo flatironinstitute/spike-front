@@ -9,37 +9,46 @@ import "./heatmap.css";
 
 class HeatmapOptionsRow extends Component {
   render() {
-    let largeCols = this.props.format === "cpu" ? 6 : 4;
+    let isCPU = this.props.format === "cpu";
+    console.info("🚀 isCPU", isCPU);
     return (
       <div>
         <Container className="container__heatmap">
-          <Row className="container__heatmap--row">
-            <Col lg={largeCols} sm={12}>
-              <ModeCard
-                showCPU={this.props.showCPU}
-                format={this.props.format}
-                handleFormatChange={this.props.handleFormatChange}
-              />
-            </Col>
-            <Col lg={largeCols} sm={12}>
-              <SliderCard
-                format={this.props.format}
-                metric={this.props.metric}
-                sliderValue={this.props.sliderValue}
-                handleSliderChange={this.props.handleSliderChange}
-              />
-            </Col>
-            {largeCols < 6 ? (
+          {isCPU ? (
+            <Row className="container__heatmap--row">
+              <Col lg={12} sm={12}>
+                <ModeCard
+                  showCPU={this.props.showCPU}
+                  format={this.props.format}
+                  handleFormatChange={this.props.handleFormatChange}
+                />
+              </Col>
+            </Row>
+          ) : (
+            <Row className="container__heatmap--row">
+              <Col lg={4} sm={12}>
+                <ModeCard
+                  showCPU={this.props.showCPU}
+                  format={this.props.format}
+                  handleFormatChange={this.props.handleFormatChange}
+                />
+              </Col>
+              <Col lg={4} sm={12}>
+                <SliderCard
+                  format={this.props.format}
+                  metric={this.props.metric}
+                  sliderValue={this.props.sliderValue}
+                  handleSliderChange={this.props.handleSliderChange}
+                />
+              </Col>
               <Col lg={4} sm={12}>
                 <MetricCard
                   metric={this.props.metric}
                   handleMetricChange={this.props.handleMetricChange}
                 />
               </Col>
-            ) : (
-              <div />
-            )}
-          </Row>
+            </Row>
+          )}
         </Container>
       </div>
     );
