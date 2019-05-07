@@ -70,7 +70,6 @@ class ExpandableRecordingsTable extends Component {
 
   render() {
     let loading = isEmpty(this.state.tableData) || isEmpty(this.props.studies);
-    console.log("🚀 tableData", this.state.tableData);
     let studysetrows = this.state.tableData.map(studySet => (
       <StudySetRow key={studySet._id.toString()} value={studySet} />
     ));
