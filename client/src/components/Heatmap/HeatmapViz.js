@@ -389,6 +389,10 @@ class HeatmapViz extends Component {
   render() {
     const loading = isEmpty(this.state.tableRows);
     const title = this.getFormatCopy();
+    const copy =
+      this.props.format !== "cpu"
+        ? "Select individual cells to see corresponding scatterplot data."
+        : "";
     return (
       <div className="card card--heatmap">
         <div className="card__header">
@@ -396,7 +400,8 @@ class HeatmapViz extends Component {
           <p className="card__category">
             <br />
             Click on the rows to expand the study sets and see component study
-            data. Select individual cells to see corresponding scatterplot data.
+            data.
+            {copy}
           </p>
         </div>
         {loading ? (

@@ -5,7 +5,6 @@ import { isEmpty } from "../../utils";
 import { Col, Container, Row } from "react-bootstrap";
 import HeatmapViz from "./HeatmapViz";
 import Preloader from "../Preloader/Preloader";
-import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
 
 // Redux
 import { bindActionCreators } from "redux";

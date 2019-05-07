@@ -7,12 +7,11 @@ import "./pages.css";
 import ExpandableRecordingsTable from "../Recordings/ExpandableRecordingsTable";
 
 class Recordings extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
-    let loading = isEmpty(this.props.recordings) || isEmpty(this.props.studies);
+    let loading =
+      isEmpty(this.props.recordings) ||
+      isEmpty(this.props.studies) ||
+      isEmpty(this.props.studysets);
     return (
       <div className="page__body">
         <Container className="container__heatmap">
