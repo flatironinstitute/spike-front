@@ -13,7 +13,7 @@ class StudySetRow extends Component {
   render() {
     const open = this.state.open;
     let arrow = this.state.open ? "-" : "+";
-    let rowClass = this.state.open ? "row__expanded-header" : "";
+    let rowClass = this.state.open ? "row__expanded-header-studyset" : "";
     const studiesRows = this.props.value.studies.map(study => (
       <StudyRow key={study._id.toString()} value={study} />
     ));

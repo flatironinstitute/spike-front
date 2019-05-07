@@ -14,7 +14,7 @@ class StudyRow extends Component {
     const study = this.props.value;
     const open = this.state.open;
     let arrow = this.state.open ? "-" : "+";
-    let rowClass = this.state.open ? "row__expanded-header" : "";
+    let rowClass = this.state.open ? "row__expanded-header-study" : "";
     const recordingsRows = this.props.value.recordings.map(recording => (
       <RecordingRow key={recording.name.toString()} value={recording} />
     ));

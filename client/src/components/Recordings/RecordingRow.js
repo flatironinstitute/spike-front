@@ -13,7 +13,7 @@ class RecordingRow extends Component {
     const recording = this.props.value;
     return (
       <React.Fragment>
-        <tr>
+        <tr className="row__expanded-header-recordings">
           <td />
           <td>{recording.name}</td>
           <td>{recording.description}</td>
