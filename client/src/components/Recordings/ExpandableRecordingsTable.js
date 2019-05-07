@@ -93,7 +93,6 @@ class ExpandableRecordingsTable extends Component {
             <tr>
               <th className="arrow__heading">+/-</th>
               <th>Study Sets</th>
-              <th>Number of Studies</th>
             </tr>
           </thead>
           <tbody>{loading ? placeholder : studysetrows}</tbody>

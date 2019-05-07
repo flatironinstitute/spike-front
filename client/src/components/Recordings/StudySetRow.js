@@ -21,7 +21,6 @@ class StudySetRow extends Component {
       <tr key={"study-header"}>
         <th />
         <th>Study Name</th>
-        <th>Number of Recordings</th>
         <th>Sorters Applied</th>
       </tr>
     );
@@ -31,7 +30,6 @@ class StudySetRow extends Component {
         <tr onClick={() => this.setState({ open: !open })} className={rowClass}>
           <td className="arrow__row">{arrow}</td>
           <td>{this.props.value.name}</td>
-          <td>{this.props.value.studies.length}</td>
         </tr>
         {open ? studiesRows : null}
       </React.Fragment>
