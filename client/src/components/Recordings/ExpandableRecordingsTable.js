@@ -15,53 +15,64 @@ class ExpandableRecordingsTable extends Component {
   }
 
   componentDidMount() {
-    if (this.props.groupedRecordings) {
-      this.formatFlatData(this.props.groupedRecordings);
-    }
+    this.formatTableData();
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (
-      prevProps.groupedRecordings !== this.props.groupedRecordings ||
-      prevProps.studies !== this.props.studies
+      this.props.studies !== prevProps.studies ||
+      this.props.recordings !== prevProps.recordings
     ) {
-      this.formatFlatData(this.props.groupedRecordings);
+      console.log(
+        "🚀 componentDidUpdate changed props",
+        !isEmpty(this.props.studies),
+        "recordings:",
+        !isEmpty(this.props.recordings)
+      );
+      this.formatTableData();
     }
   }
 
-  async flattenAndFormat(recordings) {
-    let mapped = Object.keys(recordings);
-    let grArr = [];
-    mapped.forEach((map, i) => {
-      let obj = {};
-      obj.id = i + "-" + map;
-      obj.name = map;
-      obj.studies = recordings[map];
-      obj.studies.forEach(flatstudy => {
-        let [studyMatch] = this.props.studies.filter(
-          study => study.name === flatstudy._id
-        );
-        flatstudy.sorterNames = studyMatch.sorterNames;
-        flatstudy.sorters = studyMatch.sorters;
-        flatstudy.name = studyMatch.name;
-        flatstudy._id = studyMatch._id;
-      });
-      grArr.push(obj);
+  formatTableData() {
+    let formattedData = this.addRecordingsToStudies(this.props.recordings);
+    let grouped = this.groupByStudySet(
+      formattedData,
+      formatted => formatted.studySetName
+    );
+    this.setState({ tableData: grouped });
+  }
+
+  addRecordingsToStudies(recordings) {
+    // Iterate and match with study details
+    let studiesWith = [];
+    recordings.forEach(recording => {
+      let [studyMatch] = this.props.studies.filter(
+        study => study.name === recording._id
+      );
+      studiesWith.push({ ...studyMatch, recordings: recording.recordings });
     });
-    return grArr;
+    return studiesWith;
   }
 
-  async formatFlatData(recordings) {
-    if (!isEmpty(this.props.studies)) {
-      let flatData = await this.flattenAndFormat(recordings);
-      this.setState({ tableData: flatData });
-    }
+  groupByStudySet(list, keyGetter) {
+    let map = this.props.studysets;
+    list.forEach(item => {
+      let key = keyGetter(item);
+      let [studySet] = map.filter(set => set.name === key);
+      if (!studySet.studies) {
+        studySet.studies = [item];
+      } else {
+        studySet.studies.push(item);
+      }
+    });
+    return map;
   }
 
   render() {
     let loading = isEmpty(this.state.tableData) || isEmpty(this.props.studies);
+    console.log("🚀 tableData", this.state.tableData);
     let studysetrows = this.state.tableData.map(studySet => (
-      <StudySetRow key={studySet.id.toString()} value={studySet} />
+      <StudySetRow key={studySet._id.toString()} value={studySet} />
     ));
     let placeholder = (
       <tr>
