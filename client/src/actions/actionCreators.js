@@ -20,6 +20,7 @@ export const RECEIVE_UNIT_RESULTS = "RECEIVE_UNIT_RESULTS";
 export const RECEIVE_STATS = "RECEIVE_STATS";
 export const RECEIVE_STUDY_SETS = "RECEIVE_STUDY_SETS";
 export const RECEIVE_RECORDINGS = "RECEIVE_RECORDINGS";
+export const RECEIVE_SPIKE_SPRAY = "RECEIVE_SPIKE_SPRAY";
 
 export const START_LOADING = "START_LOADING";
 export const END_LOADING = "END_LOADING";
@@ -324,6 +325,29 @@ export const fetchRecordings = () => {
       .then(() => {
         dispatch(endLoading());
       });
+  };
+};
+
+// Spike spray
+export const receiveSpikeSpray = spikeSpray => {
+  return {
+    type: RECEIVE_SPIKE_SPRAY,
+    spikeSpray: spikeSpray
+  };
+};
+
+export const fetchSpikeSpray = (studyName, recordingName, sorterName, trueUnitId, sortedUnitId) => {
+  let url = `/api/spikespray/${studyName}/${recordingName}/${sorterName}/${trueUnitId}/${sortedUnitId}`;
+  return function (dispatch) {
+    dispatch(startLoading());
+    return createFetch(url)
+      .then(res => {
+        dispatch(receiveSpikeSpray(res.spikeSpray));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      })
+      .catch(err => Sentry.captureException(err));
   };
 };
 
