@@ -14,7 +14,7 @@ class StudyRow extends Component {
     const study = this.props.value;
     const open = this.state.open;
     let arrow = this.state.open ? "-" : "+";
-    let rowClass = this.state.open ? "row__expanded-header" : "";
+    let rowClass = this.state.open ? "row__expanded-header-study" : "";
     const recordingsRows = this.props.value.recordings.map(recording => (
       <RecordingRow key={recording.name.toString()} value={recording} />
     ));
@@ -35,7 +35,6 @@ class StudyRow extends Component {
         <tr onClick={() => this.setState({ open: !open })} className={rowClass}>
           <td className="arrow__row">{arrow}</td>
           <td>{study.name}</td>
-          <td>{study.recordings.length}</td>
           <td>{study.sorterNames ? study.sorterNames.join(", ") : ""}</td>
         </tr>
         {open ? recordingsRows : null}

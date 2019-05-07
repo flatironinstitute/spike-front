@@ -7,48 +7,11 @@ import "./pages.css";
 import ExpandableRecordingsTable from "../Recordings/ExpandableRecordingsTable";
 
 class Recordings extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      groupedRecordings: {}
-    };
-  }
-  componentDidMount() {
-    if (this.props.recordings) {
-      let grouped = this.groupBy(
-        this.props.recordings,
-        recording => recording.recordings[0].studySetName
-      );
-      this.setState({ groupedRecordings: grouped });
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.recordings !== this.props.recordings) {
-      let grouped = this.groupBy(
-        this.props.recordings,
-        recording => recording.recordings[0].studySetName
-      );
-      this.setState({ groupedRecordings: grouped });
-    }
-  }
-
-  groupBy(list, keyGetter) {
-    const map = {};
-    list.forEach(item => {
-      const key = keyGetter(item);
-      if (!map[key]) {
-        map[key] = [item];
-      } else {
-        map[key].push(item);
-      }
-    });
-    return map;
-  }
-
   render() {
     let loading =
-      isEmpty(this.state.groupedRecordings) && isEmpty(this.props.studies);
+      isEmpty(this.props.recordings) ||
+      isEmpty(this.props.studies) ||
+      isEmpty(this.props.studysets);
     return (
       <div className="page__body">
         <Container className="container__heatmap">
@@ -139,32 +102,27 @@ class Recordings extends Component {
               </div>
             </Col>
           </Row>
-          {loading ? (
-            <Preloader />
-          ) : (
-            <Container className="container__heatmap">
-              <Row className="container__sorter--row justify-content-md-center">
-                <Col lg={12} sm={12} xl={10}>
-                  <div className="card card--stats">
-                    <div className="content">
-                      <div className="card__label">
-                        <p>
-                          <strong>All Data</strong>
-                        </p>
-                      </div>
-                      <div className="card__footer">
-                        <hr />
-                        <ExpandableRecordingsTable
-                          {...this.props}
-                          groupedRecordings={this.state.groupedRecordings}
-                        />
-                      </div>
-                    </div>
+          <Row className="container__sorter--row justify-content-md-center">
+            <Col lg={12} sm={12} xl={10}>
+              <div className="card card--stats">
+                <div className="content">
+                  <div className="card__label">
+                    <p>
+                      <strong>All Data</strong>
+                    </p>
                   </div>
-                </Col>
-              </Row>
-            </Container>
-          )}
+                  <div className="card__footer">
+                    <hr />
+                    {loading ? (
+                      <Preloader />
+                    ) : (
+                      <ExpandableRecordingsTable {...this.props} />
+                    )}
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
         </Container>
       </div>
     );

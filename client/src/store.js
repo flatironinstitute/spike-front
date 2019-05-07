@@ -6,7 +6,7 @@ import { routerMiddleware } from "connected-react-router";
 import rootReducer from "./reducers";
 import thunk from "redux-thunk";
 
-const gaTag = 'UA-138500572-1';
+const gaTag = "UA-138500572-1";
 ReactGA.initialize(gaTag);
 
 // create an object for the default data
@@ -30,7 +30,7 @@ const defaultState = {
 };
 
 export const history = createBrowserHistory();
-history.listen(location => ReactGA.pageview(location.pathname));
+// history.listen(location => ReactGA.pageview(location.pathname));
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

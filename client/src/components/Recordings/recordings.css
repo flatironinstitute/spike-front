@@ -14,6 +14,14 @@
   text-align: center;
 }
 
-.row__expanded-header {
+.row__expanded-header-studyset {
   background-color: rgba(0, 0, 0, 0.05);
+}
+
+.row__expanded-header-study {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.row__expanded-header-recordings {
+  background-color: rgba(0, 0, 0, 0.25);
 }
