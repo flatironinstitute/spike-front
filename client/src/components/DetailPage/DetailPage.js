@@ -119,7 +119,7 @@ class DetailPage extends Component {
         property = "checkRecall";
         break;
       case "precision":
-        property = "precision";
+        property = "checkPrecision";
         break;
       default:
         property = "checkAccuracy";

@@ -73,7 +73,7 @@ class ScatterplotAverage extends Component {
         yValue = unit.checkRecall;
         break;
       case "precision":
-        yValue = unit.precision;
+        yValue = unit.checkPrecision;
         break;
       default:
         yValue = unit.checkAccuracy;

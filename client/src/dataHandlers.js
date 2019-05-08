@@ -133,7 +133,7 @@ function sumAccuracies(allSorted, study) {
     );
     let snrs = allSorted[sorted].unitResults.map(unit => unit.snr);
     let recalls = allSorted[sorted].unitResults.map(unit => unit.checkRecall);
-    let precisions = allSorted[sorted].unitResults.map(unit => unit.precision);
+    let precisions = allSorted[sorted].unitResults.map(unit => unit.checkPrecision);
     let newObj = {
       study: study,
       sorter: sorted,
@@ -182,7 +182,7 @@ export async function formatUnitResults(groupedURs, sorters) {
       let snrs = allSorted[sorted].unitResults.map(unit => unit.snr);
       let recalls = allSorted[sorted].unitResults.map(unit => unit.checkRecall);
       let precisions = allSorted[sorted].unitResults.map(
-        unit => unit.precision
+        unit => unit.checkPrecision
       );
       let newObj = {
         study: study,
