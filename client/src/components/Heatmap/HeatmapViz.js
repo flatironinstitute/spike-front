@@ -15,7 +15,7 @@ class HeatmapViz extends Component {
     this.buildVizData(this.props.groupedUnitResults);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (
       this.props.groupedUnitResults !== prevProps.groupedUnitResults ||
       this.props.threshold !== prevProps.threshold ||
@@ -26,6 +26,15 @@ class HeatmapViz extends Component {
     ) {
       this.buildVizData(this.props.groupedUnitResults);
     }
+    if (this.state.tableHeader !== prevState.tableHeader) {
+      this.handleChartHeight();
+    }
+  }
+
+  handleChartHeight() {
+    let elmnt = document.getElementById("heatmap-card");
+    let height = elmnt.offsetHeight;
+    this.props.handleCardHeightChange(height);
   }
 
   buildVizData(groupedUnitResults) {
@@ -175,7 +184,7 @@ class HeatmapViz extends Component {
         );
         aggregated[i].snrs = aggregated[i].snrs.concat(list[j][i].snrs);
         if (this.props.format === "cpu") {
-          let cpus0 = get_cpu_times_for_study_sorter(
+          let cpus0 = this.get_cpu_times_for_study_sorter(
             this.props.cpus,
             list[j][i].study,
             list[j][i].sorter
@@ -261,7 +270,7 @@ class HeatmapViz extends Component {
           // this logic is messy and needs to be cleaned up
           metricVals = studySortingResult.cpus;
         } else {
-          metricVals = get_cpu_times_for_study_sorter(
+          metricVals = this.get_cpu_times_for_study_sorter(
             this.props.cpus,
             studySortingResult.study,
             studySortingResult.sorter
@@ -386,6 +395,23 @@ class HeatmapViz extends Component {
     this.props.selectStudySortingResult(cell.study_sorting_result);
   }
 
+  get_cpu_times_for_study_sorter(cpus, study, sorter) {
+    let ret = [];
+    cpus.forEach(function(cpu) {
+      if (cpu._id === sorter) {
+        cpu.studyGroup.forEach(function(x) {
+          if (x.studyName === study) {
+            for (let i = 0; i < x.count; i++) {
+              ret.push(x.averageCPU);
+            }
+            return ret;
+          }
+        });
+      }
+    });
+    return ret;
+  }
+
   render() {
     const loading = isEmpty(this.state.tableRows);
     const title = this.getFormatCopy();
@@ -394,7 +420,7 @@ class HeatmapViz extends Component {
         ? "Select individual cells to see corresponding scatterplot data."
         : "";
     return (
-      <div className="card card--heatmap">
+      <div className="card card--heatmap" id="heatmap-card">
         <div className="card__header">
           <h4 className="card__title">{title}</h4>
           <p className="card__category">
@@ -418,23 +444,6 @@ class HeatmapViz extends Component {
       </div>
     );
   }
-}
-
-function get_cpu_times_for_study_sorter(cpus, study, sorter) {
-  let ret = [];
-  cpus.forEach(function(cpu) {
-    if (cpu._id === sorter) {
-      cpu.studyGroup.forEach(function(x) {
-        if (x.studyName === study) {
-          for (let i = 0; i < x.count; i++) {
-            ret.push(x.averageCPU);
-          }
-          return ret;
-        }
-      });
-    }
-  });
-  return ret;
 }
 
 export default HeatmapViz;

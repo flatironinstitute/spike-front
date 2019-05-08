@@ -18,7 +18,8 @@ class HeatmapCPU2 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      builtData: []
+      builtData: [],
+      cardHeight: null
     };
   }
 
@@ -37,6 +38,12 @@ class HeatmapCPU2 extends Component {
   filterCPUMap() {
     this.setState({ builtData: this.props.unitsMap });
   }
+
+  handleCardHeightChange = value => {
+    this.setState({
+      cardHeight: value
+    });
+  };
 
   render() {
     let loading = isEmpty(this.state.builtData);
@@ -62,6 +69,7 @@ class HeatmapCPU2 extends Component {
                   format={this.props.format}
                   metric={this.props.metric}
                   threshold={this.props.sliderValue}
+                  handleCardHeightChange={this.handleCardHeightChange}
                 />
               </Col>
             </Row>

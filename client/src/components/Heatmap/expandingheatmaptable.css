@@ -2,40 +2,34 @@
   padding: 2px;
   margin: 4px;
 }
+.expandable-button {
+  font-weight: 700;
+  font-size: 2rem;
+  color: #384ca2;
+  text-align: center;
+  cursor: "pointer";
+}
 .toprow {
-  /* border-bottom: 2px solid rgba(0, 0, 0, 0.125); */
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
   height: 1vh;
 }
 .expandingheatmaptable td {
   padding: 2px;
   margin: 4px;
-  width: calc(35vw / 6);
+  width: calc(35vw / 10);
   font-size: 1.7rem;
   line-height: 1.5;
 }
-.expandingheatmaptable td.border_left {
-  /* border-left-color: lightgray; */
-}
-.expandingheatmaptable td.border_right {
-  /* border-right-color: lightgray; */
-}
-.expandingheatmaptable td.border_top {
-  /* border-top-color: lightgray; */
-}
-.expandingheatmaptable td.border_bottom {
-  /* border-bottom-color: lightgray; */
-}
 .expandingheatmaptable td.expandable {
   cursor: pointer;
+  border-left: 1px solid rgba(0, 0, 0, 0.125);
 }
 .expandingheatmaptable td.selectable {
   cursor: cell;
+  border-left: 1px solid rgba(0, 0, 0, 0.125);
 }
 .expandingheatmaptable td.selectable:hover {
-  border-style: solid;
-  border-width: 2px;
-  border-color: #f28b00;
+  border: 2px solid #f28b00 !important;
 }
 .expandingheatmaptable td.selected {
   border-style: solid;

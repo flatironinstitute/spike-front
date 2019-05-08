@@ -20,7 +20,8 @@ class HeatmapSNR extends Component {
     super(props);
     this.state = {
       builtData: [],
-      snrMin: 5
+      snrMin: 5,
+      cardHeight: null
     };
   }
 
@@ -146,6 +147,12 @@ class HeatmapSNR extends Component {
     this.setState({ builtData: built });
   }
 
+  handleCardHeightChange = value => {
+    this.setState({
+      cardHeight: value
+    });
+  };
+
   render() {
     let loading = isEmpty(this.state.builtData);
     return (
@@ -169,12 +176,14 @@ class HeatmapSNR extends Component {
                   format={this.props.format}
                   metric={this.props.metric}
                   threshold={this.props.snrMin}
+                  handleCardHeightChange={this.handleCardHeightChange}
                 />
               </Col>
               <Col lg={6} sm={12}>
                 <ScatterplotCard
                   {...this.props}
                   sliderValue={this.props.snrMin}
+                  cardHeight={this.state.cardHeight}
                 />
               </Col>
             </Row>

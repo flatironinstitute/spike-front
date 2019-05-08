@@ -49,8 +49,10 @@ class ScatterplotCard extends Component {
       isEmpty(this.props.selectedStudySortingResult) ||
       isEmpty(this.state.study) ||
       isEmpty(this.state.sorter);
+    let height = this.props.cardHeight ? this.props.cardHeight : "auto";
+    console.log("🕌 cardheight", this.props.cardHeight);
     return (
-      <div className="card card--heatmap">
+      <div className="card card--heatmap" style={{ height: this.props.card }}>
         <div className="detail__column">
           {loading ? (
             <div className="card__header">

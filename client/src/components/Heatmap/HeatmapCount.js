@@ -20,7 +20,8 @@ class HeatmapCount extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      builtData: []
+      builtData: [],
+      cardHeight: null
     };
   }
 
@@ -139,6 +140,12 @@ class HeatmapCount extends Component {
     this.setState({ builtData: built });
   }
 
+  handleCardHeightChange = value => {
+    this.setState({
+      cardHeight: value
+    });
+  };
+
   render() {
     let loading = isEmpty(this.state.builtData);
     return (
@@ -148,29 +155,33 @@ class HeatmapCount extends Component {
             <Preloader />
           </Container>
         ) : (
-            <Container className="container__heatmap">
-              <Row className="container__heatmap--row">
-                <Col lg={6} sm={12}>
-                  <HeatmapViz
-                    selectStudySortingResult={this.props.selectStudySortingResult}
-                    selectedStudySortingResult={this.props.selectedStudySortingResult}
-                    groupedUnitResults={this.state.builtData}
-                    studies={this.props.studies}
-                    studysets={this.props.studysets}
-                    format={this.props.format}
-                    metric={this.props.metric}
-                    threshold={this.props.sliderValue}
-                  />
-                </Col>
-                <Col lg={6} sm={12}>
-                  <ScatterplotCard
-                    {...this.props}
-                    sliderValue={this.props.sliderValue}
-                  />
-                </Col>
-              </Row>
-            </Container>
-          )}
+          <Container className="container__heatmap">
+            <Row className="container__heatmap--row">
+              <Col lg={6} sm={12}>
+                <HeatmapViz
+                  selectStudySortingResult={this.props.selectStudySortingResult}
+                  selectedStudySortingResult={
+                    this.props.selectedStudySortingResult
+                  }
+                  groupedUnitResults={this.state.builtData}
+                  studies={this.props.studies}
+                  studysets={this.props.studysets}
+                  format={this.props.format}
+                  metric={this.props.metric}
+                  threshold={this.props.sliderValue}
+                  handleCardHeightChange={this.handleCardHeightChange}
+                />
+              </Col>
+              <Col lg={6} sm={12}>
+                <ScatterplotCard
+                  {...this.props}
+                  sliderValue={this.props.sliderValue}
+                  cardHeight={this.state.cardHeight}
+                />
+              </Col>
+            </Row>
+          </Container>
+        )}
       </div>
     );
   }
