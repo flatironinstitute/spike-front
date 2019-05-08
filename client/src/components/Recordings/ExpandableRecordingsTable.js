@@ -23,12 +23,6 @@ class ExpandableRecordingsTable extends Component {
       this.props.studies !== prevProps.studies ||
       this.props.recordings !== prevProps.recordings
     ) {
-      console.log(
-        "🚀 componentDidUpdate changed props",
-        !isEmpty(this.props.studies),
-        "recordings:",
-        !isEmpty(this.props.recordings)
-      );
       this.formatTableData();
     }
   }

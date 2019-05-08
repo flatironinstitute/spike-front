@@ -34,7 +34,9 @@ class StudyRow extends Component {
       <React.Fragment>
         <tr onClick={() => this.setState({ open: !open })} className={rowClass}>
           <td className="arrow__row">{arrow}</td>
-          <td>{study.name}</td>
+          <td>
+            {study.name} ({study.recordings.length})
+          </td>
           <td>{study.sorterNames ? study.sorterNames.join(", ") : ""}</td>
         </tr>
         {open ? recordingsRows : null}

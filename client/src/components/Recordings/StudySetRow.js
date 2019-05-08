@@ -29,7 +29,9 @@ class StudySetRow extends Component {
       <React.Fragment>
         <tr onClick={() => this.setState({ open: !open })} className={rowClass}>
           <td className="arrow__row">{arrow}</td>
-          <td>{this.props.value.name}</td>
+          <td>
+            {this.props.value.name} ({this.props.value.studies.length})
+          </td>
         </tr>
         {open ? studiesRows : null}
       </React.Fragment>

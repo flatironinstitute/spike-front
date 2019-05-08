@@ -42,7 +42,7 @@ class ScatterplotCount extends Component {
     if (this.state.selectedRecording !== prevState.selectedRecording) {
       if (this.state.selectedRecording !== prevState.selectedRecording) {
         console.log(
-          "NEW SELECTED RECORDING",
+          "🕌 NEW SELECTED RECORDING",
           this.state.selectedRecording,
           this.props.selectedStudySortingResult
         );

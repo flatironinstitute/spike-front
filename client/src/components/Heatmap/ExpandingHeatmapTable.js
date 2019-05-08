@@ -1,6 +1,7 @@
 import React from "react";
-import "./expandingheatmaptable.css";
 import { getRandomKeyInt } from "../../utils.js";
+
+import "./expandingheatmaptable.css";
 
 class ExpandingHeatmapTable extends React.Component {
   // props are rows and header
@@ -32,7 +33,9 @@ class ExpandingHeatmapTable extends React.Component {
     if (cell["rotate"]) classes0.push("rotate");
     if (cell["border_right"]) classes0.push("border_right");
     if (cell["border_top"]) classes0.push("border_top");
-    if (cell["selectable"]) classes0.push("selectable");
+    if (cell["selectable"]) {
+      classes0.push("selectable");
+    }
     if (cell["spacer"]) classes0.push("spacer");
     if (cell.expand_id_on_click) classes0.push("expandable");
     let class0 = classes0.join(" ");
@@ -136,7 +139,7 @@ class ExpandingHeatmapTable extends React.Component {
   createCollapseButton(id) {
     return (
       <div onClick={() => this.handleCollapse(id)}>
-        <span style={{ cursor: "pointer" }}>{"-"}</span>
+        <span className="expandable-button">{"-"}</span>
       </div>
     );
   }
@@ -144,7 +147,7 @@ class ExpandingHeatmapTable extends React.Component {
   createExpandButton(id) {
     return (
       <div onClick={() => this.handleExpand(id)}>
-        <span style={{ cursor: "pointer" }}>{"+"}</span>
+        <span className="expandable-button">{"+"}</span>
       </div>
     );
   }

@@ -5,7 +5,6 @@
 .arrow__row {
   font-weight: 700;
   font-size: 2rem;
-  color: var(--black);
   color: var(--fi-blue);
   text-align: center;
 }
