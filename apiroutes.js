@@ -9,6 +9,7 @@ const studyController = require("./controllers/studyController");
 const studySetController = require("./controllers/studySetController");
 const trueUnitController = require("./controllers/trueUnitController");
 const unitResultsController = require("./controllers/unitResultsController");
+const spikeSprayController = require("./controllers/spikeSprayController");
 
 const recDetails = require("./stubData/recordingDetails.js");
 const fakeResult = require("./stubData/fakeResult.js");
@@ -41,6 +42,11 @@ router.get("/api/unitresults", unitResultsController.getUnitResults);
 router.get(
   "/api/ursbystudy/:name",
   unitResultsController.getUnitResultsByStudy
+);
+// Spike sprays
+router.get(
+  "/api/spikespray/:studyName/:recordingName/:sorterName/:trueUnitId/:sortedUnitId",
+  spikeSprayController.getOneSpikeSpray
 );
 
 // Contact Routes
