@@ -171,7 +171,7 @@ class HeatmapViz extends Component {
           list[j][i].recalls
         );
         aggregated[i].precisions = aggregated[i].precisions.concat(
-          list[j][i].accuracies
+          list[j][i].precisions
         );
         aggregated[i].snrs = aggregated[i].snrs.concat(list[j][i].snrs);
         if (this.props.format === "cpu") {

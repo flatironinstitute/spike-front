@@ -106,7 +106,7 @@ class HeatmapSNR extends Component {
       let overMin = [];
       sorter.true_units.forEach(unit => {
         if (unit.snr > this.props.snrMin) {
-          overMin.push(unit.precision);
+          overMin.push(unit.checkPrecision);
         }
       });
       let aboveAvg = 0;
