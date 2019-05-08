@@ -124,11 +124,14 @@ class ScatterplotCount extends Component {
       { x: maxSNR, y: this.props.sliderValue }
     ];
     const yTitle = toTitleCase(this.props.metric);
+    const height =
+      this.props.cardHeight > 520 ? this.props.cardHeight - 120 : 400;
+    console.log("🕌 card height in scatterplot", height);
     return (
       <div className="canvas-wrapper">
         <FlexibleXYPlot
           onMouseLeave={() => this.setState({ hoveredNode: null })}
-          height={400}
+          height={height}
           xPadding={30}
           yPadding={30}
           yDomain={[0, 1]}

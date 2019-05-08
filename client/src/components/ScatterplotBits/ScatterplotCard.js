@@ -50,9 +50,8 @@ class ScatterplotCard extends Component {
       isEmpty(this.state.study) ||
       isEmpty(this.state.sorter);
     let height = this.props.cardHeight ? this.props.cardHeight : "auto";
-    console.log("🕌 cardheight", this.props.cardHeight);
     return (
-      <div className="card card--heatmap" style={{ height: this.props.card }}>
+      <div className="card card--heatmap" style={{ height: height + "px" }}>
         <div className="detail__column">
           {loading ? (
             <div className="card__header">
@@ -92,6 +91,7 @@ class ScatterplotCard extends Component {
                 sliderValue={this.props.sliderValue}
                 format={this.props.format}
                 metric={this.props.metric}
+                cardHeight={this.props.cardHeight}
                 {...this.props}
               />
             </div>

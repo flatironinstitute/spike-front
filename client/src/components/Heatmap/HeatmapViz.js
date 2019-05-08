@@ -26,7 +26,10 @@ class HeatmapViz extends Component {
     ) {
       this.buildVizData(this.props.groupedUnitResults);
     }
-    if (this.state.tableHeader !== prevState.tableHeader) {
+    if (
+      this.state.tableHeader !== prevState.tableHeader ||
+      this.state.tableRows !== prevState.tableRows
+    ) {
       this.handleChartHeight();
     }
   }
