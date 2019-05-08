@@ -41,7 +41,7 @@
   padding: 15px;
 }
 
-.card--scatterplot .card--barchart {
+.card--barchart {
   display: flex;
   flex-direction: row;
   align-items: baseline;
