@@ -434,7 +434,7 @@ class HeatmapViz extends Component {
     const title = this.getFormatCopy();
     const copy =
       this.props.format !== "cpu"
-        ? "Select individual cells to see corresponding scatterplot data."
+        ? "  Select individual cells to see corresponding scatterplot data."
         : "";
     return (
       <div className="card card--heatmap" id="heatmap-card">

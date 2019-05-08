@@ -54,10 +54,15 @@ tr.toprow > :nth-child(2) {
 }
 .expandingheatmaptable td.spacer {
   height: 4px;
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
 }
 
 td.border_right {
   max-width: calc(35vw / 10);
+}
+
+tbody :last-child {
+  border-bottom: none;
 }
 
 /* Thanks: https://css-tricks.com/rotated-table-column-headers/ */
@@ -66,10 +71,13 @@ td.border_right {
   height: 100px;
   white-space: nowrap;
   padding-bottom: 10px;
+  font-size: 15px;
+  font-weight: 400px;
+  line-height: 24px;
 }
 .expandingheatmaptable td.rotate > div {
   transform:
-      /* Magic Numbers */ translate(28px, 28px)
+      /* Magic Numbers */ translate(5px, 28px)
     /* 45 is really 360 - 45 */ rotate(315deg);
   width: 44px;
 }
