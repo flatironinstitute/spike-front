@@ -16,10 +16,26 @@
 .expandingheatmaptable td {
   padding: 2px;
   margin: 4px;
-  width: calc(35vw / 10);
-  font-size: 1.7rem;
-  line-height: 1.5;
+  font-size: 1.2rem;
+  line-height: 1.4;
 }
+@media (min-width: 1500px) {
+  .expandingheatmaptable td {
+    font-size: 1.7rem;
+    line-height: 1.5;
+  }
+}
+
+tr.toprow > :first-child,
+tr.subrow > :first-child {
+  width: 16px;
+  text-align: center;
+}
+
+tr.toprow > :nth-child(2) {
+  border-left: none !important;
+}
+
 .expandingheatmaptable td.expandable {
   cursor: pointer;
   border-left: 1px solid rgba(0, 0, 0, 0.125);
@@ -38,6 +54,10 @@
 }
 .expandingheatmaptable td.spacer {
   height: 4px;
+}
+
+td.border_right {
+  max-width: calc(35vw / 10);
 }
 
 /* Thanks: https://css-tricks.com/rotated-table-column-headers/ */

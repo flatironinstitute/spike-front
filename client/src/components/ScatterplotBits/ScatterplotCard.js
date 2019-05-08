@@ -9,7 +9,8 @@ class ScatterplotCard extends Component {
 
     this.state = {
       study: null,
-      sorter: null
+      sorter: null,
+      cardHeight: "auto"
     };
   }
 
@@ -25,6 +26,15 @@ class ScatterplotCard extends Component {
       prevProps.selectedStudySortingResult
     ) {
       this.findStudyAndSorter();
+    }
+    if (this.props.cardHeight !== prevProps.cardHeight) {
+      this.updateCardHeight();
+    }
+  }
+
+  updateCardHeight() {
+    if (this.props.cardHeight) {
+      this.setState({ cardHeight: this.props.cardHeight });
     }
   }
 
@@ -49,9 +59,11 @@ class ScatterplotCard extends Component {
       isEmpty(this.props.selectedStudySortingResult) ||
       isEmpty(this.state.study) ||
       isEmpty(this.state.sorter);
-    let height = this.props.cardHeight ? this.props.cardHeight : "auto";
     return (
-      <div className="card card--heatmap" style={{ height: height + "px" }}>
+      <div
+        className="card card--heatmap"
+        style={{ height: this.state.cardHeight + "px", minHeight: "215px" }}
+      >
         <div className="detail__column">
           {loading ? (
             <div className="card__header">
