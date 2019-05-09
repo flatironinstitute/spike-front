@@ -159,10 +159,20 @@ class ScatterplotCount extends Component {
       horizontal: "rightEdge",
       vertical: "topEdge"
     };
-    let lineObjArr = [
-      { x: 0, y: this.props.sliderValue },
-      { x: maxSNR, y: this.props.sliderValue }
-    ];
+    const lineOrientation = this.props.lineOrientation || 'horizontal';
+    let lineObjArr;
+    if (lineOrientation === 'horizontal') {
+      lineObjArr = [
+        { x: 0, y: this.props.sliderValue },
+        { x: maxSNR, y: this.props.sliderValue }
+      ];
+    }
+    else {
+      lineObjArr = [
+        { x: this.props.sliderValue, y: 0 },
+        { x: this.props.sliderValue, y: 1 }
+      ];
+    }
     const yTitle = toTitleCase(this.props.metric);
     return (
       <div className="canvas-wrapper">
@@ -183,7 +193,7 @@ class ScatterplotCount extends Component {
             className="mark-series-example"
             sizeRange={[3, 15]}
             seriesId="my-example-scatterplot"
-            colorRange={["#6B7CC4", "#102BA3"]}
+            colorRange={this.props.colorRange || ["#6B7CC4", "#102BA3"]}
             opacityType="literal"
             data={data}
             onValueMouseOver={d => this.setState({ hoveredNode: d })}

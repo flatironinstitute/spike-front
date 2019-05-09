@@ -27,6 +27,11 @@ class ScatterplotContainer extends Component {
       metric,
       format
     } = this.props;
+    const colorRanges = {
+      count: ["#6B7CC4", "#102BA3"],
+      cpu: ["#EFC1E3", "#B52F93"],
+      average: ["#00CEA8", "#0C4F42"]
+    };
     const copy = this.getHeaderCopy(this.props.format);
     return (
       <div>
@@ -46,6 +51,8 @@ class ScatterplotContainer extends Component {
               return (
                 <ScatterplotCount
                   {...this.props}
+                  lineOrientation={'horizontal'}
+                  colorRange={colorRanges['count']}
                   studyAnalysisResult={studyAnalysisResult}
                   selectedStudyName={selectedStudyName}
                   selectedSorterName={selectedSorterName}
@@ -57,8 +64,10 @@ class ScatterplotContainer extends Component {
               );
             case "average":
               return (
-                <ScatterplotAverage
+                <ScatterplotCount
                   {...this.props}
+                  lineOrientation={'vertical'}
+                  colorRange={colorRanges['average']}
                   studyAnalysisResult={studyAnalysisResult}
                   selectedStudyName={selectedStudyName}
                   selectedSorterName={selectedSorterName}

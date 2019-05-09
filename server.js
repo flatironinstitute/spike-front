@@ -23,7 +23,6 @@ require("./models/Study");
 require("./models/StudySet");
 require("./models/TrueUnit");
 require("./models/UnitResult");
-require("./models/SpikeSpray");
 require("./models/StudyAnalysisResult");
 
 /* Express Isomorphic
