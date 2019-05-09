@@ -106,6 +106,7 @@ class ScatterplotCard extends Component {
                 format={this.props.format}
                 metric={this.props.metric}
                 cardHeight={this.props.cardHeight}
+                handleScatterplotClick={this.props.handleScatterplotClick}
                 {...this.props}
               />
             </div>

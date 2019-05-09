@@ -147,7 +147,7 @@ class HeatmapCount extends Component {
   };
 
   render() {
-    // let loading = isEmpty(this.state.builtData) || isEmpty(this.props.studyAnalysisResults);
+    let loading = isEmpty(this.state.builtData);
     let loading = isEmpty(this.props.studyAnalysisResults);
     return (
       <div>

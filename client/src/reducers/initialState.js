@@ -1,5 +1,4 @@
 export const initialState = {
-  selectedRecording: null,
   pairing: null,
   recordingDetails: null,
   //V2 Data: States

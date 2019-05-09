@@ -21,8 +21,7 @@ class ScatterplotCount extends Component {
       data: [],
       hoveredNode: null,
       minSNR: 0,
-      maxSNR: 100,
-      selectedRecording: null
+      maxSNR: 100
     };
   }
 
@@ -188,7 +187,7 @@ class ScatterplotCount extends Component {
             opacityType="literal"
             data={data}
             onValueMouseOver={d => this.setState({ hoveredNode: d })}
-            onValueClick={d => this.setState({ selectedRecording: d })}
+            onValueClick={d => this.props.handleScatterplotClick(d)}
           />
           {hoveredNode && <Hint value={valueObj} align={alignment} />}
           <LineSeries

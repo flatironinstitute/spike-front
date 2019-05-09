@@ -20,14 +20,13 @@ class ScatterplotAverage extends Component {
     this.state = {
       data: [],
       hoveredNode: null,
-      maxSNR: 100,
-      selectedRecording: null
+      maxSNR: 100
     };
   }
 
   componentDidMount() {
     if (this.props.selectedUnits) {
-      this.buildAveragetData();
+      this.buildAverageData();
     }
   }
 
@@ -37,19 +36,11 @@ class ScatterplotAverage extends Component {
       this.props.metric !== prevProps.metric ||
       this.props.format !== prevProps.format
     ) {
-      this.buildAveragetData();
-    }
-    if (this.state.selectedRecording !== prevState.selectedRecording) {
-      console.log(
-        "NEW SELECTED RECORDING",
-        this.state.selectedRecording,
-        this.props.selectedStudyName,
-        this.props.selectedSorterName
-      );
+      this.buildAverageData();
     }
   }
 
-  buildAveragetData() {
+  buildAverageData() {
     let newUnits = this.props.selectedUnits.map((unit, index) => ({
       u: unit,
       x: Math.round(unit.snr * 100) / 100,
@@ -138,7 +129,7 @@ class ScatterplotAverage extends Component {
             opacityType="literal"
             data={data}
             onValueMouseOver={d => this.setState({ hoveredNode: d })}
-            onValueClick={d => this.setState({ selectedRecording: d })}
+            onValueClick={d => this.props.handleScatterplotClick(d)}
           />
           {hoveredNode && <Hint value={valueObj} align={alignment} />}
           <LineSeries

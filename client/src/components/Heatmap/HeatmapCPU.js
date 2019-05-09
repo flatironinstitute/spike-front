@@ -21,7 +21,18 @@ class HeatmapCPU extends Component {
       builtData: [],
       checkboxes: []
     };
-    this.brewerColors = ['#8dd3c7', '#ffffb3', '#bebada', '#fb8072', '#80b1d3', '#fdb462', '#b3de69', '#fccde5', '#d9d9d9', '#bc80bd']
+    this.brewerColors = [
+      "#8dd3c7",
+      "#ffffb3",
+      "#bebada",
+      "#fb8072",
+      "#80b1d3",
+      "#fdb462",
+      "#b3de69",
+      "#fccde5",
+      "#d9d9d9",
+      "#bc80bd"
+    ];
   }
 
   componentDidMount() {
@@ -44,16 +55,18 @@ class HeatmapCPU extends Component {
       ...sorter,
       checked: true,
       color: this.brewerColors[i]
-    }))
+    }));
     let withColorsData = this.props.cpus.map((sorterGroup, i) => {
-      let [sorterObj] = checkboxes.filter(checkbox => checkbox.name === sorterGroup._id);
+      let [sorterObj] = checkboxes.filter(
+        checkbox => checkbox.name === sorterGroup._id
+      );
       let withColorsGroup = sorterGroup.studyGroup.map(study => ({
         ...study,
         color: sorterObj.color
       }));
       sorterGroup.studyGroup = withColorsGroup;
       return sorterGroup;
-    })
+    });
     this.setState({
       builtData: withColorsData,
       checkboxes: checkboxes
@@ -61,7 +74,8 @@ class HeatmapCPU extends Component {
   }
 
   render() {
-    let loading = isEmpty(this.state.builtData) || isEmpty(this.state.checkboxes);
+    let loading =
+      isEmpty(this.state.builtData) || isEmpty(this.state.checkboxes);
     return (
       <div>
         {loading ? (
@@ -69,8 +83,12 @@ class HeatmapCPU extends Component {
             <Preloader />
           </Container>
         ) : (
-            <CPUBarChartContainer builtData={this.state.builtData} checkboxes={this.state.checkboxes} {...this.props} />
-          )}
+          <CPUBarChartContainer
+            builtData={this.state.builtData}
+            checkboxes={this.state.checkboxes}
+            {...this.props}
+          />
+        )}
       </div>
     );
   }
@@ -78,8 +96,7 @@ class HeatmapCPU extends Component {
 
 function mapStateToProps(state) {
   return {
-    selectedStudySortingResult: state.selectedStudySortingResult,
-    selectedRecording: state.selectedRecording
+    selectedStudySortingResult: state.selectedStudySortingResult
   };
 }
 
