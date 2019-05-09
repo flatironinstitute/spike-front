@@ -46,11 +46,16 @@ const unitResultSchema = new mongoose.Schema(
     checkRecall: {
       type: Float
     },
-    bestSortedUnitId: {
+    bestbestSortedUnitId: {
       type: Number
     },
     snr: {
       type: Float
+    },
+    spikesprayUrl: {
+      type: String,
+      default:
+        "http://kbucket.flatironinstitute.org/get/sha1/0aa39927530abed94f32c410f3a2226e2ee71c5e?signature=c516794c53257b327f39b8349cc39313f1a254e9"
     }
   },
   {
@@ -111,7 +116,7 @@ unitResultSchema.statics.getUnitResultsByStudy = function(study) {
             numMatches: "$numMatches",
             numFalsePositives: "$numFalsePositives",
             recording: "$recording",
-            bestSortedUnitId: "$bestSortedUnitId",
+            bestbestSortedUnitId: "$bestbestSortedUnitId",
             precision: {
               $cond: {
                 if: { $gte: ["$numMatches", 1] },
@@ -154,7 +159,7 @@ unitResultSchema.statics.getAllUnitResultsByNestedStudySorter = function() {
             numMatches: "$numMatches",
             numFalsePositives: "$numFalsePositives",
             recording: "$recording",
-            bestSortedUnitId: "$bestSortedUnitId",
+            bestbestSortedUnitId: "$bestbestSortedUnitId",
             precision: "$precision"
           }
         }

@@ -271,13 +271,13 @@ class DetailPage extends Component {
 
   handleScatterplotClick = value => {
     console.log("scatterplot click", value);
-    // URL: /api/spikespray/:studyName/:recordingName/:sorterName/:trueUnitId/:sortedUnitId
+    // URL: /api/spikespray/:studyName/:recordingName/:sorterName/:trueUnitId/:bestSortedUnitId
     // this.props.fetchSpikeSpray(
-    //   studyName,
-    //   recordingName,
-    //   sorterName,
-    //   trueUnitId,
-    //   sortedUnitId
+    //   studyName, => studyId REMOVE STUDY
+    //   recordingName, => recordingId
+    //   sorterName, => sorterId
+    //   trueUnitId, => trueUnitId
+    //   bestSortedUnitId => bestbestSortedUnitId
     // );
   };
 

@@ -5,9 +5,11 @@ const fs = require("fs");
 
 function print_usage() {
   // used below
-  console.info('USAGE:');
-  console.info('./delete-data.js [database_url]');
-  console.info('If --database-from-env is specified, the DATABASE environment variable (from .env) will be used for the database url.')
+  console.info("USAGE:");
+  console.info("./delete-data.js [database_url]");
+  console.info(
+    "If --database-from-env is specified, the DATABASE environment variable (from .env) will be used for the database url."
+  );
 }
 
 // parse the arguments
@@ -15,7 +17,7 @@ let arg1 = process.argv[2] || null;
 
 let database_url = arg1;
 
-if (process.argv.includes('--database-from-env')) {
+if (process.argv.includes("--database-from-env")) {
   database_url = process.env.DATABASE;
 }
 
@@ -40,7 +42,6 @@ const Recording = require("../../models/Recording");
 const TrueUnit = require("../../models/TrueUnit");
 const SortingResult = require("../../models/SortingResult");
 const UnitResult = require("../../models/UnitResult");
-const SpikeSpray = require("../../models/SpikeSpray");
 
 async function deleteData() {
   console.log("😢😢 Goodbye Data...");
@@ -52,15 +53,12 @@ async function deleteData() {
   await TrueUnit.remove();
   await SortingResult.remove();
   await UnitResult.remove();
-  await SpikeSpray.remove();
-  console.log(
-    "Data Deleted.\n"
-  );
+  console.log("Data Deleted.\n");
   process.exit();
 }
 
 if (process.argv.includes("--delete")) {
   deleteData();
 } else {
-  console.log('You must pass the --delete flag. This is precautionary.');
+  console.log("You must pass the --delete flag. This is precautionary.");
 }

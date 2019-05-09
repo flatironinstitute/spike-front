@@ -9,7 +9,6 @@ const studyController = require("./controllers/studyController");
 const studySetController = require("./controllers/studySetController");
 const trueUnitController = require("./controllers/trueUnitController");
 const unitResultsController = require("./controllers/unitResultsController");
-const spikeSprayController = require("./controllers/spikeSprayController");
 
 const recDetails = require("./stubData/recordingDetails.js");
 const fakeResult = require("./stubData/fakeResult.js");
@@ -45,8 +44,8 @@ router.get(
 );
 // Spike sprays
 router.get(
-  "/api/spikespray/:studyName/:recordingName/:sorterName/:trueUnitId/:sortedUnitId",
-  spikeSprayController.getOneSpikeSpray
+  "/api/unitresult/spikespray/:id",
+  unitResultsController.getSpikeSprayById
 );
 
 // Contact Routes

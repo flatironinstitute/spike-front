@@ -41,3 +41,11 @@ exports.getUnitResultsByStudy = async (req, res, next) => {
   });
   res.send({ ursByStudy: ursByStudy });
 };
+
+exports.getSpikeSprayById = async (req, res, next) => {
+  const unitResult = await UnitResult.findOne({ id: req.params.id });
+  if (!unitResult) {
+    return next();
+  }
+  res.send({ unitResult: unitResult });
+};

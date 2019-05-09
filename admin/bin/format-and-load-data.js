@@ -7,13 +7,15 @@ const path = require("path");
 const fs_writeFile = util.promisify(fs.writeFile);
 const fs_unlink = util.promisify(fs.unlinkSync);
 const fs_readdir = util.promisify(fs.readdir);
-const assert = require('assert');
+const assert = require("assert");
 
 function print_usage() {
   // used below
-  console.info('USAGE:');
-  console.info('./format-and-load-data.js [data_directory] [database_url]');
-  console.info('If --database-from-env is specified, the DATABASE environment variable (from .env) will be used for the database url.')
+  console.info("USAGE:");
+  console.info("./format-and-load-data.js [data_directory] [database_url]");
+  console.info(
+    "If --database-from-env is specified, the DATABASE environment variable (from .env) will be used for the database url."
+  );
 }
 
 // parse the arguments
@@ -23,12 +25,12 @@ let arg2 = process.argv[3] || null;
 let data_directory = arg1;
 let database_url = arg2;
 
-if (process.argv.includes('--database-from-env')) {
+if (process.argv.includes("--database-from-env")) {
   database_url = process.env.DATABASE;
 }
 
 // print usage if insufficient args
-if ((!data_directory) || (!database_url)) {
+if (!data_directory || !database_url) {
   print_usage();
   process.exit(-1);
 }
@@ -36,10 +38,13 @@ if ((!data_directory) || (!database_url)) {
 console.info(`USING DATABASE: ${database_url}`);
 
 // checks
-assert(fs.lstatSync(data_directory).isDirectory(), `Not a directory: ${data_directory}`);
+assert(
+  fs.lstatSync(data_directory).isDirectory(),
+  `Not a directory: ${data_directory}`
+);
 
-if (!fs.existsSync(data_directory + '/cleanedData')) {
-  fs.mkdirSync(data_directory + '/cleanedData');
+if (!fs.existsSync(data_directory + "/cleanedData")) {
+  fs.mkdirSync(data_directory + "/cleanedData");
 }
 
 const mongoose = require("mongoose");
@@ -55,7 +60,6 @@ const Recording = require("../../models/Recording");
 const TrueUnit = require("../../models/TrueUnit");
 const SortingResult = require("../../models/SortingResult");
 const UnitResult = require("../../models/UnitResult");
-const SpikeSpray = require("../../models/SpikeSpray");
 
 // import all the raw data
 const rawSorters = JSON.parse(
@@ -82,13 +86,6 @@ const rawSortingResults = JSON.parse(
 const rawUnitResults = JSON.parse(
   fs.readFileSync(data_directory + "/UnitResults.json", "utf-8")
 );
-let rawSpikeSprays = [];
-const spikeSpraysFname = data_directory + "/SpikeSprays.json";
-if (fs.existsSync(spikeSpraysFname)) {
-  rawSpikeSprays = JSON.parse(
-    fs.readFileSync(spikeSpraysFname, "utf-8")
-  );
-}
 
 async function writeNewFile(fileName, newData) {
   let newFileName = data_directory + `/cleanedData/${fileName}.json`;
@@ -118,7 +115,7 @@ async function writeCleanData(model, name) {
 }
 
 async function formatStudies() {
-  console.info('Formatting studies...');
+  console.info("Formatting studies...");
   rawStudies.forEach(study => {
     // Add studySet id
     const studysets = JSON.parse(
@@ -160,7 +157,7 @@ async function formatStudies() {
 }
 
 async function formatTrueUnits() {
-  console.info('Formatting true units...');
+  console.info("Formatting true units...");
   rawTrueUnits.forEach(unit => {
     unit.recordingName = unit.recording;
     unit.studyName = unit.study;
@@ -172,7 +169,7 @@ async function formatTrueUnits() {
 }
 
 async function formatRecordings() {
-  console.info('Formatting recordings...');
+  console.info("Formatting recordings...");
   const studies = JSON.parse(
     fs.readFileSync(data_directory + "/cleanedData/studies.json", "utf-8")
   );
@@ -242,7 +239,7 @@ async function formatRecordings() {
 }
 
 async function formatSortingResults() {
-  console.info('Formatting sorting results...');
+  console.info("Formatting sorting results...");
   rawSortingResults.forEach(sorting => {
     // Move string names to string properties
     sorting.recordingName = sorting.recording;
@@ -305,7 +302,7 @@ async function formatSortingResults() {
 }
 
 async function formatUnitResults() {
-  console.info('Formatting unit results...');
+  console.info("Formatting unit results...");
 
   // move these outside loop
   const recordings = JSON.parse(
@@ -372,7 +369,7 @@ async function formatUnitResults() {
 }
 
 async function fetchUnitResultsWithSNR(cleanUnitResults) {
-  console.info('Fetching unit results with SNR...');
+  console.info("Fetching unit results with SNR...");
   const trueunits = JSON.parse(
     fs.readFileSync(data_directory + "/cleanedData/trueunits.json", "utf-8")
   );
@@ -383,19 +380,23 @@ async function fetchUnitResultsWithSNR(cleanUnitResults) {
   let true_units_by_code = {};
   for (let i = 0; i < trueunits.length; i++) {
     tu = trueunits[i];
-    let code0 = tu.recordingName + '--' + tu.studyName + '--' + tu.unitId;
+    let code0 = tu.recordingName + "--" + tu.studyName + "--" + tu.unitId;
     true_units_by_code[code0] = tu;
   }
   for (let index = 0; index < cleanUnitResults.length; index++) {
     let ur = cleanUnitResults[index];
-    let true_unit_code = ur.recordingName + '--' + ur.studyName + '--' + ur.unitId;
+    let true_unit_code =
+      ur.recordingName + "--" + ur.studyName + "--" + ur.unitId;
     if (true_unit_code in true_units_by_code) {
       let tu = true_units_by_code[true_unit_code];
       ur.snr = tu.snr;
       unitResultsWithSNR.push(ur);
-    }
-    else {
-      console.error('Unable to find true unit for unit result.', true_unit_code, ur);
+    } else {
+      console.error(
+        "Unable to find true unit for unit result.",
+        true_unit_code,
+        ur
+      );
       process.exit(-1);
     }
   }
@@ -463,10 +464,6 @@ async function formatAndLoadData() {
   let unitResultsWithSNR = await fetchUnitResultsWithSNR(cleanUnitResults);
   await loadIntoDB(UnitResult, unitResultsWithSNR, "Unit results");
   await writeCleanData(UnitResult, "unitresults");
-
-  // SpikeSprays
-  await loadIntoDB(SpikeSpray, rawSpikeSprays, "Spike sprays");
-  await writeCleanData(SpikeSpray, "spikesprays");
 
   // Delete WIP Files
   await emptyDataFolder(data_directory + "/cleanedData");
