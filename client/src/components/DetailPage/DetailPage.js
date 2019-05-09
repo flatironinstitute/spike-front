@@ -7,7 +7,7 @@ import HeatmapOptionsCol from "../Heatmap/HeatmapOptionsCol";
 import Preloader from "../Preloader/Preloader";
 import DetailPageRow from "./DetailPageRow";
 import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
-import SpikeSprayV2 from "./SpikeSprayV2";
+import SpikeSpray from "./SpikeSpray";
 
 import "./detailpage.css";
 
@@ -17,10 +17,8 @@ import { connect } from "react-redux";
 import * as actionCreators from "../../actions/actionCreators";
 
 // Utilities 💡
-import { isEmpty, toTitleCase } from "../../utils";
+import { isEmpty } from "../../utils";
 import { formatUnitResultsByStudy } from "../../dataHandlers";
-
-const axios = require("axios");
 
 class DetailPage extends Component {
   constructor(props) {
@@ -33,8 +31,7 @@ class DetailPage extends Component {
       sorter: "",
       unitsMap: [],
       filteredData: [],
-      selectedUnit: null,
-      spikeSprayData: null
+      selectedUnit: null
     };
   }
 
@@ -82,7 +79,9 @@ class DetailPage extends Component {
     }
 
     if (this.state.selectedUnit !== prevState.selectedUnit) {
-      this.createFetch();
+      // TODO: Remove conditional when default db is set.
+      let url = this.state.selectedUnit.u.spikesprayUrl || "";
+      this.props.fetchSpikeSpray(url);
     }
   }
 
@@ -276,23 +275,6 @@ class DetailPage extends Component {
     return copy;
   }
 
-  async createFetch() {
-    // TODO: Remove when other spikes are live and use property from selectedUnitResult
-    const defaultUrl =
-      "http://kbucket.flatironinstitute.org/get/sha1/0aa39927530abed94f32c410f3a2226e2ee71c5e?signature=c516794c53257b327f39b8349cc39313f1a254e9";
-
-    try {
-      const response = await axios.get(defaultUrl);
-      if (response.status !== 200) {
-        console.error(response);
-      } else {
-        this.setState({ spikeSprayData: response.data });
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   handleScatterplotClick = value => {
     this.setState({ selectedUnit: value });
   };
@@ -300,7 +282,7 @@ class DetailPage extends Component {
   getSpikeSprayCard() {
     if (isEmpty(this.state.selectedUnit)) {
       return "nounit";
-    } else if (isEmpty(this.state.spikeSprayData)) {
+    } else if (isEmpty(this.props.spikespray)) {
       return "nodata";
     } else {
       return "showspike";
@@ -319,7 +301,6 @@ class DetailPage extends Component {
     let format = this.getSpikeSprayCard();
 
     let heatmapTitle = this.getFormatCopy();
-    let pageTitle = toTitleCase(this.state.study.replace(/_/g, " "));
     let unitId = this.state.selectedUnit ? this.state.selectedUnit.u._id : "";
     let divStyle = {
       backgroundColor: "#fffdc0",
@@ -422,10 +403,10 @@ class DetailPage extends Component {
                             return (
                               <div className="card__footer">
                                 <hr />
-                                <SpikeSprayV2
+                                <SpikeSpray
                                   {...this.props}
                                   unit={this.state.selectedUnit}
-                                  spikeSprayData={this.state.spikeSprayData}
+                                  spikeSprayData={this.props.spikespray}
                                 />
                               </div>
                             );

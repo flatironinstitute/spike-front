@@ -1,17 +1,15 @@
 import React, { Component } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import Preloader from "../Preloader/Preloader";
-import { XYPlot, XAxis, LineSeries, LabelSeries, YAxis } from "react-vis";
+import { XYPlot, XAxis, LineSeries, LabelSeries } from "react-vis";
 import { isEmpty } from "../../utils";
-import "./detailpage.css";
 
-class SpikeSprayV2 extends Component {
+class SpikeSpray extends Component {
   constructor(props) {
     super(props);
     this.state = {
       spikeObjArr: [],
-      hoveredNode: null,
-      spikeCols: []
+      hoveredNode: null
     };
     this.colorArr = [
       "#e6194B",
@@ -95,11 +93,6 @@ class SpikeSprayV2 extends Component {
   }
 
   buildLabelData(spikeObjArr) {
-    // const sample = [
-    //   {x: 0, y: 0, label: 'woah!', style: {fontSize: 10}},
-    //   {x: 1, y: 0, label: 'dope city', yOffset: 5},
-    //   {x: 0, y: 1, label: 'cool Dog friend', xOffset: 5, rotation: 34}
-    // ]
     let withLabels = spikeObjArr.map(chartObj => {
       let labelData = [];
       chartObj.channel_ids.forEach((channel, i) => {
@@ -108,12 +101,7 @@ class SpikeSprayV2 extends Component {
           x: 0,
           y: offset,
           label: "Channel " + channel,
-          style: {
-            fontSize: "1.4rem",
-            lineHeight: "1.5",
-            fontWeight: "normal",
-            fontFamily: "Quattrocento Sans"
-          }
+          style: { fontSize: "14px", lineHeight: "16px", fontWeight: "400" }
         };
         labelData.push(labelObj);
       });
@@ -133,7 +121,6 @@ class SpikeSprayV2 extends Component {
     let totalSpikes = isEmpty(this.state.spikeObjArr)
       ? 0
       : this.state.spikeObjArr[0].num_spikes;
-    console.log("🧚 new", this.state.spikeObjArr.labelData);
     return (
       <div>
         {loading ? (
@@ -185,4 +172,4 @@ class SpikeSprayV2 extends Component {
   }
 }
 
-export default SpikeSprayV2;
+export default SpikeSpray;

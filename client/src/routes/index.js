@@ -32,10 +32,6 @@ class Routes extends Component {
     this.props.fetchStats();
     this.props.fetchStudySets();
     this.props.fetchRecordings();
-    // V1 Data: Fetches
-    // TODO: REMOVE?
-    // this.props.fetchUnitResults();
-    // this.props.fetchUnits();
   }
 
   render() {
@@ -88,16 +84,14 @@ class Routes extends Component {
 function mapStateToProps(state) {
   return {
     router: state.router,
-    pairing: state.pairing,
-    recordingDetails: state.recordingDetails,
-    // V2 Data: props
+    algorithms: state.algorithms,
     contactSent: state.contactSent,
     cpus: state.cpus,
     groupedURs: state.groupedURs,
     loading: state.loading,
     recordings: state.recordings,
     sorters: state.sorters,
-    algorithms: state.algorithms,
+    spikespray: state.spikespray,
     stats: state.stats,
     studies: state.studies,
     studysets: state.studysets,
