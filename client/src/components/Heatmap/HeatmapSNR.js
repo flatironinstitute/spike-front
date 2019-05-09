@@ -196,8 +196,7 @@ class HeatmapSNR extends Component {
 
 function mapStateToProps(state) {
   return {
-    selectedStudySortingResult: state.selectedStudySortingResult,
-    selectedRecording: state.selectedRecording
+    selectedStudySortingResult: state.selectedStudySortingResult
   };
 }
 

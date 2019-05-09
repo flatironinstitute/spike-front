@@ -48,6 +48,7 @@ class ScatterplotContainer extends Component {
                   sliderValue={sliderValue}
                   format={format}
                   metric={metric}
+                  handleScatterplotClick={this.props.handleScatterplotClick}
                 />
               );
             case "average":
@@ -58,6 +59,7 @@ class ScatterplotContainer extends Component {
                   sliderValue={sliderValue}
                   format={format}
                   metric={metric}
+                  handleScatterplotClick={this.props.handleScatterplotClick}
                 />
               );
             case "cpu":

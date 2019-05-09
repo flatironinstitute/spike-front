@@ -1,9 +1,9 @@
 import * as Sentry from "@sentry/browser";
-const axios = require('axios');
+const axios = require("axios");
 
 var baseurl;
 if (process.env.NODE_ENV === "production") {
-  baseurl = "https://spikeforestfront.herokuapp.com"
+  baseurl = "https://spikeforestfront.herokuapp.com";
 } else {
   baseurl = "http://localhost:5000";
 }
@@ -20,7 +20,7 @@ export const RECEIVE_UNIT_RESULTS = "RECEIVE_UNIT_RESULTS";
 export const RECEIVE_STATS = "RECEIVE_STATS";
 export const RECEIVE_STUDY_SETS = "RECEIVE_STUDY_SETS";
 export const RECEIVE_RECORDINGS = "RECEIVE_RECORDINGS";
-export const RECEIVE_SPIKE_SPRAY = "RECEIVE_SPIKE_SPRAY";
+export const SELECT_STUDY_SORTING_RESULT = "SELECT_STUDY_SORTING_RESULT";
 
 export const START_LOADING = "START_LOADING";
 export const END_LOADING = "END_LOADING";
@@ -30,8 +30,6 @@ export const SEND_CONTACT_FAILURE = "SEND_CONTACT_FAILURE";
 
 /* Old Shiz
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-export const SELECT_RECORDING = "SELECT_RECORDING";
-export const SELECT_STUDY_SORTING_RESULT = "SELECT_STUDY_SORTING_RESULT";
 export const RECEIVE_PAIRING = "RECEIVE_PAIRING";
 export const RECEIVE_RECORDING_DETAILS = "RECEIVE_RECORDING_DETAILS";
 
@@ -49,8 +47,7 @@ export const createFetch = async url => {
   } catch (error) {
     Sentry.captureException(error);
   }
-}
-
+};
 
 export const createFetchPost = async (url, options) => {
   try {
@@ -81,7 +78,7 @@ export function sendContactFailure(error) {
 }
 
 export const sendContact = options => {
-  return function (dispatch) {
+  return function(dispatch) {
     return createFetchPost(`/api/contact`, options)
       .then(res => {
         dispatch(sendContactSuccess(res.success));
@@ -100,7 +97,7 @@ export const receiveStudies = studies => ({
 
 export const fetchStudies = () => {
   let url = `/api/studies`;
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(startLoading());
     return createFetch(url)
       .then(res => {
@@ -123,7 +120,7 @@ export const receiveCPUs = cpus => {
 
 export const fetchCPUs = () => {
   let url = `/api/cpus`;
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(startLoading());
     return createFetch(url)
       .then(res => {
@@ -146,7 +143,7 @@ export const receiveGroupedURs = groupedURs => {
 
 export const fetchGroupedURs = () => {
   let url = `/api/groupedurs`;
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(startLoading());
     return createFetch(url)
       .then(res => {
@@ -167,9 +164,9 @@ export const receiveURsByStudy = ursByStudy => {
   };
 };
 
-export const fetchURsByStudy = (name) => {
+export const fetchURsByStudy = name => {
   let url = `/api/ursbystudy/` + name;
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(startLoading());
     return createFetch(url)
       .then(res => {
@@ -182,7 +179,6 @@ export const fetchURsByStudy = (name) => {
   };
 };
 
-
 // Unit Results
 export const receiveUnitResults = unitresults => {
   return {
@@ -193,7 +189,7 @@ export const receiveUnitResults = unitresults => {
 
 export const fetchUnitResults = () => {
   let url = `/api/unitresults`;
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(startLoading());
     return createFetch(url)
       .then(unitresults => {
@@ -213,7 +209,7 @@ export const receiveSorters = sorters => ({
 
 export const fetchSorters = () => {
   let url = `/api/sorters`;
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(startLoading());
     return createFetch(url)
       .then(res => {
@@ -236,7 +232,7 @@ export const receiveAlgorithms = algorithms => ({
 
 export const fetchAlgorithms = () => {
   let url = `/api/algorithms`;
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(startLoading());
     return createFetch(url)
       .then(res => {
@@ -272,7 +268,7 @@ export const recieveStats = stats => {
 
 export const fetchStats = () => {
   let url = `/api/stats`;
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(startLoading());
     return createFetch(url)
       .then(stats => {
@@ -294,7 +290,7 @@ export const recieveStudySets = studysets => {
 
 export const fetchStudySets = () => {
   let url = `/api/studysets`;
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(startLoading());
     return createFetch(url)
       .then(studysets => {
@@ -316,7 +312,7 @@ export const receiveRecordings = recordings => {
 
 export const fetchRecordings = () => {
   let url = `/api/recordings`;
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(startLoading());
     return createFetch(url)
       .then(recordings => {
@@ -325,29 +321,6 @@ export const fetchRecordings = () => {
       .then(() => {
         dispatch(endLoading());
       });
-  };
-};
-
-// Spike spray
-export const receiveSpikeSpray = spikeSpray => {
-  return {
-    type: RECEIVE_SPIKE_SPRAY,
-    spikeSpray: spikeSpray
-  };
-};
-
-export const fetchSpikeSpray = (studyName, recordingName, sorterName, trueUnitId, sortedUnitId) => {
-  let url = `/api/spikespray/${studyName}/${recordingName}/${sorterName}/${trueUnitId}/${sortedUnitId}`;
-  return function (dispatch) {
-    dispatch(startLoading());
-    return createFetch(url)
-      .then(res => {
-        dispatch(receiveSpikeSpray(res.spikeSpray));
-      })
-      .then(() => {
-        dispatch(endLoading());
-      })
-      .catch(err => Sentry.captureException(err));
   };
 };
 
@@ -360,13 +333,6 @@ export const selectStudySortingResult = studySortingResult => ({
 /* Old Shiz
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-export const selectRecording = recording => {
-  return {
-    type: SELECT_RECORDING,
-    recording
-  };
-};
-
 // Pairing
 export const receivePairing = pairing => ({
   type: RECEIVE_PAIRING,
@@ -375,7 +341,7 @@ export const receivePairing = pairing => ({
 
 export const fetchPairing = (study, sorter) => {
   let url = `/api/${study}/${sorter}`;
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(startLoading());
     return createFetch(url)
       .then(res => {
@@ -397,7 +363,7 @@ export const receiveRecordingDetails = recordingDetails => ({
 
 export const fetchRecordingDetails = (study, sorter, recording) => {
   let url = `/api/${study}/${sorter}/${recording}`;
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(startLoading());
     return createFetch(url)
       .then(res => {
