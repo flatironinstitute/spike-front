@@ -4,7 +4,7 @@ export const initialState = {
   //V2 Data: States
   contactSent: null,
   cpus: null,
-  groupedURs: null,
+  // groupedURs: null,
   loading: null,
   recordings: null,
   selectedStudySortingResult: null,

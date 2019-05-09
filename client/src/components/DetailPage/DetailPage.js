@@ -30,7 +30,7 @@ class DetailPage extends Component {
       metric: "accuracy",
       sliderValue: 0.8,
       sorter: "",
-      unitsMap: [],
+      // unitsMap: [],
       filteredData: []
     };
   }

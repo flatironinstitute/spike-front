@@ -13,34 +13,34 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      unitsMap: {}
+      // unitsMap: {}
     };
   }
 
   componentDidMount() {
-    if (this.props.groupedURs && this.props.sorters) {
-      this.mapUnits();
-    }
+    // if (this.props.groupedURs && this.props.sorters) {
+    //   this.mapUnits();
+    // }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (
-      this.props.groupedURs !== prevProps.groupedURs ||
-      this.props.sorters !== prevProps.sorters
-    ) {
-      this.mapUnits();
-    }
+    // if (
+    //   this.props.groupedURs !== prevProps.groupedURs ||
+    //   this.props.sorters !== prevProps.sorters
+    // ) {
+    //   this.mapUnits();
+    // }
   }
 
-  async mapUnits() {
-    if (this.props.sorters && this.props.groupedURs) {
-      let unitsMap = await formatUnitResults(
-        this.props.groupedURs,
-        this.props.sorters
-      );
-      this.setState({ unitsMap: unitsMap });
-    }
-  }
+  // async mapUnits() {
+  //   if (this.props.sorters && this.props.groupedURs) {
+  //     let unitsMap = await formatUnitResults(
+  //       this.props.groupedURs,
+  //       this.props.sorters
+  //     );
+  //     this.setState({ unitsMap: unitsMap });
+  //   }
+  // }
 
   getStudies() {
     // returns the unique names of the studies
@@ -86,7 +86,7 @@ class Home extends Component {
             {...this.props}
             shortStudies={studies}
             shortSorters={sorters}
-            unitsMap={this.state.unitsMap}
+            // unitsMap={this.state.unitsMap}
           />
         )}
         <Container className="container__heatmap">

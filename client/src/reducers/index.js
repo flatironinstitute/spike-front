@@ -7,7 +7,7 @@ import recordingDetails from "./recordingDetails";
 import algorithms from "./algorithms";
 import contactSent from "./contactSent";
 import cpus from "./cpus";
-import groupedURs from "./groupedURs";
+// import groupedURs from "./groupedURs";
 import loading from "./loading";
 import recordings from "./recordings";
 import selectedStudySortingResult from "./selectedStudySortingResult";
@@ -29,7 +29,7 @@ const rootReducer = history =>
     algorithms,
     contactSent,
     cpus,
-    groupedURs,
+    // groupedURs,
     loading,
     recordings,
     selectedStudySortingResult,

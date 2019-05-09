@@ -94,7 +94,7 @@ function mapStateToProps(state) {
     // V2 Data: props
     contactSent: state.contactSent,
     cpus: state.cpus,
-    groupedURs: state.groupedURs,
+    // groupedURs: state.groupedURs,
     loading: state.loading,
     recordings: state.recordings,
     sorters: state.sorters,

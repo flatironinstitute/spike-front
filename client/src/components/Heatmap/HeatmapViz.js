@@ -12,13 +12,11 @@ class HeatmapViz extends Component {
   }
 
   componentDidMount() {
-    // this.buildVizData(this.props.groupedUnitResults);
     this.buildVizData(this.props.studyAnalysisResults);
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      // this.props.groupedUnitResults !== prevProps.groupedUnitResults ||
       this.props.studyAnalysisResults !== prevProps.studyAnalysisResults ||
       this.props.threshold !== prevProps.threshold ||
       this.props.format !== prevProps.format ||
@@ -26,7 +24,6 @@ class HeatmapViz extends Component {
       this.props.selectedStudyName !== prevProps.selectedStudyName ||
       this.props.selectedSorterName !== prevProps.selectedSorterName
     ) {
-      // this.buildVizData(this.props.groupedUnitResults);
       this.buildVizData(this.props.studyAnalysisResults);
     }
     if (
