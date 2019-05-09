@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ScatterplotCount from "./ScatterplotCount";
-import ScatterplotAverage from "./ScatterplotAverage";
 
 class ScatterplotContainer extends Component {
   getHeaderCopy(value) {
