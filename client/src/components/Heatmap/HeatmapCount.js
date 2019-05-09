@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { isEmpty } from "../../utils";
+import { Redirect } from "react-router";
 import * as Sentry from "@sentry/browser";
 
 // Components
@@ -21,7 +22,8 @@ class HeatmapCount extends Component {
     super(props);
     this.state = {
       builtData: [],
-      cardHeight: null
+      cardHeight: null,
+      redirect: false
     };
   }
 
@@ -146,8 +148,19 @@ class HeatmapCount extends Component {
     });
   };
 
+  handleScatterplotClick = value => {
+    this.setState({ redirect: true });
+  };
+
   render() {
     let loading = isEmpty(this.state.builtData);
+    let study = this.props.selectedStudySortingResult
+      ? this.props.selectedStudySortingResult.study
+      : "";
+    study = "/study/" + study;
+    if (this.state.redirect) {
+      return <Redirect push to={study} />;
+    }
     return (
       <div>
         {loading ? (
@@ -177,6 +190,7 @@ class HeatmapCount extends Component {
                   {...this.props}
                   sliderValue={this.props.sliderValue}
                   cardHeight={this.state.cardHeight}
+                  handleScatterplotClick={this.handleScatterplotClick}
                 />
               </Col>
             </Row>

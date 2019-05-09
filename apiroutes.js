@@ -10,9 +10,6 @@ const studySetController = require("./controllers/studySetController");
 const trueUnitController = require("./controllers/trueUnitController");
 const unitResultsController = require("./controllers/unitResultsController");
 
-const recDetails = require("./stubData/recordingDetails.js");
-const fakeResult = require("./stubData/fakeResult.js");
-
 /* V2 Data: New Routes
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -42,12 +39,6 @@ router.get(
   "/api/ursbystudy/:name",
   unitResultsController.getUnitResultsByStudy
 );
-// Spike sprays
-router.get(
-  "/api/unitresult/spikespray/:id",
-  unitResultsController.getSpikeSprayById
-);
-
 // Contact Routes
 router.post("/api/contact", (req, res) => {
   // TODO: Attach to mail server
@@ -57,40 +48,6 @@ router.post("/api/contact", (req, res) => {
   });
 });
 
-/* Old Stuff & Existing Routes
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-router.get("/api/:study/:sorter/:recording", (req, res) => {
-  let study = req.params.study;
-  let sorter = req.params.sorter;
-  let recording = req.params.recording;
-  // TODO: Will I need to do this formatting from the server?
-  let formatted = formatSpikes(recDetails);
-  res.send({ recordingDetails: formatted });
-});
-// Current URL
-//https://users.flatironinstitute.org/~magland/spikeforest_website_data/spikesprays/visapy_mea/visapy_mea/
-
-// 4 spike columns - columns
-// 20 spikes - line color groups
-// 4 channels - 4lines of 50 xys
-// 50 timepoints -> become 50 xy coordinates
-
-function formatSpikes(recDetails) {
-  const keys = Object.keys(recDetails);
-  var formatted = new Object();
-  for (const key of keys) {
-    let newChannel = recDetails[key].map(spikeArr => {
-      return spikeArr.map(timepoints => {
-        return timepoints.map((timepoint, i) => {
-          let timeVal = 1.67 * i;
-          return { x: timeVal, y: timepoint };
-        });
-      });
-    });
-    formatted[key] = newChannel;
-  }
-  return formatted;
-}
 module.exports = router;
 
 /* Unused Route Stubs
