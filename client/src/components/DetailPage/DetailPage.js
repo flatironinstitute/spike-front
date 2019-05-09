@@ -31,9 +31,7 @@ class DetailPage extends Component {
       sliderValue: 0.8,
       sorter: "",
       unitsMap: [],
-      filteredData: [],
-      // TODO: Integrate
-      selectedRecording: {}
+      filteredData: []
     };
   }
 
@@ -71,13 +69,6 @@ class DetailPage extends Component {
     if (this.state.unitsMap !== prevState.unitsMap) {
       this.applyResultFilters();
     }
-
-    // TODO: Tie this call to the scatterplot clicks
-    //   this.props.fetchRecordingDetails(
-    //     this.state.study,
-    //     this.state.sorter,
-    //     "test"
-    //   );
 
     let optionsChanged =
       this.state.format !== prevState.format ||
@@ -278,6 +269,18 @@ class DetailPage extends Component {
     return copy;
   }
 
+  handleScatterplotClick = value => {
+    console.log("scatterplot click", value);
+    // URL: /api/spikespray/:studyName/:recordingName/:sorterName/:trueUnitId/:sortedUnitId
+    // this.props.fetchSpikeSpray(
+    //   studyName,
+    //   recordingName,
+    //   sorterName,
+    //   trueUnitId,
+    //   sortedUnitId
+    // );
+  };
+
   render() {
     let sorters = this.state.unitsMap
       ? this.state.unitsMap.map(result => result.sorter)
@@ -303,16 +306,6 @@ class DetailPage extends Component {
             </Container>
           ) : (
             <Container className="container__heatmap">
-              <Row className="justify-content-md-center">
-                <Col lg={12} sm={12} xl={10}>
-                  <div className="intro">
-                    <h4 className="intro__title">{pageTitle}</h4>
-                    <p className="intro__title">
-                      <em>{this.state.sorter}</em>
-                    </p>
-                  </div>
-                </Col>
-              </Row>
               <Row className="container__sorter--row">
                 <Col lg={6} sm={12}>
                   <div className="card card--stats">
@@ -353,6 +346,7 @@ class DetailPage extends Component {
                     sliderValue={this.state.sliderValue}
                     format={this.state.format}
                     metric={this.state.metric}
+                    handleScatterplotClick={this.handleScatterplotClick}
                   />
                 </Col>
               </Row>
@@ -383,8 +377,7 @@ class DetailPage extends Component {
 
 function mapStateToProps(state) {
   return {
-    selectedStudySortingResult: state.selectedStudySortingResult,
-    selectedRecording: state.selectedRecording
+    selectedStudySortingResult: state.selectedStudySortingResult
   };
 }
 

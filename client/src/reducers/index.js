@@ -1,8 +1,6 @@
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
 
-import recordings from "./recordings";
-import selectedRecording from "./selectedRecording";
 import pairing from "./pairing";
 import recordingDetails from "./recordingDetails";
 // V2 Data: Reducers
@@ -11,6 +9,7 @@ import contactSent from "./contactSent";
 import cpus from "./cpus";
 import groupedURs from "./groupedURs";
 import loading from "./loading";
+import recordings from "./recordings";
 import selectedStudySortingResult from "./selectedStudySortingResult";
 import sorters from "./sorters";
 import stats from "./stats";
@@ -21,8 +20,6 @@ import ursByStudy from "./ursByStudy";
 
 const rootReducer = history =>
   combineReducers({
-    recordings,
-    selectedRecording,
     pairing,
     recordingDetails,
     // V2 Data: Reducers
@@ -31,6 +28,7 @@ const rootReducer = history =>
     cpus,
     groupedURs,
     loading,
+    recordings,
     selectedStudySortingResult,
     sorters,
     stats,

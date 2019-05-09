@@ -12,7 +12,7 @@ class DetailPageRow extends Component {
       height: 50,
       width: 700
     };
-    this.margin = { left: 190, right: 80, top: 5, bottom: 5 };
+    this.margin = { left: 15, right: 80, top: 5, bottom: 5 };
     if (this.props.index === 0) {
       this.dims.height = 110;
       this.margin.top = 65;
@@ -71,22 +71,20 @@ class DetailPageRow extends Component {
               width={this.dims.width}
               margin={this.margin}
             >
-              {this.props.index === 0 ? (
-                <XAxis
-                  orientation={"top"}
-                  tickLabelAngle={-25}
-                  position={"start"}
-                  title="Count above accuracy threshold"
-                  style={{
-                    text: {
-                      stroke: "none",
-                      fill: "#222",
-                      fontWeight: 600,
-                      fontSize: "12px"
-                    }
-                  }}
-                />
-              ) : null}
+              <XAxis
+                orientation={"top"}
+                tickLabelAngle={-25}
+                position={"start"}
+                title="Count above accuracy threshold"
+                style={{
+                  text: {
+                    stroke: "none",
+                    fill: "#222",
+                    fontWeight: 600,
+                    fontSize: "12px"
+                  }
+                }}
+              />
               {/* TODO: Reinstate with correct data*/}
               {/* <YAxis
                 style={{

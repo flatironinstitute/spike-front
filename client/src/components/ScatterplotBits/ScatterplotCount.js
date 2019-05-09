@@ -21,8 +21,7 @@ class ScatterplotCount extends Component {
       data: [],
       hoveredNode: null,
       minSNR: 0,
-      maxSNR: 100,
-      selectedRecording: null
+      maxSNR: 100
     };
   }
 
@@ -38,15 +37,6 @@ class ScatterplotCount extends Component {
       this.props.metric !== prevProps.metric
     ) {
       this.buildCountData();
-    }
-    if (this.state.selectedRecording !== prevState.selectedRecording) {
-      if (this.state.selectedRecording !== prevState.selectedRecording) {
-        console.log(
-          "🕌 NEW SELECTED RECORDING",
-          this.state.selectedRecording,
-          this.props.selectedStudySortingResult
-        );
-      }
     }
   }
 
@@ -147,7 +137,7 @@ class ScatterplotCount extends Component {
             opacityType="literal"
             data={data}
             onValueMouseOver={d => this.setState({ hoveredNode: d })}
-            onValueClick={d => this.setState({ selectedRecording: d })}
+            onValueClick={d => this.props.handleScatterplotClick(d)}
           />
           {hoveredNode && <Hint value={valueObj} align={alignment} />}
           <LineSeries

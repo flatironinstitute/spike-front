@@ -89,22 +89,20 @@ class HeatmapRow extends Component {
               xPadding={30}
               margin={this.margin}
             >
-              {this.props.index === 0 ? (
-                <XAxis
-                  orientation={"top"}
-                  tickLabelAngle={-25}
-                  position={"start"}
-                  title="Count above accuracy threshold"
-                  style={{
-                    text: {
-                      stroke: "none",
-                      fill: "#222",
-                      fontWeight: 600,
-                      fontSize: "12px"
-                    }
-                  }}
-                />
-              ) : null}
+              <XAxis
+                orientation={"top"}
+                tickLabelAngle={-25}
+                position={"start"}
+                title="Count above accuracy threshold"
+                style={{
+                  text: {
+                    stroke: "none",
+                    fill: "#222",
+                    fontWeight: 600,
+                    fontSize: "12px"
+                  }
+                }}
+              />
               <YAxis
                 style={{
                   text: {
