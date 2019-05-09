@@ -51,6 +51,9 @@ const unitResultSchema = new mongoose.Schema(
     },
     snr: {
       type: Float
+    },
+    spikesprayUrl: {
+      type: String
     }
   },
   {

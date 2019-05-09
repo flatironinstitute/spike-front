@@ -55,7 +55,6 @@ const Recording = require("../../models/Recording");
 const TrueUnit = require("../../models/TrueUnit");
 const SortingResult = require("../../models/SortingResult");
 const UnitResult = require("../../models/UnitResult");
-const SpikeSpray = require("../../models/SpikeSpray");
 
 // import all the raw data
 const rawSorters = JSON.parse(
@@ -318,6 +317,8 @@ async function formatUnitResults() {
     fs.readFileSync(data_directory + "/cleanedData/sorters.json", "utf-8")
   );
 
+  let unit_results_lookup = {};
+
   rawUnitResults.forEach(result => {
     // Move string names to string properties
     result.recordingName = result.recording;
@@ -366,7 +367,25 @@ async function formatUnitResults() {
       );
       process.exit();
     }
+
+    result.spikesprayUrl = '';
+
+    let code0 = `${result.studyName}--${result.recordingName}--${result.sorterName}--${result.unitId}--${result.bestSortedUnitId}`;
+    unit_results_lookup[code0] = result;
   });
+
+  console.info(`Loading spikesprays...`);
+
+  let num_spikesprays = 0;
+  rawSpikeSprays.forEach(spikeSpray => {
+    let code0 = `${spikeSpray.studyName}--${spikeSpray.recordingName}--${spikeSpray.sorterName}--${spikeSpray.trueUnitId}--${spikeSpray.sortedUnitId}`;
+    if (code0 in unit_results_lookup) {
+      unit_results_lookup.spikesprayUrl = spikeSpray.spikesprayUrl;
+      num_spikesprays++;
+    }
+  });
+
+  console.info(`Loaded ${num_spikesprays} spikesprays.`);
 
   return rawUnitResults;
 }
@@ -463,10 +482,6 @@ async function formatAndLoadData() {
   let unitResultsWithSNR = await fetchUnitResultsWithSNR(cleanUnitResults);
   await loadIntoDB(UnitResult, unitResultsWithSNR, "Unit results");
   await writeCleanData(UnitResult, "unitresults");
-
-  // SpikeSprays
-  await loadIntoDB(SpikeSpray, rawSpikeSprays, "Spike sprays");
-  await writeCleanData(SpikeSpray, "spikesprays");
 
   // Delete WIP Files
   await emptyDataFolder(data_directory + "/cleanedData");
