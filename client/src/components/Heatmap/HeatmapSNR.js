@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { isEmpty } from "../../utils";
+import { Redirect } from "react-router";
 
 // Components
 import Preloader from "../Preloader/Preloader";
@@ -21,7 +22,8 @@ class HeatmapSNR extends Component {
     this.state = {
       builtData: [],
       snrMin: 5,
-      cardHeight: null
+      cardHeight: null,
+      redirect: false
     };
   }
 
@@ -153,8 +155,19 @@ class HeatmapSNR extends Component {
     });
   };
 
+  handleScatterplotClick = value => {
+    this.setState({ redirect: true });
+  };
+
   render() {
     let loading = isEmpty(this.state.builtData);
+    let study = this.props.selectedStudySortingResult
+      ? this.props.selectedStudySortingResult.study
+      : "";
+    study = "/study/" + study;
+    if (this.state.redirect) {
+      return <Redirect push to={study} />;
+    }
     return (
       <div>
         {loading ? (
