@@ -277,7 +277,6 @@ class DetailPage extends Component {
   }
 
   async createFetch() {
-    console.log("🧚 create fetch", this.state.selectedUnit);
     // TODO: Remove when other spikes are live and use property from selectedUnitResult
     const defaultUrl =
       "http://kbucket.flatironinstitute.org/get/sha1/0aa39927530abed94f32c410f3a2226e2ee71c5e?signature=c516794c53257b327f39b8349cc39313f1a254e9";
@@ -295,7 +294,6 @@ class DetailPage extends Component {
   }
 
   handleScatterplotClick = value => {
-    console.log("🧚 scatterplot click", value);
     this.setState({ selectedUnit: value });
   };
 

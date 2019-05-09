@@ -149,7 +149,6 @@ class HeatmapCount extends Component {
   };
 
   handleScatterplotClick = value => {
-    console.log("🧚 redirect");
     this.setState({ redirect: true });
   };
 

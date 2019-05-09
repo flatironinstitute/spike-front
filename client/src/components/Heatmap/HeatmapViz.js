@@ -442,7 +442,8 @@ class HeatmapViz extends Component {
         <div>
           <p>
             Click on the rows to expand the study sets and see component study
-            data.
+            data. An asterisk indicates an incomplete or failed sorting on a
+            subset of results.
             {copy}
           </p>
         </div>

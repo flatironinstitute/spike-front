@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import Preloader from "../Preloader/Preloader";
-import { XYPlot, XAxis, LineSeries, YAxis } from "react-vis";
+import { XYPlot, XAxis, LineSeries, LabelSeries, YAxis } from "react-vis";
 import { isEmpty } from "../../utils";
-const newRecDetails = require("./sampleNewRecordingDetails.js");
+import "./detailpage.css";
 
 class SpikeSprayV2 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      offsetSpikeCols: [],
-      spikeCols: [],
-      hoveredNode: null
+      spikeObjArr: [],
+      hoveredNode: null,
+      spikeCols: []
     };
     this.colorArr = [
       "#e6194B",
@@ -26,8 +26,7 @@ class SpikeSprayV2 extends Component {
   }
 
   componentDidMount() {
-    this.buildSprayData();
-    this.buildSprayData2();
+    this.buildSprayData3();
   }
 
   addOffset(timepoints, i) {
@@ -70,61 +69,71 @@ class SpikeSprayV2 extends Component {
     return colorGroups;
   }
 
-  buildSprayData2() {
-    let spikeCols = newRecDetails.map(column => {
-      let columnArr = [];
-      if (column.spike_waveforms.length) {
-        column.spike_waveforms.forEach(spike => {
+  buildSprayData3() {
+    let withPlots = this.props.spikeSprayData.map(chartObj => {
+      let plotData = [];
+      if (chartObj.spike_waveforms.length) {
+        chartObj.spike_waveforms.forEach(spike => {
           spike.channels.forEach((channel, i) => {
             let colorLine = this.colorArr[i];
-            columnArr.push({
+            plotData.push({
               color: colorLine,
+              channel: channel.channel_id,
               data: this.formatWaveformsAddOffset(channel.waveform, i)
             });
           });
         });
       } else {
-        columnArr.push([]);
+        plotData.push([]);
       }
-      return columnArr;
+      return { ...chartObj, plotData: plotData };
     });
+    let spikeObjArr = this.buildLabelData(withPlots);
     this.setState({
-      offsetSpikeCols: spikeCols
+      spikeObjArr: spikeObjArr
     });
   }
 
-  buildSprayData() {
-    let spikeCols = newRecDetails.map(column => {
-      let columnArr = [];
-      if (column.spike_waveforms.length) {
-        column.spike_waveforms.forEach(spike => {
-          spike.channels.forEach((channel, i) => {
-            let colorLine = this.colorArr[i];
-            columnArr.push({
-              color: colorLine,
-              data: this.formatWaveforms(channel.waveform, i)
-            });
-          });
-        });
-      } else {
-        columnArr.push([]);
-      }
-      return columnArr;
+  buildLabelData(spikeObjArr) {
+    // const sample = [
+    //   {x: 0, y: 0, label: 'woah!', style: {fontSize: 10}},
+    //   {x: 1, y: 0, label: 'dope city', yOffset: 5},
+    //   {x: 0, y: 1, label: 'cool Dog friend', xOffset: 5, rotation: 34}
+    // ]
+    let withLabels = spikeObjArr.map(chartObj => {
+      let labelData = [];
+      chartObj.channel_ids.forEach((channel, i) => {
+        let offset = -0.2 * i;
+        let labelObj = {
+          x: 0,
+          y: offset,
+          label: "Channel " + channel,
+          style: {
+            fontSize: "1.4rem",
+            lineHeight: "1.5",
+            fontWeight: "normal",
+            fontFamily: "Quattrocento Sans"
+          }
+        };
+        labelData.push(labelObj);
+      });
+      return { ...chartObj, labelData: labelData };
     });
-    this.setState({
-      spikeCols: spikeCols
-    });
+    return withLabels;
   }
 
   render() {
-    let loading =
-      isEmpty(this.state.spikeCols) && isEmpty(this.state.offsetSpikeCols);
-    let colTitles = [
-      "Groundtruth",
-      "Sorting",
-      "False Positive",
-      "False Negative"
-    ];
+    let loading = isEmpty(this.state.spikeObjArr);
+    let colTitles = {
+      true: "Groundtruth",
+      sorted: "Sorted",
+      true_missed: "True Missed / False Positive",
+      sorted_false: "Sorted False / False Negative"
+    };
+    let totalSpikes = isEmpty(this.state.spikeObjArr)
+      ? 0
+      : this.state.spikeObjArr[0].num_spikes;
+    console.log("🧚 new", this.state.spikeObjArr.labelData);
     return (
       <div>
         {loading ? (
@@ -138,11 +147,12 @@ class SpikeSprayV2 extends Component {
         ) : (
           <div>
             <Row>
-              {this.state.offsetSpikeCols.map((column, i) => (
+              {this.state.spikeObjArr.map((column, i) => (
                 <Col lg={3} key={`spikecol-${Math.random(i)}`}>
                   <div className="card__label">
                     <p className="card__charttitle">
-                      {colTitles[i]} <br />x of y spikes shown
+                      {colTitles[column.name]} <br />
+                      {column.num_spikes} of {totalSpikes} spikes shown
                     </p>
                   </div>
                   <XYPlot
@@ -150,8 +160,8 @@ class SpikeSprayV2 extends Component {
                     height={700}
                     key={`spikeplot-${Math.random(i)}`}
                   >
-                    <XAxis title="Samples" />
-                    {column.map((line, i) => (
+                    <XAxis title="Samples in time" />
+                    {column.plotData.map((line, i) => (
                       <LineSeries
                         key={`line-${Math.random(i)}`}
                         color={line.color}
@@ -159,34 +169,11 @@ class SpikeSprayV2 extends Component {
                         style={{ strokeWidth: 0.25 }}
                       />
                     ))}
-                  </XYPlot>
-                </Col>
-              ))}
-            </Row>
-            <Row>
-              {this.state.spikeCols.map((column, i) => (
-                <Col lg={3} key={`spikecol-${Math.random(i)}`}>
-                  <div className="card__label">
-                    <p className="card__charttitle">
-                      {colTitles[i]} x of y spikes shown
-                    </p>
-                  </div>
-                  <XYPlot
-                    width={350}
-                    height={350}
-                    key={`spikeplot-${Math.random(i)}`}
-                  >
-                    <XAxis title="Samples" />
-                    <YAxis title="Y TITLE?" />
-                    {column.map((line, i) => (
-                      <LineSeries
-                        key={`line-${Math.random(i)}`}
-                        color={line.color}
-                        data={line.data}
-                        style={{ strokeWidth: 0.25 }}
-                        onNearestXY={d => this.setState({ hoveredNode: d })}
-                      />
-                    ))}
+                    <LabelSeries
+                      animation
+                      allowOffsetToBeReversed
+                      data={column.labelData}
+                    />
                   </XYPlot>
                 </Col>
               ))}
