@@ -10,6 +10,7 @@ const studySetController = require("./controllers/studySetController");
 const trueUnitController = require("./controllers/trueUnitController");
 const unitResultsController = require("./controllers/unitResultsController");
 const spikeSprayController = require("./controllers/spikeSprayController");
+const studyAnalysisResultController = require("./controllers/studyAnalysisResultController");
 
 const recDetails = require("./stubData/recordingDetails.js");
 const fakeResult = require("./stubData/fakeResult.js");
@@ -48,6 +49,8 @@ router.get(
   "/api/spikespray/:studyName/:recordingName/:sorterName/:trueUnitId/:sortedUnitId",
   spikeSprayController.getOneSpikeSpray
 );
+// Study analysis results
+router.get("/api/studyanalysisresults", studyAnalysisResultController.getStudyAnalysisResults);
 
 // Contact Routes
 router.post("/api/contact", (req, res) => {

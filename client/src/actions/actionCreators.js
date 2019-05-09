@@ -21,6 +21,7 @@ export const RECEIVE_STATS = "RECEIVE_STATS";
 export const RECEIVE_STUDY_SETS = "RECEIVE_STUDY_SETS";
 export const RECEIVE_RECORDINGS = "RECEIVE_RECORDINGS";
 export const RECEIVE_SPIKE_SPRAY = "RECEIVE_SPIKE_SPRAY";
+export const RECEIVE_STUDY_ANALYSIS_RESULTS = "RECEIVE_STUDY_ANALYSIS_RESULTS";
 
 export const START_LOADING = "START_LOADING";
 export const END_LOADING = "END_LOADING";
@@ -32,6 +33,8 @@ export const SEND_CONTACT_FAILURE = "SEND_CONTACT_FAILURE";
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 export const SELECT_RECORDING = "SELECT_RECORDING";
 export const SELECT_STUDY_SORTING_RESULT = "SELECT_STUDY_SORTING_RESULT";
+export const SELECT_STUDY_NAME = "SELECT_STUDY_NAME";
+export const SELECT_SORTER_NAME = "SELECT_SORTER_NAME";
 export const RECEIVE_PAIRING = "RECEIVE_PAIRING";
 export const RECEIVE_RECORDING_DETAILS = "RECEIVE_RECORDING_DETAILS";
 
@@ -351,10 +354,41 @@ export const fetchSpikeSpray = (studyName, recordingName, sorterName, trueUnitId
   };
 };
 
+// Study analysis results
+export const receiveStudyAnalysisResults = studyAnalysisResults => ({
+  type: RECEIVE_STUDY_ANALYSIS_RESULTS,
+  studyAnalysisResults
+});
+
+export const fetchStudyAnalysisResults = () => {
+  let url = `/api/studyanalysisresults`;
+  return function (dispatch) {
+    dispatch(startLoading());
+    return createFetch(url)
+      .then(res => {
+        dispatch(receiveStudyAnalysisResults(res.studyAnalysisResults));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      })
+      .catch(err => Sentry.captureException(err));
+  };
+};
+
 // Selected Study for Scatterplot
 export const selectStudySortingResult = studySortingResult => ({
   type: SELECT_STUDY_SORTING_RESULT,
   studySortingResult
+});
+
+export const selectStudyName = studyName => ({
+  type: SELECT_STUDY_NAME,
+  studyName
+});
+
+export const selectSorterName = sorterName => ({
+  type: SELECT_SORTER_NAME,
+  sorterName
 });
 
 /* Old Shiz

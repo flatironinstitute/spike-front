@@ -26,12 +26,13 @@ class Routes extends Component {
     // V2 Data: Fetches
     this.props.fetchCPUs();
     this.props.fetchStudies();
-    this.props.fetchGroupedURs();
+    //this.props.fetchGroupedURs();
     this.props.fetchSorters();
     this.props.fetchAlgorithms();
     this.props.fetchStats();
     this.props.fetchStudySets();
     this.props.fetchRecordings();
+    this.props.fetchStudyAnalysisResults();
     // V1 Data: Fetches
     // TODO: REMOVE?
     // this.props.fetchUnitResults();
@@ -102,8 +103,11 @@ function mapStateToProps(state) {
     studies: state.studies,
     studysets: state.studysets,
     selectedStudySortingResult: state.selectedStudySortingResult,
+    selectedStudyName: state.selectedStudyName,
+    selectedSorterName: state.selectedSorterName,
     unitResults: state.unitResults,
-    ursByStudy: state.ursByStudy
+    ursByStudy: state.ursByStudy,
+    studyAnalysisResults: state.studyAnalysisResults
   };
 }
 

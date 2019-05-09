@@ -57,10 +57,16 @@ class Home extends Component {
   }
 
   render() {
+    // let loading =
+    //   isEmpty(this.state.unitsMap) ||
+    //   isEmpty(this.props.studies) ||
+    //   isEmpty(this.props.sorters);
     let loading =
-      isEmpty(this.state.unitsMap) ||
-      isEmpty(this.props.studies) ||
-      isEmpty(this.props.sorters);
+        isEmpty(this.props.studies) ||
+        isEmpty(this.props.sorters) ||
+        isEmpty(this.props.studysets) ||
+        isEmpty(this.props.studyAnalysisResults);
+
     let sorters = this.props.sorters ? this.getSorters() : null;
     let studies = this.props.studies ? this.getStudies() : null;
     return (

@@ -20,7 +20,9 @@ class ScatterplotContainer extends Component {
 
   render() {
     const {
-      selectedStudySortingResult,
+      selectedStudyName,
+      selectedSorterName,
+      studyAnalysisResult,
       sliderValue,
       metric,
       format
@@ -34,9 +36,9 @@ class ScatterplotContainer extends Component {
         </p>
         <p>
           {copy}
-          {selectedStudySortingResult
+          {/*selectedStudySortingResult
             ? selectedStudySortingResult.in_range
-            : ""}
+          : ""*/}
         </p>
         {(() => {
           switch (format) {
@@ -44,7 +46,9 @@ class ScatterplotContainer extends Component {
               return (
                 <ScatterplotCount
                   {...this.props}
-                  selectedUnits={selectedStudySortingResult.true_units}
+                  studyAnalysisResult={studyAnalysisResult}
+                  selectedStudyName={selectedStudyName}
+                  selectedSorterName={selectedSorterName}
                   sliderValue={sliderValue}
                   format={format}
                   metric={metric}
@@ -54,7 +58,9 @@ class ScatterplotContainer extends Component {
               return (
                 <ScatterplotAverage
                   {...this.props}
-                  selectedUnits={selectedStudySortingResult.true_units}
+                  studyAnalysisResult={studyAnalysisResult}
+                  selectedStudyName={selectedStudyName}
+                  selectedSorterName={selectedSorterName}
                   sliderValue={sliderValue}
                   format={format}
                   metric={metric}

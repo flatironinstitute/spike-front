@@ -10,20 +10,21 @@ class ScatterplotCard extends Component {
     this.state = {
       study: null,
       sorter: null,
+      studyAnalysisResult: null,
       cardHeight: "auto"
     };
   }
 
   componentDidMount() {
-    if (this.props.selectedStudySortingResult) {
+    if ((this.props.selectedStudyName) && (this.props.selectedSorterName)) {
       this.findStudyAndSorter();
     }
   }
 
   componentDidUpdate(prevProps) {
     if (
-      this.props.selectedStudySortingResult !==
-      prevProps.selectedStudySortingResult
+      (this.props.selectedStudyName !== prevProps.selectedStudyName) ||
+      (this.props.selectedSorterName !== prevProps.selectedSorterName)
     ) {
       this.findStudyAndSorter();
     }
@@ -40,25 +41,26 @@ class ScatterplotCard extends Component {
 
   findStudyAndSorter() {
     let study = this.props.studies.filter(
-      study => study.name === this.props.selectedStudySortingResult.study
+      study => study.name === this.props.selectedStudyName
     );
     let sorter = this.props.sorters.filter(
-      sorter => sorter.name === this.props.selectedStudySortingResult.sorter
+      sorter => sorter.name === this.props.selectedSorterName
     );
-    this.setState({ study: study[0], sorter: sorter[0] });
+    let studyAnalysisResult = this.props.studyAnalysisResults.filter(
+      sar => sar.studyName === this.props.selectedStudyName
+    );
+    this.setState({ study: study[0], sorter: sorter[0], studyAnalysisResult: studyAnalysisResult[0] });
   }
 
   render() {
-    const study = this.props.selectedStudySortingResult
-      ? this.props.selectedStudySortingResult.study
-      : "";
-    const sorter = this.props.selectedStudySortingResult
-      ? this.props.selectedStudySortingResult.sorter
-      : "";
+    const study = this.props.selectedStudyName || "";
+    const sorter = this.props.selectedSorterName || "";
     const loading =
-      isEmpty(this.props.selectedStudySortingResult) ||
-      isEmpty(this.state.study) ||
-      isEmpty(this.state.sorter);
+      (!this.props.selectedStudyName) ||
+      (!this.props.selectedSorterName) ||
+      (!this.state.study) ||
+      (!this.state.sorter) ||
+      (!this.state.studyAnalysisResult);
     return (
       <div
         className="card card--heatmap"
@@ -97,9 +99,9 @@ class ScatterplotCard extends Component {
               <ScatterplotContainer
                 study={this.state.study}
                 sorter={this.state.sorter}
-                selectedStudySortingResult={
-                  this.props.selectedStudySortingResult
-                }
+                studyAnalysisResult={this.state.studyAnalysisResult}
+                selectedStudyName={this.props.selectedStudyName}
+                selectedSorterName={this.props.selectedSorterName}
                 sliderValue={this.props.sliderValue}
                 format={this.props.format}
                 metric={this.props.metric}

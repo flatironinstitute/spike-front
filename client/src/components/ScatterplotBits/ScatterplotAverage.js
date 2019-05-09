@@ -43,7 +43,8 @@ class ScatterplotAverage extends Component {
       console.log(
         "NEW SELECTED RECORDING",
         this.state.selectedRecording,
-        this.props.selectedStudySortingResult
+        this.props.selectedStudyName,
+        this.props.selectedSorterName
       );
     }
   }

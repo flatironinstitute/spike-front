@@ -147,7 +147,8 @@ class HeatmapCount extends Component {
   };
 
   render() {
-    let loading = isEmpty(this.state.builtData);
+    // let loading = isEmpty(this.state.builtData) || isEmpty(this.props.studyAnalysisResults);
+    let loading = isEmpty(this.props.studyAnalysisResults);
     return (
       <div>
         {loading ? (
@@ -159,11 +160,12 @@ class HeatmapCount extends Component {
             <Row className="container__heatmap--row">
               <Col lg={6} sm={12}>
                 <HeatmapViz
-                  selectStudySortingResult={this.props.selectStudySortingResult}
-                  selectedStudySortingResult={
-                    this.props.selectedStudySortingResult
-                  }
+                  selectStudyName={this.props.selectStudyName}
+                  selectSorterName={this.props.selectSorterName}
+                  selectedStudyName={this.props.selectedStudyName}
+                  selectedSorterName={this.props.selectedSorterName}
                   groupedUnitResults={this.state.builtData}
+                  studyAnalysisResults={this.props.studyAnalysisResults}
                   studies={this.props.studies}
                   studysets={this.props.studysets}
                   format={this.props.format}
@@ -189,7 +191,8 @@ class HeatmapCount extends Component {
 
 function mapStateToProps(state) {
   return {
-    selectedStudySortingResult: state.selectedStudySortingResult,
+    selectedStudyName: state.selectedStudyName,
+    selectedSorterName: state.selectedSorterName,
     selectedRecording: state.selectedRecording
   };
 }

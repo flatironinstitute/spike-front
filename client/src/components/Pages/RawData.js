@@ -24,7 +24,8 @@ class RawData extends Component {
       "studies",
       "studySets",
       "trueUnits",
-      "unitResults"
+      "unitResults",
+      "studyAnalysisResults"
     ];
 
     this.state = {
@@ -35,7 +36,8 @@ class RawData extends Component {
       studies: [],
       studySets: [],
       trueUnits: [],
-      unitResults: []
+      unitResults: [],
+      studyAnalysisResults: []
     };
   }
 

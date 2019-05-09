@@ -12,12 +12,15 @@ import cpus from "./cpus";
 import groupedURs from "./groupedURs";
 import loading from "./loading";
 import selectedStudySortingResult from "./selectedStudySortingResult";
+import selectedStudyName from "./selectedStudyName";
+import selectedSorterName from "./selectedSorterName";
 import sorters from "./sorters";
 import stats from "./stats";
 import studies from "./studies";
 import studysets from "./studysets";
 import unitResults from "./unitResults";
 import ursByStudy from "./ursByStudy";
+import studyAnalysisResults from "./studyanalysisresults";
 
 const rootReducer = history =>
   combineReducers({
@@ -32,11 +35,14 @@ const rootReducer = history =>
     groupedURs,
     loading,
     selectedStudySortingResult,
+    selectedStudyName,
+    selectedSorterName,
     sorters,
     stats,
     studies,
     studysets,
     unitResults,
+    studyAnalysisResults,
     ursByStudy,
     router: connectRouter(history)
   });

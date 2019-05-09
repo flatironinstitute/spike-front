@@ -9,10 +9,13 @@ export const initialState = {
   loading: null,
   recordings: null,
   selectedStudySortingResult: null,
+  selectedStudyName: null,
+  selectedSorterName: null,
   sorters: null,
   stats: null,
   studies: null,
   studysets: null,
   unitResults: null,
-  ursByStudy: null
+  ursByStudy: null,
+  studyAnalysisResults: null
 };

@@ -56,6 +56,7 @@ const TrueUnit = require("../../models/TrueUnit");
 const SortingResult = require("../../models/SortingResult");
 const UnitResult = require("../../models/UnitResult");
 const SpikeSpray = require("../../models/SpikeSpray");
+const StudyAnalysisResult = require("../../models/StudyAnalysisResult");
 
 // import all the raw data
 const rawSorters = JSON.parse(
@@ -87,6 +88,13 @@ const spikeSpraysFname = data_directory + "/SpikeSprays.json";
 if (fs.existsSync(spikeSpraysFname)) {
   rawSpikeSprays = JSON.parse(
     fs.readFileSync(spikeSpraysFname, "utf-8")
+  );
+}
+let rawStudyAnalysisResults = [];
+const studyAnalysisResultsFname = data_directory + "/StudyAnalysisResults.json";
+if (fs.existsSync(studyAnalysisResultsFname)) {
+  rawStudyAnalysisResults = JSON.parse(
+    fs.readFileSync(studyAnalysisResultsFname, "utf-8")
   );
 }
 
@@ -467,6 +475,10 @@ async function formatAndLoadData() {
   // SpikeSprays
   await loadIntoDB(SpikeSpray, rawSpikeSprays, "Spike sprays");
   await writeCleanData(SpikeSpray, "spikesprays");
+
+  // StudyAnalysisResults
+  await loadIntoDB(StudyAnalysisResult, rawStudyAnalysisResults, "Study analysis results");
+  await writeCleanData(StudyAnalysisResult, "studyanalysisresults");
 
   // Delete WIP Files
   await emptyDataFolder(data_directory + "/cleanedData");

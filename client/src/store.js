@@ -21,12 +21,15 @@ const defaultState = {
   groupedURs: null,
   loading: null,
   selectedStudySortingResult: null,
+  selectedStudyName: null,
+  selectedSorterName: null,
   sorters: null,
   stats: null,
   studies: null,
   studysets: null,
   unitResults: null,
-  ursByStudy: null
+  ursByStudy: null,
+  studyAnalysisResults: null
 };
 
 export const history = createBrowserHistory();
