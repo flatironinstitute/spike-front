@@ -8,7 +8,6 @@ import Preloader from "../Preloader/Preloader";
 import DetailPageRow from "./DetailPageRow";
 import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
 import SpikeSprayV2 from "./SpikeSprayV2";
-// import ReactJson from "react-json-view";
 
 import "./detailpage.css";
 
@@ -21,6 +20,8 @@ import * as actionCreators from "../../actions/actionCreators";
 import { isEmpty, toTitleCase } from "../../utils";
 import { formatUnitResultsByStudy } from "../../dataHandlers";
 
+const axios = require("axios");
+
 class DetailPage extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +32,9 @@ class DetailPage extends Component {
       sliderValue: 0.8,
       sorter: "",
       unitsMap: [],
-      filteredData: []
+      filteredData: [],
+      selectedUnit: null,
+      spikeSprayData: null
     };
   }
 
@@ -76,6 +79,10 @@ class DetailPage extends Component {
       this.state.sliderValue !== prevState.sliderValue;
     if (optionsChanged) {
       this.applyResultFilters();
+    }
+
+    if (this.state.selectedUnit !== prevState.selectedUnit) {
+      this.createFetch();
     }
   }
 
@@ -269,16 +276,27 @@ class DetailPage extends Component {
     return copy;
   }
 
+  async createFetch() {
+    console.log("🧚 create fetch", this.state.selectedUnit);
+    // TODO: Remove when other spikes are live and use property from selectedUnitResult
+    const defaultUrl =
+      "http://kbucket.flatironinstitute.org/get/sha1/0aa39927530abed94f32c410f3a2226e2ee71c5e?signature=c516794c53257b327f39b8349cc39313f1a254e9";
+
+    try {
+      const response = await axios.get(defaultUrl);
+      if (response.status !== 200) {
+        console.error(response);
+      } else {
+        this.setState({ spikeSprayData: response.data });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   handleScatterplotClick = value => {
-    console.log("scatterplot click", value);
-    // URL: /api/spikespray/:studyName/:recordingName/:sorterName/:trueUnitId/:bestSortedUnitId
-    // this.props.fetchSpikeSpray(
-    //   studyName, => studyId REMOVE STUDY
-    //   recordingName, => recordingId
-    //   sorterName, => sorterId
-    //   trueUnitId, => trueUnitId
-    //   bestSortedUnitId => bestbestSortedUnitId
-    // );
+    console.log("🧚 scatterplot click", value);
+    this.setState({ selectedUnit: value });
   };
 
   render() {
@@ -292,6 +310,8 @@ class DetailPage extends Component {
 
     let heatmapTitle = this.getFormatCopy();
     let pageTitle = toTitleCase(this.state.study.replace(/_/g, " "));
+
+    console.log("🧚 spikeSprayData", this.state.spikeSprayData);
 
     return (
       <div>

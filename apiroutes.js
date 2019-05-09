@@ -42,12 +42,6 @@ router.get(
   "/api/ursbystudy/:name",
   unitResultsController.getUnitResultsByStudy
 );
-// Spike sprays
-router.get(
-  "/api/unitresult/spikespray/:id",
-  unitResultsController.getSpikeSprayById
-);
-
 // Contact Routes
 router.post("/api/contact", (req, res) => {
   // TODO: Attach to mail server
@@ -56,6 +50,13 @@ router.post("/api/contact", (req, res) => {
     success: true
   });
 });
+
+// Spike sprays
+// TODO: connect to fetch?
+router.get(
+  "/api/unitresult/spikespray/:id",
+  unitResultsController.getSpikeSprayById
+);
 
 /* Old Stuff & Existing Routes
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
