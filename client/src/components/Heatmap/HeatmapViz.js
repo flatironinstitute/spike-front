@@ -296,7 +296,7 @@ class HeatmapViz extends Component {
     }
     let trueSnrs = studyAnalysisResult.trueSnrs;
     // loop through the sorting results for the study, and get the metrics (e.g., counts) to display
-    let metricList = studyAnalysisResult.sortingResults.map(function(sortingResult) {
+    let cellvalList = studyAnalysisResult.sortingResults.map(function(sortingResult) {
       let metricVals;
       if (format === "count" || format === "average") {
         switch (metric) {
@@ -324,21 +324,38 @@ class HeatmapViz extends Component {
           );
         }
       }
+      let num_found = 0;
+      let num_missing = 0
+      for (let i = 0; i < trueSnrs.length; i++) {
+        let val0 = sortingResult.accuracies[i];
+        if (this.isNumeric(val0)) {
+          num_found++;
+        }
+        else {
+          num_missing++;
+        }
+      }
+      if (num_found === 0)
+        return {value: undefined, num_missing:num_missing};
+
       if (format === "count") {
         if (metricVals && metricVals.length > 0) {
           let numAbove = metricVals.filter(val => {
-            return val >= threshold; // metric threshold
+            return ((this.isNumeric(val)) && (val >= threshold)); // metric threshold
           });
-          return numAbove.length;
+          return {value: numAbove.length, num_missing:num_missing};
         } else {
-          return undefined;
+          return {value: undefined, num_missing:num_missing};
         }
       } else if (format === "average") {
         if (metricVals && metricVals.length > 0) {
           let valsToUse = [];
           for (let i = 0; i < trueSnrs.length; i++) {
             if (trueSnrs[i] > threshold) {
-              valsToUse.push(metricVals[i]);
+              let val0 = metricVals[i];
+              if (this.isNumeric(val0)) {
+                valsToUse.push(metricVals[i]);
+              }
             }
           }
           let aboveAvg = 0;
@@ -346,43 +363,40 @@ class HeatmapViz extends Component {
             let sum = valsToUse.reduce((a, b) => a + b);
             aboveAvg = sum / valsToUse.length;
           }
+
           // This just prints the output to 2 digits
           let avgRounded = Math.round(aboveAvg * 100) / 100;
-
-          return avgRounded;
+          return {value: avgRounded, num_missing:num_missing};
         } else {
-          return undefined;
+          return {value: undefined, num_missing:num_missing};
         }
       } else if (format === "cpu") {
         if (metricVals && metricVals.length > 0) {
           let sum = metricVals.reduce((a, b) => a + b);
           let avg = sum / metricVals.length;
           let avgRounded = Math.round(avg);
-          return avgRounded;
+          return {value: avgRounded, num_missing:num_missing};
         } else {
-          return undefined;
+          return {value: undefined, num_missing:num_missing};
         }
       } else {
         Sentry.captureMessage(
           "Unsupported format in computeTableRowCellsFromStudy",
           format
         );
-        return undefined;
+        return {value: undefined, num_missing:num_missing};
       }
     }, this);
 
-    // compute the max metric value for row normalization
     let maxMetricVal = 0;
-    metricList.forEach(function(val0) {
-      if (val0 !== undefined && val0 > maxMetricVal) maxMetricVal = val0;
-    }, this);
-    if (!rowNormalize) {
-      maxMetricVal = 1;
-    }
+    cellvalList.forEach(x => {
+      if ((this.isNumeric(x.value)) && (x.value > maxMetricVal))
+        maxMetricVal = x.value;
+    })
 
     // For each result, we can now determin the color and text
     studyAnalysisResult.sortingResults.forEach(function(sortingResult, i) {
-      let val0 = metricList[i];
+      let val0 = cellvalList[i].value;
       let text, color, bgcolor;
       if (val0 === undefined) {
         text = "";
@@ -390,9 +404,14 @@ class HeatmapViz extends Component {
         bgcolor = "white";
       } else {
         text = val0;
+        if (cellvalList[i].num_missing > 0)
+          text += '*';
+        if ((rowNormalize) && (maxMetricVal)) {
+          val0 = val0 / maxMetricVal;
+        }
         if (maxMetricVal) {
-          color = this.computeForegroundColor(val0 / maxMetricVal);
-          bgcolor = this.computeBackgroundColor(val0 / maxMetricVal);
+          color = this.computeForegroundColor(val0);
+          bgcolor = this.computeBackgroundColor(val0);
         } else {
           color = "black";
           bgcolor = "white";
@@ -469,6 +488,10 @@ class HeatmapViz extends Component {
       }
     });
     return ret;
+  }
+
+  isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
   }
 
   render() {

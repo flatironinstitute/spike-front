@@ -42,6 +42,7 @@ const Recording = require("../../models/Recording");
 const TrueUnit = require("../../models/TrueUnit");
 const SortingResult = require("../../models/SortingResult");
 const UnitResult = require("../../models/UnitResult");
+const StudyAnalysisResult = require("../../models/StudyAnalysisResult");
 
 async function deleteData() {
   console.log("😢😢 Goodbye Data...");
@@ -53,6 +54,7 @@ async function deleteData() {
   await TrueUnit.remove();
   await SortingResult.remove();
   await UnitResult.remove();
+  await StudyAnalysisResult.remove();
   console.log("Data Deleted.\n");
   process.exit();
 }
