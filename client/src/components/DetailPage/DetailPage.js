@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import * as Sentry from "@sentry/browser";
+// import * as Sentry from "@sentry/browser";
 
 // Components
 import { Card, Col, Container, Row } from "react-bootstrap";
@@ -8,6 +8,7 @@ import Preloader from "../Preloader/Preloader";
 import DetailPageRow from "./DetailPageRow";
 import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
 import SpikeSpray from "./SpikeSpray";
+import HeatmapViz from "../Heatmap/HeatmapViz";
 
 import "./detailpage.css";
 
@@ -18,215 +19,35 @@ import * as actionCreators from "../../actions/actionCreators";
 
 // Utilities 💡
 import { isEmpty } from "../../utils";
-import { formatUnitResultsByStudy } from "../../dataHandlers";
 
 class DetailPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      study: "",
       format: "count",
       metric: "accuracy",
       sliderValue: 0.8,
-      sorter: "",
-      // unitsMap: [],
-      filteredData: [],
+      sorterName: "",
       selectedUnit: null
     };
   }
 
   componentDidMount() {
-    this.getStudyAndSorter();
-  }
-
-  getStudyAndSorter() {
-    let study,
-      sorter = "";
-    if (this.props.selectedStudySortingResult) {
-      study = this.props.selectedStudySortingResult.study;
-      sorter = this.props.selectedStudySortingResult.sorter;
-    } else {
-      let activeRoute = this.props.router.location.pathname;
-      let activeArr = activeRoute.split("/").filter(item => item);
-      study = activeArr[1];
-    }
-    this.setState({
-      study,
-      sorter
-    });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.study !== prevState.study) {
-      // Fetch the unit results for this study and all sorters
-      this.props.fetchURsByStudy(this.state.study);
-    }
-
-    if (this.props.ursByStudy !== prevProps.ursByStudy) {
-      this.mapUnits();
-    }
-
-    if (this.state.unitsMap !== prevState.unitsMap) {
-      this.applyResultFilters();
-    }
-
-    let optionsChanged =
-      this.state.format !== prevState.format ||
-      this.state.metric !== prevState.metric ||
-      this.state.sliderValue !== prevState.sliderValue;
-    if (optionsChanged) {
-      this.applyResultFilters();
-    }
-
     if (this.state.selectedUnit !== prevState.selectedUnit) {
       // TODO: Remove conditional when default db is set.
-      let url = this.state.selectedUnit.u.spikesprayUrl || "";
-      this.props.fetchSpikeSpray(url);
+      // let url = this.state.selectedUnit.u.spikesprayUrl || "";
+      // this.props.fetchSpikeSpray(url);
     }
   }
 
-  async mapUnits() {
-    let unitsMap = await formatUnitResultsByStudy(this.props.ursByStudy);
-    let sorter = this.state.sorter ? this.state.sorter : unitsMap[0].sorter;
-    this.setState({ unitsMap: unitsMap, sorter: sorter });
-  }
-
-  applyResultFilters() {
-    var filteredData;
-    switch (this.state.format) {
-      case "count":
-        filteredData = this.filterCountMap();
-        break;
-      case "average":
-        filteredData = this.filterAverageMap();
-        break;
-      default:
-        filteredData = this.state.unitsMap;
-    }
-    this.setState({ filteredData: filteredData });
-  }
-
-  filterAverageMap() {
-    let property;
-    switch (this.state.metric) {
-      case "accuracy":
-        property = "checkAccuracy";
-        break;
-      case "recall":
-        property = "checkRecall";
-        break;
-      case "precision":
-        property = "checkPrecision";
-        break;
-      default:
-        property = "checkAccuracy";
-        break;
-    }
-    let filteredData = this.filterAverage(this.state.unitsMap, property);
-    return filteredData;
-  }
-
-  filterCountMap() {
-    let property;
-    switch (this.state.metric) {
-      case "accuracy":
-        property = "accuracies";
-        break;
-      case "recall":
-        property = "recalls";
-        break;
-      case "precision":
-        property = "precisions";
-        break;
-      default:
-        property = "accuracies";
-        break;
-    }
-    let filteredData = this.filterCount(this.state.unitsMap, property);
-    return filteredData;
-  }
-
-  filterAverage(sorterArray, property) {
-    let newArr = sorterArray.map(sorter => {
-      let overMin = [];
-      sorter.true_units.forEach(unit => {
-        if (unit.snr > this.state.sliderValue) {
-          overMin.push(unit[property]);
-        }
-      });
-      let aboveAvg = 0;
-      if (overMin.length) {
-        let sum = overMin.reduce((a, b) => a + b);
-        aboveAvg = sum / overMin.length;
-      }
-      // This just prints the output to 2 digits
-      sorter.in_range = Math.round(aboveAvg * 100) / 100;
-      sorter.color = Math.round(aboveAvg * 100) / 100;
-      return sorter;
-    });
-    return newArr;
-  }
-
-  filterCount(sorterArray, property) {
-    let newArr = sorterArray.map(sorter => {
-      if (!sorter[property]) {
-        Sentry.captureMessage("No accuracy values for this sorter: ", sorter);
-        return sorter;
-      } else {
-        let above = sorter[property].filter(accu => {
-          return accu >= this.state.sliderValue;
-        });
-        sorter.in_range = above.length;
-        sorter.color = above.length;
-        return sorter;
-      }
-    });
-    return newArr;
-  }
-
-  filterRecallCount(sorterArray) {
-    let newArr = sorterArray.map(sorter => {
-      if (!sorter.recalls) {
-        Sentry.captureMessage("No recall values for this sorter: ", sorter);
-        sorter.in_range = 0;
-        sorter.color = 0;
-        return sorter;
-      } else {
-        let above = sorter.recalls.filter(accu => {
-          return accu >= this.state.sliderValue;
-        });
-        sorter.in_range = above.length;
-        sorter.color = above.length;
-        return sorter;
-      }
-    });
-    return newArr;
-  }
-
-  filterPrecisionCount(sorterArray) {
-    let newArr = sorterArray.map(sorter => {
-      if (!sorter.precisions) {
-        Sentry.captureMessage("No precision values for this sorter: ", sorter);
-        sorter.in_range = 0;
-        sorter.color = 0;
-        return sorter;
-      } else {
-        let above = sorter.precisions.filter(accu => {
-          return accu >= this.state.sliderValue;
-        });
-        sorter.in_range = above.length;
-        sorter.color = above.length;
-        return sorter;
-      }
-    });
-    return newArr;
-  }
-
-  handleSorterChange = value => {
+  handleSorterChange = sorterName => {
     this.setState({
-      sorter: value.sorter
+      sorterName: sorterName
     });
-    this.props.selectStudySortingResult(value);
+    this.props.selectSorterName(sorterName);
   };
 
   handleFormatChange = value => {
@@ -280,6 +101,7 @@ class DetailPage extends Component {
   };
 
   getSpikeSprayCard() {
+    return 'nodata';
     if (isEmpty(this.state.selectedUnit)) {
       return "nounit";
     } else if (isEmpty(this.props.spikespray)) {
@@ -290,13 +112,9 @@ class DetailPage extends Component {
   }
 
   render() {
-    let sorters = this.state.unitsMap
-      ? this.state.unitsMap.map(result => result.sorter)
-      : [];
     let loading =
-      isEmpty(this.state.study) ||
-      isEmpty(this.state.sorter) ||
-      isEmpty(this.state.filteredData);
+      isEmpty(this.props.studyName) ||
+      isEmpty(this.props.studyAnalysisResults);
 
     let format = this.getSpikeSprayCard();
 
@@ -307,6 +125,12 @@ class DetailPage extends Component {
       borderRadius: "5px",
       display: "inline-block"
     };
+
+    let studyAnalysisResult = {};
+    this.props.studyAnalysisResults.forEach(sar => {
+      if (sar.studyName === this.props.studyName)
+        studyAnalysisResult = sar;
+    });
 
     return (
       <div>
@@ -332,15 +156,28 @@ class DetailPage extends Component {
                       </div>
                       <div className="card__footer">
                         <hr />
-                        <DetailPageRow
+                        
+                        {/* <DetailPageRow
                           {...this.props}
                           vizDatum={this.state.filteredData}
                           key={`hmrow${0}`}
                           index={0}
                           format={this.state.format}
-                          sorters={sorters.sort()}
-                          selectedSorter={this.state.sorter}
+                          // sorters={sorters.sort()}
+                          selectedSorter={this.state.sorterName}
                           handleSorterChange={this.handleSorterChange}
+                        /> */}
+                        <HeatmapViz
+                          groupByStudySets={false}
+                          selectSorterName={sorterName => {this.setState({sorterName})}}
+                          selectedStudyName={this.props.studyName}
+                          selectedSorterName={this.state.sorterName}
+                          studyAnalysisResults={[studyAnalysisResult]}
+                          studies={this.props.studies}
+                          studysets={this.props.studysets}
+                          format={this.state.format}
+                          metric={this.state.metric}
+                          threshold={this.state.sliderValue}
                         />
                       </div>
                     </div>
@@ -357,7 +194,11 @@ class DetailPage extends Component {
                 </Col>
                 <Col lg={6} sm={12}>
                   <ScatterplotCard
-                    {...this.props}
+                    studies={this.props.studies}
+                    sorters={this.props.sorters}
+                    studyAnalysisResults={[studyAnalysisResult]}
+                    studyName={this.props.studyName}
+                    sorterName={this.state.sorterName}
                     sliderValue={this.state.sliderValue}
                     format={this.state.format}
                     metric={this.state.metric}
@@ -427,9 +268,7 @@ class DetailPage extends Component {
 }
 
 function mapStateToProps(state) {
-  return {
-    selectedStudySortingResult: state.selectedStudySortingResult
-  };
+  return {};
 }
 
 function mapDispatchToProps(dispatch) {

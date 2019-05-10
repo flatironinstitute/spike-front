@@ -32,8 +32,8 @@ class ScatterplotCount extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (
       this.props.studyAnalysisResult !== prevProps.studyAnalysisResult ||
-      this.props.selectedStudyName !== prevProps.selectedStudyName ||
-      this.props.selectedSorterName !== prevProps.selectedSorterName ||
+      this.props.studyName !== prevProps.studyName ||
+      this.props.sorterName !== prevProps.sorterName ||
       this.props.metric !== prevProps.metric
     ) {
       this.buildCountData();
@@ -43,8 +43,8 @@ class ScatterplotCount extends Component {
         console.log(
           "🕌 NEW SELECTED RECORDING",
           this.state.selectedRecording,
-          this.props.selectedStudyName,
-          this.props.selectedSorterName
+          this.props.studyName,
+          this.props.sorterName
         );
       }
     }
@@ -75,7 +75,7 @@ class ScatterplotCount extends Component {
     let sar = this.props.studyAnalysisResult;
     let snrs = sar.trueSnrs;
     sar.sortingResults.forEach((sr) => {
-      if (sr.sorterName === this.props.selectedSorterName) {
+      if (sr.sorterName === this.props.sorterName) {
         let yvals;
         switch (this.props.metric) {
           case "accuracy":
@@ -197,7 +197,7 @@ class ScatterplotCount extends Component {
             opacityType="literal"
             data={data}
             onValueMouseOver={d => this.setState({ hoveredNode: d })}
-            onValueClick={d => this.props.handleScatterplotClick(d)}
+            onValueClick={d => {if (this.props.handleScatterplotClick) this.props.handleScatterplotClick(d);}}
           />
           {hoveredNode && <Hint value={valueObj} align={alignment} />}
           <LineSeries

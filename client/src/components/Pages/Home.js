@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Preloader from "../Preloader/Preloader";
 import HomeContentContainer from "../Heatmap/HomeContentContainer";
-import { formatUnitResults } from "../../dataHandlers";
+// import { formatUnitResults } from "../../dataHandlers";
 import { isEmpty } from "../../utils";
 import { Container, Card } from "react-bootstrap";
 import StatsAlert from "../Header/StatsAlert";

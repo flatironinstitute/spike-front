@@ -10,7 +10,6 @@ if (process.env.NODE_ENV === "production") {
 
 /* V2 Data Actions
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-export const RECEIVE_ALGORITHMS = "RECEIVE_ALGORITHMS";
 export const RECEIVE_CPUS = "RECEIVE_CPUS";
 export const RECEIVE_GROUPED_URS = "RECEIVE_GROUPED_URS";
 export const RECEIVE_RECORDINGS = "RECEIVE_RECORDINGS";
@@ -21,10 +20,13 @@ export const RECEIVE_UNIT_RESULTS = "RECEIVE_UNIT_RESULTS";
 export const RECEIVE_STATS = "RECEIVE_STATS";
 export const RECEIVE_STUDY_SETS = "RECEIVE_STUDY_SETS";
 export const RECEIVE_STUDIES = "RECEIVE_STUDIES";
-export const RECEIVE_UNIT_RESULTS = "RECEIVE_UNIT_RESULTS";
 export const RECEIVE_URS_BY_STUDY = "RECEIVE_URS_BY_STUDY";
-export const SELECT_STUDY_SORTING_RESULT = "SELECT_STUDY_SORTING_RESULT";
 export const RECEIVE_STUDY_ANALYSIS_RESULTS = "RECEIVE_STUDY_ANALYSIS_RESULTS";
+
+export const SELECT_STUDY_SORTING_RESULT = "SELECT_STUDY_SORTING_RESULT";
+export const SELECT_SORTER_NAME = "SELECT_SORTER_NAME";
+export const SELECT_STUDY_NAME = "SELECT_STUDY_NAME";
+
 
 export const START_LOADING = "START_LOADING";
 export const END_LOADING = "END_LOADING";
@@ -346,7 +348,7 @@ export const fetchStudyAnalysisResults = () => {
   let url = `/api/studyanalysisresults`;
   return function (dispatch) {
     dispatch(startLoading());
-    return createFetch(url)
+    return createFetchAPI(url)
       .then(res => {
         dispatch(receiveStudyAnalysisResults(res.studyAnalysisResults));
       })

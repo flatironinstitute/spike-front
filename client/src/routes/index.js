@@ -5,6 +5,9 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as actionCreators from "../actions/actionCreators";
 
+import { Card, Col, Container, Row } from "react-bootstrap";
+import Preloader from "../components/Preloader/Preloader";
+
 // import components
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
@@ -36,6 +39,18 @@ class Routes extends Component {
   }
 
   render() {
+    let loadingContainer = (
+      <div className="page__body">
+        <Container className="container__heatmap">
+          <Card>
+            <Card.Body>
+              <Preloader />
+            </Card.Body>
+          </Card>
+        </Container>
+      </div>
+    );
+
     return (
       <div className="wrapper">
         <Header router={this.props.router} />
@@ -72,7 +87,21 @@ class Routes extends Component {
           />
           <Route
             path="/study/:studyName"
-            render={props => <DetailPage {...this.props} />}
+            render={props => 
+              (!this.props.studyAnalysisResults) ||
+              (!this.props.studies) ||
+              (!this.props.sorters) ||
+              (!this.props.studysets) ? (loadingContainer) :
+              (
+                <DetailPage
+                  studyName={props.match.params.studyName}
+                  studyAnalysisResults={this.props.studyAnalysisResults}
+                  studies={this.props.studies}
+                  sorters={this.props.sorters}
+                  studysets={this.props.studysets}
+                />
+              )
+            }
           />
           <Route render={props => <FourOhFour {...this.props} />} />
         </Switch>

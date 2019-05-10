@@ -19,8 +19,8 @@ class ScatterplotContainer extends Component {
 
   render() {
     const {
-      selectedStudyName,
-      selectedSorterName,
+      studyName,
+      sorterName,
       studyAnalysisResult,
       sliderValue,
       metric,
@@ -49,12 +49,11 @@ class ScatterplotContainer extends Component {
             case "count":
               return (
                 <ScatterplotCount
-                  {...this.props}
                   lineOrientation={'horizontal'}
                   colorRange={colorRanges['count']}
                   studyAnalysisResult={studyAnalysisResult}
-                  selectedStudyName={selectedStudyName}
-                  selectedSorterName={selectedSorterName}
+                  studyName={studyName}
+                  sorterName={sorterName}
                   sliderValue={sliderValue}
                   format={format}
                   metric={metric}
@@ -64,12 +63,11 @@ class ScatterplotContainer extends Component {
             case "average":
               return (
                 <ScatterplotCount
-                  {...this.props}
                   lineOrientation={'vertical'}
                   colorRange={colorRanges['average']}
                   studyAnalysisResult={studyAnalysisResult}
-                  selectedStudyName={selectedStudyName}
-                  selectedSorterName={selectedSorterName}
+                  studyName={studyName}
+                  sorterName={sorterName}
                   sliderValue={sliderValue}
                   format={format}
                   metric={metric}

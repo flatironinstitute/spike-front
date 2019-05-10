@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { isEmpty } from "../../utils";
 import { Redirect } from "react-router";
-import * as Sentry from "@sentry/browser";
+// import * as Sentry from "@sentry/browser";
 
 // Components
 import { Col, Container, Row } from "react-bootstrap";
@@ -56,6 +56,7 @@ class HeatmapCount extends Component {
             <Row className="container__heatmap--row">
               <Col lg={6} sm={12}>
                 <HeatmapViz
+                  groupByStudySets={true}
                   selectStudyName={this.props.selectStudyName}
                   selectSorterName={this.props.selectSorterName}
                   selectedStudyName={this.props.selectedStudyName}
@@ -72,8 +73,14 @@ class HeatmapCount extends Component {
               </Col>
               <Col lg={6} sm={12}>
                 <ScatterplotCard
-                  {...this.props}
+                  studies={this.props.studies}
+                  sorters={this.props.sorters}
+                  studyAnalysisResults={this.props.studyAnalysisResults}
+                  studyName={this.props.selectedStudyName}
+                  sorterName={this.props.selectedSorterName}
                   sliderValue={this.props.sliderValue}
+                  format={this.props.format}
+                  metric={this.props.metric}
                   cardHeight={this.state.cardHeight}
                   handleScatterplotClick={this.handleScatterplotClick}
                 />

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ScatterplotContainer from "./ScatterplotContainer";
-import { isEmpty } from "../../utils";
+// import { isEmpty } from "../../utils";
 import { Link } from "react-router-dom";
 
 class ScatterplotCard extends Component {
@@ -16,15 +16,15 @@ class ScatterplotCard extends Component {
   }
 
   componentDidMount() {
-    if ((this.props.selectedStudyName) && (this.props.selectedSorterName)) {
+    if ((this.props.studyName) && (this.props.sorterName)) {
       this.findStudyAndSorter();
     }
   }
 
   componentDidUpdate(prevProps) {
     if (
-      (this.props.selectedStudyName !== prevProps.selectedStudyName) ||
-      (this.props.selectedSorterName !== prevProps.selectedSorterName)
+      (this.props.studyName !== prevProps.studyName) ||
+      (this.props.sorterName !== prevProps.sorterName)
     ) {
       this.findStudyAndSorter();
     }
@@ -41,23 +41,23 @@ class ScatterplotCard extends Component {
 
   findStudyAndSorter() {
     let study = this.props.studies.filter(
-      study => study.name === this.props.selectedStudyName
+      study => study.name === this.props.studyName
     );
     let sorter = this.props.sorters.filter(
-      sorter => sorter.name === this.props.selectedSorterName
+      sorter => sorter.name === this.props.sorterName
     );
     let studyAnalysisResult = this.props.studyAnalysisResults.filter(
-      sar => sar.studyName === this.props.selectedStudyName
+      sar => sar.studyName === this.props.studyName
     );
     this.setState({ study: study[0], sorter: sorter[0], studyAnalysisResult: studyAnalysisResult[0] });
   }
 
   render() {
-    const study = this.props.selectedStudyName || "";
-    const sorter = this.props.selectedSorterName || "";
+    const study = this.props.studyName || "";
+    const sorter = this.props.sorterName || "";
     const loading =
-      (!this.props.selectedStudyName) ||
-      (!this.props.selectedSorterName) ||
+      (!this.props.studyName) ||
+      (!this.props.sorterName) ||
       (!this.state.study) ||
       (!this.state.sorter) ||
       (!this.state.studyAnalysisResult);
@@ -105,14 +105,13 @@ class ScatterplotCard extends Component {
                 study={this.state.study}
                 sorter={this.state.sorter}
                 studyAnalysisResult={this.state.studyAnalysisResult}
-                selectedStudyName={this.props.selectedStudyName}
-                selectedSorterName={this.props.selectedSorterName}
+                studyName={this.props.studyName}
+                sorterName={this.props.sorterName}
                 sliderValue={this.props.sliderValue}
                 format={this.props.format}
                 metric={this.props.metric}
                 cardHeight={this.props.cardHeight}
                 handleScatterplotClick={this.props.handleScatterplotClick}
-                {...this.props}
               />
             </div>
           )}

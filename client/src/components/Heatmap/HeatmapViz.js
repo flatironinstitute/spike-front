@@ -37,76 +37,87 @@ class HeatmapViz extends Component {
   handleChartHeight() {
     let elmnt = document.getElementById("heatmap-card");
     let height = elmnt.offsetHeight;
-    this.props.handleCardHeightChange(height);
+    if (this.props.handleCardHeightChange)
+      this.props.handleCardHeightChange(height);
   }
 
   buildVizData(studyAnalysisResults) {
     if ((studyAnalysisResults) && (studyAnalysisResults.length > 0)) {
-      // assemble a lookup: study_set_id -> study_set_name which we will need later
-      let studySetNamesById = {};
-      this.props.studysets.forEach(function(x, i) {
-        studySetNamesById[x._id] = x.name;
-      }, this);
-
-      // assemble a lookup: study_name -> study_set_name
-      // and a collection of study set names
-      let studySetByStudy = {}; // lookup study_name -> study_set_name
-      let studySetNames = {}; // collection of study set names (will be sorted list below)
-      this.props.studies.forEach(function(study, i) {
-        let studySetName = studySetNamesById[study.studySet];
-        studySetByStudy[study.name] = studySetName;
-        studySetNames[studySetName] = true;
-      }, this);
-      // make it a sorted list
-      studySetNames = Object.keys(studySetNames);
-      studySetNames.sort();
 
       // Assemble the table rows (list of objects that will be passed to the ExpandingHeatmapTable component)
       let tableRows = [];
-      studySetNames.forEach(function(studySet, ii) {
-        // loop through the study sets
-        // prepare a list of the studies in the study set (formatted properly for convenience)
-        let studyAnalysisResultsInStudySet = [];
-        studyAnalysisResults.forEach(function(studyAnalysisResult, jj) {
-          // loop through the studies with results looking for the ones that match the study set
-          let studyName = studyAnalysisResult.studyName;
-          if (studySetByStudy[studyName] === studySet) {
-            /*
-            // important to sort the results by sorter so they all line up
-            studyWithResults0.sort((a, b) => {
-              let textA = a.sorter.toUpperCase();
-              let textB = b.sorter.toUpperCase();
-              return textA < textB ? -1 : textA > textB ? 1 : 0;
-            });
-            */
-            studyAnalysisResultsInStudySet.push(studyAnalysisResult);
-          }
-          return null;
+      if (this.props.groupByStudySets) {
+        // assemble a lookup: study_set_id -> study_set_name which we will need later
+        let studySetNamesById = {};
+        this.props.studysets.forEach(function(x, i) {
+          studySetNamesById[x._id] = x.name;
         }, this);
-        // Here's the table row associated with the study set
-        let tableRow = {
-          id: 'studySet--' + studySet,
-          cells: this.computeTableRowCellsFromStudySet(
-            studyAnalysisResultsInStudySet,
-            studySet
-          ),
-          subrows: []
-        };
-        // loop through the study analysis results in the study set and add a row for each
-        studyAnalysisResultsInStudySet.forEach(function(studyAnalysisResult, kk) {
-          tableRow.subrows.push({
-            cells: this.computeTableRowCellsFromStudyAnalysisResult(studyAnalysisResult, false)
+
+        // assemble a lookup: study_name -> study_set_name
+        // and a collection of study set names
+        let studySetByStudy = {}; // lookup study_name -> study_set_name
+        let studySetNames = {}; // collection of study set names (will be sorted list below)
+        this.props.studies.forEach(function(study, i) {
+          let studySetName = studySetNamesById[study.studySet];
+          studySetByStudy[study.name] = studySetName;
+          studySetNames[studySetName] = true;
+        }, this);
+        // make it a sorted list
+        studySetNames = Object.keys(studySetNames);
+        studySetNames.sort();
+
+        studySetNames.forEach(function(studySet, ii) {
+          // loop through the study sets
+          // prepare a list of the studies in the study set (formatted properly for convenience)
+          let studyAnalysisResultsInStudySet = [];
+          studyAnalysisResults.forEach(function(studyAnalysisResult, jj) {
+            // loop through the studies with results looking for the ones that match the study set
+            let studyName = studyAnalysisResult.studyName;
+            if (studySetByStudy[studyName] === studySet) {
+              /*
+              // important to sort the results by sorter so they all line up
+              studyWithResults0.sort((a, b) => {
+                let textA = a.sorter.toUpperCase();
+                let textB = b.sorter.toUpperCase();
+                return textA < textB ? -1 : textA > textB ? 1 : 0;
+              });
+              */
+              studyAnalysisResultsInStudySet.push(studyAnalysisResult);
+            }
+            return null;
+          }, this);
+          // Here's the table row associated with the study set
+          let tableRow = {
+            id: 'studySet--' + studySet,
+            cells: this.computeTableRowCellsFromStudySet(
+              studyAnalysisResultsInStudySet,
+              studySet
+            ),
+            subrows: []
+          };
+          // loop through the study analysis results in the study set and add a row for each
+          studyAnalysisResultsInStudySet.forEach(function(studyAnalysisResult, kk) {
+            tableRow.subrows.push({
+              cells: this.computeTableRowCellsFromStudyAnalysisResult(studyAnalysisResult, false)
+            });
+            return null;
+          }, this);
+          tableRows.push(tableRow);
+
+          // add a spacer row -- which should have the same number of cells and perhaps some formatting associated with the study set
+          tableRows.push({
+            cells: this.computeEmptyTableRowCellsFromStudyAnalysisResult(studyAnalysisResultsInStudySet[0])
           });
           return null;
         }, this);
-        tableRows.push(tableRow);
-
-        // add a spacer row -- which should have the same number of cells and perhaps some formatting associated with the study set
-        tableRows.push({
-          cells: this.computeEmptyTableRowCellsFromStudyAnalysisResult(studyAnalysisResultsInStudySet[0])
-        });
-        return null;
-      }, this);
+      }
+      else {
+        this.props.studyAnalysisResults.forEach(function(studyAnalysisResult) {
+          tableRows.push({
+            cells: this.computeTableRowCellsFromStudyAnalysisResult(studyAnalysisResult, false)
+          });
+        }, this);
+      }
 
       let sar = studyAnalysisResults[0]; // first study analysis result
       let sorterNames = sar.sortingResults.map(function(sr) {
@@ -463,8 +474,10 @@ class HeatmapViz extends Component {
 
   handleCellSelected(cell) {
     if (cell.selectable) {
-      this.props.selectStudyName(cell.info.studyName);
-      this.props.selectSorterName(cell.info.sorterName);
+      if (this.props.selectStudyName)
+        this.props.selectStudyName(cell.info.studyName);
+      if (this.props.selectSorterName)
+        this.props.selectSorterName(cell.info.sorterName);
     }
   }
 
