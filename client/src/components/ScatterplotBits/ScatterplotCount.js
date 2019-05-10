@@ -152,6 +152,7 @@ class ScatterplotCount extends Component {
 
   handleScatterplotClick(d) {
     if (this.props.handleScatterplotClick) {
+      this.setState({selectedNode: d});
       this.props.handleScatterplotClick(d);
     }
   }

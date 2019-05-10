@@ -38,10 +38,16 @@ class HeatmapCount extends Component {
     });
   };
 
+  handleScatterplotClick = d => {
+    this.setState({
+      redirect: true
+    });
+  }
+
   render() {
     let loading = isEmpty(this.props.studyAnalysisResults);
     let study = this.props.selectedStudyName || "";
-    study = "/studyresult/" + study;
+    study = "/studyresults/" + study;
     if (this.state.redirect) {
       return <Redirect push to={study} />;
     }

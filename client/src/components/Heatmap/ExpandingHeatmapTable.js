@@ -8,9 +8,20 @@ class ExpandingHeatmapTable extends React.Component {
   // props are rows and header
   constructor(props) {
     super(props);
+
+    let selectedCellId = null;
+    props.rows.forEach(row => {
+      row.cells.forEach(c => {
+        if (c.selected) {
+          console.log('------- selected!!!', c);
+          selectedCellId = c.id;
+        }
+      });
+    })
+
     this.state = {
       expandedRowIds: {},
-      selectedCellId: null
+      selectedCellId: selectedCellId
     };
 
     this.handleCollapse = this.handleCollapse.bind(this);

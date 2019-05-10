@@ -42,7 +42,7 @@ class HeatmapSNR extends Component {
   render() {
     let loading = isEmpty(this.props.studyAnalysisResults);
     let study = this.props.selectedStudyName || "";
-    study = "/studyresult/" + study;
+    study = "/studyresults/" + study;
     if (this.state.redirect) {
       return <Redirect push to={study} />;
     }

@@ -86,7 +86,7 @@ class Routes extends Component {
             render={props => <Studies {...this.props} />}
           />
           <Route
-            path="/studyresult/:studyName"
+            path="/studyresults/:studyName"
             render={props => 
               (!this.props.studyAnalysisResults) ||
               (!this.props.studies) ||
@@ -95,6 +95,7 @@ class Routes extends Component {
               (
                 <DetailPage
                   studyName={props.match.params.studyName}
+                  sorterName={this.props.selectedSorterName}
                   studyAnalysisResults={this.props.studyAnalysisResults}
                   studies={this.props.studies}
                   sorters={this.props.sorters}

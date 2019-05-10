@@ -63,7 +63,7 @@ class Header extends Component {
                 height="48"
                 className="d-inline-block align-top"
               />
-              <p className="navbar__pagename">{this.getPageName()}</p>
+              {/*<p className="navbar__pagename">{this.getPageName()}</p>*/}
             </Navbar.Brand>
           </LinkContainer>
           <Nav className="navbar__right">

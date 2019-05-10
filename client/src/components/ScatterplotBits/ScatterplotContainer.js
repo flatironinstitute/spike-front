@@ -41,7 +41,7 @@ class ScatterplotContainer extends Component {
           this.props.handleScatterplotClick ?
           (
             <p>
-              Click a marker below to see unit details.
+              Click a marker below for more details.
             </p>
           ) : (<span></span>)
         }

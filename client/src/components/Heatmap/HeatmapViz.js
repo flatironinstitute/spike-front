@@ -7,7 +7,13 @@ import ExpandingHeatmapTable from "./ExpandingHeatmapTable";
 class HeatmapViz extends Component {
   constructor(props) {
     super(props);
-    this.state = { tableRows: [], tableHeader: [], vizWidth: null };
+    this.state = { 
+      tableRows: [], 
+      tableHeader: [], 
+      vizWidth: null,
+      selectedStudyName: props.selectedStudyName,
+      selectedSorterName: props.selectedSorterName
+    };
     this.handleCellSelected = this.handleCellSelected.bind(this);
   }
 
@@ -21,8 +27,8 @@ class HeatmapViz extends Component {
       this.props.threshold !== prevProps.threshold ||
       this.props.format !== prevProps.format ||
       this.props.metric !== prevProps.metric ||
-      this.props.selectedStudyName !== prevProps.selectedStudyName ||
-      this.props.selectedSorterName !== prevProps.selectedSorterName
+      this.state.selectedStudyName !== prevState.selectedStudyName ||
+      this.state.selectedSorterName !== prevState.selectedSorterName
     ) {
       this.buildVizData(this.props.studyAnalysisResults);
     }
@@ -286,7 +292,7 @@ class HeatmapViz extends Component {
     let threshold = this.props.threshold;
     let ret = []; // the cells to return
     // the first cell is the name of the study
-    let link = isStudySet ? null : `/studyresult/${studyAnalysisResult.studyName}`;
+    let link = isStudySet ? null : `/studyresults/${studyAnalysisResult.studyName}`;
     ret.push({
       text: studyAnalysisResult.studyName,
       link: link,
@@ -430,6 +436,7 @@ class HeatmapViz extends Component {
         border_right: true,
         text_align: "center",
         selectable: isStudySet ? false : true,
+        selected: ((studyAnalysisResult.studyName === this.state.selectedStudyName) && (sortingResult.sorterName === this.state.selectedSorterName)),
         info: {
           studyName: studyAnalysisResult.studyName,
           sorterName: sortingResult.sorterName
@@ -474,6 +481,10 @@ class HeatmapViz extends Component {
         this.props.selectStudyName(cell.info.studyName);
       if (this.props.selectSorterName)
         this.props.selectSorterName(cell.info.sorterName);
+      this.setState({
+        selectedStudyName: cell.info.studyName,
+        selectedSorterName: cell.info.sorterName
+      });
     }
   }
 

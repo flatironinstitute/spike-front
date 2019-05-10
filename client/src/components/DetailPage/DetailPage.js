@@ -28,7 +28,7 @@ class DetailPage extends Component {
       format: "count",
       metric: "accuracy",
       sliderValue: 0.8,
-      sorterName: "",
+      sorterName: this.props.sorterName,
       selectedUnit: null
     };
   }
