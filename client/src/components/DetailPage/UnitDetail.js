@@ -29,7 +29,10 @@ class UnitDetail extends Component {
         if (sr.sorterName == sorterName)
             sortingResult = sr;
     });
+    let recind = sar.trueRecordingIndices[uind];
     let unitData = {
+        recordingName: sar.recordingNames[recind],
+        unitId: sar.trueUnitIds[uind],
         snr: sar.trueSnrs[uind],
         firingRate: sar.trueFiringRates[uind],
         numEvents: sar.trueNumEvents[uind],
