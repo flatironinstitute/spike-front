@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { isEmpty } from "../../utils";
-import * as Sentry from "@sentry/browser";
+import { Redirect } from "react-router";
 
 // Components
+import Preloader from "../Preloader/Preloader";
 import { Col, Container, Row } from "react-bootstrap";
 import HeatmapViz from "./HeatmapViz";
-import Preloader from "../Preloader/Preloader";
 import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
 
 // Redux
@@ -20,14 +20,15 @@ class HeatmapSNR extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cardHeight: null
+      cardHeight: null,
+      redirect: false
     };
   }
 
   componentDidMount() {
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
   }
 
   handleCardHeightChange = value => {
@@ -36,8 +37,17 @@ class HeatmapSNR extends Component {
     });
   };
 
+  handleScatterplotClick = value => {
+    this.setState({ redirect: true });
+  };
+
   render() {
     let loading = isEmpty(this.props.studyAnalysisResults);
+    let study = this.props.selectedStudyName || "";
+    study = "/study/" + study;
+    if (this.state.redirect) {
+      return <Redirect push to={study} />;
+    }
     return (
       <div>
         {loading ? (

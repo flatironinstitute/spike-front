@@ -1,8 +1,6 @@
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
 
-import pairing from "./pairing";
-import recordingDetails from "./recordingDetails";
 // V2 Data: Reducers
 import algorithms from "./algorithms";
 import contactSent from "./contactSent";
@@ -14,6 +12,7 @@ import selectedStudySortingResult from "./selectedStudySortingResult";
 import selectedStudyName from "./selectedStudyName";
 import selectedSorterName from "./selectedSorterName";
 import sorters from "./sorters";
+import spikespray from "./spikespray";
 import stats from "./stats";
 import studies from "./studies";
 import studysets from "./studysets";
@@ -23,9 +22,6 @@ import studyAnalysisResults from "./studyanalysisresults";
 
 const rootReducer = history =>
   combineReducers({
-    pairing,
-    recordingDetails,
-    // V2 Data: Reducers
     algorithms,
     contactSent,
     cpus,
@@ -36,6 +32,7 @@ const rootReducer = history =>
     selectedStudyName,
     selectedSorterName,
     sorters,
+    spikespray,
     stats,
     studies,
     studysets,

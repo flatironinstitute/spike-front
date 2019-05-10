@@ -1,6 +1,4 @@
 export const initialState = {
-  pairing: null,
-  recordingDetails: null,
   //V2 Data: States
   contactSent: null,
   cpus: null,
@@ -11,6 +9,7 @@ export const initialState = {
   selectedStudyName: null,
   selectedSorterName: null,
   sorters: null,
+  spikespray: null,
   stats: null,
   studies: null,
   studysets: null,

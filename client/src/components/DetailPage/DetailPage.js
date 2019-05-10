@@ -7,8 +7,7 @@ import HeatmapOptionsCol from "../Heatmap/HeatmapOptionsCol";
 import Preloader from "../Preloader/Preloader";
 import DetailPageRow from "./DetailPageRow";
 import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
-import SpikeSprayV2 from "./SpikeSprayV2";
-// import ReactJson from "react-json-view";
+import SpikeSpray from "./SpikeSpray";
 
 import "./detailpage.css";
 
@@ -18,7 +17,7 @@ import { connect } from "react-redux";
 import * as actionCreators from "../../actions/actionCreators";
 
 // Utilities 💡
-import { isEmpty, toTitleCase } from "../../utils";
+import { isEmpty } from "../../utils";
 import { formatUnitResultsByStudy } from "../../dataHandlers";
 
 class DetailPage extends Component {
@@ -31,7 +30,8 @@ class DetailPage extends Component {
       sliderValue: 0.8,
       sorter: "",
       // unitsMap: [],
-      filteredData: []
+      filteredData: [],
+      selectedUnit: null
     };
   }
 
@@ -76,6 +76,12 @@ class DetailPage extends Component {
       this.state.sliderValue !== prevState.sliderValue;
     if (optionsChanged) {
       this.applyResultFilters();
+    }
+
+    if (this.state.selectedUnit !== prevState.selectedUnit) {
+      // TODO: Remove conditional when default db is set.
+      let url = this.state.selectedUnit.u.spikesprayUrl || "";
+      this.props.fetchSpikeSpray(url);
     }
   }
 
@@ -270,16 +276,18 @@ class DetailPage extends Component {
   }
 
   handleScatterplotClick = value => {
-    console.log("scatterplot click", value);
-    // URL: /api/spikespray/:studyName/:recordingName/:sorterName/:trueUnitId/:bestSortedUnitId
-    // this.props.fetchSpikeSpray(
-    //   studyName, => studyId REMOVE STUDY
-    //   recordingName, => recordingId
-    //   sorterName, => sorterId
-    //   trueUnitId, => trueUnitId
-    //   bestSortedUnitId => bestbestSortedUnitId
-    // );
+    this.setState({ selectedUnit: value });
   };
+
+  getSpikeSprayCard() {
+    if (isEmpty(this.state.selectedUnit)) {
+      return "nounit";
+    } else if (isEmpty(this.props.spikespray)) {
+      return "nodata";
+    } else {
+      return "showspike";
+    }
+  }
 
   render() {
     let sorters = this.state.unitsMap
@@ -290,8 +298,15 @@ class DetailPage extends Component {
       isEmpty(this.state.sorter) ||
       isEmpty(this.state.filteredData);
 
+    let format = this.getSpikeSprayCard();
+
     let heatmapTitle = this.getFormatCopy();
-    let pageTitle = toTitleCase(this.state.study.replace(/_/g, " "));
+    let unitId = this.state.selectedUnit ? this.state.selectedUnit.u._id : "";
+    let divStyle = {
+      backgroundColor: "#fffdc0",
+      borderRadius: "5px",
+      display: "inline-block"
+    };
 
     return (
       <div>
@@ -356,13 +371,49 @@ class DetailPage extends Component {
                     <div className="content">
                       <div className="card__label">
                         <p>
-                          <strong>Spike Spray:</strong> Recording ID
+                          <strong>Unit Details: </strong>
+                          {unitId}
                         </p>
                       </div>
-                      <div className="card__footer">
-                        <hr />
-                        <SpikeSprayV2 {...this.props} />
-                      </div>
+                      {(() => {
+                        switch (format) {
+                          case "nounit":
+                            return (
+                              <div className="card__footer">
+                                <hr />
+                                <p style={divStyle}>
+                                  Click on a mark in the scatterplot above to
+                                  view a spikespray of the selected unit.
+                                </p>
+                              </div>
+                            );
+                          case "nodata":
+                            return (
+                              <div className="card__footer">
+                                <hr />
+                                <p>
+                                  Sorry. Spike spray data for this unit has not
+                                  yet been generated. Please check back for more
+                                  sorting results information in the near
+                                  future.
+                                </p>
+                              </div>
+                            );
+                          case "showspike":
+                            return (
+                              <div className="card__footer">
+                                <hr />
+                                <SpikeSpray
+                                  {...this.props}
+                                  unit={this.state.selectedUnit}
+                                  spikeSprayData={this.props.spikespray}
+                                />
+                              </div>
+                            );
+                          default:
+                            return null;
+                        }
+                      })()}
                     </div>
                   </div>
                 </Col>

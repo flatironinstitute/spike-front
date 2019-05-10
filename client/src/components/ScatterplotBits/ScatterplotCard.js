@@ -61,6 +61,11 @@ class ScatterplotCard extends Component {
       (!this.state.study) ||
       (!this.state.sorter) ||
       (!this.state.studyAnalysisResult);
+    let divStyle = {
+      backgroundColor: "#fffdc0",
+      borderRadius: "5px",
+      display: "inline-block"
+    };
     return (
       <div
         className="card card--heatmap"
@@ -69,8 +74,9 @@ class ScatterplotCard extends Component {
         <div className="detail__column">
           {loading ? (
             <div className="card__header">
-              <h4 className="card__title">
-                Click an item on the left to see more detail below
+              <h4 className="card__title" style={divStyle}>
+                Click an item on the left to see a detailed scatterplot of
+                sorter results
               </h4>
               <p className="card__category">
                 <br />
@@ -78,8 +84,7 @@ class ScatterplotCard extends Component {
                 from the community and also many in silico synthetic recordings.
                 Each sorter is run on all recordings and the resulting
                 accuracies for the ground truth units are updated on a daily
-                basis as needed. Approximate CPU/GPU run times are also
-                reported.
+                basis as needed.
               </p>
             </div>
           ) : (
