@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { isEmpty } from "../../utils";
 import { Redirect } from "react-router";
+// import * as Sentry from "@sentry/browser";
 
 // Components
-import Preloader from "../Preloader/Preloader";
 import { Col, Container, Row } from "react-bootstrap";
 import HeatmapViz from "./HeatmapViz";
+import Preloader from "../Preloader/Preloader";
 import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
 
 // Redux
@@ -16,6 +17,7 @@ import * as actionCreators from "../../actions/actionCreators";
 // Stylin'
 import "./heatmap.css";
 
+// No longer used
 class HeatmapSNR extends Component {
   constructor(props) {
     super(props);
@@ -26,9 +28,11 @@ class HeatmapSNR extends Component {
   }
 
   componentDidMount() {
+    console.log('MOUNT: HeatmapSNR');
   }
 
   componentDidUpdate(prevProps) {
+    console.log('UPDATE: HeatmapSNR');
   }
 
   handleCardHeightChange = value => {
@@ -37,14 +41,10 @@ class HeatmapSNR extends Component {
     });
   };
 
-  handleScatterplotClick = value => {
-    this.setState({ redirect: true });
-  };
-
   render() {
     let loading = isEmpty(this.props.studyAnalysisResults);
     let study = this.props.selectedStudyName || "";
-    study = "/study/" + study;
+    study = "/studyresult/" + study;
     if (this.state.redirect) {
       return <Redirect push to={study} />;
     }
@@ -76,8 +76,14 @@ class HeatmapSNR extends Component {
               </Col>
               <Col lg={6} sm={12}>
                 <ScatterplotCard
-                  {...this.props}
+                  studies={this.props.studies}
+                  sorters={this.props.sorters}
+                  studyAnalysisResults={this.props.studyAnalysisResults}
+                  studyName={this.props.selectedStudyName}
+                  sorterName={this.props.selectedSorterName}
                   sliderValue={this.props.snrMin}
+                  format={this.props.format}
+                  metric={this.props.metric}
                   cardHeight={this.state.cardHeight}
                 />
               </Col>

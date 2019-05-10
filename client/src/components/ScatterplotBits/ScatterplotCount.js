@@ -101,7 +101,7 @@ class ScatterplotCount extends Component {
             x: Math.round(snrs[ii] * 100) / 100,
             y: yvals[ii],
             size: Math.max(1, this.getSqrt(sar.trueNumEvents[ii])),
-            color: sar.trueUnitIds[ii] * 10,
+            color: sar.trueRecordingIndices[ii],
             opacity: yvals[ii] * 0.5 + 0.5,
             recordingIndex: sar.trueRecordingIndices[ii],
             recordingName: sar.recordingNames[sar.trueRecordingIndices[ii]],
@@ -151,15 +151,13 @@ class ScatterplotCount extends Component {
   }
 
   handleScatterplotClick(d) {
-    console.log('--------------', d);
-    this.setState({selectedNode: d});
-    if (this.props.handleScatterplotClick)
+    if (this.props.handleScatterplotClick) {
       this.props.handleScatterplotClick(d);
+    }
   }
 
   render() {
     const { data, hoveredNode, selectedNode, maxSNR } = this.state;
-    console.log('---- render', selectedNode);
     let metricObj = {};
     metricObj[this.props.metric] = hoveredNode ? hoveredNode.y : 0;
     let otherObj = {

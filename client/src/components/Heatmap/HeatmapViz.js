@@ -12,9 +12,7 @@ class HeatmapViz extends Component {
   }
 
   componentDidMount() {
-    console.log('--- buildVizData 1');
     this.buildVizData(this.props.studyAnalysisResults);
-    console.log('--- buildVizData 2');
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -133,6 +131,7 @@ class HeatmapViz extends Component {
       sorterNames.forEach(function(sorterName) {
         headerCells.push({
           text: sorterName,
+          link: '/algorithms',
           rotate: true
         });
         return null;
@@ -285,7 +284,7 @@ class HeatmapViz extends Component {
     let threshold = this.props.threshold;
     let ret = []; // the cells to return
     // the first cell is the name of the study
-    let link = isStudySet ? null : `/study/${studyAnalysisResult.studyName}`;
+    let link = isStudySet ? null : `/studyresult/${studyAnalysisResult.studyName}`;
     ret.push({
       text: studyAnalysisResult.studyName,
       link: link,
@@ -514,7 +513,7 @@ class HeatmapViz extends Component {
     const title = this.getFormatCopy();
     const copy =
       this.props.format !== "cpu"
-        ? "  Select individual cells to see corresponding scatterplot data."
+        ? "  Select individual cells to see corresponding details. "
         : "";
     return (
       <div className="card card--heatmap" id="heatmap-card">
@@ -522,12 +521,22 @@ class HeatmapViz extends Component {
           <h4 className="card__title">{title}</h4>
         </div>
         <div>
-          <p>
-            Click on the rows to expand the study sets and see component study
-            data. An asterisk indicates an incomplete or failed sorting on a
-            subset of results.
-            {copy}
-          </p>
+          {
+            this.props.groupByStudySets ?
+            (
+              <p>
+                Click to expand study set rows and see component study data.
+                {copy}
+                An asterisk indicates an incomplete or failed sorting on a subset of results.
+              </p>
+            ) :
+            (
+              <p>
+                {copy}
+                An asterisk indicates an incomplete or failed sorting on a subset of results.
+              </p>
+            )
+          }
         </div>
         {loading ? (
           <h4>...</h4>

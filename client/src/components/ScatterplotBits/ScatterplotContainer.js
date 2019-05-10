@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import ScatterplotCount from "./ScatterplotCount";
 
 class ScatterplotContainer extends Component {
-  getHeaderCopy(value) {
+  getHeaderCopy(metric) {
+    return `Unit ${metric} vs. SNR`;
+    /*
     var sliderValue;
     switch (value) {
       case "count":
@@ -15,6 +17,7 @@ class ScatterplotContainer extends Component {
         sliderValue = "";
     }
     return sliderValue;
+    */
   }
 
   render() {
@@ -31,13 +34,17 @@ class ScatterplotContainer extends Component {
       cpu: ["#EFC1E3", "#B52F93"],
       average: ["#00CEA8", "#0C4F42"]
     };
-    const copy = this.getHeaderCopy(this.props.format);
+    const copy = this.getHeaderCopy(this.props.metric);
     return (
       <div>
-        <p>
-          Click marks below to see detailed information on the study and
-          recording
-        </p>
+        {
+          this.props.handleScatterplotClick ?
+          (
+            <p>
+              Click a marker below to see unit details.
+            </p>
+          ) : (<span></span>)
+        }
         <p>
           {copy}
           {/*selectedStudySortingResult

@@ -43,7 +43,7 @@ class HeatmapCount extends Component {
   render() {
     let loading = isEmpty(this.props.studyAnalysisResults);
     let study = this.props.selectedStudyName || "";
-    study = "/study/" + study;
+    study = "/studyresult/" + study;
     if (this.state.redirect) {
       return <Redirect push to={study} />;
     }

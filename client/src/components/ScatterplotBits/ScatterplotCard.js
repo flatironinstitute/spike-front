@@ -93,11 +93,11 @@ class ScatterplotCard extends Component {
                 <div className="card__category--div">
                   <span className="card__title--link">
                     Study:
-                    <Link to={`/study/${study}`}>{study}</Link>
+                    <Link to={`/studyresult/${study}`}>{study}</Link>
                   </span>
                   <span className="card__title--link">
                     Sorter:
-                    <Link to="/sorters">{sorter}</Link>
+                    <Link to="/algorithms">{sorter}</Link>
                   </span>
                 </div>
               </div>

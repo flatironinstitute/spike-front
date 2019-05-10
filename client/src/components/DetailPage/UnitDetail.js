@@ -30,6 +30,7 @@ class UnitDetail extends Component {
             sortingResult = sr;
     });
     let recind = sar.trueRecordingIndices[uind];
+    console.log('---------------------------- xxx', recind, sar.recordingNames, sar);
     let unitData = {
         recordingName: sar.recordingNames[recind],
         unitId: sar.trueUnitIds[uind],
@@ -40,7 +41,6 @@ class UnitDetail extends Component {
         precision: sortingResult.precisions[uind],
         recall: sortingResult.recalls[uind]
     }
-    console.log('---- unit detail', this.props);
     return (
         <div><pre>{JSON.stringify(unitData, null, 4)}</pre></div>
     )

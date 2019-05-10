@@ -39,7 +39,6 @@ class Routes extends Component {
   }
 
   render() {
-    console.log('--------------- rendering routes.');
     let loadingContainer = (
       <div className="page__body">
         <Container className="container__heatmap">
@@ -79,7 +78,7 @@ class Routes extends Component {
             render={props => <Recordings {...this.props} />}
           />
           <Route
-            path="/sorters"
+            path="/algorithms"
             render={props => <Algorithms algorithms={this.props.algorithms} />}
           />
           <Route
@@ -87,7 +86,7 @@ class Routes extends Component {
             render={props => <Studies {...this.props} />}
           />
           <Route
-            path="/study/:studyName"
+            path="/studyresult/:studyName"
             render={props => 
               (!this.props.studyAnalysisResults) ||
               (!this.props.studies) ||

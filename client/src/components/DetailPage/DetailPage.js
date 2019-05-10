@@ -46,12 +46,13 @@ class DetailPage extends Component {
     }
   }
 
-  handleSorterChange = sorterName => {
-    this.setState({
-      sorterName: sorterName
-    });
-    this.props.selectSorterName(sorterName);
-  };
+  // handleSorterChange = sorterName => {
+  //   this.setState({
+  //     sorterName: sorterName,
+  //     selectedUnit: null
+  //   });
+  //   this.props.selectSorterName(sorterName);
+  // };
 
   handleFormatChange = value => {
     var sliderValue;
@@ -171,7 +172,7 @@ class DetailPage extends Component {
                         /> */}
                         <HeatmapViz
                           groupByStudySets={false}
-                          selectSorterName={sorterName => {this.setState({sorterName})}}
+                          selectSorterName={sorterName => {this.setState({ sorterName, selectedUnit: null })}}
                           selectedStudyName={this.props.studyName}
                           selectedSorterName={this.state.sorterName}
                           studyAnalysisResults={[studyAnalysisResult]}
@@ -237,8 +238,8 @@ class DetailPage extends Component {
                             <div className="card__footer">
                               <hr />
                               <p style={divStyle}>
-                                Click on a mark in the scatterplot above to
-                                view a spikespray of the selected unit.
+                                Click on a marker in the scatterplot above to
+                                view details of the selected unit.
                               </p>
                             </div>
                           );
@@ -249,8 +250,6 @@ class DetailPage extends Component {
                               <div className="card__footer">
                                 <hr />
                                 <p style={divStyle}>
-                                  Click on a mark in the scatterplot above to
-                                  view a spikespray of the selected unit.
                                 </p>
                               </div>
                             );

@@ -73,8 +73,8 @@ class Header extends Component {
             <LinkContainer to="/recordings">
               <Nav.Link eventKey="/recordings">Recordings</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/sorters">
-              <Nav.Link eventKey="/sorters">Sorters</Nav.Link>
+            <LinkContainer to="/algorithms">
+              <Nav.Link eventKey="/algorithms">Algorithms</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/metrics">
               <Nav.Link eventKey="/metrics">Metrics</Nav.Link>

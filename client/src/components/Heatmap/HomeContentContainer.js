@@ -77,11 +77,11 @@ class HomeContentContainer extends Component {
               );
             case "average":
               return (
-                <HeatmapSNR
+                <HeatmapCount
                   {...this.props}
                   format={this.state.format}
                   metric={this.state.metric}
-                  snrMin={this.state.sliderValue}
+                  sliderValue={this.state.sliderValue}
                 />
               );
             case "cpu":
