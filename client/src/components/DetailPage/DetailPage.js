@@ -46,7 +46,8 @@ class DetailPage extends Component {
       study = this.props.selectedStudySortingResult.study;
       sorter = this.props.selectedStudySortingResult.sorter;
     } else {
-      let activeRoute = this.props.router.location.pathname;
+      let activeRoute = window.location.pathname;
+      console.log("🌭 active route", activeRoute);
       let activeArr = activeRoute.split("/").filter(item => item);
       study = activeArr[1];
     }

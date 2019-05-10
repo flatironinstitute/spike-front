@@ -29,7 +29,7 @@ class Header extends Component {
   }
 
   getPageName() {
-    let activeRoute = this.props.router.location.pathname;
+    let activeRoute = window.location.pathname;
     let activeArr = activeRoute.split("/").filter(item => item);
     if (activeArr[0] === "study") {
       let str = activeArr[1].replace(/_/g, " ");
@@ -81,7 +81,7 @@ class Header extends Component {
             </LinkContainer>
           </Nav>
         </Nav>
-      </div >
+      </div>
     );
   }
 }
