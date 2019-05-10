@@ -39,6 +39,7 @@ class Routes extends Component {
   }
 
   render() {
+    console.log('--------------- rendering routes.');
     let loadingContainer = (
       <div className="page__body">
         <Container className="container__heatmap">

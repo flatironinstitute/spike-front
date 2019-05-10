@@ -9,6 +9,7 @@ import DetailPageRow from "./DetailPageRow";
 import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
 import SpikeSpray from "./SpikeSpray";
 import HeatmapViz from "../Heatmap/HeatmapViz";
+import UnitDetail from "./UnitDetail";
 
 import "./detailpage.css";
 
@@ -103,7 +104,6 @@ class DetailPage extends Component {
   };
 
   getSpikeSprayCard() {
-    return 'nodata';
     if (isEmpty(this.state.selectedUnit)) {
       return "nounit";
     } else if (isEmpty(this.props.spikespray)) {
@@ -118,10 +118,10 @@ class DetailPage extends Component {
       isEmpty(this.props.studyName) ||
       isEmpty(this.props.studyAnalysisResults);
 
-    let format = this.getSpikeSprayCard();
+    // let format = this.getSpikeSprayCard();
 
     let heatmapTitle = this.getFormatCopy();
-    let unitId = this.state.selectedUnit ? this.state.selectedUnit.u._id : "";
+    let unitId = this.state.selectedUnit ? this.state.selectedUnit.unitId : "";
     let divStyle = {
       backgroundColor: "#fffdc0",
       borderRadius: "5px",
@@ -215,11 +215,35 @@ class DetailPage extends Component {
                       <div className="card__label">
                         <p>
                           <strong>Unit Details: </strong>
-                          {unitId}
                         </p>
                       </div>
                       {(() => {
-                        switch (format) {
+                        if (this.state.selectedUnit) {
+                          return (
+                            <div className="card__footer">
+                              <hr />
+                              <UnitDetail
+                                studies={this.props.studies}
+                                sorters={this.props.sorters}
+                                studyAnalysisResult={studyAnalysisResult}
+                                unitIndex={this.state.selectedUnit.unitIndex}
+                                sorterName={this.state.selectedUnit.sorterName}
+                              />
+                            </div>
+                          )
+                        }
+                        else {
+                          return (
+                            <div className="card__footer">
+                              <hr />
+                              <p style={divStyle}>
+                                Click on a mark in the scatterplot above to
+                                view a spikespray of the selected unit.
+                              </p>
+                            </div>
+                          );
+                        }
+                        /*switch (format) {
                           case "nounit":
                             return (
                               <div className="card__footer">
@@ -255,7 +279,7 @@ class DetailPage extends Component {
                             );
                           default:
                             return null;
-                        }
+                        }*/
                       })()}
                     </div>
                   </div>

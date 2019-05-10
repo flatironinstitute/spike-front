@@ -12,7 +12,9 @@ class HeatmapViz extends Component {
   }
 
   componentDidMount() {
+    console.log('--- buildVizData 1');
     this.buildVizData(this.props.studyAnalysisResults);
+    console.log('--- buildVizData 2');
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -283,7 +285,7 @@ class HeatmapViz extends Component {
     let threshold = this.props.threshold;
     let ret = []; // the cells to return
     // the first cell is the name of the study
-    let link = isStudySet ? null : `study/${studyAnalysisResult.studyName}`;
+    let link = isStudySet ? null : `/study/${studyAnalysisResult.studyName}`;
     ret.push({
       text: studyAnalysisResult.studyName,
       link: link,

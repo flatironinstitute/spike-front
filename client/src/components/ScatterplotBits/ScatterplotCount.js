@@ -20,6 +20,7 @@ class ScatterplotCount extends Component {
     this.state = {
       data: [],
       hoveredNode: null,
+      selectedNode: null,
       minSNR: 0,
       maxSNR: 100
     };
@@ -94,14 +95,17 @@ class ScatterplotCount extends Component {
         let newUnits = [];
         for (let ii = 0; ii < snrs.length; ii++) {
           newUnits.push({
+            unitIndex: ii, // this is the part that is used in the parent component
+            sorterName: this.props.sorterName, // this is used by parent component also
             unitId: sar.trueUnitIds[ii],
-            // ...
             x: Math.round(snrs[ii] * 100) / 100,
             y: yvals[ii],
             size: Math.max(1, this.getSqrt(sar.trueNumEvents[ii])),
             color: sar.trueUnitIds[ii] * 10,
             opacity: yvals[ii] * 0.5 + 0.5,
-            recording: sar.trueRecordingIndices[ii],
+            recordingIndex: sar.trueRecordingIndices[ii],
+            recordingName: sar.recordingNames[sar.trueRecordingIndices[ii]],
+            studyName: sar.studyName,
             num_events: sar.trueNumEvents[ii]
           });
         }
@@ -146,8 +150,16 @@ class ScatterplotCount extends Component {
     }
   }
 
+  handleScatterplotClick(d) {
+    console.log('--------------', d);
+    this.setState({selectedNode: d});
+    if (this.props.handleScatterplotClick)
+      this.props.handleScatterplotClick(d);
+  }
+
   render() {
-    const { data, hoveredNode, maxSNR } = this.state;
+    const { data, hoveredNode, selectedNode, maxSNR } = this.state;
+    console.log('---- render', selectedNode);
     let metricObj = {};
     metricObj[this.props.metric] = hoveredNode ? hoveredNode.y : 0;
     let otherObj = {
@@ -173,6 +185,7 @@ class ScatterplotCount extends Component {
         { x: this.props.sliderValue, y: 1 }
       ];
     }
+    let selectedData = [];
     const yTitle = toTitleCase(this.props.metric);
     return (
       <div className="canvas-wrapper">
@@ -197,9 +210,21 @@ class ScatterplotCount extends Component {
             opacityType="literal"
             data={data}
             onValueMouseOver={d => this.setState({ hoveredNode: d })}
-            onValueClick={d => {if (this.props.handleScatterplotClick) this.props.handleScatterplotClick(d);}}
+            onValueClick={d => {this.handleScatterplotClick(d);}}
           />
           {hoveredNode && <Hint value={valueObj} align={alignment} />}
+          {selectedNode && 
+            <MarkSeries
+              // animation={true}
+              className="mark-series-example"
+              sizeRange={[3, 15]}
+              seriesId="selected"
+              colorRange={["#bbbb05", "#bbbb05"]}
+              opacityType="literal"
+              data={[selectedNode]}
+              onValueClick={d => {this.handleScatterplotClick(d)}}
+            />
+          }
           <LineSeries
             className="fourth-series"
             strokeDasharray="7, 3"

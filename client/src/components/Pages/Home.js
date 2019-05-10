@@ -68,6 +68,9 @@ class Home extends Component {
         isEmpty(this.props.sorters) ||
         isEmpty(this.props.studysets) ||
         isEmpty(this.props.studyAnalysisResults);
+    if (loading) {
+      window.scrollTo(0, 0);
+    }
 
     let sorters = this.props.sorters ? this.getSorters() : null;
     let studies = this.props.studies ? this.getStudies() : null;

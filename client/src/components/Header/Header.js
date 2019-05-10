@@ -29,7 +29,8 @@ class Header extends Component {
   }
 
   getPageName() {
-    let activeRoute = this.props.router.location.pathname;
+    // let activeRoute = this.props.router.location.pathname;
+    let activeRoute = "";
     let activeArr = activeRoute.split("/").filter(item => item);
     if (activeArr[0] === "study") {
       let str = activeArr[1].replace(/_/g, " ");
