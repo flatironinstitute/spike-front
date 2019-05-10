@@ -27,9 +27,11 @@ class HeatmapCount extends Component {
   }
 
   componentDidMount() {
+    console.log('MOUNT: HeatmapCount');
   }
 
   componentDidUpdate(prevProps, prevState) {
+    console.log('UPDATE: DetailPage');
   }
 
   handleCardHeightChange = value => {

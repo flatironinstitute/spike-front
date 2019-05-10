@@ -33,9 +33,11 @@ class DetailPage extends Component {
   }
 
   componentDidMount() {
+    console.log('MOUNT: DetailPage');
   }
 
   componentDidUpdate(prevProps, prevState) {
+    console.log('UPDATE: DetailPage');
     if (this.state.selectedUnit !== prevState.selectedUnit) {
       // TODO: Remove conditional when default db is set.
       // let url = this.state.selectedUnit.u.spikesprayUrl || "";

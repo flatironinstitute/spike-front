@@ -1,10 +1,9 @@
-import React from "react";
+import React, { Component } from "react";
 
 // import router dependencies
 import PropTypes from "prop-types";
 import { ConnectedRouter } from "connected-react-router";
 import Routes from "./routes";
-
 
 const App = ({ history }) => {
   return (

@@ -71,7 +71,7 @@ class ScatterplotCard extends Component {
         className="card card--heatmap"
         style={{ height: this.state.cardHeight + "px", minHeight: "215px" }}
       >
-        <div className="detail__column">
+        <div className="detail__column-disable">
           {loading ? (
             <div className="card__header">
               <h4 className="card__title" style={divStyle}>

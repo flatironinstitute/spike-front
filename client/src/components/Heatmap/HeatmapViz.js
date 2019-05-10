@@ -283,8 +283,10 @@ class HeatmapViz extends Component {
     let threshold = this.props.threshold;
     let ret = []; // the cells to return
     // the first cell is the name of the study
+    let link = isStudySet ? null : `study/${studyAnalysisResult.studyName}`;
     ret.push({
       text: studyAnalysisResult.studyName,
+      link: link,
       expand_id_on_click: expandIdOnClick,
       text_align: "right",
       selectable: false

@@ -2,6 +2,7 @@ import React from "react";
 import { getRandomKeyInt } from "../../utils.js";
 
 import "./expandingheatmaptable.css";
+import { Link } from "react-router-dom";
 
 class ExpandingHeatmapTable extends React.Component {
   // props are rows and header
@@ -45,6 +46,9 @@ class ExpandingHeatmapTable extends React.Component {
       textAlign: cell.text_align || "left"
     };
     if (cell.text_align === "right") style0.paddingRight = "4px";
+    let cellContent = cell.text;
+    if (cell.link)
+      cellContent = <Link to={cell.link}>{cellContent}</Link>;
     return (
       <td
         onClick={() => this.handleCellSelected(cell)}
@@ -53,7 +57,7 @@ class ExpandingHeatmapTable extends React.Component {
         key={"table-cell-" + getRandomKeyInt(0)}
       >
         <div>
-          <span>{cell.text}</span>
+          <span>{cellContent}</span>
         </div>
       </td>
     );
