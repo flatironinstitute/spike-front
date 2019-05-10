@@ -30,7 +30,7 @@ const defaultState = {
 };
 
 export const history = createBrowserHistory();
-// history.listen(location => ReactGA.pageview(location.pathname));
+history.listen(location => ReactGA.pageview(location.pathname));
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

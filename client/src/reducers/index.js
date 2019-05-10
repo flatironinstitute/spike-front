@@ -1,5 +1,4 @@
 import { combineReducers } from "redux";
-// import { connectRouter } from "connected-react-router";
 
 // V2 Data: Reducers
 import algorithms from "./algorithms";
@@ -39,7 +38,6 @@ const rootReducer = history =>
     unitResults,
     studyAnalysisResults,
     ursByStudy
-    // router: connectRouter(history)
   });
 
 export default rootReducer;
