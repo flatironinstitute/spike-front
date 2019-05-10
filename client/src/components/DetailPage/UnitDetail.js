@@ -13,11 +13,9 @@ class UnitDetail extends Component {
   }
 
   componentDidMount() {
-    console.log('MOUNT: UnitDetail');
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('UPDATE: UnitDetail');
   }
 
   render() {
@@ -26,11 +24,10 @@ class UnitDetail extends Component {
     let sorterName = this.props.sorterName;
     let sortingResult = null;
     sar.sortingResults.forEach(sr => {
-        if (sr.sorterName == sorterName)
+        if (sr.sorterName === sorterName)
             sortingResult = sr;
     });
     let recind = sar.trueRecordingIndices[uind];
-    console.log('---------------------------- xxx', recind, sar.recordingNames, sar);
     let unitData = {
         recordingName: sar.recordingNames[recind],
         unitId: sar.trueUnitIds[uind],

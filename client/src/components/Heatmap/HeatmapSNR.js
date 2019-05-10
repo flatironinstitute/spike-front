@@ -28,11 +28,9 @@ class HeatmapSNR extends Component {
   }
 
   componentDidMount() {
-    console.log('MOUNT: HeatmapSNR');
   }
 
   componentDidUpdate(prevProps) {
-    console.log('UPDATE: HeatmapSNR');
   }
 
   handleCardHeightChange = value => {

@@ -183,7 +183,7 @@ class ScatterplotCount extends Component {
         { x: this.props.sliderValue, y: 1 }
       ];
     }
-    let selectedData = [];
+    // let selectedData = [];
     const yTitle = toTitleCase(this.props.metric);
     return (
       <div className="canvas-wrapper">

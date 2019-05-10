@@ -5,9 +5,9 @@ import React, { Component } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import HeatmapOptionsCol from "../Heatmap/HeatmapOptionsCol";
 import Preloader from "../Preloader/Preloader";
-import DetailPageRow from "./DetailPageRow";
+// import DetailPageRow from "./DetailPageRow";
 import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
-import SpikeSpray from "./SpikeSpray";
+// import SpikeSpray from "./SpikeSpray";
 import HeatmapViz from "../Heatmap/HeatmapViz";
 import UnitDetail from "./UnitDetail";
 
@@ -38,7 +38,6 @@ class DetailPage extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('UPDATE: DetailPage');
     if (this.state.selectedUnit !== prevState.selectedUnit) {
       // TODO: Remove conditional when default db is set.
       // let url = this.state.selectedUnit.u.spikesprayUrl || "";
@@ -122,7 +121,7 @@ class DetailPage extends Component {
     // let format = this.getSpikeSprayCard();
 
     let heatmapTitle = this.getFormatCopy();
-    let unitId = this.state.selectedUnit ? this.state.selectedUnit.unitId : "";
+    // let unitId = this.state.selectedUnit ? this.state.selectedUnit.unitId : "";
     let divStyle = {
       backgroundColor: "#fffdc0",
       borderRadius: "5px",

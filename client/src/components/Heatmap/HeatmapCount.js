@@ -27,11 +27,9 @@ class HeatmapCount extends Component {
   }
 
   componentDidMount() {
-    console.log('MOUNT: HeatmapCount');
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('UPDATE: DetailPage');
   }
 
   handleCardHeightChange = value => {
@@ -73,20 +71,24 @@ class HeatmapCount extends Component {
                   handleCardHeightChange={this.handleCardHeightChange}
                 />
               </Col>
-              <Col lg={6} sm={12}>
-                <ScatterplotCard
-                  studies={this.props.studies}
-                  sorters={this.props.sorters}
-                  studyAnalysisResults={this.props.studyAnalysisResults}
-                  studyName={this.props.selectedStudyName}
-                  sorterName={this.props.selectedSorterName}
-                  sliderValue={this.props.sliderValue}
-                  format={this.props.format}
-                  metric={this.props.metric}
-                  cardHeight={this.state.cardHeight}
-                  handleScatterplotClick={this.handleScatterplotClick}
-                />
-              </Col>
+
+              {
+                (this.props.format !== "cpu") ?
+                (<Col lg={6} sm={12}>
+                  <ScatterplotCard
+                    studies={this.props.studies}
+                    sorters={this.props.sorters}
+                    studyAnalysisResults={this.props.studyAnalysisResults}
+                    studyName={this.props.selectedStudyName}
+                    sorterName={this.props.selectedSorterName}
+                    sliderValue={this.props.sliderValue}
+                    format={this.props.format}
+                    metric={this.props.metric}
+                    cardHeight={this.state.cardHeight}
+                    handleScatterplotClick={this.handleScatterplotClick}
+                  />
+                </Col>) : (<span />)
+              }
             </Row>
           </Container>
         )}

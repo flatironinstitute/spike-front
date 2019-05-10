@@ -43,6 +43,9 @@ const studyAnalysisResultSchema = new mongoose.Schema({
         },
         recalls: {
             type: [Number]
+        },
+        cpuTimesSec: {
+          type: [Number]
         }
     }]
   }

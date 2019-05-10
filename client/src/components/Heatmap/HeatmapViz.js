@@ -185,7 +185,8 @@ class HeatmapViz extends Component {
       sortingResults.push({
         accuracies: [],
         precisions: [],
-        recalls: []
+        recalls: [],
+        cpuTimesSec: []
       });
     }
 
@@ -198,6 +199,7 @@ class HeatmapViz extends Component {
         sortingResults[ii].accuracies = sortingResults[ii].accuracies.concat(studyAnalysisResult.sortingResults[ii].accuracies);
         sortingResults[ii].precisions = sortingResults[ii].precisions.concat(studyAnalysisResult.sortingResults[ii].precisions);
         sortingResults[ii].recalls = sortingResults[ii].recalls.concat(studyAnalysisResult.sortingResults[ii].recalls);
+        sortingResults[ii].cpuTimesSec = sortingResults[ii].cpuTimesSec.concat(studyAnalysisResult.sortingResults[ii].cpuTimesSec);
       }
     })
 
@@ -322,16 +324,7 @@ class HeatmapViz extends Component {
             throw Error("Unexpected metric: " + metric);
         }
       } else if (format === "cpu") {
-        if (isStudySet) {
-          // this logic is messy and needs to be cleaned up
-          metricVals = sortingResult.cpus;
-        } else {
-          metricVals = this.get_cpu_times_for_study_sorter(
-            this.props.cpus,
-            sortingResult.study,
-            sortingResult.sorter
-          );
-        }
+        metricVals = sortingResult.cpuTimesSec;
       }
       let num_found = 0;
       let num_missing = 0
@@ -525,15 +518,12 @@ class HeatmapViz extends Component {
             this.props.groupByStudySets ?
             (
               <p>
-                Click to expand study set rows and see component study data.
-                {copy}
-                An asterisk indicates an incomplete or failed sorting on a subset of results.
+                Click to expand study set rows and see component study data. {copy} An asterisk indicates an incomplete or failed sorting on a subset of results.
               </p>
             ) :
             (
               <p>
-                {copy}
-                An asterisk indicates an incomplete or failed sorting on a subset of results.
+                {copy} An asterisk indicates an incomplete or failed sorting on a subset of results.
               </p>
             )
           }

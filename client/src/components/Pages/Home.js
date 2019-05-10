@@ -18,14 +18,12 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    console.log('MOUNT: Home');
     // if (this.props.groupedURs && this.props.sorters) {
     //   this.mapUnits();
     // }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('UPDATE: Home');
     // if (
     //   this.props.groupedURs !== prevProps.groupedURs ||
     //   this.props.sorters !== prevProps.sorters
