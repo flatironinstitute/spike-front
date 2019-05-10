@@ -46,7 +46,7 @@ class DetailPage extends Component {
       study = this.props.selectedStudySortingResult.study;
       sorter = this.props.selectedStudySortingResult.sorter;
     } else {
-      let activeRoute = this.props.router.location.pathname;
+      let activeRoute = window.location.pathname;
       let activeArr = activeRoute.split("/").filter(item => item);
       study = activeArr[1];
     }
@@ -79,7 +79,7 @@ class DetailPage extends Component {
     }
 
     if (this.state.selectedUnit !== prevState.selectedUnit) {
-      // TODO: Remove conditional when default db is set.
+      // TODO: Remove conditional when default spikesprayurl property on db is active.
       let url = this.state.selectedUnit.u.spikesprayUrl || "";
       this.props.fetchSpikeSpray(url);
     }
