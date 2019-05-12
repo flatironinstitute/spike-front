@@ -9,6 +9,7 @@ const studyController = require("./controllers/studyController");
 const studySetController = require("./controllers/studySetController");
 const trueUnitController = require("./controllers/trueUnitController");
 const unitResultsController = require("./controllers/unitResultsController");
+const mailer = require("./email/mailer.js");
 
 /* V2 Data: New Routes
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -40,12 +41,16 @@ router.get(
   unitResultsController.getUnitResultsByStudy
 );
 // Contact Routes
-router.post("/api/contact", (req, res) => {
-  // TODO: Attach to mail server
-  console.log("🗺️ Email sent fake", req.body);
-  res.send({
-    success: true
-  });
+router.post("/api/contact", async (req, res) => {
+  try {
+    let sent = await mailer.send(req.body);
+    res.send({
+      success: true
+    });
+  } catch (e) {
+    //TODO: Add Sentry logging
+    console.log("Error", e);
+  }
 });
 
 module.exports = router;

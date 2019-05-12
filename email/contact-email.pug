@@ -1,11 +1,27 @@
-extends email-layout
-
-block content
-  h2 SpikeForest Contact
-  p From: #{options.firstName} #{options.lastName}
-  p Email: #{options.email}
-  p Affiliation: #{options.affiliation}
-  br
-  p Comment: #{options.feedback}
-  br
-  p ELABORATION IS A FORM OF POLLUTION
+doctype html
+html
+  head
+    meta(name='viewport', content='width=device-width')
+    meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+    style
+      include styles.css
+  body
+    table.body(border='0', cellpadding='0', cellspacing='0')
+      tr
+        td
+        td.container
+          .content
+            table.main
+              tr
+                td.wrapper
+                  table(border='0', cellpadding='0', cellspacing='0')
+                    tr
+                      td
+                        h2 SpikeForest Contact Form Message
+                        p From: #{firstName} #{lastName}
+                        p Email: #{email}
+                        p Affiliation: #{affiliation}
+                        br
+                        p Comment: #{feedback}
+                        br
+                        p Please reply to the above address in a fresh email. Reply-tos on this message may not work properly.
