@@ -18,8 +18,7 @@ exports.send = async options => {
     secure: false, // use TLS
     auth: {
       user: "apikey",
-      pass:
-        "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"
+      pass: process.env.DATABASE
     }
   });
 
@@ -34,6 +33,5 @@ exports.send = async options => {
     html: html // html body
   });
 
-  console.log("📝 Message info on mailer.js: %s", info);
   return info;
 };
