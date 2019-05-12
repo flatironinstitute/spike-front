@@ -101,7 +101,7 @@ class SpikeSpray extends Component {
           x: 0,
           y: offset,
           label: "Channel " + channel,
-          style: { fontSize: "14px", lineHeight: "16px", fontWeight: "400" }
+          style: { fontSize: "14px", lineheight: "16px", fontWeight: "400" }
         };
         labelData.push(labelObj);
       });
