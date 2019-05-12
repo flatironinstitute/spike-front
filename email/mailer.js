@@ -18,7 +18,7 @@ exports.send = async options => {
     secure: false, // use TLS
     auth: {
       user: "apikey",
-      pass: process.env.DATABASE
+      pass: process.env.SENDGRID
     }
   });
 
