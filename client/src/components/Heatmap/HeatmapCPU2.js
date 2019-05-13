@@ -58,6 +58,7 @@ class HeatmapCPU2 extends Component {
             <Row className="container__heatmap--row">
               <Col lg={12} sm={12}>
                 <HeatmapViz
+                  groupByStudySets={true}
                   cpus={this.props.cpus}
                   selectStudySortingResult={this.props.selectStudySortingResult}
                   selectedStudySortingResult={

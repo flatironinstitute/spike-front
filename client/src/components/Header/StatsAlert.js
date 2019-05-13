@@ -19,10 +19,10 @@ class StatsAlert extends Component {
                 <b>Beta notice:</b>
               </div>
               <div className="ticker__item">
-                Please note we are updating the site on a regular basis.
+                This is a website preview.
               </div>
               <div className="ticker__item">
-                <b>Project Totals:</b>
+                <b>Project totals:</b>
               </div>
               <div className="ticker__item">
                 {Math.round(coreHours / 60)} CPU core hours

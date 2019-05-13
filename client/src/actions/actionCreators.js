@@ -10,18 +10,23 @@ if (process.env.NODE_ENV === "production") {
 
 /* V2 Data Actions
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-export const RECEIVE_ALGORITHMS = "RECEIVE_ALGORITHMS";
 export const RECEIVE_CPUS = "RECEIVE_CPUS";
 export const RECEIVE_GROUPED_URS = "RECEIVE_GROUPED_URS";
 export const RECEIVE_RECORDINGS = "RECEIVE_RECORDINGS";
 export const RECEIVE_SPIKESPRAY = "RECEIVE_SPIKESPRAY";
 export const RECEIVE_SORTERS = "RECEIVE_SORTERS";
+export const RECEIVE_ALGORITHMS = "RECEIVE_ALGORITHMS";
+export const RECEIVE_UNIT_RESULTS = "RECEIVE_UNIT_RESULTS";
 export const RECEIVE_STATS = "RECEIVE_STATS";
 export const RECEIVE_STUDY_SETS = "RECEIVE_STUDY_SETS";
 export const RECEIVE_STUDIES = "RECEIVE_STUDIES";
-export const RECEIVE_UNIT_RESULTS = "RECEIVE_UNIT_RESULTS";
 export const RECEIVE_URS_BY_STUDY = "RECEIVE_URS_BY_STUDY";
+export const RECEIVE_STUDY_ANALYSIS_RESULTS = "RECEIVE_STUDY_ANALYSIS_RESULTS";
+
 export const SELECT_STUDY_SORTING_RESULT = "SELECT_STUDY_SORTING_RESULT";
+export const SELECT_SORTER_NAME = "SELECT_SORTER_NAME";
+export const SELECT_STUDY_NAME = "SELECT_STUDY_NAME";
+
 
 export const START_LOADING = "START_LOADING";
 export const END_LOADING = "END_LOADING";
@@ -332,10 +337,42 @@ export const fetchRecordings = () => {
   };
 };
 
+// Study analysis results
+export const receiveStudyAnalysisResults = studyAnalysisResults => ({
+  type: RECEIVE_STUDY_ANALYSIS_RESULTS,
+  studyAnalysisResults
+});
+
+export const fetchStudyAnalysisResults = () => {
+  let url = `/api/studyanalysisresults`;
+  return function (dispatch) {
+    dispatch(startLoading());
+    return createFetchAPI(url)
+      .then(res => {
+        dispatch(receiveStudyAnalysisResults(res.studyAnalysisResults));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      })
+      .catch(err => Sentry.captureException(err));
+  };
+};
+
+
 // Selected Study for Scatterplot
 export const selectStudySortingResult = studySortingResult => ({
   type: SELECT_STUDY_SORTING_RESULT,
   studySortingResult
+});
+
+export const selectStudyName = studyName => ({
+  type: SELECT_STUDY_NAME,
+  studyName
+});
+
+export const selectSorterName = sorterName => ({
+  type: SELECT_SORTER_NAME,
+  sorterName
 });
 
 // SpikeSpray

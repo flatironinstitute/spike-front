@@ -60,6 +60,7 @@ const Recording = require("../../models/Recording");
 const TrueUnit = require("../../models/TrueUnit");
 const SortingResult = require("../../models/SortingResult");
 const UnitResult = require("../../models/UnitResult");
+const StudyAnalysisResult = require("../../models/StudyAnalysisResult");
 
 // import all the raw data
 const rawSorters = JSON.parse(
@@ -85,6 +86,9 @@ const rawSortingResults = JSON.parse(
 );
 const rawUnitResults = JSON.parse(
   fs.readFileSync(data_directory + "/UnitResults.json", "utf-8")
+);
+const rawStudyAnalysisResults = JSON.parse(
+  fs.readFileSync(data_directory + "/StudyAnalysisResults.json", "utf-8")
 );
 
 async function writeNewFile(fileName, newData) {
@@ -247,11 +251,17 @@ async function formatSortingResults() {
     sorting.sorterName = sorting.sorter;
     delete sorting.study;
   });
+  const recordings = JSON.parse(
+    fs.readFileSync(data_directory + "/cleanedData/recordings.json", "utf-8")
+  );
+  const studies = JSON.parse(
+    fs.readFileSync(data_directory + "/cleanedData/studies.json", "utf-8")
+  );
+  const sorters = JSON.parse(
+    fs.readFileSync(data_directory + "/cleanedData/sorters.json", "utf-8")
+  );
   rawSortingResults.forEach(sorting => {
     // Match sorting.recording to the recording._id;
-    const recordings = JSON.parse(
-      fs.readFileSync(data_directory + "/cleanedData/recordings.json", "utf-8")
-    );
     let [recordingId] = recordings.filter(
       recording =>
         recording.studyName === sorting.studyName &&
@@ -267,9 +277,6 @@ async function formatSortingResults() {
       process.exit();
     }
     // Match sorting.studyName to the study.name and add the id;
-    const studies = JSON.parse(
-      fs.readFileSync(data_directory + "/cleanedData/studies.json", "utf-8")
-    );
     let [studyId] = studies.filter(study => study.name === sorting.studyName);
     if (studyId) {
       sorting.study = studyId;
@@ -281,9 +288,6 @@ async function formatSortingResults() {
       process.exit();
     }
     // Match sorting.sorter to the sorter._id;
-    const sorters = JSON.parse(
-      fs.readFileSync(data_directory + "/cleanedData/sorters.json", "utf-8")
-    );
     let [sorterId] = sorters.filter(
       sorter => sorter.name === sorting.sorterName
     );
@@ -460,10 +464,14 @@ async function formatAndLoadData() {
   await writeCleanData(SortingResult, "sortingresults");
 
   // Unit Results
-  let cleanUnitResults = await formatUnitResults();
-  let unitResultsWithSNR = await fetchUnitResultsWithSNR(cleanUnitResults);
-  await loadIntoDB(UnitResult, unitResultsWithSNR, "Unit results");
-  await writeCleanData(UnitResult, "unitresults");
+  // let cleanUnitResults = await formatUnitResults();
+  // let unitResultsWithSNR = await fetchUnitResultsWithSNR(cleanUnitResults);
+  // await loadIntoDB(UnitResult, unitResultsWithSNR, "Unit results");
+  // await writeCleanData(UnitResult, "unitresults");
+
+  // Study analysis results
+  await loadIntoDB(StudyAnalysisResult, rawStudyAnalysisResults, "StudyAnalysisResults");
+  await writeCleanData(StudyAnalysisResult, "studyanalysisresults");
 
   // Delete WIP Files
   await emptyDataFolder(data_directory + "/cleanedData");

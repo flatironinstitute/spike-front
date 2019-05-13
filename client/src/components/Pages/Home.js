@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Preloader from "../Preloader/Preloader";
 import HomeContentContainer from "../Heatmap/HomeContentContainer";
-import { formatUnitResults } from "../../dataHandlers";
+// import { formatUnitResults } from "../../dataHandlers";
 import { isEmpty } from "../../utils";
 import { Container, Card } from "react-bootstrap";
 import StatsAlert from "../Header/StatsAlert";
@@ -13,34 +13,34 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      unitsMap: {}
+      // unitsMap: {}
     };
   }
 
   componentDidMount() {
-    if (this.props.groupedURs && this.props.sorters) {
-      this.mapUnits();
-    }
+    // if (this.props.groupedURs && this.props.sorters) {
+    //   this.mapUnits();
+    // }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (
-      this.props.groupedURs !== prevProps.groupedURs ||
-      this.props.sorters !== prevProps.sorters
-    ) {
-      this.mapUnits();
-    }
+    // if (
+    //   this.props.groupedURs !== prevProps.groupedURs ||
+    //   this.props.sorters !== prevProps.sorters
+    // ) {
+    //   this.mapUnits();
+    // }
   }
 
-  async mapUnits() {
-    if (this.props.sorters && this.props.groupedURs) {
-      let unitsMap = await formatUnitResults(
-        this.props.groupedURs,
-        this.props.sorters
-      );
-      this.setState({ unitsMap: unitsMap });
-    }
-  }
+  // async mapUnits() {
+  //   if (this.props.sorters && this.props.groupedURs) {
+  //     let unitsMap = await formatUnitResults(
+  //       this.props.groupedURs,
+  //       this.props.sorters
+  //     );
+  //     this.setState({ unitsMap: unitsMap });
+  //   }
+  // }
 
   getStudies() {
     // returns the unique names of the studies
@@ -57,10 +57,19 @@ class Home extends Component {
   }
 
   render() {
+    // let loading =
+    //   isEmpty(this.state.unitsMap) ||
+    //   isEmpty(this.props.studies) ||
+    //   isEmpty(this.props.sorters);
     let loading =
-      isEmpty(this.state.unitsMap) ||
-      isEmpty(this.props.studies) ||
-      isEmpty(this.props.sorters);
+        isEmpty(this.props.studies) ||
+        isEmpty(this.props.sorters) ||
+        isEmpty(this.props.studysets) ||
+        isEmpty(this.props.studyAnalysisResults);
+    if (loading) {
+      window.scrollTo(0, 0);
+    }
+
     let sorters = this.props.sorters ? this.getSorters() : null;
     let studies = this.props.studies ? this.getStudies() : null;
     return (
@@ -80,7 +89,7 @@ class Home extends Component {
             {...this.props}
             shortStudies={studies}
             shortSorters={sorters}
-            unitsMap={this.state.unitsMap}
+            // unitsMap={this.state.unitsMap}
           />
         )}
         <Container className="container__heatmap">

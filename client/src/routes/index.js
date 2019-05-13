@@ -5,6 +5,9 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as actionCreators from "../actions/actionCreators";
 
+import { Card, Container } from "react-bootstrap";
+import Preloader from "../components/Preloader/Preloader";
+
 // import components
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
@@ -26,15 +29,28 @@ class Routes extends Component {
     // V2 Data: Fetches
     this.props.fetchCPUs();
     this.props.fetchStudies();
-    this.props.fetchGroupedURs();
+    //this.props.fetchGroupedURs();
     this.props.fetchSorters();
     this.props.fetchAlgorithms();
     this.props.fetchStats();
     this.props.fetchStudySets();
     this.props.fetchRecordings();
+    this.props.fetchStudyAnalysisResults();
   }
 
   render() {
+    let loadingContainer = (
+      <div className="page__body">
+        <Container className="container__heatmap">
+          <Card>
+            <Card.Body>
+              <Preloader />
+            </Card.Body>
+          </Card>
+        </Container>
+      </div>
+    );
+
     return (
       <div className="wrapper">
         <Header />
@@ -62,7 +78,7 @@ class Routes extends Component {
             render={props => <Recordings {...this.props} />}
           />
           <Route
-            path="/sorters"
+            path="/algorithms"
             render={props => <Algorithms algorithms={this.props.algorithms} />}
           />
           <Route
@@ -70,8 +86,23 @@ class Routes extends Component {
             render={props => <Studies {...this.props} />}
           />
           <Route
-            path="/study/:studyName"
-            render={props => <DetailPage {...this.props} />}
+            path="/studyresults/:studyName"
+            render={props => 
+              (!this.props.studyAnalysisResults) ||
+              (!this.props.studies) ||
+              (!this.props.sorters) ||
+              (!this.props.studysets) ? (loadingContainer) :
+              (
+                <DetailPage
+                  studyName={props.match.params.studyName}
+                  sorterName={this.props.selectedSorterName}
+                  studyAnalysisResults={this.props.studyAnalysisResults}
+                  studies={this.props.studies}
+                  sorters={this.props.sorters}
+                  studysets={this.props.studysets}
+                />
+              )
+            }
           />
           <Route render={props => <FourOhFour {...this.props} />} />
         </Switch>
@@ -87,17 +118,20 @@ function mapStateToProps(state) {
     algorithms: state.algorithms,
     contactSent: state.contactSent,
     cpus: state.cpus,
-    groupedURs: state.groupedURs,
+    // groupedURs: state.groupedURs,
     loading: state.loading,
     recordings: state.recordings,
     sorters: state.sorters,
-    spikespray: state.spikespray,
+    // spikespray: state.spikespray,
     stats: state.stats,
     studies: state.studies,
     studysets: state.studysets,
     selectedStudySortingResult: state.selectedStudySortingResult,
+    selectedStudyName: state.selectedStudyName,
+    selectedSorterName: state.selectedSorterName,
     unitResults: state.unitResults,
-    ursByStudy: state.ursByStudy
+    ursByStudy: state.ursByStudy,
+    studyAnalysisResults: state.studyAnalysisResults
   };
 }
 

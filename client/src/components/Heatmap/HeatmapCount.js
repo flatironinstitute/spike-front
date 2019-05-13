@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { isEmpty } from "../../utils";
 import { Redirect } from "react-router";
-import * as Sentry from "@sentry/browser";
+// import * as Sentry from "@sentry/browser";
 
 // Components
 import { Col, Container, Row } from "react-bootstrap";
@@ -21,125 +21,15 @@ class HeatmapCount extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      builtData: [],
       cardHeight: null,
       redirect: false
     };
   }
 
   componentDidMount() {
-    if (this.props.unitsMap.length) {
-      this.filterAccuracyMap();
-    }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (
-      this.props.unitsMap !== prevProps.unitsMap ||
-      this.props.sliderValue !== prevProps.sliderValue ||
-      this.props.metric !== prevProps.metric
-    ) {
-      this.filterAccuracyMap();
-    }
-  }
-
-  getMetricKey() {
-    let metricKey;
-    switch (this.props.metric) {
-      case "accuracy":
-        metricKey = "accuracies";
-        break;
-      case "recall":
-        metricKey = "recalls";
-        break;
-      case "precision":
-        metricKey = "precisions";
-        break;
-      default:
-        metricKey = "accuracies";
-        break;
-    }
-    return metricKey;
-  }
-
-  // Count functions for 'Number of groundtruth units above metric threshold'
-  filterAccuracy(sorterArray) {
-    let newArr = sorterArray.map(sorter => {
-      if (!sorter.accuracies) {
-        Sentry.captureMessage("No accuracy values for this sorter: ", sorter);
-        return sorter;
-      } else {
-        let above = sorter.accuracies.filter(accu => {
-          return accu >= this.props.sliderValue;
-        });
-        sorter.in_range = above.length;
-        sorter.color = above.length;
-        return sorter;
-      }
-    });
-    return newArr;
-  }
-
-  filterRecall(sorterArray) {
-    let newArr = sorterArray.map(sorter => {
-      if (!sorter.recalls) {
-        Sentry.captureMessage("No recall values for this sorter: ", sorter);
-        sorter.in_range = 0;
-        sorter.color = 0;
-        return sorter;
-      } else {
-        let above = sorter.recalls.filter(accu => {
-          return accu >= this.props.sliderValue;
-        });
-        sorter.in_range = above.length;
-        sorter.color = above.length;
-        return sorter;
-      }
-    });
-    return newArr;
-  }
-
-  filterPrecision(sorterArray) {
-    let newArr = sorterArray.map(sorter => {
-      if (!sorter.precisions) {
-        Sentry.captureMessage("No precision values for this sorter: ", sorter);
-        sorter.in_range = 0;
-        sorter.color = 0;
-        return sorter;
-      } else {
-        let above = sorter.precisions.filter(accu => {
-          return accu >= this.props.sliderValue;
-        });
-        sorter.in_range = above.length;
-        sorter.color = above.length;
-        return sorter;
-      }
-    });
-    return newArr;
-  }
-
-  filterAccuracyMap() {
-    let built = this.props.unitsMap.map(study => {
-      let values = Object.values(study)[0];
-      let key = Object.keys(study)[0];
-      let filtered;
-      switch (this.props.metric) {
-        case "accuracy":
-          filtered = this.filterAccuracy(values);
-          break;
-        case "recall":
-          filtered = this.filterRecall(values);
-          break;
-        case "precision":
-          filtered = this.filterPrecision(values);
-          break;
-        default:
-          filtered = this.filterAccuracy(values);
-          break;
-      }
-      return { [key]: filtered };
-    });
-    this.setState({ builtData: built });
   }
 
   handleCardHeightChange = value => {
@@ -148,16 +38,16 @@ class HeatmapCount extends Component {
     });
   };
 
-  handleScatterplotClick = value => {
-    this.setState({ redirect: true });
-  };
+  handleScatterplotClick = d => {
+    this.setState({
+      redirect: true
+    });
+  }
 
   render() {
-    let loading = isEmpty(this.state.builtData);
-    let study = this.props.selectedStudySortingResult
-      ? this.props.selectedStudySortingResult.study
-      : "";
-    study = "/study/" + study;
+    let loading = isEmpty(this.props.studyAnalysisResults);
+    let study = this.props.selectedStudyName || "";
+    study = "/studyresults/" + study;
     if (this.state.redirect) {
       return <Redirect push to={study} />;
     }
@@ -172,11 +62,13 @@ class HeatmapCount extends Component {
             <Row className="container__heatmap--row">
               <Col lg={6} sm={12}>
                 <HeatmapViz
-                  selectStudySortingResult={this.props.selectStudySortingResult}
-                  selectedStudySortingResult={
-                    this.props.selectedStudySortingResult
-                  }
+                  groupByStudySets={true}
+                  selectStudyName={this.props.selectStudyName}
+                  selectSorterName={this.props.selectSorterName}
+                  selectedStudyName={this.props.selectedStudyName}
+                  selectedSorterName={this.props.selectedSorterName}
                   groupedUnitResults={this.state.builtData}
+                  studyAnalysisResults={this.props.studyAnalysisResults}
                   studies={this.props.studies}
                   studysets={this.props.studysets}
                   format={this.props.format}
@@ -185,14 +77,24 @@ class HeatmapCount extends Component {
                   handleCardHeightChange={this.handleCardHeightChange}
                 />
               </Col>
-              <Col lg={6} sm={12}>
-                <ScatterplotCard
-                  {...this.props}
-                  sliderValue={this.props.sliderValue}
-                  cardHeight={this.state.cardHeight}
-                  handleScatterplotClick={this.handleScatterplotClick}
-                />
-              </Col>
+
+              {
+                (this.props.format !== "cpu") ?
+                (<Col lg={6} sm={12}>
+                  <ScatterplotCard
+                    studies={this.props.studies}
+                    sorters={this.props.sorters}
+                    studyAnalysisResults={this.props.studyAnalysisResults}
+                    studyName={this.props.selectedStudyName}
+                    sorterName={this.props.selectedSorterName}
+                    sliderValue={this.props.sliderValue}
+                    format={this.props.format}
+                    metric={this.props.metric}
+                    cardHeight={this.state.cardHeight}
+                    handleScatterplotClick={this.handleScatterplotClick}
+                  />
+                </Col>) : (<span />)
+              }
             </Row>
           </Container>
         )}
@@ -203,7 +105,9 @@ class HeatmapCount extends Component {
 
 function mapStateToProps(state) {
   return {
-    selectedStudySortingResult: state.selectedStudySortingResult
+    selectedStudyName: state.selectedStudyName,
+    selectedSorterName: state.selectedSorterName,
+    selectedRecording: state.selectedRecording
   };
 }
 

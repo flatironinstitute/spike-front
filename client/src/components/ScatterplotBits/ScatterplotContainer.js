@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import ScatterplotCount from "./ScatterplotCount";
-import ScatterplotAverage from "./ScatterplotAverage";
 
 class ScatterplotContainer extends Component {
-  getHeaderCopy(value) {
+  getHeaderCopy(metric) {
+    return `Unit ${metric} vs. SNR`;
+    /*
     var sliderValue;
     switch (value) {
       case "count":
@@ -16,35 +17,50 @@ class ScatterplotContainer extends Component {
         sliderValue = "";
     }
     return sliderValue;
+    */
   }
 
   render() {
     const {
-      selectedStudySortingResult,
+      studyName,
+      sorterName,
+      studyAnalysisResult,
       sliderValue,
       metric,
       format
     } = this.props;
-    const copy = this.getHeaderCopy(this.props.format);
+    const colorRanges = {
+      count: ["#6B7CC4", "#102BA3"],
+      cpu: ["#EFC1E3", "#B52F93"],
+      average: ["#00CEA8", "#0C4F42"]
+    };
+    const copy = this.getHeaderCopy(this.props.metric);
     return (
       <div>
-        <p>
-          Click marks below to see detailed information on the study and
-          recording
-        </p>
+        {
+          this.props.handleScatterplotClick ?
+          (
+            <p>
+              Click a marker below for more details.
+            </p>
+          ) : (<span></span>)
+        }
         <p>
           {copy}
-          {selectedStudySortingResult
+          {/*selectedStudySortingResult
             ? selectedStudySortingResult.in_range
-            : ""}
+          : ""*/}
         </p>
         {(() => {
           switch (format) {
             case "count":
               return (
                 <ScatterplotCount
-                  {...this.props}
-                  selectedUnits={selectedStudySortingResult.true_units}
+                  lineOrientation={'horizontal'}
+                  colorRange={colorRanges['count']}
+                  studyAnalysisResult={studyAnalysisResult}
+                  studyName={studyName}
+                  sorterName={sorterName}
                   sliderValue={sliderValue}
                   format={format}
                   metric={metric}
@@ -53,9 +69,12 @@ class ScatterplotContainer extends Component {
               );
             case "average":
               return (
-                <ScatterplotAverage
-                  {...this.props}
-                  selectedUnits={selectedStudySortingResult.true_units}
+                <ScatterplotCount
+                  lineOrientation={'vertical'}
+                  colorRange={colorRanges['average']}
+                  studyAnalysisResult={studyAnalysisResult}
+                  studyName={studyName}
+                  sorterName={sorterName}
                   sliderValue={sliderValue}
                   format={format}
                   metric={metric}

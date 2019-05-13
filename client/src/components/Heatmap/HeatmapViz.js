@@ -4,27 +4,35 @@ import * as Sentry from "@sentry/browser";
 import * as d3 from "d3";
 import ExpandingHeatmapTable from "./ExpandingHeatmapTable";
 
+import { Link } from "react-router-dom";
+
 class HeatmapViz extends Component {
   constructor(props) {
     super(props);
-    this.state = { tableRows: [], tableHeader: [], vizWidth: null };
+    this.state = { 
+      tableRows: [], 
+      tableHeader: [], 
+      vizWidth: null,
+      selectedStudyName: props.selectedStudyName,
+      selectedSorterName: props.selectedSorterName
+    };
     this.handleCellSelected = this.handleCellSelected.bind(this);
   }
 
   componentDidMount() {
-    this.buildVizData(this.props.groupedUnitResults);
+    this.buildVizData(this.props.studyAnalysisResults);
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      this.props.groupedUnitResults !== prevProps.groupedUnitResults ||
+      this.props.studyAnalysisResults !== prevProps.studyAnalysisResults ||
       this.props.threshold !== prevProps.threshold ||
       this.props.format !== prevProps.format ||
       this.props.metric !== prevProps.metric ||
-      this.props.selectedStudySortingResult !==
-        prevProps.selectedStudySortingResult
+      this.state.selectedStudyName !== prevState.selectedStudyName ||
+      this.state.selectedSorterName !== prevState.selectedSorterName
     ) {
-      this.buildVizData(this.props.groupedUnitResults);
+      this.buildVizData(this.props.studyAnalysisResults);
     }
     if (
       this.state.tableHeader !== prevState.tableHeader ||
@@ -37,81 +45,91 @@ class HeatmapViz extends Component {
   handleChartHeight() {
     let elmnt = document.getElementById("heatmap-card");
     let height = elmnt.offsetHeight;
-    this.props.handleCardHeightChange(height);
+    if (this.props.handleCardHeightChange)
+      this.props.handleCardHeightChange(height);
   }
 
-  buildVizData(groupedUnitResults) {
-    if (groupedUnitResults) {
-      // assemble a lookup: study_set_id -> study_set_name which we will need later
-      let studySetNamesById = {};
-      this.props.studysets.forEach(function(x, i) {
-        studySetNamesById[x._id] = x.name;
-      }, this);
-
-      // assemble a lookup: study_name -> study_set_name
-      // and a collection of study set names
-      let studySetByStudy = {}; // lookup study_name -> study_set_name
-      let studySetNames = {}; // collection of study set names (will be sorted list below)
-      this.props.studies.forEach(function(study, i) {
-        let studySetName = studySetNamesById[study.studySet];
-        studySetByStudy[study.name] = studySetName;
-        studySetNames[studySetName] = true;
-      }, this);
-      // make it a sorted list
-      studySetNames = Object.keys(studySetNames);
-      studySetNames.sort();
+  buildVizData(studyAnalysisResults) {
+    if ((studyAnalysisResults) && (studyAnalysisResults.length > 0)) {
 
       // Assemble the table rows (list of objects that will be passed to the ExpandingHeatmapTable component)
       let tableRows = [];
-      studySetNames.forEach(function(studySet, ii) {
-        // loop through the study sets
-        // prepare a list of the studies in the study set (formatted properly for convenience)
-        let studiesInStudySet = [];
-        groupedUnitResults.forEach(function(studyWithResults, jj) {
-          // loop through the studies with results looking for the ones that match the study set
-          let studyName = Object.keys(studyWithResults)[0];
-          if (studySetByStudy[studyName] === studySet) {
-            let studyWithResults0 = studyWithResults[studyName]; // this is necessary because of the somewhat difficult structure of studyWithResults
-            // important to sort the results by sorter so they all line up
-            studyWithResults0.sort((a, b) => {
-              let textA = a.sorter.toUpperCase();
-              let textB = b.sorter.toUpperCase();
-              return textA < textB ? -1 : textA > textB ? 1 : 0;
-            });
-            studiesInStudySet.push(studyWithResults0);
-          }
-          return null;
+      if (this.props.groupByStudySets) {
+        // assemble a lookup: study_set_id -> study_set_name which we will need later
+        let studySetNamesById = {};
+        this.props.studysets.forEach(function(x, i) {
+          studySetNamesById[x._id] = x.name;
         }, this);
-        // Here's the table row associated with the study set
-        let tableRow = {
-          id: studySet,
-          cells: this.computeTableRowCellsFromStudySet(
-            studiesInStudySet,
-            studySet
-          ),
-          subrows: []
-        };
-        // loop through the studies in the study set and add a row for each
-        studiesInStudySet.forEach(function(study, kk) {
-          tableRow.subrows.push({
-            cells: this.computeTableRowCellsFromStudy(study, false)
+
+        // assemble a lookup: study_name -> study_set_name
+        // and a collection of study set names
+        let studySetByStudy = {}; // lookup study_name -> study_set_name
+        let studySetNames = {}; // collection of study set names (will be sorted list below)
+        this.props.studies.forEach(function(study, i) {
+          let studySetName = studySetNamesById[study.studySet];
+          studySetByStudy[study.name] = studySetName;
+          studySetNames[studySetName] = true;
+        }, this);
+        // make it a sorted list
+        studySetNames = Object.keys(studySetNames);
+        studySetNames.sort();
+
+        studySetNames.forEach(function(studySet, ii) {
+          // loop through the study sets
+          // prepare a list of the studies in the study set (formatted properly for convenience)
+          let studyAnalysisResultsInStudySet = [];
+          studyAnalysisResults.forEach(function(studyAnalysisResult, jj) {
+            // loop through the studies with results looking for the ones that match the study set
+            let studyName = studyAnalysisResult.studyName;
+            if (studySetByStudy[studyName] === studySet) {
+              /*
+              // important to sort the results by sorter so they all line up
+              studyWithResults0.sort((a, b) => {
+                let textA = a.sorter.toUpperCase();
+                let textB = b.sorter.toUpperCase();
+                return textA < textB ? -1 : textA > textB ? 1 : 0;
+              });
+              */
+              studyAnalysisResultsInStudySet.push(studyAnalysisResult);
+            }
+            return null;
+          }, this);
+          // Here's the table row associated with the study set
+          let tableRow = {
+            id: 'studySet--' + studySet,
+            cells: this.computeTableRowCellsFromStudySet(
+              studyAnalysisResultsInStudySet,
+              studySet
+            ),
+            subrows: []
+          };
+          // loop through the study analysis results in the study set and add a row for each
+          studyAnalysisResultsInStudySet.forEach(function(studyAnalysisResult, kk) {
+            tableRow.subrows.push({
+              cells: this.computeTableRowCellsFromStudyAnalysisResult(studyAnalysisResult, false)
+            });
+            return null;
+          }, this);
+          tableRows.push(tableRow);
+
+          // add a spacer row -- which should have the same number of cells and perhaps some formatting associated with the study set
+          tableRows.push({
+            cells: this.computeEmptyTableRowCellsFromStudyAnalysisResult(studyAnalysisResultsInStudySet[0])
           });
           return null;
         }, this);
-        tableRows.push(tableRow);
+      }
+      else {
+        this.props.studyAnalysisResults.forEach(function(studyAnalysisResult) {
+          tableRows.push({
+            cells: this.computeTableRowCellsFromStudyAnalysisResult(studyAnalysisResult, false)
+          });
+        }, this);
+      }
 
-        // add a spacer row -- which should have the same number of cells and perhaps some formatting associated with the study set
-        tableRows.push({
-          cells: this.computeEmptyTableRowCellsFromStudy(studiesInStudySet[0])
-        });
-        return null;
-      }, this);
-
-      let x = groupedUnitResults[0]; // first study
-      let studyName = Object.keys(x)[0];
-      let y = x[studyName];
-      let sorterNames = y.map(function(z) {
-        return z.sorter;
+      let sar = studyAnalysisResults[0]; // first study analysis result
+      let sorterNames = sar.sortingResults.map(function(sr) {
+        return sr.sorterName;
       });
 
       let headerCells = [];
@@ -121,6 +139,7 @@ class HeatmapViz extends Component {
       sorterNames.forEach(function(sorterName) {
         headerCells.push({
           text: sorterName,
+          link: '/algorithms',
           rotate: true
         });
         return null;
@@ -157,14 +176,51 @@ class HeatmapViz extends Component {
     return copy;
   }
 
-  computeTableRowCellsFromStudySet(list, studySet) {
-    let ret = [];
-    ret.push({
-      text: studySet,
-      selectable: false
-    });
+  computeTableRowCellsFromStudySet(studyAnalysisResults, studySetName) {
+    let aggregatedStudyAnalysisResult = this.aggregateStudyAnalysisResults(studyAnalysisResults, studySetName);
+    return this.computeTableRowCellsFromStudyAnalysisResult(aggregatedStudyAnalysisResult, true, 'studySet--' + studySetName);
+  }
 
-    let numSorters = list[0].length;
+  aggregateStudyAnalysisResults(studyAnalysisResults, studySetName) {
+    let numSorters = studyAnalysisResults[0].sortingResults.length;
+
+    let trueSnrs = [];
+    let trueFiringRates = [];
+    let trueNumEvents = [];
+    // ...
+    let sortingResults = [];
+    for (let ii = 0; ii < numSorters; ii++) {
+      sortingResults.push({
+        accuracies: [],
+        precisions: [],
+        recalls: [],
+        cpuTimesSec: []
+      });
+    }
+
+    studyAnalysisResults.forEach((studyAnalysisResult) => {
+      trueSnrs = trueSnrs.concat(studyAnalysisResult.trueSnrs);
+      trueFiringRates = trueFiringRates.concat(studyAnalysisResult.trueFiringRates);
+      trueNumEvents = trueNumEvents.concat(studyAnalysisResult.trueNumEvents);
+      // ...
+      for (let ii = 0; ii < numSorters; ii++) {
+        sortingResults[ii].accuracies = sortingResults[ii].accuracies.concat(studyAnalysisResult.sortingResults[ii].accuracies);
+        sortingResults[ii].precisions = sortingResults[ii].precisions.concat(studyAnalysisResult.sortingResults[ii].precisions);
+        sortingResults[ii].recalls = sortingResults[ii].recalls.concat(studyAnalysisResult.sortingResults[ii].recalls);
+        sortingResults[ii].cpuTimesSec = sortingResults[ii].cpuTimesSec.concat(studyAnalysisResult.sortingResults[ii].cpuTimesSec);
+      }
+    })
+
+    return {
+      studyName: studySetName,
+      trueSnrs: trueSnrs,
+      trueFiringRates: trueFiringRates,
+      trueNumEvents: trueNumEvents,
+      // ...
+      sortingResults: sortingResults
+    };
+
+    /*
     let aggregated = [];
     for (let i = 0; i < numSorters; i++) {
       aggregated.push({
@@ -206,16 +262,17 @@ class HeatmapViz extends Component {
     }
 
     return this.computeTableRowCellsFromStudy(aggregated, true, studySet);
+    */
   }
 
-  computeEmptyTableRowCellsFromStudy(studySortingResults) {
+  computeEmptyTableRowCellsFromStudyAnalysisResult(studyAnalysisResult) {
     let ret = [];
     ret.push({
       text: "",
       spacer: true,
       selectable: false
     });
-    studySortingResults.forEach(function(studySortingResult) {
+    studyAnalysisResult.sortingResults.forEach(function(sr) {
       ret.push({
         text: "",
         spacer: true,
@@ -226,8 +283,8 @@ class HeatmapViz extends Component {
     return ret;
   }
 
-  computeTableRowCellsFromStudy(
-    studySortingResults,
+  computeTableRowCellsFromStudyAnalysisResult(
+    studyAnalysisResult,
     isStudySet,
     expandIdOnClick
   ) {
@@ -237,8 +294,10 @@ class HeatmapViz extends Component {
     let threshold = this.props.threshold;
     let ret = []; // the cells to return
     // the first cell is the name of the study
+    let link = isStudySet ? null : `/studyresults/${studyAnalysisResult.studyName}`;
     ret.push({
-      text: (studySortingResults[0] || {}).study,
+      text: studyAnalysisResult.studyName,
+      link: link,
       expand_id_on_click: expandIdOnClick,
       text_align: "right",
       selectable: false
@@ -254,50 +313,59 @@ class HeatmapViz extends Component {
       default:
         rowNormalize = true;
     }
+    let trueSnrs = studyAnalysisResult.trueSnrs;
     // loop through the sorting results for the study, and get the metrics (e.g., counts) to display
-    let metricList = studySortingResults.map(function(studySortingResult) {
+    let cellvalList = studyAnalysisResult.sortingResults.map(function(sortingResult) {
       let metricVals;
       if (format === "count" || format === "average") {
         switch (metric) {
           case "accuracy":
-            metricVals = studySortingResult.accuracies;
+            metricVals = sortingResult.accuracies;
             break;
           case "recall":
-            metricVals = studySortingResult.recalls;
+            metricVals = sortingResult.recalls;
             break;
           case "precision":
-            metricVals = studySortingResult.precisions;
+            metricVals = sortingResult.precisions;
             break;
           default:
             throw Error("Unexpected metric: " + metric);
         }
       } else if (format === "cpu") {
-        if (isStudySet) {
-          // this logic is messy and needs to be cleaned up
-          metricVals = studySortingResult.cpus;
-        } else {
-          metricVals = this.get_cpu_times_for_study_sorter(
-            this.props.cpus,
-            studySortingResult.study,
-            studySortingResult.sorter
-          );
+        metricVals = sortingResult.cpuTimesSec;
+      }
+      let num_found = 0;
+      let num_missing = 0
+      for (let i = 0; i < trueSnrs.length; i++) {
+        let val0 = sortingResult.accuracies[i];
+        if (this.isNumeric(val0)) {
+          num_found++;
+        }
+        else {
+          num_missing++;
         }
       }
+      if (num_found === 0)
+        return {value: undefined, num_missing:num_missing};
+
       if (format === "count") {
         if (metricVals && metricVals.length > 0) {
           let numAbove = metricVals.filter(val => {
-            return val >= threshold; // metric threshold
+            return ((this.isNumeric(val)) && (val >= threshold)); // metric threshold
           });
-          return numAbove.length;
+          return {value: numAbove.length, num_missing:num_missing};
         } else {
-          return undefined;
+          return {value: undefined, num_missing:num_missing};
         }
       } else if (format === "average") {
         if (metricVals && metricVals.length > 0) {
           let valsToUse = [];
-          for (let i = 0; i < studySortingResult.snrs.length; i++) {
-            if (studySortingResult.snrs[i] > threshold) {
-              valsToUse.push(metricVals[i]);
+          for (let i = 0; i < trueSnrs.length; i++) {
+            if (trueSnrs[i] > threshold) {
+              let val0 = metricVals[i];
+              if (this.isNumeric(val0)) {
+                valsToUse.push(metricVals[i]);
+              }
             }
           }
           let aboveAvg = 0;
@@ -305,43 +373,40 @@ class HeatmapViz extends Component {
             let sum = valsToUse.reduce((a, b) => a + b);
             aboveAvg = sum / valsToUse.length;
           }
+
           // This just prints the output to 2 digits
           let avgRounded = Math.round(aboveAvg * 100) / 100;
-
-          return avgRounded;
+          return {value: avgRounded, num_missing:num_missing};
         } else {
-          return undefined;
+          return {value: undefined, num_missing:num_missing};
         }
       } else if (format === "cpu") {
         if (metricVals && metricVals.length > 0) {
           let sum = metricVals.reduce((a, b) => a + b);
           let avg = sum / metricVals.length;
           let avgRounded = Math.round(avg);
-          return avgRounded;
+          return {value: avgRounded, num_missing:num_missing};
         } else {
-          return undefined;
+          return {value: undefined, num_missing:num_missing};
         }
       } else {
         Sentry.captureMessage(
           "Unsupported format in computeTableRowCellsFromStudy",
           format
         );
-        return undefined;
+        return {value: undefined, num_missing:num_missing};
       }
     }, this);
 
-    // compute the max metric value for row normalization
     let maxMetricVal = 0;
-    metricList.forEach(function(val0) {
-      if (val0 !== undefined && val0 > maxMetricVal) maxMetricVal = val0;
-    }, this);
-    if (!rowNormalize) {
-      maxMetricVal = 1;
-    }
+    cellvalList.forEach(x => {
+      if ((this.isNumeric(x.value)) && (x.value > maxMetricVal))
+        maxMetricVal = x.value;
+    })
 
     // For each result, we can now determin the color and text
-    studySortingResults.forEach(function(studySortingResult, i) {
-      let val0 = metricList[i];
+    studyAnalysisResult.sortingResults.forEach(function(sortingResult, i) {
+      let val0 = cellvalList[i].value;
       let text, color, bgcolor;
       if (val0 === undefined) {
         text = "";
@@ -349,9 +414,14 @@ class HeatmapViz extends Component {
         bgcolor = "white";
       } else {
         text = val0;
+        if (cellvalList[i].num_missing > 0)
+          text += '*';
+        if ((rowNormalize) && (maxMetricVal)) {
+          val0 = val0 / maxMetricVal;
+        }
         if (maxMetricVal) {
-          color = this.computeForegroundColor(val0 / maxMetricVal);
-          bgcolor = this.computeBackgroundColor(val0 / maxMetricVal);
+          color = this.computeForegroundColor(val0);
+          bgcolor = this.computeBackgroundColor(val0);
         } else {
           color = "black";
           bgcolor = "white";
@@ -359,7 +429,7 @@ class HeatmapViz extends Component {
       }
       // add a cell corresponding to a sorting result
       ret.push({
-        id: studySortingResult.study + "--" + studySortingResult.sorter,
+        id: studyAnalysisResult.studyName + "--" + sortingResult.sorterName,
         expand_id_on_click: expandIdOnClick,
         color: color,
         bgcolor: bgcolor,
@@ -368,7 +438,11 @@ class HeatmapViz extends Component {
         border_right: true,
         text_align: "center",
         selectable: isStudySet ? false : true,
-        study_sorting_result: studySortingResult // needed in onCellSelected -> selectStudySortingResult
+        selected: ((studyAnalysisResult.studyName === this.state.selectedStudyName) && (sortingResult.sorterName === this.state.selectedSorterName)),
+        info: {
+          studyName: studyAnalysisResult.studyName,
+          sorterName: sortingResult.sorterName
+        } // needed in onCellSelected -> selectStudyName, selectSorterName
       });
     }, this);
     return ret;
@@ -404,7 +478,16 @@ class HeatmapViz extends Component {
   }
 
   handleCellSelected(cell) {
-    this.props.selectStudySortingResult(cell.study_sorting_result);
+    if (cell.selectable) {
+      if (this.props.selectStudyName)
+        this.props.selectStudyName(cell.info.studyName);
+      if (this.props.selectSorterName)
+        this.props.selectSorterName(cell.info.sorterName);
+      this.setState({
+        selectedStudyName: cell.info.studyName,
+        selectedSorterName: cell.info.sorterName
+      });
+    }
   }
 
   get_cpu_times_for_study_sorter(cpus, study, sorter) {
@@ -424,6 +507,10 @@ class HeatmapViz extends Component {
     return ret;
   }
 
+  isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+  }
+
   render() {
     const loading =
       isEmpty(this.state.tableRows) ||
@@ -432,20 +519,47 @@ class HeatmapViz extends Component {
     const title = this.getFormatCopy();
     const copy =
       this.props.format !== "cpu"
-        ? "  Select individual cells to see corresponding scatterplot data."
+        ? "  Select individual cells to see corresponding details. "
         : "";
+    let divStyle = {
+      backgroundColor: "#fffdc0",
+      borderRadius: "5px",
+      display: "inline-block"
+    };
     return (
       <div className="card card--heatmap" id="heatmap-card">
         <div className="card__header">
           <h4 className="card__title">{title}</h4>
         </div>
         <div>
-          <p>
-            Click on the rows to expand the study sets and see component study
-            data. An asterisk indicates an incomplete or failed sorting on a
-            subset of results.
-            {copy}
-          </p>
+          {
+            this.props.groupByStudySets ?
+            (
+              <span>
+                <p style={divStyle}>
+                  {
+                    this.props.format == 'cpu' ?
+                    (
+                      <span>Note: These numbers reflect actual compute times on our cluster and are not meant to be a rigorous benchmark. The algorithms were applied in batches, with many different algorithms possibly running
+                        simultaneously on the same machine. Some runs may have been allocated more CPU cores than others. We are working toward a more accurate compute time test.
+                      </span>
+                    ) :
+                    (
+                      <span>Note: These are preliminary results prior to parameter optimization, and we still in the process of ensuring that we are using the proper <Link to="/algorithms">versions of the spike sorters</Link>.</span>
+                    )
+                  }
+                </p>
+                <p>
+                  Click to expand study set rows and see component study data. {copy} An asterisk indicates an incomplete or failed sorting on a subset of results.
+                </p>
+              </span>
+            ) :
+            (
+              <p>
+                {copy} An asterisk indicates an incomplete or failed sorting on a subset of results.
+              </p>
+            )
+          }
         </div>
         {loading ? (
           <h4>...</h4>

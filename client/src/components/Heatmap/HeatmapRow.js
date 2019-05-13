@@ -10,6 +10,7 @@ import {
 import Preloader from "../Preloader/Preloader";
 import { isEmpty } from "../../utils";
 
+// No longer used
 class HeatmapRow extends Component {
   constructor(props) {
     super(props);

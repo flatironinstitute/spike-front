@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { isEmpty } from "../../utils";
 import { Redirect } from "react-router";
+// import * as Sentry from "@sentry/browser";
 
 // Components
-import Preloader from "../Preloader/Preloader";
 import { Col, Container, Row } from "react-bootstrap";
 import HeatmapViz from "./HeatmapViz";
+import Preloader from "../Preloader/Preloader";
 import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
 
 // Redux
@@ -16,137 +17,20 @@ import * as actionCreators from "../../actions/actionCreators";
 // Stylin'
 import "./heatmap.css";
 
+// No longer used
 class HeatmapSNR extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      builtData: [],
-      snrMin: 5,
       cardHeight: null,
       redirect: false
     };
   }
 
   componentDidMount() {
-    if (this.props.unitsMap.length) {
-      this.filterSNRMap();
-    }
   }
 
   componentDidUpdate(prevProps) {
-    if (
-      this.props.unitsMap !== prevProps.unitsMap ||
-      this.props.snrMin !== prevProps.snrMin
-    ) {
-      this.filterSNRMap();
-    }
-  }
-
-  getMetricKey() {
-    let metricKey;
-    switch (this.props.metric) {
-      case "accuracy":
-        metricKey = "accuracies";
-        break;
-      case "recall":
-        metricKey = "recalls";
-        break;
-      case "precision":
-        metricKey = "precisions";
-        break;
-      default:
-        metricKey = "accuracies";
-        break;
-    }
-    return metricKey;
-  }
-
-  // Average functions for 'Average accuracy of groundtruth units above SNR threshold'
-  filterAccuracy(sorterArray) {
-    let newArr = sorterArray.map(sorter => {
-      let overMin = [];
-      sorter.true_units.forEach(unit => {
-        if (unit.snr > this.props.snrMin) {
-          overMin.push(unit.checkAccuracy);
-        }
-      });
-      let aboveAvg = 0;
-      if (overMin.length) {
-        let sum = overMin.reduce((a, b) => a + b);
-        aboveAvg = sum / overMin.length;
-      }
-      // This just prints the output to 2 digits
-      sorter.in_range = Math.round(aboveAvg * 100) / 100;
-      sorter.color = Math.round(aboveAvg * 100) / 100;
-      return sorter;
-    });
-    return newArr;
-  }
-
-  filterRecall(sorterArray) {
-    let newArr = sorterArray.map(sorter => {
-      let overMin = [];
-      sorter.true_units.forEach(unit => {
-        if (unit.snr > this.props.snrMin) {
-          overMin.push(unit.checkRecall);
-        }
-      });
-      let aboveAvg = 0;
-      if (overMin.length) {
-        let sum = overMin.reduce((a, b) => a + b);
-        aboveAvg = sum / overMin.length;
-      }
-      // This just prints the output to 2 digits
-      sorter.in_range = Math.round(aboveAvg * 100) / 100;
-      sorter.color = Math.round(aboveAvg * 100) / 100;
-      return sorter;
-    });
-    return newArr;
-  }
-
-  filterPrecision(sorterArray) {
-    let newArr = sorterArray.map(sorter => {
-      let overMin = [];
-      sorter.true_units.forEach(unit => {
-        if (unit.snr > this.props.snrMin) {
-          overMin.push(unit.checkPrecision);
-        }
-      });
-      let aboveAvg = 0;
-      if (overMin.length) {
-        let sum = overMin.reduce((a, b) => a + b);
-        aboveAvg = sum / overMin.length;
-      }
-      // This just prints the output to 2 digits
-      sorter.in_range = Math.round(aboveAvg * 100) / 100;
-      sorter.color = Math.round(aboveAvg * 100) / 100;
-      return sorter;
-    });
-    return newArr;
-  }
-
-  filterSNRMap() {
-    let built = this.props.unitsMap.map(study => {
-      let values = Object.values(study)[0];
-      let key = Object.keys(study)[0];
-      let filtered;
-      switch (this.props.metric) {
-        case "accuracy":
-          filtered = this.filterAccuracy(values);
-          break;
-        case "recall":
-          filtered = this.filterRecall(values);
-          break;
-        case "precision":
-          filtered = this.filterPrecision(values);
-          break;
-        default:
-          filtered = this.filterAccuracy(values);
-          break;
-      }
-      return { [key]: filtered };
-    });
-    this.setState({ builtData: built });
   }
 
   handleCardHeightChange = value => {
@@ -155,16 +39,10 @@ class HeatmapSNR extends Component {
     });
   };
 
-  handleScatterplotClick = value => {
-    this.setState({ redirect: true });
-  };
-
   render() {
-    let loading = isEmpty(this.state.builtData);
-    let study = this.props.selectedStudySortingResult
-      ? this.props.selectedStudySortingResult.study
-      : "";
-    study = "/study/" + study;
+    let loading = isEmpty(this.props.studyAnalysisResults);
+    let study = this.props.selectedStudyName || "";
+    study = "/studyresults/" + study;
     if (this.state.redirect) {
       return <Redirect push to={study} />;
     }
@@ -179,11 +57,13 @@ class HeatmapSNR extends Component {
             <Row className="container__heatmap--row">
               <Col lg={6} sm={12}>
                 <HeatmapViz
-                  selectStudySortingResult={this.props.selectStudySortingResult}
-                  selectedStudySortingResult={
-                    this.props.selectedStudySortingResult
-                  }
+                  groupByStudySets={true}
+                  selectStudyName={this.props.selectStudyName}
+                  selectSorterName={this.props.selectSorterName}
+                  selectedStudyName={this.props.selectedStudyName}
+                  selectedSorterName={this.props.selectedSorterName}
                   groupedUnitResults={this.state.builtData}
+                  studyAnalysisResults={this.props.studyAnalysisResults}
                   studies={this.props.studies}
                   studysets={this.props.studysets}
                   format={this.props.format}
@@ -194,8 +74,14 @@ class HeatmapSNR extends Component {
               </Col>
               <Col lg={6} sm={12}>
                 <ScatterplotCard
-                  {...this.props}
+                  studies={this.props.studies}
+                  sorters={this.props.sorters}
+                  studyAnalysisResults={this.props.studyAnalysisResults}
+                  studyName={this.props.selectedStudyName}
+                  sorterName={this.props.selectedSorterName}
                   sliderValue={this.props.snrMin}
+                  format={this.props.format}
+                  metric={this.props.metric}
                   cardHeight={this.state.cardHeight}
                 />
               </Col>
@@ -209,7 +95,9 @@ class HeatmapSNR extends Component {
 
 function mapStateToProps(state) {
   return {
-    selectedStudySortingResult: state.selectedStudySortingResult
+    selectedStudyName: state.selectedStudyName,
+    selectedSorterName: state.selectedSorterName,
+    selectedRecording: state.selectedRecording
   };
 }
 

@@ -20,26 +20,38 @@ class ScatterplotCount extends Component {
     this.state = {
       data: [],
       hoveredNode: null,
+      selectedNode: null,
       minSNR: 0,
       maxSNR: 100
     };
   }
 
   componentDidMount() {
-    if (this.props.selectedUnits) {
-      this.buildCountData();
-    }
+    this.buildCountData();
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      this.props.selectedUnits !== prevProps.selectedUnits ||
+      this.props.studyAnalysisResult !== prevProps.studyAnalysisResult ||
+      this.props.studyName !== prevProps.studyName ||
+      this.props.sorterName !== prevProps.sorterName ||
       this.props.metric !== prevProps.metric
     ) {
       this.buildCountData();
     }
+    if (this.state.selectedRecording !== prevState.selectedRecording) {
+      if (this.state.selectedRecording !== prevState.selectedRecording) {
+        console.log(
+          "🕌 NEW SELECTED RECORDING",
+          this.state.selectedRecording,
+          this.props.studyName,
+          this.props.sorterName
+        );
+      }
+    }
   }
 
+  /*
   getYValue(unit) {
     let yValue;
     switch (this.props.metric) {
@@ -58,8 +70,52 @@ class ScatterplotCount extends Component {
     }
     return yValue;
   }
+  */
 
   buildCountData() {
+    let sar = this.props.studyAnalysisResult;
+    let snrs = sar.trueSnrs;
+    sar.sortingResults.forEach((sr) => {
+      if (sr.sorterName === this.props.sorterName) {
+        let yvals;
+        switch (this.props.metric) {
+          case "accuracy":
+            yvals = sr.accuracies;
+            break;
+          case "recall":
+            yvals = sr.recalls;
+            break;
+          case "precision":
+            yvals = sr.precisions;
+            break;
+          default:
+            yvals = sr.accuracies;
+            break;
+        }
+        let newUnits = [];
+        for (let ii = 0; ii < snrs.length; ii++) {
+          newUnits.push({
+            unitIndex: ii, // this is the part that is used in the parent component
+            sorterName: this.props.sorterName, // this is used by parent component also
+            unitId: sar.trueUnitIds[ii],
+            x: Math.round(snrs[ii] * 100) / 100,
+            y: yvals[ii],
+            size: Math.max(1, this.getSqrt(sar.trueNumEvents[ii])),
+            color: sar.trueRecordingIndices[ii],
+            opacity: yvals[ii] * 0.5 + 0.5,
+            recordingIndex: sar.trueRecordingIndices[ii],
+            recordingName: sar.recordingNames[sar.trueRecordingIndices[ii]],
+            studyName: sar.studyName,
+            num_events: sar.trueNumEvents[ii]
+          });
+        }
+        let min = this.getMinSNR(newUnits);
+        let max = this.getMaxSNR(newUnits);
+        this.setState({ data: newUnits, minSNR: min, maxSNR: max });  
+      }
+    });
+    
+    /*
     let newUnits = this.props.selectedUnits.map((unit, index) => ({
       u: unit,
       x: Math.round(unit.snr * 100) / 100,
@@ -70,9 +126,7 @@ class ScatterplotCount extends Component {
       recording: unit.recording,
       num_events: unit.numMatches
     }));
-    let min = this.getMinSNR(newUnits);
-    let max = this.getMaxSNR(newUnits);
-    this.setState({ data: newUnits, minSNR: min, maxSNR: max });
+    */
   }
 
   getSqrt(num_events) {
@@ -96,8 +150,15 @@ class ScatterplotCount extends Component {
     }
   }
 
+  handleScatterplotClick(d) {
+    if (this.props.handleScatterplotClick) {
+      this.setState({selectedNode: d});
+      this.props.handleScatterplotClick(d);
+    }
+  }
+
   render() {
-    const { data, hoveredNode, maxSNR } = this.state;
+    const { data, hoveredNode, selectedNode, maxSNR } = this.state;
     let metricObj = {};
     metricObj[this.props.metric] = hoveredNode ? hoveredNode.y : 0;
     let otherObj = {
@@ -109,10 +170,21 @@ class ScatterplotCount extends Component {
       horizontal: "rightEdge",
       vertical: "topEdge"
     };
-    let lineObjArr = [
-      { x: 0, y: this.props.sliderValue },
-      { x: maxSNR, y: this.props.sliderValue }
-    ];
+    const lineOrientation = this.props.lineOrientation || 'horizontal';
+    let lineObjArr;
+    if (lineOrientation === 'horizontal') {
+      lineObjArr = [
+        { x: 0, y: this.props.sliderValue },
+        { x: maxSNR, y: this.props.sliderValue }
+      ];
+    }
+    else {
+      lineObjArr = [
+        { x: this.props.sliderValue, y: 0 },
+        { x: this.props.sliderValue, y: 1 }
+      ];
+    }
+    // let selectedData = [];
     const yTitle = toTitleCase(this.props.metric);
     return (
       <div className="canvas-wrapper">
@@ -133,13 +205,25 @@ class ScatterplotCount extends Component {
             className="mark-series-example"
             sizeRange={[3, 15]}
             seriesId="my-example-scatterplot"
-            colorRange={["#6B7CC4", "#102BA3"]}
+            colorRange={this.props.colorRange || ["#6B7CC4", "#102BA3"]}
             opacityType="literal"
             data={data}
             onValueMouseOver={d => this.setState({ hoveredNode: d })}
-            onValueClick={d => this.props.handleScatterplotClick(d)}
+            onValueClick={d => {this.handleScatterplotClick(d);}}
           />
           {hoveredNode && <Hint value={valueObj} align={alignment} />}
+          {selectedNode && 
+            <MarkSeries
+              // animation={true}
+              className="mark-series-example"
+              sizeRange={[3, 15]}
+              seriesId="selected"
+              colorRange={["#bbbb05", "#bbbb05"]}
+              opacityType="literal"
+              data={[selectedNode]}
+              onValueClick={d => {this.handleScatterplotClick(d)}}
+            />
+          }
           <LineSeries
             className="fourth-series"
             strokeDasharray="7, 3"
