@@ -53,8 +53,7 @@ export const createFetchAPI = async url => {
 export const createFetchPost = async (url, options) => {
   try {
     const newUrl = baseurl + url;
-    const body = JSON.stringify(options);
-    const response = await axios.post(newUrl, body);
+    const response = await axios.post(newUrl, options);
     const returned = await response.data;
     if (response.status !== 200) Sentry.captureException(returned.message);
     return returned;
