@@ -4,6 +4,8 @@ import * as Sentry from "@sentry/browser";
 import * as d3 from "d3";
 import ExpandingHeatmapTable from "./ExpandingHeatmapTable";
 
+import { Link } from "react-router-dom";
+
 class HeatmapViz extends Component {
   constructor(props) {
     super(props);
@@ -519,6 +521,11 @@ class HeatmapViz extends Component {
       this.props.format !== "cpu"
         ? "  Select individual cells to see corresponding details. "
         : "";
+    let divStyle = {
+      backgroundColor: "#fffdc0",
+      borderRadius: "5px",
+      display: "inline-block"
+    };
     return (
       <div className="card card--heatmap" id="heatmap-card">
         <div className="card__header">
@@ -528,9 +535,24 @@ class HeatmapViz extends Component {
           {
             this.props.groupByStudySets ?
             (
-              <p>
-                Click to expand study set rows and see component study data. {copy} An asterisk indicates an incomplete or failed sorting on a subset of results.
-              </p>
+              <span>
+                <p style={divStyle}>
+                  {
+                    this.props.format == 'cpu' ?
+                    (
+                      <span>Note: These numbers reflect actual compute times on our cluster and are not meant to be a rigorous benchmark. The algorithms were applied in batches, with many different algorithms possibly running
+                        simultaneously on the same machine. Some runs may have been allocated more CPU cores than others. We are working toward a more accurate compute time test.
+                      </span>
+                    ) :
+                    (
+                      <span>Note: These are preliminary results prior to parameter optimization, and we still in the process of ensuring that we are using the proper <Link to="/algorithms">versions of the spike sorters</Link>.</span>
+                    )
+                  }
+                </p>
+                <p>
+                  Click to expand study set rows and see component study data. {copy} An asterisk indicates an incomplete or failed sorting on a subset of results.
+                </p>
+              </span>
             ) :
             (
               <p>

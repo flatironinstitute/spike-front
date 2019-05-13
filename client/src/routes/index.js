@@ -122,7 +122,7 @@ function mapStateToProps(state) {
     loading: state.loading,
     recordings: state.recordings,
     sorters: state.sorters,
-    spikespray: state.spikespray,
+    // spikespray: state.spikespray,
     stats: state.stats,
     studies: state.studies,
     studysets: state.studysets,
