@@ -34,7 +34,7 @@ class Metrics extends Component {
                 <div className="content">
                   <div className="card__label">
                     <p>
-                      <strong>Matching of Firing Events</strong>
+                      <strong>Matching of firing events</strong>
                     </p>
                   </div>
                   <div className="card__footer">
@@ -121,15 +121,15 @@ class Metrics extends Component {
                 <div className="content">
                   <div className="card__label">
                     <p>
-                      <strong>Accuracy Metrics</strong>
+                      <strong>Accuracy metrics</strong>
                     </p>
                   </div>
                   <div className="card__footer">
                     <hr />
                     <MathJax.Provider>
                       <p>
-                        For a given ground truth unit, and sorted unit{" "}
-                        <MathJax.Node inline formula={`k`} />, the metrics are
+                        The main page of SpikeForest allows ground truth unit counts to be filtered by one of three metrics: precision, recall, and overall accuracy. For a given ground truth unit, and sorted unit{" "}
+                        <MathJax.Node inline formula={`k`} />, these metrics are
                         as follows, in terms of the above counts:
                       </p>
                       <p className="metrics__inline">
