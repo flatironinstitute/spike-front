@@ -13,7 +13,8 @@ class Footer extends Component {
           <p className="footer__description">
             SpikeForest is a website and open source computing framework for
             evaluating and comparing spike sorting algorithms for
-            neurophysiology data analysis.
+                neurophysiology data analysis. It is a project of the
+        Center for Computational Mathematics at the Flatiron Institute.
           </p>
         </div>
 
@@ -84,7 +85,7 @@ class Footer extends Component {
             className="footer__emoji"
           >
             🔬
-          </span>
+        </span>{" "}
           in NYC
           <span
             role="img"
