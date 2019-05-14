@@ -7,6 +7,7 @@ import * as actionCreators from "../../actions/actionCreators";
 import SpikeSpray from "./SpikeSpray";
 
 import { Card, Col, Container, Row } from "react-bootstrap";
+import loading from "../../reducers/loading";
 
 const axios = require("axios");
 
@@ -14,23 +15,55 @@ class UnitDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      spikeSprayData: null
+      unitDetail: null,
+      spikeSprayData: null,
+      unitDetailLoaded: false,
+      spikeSprayLoaded: false
     };
   }
 
   componentDidMount() {
-    this.fetchSpikeSpray()
+    this.fetchUnitDetail();
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if ((this.props.studyAnalysisResult !== prevProps.studyAnalysisResult) || (this.props.unitIndex !== prevProps.unitIndex) || (this.props.sorterName !== prevProps.sorterName)) {
+      this.setState({unitDetailLoaded: false});
+      this.fetchUnitDetail();
+    }
+    else {
+      if (this.state.unitDetail !== prevState.unitDetail) {
+        this.setState({spikeSprayLoaded: false});
+        this.fetchSpikeSpray();
+      }
+    }
+  }
+
+  async fetchUnitDetail() {
+    let baseurl;
+    if (process.env.NODE_ENV === "production") {
+      baseurl = "https://spikeforestfront.herokuapp.com";
+    } else {
+      baseurl = "http://localhost:5000";
+    }
+
+    let unitData = this.getUnitData()
+    let result = await fetchUrl(baseurl + `/api/unitdetail/${unitData.studyName}/${unitData.recordingName}/${unitData.sorterName}/${unitData.unitId}`, 3000);
+    if (result)
+      this.setState({unitDetail: result.unitDetail});
+    else
+      this.setState({unitDetail: null});
+    this.setState({unitDetailLoaded: true});
   }
 
   async fetchSpikeSpray() {
-    let unitData = this.getUnitData();
-    const defaultUrl =
-    "http://kbucket.flatironinstitute.org/get/sha1/0aa39927530abed94f32c410f3a2226e2ee71c5e?signature=c516794c53257b327f39b8349cc39313f1a254e9";
-    let data = await fetchUrl(defaultUrl);
-    this.setState({spikeSprayData: data});
+    let udet = this.state.unitDetail;
+    if (!udet) return;
+    if (udet.spikeSprayUrl) {
+      let data = await fetchUrl(udet.spikeSprayUrl);
+      this.setState({spikeSprayData: data});
+      this.setState({spikeSprayLoaded: true});
+    }
   }
 
   getUnitData() {
@@ -44,7 +77,9 @@ class UnitDetail extends Component {
     });
     let recind = sar.trueRecordingIndices[uind];
     let unitData = {
+        studyName: sar.studyName,
         recordingName: sar.recordingNames[recind],
+        sorterName: sorterName,
         unitId: sar.trueUnitIds[uind],
         snr: sar.trueSnrs[uind],
         firingRate: sar.trueFiringRates[uind],
@@ -58,39 +93,60 @@ class UnitDetail extends Component {
 
   render() {
     let unitData = this.getUnitData()
+    let loading_message = null;
+    if (!this.state.unitDetailLoaded) {
+      loading_message = 'Loading unit detail...';
+    }
+    else if (!this.state.spikeSprayLoaded) {
+      if (!this.state.unitDetail) {
+        loading_message = 'No unit detail found.';
+      }
+      else {
+        loading_message = 'Loading spike spray...';
+      }
+    }
+    else {
+      if (!this.state.spikeSprayData) {
+        loading_message = 'No spike spray found.'
+      }
+    }
     return (
         <Container>
-          <Col>{JSON.stringify(unitData, null, 4)}</Col>
-          <Col>
+          <Row>{JSON.stringify(unitData, null, 4)}</Row>
+          <Row>
             {
-              this.state.spikeSprayData ?
-              (<SpikeSpray spikeSprayData={this.state.spikeSprayData}></SpikeSpray>) :
-              (<span>Loading spikespray...</span>)
+              (loading_message) ?
+              (<span>{loading_message}</span>) :
+              (<SpikeSpray spikeSprayData={this.state.spikeSprayData}></SpikeSpray>)
             }
-          </Col>
+          </Row>
         </Container>
         
     )
   }
 }
 
-const fetchUrl = async url => {
+const fetchUrl = async (url, timeout) => {
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(url, {timeout: timeout});
     if (response.status !== 200) {
       // Sentry.captureException(response.message);
       console.error(response.message);
+      return null;
     } else {
       return response.data;
     }
   } catch (error) {
     // Sentry.captureException(error);
     console.error(error);
+    return null;
   }
 };
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    unitDetail: state.unitDetail
+  };
 }
 
 function mapDispatchToProps(dispatch) {

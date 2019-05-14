@@ -22,6 +22,7 @@ export const RECEIVE_STUDY_SETS = "RECEIVE_STUDY_SETS";
 export const RECEIVE_STUDIES = "RECEIVE_STUDIES";
 export const RECEIVE_URS_BY_STUDY = "RECEIVE_URS_BY_STUDY";
 export const RECEIVE_STUDY_ANALYSIS_RESULTS = "RECEIVE_STUDY_ANALYSIS_RESULTS";
+export const RECEIVE_UNIT_DETAIL = "RECEIVE_UNIT_DETAIL";
 
 export const SELECT_STUDY_SORTING_RESULT = "SELECT_STUDY_SORTING_RESULT";
 export const SELECT_SORTER_NAME = "SELECT_SORTER_NAME";
@@ -350,6 +351,29 @@ export const fetchStudyAnalysisResults = () => {
     return createFetchAPI(url)
       .then(res => {
         dispatch(receiveStudyAnalysisResults(res.studyAnalysisResults));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      })
+      .catch(err => Sentry.captureException(err));
+  };
+};
+
+// Unit details
+export const receiveUnitDetail = unitDetail => {
+  return {
+    type: RECEIVE_UNIT_DETAIL,
+    unitDetail: unitDetail
+  };
+};
+
+export const fetchUnitDetail = (studyName, recordingName, sorterName, trueUnitId) => {
+  let url = `/api/unitdetail/${studyName}/${recordingName}/${sorterName}/${trueUnitId}`;
+  return function(dispatch) {
+    dispatch(startLoading());
+    return createFetchAPI(url)
+      .then(res => {
+        dispatch(receiveUnitDetail(res.unitDetail));
       })
       .then(() => {
         dispatch(endLoading());

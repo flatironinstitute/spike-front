@@ -1,6 +1,14 @@
 const Sentry = require("@sentry/node");
+const IS_DEBUG = true;
 Sentry.init({
-  dsn: "https://a7b7f1b624b44a9ea537ec1069859393@sentry.io/1365884"
+  dsn: "https://a7b7f1b624b44a9ea537ec1069859393@sentry.io/1365884",
+  beforeSend: (event, hint) => {
+    if (IS_DEBUG) {
+      console.error(hint.originalException || hint.syntheticException);
+      return null; // this drops the event and nothing will be send to sentry
+    }
+    return event;
+   }
 });
 // import environmental variables from our variables.env file
 require("dotenv").config({ path: ".env" });
@@ -24,6 +32,7 @@ require("./models/StudySet");
 require("./models/TrueUnit");
 require("./models/UnitResult");
 require("./models/StudyAnalysisResult");
+require("./models/UnitDetail");
 
 /* Express Isomorphic
 –––––––––––––––––––––––––––––––––––––––––––––––––– */

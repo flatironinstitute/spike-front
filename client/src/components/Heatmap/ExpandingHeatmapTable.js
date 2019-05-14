@@ -13,7 +13,6 @@ class ExpandingHeatmapTable extends React.Component {
     props.rows.forEach(row => {
       row.cells.forEach(c => {
         if (c.selected) {
-          console.log('------- selected!!!', c);
           selectedCellId = c.id;
         }
       });
