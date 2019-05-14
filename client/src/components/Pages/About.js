@@ -17,25 +17,73 @@ class About extends Component {
               <div className="intro">
                 <p className="big">About SpikeForest</p>
                 <div className="dividerthick" />
-                <p className="subhead">
-                  Project of the Center for Computational Mathematics, Flatiron
-                  Institute
-                </p>
-                <p className="byline">
-                  Please use the
-                  <a
-                    href="https://github.com/elovero/spike-front/issues"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Github issues
-                  </a>{" "}
-                  page to report website problems or
-                  <Link exact="true" to="/contact">
-                    contact
-                  </Link>{" "}
-                  us directly.
-                </p>
+              </div>
+            </Col>
+          </Row>
+          <Row className="container__sorter--row justify-content-md-center">
+            <Col lg={12} sm={12} xl={10}>
+              <div className="card card--stats">
+                <div className="content">
+                  <div className="card__label">
+                    <p>
+                      <strong>Overview</strong>
+                    </p>
+                  </div>
+                  <div className="card__footer">
+                    <hr />
+                    <p>
+                      Electrical recording from extracellular probes is a popular and
+                      affordable method to capture the simultaneous activity of many neurons
+                      in the brain or retina. There is a great need to quantify the
+                      reliability of the firing events extracted from the recordings by
+                      spike sorting algorithms. This website addresses this need, assessing
+                      many popular spike sorting codes via "ground truth" recordings, which
+                      are the gold standard in terms of accuracy.
+                    </p>
+                    <p>
+                      We host a variety of experimental paired ground truth recordings from
+                      the community and also many in silico synthetic recordings. Each
+                      sorter is run on all recordings and the resulting accuracies for the
+                      ground truth units are updated on a daily basis as needed. Approximate
+                      CPU/GPU run times are also reported.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+          <Row className="container__sorter--row justify-content-md-center">
+            <Col lg={12} sm={12} xl={10}>
+              <div className="card card--stats">
+                <div className="content">
+                  <div className="card__label">
+                    <p>
+                      <strong>Feedback</strong>
+                    </p>
+                  </div>
+                  <div className="card__footer">
+                    <hr />
+                    There are at least three ways to provide feedback, report problems, or contact us with questions:
+                      <ul>
+                      <li> You may email us using the{" "}
+                        <Link exact="true" to="/contact">
+                          contact form
+                          </Link>{" "}.
+                       </li>
+                      <li> For website problems, please use the{" "}
+                        <a
+                          href="https://github.com/elovero/spike-front/issues"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Github issues
+                        </a>{" "}
+                        page for the front end.
+                       </li>
+                      <li> If you prefer a more graphical/interactive way to label problems or questions on a particular page, click on UserSnap in the bottom-right corner of any page.</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </Col>
           </Row>
@@ -50,30 +98,59 @@ class About extends Component {
                   </div>
                   <div className="card__footer">
                     <hr />
+                    <p>
+                      SpikeForest is a project of the Flatiron Institute, involving
+                      the Center for Computational Mathematics and the Scientific Computing Core.
+                    </p>
                     <ul>
                       <li>
-                        Jeremy Magland (chief infrastructure developer,
-                        back-end, recording simulation)
+                        Jeremy Magland, CCM (chief infrastructure developer,
+                         back-end, recording simulation)
                       </li>{" "}
                       <li>
-                        Elizabeth Lovero (site design and web development,
+                        Elizabeth Lovero, SCC (site design, web development,
                         visualizations)
                       </li>
                       <li>
-                        James Jun (infrastructure, testing, and recording
-                        wrangling and simulation)
+                        James Jun, CCM (infrastructure, testing, recording
+                                   wrangling and simulation)
                       </li>
-                      <li>Alex Barnett (concept and site design, testing)</li>
+                      <li>Alex Barnett, CCM (concept, site design, testing)</li>
                     </ul>
                     <p>
                       We are grateful for many collaborators at other
-                      institutions for their vital help:
+                      institutions for their vital help and supply of recordings:
                     </p>
                     <ul>
-                      <li>Jason Chung (UCSD) </li>
-                      <li>Dan English (VT)</li>
-                      <li>Loren Frank (UCSD)</li>
-                      <li>Catalin Mitelut (Columbia)</li>
+                      <li> Frank Lab, UCSF</li>
+                      <ul><li> Jason Chung (UCSF)</li>
+                        <li> Loren Frank (UCSF)</li>
+                      </ul>
+                      <li> Allen Institute for Brian Science</li>
+                      <ul><li> Catalin Mitelut (Columbia)</li>
+                        <li> Sergey Gratiy (AIBS)</li>
+                        <li> Costas Anastassiou (AIBS)</li>
+                      </ul>
+                      <li> Buzsaki Lab (NYU)</li>
+                      <ul><li> Dan English (Virginia Tech)</li>
+                        <li> Anton Sirota (LMU Munich)</li>
+                        <li> György Buzsáki (NYU)</li>
+                      </ul>
+                      <li> Kampff Lab, UCL</li>
+                      <ul><li> André Marques-Smith (UCL)</li>
+                        <li> Joana P. Neto (UCL)</li>
+                        <li> Adam R. Kampff (UCL)</li>
+                      </ul>
+                      <li> Boyden Lab, MIT</li>
+                      <li> Ed Boyden (MIT)</li>
+                      <li> Brian D. Allen (MIT)</li>
+                      <li> Caroline Moore-Kochlacs (MIT)</li>
+                      <li> Institute de la Vision, CNRS</li>
+                    </ul>
+                    <ul>
+                      <li> Pierre Yger (CNRS)</li>
+                      <li> Giulia LB Spampinato (CNRS)</li>
+                      <li> Olivier Marre (CNRS)</li>
                     </ul>
                   </div>
                 </div>
@@ -86,7 +163,7 @@ class About extends Component {
                 <div className="content">
                   <div className="card__label">
                     <p>
-                      <strong>History and Future</strong>
+                      <strong>Background and related projects</strong>
                     </p>
                   </div>
                   <div className="card__footer">
@@ -94,12 +171,12 @@ class About extends Component {
                     <p>
                       This project is the fruition of a long-term goal within
                       the spike sorting effort of CCM, starting in 2014 at what
-                      was then the SCDA. The original spike sorting effort
+                       was then SCDA (the Simons Center for Data Analysis). The original spike sorting effort
                       comprised Jeremy Magland, Alex Barnett, and Leslie
                       Greengard, and collaborators in Loren Frank's lab.
                     </p>
                     <p>
-                      Early design principles were outlined in our{" "}
+                      Design principles were outlined in our{" "}
                       <a
                         href="https://github.com/flatironinstitute/spikesortercomparison"
                         target="_blank"
@@ -107,9 +184,11 @@ class About extends Component {
                       >
                         white paper
                       </a>{" "}
-                      of May 2018. This was inspired in part a spike sorting
-                      community discussion at the Janelia spike sorting meeting
+                      of May 2018. This was inspired in part by a
+                      community discussion on validation at the Janelia spike sorting workshop
                       of 3/22/18.
+                    </p>
+                    <p>We were influenced (in terms of concept, features, and site design) by many neuroscience and non-neuroscience algorithm validation websites, including:
                     </p>
                     <ul>
                       <li>
@@ -120,8 +199,9 @@ class About extends Component {
                         >
                           ClustEval website
                         </a>{" "}
-                        Wiwie, C., Röttger, R. & Baumbach, J. Comparing the
-                        performance of biomedical clustering methods. Nature
+                        for comparing clustering algorithms, including parameter optimizations.
+                        Their publication is: Wiwie, C., Röttger, R. & Baumbach, J. "Comparing the
+                        performance of biomedical clustering methods," Nature
                         Methods (2015).
                       </li>
                       <li>
@@ -154,7 +234,7 @@ class About extends Component {
                         >
                           G-Node
                         </a>
-                        . A now-defunct 2011-2012 project wher the user uploads
+                        . A now-defunct 2011-2012 project where the user uploads
                         sorted data, which is compared against a hidden ground
                         truth sorting and optionally published.
                       </li>
@@ -201,41 +281,22 @@ class About extends Component {
                 <div className="content">
                   <div className="card__label">
                     <p>
-                      <strong>Related Projects</strong>
-                    </p>
-                  </div>
-                  <div className="card__footer">
-                    <hr />
-                    <p style={divStyle}>[Please add these details]</p>
-                    <ul>
-                      <li>Project 1</li>
-                      <li>Project 2</li>
-                      <li>Project 3</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </Col>
-          </Row>
-          <Row className="container__sorter--row justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
-                <div className="content">
-                  <div className="card__label">
-                    <p>
                       <strong>Future plans</strong>
                     </p>
                   </div>
                   <div className="card__footer">
                     <hr />
-                    <ul>
-                      <li>Hybrid recordings</li>
+                    <p>We have many future plans, and welcome your suggestions. Some of our future plans include:</p>
+                    <ol>
+                      <li>Parameter settings: more explicit control of parameters for sorting algorithms, with possible optimization.</li>
+                      <li>Hybrid recordings: incorporate a new recording class to complement the current in vivo, ex vivo, and simulated recordings.</li>
                       <li>
-                        Expansion of SNR to other surrogate metrics: noise
-                        overlap, etc.
+                        Expansion of SNR to other surrogate quality metrics: display noise
+                        overlap, isolation, etc, as used in MountainView.
                       </li>
-                      <li>Stability-based quality metrics.</li>
-                    </ul>
+                      <li>Stability-based quality metrics: run sorters multiple times to measure stability, as in our work "Validation of neural spike sorting algorithms without ground-truth information," A. H. Barnett, J. F. Magland, and L. Greengard, J. Neurosci. Meth., 264, 65--77 (2016).
+                      </li>
+                    </ol>
                   </div>
                 </div>
               </div>
