@@ -7,7 +7,7 @@ import "./pages.css";
 class Metrics extends Component {
   render() {
     const groundtruth =
-      "n_{{  \\rm match } }^k:= \\{ i: |t_j^k-s_i| < \\Delta t  \\mbox{ for some }\\ j \\}";
+      "n_{{  \\rm match } }^k \\; := \\; \\{ i: |t_j^k-s_i| < \\Delta t  \\mbox{ for some }\\ j \\}";
     let divStyle = {
       backgroundColor: "#fffdc0",
       borderRadius: "5px",
@@ -44,17 +44,15 @@ class Metrics extends Component {
                         We first describe how labeled firing events output by a
                         sorter are matched to a given list of ground truth
                         events, with firing times{" "}
-                        <MathJax.Node
-                          inline
-                          formula={`s_i, i=1,\\dots,n_{GT}`}
-                        />
-                        . Consider the sorted unit labeled{" "}
+                          <MathJax.Node inline formula={`s_i`} />, labeled by the index{" "}
+                          <MathJax.Node inline formula=i=1,\\dots,n_{GT}`} />.
+                        Consider the sorted unit labeled{" "}
                         <MathJax.Node inline formula={"k"} />. Let{"  "}
                         <MathJax.Node
                           inline
-                          formula={"t_j^k \\mbox{ where }\\ j=1,\\dots,n_k"}
+                          formula={"t_j^k, j=1,\\dots,n_k"}
                         />{" "}
-                        be the firing times of this unit from the sorter. Let
+                        be the set of firing times of this unit output by the sorter. Let
                         {"  "}
                         <MathJax.Node inline formula={`\\Delta t`} /> be an
                         acceptable firing time error, which we assume is shorter
@@ -63,61 +61,53 @@ class Metrics extends Component {
                       <p>
                         The number of matches of unit{" "}
                         <MathJax.Node inline formula={`k`} /> to the ground
-                        truth is:
-                      </p>
+                        truth is defined by
                       <MathJax.Node formula={groundtruth} />
-                      <p>
-                        Note that if more than one sorted event falls within{" "}
+                        Note that even if more than one sorted event falls within{" "}
                         <MathJax.Node inline formula={`\\pm \\Delta t`} /> of a
-                        true event, only one is matched. The converse cannot
-                        happen, by assumption.
+                          true event, at most one is matched.
+                          The reverse situation, where more than one ground truth event from the same neuron could
+                          match to a given sorted event, cannot happen, by our assumption about the refractory period.
                       </p>
                       <p>
-                        The number of missed events is:{" "}
+                        Given the above, the number of missed events is then{" "}
                         <MathJax.Node
                           formula={`n_{{  \\rm miss } }^k := n_{GT}
                         - n_{{ \\rm match } }^k.`}
                         />
                       </p>
                       <p>
-                        The number of false positive events is:{" "}
+                        The number of false positive events is{" "}
                         <MathJax.Node
                           formula={`n_{{  \\rm fp } }^k := n_k - n_{{  \\rm match } }^k`}
                         />
                       </p>
                       <div>
                         <p>
-                          Translated to the notation of Jun et al, 2017 [1] :
+                          Translated to the notation of Jun et al, 2017 [1], these three metrics are,
                         </p>
                         <MathJax.Node
-                          formula={`n_1 = n_{{  \\rm miss } }^k,  \\ n_2 = n_{{  \\rm match } }^k,  \\ n_3
+                        formula={`n_1 = n_{{  \\rm miss } }^k,  \\qquad n_2 = n_{{  \\rm match } }^k,
+                        \\qquad n_3
                         = n_{{  \\rm fp } }^k`}
                         />
                       </div>
                       <p>
-                        In the code implementation, this matching of sorted
+                        In the code implementation, the above matching of sorted
                         events to ground truth events uses{" "}
                         <a
                           target="_blank"
                           rel="noopener noreferrer"
-                          href="https://github.com/flatironinstitute/spikeforest/blob/master/spikeforest/spikeforest/spiketoolkit/comparison/sortingcomparison.py"
+                          href="https://github.com/SpikeInterface/spiketoolkit/blob/master/spiketoolkit/comparison/sortingcomparison.py"
                         >
                           the sortingcomparison.py routine from spiketoolkit
                         </a>
                         . In this routine, the default{" "}
                         <MathJax.Node inline formula={`\\Delta t \\`} />
-                        is set as <code>delta_tp</code> in sample units. Note
-                        that the actual time thus depends on the sample rate.
-                        <MathJax.Node inline formula="\Delta t" /> is 10 samples
-                        according to{" "}
-                        <a
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          href="https://github.com/flatironinstitute/spikeforest/blob/master/spikeforest/spikeforest/spiketoolkit/comparison/sortingcomparison.py"
-                        >
-                          sortingcomparison.py
-                        </a>{" "}
-                        corresponding to 0.5 ms at 20 kHz and 0.333ms at 30 kHz.
+                        is set as <code>delta_frames</code> in sample units. Note
+                        that the time in milliseconds thus depends on the sample rate. We use{" "}
+                        <MathJax.Node inline formula="\Delta t" /> is 10 samples (frames),
+                        corresponding to 0.5 ms at 20 kHz, or 0.333ms at 30 kHz.
                       </p>
                     </MathJax.Provider>
                   </div>
@@ -203,7 +193,7 @@ class Metrics extends Component {
                 <div className="content">
                   <div className="card__label">
                     <p>
-                      <strong>Best Matching Unit</strong>
+                      <strong>Best matching unit</strong>
                     </p>
                   </div>
                   <div className="card__footer">
@@ -213,13 +203,13 @@ class Metrics extends Component {
                         For each ground truth unit, the best matching unit{" "}
                         <MathJax.Node inline formula={"k"} /> to the ground
                         truth firing time list{" "}
-                        <MathJax.Node inline formula={"s_i"} /> is the one with
+                        <MathJax.Node inline formula={"s_i"} /> is defined as the one with
                         the highest accuracy{" "}
                         <MathJax.Node inline formula={"a_k"} />, as defined
                         above.
                       </p>
                     </MathJax.Provider>
-                    <p>Only results for this unit are reported.</p>
+                    <p>Only results (accuracy, precision, recall) for this unit are reported.</p>
                   </div>
                 </div>
               </div>
@@ -231,7 +221,7 @@ class Metrics extends Component {
                 <div className="content">
                   <div className="card__label">
                     <p>
-                      <strong>Other Metrics of a Unit</strong>
+                      <strong>Other per-unit metrics</strong>
                     </p>
                   </div>
                   <div className="card__footer">
@@ -247,9 +237,7 @@ class Metrics extends Component {
                         the channel index and{" "}
                         <MathJax.Node inline formula={"t"} /> the time point, is
                         needed, and the list of firing times.
-                      </p>
-                      <p style={divStyle}>
-                        [say something about standardized filtering]
+                        See below for a description of filtering.
                       </p>
                       <p>
                         Firstly, the mean waveforms{" "}
@@ -278,7 +266,7 @@ class Metrics extends Component {
                         <MathJax.Node inline formula={"m"} /> , the median
                         absolute deviation of the filtered data is defined by{" "}
                         <MathJax.Node
-                          formula={`{\\mbox{ MAD}}_m = \\mbox{ median }\\ (y_m(t) - \\overline{y_m})`}
+                          formula={`{\\mbox{ MAD}}_m = \\mbox{ median }\\ |y_m(t) - \\overline{y_m}|`}
                         />
                         where{"  "}
                         <MathJax.Node
@@ -287,11 +275,10 @@ class Metrics extends Component {
                             "\\overline{y_m} := \\frac{1}{T} \\sum_{t = 1}^T y_m(t)"
                           }
                         />{" "}
-                        is the channel average.
+                        is the average of that channel.
                       </p>
                       <p>
-                        The above are estimated by stochastic sampling in large
-                        datasets.{" "}
+                        In large datasets, the above are estimated by stochastic sampling.{" "}
                       </p>
                       <p>
                         {" "}
@@ -323,6 +310,44 @@ class Metrics extends Component {
                         .
                       </p>
                     </MathJax.Provider>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+          <Row className="container__sorter--row justify-content-md-center">
+            <Col lg={12} sm={12} xl={10}>
+              <div className="card card--stats">
+                <div className="content">
+                  <div className="card__label">
+                    <p>
+                      <strong>Filtering</strong>
+                    </p>
+                  </div>
+                  <div className="card__footer">
+                    <hr />
+                    <p>
+                      Filtering of recording signals is done throughout SpikeForest using a bandpass filter from 300 to 6000 Hz.
+                      This is implemented via convolution using FFTs, allowing an arbitrary function of frequency
+                      to be used as a filter. We use erf (the error function) to create smooth roll-offs at the low and high ends
+                      of the band. The widths of the low-end roll-off is 100 Hz and the high-end roll-off 1000 Hz.
+                      The point of the smoothness here is to create rapid decay in impulse response in the time domain.
+                      The code for this is{" "}
+                      <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href="https://github.com/flatironinstitute/spikeforest/blob/master/spikeforest/spikeforest_analysis/bandpass_filter.py"
+                        >
+                          bandpass_filter.py
+                       </a>{" "} and the calling code is{" "}
+                       <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href="https://github.com/flatironinstitute/spikeforest/blob/master/spikeforest/spikeforest_analysis/compute_units_info.py"
+                        >
+                          compute_units_info.py
+                       </a>
+                     </p>
                   </div>
                 </div>
               </div>
