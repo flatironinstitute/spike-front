@@ -53,7 +53,7 @@ class Header extends Component {
   render() {
     return (
       <div className="navbar__container">
-        <InfoPanel width={this.state.width} height={this.state.height} />
+        {/*<InfoPanel width={this.state.width} height={this.state.height} />*/}
         <Nav className="navbar__white">
           <LinkContainer exact to="/">
             <Navbar.Brand className="navbar__left">
@@ -78,6 +78,9 @@ class Header extends Component {
             </LinkContainer>
             <LinkContainer to="/metrics">
               <Nav.Link eventKey="/metrics">Metrics</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/about">
+              <Nav.Link eventKey="/about">About</Nav.Link>
             </LinkContainer>
           </Nav>
         </Nav>

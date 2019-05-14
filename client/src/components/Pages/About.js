@@ -17,7 +17,39 @@ class About extends Component {
               <div className="intro">
                 <p className="big">About SpikeForest</p>
                 <div className="dividerthick" />
+              </div>
+            </Col>
+          </Row>
+          <Row className="container__sorter--row justify-content-md-center">
+            <Col lg={12} sm={12} xl={10}>
+              <div className="card card--stats">
+                <div className="content">
+                  <div className="card__label">
+                    <p>
+                      <strong>Overview</strong>
+                    </p>
+                  </div>
+                  <div className="card__footer">
+                    <hr />
+                    <p>
+                      Electrical recording from extracellular probes is a popular and
+                      affordable method to capture the simultaneous activity of many neurons
+                      in the brain or retina. There is a great need to quantify the
+                      reliability of the firing events extracted from the recordings by
+                      spike sorting algorithms. This website addresses this need, assessing
+                      many popular spike sorting codes via "ground truth" recordings, which
+                      are the gold standard in terms of accuracy.
+                    </p>
+                    <p>
+                      We host a variety of experimental paired ground truth recordings from
+                      the community and also many in silico synthetic recordings. Each
+                      sorter is run on all recordings and the resulting accuracies for the
+                      ground truth units are updated on a daily basis as needed. Approximate
+                      CPU/GPU run times are also reported.
+                    </p>
+                  </div>
                 </div>
+              </div>
             </Col>
           </Row>
           <Row className="container__sorter--row justify-content-md-center">
@@ -31,23 +63,25 @@ class About extends Component {
                   </div>
                   <div className="card__footer">
                     <hr />
-                      There are at least three ways to provide feedback, report problems, or contact us with questions:
+                    There are at least three ways to provide feedback, report problems, or contact us with questions:
                       <ul>
-                       <li> You may email us using the
-                          <Link exact="true" to="/contact">
+                      <li> You may email us using the{" "}
+                        <Link exact="true" to="/contact">
                           contact form
                           </Link>{" "}.
-                       <li> For website problems, please use the
+                       </li>
+                      <li> For website problems, please use the{" "}
                         <a
-                           href="https://github.com/elovero/spike-front/issues"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                         Github issues
+                          href="https://github.com/elovero/spike-front/issues"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Github issues
                         </a>{" "}
                         page for the front end.
-                       <li> If you prefer a more graphical/interactive way to label problems or questions on a particular page, click on UserSnap in the bottom-right corner of any page.
-                   </ul>
+                       </li>
+                      <li> If you prefer a more graphical/interactive way to label problems or questions on a particular page, click on UserSnap in the bottom-right corner of any page.</li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -63,15 +97,15 @@ class About extends Component {
                     </p>
                   </div>
                   <div className="card__footer">
-                  <hr />
-                   <p>
-                   SpikeForest is a project of the Flatiron Institute, involving
-                   the Center for Computational Mathematics and the Scientific Computing Core.
-                   </p>
+                    <hr />
+                    <p>
+                      SpikeForest is a project of the Flatiron Institute, involving
+                      the Center for Computational Mathematics and the Scientific Computing Core.
+                    </p>
                     <ul>
                       <li>
-                       Jeremy Magland, CCM (chief infrastructure developer,
-                        back-end, recording simulation)
+                        Jeremy Magland, CCM (chief infrastructure developer,
+                         back-end, recording simulation)
                       </li>{" "}
                       <li>
                         Elizabeth Lovero, SCC (site design, web development,
@@ -84,40 +118,40 @@ class About extends Component {
                       <li>Alex Barnett, CCM (concept, site design, testing)</li>
                     </ul>
                     <p>
-                    We are grateful for many collaborators at other
-                    institutions for their vital help and supply of recordings:
+                      We are grateful for many collaborators at other
+                      institutions for their vital help and supply of recordings:
                     </p>
-            <ul>
-            <li> Frank Lab, UCSF
-            <ul><li> Jason Chung (UCSF)
-            <li> Loren Frank (UCSF)
-        </ul>
-            <li> Allen Institute for Brian Science
-            <ul><li> Catalin Mitelut (Columbia)
-            <li> Sergey Gratiy (AIBS)
-            <li> Costas Anastassiou (AIBS)
-        </ul>
-            <li> Buzsaki Lab (NYU)
-            <ul><li> Dan English (Virginia Tech)
-            <li> Anton Sirota (LMU Munich)
-            <li> György Buzsáki (NYU)
-        </ul>
-            <li> Kampff Lab, UCL
-            <ul><li> André Marques-Smith (UCL)
-            <li> Joana P. Neto (UCL)
-            <li> Adam R. Kampff (UCL)
-        </ul>
-            <li> Boyden Lab, MIT
-            <ul><li> Ed Boyden (MIT)
-            <li> Brian D. Allen (MIT)
-            <li> Caroline Moore-Kochlacs (MIT)
-        </ul> 
-            <li> Institute de la Vision, CNRS
-            <ul><li> Pierre Yger (CNRS)
-            <li> Giulia LB Spampinato (CNRS)
-            <li> Olivier Marre (CNRS)
-        </ul>
-            </ul>
+                    <ul>
+                      <li> Frank Lab, UCSF</li>
+                      <ul><li> Jason Chung (UCSF)</li>
+                        <li> Loren Frank (UCSF)</li>
+                      </ul>
+                      <li> Allen Institute for Brian Science</li>
+                      <ul><li> Catalin Mitelut (Columbia)</li>
+                        <li> Sergey Gratiy (AIBS)</li>
+                        <li> Costas Anastassiou (AIBS)</li>
+                      </ul>
+                      <li> Buzsaki Lab (NYU)</li>
+                      <ul><li> Dan English (Virginia Tech)</li>
+                        <li> Anton Sirota (LMU Munich)</li>
+                        <li> György Buzsáki (NYU)</li>
+                      </ul>
+                      <li> Kampff Lab, UCL</li>
+                      <ul><li> André Marques-Smith (UCL)</li>
+                        <li> Joana P. Neto (UCL)</li>
+                        <li> Adam R. Kampff (UCL)</li>
+                      </ul>
+                      <li> Boyden Lab, MIT</li>
+                      <li> Ed Boyden (MIT)</li>
+                      <li> Brian D. Allen (MIT)</li>
+                      <li> Caroline Moore-Kochlacs (MIT)</li>
+                      <li> Institute de la Vision, CNRS</li>
+                    </ul>
+                    <ul>
+                      <li> Pierre Yger (CNRS)</li>
+                      <li> Giulia LB Spampinato (CNRS)</li>
+                      <li> Olivier Marre (CNRS)</li>
+                    </ul>
                   </div>
                 </div>
               </div>

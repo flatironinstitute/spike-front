@@ -45,7 +45,7 @@ class Metrics extends Component {
                         sorter are matched to a given list of ground truth
                         events, with firing times{" "}
                           <MathJax.Node inline formula={`s_i`} />, labeled by the index{" "}
-                          <MathJax.Node inline formula=i=1,\\dots,n_{GT}`} />.
+                          <MathJax.Node inline formula={'i=1,\\dots,n_{GT}'} />.
                         Consider the sorted unit labeled{" "}
                         <MathJax.Node inline formula={"k"} />. Let{"  "}
                         <MathJax.Node
