@@ -10,6 +10,7 @@ const studySetController = require("./controllers/studySetController");
 const trueUnitController = require("./controllers/trueUnitController");
 const unitResultsController = require("./controllers/unitResultsController");
 const studyAnalysisResultController = require("./controllers/studyAnalysisResultController");
+const unitDetailController = require("./controllers/unitDetailController");
 const mailer = require("./email/mailer.js");
 
 /* V2 Data: New Routes
@@ -43,6 +44,8 @@ router.get(
 );
 // Study analysis results
 router.get("/api/studyanalysisresults", studyAnalysisResultController.getStudyAnalysisResults);
+// Unit details
+router.get("/api/unitdetail/:studyName/:recordingName/:sorterName/:trueUnitId", unitDetailController.getUnitDetail);
 // Contact Routes
 router.post("/api/contact", async (req, res) => {
   try {

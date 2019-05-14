@@ -27,6 +27,12 @@ class SpikeSpray extends Component {
     this.buildSprayData3();
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.spikeSprayData !== prevProps.spikeSprayData) {
+      this.buildSprayData3();
+    }
+  }
+
   addOffset(timepoints, i) {
     let offset = -0.2 * i;
     let newTPs = [];

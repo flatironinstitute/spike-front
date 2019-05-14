@@ -18,6 +18,7 @@ import studysets from "./studysets";
 import unitResults from "./unitResults";
 import ursByStudy from "./ursByStudy";
 import studyAnalysisResults from "./studyanalysisresults";
+import unitDetail from "./unitdetail";
 
 const rootReducer = history =>
   combineReducers({
@@ -37,7 +38,8 @@ const rootReducer = history =>
     studysets,
     unitResults,
     studyAnalysisResults,
-    ursByStudy
+    ursByStudy,
+    unitDetail
   });
 
 export default rootReducer;

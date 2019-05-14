@@ -15,5 +15,6 @@ export const initialState = {
   studysets: null,
   unitResults: null,
   ursByStudy: null,
-  studyAnalysisResults: null
+  studyAnalysisResults: null,
+  unitDetail: null
 };
