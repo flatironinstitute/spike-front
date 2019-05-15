@@ -45,6 +45,9 @@ class Algorithms extends Component {
           alg.dockerfile
         )}</a>`;
       }
+      else if (alg.environment) {
+        row.environment = '<span>alg.environment</span>';
+      }
       if (alg.wrapper) {
         row.wrapper = `<a href="${alg.wrapper}" target="_blank">${basename(alg.wrapper)}</a>`;
       }

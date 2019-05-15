@@ -8,11 +8,11 @@ class Metrics extends Component {
   render() {
     const groundtruth =
       "n_{{  \\rm match } }^k \\; := \\; \\{ i: |t_j^k-s_i| < \\Delta t  \\mbox{ for some }\\ j \\}";
-    let divStyle = {
-      backgroundColor: "#fffdc0",
-      borderRadius: "5px",
-      display: "inline-block"
-    };
+    // let divStyle = {
+    //   backgroundColor: "#fffdc0",
+    //   borderRadius: "5px",
+    //   display: "inline-block"
+    // };
     return (
       <div className="page__body">
         <Container className="container__heatmap">

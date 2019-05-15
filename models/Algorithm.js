@@ -9,6 +9,9 @@ const algorithmSchema = new mongoose.Schema({
   dockerfile: {
     type: String
   },
+  environment: {
+    type: String
+  },
   website: {
     type: String
   },

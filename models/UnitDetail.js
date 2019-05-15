@@ -22,6 +22,10 @@ const unitDetailSchema = new mongoose.Schema(
     },  
     spikeSprayUrl: {
       type: String
+    },
+    spikeSprayData: {
+      type: String,
+      required: false
     }
   },
   {

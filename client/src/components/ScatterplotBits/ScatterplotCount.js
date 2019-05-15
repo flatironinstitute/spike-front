@@ -20,7 +20,7 @@ class ScatterplotCount extends Component {
     this.state = {
       data: [],
       hoveredNode: null,
-      selectedNode: null,
+      selectedUnitCode: null,
       minSNR: 0,
       maxSNR: 100
     };
@@ -98,6 +98,7 @@ class ScatterplotCount extends Component {
             unitIndex: ii, // this is the part that is used in the parent component
             sorterName: this.props.sorterName, // this is used by parent component also
             unitId: sar.trueUnitIds[ii],
+            unitCode: `${sar.studyName}/${sar.recordingNames[sar.trueRecordingIndices[ii]]}/${this.props.sorterName}/${sar.trueUnitIds[ii]}`,
             x: Math.round(snrs[ii] * 100) / 100,
             y: yvals[ii],
             size: Math.max(1, this.getSqrt(sar.trueNumEvents[ii])),
@@ -152,13 +153,13 @@ class ScatterplotCount extends Component {
 
   handleScatterplotClick(d) {
     if (this.props.handleScatterplotClick) {
-      this.setState({selectedNode: d});
+      this.setState({selectedUnitCode: d.unitCode});
       this.props.handleScatterplotClick(d);
     }
   }
 
   render() {
-    const { data, hoveredNode, selectedNode, maxSNR } = this.state;
+    const { data, hoveredNode, selectedUnitCode, maxSNR } = this.state;
     let metricObj = {};
     metricObj[this.props.metric] = hoveredNode ? hoveredNode.y : 0;
     let otherObj = {
@@ -183,6 +184,13 @@ class ScatterplotCount extends Component {
         { x: this.props.sliderValue, y: 0 },
         { x: this.props.sliderValue, y: 1 }
       ];
+    }
+    let selectedNode = null;
+    if (selectedUnitCode) {
+      data.forEach(a => {
+        if (a.unitCode === selectedUnitCode)
+          selectedNode = JSON.parse(JSON.stringify(a));
+      })
     }
     // let selectedData = [];
     const yTitle = toTitleCase(this.props.metric);

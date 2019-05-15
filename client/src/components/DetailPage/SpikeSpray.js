@@ -118,15 +118,24 @@ class SpikeSpray extends Component {
 
   render() {
     let loading = isEmpty(this.state.spikeObjArr);
+    let totalTrue = this.props.numMatches + this.props.numFalseNegatives;
+    let totalSorted = this.props.numMatches + this.props.numFalsePositives;
     let colTitles = {
-      true: "Groundtruth",
+      true: "Ground truth",
       sorted: "Sorted",
-      true_missed: "True Missed / False Positive",
-      sorted_false: "Sorted False / False Negative"
+      true_missed: "False negatives",
+      sorted_false: "False positives"
     };
-    let totalSpikes = isEmpty(this.state.spikeObjArr)
-      ? 0
-      : this.state.spikeObjArr[0].num_spikes;
+    let colTotals = {
+      true: totalTrue,
+      sorted: totalSorted,
+      true_missed: this.props.numFalseNegatives,
+      sorted_false: this.props.numFalsePositives
+    };
+    // let totalSpikes = isEmpty(this.state.spikeObjArr)
+    //   ? 0
+    //   : this.state.spikeObjArr[0].num_spikes;
+    
     return (
       <div>
         {loading ? (
@@ -145,7 +154,7 @@ class SpikeSpray extends Component {
                   <div className="card__label">
                     <p className="card__charttitle">
                       {colTitles[column.name]} <br />
-                      {column.num_spikes} of {totalSpikes} spikes shown
+                      {column.num_spikes} of {colTotals[column.name]} spikes shown
                     </p>
                   </div>
                   <XYPlot
