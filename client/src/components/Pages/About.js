@@ -32,13 +32,19 @@ class About extends Component {
                   <div className="card__footer">
                     <hr />
                     <p>
-                      Electrical recording from extracellular probes is a popular and
-                      affordable method to capture the simultaneous activity of many neurons
-                      in the brain or retina. There is a great need to quantify the
-                      reliability of the firing events extracted from the recordings by
-                      spike sorting algorithms. This website addresses this need, assessing
-                      many popular spike sorting codes via "ground truth" recordings, which
-                      are the gold standard in terms of accuracy.
+                      {/* #barcode:29426aa5-spikeforest-overview */}
+                      Extracellular electrical recording is a popular and affordable method to measure the simultaneous spiking activity of a large neural population.
+                      The key computational extraction of distinct neuronal units and firing times is known as spike sorting.
+                      However, there is a growing number of automated spike sorting codes, and much uncertainty and folklore about their accuracy
+                      in various experimental conditions. Several papers report comparisons on a case-by-case basis, but there is a lack of standardized
+                      measures and validation data. Furthermore, there is a potential for bias, such as sub-optimal tuning of competing algorithms, and a focus on one
+                      brain region or probe type. Without a fair and transparent comparison, genuine progress in the field remains difficult.
+                    </p>
+                    <p>
+                      Aiming to address this need, SpikeForest is a reproducible, continuously updating platform which benchmarks the performance of spike sorting
+                      codes across a large curated database of electrophysiological recordings with ground truth. It consists of this website
+                      for presenting our up-to-date findings, a <a href={'https://github.com/flatironinstitute/spikeforest'}>python package</a> which contains the tools for running the
+                      SpikeForest analysis, and an expanding collection of electrophysiology recordings with ground-truth spiking information.
                     </p>
                     <p>
                       We host a variety of experimental paired ground truth recordings from
@@ -46,6 +52,14 @@ class About extends Component {
                       sorter is run on all recordings and the resulting accuracies for the
                       ground truth units are updated on a daily basis as needed. Approximate
                       CPU/GPU run times are also reported.
+                    </p>
+                    <p>
+                      Visitors may browse all datasets, algorithms, sorting results,
+                      and comparisons, and inspect the source code used to generate these
+                      data. Use the links on the navbar to learn about{" "}
+                      <Link to="/recordings">recordings</Link>,{" "}
+                      <Link to="/algorithms">algorithms</Link>, and{" "}
+                      <Link to="/metrics">metric definitions</Link>.
                     </p>
                   </div>
                 </div>
@@ -106,7 +120,7 @@ class About extends Component {
                       <li>
                         Jeremy Magland, CCM (chief infrastructure developer,
                          back-end, recording simulation)
-                      </li>{" "}
+                      </li>
                       <li>
                         Elizabeth Lovero, SCC (site design, web development,
                         visualizations)
@@ -116,6 +130,26 @@ class About extends Component {
                                    wrangling and simulation)
                       </li>
                       <li>Alex Barnett, CCM (concept, site design, testing)</li>
+                    </ul>
+                    <p>
+                      Other key contributors to the project include
+                    </p>
+                    <ul>
+                      <li>
+                        Alex Morley - Research student, Brain Network Dynamics Unit, University of Oxford, UK
+                      </li>
+                      <li>
+                        Witold Wysota - Programmer - Warsaw, Poland
+                      </li>
+                    </ul>
+                    <p>
+                      This project is closely related to <a href={'https://github.com/SpikeInterface/'}>SpikeInterface</a> which is being developed by the following individuals
+                    </p>
+                    <ul>
+                      <li>Cole Hurwitz - The Institute for Adaptive and Neural Computation (ANC), University of Edinburgh, Edinburgh, Scotland</li>
+                      <li>Alessio Paolo Buccino - Center for Inegrative Neurolasticity (CINPLA), Department of Biosciences, Physics, and Informatics, University of Oslo, Oslo, Norway</li>
+                      <li>Matthias Hennig - The Institute for Adaptive and Neural Computation (ANC), University of Edinburgh, Edinburgh, Scotland</li>
+                      <li>Samuel Garcia - Centre de Recherche en Neuroscience de Lyon (CRNL), Lyon, France</li>
                     </ul>
                     <p>
                       We are grateful for many collaborators at other
