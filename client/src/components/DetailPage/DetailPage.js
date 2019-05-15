@@ -214,7 +214,10 @@ class DetailPage extends Component {
                     <div className="content">
                       <div className="card__label">
                         <p>
-                          <strong>Unit Details: </strong>
+                          {this.state.selectedUnit ?
+                            (<strong>Unit Details: {`${this.props.studyName}/${studyAnalysisResult.recordingNames[studyAnalysisResult.trueRecordingIndices[this.state.selectedUnit.unitIndex]]}/${this.state.selectedUnit.sorterName}/${studyAnalysisResult.trueUnitIds[this.state.selectedUnit.unitIndex]}`}</strong>) :
+                            (<strong>Unit Details:</strong>)
+                          }
                         </p>
                       </div>
                       {(() => {

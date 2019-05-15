@@ -194,6 +194,9 @@ class HeatmapViz extends Component {
         accuracies: [],
         precisions: [],
         recalls: [],
+        numMatches: [],
+        numFalsePositives: [],
+        numFalseNegatives: [],
         cpuTimesSec: []
       });
     }
@@ -207,6 +210,9 @@ class HeatmapViz extends Component {
         sortingResults[ii].accuracies = sortingResults[ii].accuracies.concat(studyAnalysisResult.sortingResults[ii].accuracies);
         sortingResults[ii].precisions = sortingResults[ii].precisions.concat(studyAnalysisResult.sortingResults[ii].precisions);
         sortingResults[ii].recalls = sortingResults[ii].recalls.concat(studyAnalysisResult.sortingResults[ii].recalls);
+        sortingResults[ii].numMatches = sortingResults[ii].numMatches.concat(studyAnalysisResult.sortingResults[ii].numMatches);
+        sortingResults[ii].numFalsePositives = sortingResults[ii].numFalsePositives.concat(studyAnalysisResult.sortingResults[ii].numFalsePositives);
+        sortingResults[ii].numFalseNegatives = sortingResults[ii].numFalseNegatives.concat(studyAnalysisResult.sortingResults[ii].numFalseNegatives);
         sortingResults[ii].cpuTimesSec = sortingResults[ii].cpuTimesSec.concat(studyAnalysisResult.sortingResults[ii].cpuTimesSec);
       }
     })
@@ -538,26 +544,25 @@ class HeatmapViz extends Component {
               <span>
                 <p style={divStyle}>
                   {
-                    this.props.format == 'cpu' ?
+                    this.props.format === 'cpu' ?
                     (
-                      <span>Note: These numbers reflect actual compute times on our cluster and are not meant to be a rigorous benchmark. The algorithms were applied in batches, with many different algorithms possibly running
+                      <span>These numbers reflect actual compute times on our cluster and are not meant to be a rigorous benchmark. The algorithms were applied in batches, with many different algorithms possibly running
                         simultaneously on the same machine. Some runs may have been allocated more CPU cores than others. We are working toward a more accurate compute time test.
                       </span>
                     ) :
                     (
-                      <span>Note: These are preliminary results prior to parameter optimization, and we still in the process of ensuring that we are using the proper <Link to="/algorithms">versions of the spike sorters</Link>.</span>
+                      <span>These are preliminary results prior to parameter optimization, and we are still in the process of ensuring that we are using the proper <Link to="/algorithms">versions of the spike sorters</Link>.</span>
                     )
                   }
                 </p>
                 <p>
-                  Click to expand study set rows and see component study data. {copy} An asterisk indicates an incomplete or failed sorting on a subset of results.
-                </p>
+                  Click to expand study set rows and see component study data. {copy} * An asterisk indicates an incomplete or failed sorting on a subset of results.</p>
               </span>
             ) :
             (
-              <p>
-                {copy} An asterisk indicates an incomplete or failed sorting on a subset of results.
-              </p>
+              <span>
+                <p>{copy} * An asterisk indicates an incomplete or failed sorting on a subset of results.</p>
+              </span>
             )
           }
         </div>

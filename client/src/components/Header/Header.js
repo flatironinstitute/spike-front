@@ -3,7 +3,7 @@ import { LinkContainer } from "react-router-bootstrap";
 
 import { Nav, Navbar } from "react-bootstrap";
 import logo from "./logo-no-icon.svg";
-import InfoPanel from "./InfoPanel";
+// import InfoPanel from "./InfoPanel";
 
 import { toTitleCase } from "../../utils";
 

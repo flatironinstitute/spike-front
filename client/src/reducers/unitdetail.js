@@ -4,7 +4,10 @@ import { initialState } from "./initialState";
 const unitDetail = (state = initialState, action) => {
   switch (action.type) {
     case RECEIVE_UNIT_DETAIL:
-      return action.unitDetail;
+      let ud = action.unitDetail;
+      let a = state.unitDetail || {};
+      a[`${ud.studyName}/${ud.recordingName}/${ud.sorterName}/${ud.trueUnitId}`] = action.unitDetail;
+      return a;
     default:
       return state;
   }
