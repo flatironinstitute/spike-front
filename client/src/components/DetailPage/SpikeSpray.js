@@ -11,6 +11,7 @@ class SpikeSpray extends Component {
       spikeObjArr: [],
       hoveredNode: null
     };
+    this.spacing = 0.2;
     this.colorArr = [
       "#e6194B",
       "#bfef45",
@@ -34,7 +35,7 @@ class SpikeSpray extends Component {
   }
 
   addOffset(timepoints, i) {
-    let offset = -0.2 * i;
+    let offset = -this.spacing * i;
     let newTPs = [];
     timepoints.forEach(timepoint => {
       let newtp = {
@@ -74,6 +75,24 @@ class SpikeSpray extends Component {
   }
 
   buildSprayData3() {
+    // determine spacing
+    let vals = [];
+    this.props.spikeSprayData.forEach(chartObj => {
+      chartObj.spike_waveforms.forEach(spike => {
+        spike.channels.forEach((channel, i) => {
+          channel.waveform.forEach(a => {
+            vals.push(Number(a));
+          })
+        });
+      });
+    });
+    vals.sort();
+    //let pctl_low = vals[Math.floor(vals.length*0.01)];
+    //let pctl_high = vals[Math.floor(vals.length*0.99)];
+    let pctl_low = vals[0];
+    let pctl_high = vals[vals.length-1];
+    console.log('--------', pctl_low, pctl_high, vals.length, vals);
+    // this.spacing = pctl_high - pctl_low;
     let withPlots = this.props.spikeSprayData.map(chartObj => {
       let plotData = [];
       if (chartObj.spike_waveforms.length) {
@@ -102,7 +121,7 @@ class SpikeSpray extends Component {
     let withLabels = spikeObjArr.map(chartObj => {
       let labelData = [];
       chartObj.channel_ids.forEach((channel, i) => {
-        let offset = -0.2 * i;
+        let offset = -this.spacing * i;
         let labelObj = {
           x: 0,
           y: offset,
