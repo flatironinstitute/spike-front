@@ -91,7 +91,6 @@ class SpikeSpray extends Component {
     //let pctl_high = vals[Math.floor(vals.length*0.99)];
     let pctl_low = vals[0];
     let pctl_high = vals[vals.length-1];
-    console.log('--------', pctl_low, pctl_high, vals.length, vals);
     // this.spacing = pctl_high - pctl_low;
     let withPlots = this.props.spikeSprayData.map(chartObj => {
       let plotData = [];
@@ -187,7 +186,7 @@ class SpikeSpray extends Component {
                         key={`line-${Math.random(i)}`}
                         color={line.color}
                         data={line.data}
-                        style={{ strokeWidth: 0.25 }}
+                        style={{ strokeWidth: 2 }}
                       />
                     ))}
                     <LabelSeries

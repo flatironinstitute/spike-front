@@ -46,7 +46,7 @@ class Algorithms extends Component {
         )}</a>`;
       }
       else if (alg.environment) {
-        row.environment = '<span>alg.environment</span>';
+        row.environment = `<span>${alg.environment}</span>`;
       }
       if (alg.wrapper) {
         row.wrapper = `<a href="${alg.wrapper}" target="_blank">${basename(alg.wrapper)}</a>`;
@@ -82,7 +82,7 @@ class Algorithms extends Component {
     const algosColumns = [
       {
         accessor: "label",
-        label: "Name",
+        label: "Algorithm webpage",
         priorityLevel: 1,
         minWidth: 100,
         sortable: true
@@ -133,15 +133,25 @@ class Algorithms extends Component {
               <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
                   <div className="card card--stats">
+                    <ReactCollapsingTable
+                      columns={algosColumns}
+                      rows={this.state.rows}
+                    />
+                  </div>
+                </Col>
+              </Row>
+              <Row className="container__sorter--row">
+                <Col lg={12} sm={12}>
+                  <div className="card card--stats">
                     <div className="content">
-                      <div className="card__label">
+                      {/* <div className="card__label">
                         <p>
                           Algorithms:{" "}
                           <strong>
                             Spike sorting algorithms tested in this project
                           </strong>
                         </p>
-                      </div>
+                      </div> */}
                       <div className="card__footer">
                         <hr />
                         <p>
@@ -169,16 +179,6 @@ class Algorithms extends Component {
                         </p>
                       </div>
                     </div>
-                  </div>
-                </Col>
-              </Row>
-              <Row className="container__sorter--row">
-                <Col lg={12} sm={12}>
-                  <div className="card card--stats">
-                    <ReactCollapsingTable
-                      columns={algosColumns}
-                      rows={this.state.rows}
-                    />
                   </div>
                 </Col>
               </Row>

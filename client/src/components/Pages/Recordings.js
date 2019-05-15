@@ -15,7 +15,7 @@ class Recordings extends Component {
     return (
       <div className="page__body">
         <Container className="container__heatmap">
-          <Row className="justify-content-md-center">
+          {/* <Row className="justify-content-md-center">
             <Col lg={12} sm={12} xl={10}>
               <div className="intro">
                 <p className="big">Recordings</p>
@@ -27,7 +27,7 @@ class Recordings extends Component {
                 </p>
               </div>
             </Col>
-          </Row>
+          </Row> */}
           <Row className="container__sorter--row justify-content-md-center">
             <Col lg={12} sm={12} xl={10}>
               <div className="card card--stats">
@@ -51,6 +51,27 @@ class Recordings extends Component {
                       set is a collection of studies which have different
                       parameters but share some common features.
                     </p>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+          <Row className="container__sorter--row justify-content-md-center">
+            <Col lg={12} sm={12} xl={10}>
+              <div className="card card--stats">
+                <div className="content">
+                  <div className="card__label">
+                    <p>
+                      <strong>SpikeForest study sets</strong>
+                    </p>
+                  </div>
+                  <div className="card__footer">
+                    <hr />
+                    {loading ? (
+                      <Preloader />
+                    ) : (
+                      <ExpandableRecordingsTable {...this.props} />
+                    )}
                   </div>
                 </div>
               </div>
@@ -97,27 +118,6 @@ class Recordings extends Component {
                         results.
                       </span>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </Col>
-          </Row>
-          <Row className="container__sorter--row justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
-                <div className="content">
-                  <div className="card__label">
-                    <p>
-                      <strong>All Data</strong>
-                    </p>
-                  </div>
-                  <div className="card__footer">
-                    <hr />
-                    {loading ? (
-                      <Preloader />
-                    ) : (
-                      <ExpandableRecordingsTable {...this.props} />
-                    )}
                   </div>
                 </div>
               </div>

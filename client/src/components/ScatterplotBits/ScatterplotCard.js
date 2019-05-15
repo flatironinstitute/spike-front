@@ -61,11 +61,11 @@ class ScatterplotCard extends Component {
       (!this.state.study) ||
       (!this.state.sorter) ||
       (!this.state.studyAnalysisResult);
-    let divStyle = {
-      backgroundColor: "#fffdc0",
-      borderRadius: "5px",
-      display: "inline-block"
-    };
+    // let divStyle = {
+    //   backgroundColor: "#fffdc0",
+    //   borderRadius: "5px",
+    //   display: "inline-block"
+    // };
     return (
       <div
         className="card card--heatmap"
@@ -74,18 +74,18 @@ class ScatterplotCard extends Component {
         <div className="detail__column-disable">
           {loading ? (
             <div className="card__header">
-              <h4 className="card__title" style={divStyle}>
+              <h4 className="card__title">
                 Click an item on the left to see a detailed scatterplot of
                 sorter results
               </h4>
-              <p className="card__category">
+              {/* <p className="card__category">
                 <br />
                 We host a variety of experimental paired ground truth recordings
                 from the community and also many in silico synthetic recordings.
                 Each sorter is run on all recordings and the resulting
                 accuracies for the ground truth units are updated on a daily
                 basis as needed.
-              </p>
+              </p> */}
             </div>
           ) : (
             <div>

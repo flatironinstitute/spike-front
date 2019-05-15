@@ -41,7 +41,7 @@ class ScatterplotContainer extends Component {
           this.props.handleScatterplotClick ?
           (
             <p>
-              Click a marker below for more details.
+              Click a marker below for more details. Marker area is proportional to the number of events and color reflects the particular recording within the study.
             </p>
           ) : (<span></span>)
         }

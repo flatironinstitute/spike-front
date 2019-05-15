@@ -14,13 +14,13 @@ export class MetricCard extends Component {
     let copy;
     switch (this.props.metric) {
       case "accuracy":
-        copy = "Accuracy balances precision and recall.";
+        copy = " balances precision and recall.";
         break;
       case "precision":
-        copy = "1 - (false positive rate)";
+        copy = "= 1 - (false positive rate)";
         break;
       case "recall":
-        copy = "1 - (false negative rate)";
+        copy = "= 1 - (false negative rate)";
         break;
       default:
         copy = "";
