@@ -93,7 +93,7 @@ class Recordings extends Component {
                       geometries and types, and fall into three categories:
                     </p>
                     <div className="list__section">
-                      <span className="list__heading">1. Paired (in vivo)</span>
+                      <span className="list__heading">1. Paired (<i>in vivo</i> or <i>in vitro</i>)</span>
                       <span className="list__body">
                         Recordings from various laboratories where an
                         independent intra- or juxta-cellular probe provides

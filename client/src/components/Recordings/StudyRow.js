@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import RecordingRow from "./RecordingRow";
+import { Link } from "react-router-dom";
 
 class StudyRow extends Component {
   constructor() {
@@ -21,23 +22,27 @@ class StudyRow extends Component {
     const headRow = (
       <tr key={"recording-header"}>
         <th />
-        <th>Recording Name</th>
+        <th></th>
+        <th></th>
+        <th>Recording name</th>
         <th>Description</th>
-        <th>Number of Channels</th>
-        <th>Number of True Units</th>
-        <th>Sample Rate in Hz</th>
+        <th>Number of channels</th>
+        <th>Number of ground truth units</th>
+        <th>Sample rate in Hz</th>
         <th>Spike sign</th>
       </tr>
     );
     recordingsRows.unshift(headRow);
     return (
       <React.Fragment>
-        <tr onClick={() => this.setState({ open: !open })} className={rowClass}>
-          <td className="arrow__row">{arrow}</td>
+        {/* <tr onClick={() => this.setState({ open: !open })} className={rowClass}> */}
+        <tr className={rowClass}>
+          <td />
+          <td onClick={() => this.setState({ open: !open })} className="arrow__row">{arrow}</td>
           <td>
-            {study.name} ({study.recordings.length})
+            <Link to={`/studyresults/${study.name}`}>{study.name}</Link> ({study.recordings.length})
           </td>
-          <td>{study.sorterNames ? study.sorterNames.join(", ") : ""}</td>
+          {/* <td>{study.sorterNames ? study.sorterNames.join(", ") : ""}</td> */}
         </tr>
         {open ? recordingsRows : null}
       </React.Fragment>

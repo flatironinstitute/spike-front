@@ -76,7 +76,7 @@ class HeatmapViz extends Component {
       let tableRows = [];
       if (this.props.groupByStudySets) {
 
-        let studySetGroups = ['PAIRED_', 'SYNTH_', 'MANUAL_'];
+        let studySetGroups = ['PAIRED_', 'SYNTH_', 'HYBRID_', 'MANUAL_'];
 
         studySetGroups.forEach(grp => {
           studySetNames.forEach(function(studySet, ii) {
@@ -312,7 +312,7 @@ class HeatmapViz extends Component {
     let threshold = this.props.threshold;
     let ret = []; // the cells to return
     // the first cell is the name of the study
-    let link = isStudySet ? null : `/studyresults/${studyAnalysisResult.studyName}`;
+    let link = isStudySet ? `/studyset/${studyAnalysisResult.studyName}` : `/studyresults/${studyAnalysisResult.studyName}`;
     let name0 = studyAnalysisResult.studyName;
     if (!this.props.groupByStudySets) {
       name0 = this.studySetByStudy[studyAnalysisResult.studyName]+' '+studyAnalysisResult.studyName;

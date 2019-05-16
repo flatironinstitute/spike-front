@@ -2,11 +2,16 @@
   background: #fff;
 }
 
+.recording__table-expandable td,th {
+  width: auto;
+}
+
 .arrow__row {
   font-weight: 700;
   font-size: 2rem;
   color: var(--fi-blue);
   text-align: center;
+  cursor: pointer;
 }
 
 .arrow__heading {

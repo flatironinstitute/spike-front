@@ -42,23 +42,6 @@ class InfoPanel extends Component {
         <p>
           <Link to="/about">Read more on the About page ...</Link>.
         </p>
-        <p className="info__byline">
-          Project of{" "}
-          <a
-            href="https://www.simonsfoundation.org/flatiron/center-for-computational-mathematics/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Center for Computational Mathematics,
-          </a>{" "}
-          <a
-            href="https://flatironinstitute.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Flatiron Institute
-          </a>.
-        </p>
       </div>
     );
   }

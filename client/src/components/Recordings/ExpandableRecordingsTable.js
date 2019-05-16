@@ -73,6 +73,12 @@ class ExpandableRecordingsTable extends Component {
         <td>
           <em>Loading...</em>
         </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
       </tr>
     );
     return (

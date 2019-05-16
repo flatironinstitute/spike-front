@@ -345,7 +345,7 @@ class About extends Component {
                     <p>We have many future plans, and welcome your suggestions. Some of our future plans include:</p>
                     <ol>
                       <li>Parameter settings: more explicit control of parameters for sorting algorithms, with possible optimization.</li>
-                      <li>Hybrid recordings: incorporate a new recording class to complement the current in vivo, ex vivo, and simulated recordings.</li>
+                      <li>Hybrid recordings: incorporate a new recording class to complement the current <i>in vivo</i>, <i>ex vivo</i>, and simulated recordings.</li>
                       <li>
                         Expansion of SNR to other surrogate quality metrics: display noise
                         overlap, isolation, etc, as used in MountainView.

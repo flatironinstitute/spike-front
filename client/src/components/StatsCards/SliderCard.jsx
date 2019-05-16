@@ -79,12 +79,12 @@ export class SliderCard extends Component {
   }
 
   handleSliderChange = value => {
-    this.setState({sliderValue: value})
+    this.setState({sliderValue: value});
   }
 
   handleSliderChangeComplete = () => {
     if (this.props.handleSliderChange)
-      this.props.handleSliderChange(this.state.sliderValue)
+      this.props.handleSliderChange(this.state.sliderValue);
   }
 
   render() {
