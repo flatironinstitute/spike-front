@@ -56,8 +56,8 @@ class InfoPanel extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Flatiron Institute.
-          </a>
+            Flatiron Institute
+          </a>.
         </p>
       </div>
     );
