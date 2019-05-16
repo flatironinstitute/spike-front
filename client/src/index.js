@@ -32,4 +32,5 @@ const render = () => {
 };
 
 render();
-serviceWorker.register();
+// serviceWorker.register();
+serviceWorker.unregister();
