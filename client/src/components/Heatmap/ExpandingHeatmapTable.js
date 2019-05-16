@@ -38,7 +38,8 @@ class ExpandingHeatmapTable extends React.Component {
     if (this.props.onCellSelected) this.props.onCellSelected(cell);
   }
 
-  createTableCell(cell, index) {
+  createTableCell(cell, index, opts) {
+    opts = opts || {};
     let classes0 = [];
     if (cell["id"] === this.state.selectedCellId) classes0.push("selected");
     if (cell["rotate"]) classes0.push("rotate");
@@ -59,6 +60,10 @@ class ExpandingHeatmapTable extends React.Component {
     let cellContent = cell.text;
     if (cell.link)
       cellContent = <Link to={cell.link}>{cellContent}</Link>;
+    if (opts.empty_content) {
+      cellContent = <span></span>;
+      style0 = {};
+    }
     return (
       <td
         onClick={() => this.handleCellSelected(cell)}
@@ -105,6 +110,9 @@ class ExpandingHeatmapTable extends React.Component {
       if ((!isExpanded) || (i === 0)) {
         tds.push(this.createTableCell(c, i));
       }
+      else {
+        tds.push(this.createTableCell(c, i, {empty_content: true}));
+      }
     });
     // Create Rows and put cells in
     ret.push(
@@ -123,6 +131,7 @@ class ExpandingHeatmapTable extends React.Component {
           ret = ret.concat(trs0);
           return null;
         }, this);
+        ret.push(<tr><td>&nbsp;</td></tr>);
       }
     }
     return ret;
