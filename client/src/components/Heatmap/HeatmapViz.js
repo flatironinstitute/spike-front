@@ -180,7 +180,7 @@ class HeatmapViz extends Component {
         copy = `Average ${this.props.metric} above SNR threshold`;
         break;
       case "cpu":
-        copy = "Estimated average compute time";
+        copy = "Estimated average compute time per recording (sec)";
         break;
       default:
         copy = "";
@@ -325,7 +325,7 @@ class HeatmapViz extends Component {
       selectable: false
     });
     let rowNormalize; // whether to normalize the rows
-    switch (metric) {
+    switch (format) {
       case "count":
         rowNormalize = true;
         break;
@@ -562,7 +562,7 @@ class HeatmapViz extends Component {
                   {
                     this.props.format === 'cpu' ?
                     (
-                      <span>These numbers reflect actual compute times on our cluster and are not meant to be a rigorous benchmark. The algorithms were applied in batches, with many different algorithms possibly running
+                      <span><b>Important!</b> These numbers reflect actual compute times on our cluster and are not meant to be a rigorous benchmark. The algorithms were applied in batches, with many different algorithms possibly running
                         simultaneously on the same machine. Some runs may have been allocated more CPU cores than others. We are working toward a more accurate compute time test.
                       </span>
                     ) :

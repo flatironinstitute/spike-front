@@ -77,7 +77,7 @@ class Footer extends Component {
             </a>
           </div>
         </div>
-        <p className="footer__location xx-small tk-atlas">
+        {/* <p className="footer__location xx-small tk-atlas">
           SpikeForest is made with
           <span
             role="img"
@@ -94,7 +94,7 @@ class Footer extends Component {
           >
             🗽
           </span>
-        </p>
+        </p> */}
       </footer>
     );
   }

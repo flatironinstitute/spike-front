@@ -40,7 +40,7 @@ class InfoPanel extends Component {
           <Link to="/metrics">metric definitions</Link>.
         </p>
         <p>
-          <Link to="/about">Read more on the About page ...</Link>.
+          <Link to="/about">Read more...</Link>.
         </p>
       </div>
     );
