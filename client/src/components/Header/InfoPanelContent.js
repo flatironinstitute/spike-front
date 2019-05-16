@@ -45,7 +45,7 @@ class InfoPanel extends Component {
         <p className="info__byline">
           Project of{" "}
           <a
-            href="https://flatironinstitute.org"
+            href="https://www.simonsfoundation.org/flatiron/center-for-computational-mathematics/"
             target="_blank"
             rel="noopener noreferrer"
           >

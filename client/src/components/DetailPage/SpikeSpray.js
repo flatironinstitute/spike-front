@@ -1,17 +1,22 @@
 import React, { Component } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import Preloader from "../Preloader/Preloader";
-import { XYPlot, XAxis, LineSeries, LabelSeries } from "react-vis";
+// import { XYPlot, XAxis, LineSeries, LabelSeries } from "react-vis";
+import Plot from 'react-plotly.js';
 import { isEmpty } from "../../utils";
+import { width, height } from "window-size";
 
 class SpikeSpray extends Component {
   constructor(props) {
     super(props);
     this.state = {
       spikeObjArr: [],
-      hoveredNode: null
+      hoveredNode: null,
+      goRender: false
     };
-    this.spacing = 0.2;
+    this.spacing = 0;
+    this.numChannels = 0;
+    this.numTimepoints = 0;
     this.colorArr = [
       "#e6194B",
       "#bfef45",
@@ -34,18 +39,18 @@ class SpikeSpray extends Component {
     }
   }
 
-  addOffset(timepoints, i) {
-    let offset = -this.spacing * i;
-    let newTPs = [];
-    timepoints.forEach(timepoint => {
-      let newtp = {
-        x: timepoint.x,
-        y: timepoint.y + offset
-      };
-      newTPs.push(newtp);
-    });
-    return newTPs;
-  }
+  // addOffset(timepoints, i) {
+  //   let offset = -this.spacing * i;
+  //   let newTPs = [];
+  //   timepoints.forEach(timepoint => {
+  //     let newtp = {
+  //       x: timepoint.x,
+  //       y: timepoint.y + offset
+  //     };
+  //     newTPs.push(newtp);
+  //   });
+  //   return newTPs;
+  // }
 
   formatWaveformsAddOffset(waveforms, i) {
     let xyWaves = waveforms.map((wave, index) => {
@@ -74,24 +79,47 @@ class SpikeSpray extends Component {
     return colorGroups;
   }
 
+  getXDataFromWaveform(waveform) {
+    let ret = [];
+    for (let i = 0; i < waveform.length; i++) {
+      ret.push(i);
+    }
+    return ret;
+  }
+
+  getYDataFromWaveform(waveform, offset) {
+    let ret = [];
+    for (let i = 0; i < waveform.length; i++) {
+      ret.push(waveform[i] + offset);
+    }
+    return ret;
+  }
+
   buildSprayData3() {
-    // determine spacing
+    // determine spacing, numTimepoints, numChannels
     let vals = [];
     this.props.spikeSprayData.forEach(chartObj => {
       chartObj.spike_waveforms.forEach(spike => {
+        this.numChannels = spike.channels.length;
         spike.channels.forEach((channel, i) => {
+          this.numTimepoints = channel.waveform.length;
           channel.waveform.forEach(a => {
-            vals.push(Number(a));
+            vals.push(a + 0);
           })
         });
       });
     });
-    vals.sort();
-    //let pctl_low = vals[Math.floor(vals.length*0.01)];
-    //let pctl_high = vals[Math.floor(vals.length*0.99)];
-    let pctl_low = vals[0];
-    let pctl_high = vals[vals.length-1];
-    // this.spacing = pctl_high - pctl_low;
+    // Custom sort is needed to deal with annoying case of scientific notation for very small values
+    vals.sort(function (a, b) {
+      if (Number(a) < Number(b)) return -1;
+      else if (Number(b) < Number(a)) return 1;
+      else return 0;
+    });
+    let pctl_low = vals[Math.floor(vals.length * 0.01)];
+    let pctl_high = vals[Math.floor(vals.length * 0.99)];
+    // let pctl_low = vals[0];
+    // let pctl_high = vals[vals.length - 1];
+    this.spacing = pctl_high - pctl_low;
     let withPlots = this.props.spikeSprayData.map(chartObj => {
       let plotData = [];
       if (chartObj.spike_waveforms.length) {
@@ -101,40 +129,55 @@ class SpikeSpray extends Component {
             plotData.push({
               color: colorLine,
               channel: channel.channel_id,
-              data: this.formatWaveformsAddOffset(channel.waveform, i)
+              // data: this.formatWaveformsAddOffset(channel.waveform, i),
+              xdata: this.getXDataFromWaveform(channel.waveform),
+              ydata: this.getYDataFromWaveform(channel.waveform, -i * this.spacing)
             });
           });
         });
       } else {
         plotData.push([]);
       }
+      // use reverse so that the first channel ultimately gets rendered on top
+      plotData.reverse();
       return { ...chartObj, plotData: plotData };
     });
-    let spikeObjArr = this.buildLabelData(withPlots);
+    // let spikeObjArr = this.buildLabelData(withPlots);
+    // this.setState({
+    //   spikeObjArr: spikeObjArr
+    // });
+    let spikeObjArr = withPlots;
     this.setState({
       spikeObjArr: spikeObjArr
     });
   }
 
-  buildLabelData(spikeObjArr) {
-    let withLabels = spikeObjArr.map(chartObj => {
-      let labelData = [];
-      chartObj.channel_ids.forEach((channel, i) => {
-        let offset = -this.spacing * i;
-        let labelObj = {
-          x: 0,
-          y: offset,
-          label: "Channel " + channel,
-          style: { fontSize: "14px", lineheight: "16px", fontWeight: "400" }
-        };
-        labelData.push(labelObj);
-      });
-      return { ...chartObj, labelData: labelData };
-    });
-    return withLabels;
-  }
+  // buildLabelData(spikeObjArr) {
+  //   let withLabels = spikeObjArr.map(chartObj => {
+  //     let labelData = [];
+  //     chartObj.channel_ids.forEach((channel, i) => {
+  //       let offset = -this.spacing * i;
+  //       let labelObj = {
+  //         x: 0,
+  //         y: offset,
+  //         label: "Channel " + channel,
+  //         style: { fontSize: "14px", lineheight: "16px", fontWeight: "400" }
+  //       };
+  //       labelData.push(labelObj);
+  //     });
+  //     return { ...chartObj, labelData: labelData };
+  //   });
+  //   return withLabels;
+  // }
 
   render() {
+    if (!this.state.goRender) {
+      let that=this;
+      setTimeout(function() {
+        that.setState({goRender: true});
+      },10);
+      return <div>Rendering...</div>;
+    }
     let loading = isEmpty(this.state.spikeObjArr);
     let totalTrue = this.props.numMatches + this.props.numFalseNegatives;
     let totalSorted = this.props.numMatches + this.props.numFalsePositives;
@@ -153,9 +196,9 @@ class SpikeSpray extends Component {
     // let totalSpikes = isEmpty(this.state.spikeObjArr)
     //   ? 0
     //   : this.state.spikeObjArr[0].num_spikes;
-    
+
     return (
-      <div>
+      <Container fluid={true}>
         {loading ? (
           <Container className="container__heatmap">
             <Card>
@@ -165,42 +208,94 @@ class SpikeSpray extends Component {
             </Card>
           </Container>
         ) : (
-          <div>
-            <Row>
+            <Row style={{ marginLeft: 0, marginRight: 0 }}>
               {this.state.spikeObjArr.map((column, i) => (
-                <Col lg={3} key={`spikecol-${Math.random(i)}`}>
+                <Col lg={3} key={`spikecol-${Math.random(i)}`} style={{ paddingLeft: 0, paddingRight: 0 }}>
                   <div className="card__label">
                     <p className="card__charttitle">
-                      {colTitles[column.name]} <br />
-                      {column.num_spikes} of {colTotals[column.name]} spikes shown
+                      {colTitles[column.name]}
                     </p>
                   </div>
-                  <XYPlot
-                    width={350}
-                    height={700}
-                    key={`spikeplot-${Math.random(i)}`}
-                  >
-                    <XAxis title="Samples in time" />
-                    {column.plotData.map((line, i) => (
-                      <LineSeries
-                        key={`line-${Math.random(i)}`}
-                        color={line.color}
-                        data={line.data}
-                        style={{ strokeWidth: 2 }}
+                  <Plot style={{ width: '100%', height: '400px' }}
+                    data={(
+                      column.plotData.map((line, i) => (
+                        {
+                          x: line.xdata,
+                          y: line.ydata,
+                          type: 'scatter',
+                          mode: 'lines',
+                          line: {
+                            width: 0.5,
+                            color: line.color
+                          },
+                          hoverinfo: 'skip'
+                        }
+                      ))
+                    )}
+                    layout={(
+                      {
+                        // width: '100%',
+                        // height: '100%',
+                        title: '',
+                        showlegend: false,
+                        xaxis: {
+                          autorange: false,
+                          range: [0, this.numTimepoints - 1],
+                          showgrid: false,
+                          zeroline: false,
+                          showline: false,
+                          ticks: '',
+                          showticklabels: false
+                        },
+                        yaxis: {
+                          autorange: false,
+                          range: [-this.numChannels * this.spacing, this.spacing],
+                          showgrid: false,
+                          zeroline: false,
+                          showline: false,
+                          ticks: '',
+                          showticklabels: false
+                        },
+                        margin: {
+                          l: 20, r: 20, b: 0, t: 0
+                        }
+                      }
+                    )}
+                    config={(
+                      {
+                        displayModeBar: false,
+                        responsive: true
+                      }
+                    )}
+                  />
+                  <div className="card__label">
+                    <span style={{ fontSize: '14px', textAlign: 'center' }}>{column.num_spikes} of {colTotals[column.name]} spikes shown</span>
+                  </div>
+                  {/* <XYPlot
+                      width={350}
+                      height={700}
+                      key={`spikeplot-${Math.random(i)}`}
+                    >
+                      <XAxis title="Samples in time" />
+                      {column.plotData.map((line, i) => (
+                        <LineSeries
+                          key={`line-${Math.random(i)}`}
+                          color={line.color}
+                          data={line.data}
+                          style={{ strokeWidth: 2 }}
+                        />
+                      ))}
+                      <LabelSeries
+                        animation
+                        allowOffsetToBeReversed
+                        data={column.labelData}
                       />
-                    ))}
-                    <LabelSeries
-                      animation
-                      allowOffsetToBeReversed
-                      data={column.labelData}
-                    />
-                  </XYPlot>
+                    </XYPlot> */}
                 </Col>
               ))}
             </Row>
-          </div>
-        )}
-      </div>
+          )}
+      </Container>
     );
   }
 }

@@ -122,11 +122,11 @@ class DetailPage extends Component {
 
     let heatmapTitle = this.getFormatCopy();
     // let unitId = this.state.selectedUnit ? this.state.selectedUnit.unitId : "";
-    let divStyle = {
-      backgroundColor: "#fffdc0",
-      borderRadius: "5px",
-      display: "inline-block"
-    };
+    // let divStyle = {
+    //   backgroundColor: "#fffdc0",
+    //   borderRadius: "5px",
+    //   display: "inline-block"
+    // };
 
     let studyAnalysisResult = {};
     this.props.studyAnalysisResults.forEach(sar => {
@@ -146,20 +146,20 @@ class DetailPage extends Component {
               </Card>
             </Container>
           ) : (
-            <Container className="container__heatmap">
-              <Row className="container__sorter--row">
-                <Col lg={6} sm={12}>
-                  <div className="card card--stats">
-                    <div className="content">
-                      <div className="card__label">
-                        <p>
-                          <b>{heatmapTitle}</b>
-                        </p>
-                      </div>
-                      <div className="card__footer">
-                        <hr />
-                        
-                        {/* <DetailPageRow
+              <Container className="container__heatmap">
+                <Row className="container__sorter--row">
+                  <Col lg={6} sm={12}>
+                    <div className="card card--stats">
+                      <div className="content">
+                        <div className="card__label">
+                          <p>
+                            <b>{heatmapTitle}</b>
+                          </p>
+                        </div>
+                        <div className="card__footer">
+                          <hr />
+
+                          {/* <DetailPageRow
                           {...this.props}
                           vizDatum={this.state.filteredData}
                           key={`hmrow${0}`}
@@ -169,125 +169,132 @@ class DetailPage extends Component {
                           selectedSorter={this.state.sorterName}
                           handleSorterChange={this.handleSorterChange}
                         /> */}
-                        <HeatmapViz
-                          groupByStudySets={false}
-                          selectSorterName={sorterName => {this.setState({ sorterName, selectedUnit: null })}}
-                          selectedStudyName={this.props.studyName}
-                          selectedSorterName={this.state.sorterName}
-                          studyAnalysisResults={[studyAnalysisResult]}
-                          studies={this.props.studies}
-                          studysets={this.props.studysets}
-                          format={this.state.format}
-                          metric={this.state.metric}
-                          threshold={this.state.sliderValue}
-                        />
+                          <HeatmapViz
+                            groupByStudySets={false}
+                            selectSorterName={sorterName => { this.setState({ sorterName, selectedUnit: null }) }}
+                            selectedStudyName={this.props.studyName}
+                            selectedSorterName={this.state.sorterName}
+                            studyAnalysisResults={[studyAnalysisResult]}
+                            studies={this.props.studies}
+                            studysets={this.props.studysets}
+                            format={this.state.format}
+                            metric={this.state.metric}
+                            threshold={this.state.sliderValue}
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <HeatmapOptionsCol
-                    showCPU={false}
-                    handleFormatChange={this.handleFormatChange}
-                    handleSliderChange={this.handleSliderChange}
-                    handleMetricChange={this.handleMetricChange}
-                    format={this.state.format}
-                    metric={this.state.metric}
-                    sliderValue={this.state.sliderValue}
-                  />
-                </Col>
-                <Col lg={6} sm={12}>
-                  <ScatterplotCard
-                    studies={this.props.studies}
-                    sorters={this.props.sorters}
-                    studyAnalysisResults={[studyAnalysisResult]}
-                    studyName={this.props.studyName}
-                    sorterName={this.state.sorterName}
-                    sliderValue={this.state.sliderValue}
-                    format={this.state.format}
-                    metric={this.state.metric}
-                    handleScatterplotClick={this.handleScatterplotClick}
-                  />
-                </Col>
-              </Row>
-              <Row className="container__sorter--row">
-                <Col lg={12} sm={12}>
-                  <div className="card card--heatmap">
-                    <div className="content">
-                      <div className="card__label">
-                        <p>
-                          {this.state.selectedUnit ?
-                            (<strong>Unit Details: {`${this.props.studyName}/${studyAnalysisResult.recordingNames[studyAnalysisResult.trueRecordingIndices[this.state.selectedUnit.unitIndex]]}/${this.state.selectedUnit.sorterName}/${studyAnalysisResult.trueUnitIds[this.state.selectedUnit.unitIndex]}`}</strong>) :
-                            (<strong>Unit Details:</strong>)
-                          }
-                        </p>
-                      </div>
-                      {(() => {
-                        if (this.state.selectedUnit) {
-                          return (
-                            <div className="card__footer">
-                              <hr />
-                              <UnitDetail
-                                studies={this.props.studies}
-                                sorters={this.props.sorters}
-                                studyAnalysisResult={studyAnalysisResult}
-                                unitIndex={this.state.selectedUnit.unitIndex}
-                                sorterName={this.state.selectedUnit.sorterName}
-                              />
-                            </div>
-                          )
-                        }
-                        else {
-                          return (
-                            <div className="card__footer">
-                              <hr />
-                              <p style={divStyle}>
-                                Click on a marker in the scatterplot above to
-                                view details of the selected unit.
-                              </p>
-                            </div>
-                          );
-                        }
-                        /*switch (format) {
-                          case "nounit":
+                  </Col>
+                  <Col lg={6} sm={12}>
+                    <HeatmapOptionsCol
+                      showCPU={false}
+                      handleFormatChange={this.handleFormatChange}
+                      handleSliderChange={this.handleSliderChange}
+                      handleMetricChange={this.handleMetricChange}
+                      format={this.state.format}
+                      metric={this.state.metric}
+                      sliderValue={this.state.sliderValue}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={6} sm={12}>
+                    <ScatterplotCard
+                      studies={this.props.studies}
+                      sorters={this.props.sorters}
+                      studyAnalysisResults={[studyAnalysisResult]}
+                      studyName={this.props.studyName}
+                      sorterName={this.state.sorterName}
+                      sliderValue={this.state.sliderValue}
+                      format={this.state.format}
+                      metric={this.state.metric}
+                      handleScatterplotClick={this.handleScatterplotClick}
+                    />
+                  </Col>
+                  <Col lg={6} sm={12}>
+                    <div className="card card--heatmap">
+                      <div className="content">
+                        <div className="card__label">
+                          <p>
+                            {this.state.selectedUnit ?
+                              (<strong>Unit Details: {`${this.props.studyName}/${studyAnalysisResult.recordingNames[studyAnalysisResult.trueRecordingIndices[this.state.selectedUnit.unitIndex]]}/${this.state.selectedUnit.sorterName}/${studyAnalysisResult.trueUnitIds[this.state.selectedUnit.unitIndex]}`}</strong>) :
+                              (<strong>Unit Details:</strong>)
+                            }
+                          </p>
+                        </div>
+                        {(() => {
+                          if (this.state.selectedUnit) {
                             return (
                               <div className="card__footer">
                                 <hr />
-                                <p style={divStyle}>
-                                </p>
+                                <UnitDetail
+                                  studies={this.props.studies}
+                                  sorters={this.props.sorters}
+                                  studyAnalysisResult={studyAnalysisResult}
+                                  unitIndex={this.state.selectedUnit.unitIndex}
+                                  sorterName={this.state.selectedUnit.sorterName}
+                                />
                               </div>
-                            );
-                          case "nodata":
+                            )
+                          }
+                          else {
                             return (
                               <div className="card__footer">
                                 <hr />
                                 <p>
-                                  Sorry. Spike spray data for this unit has not
-                                  yet been generated. Please check back for more
-                                  sorting results information in the near
-                                  future.
-                                </p>
+                                  Click a marker in the scatterplot to
+                                  view details of the corresponding unit.
+                              </p>
                               </div>
                             );
-                          case "showspike":
-                            return (
-                              <div className="card__footer">
-                                <hr />
-                                <SpikeSpray
-                                  {...this.props}
-                                  unit={this.state.selectedUnit}
-                                  spikeSprayData={this.props.spikespray}
-                                />
-                              </div>
-                            );
-                          default:
-                            return null;
-                        }*/
-                      })()}
+                          }
+                          /*switch (format) {
+                            case "nounit":
+                              return (
+                                <div className="card__footer">
+                                  <hr />
+                                  <p style={divStyle}>
+                                  </p>
+                                </div>
+                              );
+                            case "nodata":
+                              return (
+                                <div className="card__footer">
+                                  <hr />
+                                  <p>
+                                    Sorry. Spike spray data for this unit has not
+                                    yet been generated. Please check back for more
+                                    sorting results information in the near
+                                    future.
+                                  </p>
+                                </div>
+                              );
+                            case "showspike":
+                              return (
+                                <div className="card__footer">
+                                  <hr />
+                                  <SpikeSpray
+                                    {...this.props}
+                                    unit={this.state.selectedUnit}
+                                    spikeSprayData={this.props.spikespray}
+                                  />
+                                </div>
+                              );
+                            default:
+                              return null;
+                          }*/
+                        })()}
+                      </div>
                     </div>
-                  </div>
-                </Col>
-              </Row>
-            </Container>
-          )}
+                  </Col>
+                </Row>
+                {/* <Row className="container__sorter--row">
+                  <Col lg={12} sm={12}>
+
+                  </Col>
+                </Row> */}
+              </Container>
+            )}
         </div>
       </div>
     );

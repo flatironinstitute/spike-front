@@ -52,28 +52,29 @@ class HeatmapViz extends Component {
   buildVizData(studyAnalysisResults) {
     if ((studyAnalysisResults) && (studyAnalysisResults.length > 0)) {
 
+      // assemble a lookup: study_set_id -> study_set_name which we will need later
+      let studySetNamesById = {};
+      this.props.studysets.forEach(function(x, i) {
+        studySetNamesById[x._id] = x.name;
+      }, this);
+
+      // assemble a lookup: study_name -> study_set_name
+      // and a collection of study set names
+      let studySetByStudy = {}; // lookup study_name -> study_set_name
+      let studySetNames = {}; // collection of study set names (will be sorted list below)
+      this.props.studies.forEach(function(study, i) {
+        let studySetName = studySetNamesById[study.studySet];
+        studySetByStudy[study.name] = studySetName;
+        studySetNames[studySetName] = true;
+      }, this);
+      // make it a sorted list
+      studySetNames = Object.keys(studySetNames);
+      studySetNames.sort();
+      this.studySetByStudy = studySetByStudy;
+
       // Assemble the table rows (list of objects that will be passed to the ExpandingHeatmapTable component)
       let tableRows = [];
       if (this.props.groupByStudySets) {
-        // assemble a lookup: study_set_id -> study_set_name which we will need later
-        let studySetNamesById = {};
-        this.props.studysets.forEach(function(x, i) {
-          studySetNamesById[x._id] = x.name;
-        }, this);
-
-        // assemble a lookup: study_name -> study_set_name
-        // and a collection of study set names
-        let studySetByStudy = {}; // lookup study_name -> study_set_name
-        let studySetNames = {}; // collection of study set names (will be sorted list below)
-        this.props.studies.forEach(function(study, i) {
-          let studySetName = studySetNamesById[study.studySet];
-          studySetByStudy[study.name] = studySetName;
-          studySetNames[studySetName] = true;
-        }, this);
-        // make it a sorted list
-        studySetNames = Object.keys(studySetNames);
-        studySetNames.sort();
-
         studySetNames.forEach(function(studySet, ii) {
           // loop through the study sets
           // prepare a list of the studies in the study set (formatted properly for convenience)
@@ -301,8 +302,12 @@ class HeatmapViz extends Component {
     let ret = []; // the cells to return
     // the first cell is the name of the study
     let link = isStudySet ? null : `/studyresults/${studyAnalysisResult.studyName}`;
+    let name0 = studyAnalysisResult.studyName;
+    if (!this.props.groupByStudySets) {
+      name0 = this.studySetByStudy[studyAnalysisResult.studyName]+' '+studyAnalysisResult.studyName;
+    }
     ret.push({
-      text: studyAnalysisResult.studyName,
+      text: name0,
       link: link,
       expand_id_on_click: expandIdOnClick,
       text_align: "right",
