@@ -3,7 +3,7 @@ const axios = require("axios");
 
 var baseurl;
 if (process.env.NODE_ENV === "production") {
-  baseurl = process.env['API_URL'];
+  baseurl = '';
 } else {
   baseurl = "http://localhost:5000";
 }
