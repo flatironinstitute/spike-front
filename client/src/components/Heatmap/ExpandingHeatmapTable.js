@@ -102,7 +102,7 @@ class ExpandingHeatmapTable extends React.Component {
     }
     // Create the Other Cells
     row.cells.forEach((c, i) => {
-      if ((!isExpanded) || (i==0)) {
+      if ((!isExpanded) || (i === 0)) {
         tds.push(this.createTableCell(c, i));
       }
     });
