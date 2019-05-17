@@ -4,7 +4,7 @@ import Preloader from "../Preloader/Preloader";
 // import { XYPlot, XAxis, LineSeries, LabelSeries } from "react-vis";
 import Plot from 'react-plotly.js';
 import { isEmpty } from "../../utils";
-import { width, height } from "window-size";
+// import { width, height } from "window-size";
 
 class SpikeSpray extends Component {
   constructor(props) {

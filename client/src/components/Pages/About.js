@@ -157,7 +157,8 @@ class About extends Component {
                       </li>
                     </ul>
                     <p>
-                      This project is closely related to <a href={'https://github.com/SpikeInterface/'}>SpikeInterface</a> which is being developed by the following individuals
+                      File format conversions and some computations make use of <a href={'https://github.com/SpikeInterface/'} target={"_blank"}>SpikeInterface</a>. Over time we
+                      will expand our integration with this project. It is under development by the following individuals
                     </p>
                     <ul>
                       <li>Cole Hurwitz - The Institute for Adaptive and Neural Computation (ANC), University of Edinburgh, Edinburgh, Scotland</li>

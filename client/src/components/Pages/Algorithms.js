@@ -154,12 +154,13 @@ class Algorithms extends Component {
                       </div> */}
                       <div className="card__footer">
                         <hr />
+                        <h3>Algorithms overview</h3>
                         <p>
                           {" "}
-                          Generally speaking, spike sorting algorithms take in
+                          Generally speaking, a spike sorting algorithm takes in
                           an unfiltered multi-channel timeseries (aka,
-                          recording) and a list of algorithm parameters and
-                          output a list of firing times and associated integer
+                          recording) and a dictionary of algorithm parameters and
+                          outputs a list of firing times and associated integer
                           unit labels. This page lists the spike sorting codes
                           we run, as well as some that have yet to be
                           incorporated. Most of the codes were developed at
@@ -167,15 +168,26 @@ class Algorithms extends Component {
                         </p>
                         <p>
                           {" "}
-                          SpikeForest uses python wrappers to implement the
+                          SpikeForest uses Python wrappers to implement the
                           algorithms. Links to those may be found in the
-                          "Wrapper" links below. For the non-MATLAB sorters, we
+                          "Wrapper" links above. For the non-MATLAB sorters, we
                           use singularity containers (similar to docker
                           containers) in order to ensure a reproducible compute
                           environment. In those cases, links to the docker files
-                          (environment presciptions) are provided. For the
-                          precise parameters used, see the Analyses page (coming
-                          soon).
+                          (environment presciptions) are provided. We almost always use the default parameters of the wrappers, but some
+                          may be overriden in the <a href={'https://github.com/flatironinstitute/spikeforest/tree/master/working/main_analysis'} target={"_blank"}>analysis configuration files</a>.
+                        </p>
+                        <p>
+                          Wrappers
+                          were created in collaboration with the <a href={'https://github.com/SpikeInterface/'} target={"_blank"}>SpikeInterface</a>{" "}
+                          project. The goal is to ultimately merge these with
+                          the corresponding wrappers in SpikeInterface/SpikeToolkit.
+                        </p>
+                        <h3>How to run the analysis locally</h3>
+                        <p>
+                          We have prepared a <a href={"https://github.com/flatironinstitute/spikeforest/blob/master/docs/tutorials/spike_sorting_spikeforest_recording.md"} target={"_blank"}>full tutorial</a>{" "}
+                          on running these algorithms on your own
+                          computer to reproduce the results.
                         </p>
                       </div>
                     </div>
