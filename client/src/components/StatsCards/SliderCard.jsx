@@ -6,6 +6,15 @@ import "./statscards.css";
 import { toTitleCase } from "../../utils";
 
 export class SliderCard extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      sliderValue: props.sliderValue
+    }
+  }
+
   getSliderCopy() {
     let copy;
     switch (this.props.format) {
@@ -46,7 +55,7 @@ export class SliderCard extends Component {
     let step;
     switch (this.props.format) {
       case "count":
-        step = 0.1;
+        step = 0.05;
         break;
       case "average":
         step = 1;
@@ -69,12 +78,23 @@ export class SliderCard extends Component {
     }
   }
 
+  handleSliderChange = value => {
+    this.setState({sliderValue: value});
+  }
+
+  handleSliderChangeComplete = () => {
+    if (this.props.handleSliderChange)
+      this.props.handleSliderChange(this.state.sliderValue);
+  }
+
   render() {
     let max = this.getSliderMax();
     let step = this.getSliderStep();
     let primaryClass = this.props.bottomMargin
       ? "card card__stats-col"
       : "card card__stats";
+    let sliderVal = Math.round(this.state.sliderValue / step) * step;
+    sliderVal = Math.round(sliderVal * 100) / 100;
     return (
       <div className={primaryClass}>
         <div className="content">
@@ -89,10 +109,12 @@ export class SliderCard extends Component {
               <Slider
                 min={0}
                 max={max}
-                value={this.props.sliderValue}
+                value={sliderVal}
                 step={step}
                 orientation="horizontal"
-                onChange={this.props.handleSliderChange}
+                onChange={this.handleSliderChange}
+                onChangeComplete={this.handleSliderChangeComplete}
+                // onChange={this.props.handleSliderChange}
               />
             </div>
           </div>

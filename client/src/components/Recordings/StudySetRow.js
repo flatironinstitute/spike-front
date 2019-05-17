@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import StudyRow from "./StudyRow";
+import { Link } from "react-router-dom";
 
 class StudySetRow extends Component {
   constructor() {
@@ -20,17 +21,19 @@ class StudySetRow extends Component {
     const headStudyRow = (
       <tr key={"study-header"}>
         <th />
+        <th />
         <th>Study Name</th>
-        <th>Sorters Applied</th>
+        {/* <th>Sorters Applied</th> */}
       </tr>
     );
     studiesRows.unshift(headStudyRow);
     return (
       <React.Fragment>
-        <tr onClick={() => this.setState({ open: !open })} className={rowClass}>
-          <td className="arrow__row">{arrow}</td>
+        {/* <tr onClick={() => this.setState({ open: !open })} className={rowClass}> */}
+        <tr className={rowClass}>
+          <td onClick={() => this.setState({ open: !open })} className="arrow__row">{arrow}</td>
           <td>
-            {this.props.value.name} ({this.props.value.studies.length})
+            <Link to={`/studyset/${this.props.value.name}`}>{this.props.value.name}</Link> ({this.props.value.studies.length})
           </td>
         </tr>
         {open ? studiesRows : null}

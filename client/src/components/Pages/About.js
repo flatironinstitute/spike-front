@@ -113,22 +113,36 @@ class About extends Component {
                   <div className="card__footer">
                     <hr />
                     <p>
-                      SpikeForest is a project of the Flatiron Institute, involving
-                      the Center for Computational Mathematics and the Scientific Computing Core.
+                      SpikeForest is a project of the
+                      {" "}
+                      <a
+                        href="https://flatironinstitute.org"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Flatiron Institute
+                      </a>{" "}
+                      involving
+                      the{" "}
+                      <a
+                        href="https://www.simonsfoundation.org/flatiron/center-for-computational-mathematics/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                      Center for Computational Mathematics (CCM)
+                      </a> and the{" "}
+                      <a
+                        href="https://www.simonsfoundation.org/flatiron/scientific-computing-core/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                      Scientific Computing Core (SCC)
+                      </a>.
                     </p>
                     <ul>
-                      <li>
-                        Jeremy Magland, CCM (chief infrastructure developer,
-                         back-end, recording simulation)
-                      </li>
-                      <li>
-                        Elizabeth Lovero, SCC (site design, web development,
-                        visualizations)
-                      </li>
-                      <li>
-                        James Jun, CCM (infrastructure, testing, recording
-                                   wrangling and simulation)
-                      </li>
+                      <li>Jeremy Magland, CCM (chief infrastructure developer, backend analysis framework)</li>
+                      <li>James Jun, CCM (infrastructure, testing, recording preparation, and algorithm integration)</li>
+                      <li>Elizabeth Lovero, SCC (site design, web development, visualizations)</li>
                       <li>Alex Barnett, CCM (concept, site design, testing)</li>
                     </ul>
                     <p>
@@ -136,7 +150,7 @@ class About extends Component {
                     </p>
                     <ul>
                       <li>
-                        Alex Morley - Research student, Brain Network Dynamics Unit, University of Oxford, UK
+                        Alex Morley - Mozilla Fellow, MRC Brain Network Dynamics Unit, University of Oxford, UK (infrastructure, testing)
                       </li>
                       <li>
                         Witold Wysota - Programmer - Warsaw, Poland
@@ -150,6 +164,7 @@ class About extends Component {
                       <li>Alessio Paolo Buccino - Center for Inegrative Neurolasticity (CINPLA), Department of Biosciences, Physics, and Informatics, University of Oslo, Oslo, Norway</li>
                       <li>Matthias Hennig - The Institute for Adaptive and Neural Computation (ANC), University of Edinburgh, Edinburgh, Scotland</li>
                       <li>Samuel Garcia - Centre de Recherche en Neuroscience de Lyon (CRNL), Lyon, France</li>
+                      <li>Jeremy Magland - Center for Computational Mathematics, Flatiron Institute, New York, NY</li>
                     </ul>
                     <p>
                       We are grateful for many collaborators at other
@@ -176,15 +191,22 @@ class About extends Component {
                         <li> Adam R. Kampff (UCL)</li>
                       </ul>
                       <li> Boyden Lab, MIT</li>
-                      <li> Ed Boyden (MIT)</li>
-                      <li> Brian D. Allen (MIT)</li>
-                      <li> Caroline Moore-Kochlacs (MIT)</li>
+                      <ul>
+                        <li> Ed Boyden (MIT)</li>
+                        <li> Brian D. Allen (MIT)</li>
+                        <li> Caroline Moore-Kochlacs (MIT)</li>
+                      </ul>
                       <li> Institute de la Vision, CNRS</li>
-                    </ul>
-                    <ul>
-                      <li> Pierre Yger (CNRS)</li>
-                      <li> Giulia LB Spampinato (CNRS)</li>
-                      <li> Olivier Marre (CNRS)</li>
+                      <ul>
+                        <li> Pierre Yger (CNRS)</li>
+                        <li> Giulia LB Spampinato (CNRS)</li>
+                        <li> Olivier Marre (CNRS)</li>
+                      </ul>
+                      <li>HHMI - Janelia Research Campus (hybrid drift simulation)</li>
+                      <ul>
+                        <li>Jennifer O'Connor</li>
+                        <li>Marius Pachitariu</li>
+                      </ul>
                     </ul>
                   </div>
                 </div>
@@ -323,7 +345,7 @@ class About extends Component {
                     <p>We have many future plans, and welcome your suggestions. Some of our future plans include:</p>
                     <ol>
                       <li>Parameter settings: more explicit control of parameters for sorting algorithms, with possible optimization.</li>
-                      <li>Hybrid recordings: incorporate a new recording class to complement the current in vivo, ex vivo, and simulated recordings.</li>
+                      <li>Hybrid recordings: incorporate a new recording class to complement the current <i>in vivo</i>, <i>ex vivo</i>, and simulated recordings.</li>
                       <li>
                         Expansion of SNR to other surrogate quality metrics: display noise
                         overlap, isolation, etc, as used in MountainView.

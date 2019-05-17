@@ -28,7 +28,7 @@ class HomeContentContainer extends Component {
         sliderValue = 0.8;
         break;
       case "average":
-        sliderValue = 5;
+        sliderValue = 8;
         break;
       default:
         sliderValue = 0;

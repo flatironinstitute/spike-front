@@ -75,50 +75,61 @@ class HeatmapViz extends Component {
       // Assemble the table rows (list of objects that will be passed to the ExpandingHeatmapTable component)
       let tableRows = [];
       if (this.props.groupByStudySets) {
-        studySetNames.forEach(function(studySet, ii) {
-          // loop through the study sets
-          // prepare a list of the studies in the study set (formatted properly for convenience)
-          let studyAnalysisResultsInStudySet = [];
-          studyAnalysisResults.forEach(function(studyAnalysisResult, jj) {
-            // loop through the studies with results looking for the ones that match the study set
-            let studyName = studyAnalysisResult.studyName;
-            if (studySetByStudy[studyName] === studySet) {
-              /*
-              // important to sort the results by sorter so they all line up
-              studyWithResults0.sort((a, b) => {
-                let textA = a.sorter.toUpperCase();
-                let textB = b.sorter.toUpperCase();
-                return textA < textB ? -1 : textA > textB ? 1 : 0;
-              });
-              */
-              studyAnalysisResultsInStudySet.push(studyAnalysisResult);
-            }
-            return null;
-          }, this);
-          // Here's the table row associated with the study set
-          let tableRow = {
-            id: 'studySet--' + studySet,
-            cells: this.computeTableRowCellsFromStudySet(
-              studyAnalysisResultsInStudySet,
-              studySet
-            ),
-            subrows: []
-          };
-          // loop through the study analysis results in the study set and add a row for each
-          studyAnalysisResultsInStudySet.forEach(function(studyAnalysisResult, kk) {
-            tableRow.subrows.push({
-              cells: this.computeTableRowCellsFromStudyAnalysisResult(studyAnalysisResult, false)
-            });
-            return null;
-          }, this);
-          tableRows.push(tableRow);
 
+        let studySetGroups = ['PAIRED_', 'SYNTH_', 'HYBRID_', 'MANUAL_'];
+
+        studySetGroups.forEach(grp => {
+          studySetNames.forEach(function(studySet, ii) {
+            if (studySet.includes(grp)) {
+              // loop through the study sets
+              // prepare a list of the studies in the study set (formatted properly for convenience)
+              let studyAnalysisResultsInStudySet = [];
+              studyAnalysisResults.forEach(function(studyAnalysisResult, jj) {
+                // loop through the studies with results looking for the ones that match the study set
+                let studyName = studyAnalysisResult.studyName;
+                if (studySetByStudy[studyName] === studySet) {
+                  /*
+                  // important to sort the results by sorter so they all line up
+                  studyWithResults0.sort((a, b) => {
+                    let textA = a.sorter.toUpperCase();
+                    let textB = b.sorter.toUpperCase();
+                    return textA < textB ? -1 : textA > textB ? 1 : 0;
+                  });
+                  */
+                  studyAnalysisResultsInStudySet.push(studyAnalysisResult);
+                }
+                return null;
+              }, this);
+              // Here's the table row associated with the study set
+              let tableRow = {
+                id: 'studySet--' + studySet,
+                cells: this.computeTableRowCellsFromStudySet(
+                  studyAnalysisResultsInStudySet,
+                  studySet
+                ),
+                subrows: []
+              };
+              // loop through the study analysis results in the study set and add a row for each
+              studyAnalysisResultsInStudySet.forEach(function(studyAnalysisResult, kk) {
+                tableRow.subrows.push({
+                  cells: this.computeTableRowCellsFromStudyAnalysisResult(studyAnalysisResult, false)
+                });
+                return null;
+              }, this);
+              tableRows.push(tableRow);
+
+              // // add a spacer row -- which should have the same number of cells and perhaps some formatting associated with the study set
+              // tableRows.push({
+              //   cells: this.computeEmptyTableRowCellsFromStudyAnalysisResult(studyAnalysisResults[0])
+              // });
+              return null;
+            }
+          }, this);
           // add a spacer row -- which should have the same number of cells and perhaps some formatting associated with the study set
           tableRows.push({
-            cells: this.computeEmptyTableRowCellsFromStudyAnalysisResult(studyAnalysisResultsInStudySet[0])
+            cells: this.computeEmptyTableRowCellsFromStudyAnalysisResult(studyAnalysisResults[0])
           });
-          return null;
-        }, this);
+        });
       }
       else {
         this.props.studyAnalysisResults.forEach(function(studyAnalysisResult) {
@@ -169,7 +180,7 @@ class HeatmapViz extends Component {
         copy = `Average ${this.props.metric} above SNR threshold`;
         break;
       case "cpu":
-        copy = "Estimated average compute time";
+        copy = "Estimated average compute time per recording (sec)";
         break;
       default:
         copy = "";
@@ -301,7 +312,7 @@ class HeatmapViz extends Component {
     let threshold = this.props.threshold;
     let ret = []; // the cells to return
     // the first cell is the name of the study
-    let link = isStudySet ? null : `/studyresults/${studyAnalysisResult.studyName}`;
+    let link = isStudySet ? `/studyset/${studyAnalysisResult.studyName}` : `/studyresults/${studyAnalysisResult.studyName}`;
     let name0 = studyAnalysisResult.studyName;
     if (!this.props.groupByStudySets) {
       name0 = this.studySetByStudy[studyAnalysisResult.studyName]+' '+studyAnalysisResult.studyName;
@@ -314,7 +325,7 @@ class HeatmapViz extends Component {
       selectable: false
     });
     let rowNormalize; // whether to normalize the rows
-    switch (metric) {
+    switch (format) {
       case "count":
         rowNormalize = true;
         break;
@@ -551,7 +562,7 @@ class HeatmapViz extends Component {
                   {
                     this.props.format === 'cpu' ?
                     (
-                      <span>These numbers reflect actual compute times on our cluster and are not meant to be a rigorous benchmark. The algorithms were applied in batches, with many different algorithms possibly running
+                      <span><b>Important!</b> These numbers reflect actual compute times on our cluster and are not meant to be a rigorous benchmark. The algorithms were applied in batches, with many different algorithms possibly running
                         simultaneously on the same machine. Some runs may have been allocated more CPU cores than others. We are working toward a more accurate compute time test.
                       </span>
                     ) :

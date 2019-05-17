@@ -15,6 +15,8 @@ class RecordingRow extends Component {
       <React.Fragment>
         <tr className="row__expanded-header-recordings">
           <td />
+          <td></td>
+          <td></td>
           <td>{recording.name}</td>
           <td>{recording.description}</td>
           <td>{recording.numChannels}</td>

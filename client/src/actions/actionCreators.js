@@ -3,7 +3,7 @@ const axios = require("axios");
 
 var baseurl;
 if (process.env.NODE_ENV === "production") {
-  baseurl = "https://spikeforestfront.herokuapp.com";
+  baseurl = '';
 } else {
   baseurl = "http://localhost:5000";
 }

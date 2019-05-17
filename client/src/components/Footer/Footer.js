@@ -8,7 +8,7 @@ class Footer extends Component {
   render() {
     return (
       <footer className="footer">
-        <p className="updated">Updated on May 16, 2019 (morning)</p>
+        <p className="updated">Updated on May 16, 2019 (7pm)</p>
         <div className="outro">
           <p className="footer__description">
             SpikeForest is a website and open source computing framework for
@@ -77,7 +77,7 @@ class Footer extends Component {
             </a>
           </div>
         </div>
-        <p className="footer__location xx-small tk-atlas">
+        {/* <p className="footer__location xx-small tk-atlas">
           SpikeForest is made with
           <span
             role="img"
@@ -94,7 +94,7 @@ class Footer extends Component {
           >
             🗽
           </span>
-        </p>
+        </p> */}
       </footer>
     );
   }

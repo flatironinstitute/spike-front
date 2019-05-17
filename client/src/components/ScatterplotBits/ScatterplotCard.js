@@ -92,8 +92,7 @@ class ScatterplotCard extends Component {
               <div className="card__header">
                 <div className="card__category--div">
                   <span className="card__title--link">
-                    Study:
-                    <Link to={`/studyresults/${study}`}>{study}</Link>
+                  <Link to={`/studyset/${this.state.study.studySetName}`}>{this.state.study.studySetName}</Link>/<Link to={`/studyresults/${study}`}>{study}</Link>
                   </span>
                   <span className="card__title--link">
                     Sorter:
