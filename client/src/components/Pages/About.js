@@ -150,7 +150,8 @@ class About extends Component {
                       <li>Jeremy Magland, CCM (chief infrastructure developer, backend analysis framework)</li>
                       <li>James Jun, CCM (infrastructure, testing, recording preparation, and algorithm integration)</li>
                       <li>Elizabeth Lovero, SCC (site design, web development, visualizations)</li>
-                      <li>Alex Barnett, CCM (concept, site design, testing)</li>
+                      <li>Leslie Greengard, CCM (concept, planning)</li>
+                      <li>Alex Barnett, CCM (concept, planning, site design, testing)</li>
                     </ul>
                     <p>
                       Other key contributors to the project include
@@ -160,7 +161,7 @@ class About extends Component {
                         Alex Morley - Mozilla Fellow, MRC Brain Network Dynamics Unit, University of Oxford, UK (infrastructure, testing)
                       </li>
                       <li>
-                        Witold Wysota - Programmer - Warsaw, Poland
+                        Witold Wysota - Warsaw, Poland (MountainTools infrastructure, testing)
                       </li>
                     </ul>
                     <p>
