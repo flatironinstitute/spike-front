@@ -186,8 +186,11 @@ class Algorithms extends Component {
                         <h3>How to run the analysis locally</h3>
                         <p>
                           We have prepared a <a href={"https://github.com/flatironinstitute/spikeforest/blob/master/docs/tutorials/spike_sorting_spikeforest_recording.md"} target={"_blank"}>full tutorial</a>{" "}
-                          on running these algorithms on your own
+                          illustrating how to run these algorithms on your own
                           computer to reproduce the results.
+                        </p>
+                        <p>
+                          Or to run these algorithms on your own data, see <a href={"https://github.com/flatironinstitute/spikeforest/blob/master/docs/tutorials/spike_sorting_single_recording.md"} target={"_blank"}>this tutorial</a>.
                         </p>
                       </div>
                     </div>
