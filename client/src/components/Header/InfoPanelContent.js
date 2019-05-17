@@ -21,7 +21,7 @@ class InfoPanel extends Component {
         <p>
           Aiming to address this need, SpikeForest is a reproducible, continuously updating platform which benchmarks the performance of spike sorting
           codes across a large curated database of electrophysiological recordings with ground truth. It consists of this website
-          for presenting our up-to-date findings, a <a href={'https://github.com/flatironinstitute/spikeforest'}>python package</a> which contains the tools for running the
+          for presenting our up-to-date findings, a <a href={'https://github.com/flatironinstitute/spikeforest'}>Python package</a> which contains the tools for running the
           SpikeForest analysis, and an expanding collection of electrophysiology recordings with ground-truth spiking information.
         </p>
         <p>

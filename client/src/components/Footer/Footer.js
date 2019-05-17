@@ -8,7 +8,7 @@ class Footer extends Component {
   render() {
     return (
       <footer className="footer">
-        <p className="updated">Updated on May 16, 2019 (7pm)</p>
+        <p className="updated">Updated on May 17, 2019 (9:30am)</p>
         <div className="outro">
           <p className="footer__description">
             SpikeForest is a website and open source computing framework for
@@ -62,7 +62,7 @@ class Footer extends Component {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://github.com/elovero/spike-front"
+              href="https://github.com/flatironinstitute/spike-front"
               className="github-logo"
             >
               <img alt="spikeforest logo" src={github} height="24" />
