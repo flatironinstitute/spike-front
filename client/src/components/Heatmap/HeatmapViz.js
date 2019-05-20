@@ -522,7 +522,6 @@ class HeatmapViz extends Component {
 
   handleCellSelected(cell) {
     if (cell.selectable) {
-      console.log('---', cell);
       if (this.props.selectStudyName)
         this.props.selectStudyName(cell.info.studyName);
       if (this.props.selectSorterName)
