@@ -30,7 +30,7 @@ class StatsAlert extends Component {
               <div className="ticker__item">
                 {groundTruth.toLocaleString()} ground truth units
               </div>
-              <div className="ticker__item">1.2TB of recordings</div>
+              <div className="ticker__item">1.2 TB of recordings</div>
             </div>
           </div>
         </Alert>

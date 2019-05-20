@@ -43,7 +43,7 @@ class About extends Component {
                     <p>
                       Aiming to address this need, SpikeForest is a reproducible, continuously updating platform which benchmarks the performance of spike sorting
                       codes across a large curated database of electrophysiological recordings with ground truth. It consists of this website
-                      for presenting our up-to-date findings, a <a href={'https://github.com/flatironinstitute/spikeforest'}>python package</a> which contains the tools for running the
+                      for presenting our up-to-date findings, a <a href={'https://github.com/flatironinstitute/spikeforest'}>Python package</a> which contains the tools for running the
                       SpikeForest analysis, and an expanding collection of electrophysiology recordings with ground-truth spiking information.
                     </p>
                     <p>
@@ -77,7 +77,7 @@ class About extends Component {
                   </div>
                   <div className="card__footer">
                     <hr />
-                    There are at least three ways to provide feedback, report problems, or contact us with questions:
+                    There are at least four ways to provide feedback, report problems, or contact us with questions:
                       <ul>
                       <li> You may email us using the{" "}
                         <Link exact="true" to="/contact">
@@ -86,7 +86,7 @@ class About extends Component {
                        </li>
                       <li> For website problems, please use the{" "}
                         <a
-                          href="https://github.com/elovero/spike-front/issues"
+                          href="https://github.com/flatironinstitute/spike-front/issues"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -94,6 +94,13 @@ class About extends Component {
                         </a>{" "}
                         page for the front end.
                        </li>
+                       <li> Or you can submit issues to the
+                       <a
+                          href="https://github.com/flatironinstitute/spikeforest/issues"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                        SpikeForest analysis repository</a>.</li>
                       <li> If you prefer a more graphical/interactive way to label problems or questions on a particular page, click on UserSnap in the bottom-right corner of any page.</li>
                     </ul>
                   </div>
@@ -143,7 +150,8 @@ class About extends Component {
                       <li>Jeremy Magland, CCM (chief infrastructure developer, backend analysis framework)</li>
                       <li>James Jun, CCM (infrastructure, testing, recording preparation, and algorithm integration)</li>
                       <li>Elizabeth Lovero, SCC (site design, web development, visualizations)</li>
-                      <li>Alex Barnett, CCM (concept, site design, testing)</li>
+                      <li>Leslie Greengard, CCM (concept, planning)</li>
+                      <li>Alex Barnett, CCM (concept, planning, site design, testing)</li>
                     </ul>
                     <p>
                       Other key contributors to the project include
@@ -153,11 +161,12 @@ class About extends Component {
                         Alex Morley - Mozilla Fellow, MRC Brain Network Dynamics Unit, University of Oxford, UK (infrastructure, testing)
                       </li>
                       <li>
-                        Witold Wysota - Programmer - Warsaw, Poland
+                        Witold Wysota - Warsaw, Poland (MountainTools infrastructure, testing)
                       </li>
                     </ul>
                     <p>
-                      This project is closely related to <a href={'https://github.com/SpikeInterface/'}>SpikeInterface</a> which is being developed by the following individuals
+                      File format conversions and some computations make use of <a href={'https://github.com/SpikeInterface/'} target={"_blank"}>SpikeInterface</a>. Over time we
+                      will expand our integration with this project. It is under development by the following individuals
                     </p>
                     <ul>
                       <li>Cole Hurwitz - The Institute for Adaptive and Neural Computation (ANC), University of Edinburgh, Edinburgh, Scotland</li>
@@ -344,6 +353,7 @@ class About extends Component {
                     <hr />
                     <p>We have many future plans, and welcome your suggestions. Some of our future plans include:</p>
                     <ol>
+                      <li>Expanding the set of test recordings</li>
                       <li>Parameter settings: more explicit control of parameters for sorting algorithms, with possible optimization.</li>
                       <li>Hybrid recordings: incorporate a new recording class to complement the current <i>in vivo</i>, <i>ex vivo</i>, and simulated recordings.</li>
                       <li>
@@ -352,24 +362,8 @@ class About extends Component {
                       </li>
                       <li>Stability-based quality metrics: run sorters multiple times to measure stability, as in our work "Validation of neural spike sorting algorithms without ground-truth information," A. H. Barnett, J. F. Magland, and L. Greengard, J. Neurosci. Meth., 264, 65--77 (2016).
                       </li>
+                      <li>Further integration with SpikeInterface.</li>
                     </ol>
-                  </div>
-                </div>
-              </div>
-            </Col>
-          </Row>
-          <Row className="container__sorter--row justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
-                <div className="content">
-                  <div className="card__label">
-                    <p>
-                      <strong>Changelog for website</strong>
-                    </p>
-                  </div>
-                  <div className="card__footer">
-                    <hr />
-                    <p style={divStyle}>[June 2019 : release v 1.0]</p>
                   </div>
                 </div>
               </div>

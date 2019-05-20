@@ -392,8 +392,18 @@ class HeatmapViz extends Component {
           }
           let aboveAvg = 0;
           if (valsToUse.length) {
-            let sum = valsToUse.reduce((a, b) => a + b);
-            aboveAvg = sum / valsToUse.length;
+            let sum = 0;
+            let count = 0;
+            for (let i=0; i<valsToUse.length; i++) {
+              if (this.isNumeric(valsToUse[i])) {
+                sum += valsToUse[i];
+                count++;
+              }
+            }
+            if (count === 0) {
+              return {value: undefined, num_missing:num_missing};  
+            }
+            aboveAvg = sum / count;
           }
 
           // This just prints the output to 2 digits
@@ -404,10 +414,20 @@ class HeatmapViz extends Component {
         }
       } else if (format === "cpu") {
         if (metricVals && metricVals.length > 0) {
-          let sum = metricVals.reduce((a, b) => a + b);
-          let avg = sum / metricVals.length;
+          let sum = 0;
+          let count = 0;
+          for (let i=0; i<metricVals.length; i++) {
+            if (this.isNumeric(metricVals[i])) {
+              sum += metricVals[i];
+              count++;
+            }
+          }
+          if (count === 0) {
+            return {value: undefined, num_missing:num_missing};  
+          }
+          let avg = sum / count;
           let avgRounded = Math.round(avg);
-          return {value: avgRounded, num_missing:num_missing};
+          return {value: avgRounded, num_missing:num_missing, vals: metricVals};
         } else {
           return {value: undefined, num_missing:num_missing};
         }
@@ -426,7 +446,7 @@ class HeatmapViz extends Component {
         maxMetricVal = x.value;
     })
 
-    // For each result, we can now determin the color and text
+    // For each result, we can now determine the color and text
     studyAnalysisResult.sortingResults.forEach(function(sortingResult, i) {
       let val0 = cellvalList[i].value;
       let text, color, bgcolor;
@@ -456,6 +476,7 @@ class HeatmapViz extends Component {
         color: color,
         bgcolor: bgcolor,
         text: text,
+        vals: cellvalList[i].vals,
         border_left: true,
         border_right: true,
         text_align: "center",
