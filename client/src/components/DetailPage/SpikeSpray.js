@@ -268,8 +268,8 @@ class SpikeSpray extends Component {
                       }
                     )}
                   />
-                  <div className="card__label">
-                    <span style={{ fontSize: '14px', textAlign: 'center' }}>{column.num_spikes} of {colTotals[column.name]} spikes shown</span>
+                  <div className="card__label" style={{ fontSize: '14px', textAlign: 'center' }}>
+                    <span>{column.num_spikes} of {colTotals[column.name]} spikes shown</span>
                   </div>
                   {/* <XYPlot
                       width={350}
