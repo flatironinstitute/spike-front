@@ -39,7 +39,7 @@ class StudyRow extends Component {
           <td />
           <td onClick={() => this.setState({ open: !open })} className="arrow__row">{arrow}</td>
           <td>
-            <Link to={`/studyresults/${study.name}`}>{study.name}</Link> ({study.recordings.length})
+            <Link to={`/study/${study.name}`}>{study.name}</Link> ({study.recordings.length})
           </td>
         </tr>
         {open ? recordingsRows : null}

@@ -28,9 +28,9 @@ class ExpandableRecordingsTable extends Component {
   }
 
   formatTableData() {
-    let formattedData = this.addRecordingsToStudies(this.props.recordings);
+    this.addRecordingsToStudies(this.props.recordings);
     let grouped = this.groupByStudySet(
-      formattedData,
+      this.props.studies,
       formatted => formatted.studySetName
     );
     this.setState({ tableData: grouped });
@@ -38,14 +38,17 @@ class ExpandableRecordingsTable extends Component {
 
   addRecordingsToStudies(recordings) {
     // Iterate and match with study details
-    let studiesWith = [];
-    recordings.forEach(recording => {
+    for (let stu in this.props.studies) {
+      stu.recordings = [];
+    }
+    for (let rec of recordings) {
       let [studyMatch] = this.props.studies.filter(
-        study => study.name === recording._id
+        study => study.name === rec.studyName
       );
-      studiesWith.push({ ...studyMatch, recordings: recording.recordings });
-    });
-    return studiesWith;
+      if (studyMatch) {
+        studyMatch.recordings.push(rec);
+      }
+    }
   }
 
   groupByStudySet(list, keyGetter) {

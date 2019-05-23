@@ -312,7 +312,7 @@ class HeatmapViz extends Component {
     let threshold = this.props.threshold;
     let ret = []; // the cells to return
     // the first cell is the name of the study
-    let link = isStudySet ? `/studyset/${studyAnalysisResult.studyName}` : `/studyresults/${studyAnalysisResult.studyName}`;
+    let link = isStudySet ? `/studyset/${studyAnalysisResult.studyName}` : `/study/${studyAnalysisResult.studyName}`;
     let name0 = studyAnalysisResult.studyName;
     if (!this.props.groupByStudySets) {
       name0 = this.studySetByStudy[studyAnalysisResult.studyName]+' '+studyAnalysisResult.studyName;

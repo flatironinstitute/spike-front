@@ -21,6 +21,7 @@ import Metrics from "../components/Pages/Metrics";
 import Contact from "../components/Contact/Contact";
 import DetailPage from "../components/DetailPage/DetailPage";
 import StudySet from "../components/Pages/StudySet";
+import Study from "../components/Pages/Study";
 import FourOhFour from "../components/Pages/FourOhFour";
 
 class Routes extends Component {
@@ -100,11 +101,25 @@ class Routes extends Component {
           <Route
             path="/studyset/:studySetName"
             render={props => 
-              (!this.props.studysets) ? (loadingContainer) :
+              ((!this.props.studysets)||(!this.props.studies)) ? (loadingContainer) :
               (
                 <StudySet
                   studysets={this.props.studysets}
+                  studies={this.props.studies}
                   studySetName={props.match.params.studySetName}
+                />
+              )
+            }
+          />
+          <Route
+            path="/study/:studyName"
+            render={props => 
+              ((!this.props.studies) || (!this.props.recordings)) ? (loadingContainer) :
+              (
+                <Study
+                  studies={this.props.studies}
+                  recordings={this.props.recordings}
+                  studyName={props.match.params.studyName}
                 />
               )
             }

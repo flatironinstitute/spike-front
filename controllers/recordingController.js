@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const Recording = mongoose.model("Recording"); //Singleton from mongoose
 
 exports.getRecordings = async (req, res) => {
-  // const recordingsPromise = Recording.find();
-  const recordingsPromise = Recording.getRecordingsByStudy();
+  const recordingsPromise = Recording.find();
+  // const recordingsPromise = Recording.getRecordingsByStudy();
   const [recordings] = await Promise.all([recordingsPromise]);
   res.send(recordings);
 };

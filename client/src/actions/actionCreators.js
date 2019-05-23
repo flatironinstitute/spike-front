@@ -245,6 +245,7 @@ export const fetchRecordings = () => {
     dispatch(startLoading());
     return createFetchAPI(url)
       .then(recordings => {
+        console.log('--- abc123', recordings);
         dispatch(receiveRecordings(recordings));
       })
       .then(() => {
