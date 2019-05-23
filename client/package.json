@@ -19,6 +19,7 @@
     "formik": "^1.5.1",
     "history": "^4.7.2",
     "jquery": "^3.3.1",
+    "json-stable-stringify": "^1.0.1",
     "jsonfile": "^5.0.0",
     "modern-normalize": "^0.5.0",
     "normalize.css": "^8.0.0",

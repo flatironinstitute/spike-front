@@ -10,8 +10,10 @@ const studySetController = require("./controllers/studySetController");
 const trueUnitController = require("./controllers/trueUnitController");
 const unitResultsController = require("./controllers/unitResultsController");
 const studyAnalysisResultController = require("./controllers/studyAnalysisResultController");
-const unitDetailController = require("./controllers/unitDetailController");
+// const unitDetailController = require("./controllers/unitDetailController");
 const mailer = require("./email/mailer.js");
+
+const MountainClient = require('./mountainclient-js').MountainClient;
 
 /* V2 Data: New Routes
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -37,7 +39,26 @@ router.get("/api/stats", sortingResultController.getStats);
 // True Units
 router.get("/api/trueunits", trueUnitController.getTrueUnits);
 // Unit Results
-router.get("/api/unitresults", unitResultsController.getUnitResults);
+router.get("/api/unitresults", async (req, res) => {
+  const unitResultsPromise = UnitResult.find();
+  const [unitResults] = await Promise.all([unitResultsPromise]);
+  res.send({ unitResults: unitResults });
+});
+// Load object
+router.get("/api/loadObject", async (req, res) => {
+  let path = decodeURIComponent(req.query.path)
+
+  let mt = new MountainClient();
+  mt.configDownloadFrom('spikeforest.public');
+  
+  let obj = await mt.loadObject(path);
+  if (obj) {
+    res.send({success:true, object: obj});
+  }
+  else {
+    res.send({success:false});
+  }
+});
 router.get(
   "/api/ursbystudy/:name",
   unitResultsController.getUnitResultsByStudy
@@ -45,7 +66,7 @@ router.get(
 // Study analysis results
 router.get("/api/studyanalysisresults", studyAnalysisResultController.getStudyAnalysisResults);
 // Unit details
-router.get("/api/unitdetail/:studyName/:recordingName/:sorterName/:trueUnitId", unitDetailController.getUnitDetail);
+// router.get("/api/unitdetail/:studyName/:recordingName/:sorterName/:trueUnitId", unitDetailController.getUnitDetail);
 // Contact Routes
 router.post("/api/contact", async (req, res) => {
   try {

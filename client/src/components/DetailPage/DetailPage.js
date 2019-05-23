@@ -34,7 +34,6 @@ class DetailPage extends Component {
   }
 
   componentDidMount() {
-    console.log('MOUNT: DetailPage');
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -230,6 +229,7 @@ class DetailPage extends Component {
                                 <UnitDetail
                                   studies={this.props.studies}
                                   sorters={this.props.sorters}
+                                  sortingResults={this.props.sortingResults}
                                   studyAnalysisResult={studyAnalysisResult}
                                   unitIndex={this.state.selectedUnit.unitIndex}
                                   sorterName={this.state.selectedUnit.sorterName}

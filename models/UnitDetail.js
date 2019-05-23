@@ -19,13 +19,6 @@ const unitDetailSchema = new mongoose.Schema(
     },  
     sortedUnitId: {
       type: Number,
-    },  
-    spikeSprayUrl: {
-      type: String
-    },
-    spikeSprayData: {
-      type: String,
-      required: false
     }
   },
   {

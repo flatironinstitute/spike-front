@@ -21,6 +21,10 @@ const recordingSchema = new mongoose.Schema({
     type: String,
     required: "You must provide a directory name"
   },
+  firingsTrue: {
+    type: String,
+    required: "sha1:// of the true firings file"
+  },
   description: {
     type: String,
     required: "You must provide a description name"

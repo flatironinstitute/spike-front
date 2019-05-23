@@ -31,6 +31,7 @@ class Routes extends Component {
     this.props.fetchCPUs();
     this.props.fetchStudies();
     //this.props.fetchGroupedURs();
+    this.props.fetchSortingResults();
     this.props.fetchSorters();
     this.props.fetchAlgorithms();
     this.props.fetchStats();
@@ -99,6 +100,8 @@ class Routes extends Component {
                   sorterName={this.props.selectedSorterName}
                   studyAnalysisResults={this.props.studyAnalysisResults}
                   studies={this.props.studies}
+                  recordings={this.props.recordings}
+                  sortingResults={this.props.sortingResults}
                   sorters={this.props.sorters}
                   studysets={this.props.studysets}
                 />
@@ -134,6 +137,7 @@ function mapStateToProps(state) {
     // groupedURs: state.groupedURs,
     loading: state.loading,
     recordings: state.recordings,
+    sortingResults: state.sortingResults,
     sorters: state.sorters,
     // spikespray: state.spikespray,
     stats: state.stats,
