@@ -13,7 +13,6 @@
     "heroku-postbuild": "cd client && yarn && yarn run build"
   },
   "dependencies": {
-    "@magland/kbucket": "^0.12.5",
     "@sentry/browser": "^4.4.2",
     "@sentry/node": "4.5.3",
     "axios": "^0.18.0",

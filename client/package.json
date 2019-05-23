@@ -8,7 +8,6 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.15",
     "@fortawesome/free-solid-svg-icons": "^5.7.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
-    "@magland/kbucket": "^0.12.5",
     "@sentry/browser": "^4.4.2",
     "@sentry/node": "^4.4.2",
     "axios": "^0.18.0",

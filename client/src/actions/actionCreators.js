@@ -85,18 +85,18 @@ export const createFetchPost = async (url, options) => {
   }
 };
 
-export const createFetchKBucket = async url => {
-  try {
-    const response = await axios.get(url);
-    if (response.status !== 200) {
-      Sentry.captureException(response.message);
-    } else {
-      return response.data;
-    }
-  } catch (error) {
-    Sentry.captureException(error);
-  }
-};
+// export const createFetchKBucket = async url => {
+//   try {
+//     const response = await axios.get(url);
+//     if (response.status !== 200) {
+//       Sentry.captureException(response.message);
+//     } else {
+//       return response.data;
+//     }
+//   } catch (error) {
+//     Sentry.captureException(error);
+//   }
+// };
 
 // Contacts
 export function sendContactSuccess() {
