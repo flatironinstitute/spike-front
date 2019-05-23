@@ -13,7 +13,8 @@ if (process.env.NODE_ENV === "production") {
 export const RECEIVE_CPUS = "RECEIVE_CPUS";
 export const RECEIVE_GROUPED_URS = "RECEIVE_GROUPED_URS";
 export const RECEIVE_RECORDINGS = "RECEIVE_RECORDINGS";
-export const RECEIVE_SPIKESPRAY = "RECEIVE_SPIKESPRAY";
+export const RECEIVE_SORTING_RESULTS = "RECEIVE_SORTING_RESULTS";
+// export const RECEIVE_SPIKESPRAY = "RECEIVE_SPIKESPRAY";
 export const RECEIVE_SORTERS = "RECEIVE_SORTERS";
 export const RECEIVE_ALGORITHMS = "RECEIVE_ALGORITHMS";
 export const RECEIVE_UNIT_RESULTS = "RECEIVE_UNIT_RESULTS";
@@ -84,18 +85,18 @@ export const createFetchPost = async (url, options) => {
   }
 };
 
-export const createFetchKBucket = async url => {
-  try {
-    const response = await axios.get(url);
-    if (response.status !== 200) {
-      Sentry.captureException(response.message);
-    } else {
-      return response.data;
-    }
-  } catch (error) {
-    Sentry.captureException(error);
-  }
-};
+// export const createFetchKBucket = async url => {
+//   try {
+//     const response = await axios.get(url);
+//     if (response.status !== 200) {
+//       Sentry.captureException(response.message);
+//     } else {
+//       return response.data;
+//     }
+//   } catch (error) {
+//     Sentry.captureException(error);
+//   }
+// };
 
 // Contacts
 export function sendContactSuccess() {
@@ -359,6 +360,28 @@ export const fetchRecordings = () => {
   };
 };
 
+// Sorting results
+export const receiveSortingResults = sortingResults => {
+  return {
+    type: RECEIVE_SORTING_RESULTS,
+    sortingResults: sortingResults
+  };
+};
+
+export const fetchSortingResults = () => {
+  let url = `/api/sortingresults`;
+  return function (dispatch) {
+    dispatch(startLoading());
+    return createFetchAPI(url)
+      .then(sortingResults => {
+        dispatch(receiveSortingResults(sortingResults));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      });
+  };
+};
+
 // Study analysis results
 export const receiveStudyAnalysisResults = studyAnalysisResults => {
   return {
@@ -390,20 +413,20 @@ export const receiveUnitDetail = unitDetail => {
   };
 };
 
-export const fetchUnitDetail = (studyName, recordingName, sorterName, trueUnitId) => {
-  let url = `/api/unitdetail/${studyName}/${recordingName}/${sorterName}/${trueUnitId}`;
-  return function (dispatch) {
-    dispatch(startLoading());
-    return createFetchAPI(url)
-      .then(res => {
-        dispatch(receiveUnitDetail(res.unitDetail));
-      })
-      .then(() => {
-        dispatch(endLoading());
-      })
-      .catch(err => Sentry.captureException(err));
-  };
-};
+// export const fetchUnitDetail = (studyName, recordingName, sorterName, trueUnitId) => {
+//   let url = `/api/unitdetail/${studyName}/${recordingName}/${sorterName}/${trueUnitId}`;
+//   return function (dispatch) {
+//     dispatch(startLoading());
+//     return createFetchAPI(url)
+//       .then(res => {
+//         dispatch(receiveUnitDetail(res.unitDetail));
+//       })
+//       .then(() => {
+//         dispatch(endLoading());
+//       })
+//       .catch(err => Sentry.captureException(err));
+//   };
+// };
 
 // Selected Study for Scatterplot
 export const selectStudySortingResult = studySortingResult => ({
@@ -421,26 +444,26 @@ export const selectSorterName = sorterName => ({
   sorterName
 });
 
-// SpikeSpray
-export const receiveSpikeSpray = spikespray => {
-  return {
-    type: RECEIVE_SPIKESPRAY,
-    spikespray
-  };
-};
+// // SpikeSpray
+// export const receiveSpikeSpray = spikespray => {
+//   return {
+//     type: RECEIVE_SPIKESPRAY,
+//     spikespray
+//   };
+// };
 
-export const fetchSpikeSpray = url => {
-  // TODO: Remove when other spikes are live and use passed in URL
-  const defaultUrl =
-    "http://kbucket.flatironinstitute.org/get/sha1/0aa39927530abed94f32c410f3a2226e2ee71c5e?signature=c516794c53257b327f39b8349cc39313f1a254e9";
-  return function (dispatch) {
-    dispatch(startLoading());
-    return createFetchKBucket(defaultUrl)
-      .then(spikespray => {
-        dispatch(receiveSpikeSpray(spikespray));
-      })
-      .then(() => {
-        dispatch(endLoading());
-      });
-  };
-};
+// export const fetchSpikeSpray = url => {
+//   // TODO: Remove when other spikes are live and use passed in URL
+//   const defaultUrl =
+//     "http://kbucket.flatironinstitute.org/get/sha1/0aa39927530abed94f32c410f3a2226e2ee71c5e?signature=c516794c53257b327f39b8349cc39313f1a254e9";
+//   return function (dispatch) {
+//     dispatch(startLoading());
+//     return createFetchKBucket(defaultUrl)
+//       .then(spikespray => {
+//         dispatch(receiveSpikeSpray(spikespray));
+//       })
+//       .then(() => {
+//         dispatch(endLoading());
+//       });
+//   };
+// };

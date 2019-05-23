@@ -5,7 +5,7 @@ const TrueUnit = mongoose.model("TrueUnit");
 exports.getSortingResults = async (req, res) => {
   const sortingResultsPromise = SortingResult.find();
   const [sortingResults] = await Promise.all([sortingResultsPromise]);
-  res.send({ sortingResults: sortingResults });
+  res.send(sortingResults);
 };
 
 exports.getSortingResultById = async (req, res, next) => {

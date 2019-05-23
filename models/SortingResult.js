@@ -20,6 +20,17 @@ const sortingResultSchema = new mongoose.Schema({
   studyName: {
     type: String
   },
+  firings: {
+    type: String,
+    required: "sha1:// of the firings file"
+  },
+  firingsTrue: {
+    type: String,
+    required: "sha1:// of the firings true file"
+  },
+  recordingDirectory: {
+    type: String
+  },
   study: {
     type: mongoose.Schema.ObjectId,
     ref: "Study"

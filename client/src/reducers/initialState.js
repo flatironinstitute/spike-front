@@ -5,16 +5,17 @@ export const initialState = {
   // groupedURs: null,
   loading: null,
   recordings: null,
+  sortingResults: null,
   selectedStudySortingResult: null,
   selectedStudyName: null,
   selectedSorterName: null,
   sorters: null,
-  spikespray: null,
+  // spikespray: null,
   stats: null,
   studies: null,
   studysets: null,
   unitResults: null,
   ursByStudy: null,
-  studyAnalysisResults: null,
-  unitDetail: null
+  studyAnalysisResults: null
+  // unitDetail: null
 };
