@@ -11,19 +11,14 @@ if (process.env.NODE_ENV === "production") {
 /* V2 Data Actions
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 export const RECEIVE_CPUS = "RECEIVE_CPUS";
-export const RECEIVE_GROUPED_URS = "RECEIVE_GROUPED_URS";
 export const RECEIVE_RECORDINGS = "RECEIVE_RECORDINGS";
 export const RECEIVE_SORTING_RESULTS = "RECEIVE_SORTING_RESULTS";
-// export const RECEIVE_SPIKESPRAY = "RECEIVE_SPIKESPRAY";
 export const RECEIVE_SORTERS = "RECEIVE_SORTERS";
 export const RECEIVE_ALGORITHMS = "RECEIVE_ALGORITHMS";
-export const RECEIVE_UNIT_RESULTS = "RECEIVE_UNIT_RESULTS";
 export const RECEIVE_STATS = "RECEIVE_STATS";
 export const RECEIVE_STUDY_SETS = "RECEIVE_STUDY_SETS";
 export const RECEIVE_STUDIES = "RECEIVE_STUDIES";
-export const RECEIVE_URS_BY_STUDY = "RECEIVE_URS_BY_STUDY";
 export const RECEIVE_STUDY_ANALYSIS_RESULTS = "RECEIVE_STUDY_ANALYSIS_RESULTS";
-export const RECEIVE_UNIT_DETAIL = "RECEIVE_UNIT_DETAIL";
 
 export const SELECT_STUDY_SORTING_RESULT = "SELECT_STUDY_SORTING_RESULT";
 export const SELECT_SORTER_NAME = "SELECT_SORTER_NAME";
@@ -52,27 +47,6 @@ export const createFetchAPI = async url => {
   }
 };
 
-// export const createFetchUnitDetailApi = async url => {
-//   const newUrl = baseurl + url;
-//   try {
-//     const response = await axios.get(newUrl);
-//     const returned = await response.data;
-//     if (response.status !== 200) Sentry.captureException(returned.message);
-//     if (returned.unitDetail.spikeSprayUrl) {
-//       let response2 = await axios.get(returned.unitDetail.spikeSprayUrl)
-//       const returned2 = await response2.data;
-//       if (response.status !== 200) Sentry.captureException(returned2.message);
-//       returned.unitDetail.spikeSprayData = returned2.data;
-//       return returned;
-//     }
-//     else {
-//       return returned;
-//     }
-//   } catch (error) {
-//     Sentry.captureException(error);
-//   }
-// };
-
 export const createFetchPost = async (url, options) => {
   try {
     const newUrl = baseurl + url;
@@ -84,19 +58,6 @@ export const createFetchPost = async (url, options) => {
     Sentry.captureException(error);
   }
 };
-
-// export const createFetchKBucket = async url => {
-//   try {
-//     const response = await axios.get(url);
-//     if (response.status !== 200) {
-//       Sentry.captureException(response.message);
-//     } else {
-//       return response.data;
-//     }
-//   } catch (error) {
-//     Sentry.captureException(error);
-//   }
-// };
 
 // Contacts
 export function sendContactSuccess() {
@@ -166,74 +127,6 @@ export const fetchCPUs = () => {
         dispatch(endLoading());
       })
       .catch(err => Sentry.captureException(err));
-  };
-};
-
-// Grouped Unit Results
-export const receiveGroupedURs = groupedURs => {
-  return {
-    type: RECEIVE_GROUPED_URS,
-    groupedURs: groupedURs
-  };
-};
-
-export const fetchGroupedURs = () => {
-  let url = `/api/groupedurs`;
-  return function (dispatch) {
-    dispatch(startLoading());
-    return createFetchAPI(url)
-      .then(res => {
-        dispatch(receiveGroupedURs(res.groupedURs));
-      })
-      .then(() => {
-        dispatch(endLoading());
-      })
-      .catch(err => Sentry.captureException(err));
-  };
-};
-
-// Unit Results By Study
-export const receiveURsByStudy = ursByStudy => {
-  return {
-    type: RECEIVE_URS_BY_STUDY,
-    ursByStudy: ursByStudy
-  };
-};
-
-export const fetchURsByStudy = name => {
-  let url = `/api/ursbystudy/` + name;
-  return function (dispatch) {
-    dispatch(startLoading());
-    return createFetchAPI(url)
-      .then(res => {
-        dispatch(receiveURsByStudy(res.ursByStudy));
-      })
-      .then(() => {
-        dispatch(endLoading());
-      })
-      .catch(err => Sentry.captureException(err));
-  };
-};
-
-// Unit Results
-export const receiveUnitResults = unitresults => {
-  return {
-    type: RECEIVE_UNIT_RESULTS,
-    unitresults
-  };
-};
-
-export const fetchUnitResults = () => {
-  let url = `/api/unitresults`;
-  return function (dispatch) {
-    dispatch(startLoading());
-    return createFetchAPI(url)
-      .then(unitresults => {
-        dispatch(receiveUnitResults(unitresults));
-      })
-      .then(() => {
-        dispatch(endLoading());
-      });
   };
 };
 
@@ -405,29 +298,6 @@ export const fetchStudyAnalysisResults = () => {
   };
 };
 
-// Unit details
-export const receiveUnitDetail = unitDetail => {
-  return {
-    type: RECEIVE_UNIT_DETAIL,
-    unitDetail: unitDetail
-  };
-};
-
-// export const fetchUnitDetail = (studyName, recordingName, sorterName, trueUnitId) => {
-//   let url = `/api/unitdetail/${studyName}/${recordingName}/${sorterName}/${trueUnitId}`;
-//   return function (dispatch) {
-//     dispatch(startLoading());
-//     return createFetchAPI(url)
-//       .then(res => {
-//         dispatch(receiveUnitDetail(res.unitDetail));
-//       })
-//       .then(() => {
-//         dispatch(endLoading());
-//       })
-//       .catch(err => Sentry.captureException(err));
-//   };
-// };
-
 // Selected Study for Scatterplot
 export const selectStudySortingResult = studySortingResult => ({
   type: SELECT_STUDY_SORTING_RESULT,
@@ -443,27 +313,3 @@ export const selectSorterName = sorterName => ({
   type: SELECT_SORTER_NAME,
   sorterName
 });
-
-// // SpikeSpray
-// export const receiveSpikeSpray = spikespray => {
-//   return {
-//     type: RECEIVE_SPIKESPRAY,
-//     spikespray
-//   };
-// };
-
-// export const fetchSpikeSpray = url => {
-//   // TODO: Remove when other spikes are live and use passed in URL
-//   const defaultUrl =
-//     "http://kbucket.flatironinstitute.org/get/sha1/0aa39927530abed94f32c410f3a2226e2ee71c5e?signature=c516794c53257b327f39b8349cc39313f1a254e9";
-//   return function (dispatch) {
-//     dispatch(startLoading());
-//     return createFetchKBucket(defaultUrl)
-//       .then(spikespray => {
-//         dispatch(receiveSpikeSpray(spikespray));
-//       })
-//       .then(() => {
-//         dispatch(endLoading());
-//       });
-//   };
-// };

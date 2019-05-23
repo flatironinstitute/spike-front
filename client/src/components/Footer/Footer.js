@@ -77,24 +77,6 @@ class Footer extends Component {
             </a>
           </div>
         </div>
-        {/* <p className="footer__location xx-small tk-atlas">
-          SpikeForest is made with
-          <span
-            role="img"
-            aria-label="microscrope emoji"
-            className="footer__emoji"
-          >
-            🔬
-        </span>{" "}
-          in NYC
-          <span
-            role="img"
-            aria-label="statue of liberty"
-            className="footer__emoji"
-          >
-            🗽
-          </span>
-        </p> */}
       </footer>
     );
   }

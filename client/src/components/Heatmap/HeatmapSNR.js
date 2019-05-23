@@ -62,7 +62,6 @@ class HeatmapSNR extends Component {
                   selectSorterName={this.props.selectSorterName}
                   selectedStudyName={this.props.selectedStudyName}
                   selectedSorterName={this.props.selectedSorterName}
-                  groupedUnitResults={this.state.builtData}
                   studyAnalysisResults={this.props.studyAnalysisResults}
                   studies={this.props.studies}
                   studysets={this.props.studysets}

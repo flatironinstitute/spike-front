@@ -26,13 +26,11 @@ class UnitDetail extends Component {
 
   async componentDidMount()  {
     await this.updateSpikeSpray()
-    // this.props.fetchUnitDetail(unitData.studyName, unitData.recordingName, unitData.sorterName, unitData.unitId);
   }
 
   async componentDidUpdate(prevProps, prevState) {
     if ((this.props.studyAnalysisResult !== prevProps.studyAnalysisResult) || (this.props.unitIndex !== prevProps.unitIndex) || (this.props.sorterName !== prevProps.sorterName)) {
       await this.updateSpikeSpray();
-      // this.props.fetchUnitDetail(unitData.studyName, unitData.recordingName, unitData.sorterName, unitData.unitId);
     }
   }
 
@@ -153,7 +151,6 @@ class UnitDetail extends Component {
     let unitData = this.getUnitData()
     return (
         <Container>
-          {/* <Row>{JSON.stringify(unitData, null, 4)}</Row> */}
           <Row>
             {
               (!this.state.spikeSprayData) ?
@@ -184,9 +181,7 @@ function hash_of_key(key) {
 }
 
 function mapStateToProps(state) {
-  return {
-    unitDetail: state.unitDetail
-  };
+  return {};
 }
 
 function mapDispatchToProps(dispatch) {

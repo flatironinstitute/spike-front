@@ -29,10 +29,7 @@ require("./models/Algorithm");
 require("./models/SortingResult");
 require("./models/Study");
 require("./models/StudySet");
-require("./models/TrueUnit");
-require("./models/UnitResult");
 require("./models/StudyAnalysisResult");
-require("./models/UnitDetail");
 
 /* Express Isomorphic
 –––––––––––––––––––––––––––––––––––––––––––––––––– */

@@ -78,14 +78,6 @@ class ScatterplotCard extends Component {
                 Click a cell in the table to the left to see a detailed scatterplot of
                 the corresponding sorter results.
               </h4>
-              {/* <p className="card__category">
-                <br />
-                We host a variety of experimental paired ground truth recordings
-                from the community and also many in silico synthetic recordings.
-                Each sorter is run on all recordings and the resulting
-                accuracies for the ground truth units are updated on a daily
-                basis as needed.
-              </p> */}
             </div>
           ) : (
             <div>

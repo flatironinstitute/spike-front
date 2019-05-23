@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Preloader from "../Preloader/Preloader";
 import HomeContentContainer from "../Heatmap/HomeContentContainer";
-// import { formatUnitResults } from "../../dataHandlers";
 import { isEmpty } from "../../utils";
 import { Container, Card } from "react-bootstrap";
 import StatsAlert from "../Header/StatsAlert";
@@ -18,29 +17,10 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    // if (this.props.groupedURs && this.props.sorters) {
-    //   this.mapUnits();
-    // }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // if (
-    //   this.props.groupedURs !== prevProps.groupedURs ||
-    //   this.props.sorters !== prevProps.sorters
-    // ) {
-    //   this.mapUnits();
-    // }
   }
-
-  // async mapUnits() {
-  //   if (this.props.sorters && this.props.groupedURs) {
-  //     let unitsMap = await formatUnitResults(
-  //       this.props.groupedURs,
-  //       this.props.sorters
-  //     );
-  //     this.setState({ unitsMap: unitsMap });
-  //   }
-  // }
 
   getStudies() {
     // returns the unique names of the studies

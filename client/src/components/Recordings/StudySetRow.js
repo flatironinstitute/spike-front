@@ -23,13 +23,11 @@ class StudySetRow extends Component {
         <th />
         <th />
         <th>Study Name</th>
-        {/* <th>Sorters Applied</th> */}
       </tr>
     );
     studiesRows.unshift(headStudyRow);
     return (
       <React.Fragment>
-        {/* <tr onClick={() => this.setState({ open: !open })} className={rowClass}> */}
         <tr className={rowClass}>
           <td onClick={() => this.setState({ open: !open })} className="arrow__row">{arrow}</td>
           <td>

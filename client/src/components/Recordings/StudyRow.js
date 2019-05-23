@@ -35,14 +35,12 @@ class StudyRow extends Component {
     recordingsRows.unshift(headRow);
     return (
       <React.Fragment>
-        {/* <tr onClick={() => this.setState({ open: !open })} className={rowClass}> */}
         <tr className={rowClass}>
           <td />
           <td onClick={() => this.setState({ open: !open })} className="arrow__row">{arrow}</td>
           <td>
             <Link to={`/studyresults/${study.name}`}>{study.name}</Link> ({study.recordings.length})
           </td>
-          {/* <td>{study.sorterNames ? study.sorterNames.join(", ") : ""}</td> */}
         </tr>
         {open ? recordingsRows : null}
       </React.Fragment>

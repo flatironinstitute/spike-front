@@ -15,19 +15,6 @@ class Recordings extends Component {
     return (
       <div className="page__body">
         <Container className="container__heatmap">
-          {/* <Row className="justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
-              <div className="intro">
-                <p className="big">Recordings</p>
-                <div className="dividerthick" />
-                <p className="subhead">
-                  Below is the current list of studies in SpikeForest. Click on
-                  each to see an expanded list of the recordings within each
-                  study.
-                </p>
-              </div>
-            </Col>
-          </Row> */}
           <Row className="container__sorter--row justify-content-md-center">
             <Col lg={12} sm={12} xl={10}>
               <div className="card card--stats">

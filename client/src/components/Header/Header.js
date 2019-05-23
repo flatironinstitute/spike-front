@@ -53,7 +53,6 @@ class Header extends Component {
   render() {
     return (
       <div className="navbar__container">
-        {/*<InfoPanel width={this.state.width} height={this.state.height} />*/}
         <Nav className="navbar__white">
           <LinkContainer exact to="/">
             <Navbar.Brand className="navbar__left">
@@ -63,7 +62,6 @@ class Header extends Component {
                 height="48"
                 className="d-inline-block align-top"
               />
-              {/*<p className="navbar__pagename">{this.getPageName()}</p>*/}
             </Navbar.Brand>
           </LinkContainer>
           <Nav className="navbar__right">

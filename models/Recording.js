@@ -43,8 +43,7 @@ const recordingSchema = new mongoose.Schema({
   },
   spikeSign: {
     type: Number
-  },
-  trueUnits: [{ type: mongoose.Schema.ObjectId, ref: "TrueUnit" }]
+  }
 });
 
 function autopopulate(next) {
@@ -71,7 +70,6 @@ recordingSchema.statics.getRecordingsByStudy = function() {
             durationSec: "$durationSec",
             numTrueUnits: "$numTrueUnits",
             spikeSign: "$spikeSign",
-            trueUnits: "$trueUnits",
             study: "$study"
           }
         }

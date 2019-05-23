@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const SortingResult = mongoose.model("SortingResult"); //Singleton from mongoose
-const TrueUnit = mongoose.model("TrueUnit");
 
 exports.getSortingResults = async (req, res) => {
   const sortingResultsPromise = SortingResult.find();
@@ -24,6 +23,5 @@ exports.getCPUs = async (req, res, next) => {
 
 exports.getStats = async (req, res, next) => {
   const [cpuPromise] = await SortingResult.getTotalCPU();
-  const truePromise = await TrueUnit.countDocuments();
-  res.send({ cpus: cpuPromise.cpuTimeSec, groundTruth: truePromise });
+  res.send({ cpus: cpuPromise.cpuTimeSec, groundTruth: 0 });
 };

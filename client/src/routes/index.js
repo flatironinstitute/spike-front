@@ -17,20 +17,17 @@ import About from "../components/Pages/About";
 import Recordings from "../components/Pages/Recordings";
 import Studies from "../components/Pages/Studies";
 import Algorithms from "../components/Pages/Algorithms";
-import Internals from "../components/Pages/Internals";
 import Metrics from "../components/Pages/Metrics";
 import Contact from "../components/Contact/Contact";
 import DetailPage from "../components/DetailPage/DetailPage";
 import StudySet from "../components/Pages/StudySet";
 import FourOhFour from "../components/Pages/FourOhFour";
-import RawData from "../components/Pages/RawData";
 
 class Routes extends Component {
   async componentDidMount() {
     // V2 Data: Fetches
     this.props.fetchCPUs();
     this.props.fetchStudies();
-    //this.props.fetchGroupedURs();
     this.props.fetchSortingResults();
     this.props.fetchSorters();
     this.props.fetchAlgorithms();
@@ -64,16 +61,8 @@ class Routes extends Component {
             render={props => <Contact {...this.props} />}
           />
           <Route
-            path="/internals"
-            render={props => <Internals {...this.props} />}
-          />
-          <Route
             path="/metrics"
             render={props => <Metrics {...this.props} />}
-          />
-          <Route
-            path="/rawdata"
-            render={props => <RawData {...this.props} />}
           />
           <Route
             path="/recordings"
@@ -134,20 +123,16 @@ function mapStateToProps(state) {
     algorithms: state.algorithms,
     contactSent: state.contactSent,
     cpus: state.cpus,
-    // groupedURs: state.groupedURs,
     loading: state.loading,
     recordings: state.recordings,
     sortingResults: state.sortingResults,
     sorters: state.sorters,
-    // spikespray: state.spikespray,
     stats: state.stats,
     studies: state.studies,
     studysets: state.studysets,
     selectedStudySortingResult: state.selectedStudySortingResult,
     selectedStudyName: state.selectedStudyName,
     selectedSorterName: state.selectedSorterName,
-    unitResults: state.unitResults,
-    ursByStudy: state.ursByStudy,
     studyAnalysisResults: state.studyAnalysisResults
   };
 }
