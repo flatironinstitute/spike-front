@@ -8,8 +8,6 @@ class ScatterplotCard extends Component {
     super(props);
 
     this.state = {
-      study: null,
-      sorter: null,
       studyAnalysisResult: null,
       cardHeight: "auto"
     };
@@ -17,7 +15,7 @@ class ScatterplotCard extends Component {
 
   componentDidMount() {
     if ((this.props.studyName) && (this.props.sorterName)) {
-      this.findStudyAndSorter();
+      this.findStudyAnalysisResult();
     }
   }
 
@@ -26,7 +24,7 @@ class ScatterplotCard extends Component {
       (this.props.studyName !== prevProps.studyName) ||
       (this.props.sorterName !== prevProps.sorterName)
     ) {
-      this.findStudyAndSorter();
+      this.findStudyAnalysisResult();
     }
     if (this.props.cardHeight !== prevProps.cardHeight) {
       this.updateCardHeight();
@@ -39,27 +37,20 @@ class ScatterplotCard extends Component {
     }
   }
 
-  findStudyAndSorter() {
-    let study = this.props.studies.filter(
-      study => study.name === this.props.studyName
-    );
-    let sorter = this.props.sorters.filter(
-      sorter => sorter.name === this.props.sorterName
-    );
-    let studyAnalysisResult = this.props.studyAnalysisResults.filter(
-      sar => sar.studyName === this.props.studyName
-    );
-    this.setState({ study: study[0], sorter: sorter[0], studyAnalysisResult: studyAnalysisResult[0] });
+  findStudyAnalysisResult() {
+    let sar = null;
+    for (let studyAnalysisResult of this.props.studyAnalysisResults) {
+      if (studyAnalysisResult.studyName === this.props.studyName) {
+        sar = studyAnalysisResult;
+      }
+    }
+    this.setState({studyAnalysisResult: sar});
   }
 
   render() {
-    const study = this.props.studyName || "";
-    const sorter = this.props.sorterName || "";
     const loading =
       (!this.props.studyName) ||
       (!this.props.sorterName) ||
-      (!this.state.study) ||
-      (!this.state.sorter) ||
       (!this.state.studyAnalysisResult);
     // let divStyle = {
     //   backgroundColor: "#fffdc0",
@@ -84,17 +75,15 @@ class ScatterplotCard extends Component {
               <div className="card__header">
                 <div className="card__category--div">
                   <span className="card__title--link">
-                  <Link to={`/studyset/${this.state.study.studySetName}`}>{this.state.study.studySetName}</Link>/<Link to={`/studyresults/${study}`}>{study}</Link>
+                  <Link to={`/studyset/${this.props.studySetName}`}>{this.props.studySetName}</Link>/<Link to={`/studyresults/${this.props.studyName}`}>{this.props.studyName}</Link>
                   </span>
                   <span className="card__title--link">
                     Sorter:
-                    <Link to="/algorithms">{sorter}</Link>
+                    <Link to="/algorithms">{this.props.sorterName}</Link>
                   </span>
                 </div>
               </div>
               <ScatterplotContainer
-                study={this.state.study}
-                sorter={this.state.sorter}
                 studyAnalysisResult={this.state.studyAnalysisResult}
                 studyName={this.props.studyName}
                 sorterName={this.props.sorterName}

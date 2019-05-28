@@ -22,13 +22,6 @@ class Home extends Component {
   componentDidUpdate(prevProps, prevState) {
   }
 
-  getStudies() {
-    // returns the unique names of the studies
-    return this.props.studies
-      .map(item => item.name)
-      .filter((value, index, self) => self.indexOf(value) === index);
-  }
-
   getSorters() {
     // returns the unique names of the sorters
     return this.props.sorters
@@ -42,16 +35,13 @@ class Home extends Component {
     //   isEmpty(this.props.studies) ||
     //   isEmpty(this.props.sorters);
     let loading =
-        isEmpty(this.props.studies) ||
         isEmpty(this.props.sorters) ||
-        isEmpty(this.props.studysets) ||
+        isEmpty(this.props.studySets) ||
         isEmpty(this.props.studyAnalysisResults);
     if (loading) {
       window.scrollTo(0, 0);
     }
 
-    let sorters = this.props.sorters ? this.getSorters() : null;
-    let studies = this.props.studies ? this.getStudies() : null;
     return (
       <div className="page__body page__body--alert ">
         <StatsAlert {...this.props} />
@@ -67,8 +57,6 @@ class Home extends Component {
           <HomeContentContainer
             id="overview"
             {...this.props}
-            shortStudies={studies}
-            shortSorters={sorters}
             // unitsMap={this.state.unitsMap}
           />
         )}

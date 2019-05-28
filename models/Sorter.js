@@ -6,7 +6,7 @@ const sorterSchema = new mongoose.Schema({
     type: String,
     required: "You must provide a name for the sorter."
   },
-  algorithm: {
+  algorithmName: {
     type: String,
     required: "You must provide a parent algorithm"
   },
@@ -18,7 +18,7 @@ const sorterSchema = new mongoose.Schema({
     type: String,
     required: "You must provide a version for the sorter."
   },
-  sorting_parameters: {
+  sortingParameters: {
     type: Map
   }
 });

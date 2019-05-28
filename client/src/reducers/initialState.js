@@ -11,6 +11,6 @@ export const initialState = {
   sorters: null,
   stats: null,
   studies: null,
-  studysets: null,
+  studySets: null,
   studyAnalysisResults: null
 };

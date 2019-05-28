@@ -6,7 +6,7 @@ const ReactMarkdown = require('react-markdown')
 class StudySet extends Component {
   render() {
     let studySet = {};
-    this.props.studysets.forEach(ss => {
+    this.props.studySets.forEach(ss => {
         if (ss.name === this.props.studySetName) {
             studySet = ss;
         }

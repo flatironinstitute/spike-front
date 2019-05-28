@@ -103,6 +103,7 @@ class DetailPage extends Component {
   }
 
   render() {
+    console.log('---- detail render', this.props);
     let loading =
       isEmpty(this.props.studyName) ||
       isEmpty(this.props.studyAnalysisResults);
@@ -145,8 +146,8 @@ class DetailPage extends Component {
                             selectedStudyName={this.props.studyName}
                             selectedSorterName={this.state.sorterName}
                             studyAnalysisResults={[studyAnalysisResult]}
-                            studies={this.props.studies}
-                            studysets={this.props.studysets}
+                            studySets={this.props.studySets}
+                            sorters={this.props.sorters}
                             format={this.state.format}
                             metric={this.state.metric}
                             threshold={this.state.sliderValue}
@@ -170,7 +171,6 @@ class DetailPage extends Component {
                 <Row>
                   <Col lg={6} sm={12}>
                     <ScatterplotCard
-                      studies={this.props.studies}
                       sorters={this.props.sorters}
                       studyAnalysisResults={[studyAnalysisResult]}
                       studyName={this.props.studyName}
@@ -198,7 +198,6 @@ class DetailPage extends Component {
                               <div className="card__footer">
                                 <hr />
                                 <UnitDetail
-                                  studies={this.props.studies}
                                   sorters={this.props.sorters}
                                   sortingResults={this.props.sortingResults}
                                   studyAnalysisResult={studyAnalysisResult}

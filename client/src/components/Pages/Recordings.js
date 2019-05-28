@@ -8,10 +8,7 @@ import ExpandableRecordingsTable from "../Recordings/ExpandableRecordingsTable";
 
 class Recordings extends Component {
   render() {
-    let loading =
-      isEmpty(this.props.recordings) ||
-      isEmpty(this.props.studies) ||
-      isEmpty(this.props.studysets);
+    let loading = isEmpty(this.props.studySets);
     return (
       <div className="page__body">
         <Container className="container__heatmap">
@@ -57,7 +54,7 @@ class Recordings extends Component {
                     {loading ? (
                       <Preloader />
                     ) : (
-                      <ExpandableRecordingsTable {...this.props} />
+                      <ExpandableRecordingsTable studySets={this.props.studySets} />
                     )}
                   </div>
                 </div>

@@ -1,11 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const recordingController = require("./controllers/recordingController");
 const sorterController = require("./controllers/sorterController");
 const algorithmController = require("./controllers/algorithmController");
 const sortingResultController = require("./controllers/sortingResultController");
-const studyController = require("./controllers/studyController");
 const studySetController = require("./controllers/studySetController");
 const studyAnalysisResultController = require("./controllers/studyAnalysisResultController");
 const mailer = require("./email/mailer.js");
@@ -17,16 +15,12 @@ const MountainClient = require('./mountainclient-js').MountainClient;
 
 // CPU Routes
 router.get("/api/cpus", sortingResultController.getCPUs);
-// Recordings
-router.get("/api/recordings", recordingController.getRecordings);
 // Sorters
 router.get("/api/sorters", sorterController.getSorters);
 // Algorithms
 router.get("/api/algorithms", algorithmController.getAlgorithms);
 // Sorting Results
 router.get("/api/sortingresults", sortingResultController.getSortingResults);
-// Studies
-router.get("/api/studies", studyController.getStudies);
 // Study Sets
 router.get("/api/studysets", studySetController.getStudySets);
 // Summary Stats

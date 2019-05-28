@@ -12,12 +12,12 @@ class StudyRow extends Component {
   }
 
   render() {
-    const study = this.props.value;
+    const study = this.props.study;
     const open = this.state.open;
     let arrow = this.state.open ? "-" : "+";
     let rowClass = this.state.open ? "row__expanded-header-study" : "";
-    const recordingsRows = this.props.value.recordings.map(recording => (
-      <RecordingRow key={recording.name.toString()} value={recording} />
+    const recordingsRows = study.recordings.map(recording => (
+      <RecordingRow key={recording.name.toString()} recording={recording} />
     ));
     const headRow = (
       <tr key={"recording-header"}>

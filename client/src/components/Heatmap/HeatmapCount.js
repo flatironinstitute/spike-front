@@ -68,8 +68,8 @@ class HeatmapCount extends Component {
                   selectedStudyName={this.props.selectedStudyName}
                   selectedSorterName={this.props.selectedSorterName}
                   studyAnalysisResults={this.props.studyAnalysisResults}
-                  studies={this.props.studies}
-                  studysets={this.props.studysets}
+                  studySets={this.props.studySets}
+                  sorters={this.props.sorters}
                   format={this.props.format}
                   metric={this.props.metric}
                   threshold={this.props.sliderValue}
@@ -81,7 +81,6 @@ class HeatmapCount extends Component {
                 (this.props.format !== "cpu") ?
                 (<Col lg={6} sm={12}>
                   <ScatterplotCard
-                    studies={this.props.studies}
                     sorters={this.props.sorters}
                     studyAnalysisResults={this.props.studyAnalysisResults}
                     studyName={this.props.selectedStudyName}

@@ -58,7 +58,7 @@ const studyAnalysisResultSchema = new mongoose.Schema(
             type: [Number]
           }
       }]
-    },  
+    },
   }
 );
 

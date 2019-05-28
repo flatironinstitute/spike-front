@@ -86,27 +86,6 @@ export const sendContact = options => {
   };
 };
 
-// Studies
-export const receiveStudies = studies => ({
-  type: RECEIVE_STUDIES,
-  studies
-});
-
-export const fetchStudies = () => {
-  let url = `/api/studies`;
-  return function (dispatch) {
-    dispatch(startLoading());
-    return createFetchAPI(url)
-      .then(res => {
-        dispatch(receiveStudies(res.studies));
-      })
-      .then(() => {
-        dispatch(endLoading());
-      })
-      .catch(err => Sentry.captureException(err));
-  };
-};
-
 // CPUs
 export const receiveCPUs = cpus => {
   return {
@@ -210,10 +189,10 @@ export const fetchStats = () => {
 };
 
 // Study Sets
-export const recieveStudySets = studysets => {
+export const recieveStudySets = studySets => {
   return {
     type: RECEIVE_STUDY_SETS,
-    studysets
+    studySets
   };
 };
 
@@ -222,31 +201,8 @@ export const fetchStudySets = () => {
   return function (dispatch) {
     dispatch(startLoading());
     return createFetchAPI(url)
-      .then(studysets => {
-        dispatch(recieveStudySets(studysets));
-      })
-      .then(() => {
-        dispatch(endLoading());
-      });
-  };
-};
-
-// Recordings
-export const receiveRecordings = recordings => {
-  return {
-    type: RECEIVE_RECORDINGS,
-    recordings: recordings
-  };
-};
-
-export const fetchRecordings = () => {
-  let url = `/api/recordings`;
-  return function (dispatch) {
-    dispatch(startLoading());
-    return createFetchAPI(url)
-      .then(recordings => {
-        console.log('--- abc123', recordings);
-        dispatch(receiveRecordings(recordings));
+      .then(studySets => {
+        dispatch(recieveStudySets(studySets));
       })
       .then(() => {
         dispatch(endLoading());

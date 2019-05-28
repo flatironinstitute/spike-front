@@ -23,13 +23,11 @@ mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 mongoose.connection.on("error", err => {
   console.error(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
 });
-require("./models/Recording");
 require("./models/Sorter");
 require("./models/Algorithm");
 require("./models/SortingResult");
-require("./models/Study");
-require("./models/StudySet");
 require("./models/StudyAnalysisResult");
+require("./models/StudySet");
 
 /* Express Isomorphic
 –––––––––––––––––––––––––––––––––––––––––––––––––– */

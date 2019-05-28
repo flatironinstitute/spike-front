@@ -28,13 +28,11 @@ class Routes extends Component {
   async componentDidMount() {
     // V2 Data: Fetches
     this.props.fetchCPUs();
-    this.props.fetchStudies();
     this.props.fetchSortingResults();
     this.props.fetchSorters();
     this.props.fetchAlgorithms();
     this.props.fetchStats();
     this.props.fetchStudySets();
-    this.props.fetchRecordings();
     this.props.fetchStudyAnalysisResults();
   }
 
@@ -50,6 +48,8 @@ class Routes extends Component {
         </Container>
       </div>
     );
+
+    console.log('----- props', this.props.studyAnalysisResults, this.props.sorterName, this.props.studySets);
 
     return (
       <div className="wrapper">
@@ -67,7 +67,7 @@ class Routes extends Component {
           />
           <Route
             path="/recordings"
-            render={props => <Recordings {...this.props} />}
+            render={props => <Recordings studySets={this.props.studySets} />}
           />
           <Route
             path="/algorithms"
@@ -81,19 +81,16 @@ class Routes extends Component {
             path="/studyresults/:studyName"
             render={props => 
               (!this.props.studyAnalysisResults) ||
-              (!this.props.studies) ||
               (!this.props.sorters) ||
-              (!this.props.studysets) ? (loadingContainer) :
+              (!this.props.studySets) ? (loadingContainer) :
               (
                 <DetailPage
                   studyName={props.match.params.studyName}
                   sorterName={this.props.selectedSorterName}
                   studyAnalysisResults={this.props.studyAnalysisResults}
-                  studies={this.props.studies}
-                  recordings={this.props.recordings}
                   sortingResults={this.props.sortingResults}
                   sorters={this.props.sorters}
-                  studysets={this.props.studysets}
+                  studySets={this.props.studySets}
                 />
               )
             }
@@ -101,11 +98,10 @@ class Routes extends Component {
           <Route
             path="/studyset/:studySetName"
             render={props => 
-              ((!this.props.studysets)||(!this.props.studies)) ? (loadingContainer) :
+              (!this.props.studySets) ? (loadingContainer) :
               (
                 <StudySet
-                  studysets={this.props.studysets}
-                  studies={this.props.studies}
+                  studySets={this.props.studySets}
                   studySetName={props.match.params.studySetName}
                 />
               )
@@ -114,11 +110,9 @@ class Routes extends Component {
           <Route
             path="/study/:studyName"
             render={props => 
-              ((!this.props.studies) || (!this.props.recordings)) ? (loadingContainer) :
+              (false) ? (loadingContainer) :
               (
                 <Study
-                  studies={this.props.studies}
-                  recordings={this.props.recordings}
                   studyName={props.match.params.studyName}
                 />
               )
@@ -139,12 +133,10 @@ function mapStateToProps(state) {
     contactSent: state.contactSent,
     cpus: state.cpus,
     loading: state.loading,
-    recordings: state.recordings,
     sortingResults: state.sortingResults,
     sorters: state.sorters,
     stats: state.stats,
-    studies: state.studies,
-    studysets: state.studysets,
+    studySets: state.studySets,
     selectedStudySortingResult: state.selectedStudySortingResult,
     selectedStudyName: state.selectedStudyName,
     selectedSorterName: state.selectedSorterName,

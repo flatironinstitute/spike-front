@@ -36,8 +36,6 @@ mongoose.Promise = global.Promise;
 const Sorter = require("../../models/Sorter");
 const Algorithm = require("../../models/Algorithm");
 const StudySet = require("../../models/StudySet");
-const Study = require("../../models/Study");
-const Recording = require("../../models/Recording");
 const SortingResult = require("../../models/SortingResult");
 const StudyAnalysisResult = require("../../models/StudyAnalysisResult");
 
@@ -46,8 +44,6 @@ async function deleteData() {
   await Sorter.remove();
   await Algorithm.remove();
   await StudySet.remove();
-  await Study.remove();
-  await Recording.remove();
   await SortingResult.remove();
   await StudyAnalysisResult.remove();
   console.log("Data Deleted.\n");

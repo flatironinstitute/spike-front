@@ -5,15 +5,13 @@ import algorithms from "./algorithms";
 import contactSent from "./contactSent";
 import cpus from "./cpus";
 import loading from "./loading";
-import recordings from "./recordings";
 import sortingResults from "./sortingResults";
 import selectedStudySortingResult from "./selectedStudySortingResult";
 import selectedStudyName from "./selectedStudyName";
 import selectedSorterName from "./selectedSorterName";
 import sorters from "./sorters";
 import stats from "./stats";
-import studies from "./studies";
-import studysets from "./studysets";
+import studySets from "./studysets";
 import studyAnalysisResults from "./studyanalysisresults";
 
 const rootReducer = history =>
@@ -22,15 +20,13 @@ const rootReducer = history =>
     contactSent,
     cpus,
     loading,
-    recordings,
     sortingResults,
     selectedStudySortingResult,
     selectedStudyName,
     selectedSorterName,
     sorters,
     stats,
-    studies,
-    studysets,
+    studySets,
     studyAnalysisResults
   });
 

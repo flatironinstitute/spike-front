@@ -15,8 +15,8 @@ class StudySetRow extends Component {
     const open = this.state.open;
     let arrow = this.state.open ? "-" : "+";
     let rowClass = this.state.open ? "row__expanded-header-studyset" : "";
-    const studiesRows = this.props.value.studies.map(study => (
-      <StudyRow key={study._id.toString()} value={study} />
+    const studiesRows = this.props.studySet.studies.map(study => (
+      <StudyRow key={study.name.toString()} study={study} />
     ));
     const headStudyRow = (
       <tr key={"study-header"}>
@@ -31,7 +31,7 @@ class StudySetRow extends Component {
         <tr className={rowClass}>
           <td onClick={() => this.setState({ open: !open })} className="arrow__row">{arrow}</td>
           <td>
-            <Link to={`/studyset/${this.props.value.name}`}>{this.props.value.name}</Link> ({this.props.value.studies.length})
+            <Link to={`/studyset/${this.props.studySet.name}`}>{this.props.studySet.name}</Link> ({this.props.studySet.studies.length})
           </td>
         </tr>
         {open ? studiesRows : null}
