@@ -47,9 +47,6 @@ class ScatterplotContainer extends Component {
         }
         <p>
           {copy}
-          {/*selectedStudySortingResult
-            ? selectedStudySortingResult.in_range
-          : ""*/}
         </p>
         {(() => {
           switch (format) {

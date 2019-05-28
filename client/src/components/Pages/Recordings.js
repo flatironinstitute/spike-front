@@ -2,32 +2,17 @@ import React, { Component } from "react";
 import Preloader from "../Preloader/Preloader";
 import { isEmpty } from "../../utils";
 import { Col, Container, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import "./pages.css";
-import ExpandableRecordingsTable from "../Recordings/ExpandableRecordingsTable";
+// import ExpandableRecordingsTable from "../Recordings/ExpandableRecordingsTable";
 
 class Recordings extends Component {
   render() {
-    let loading =
-      isEmpty(this.props.recordings) ||
-      isEmpty(this.props.studies) ||
-      isEmpty(this.props.studysets);
+    let loading = isEmpty(this.props.studySets);
     return (
       <div className="page__body">
         <Container className="container__heatmap">
-          {/* <Row className="justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
-              <div className="intro">
-                <p className="big">Recordings</p>
-                <div className="dividerthick" />
-                <p className="subhead">
-                  Below is the current list of studies in SpikeForest. Click on
-                  each to see an expanded list of the recordings within each
-                  study.
-                </p>
-              </div>
-            </Col>
-          </Row> */}
           <Row className="container__sorter--row justify-content-md-center">
             <Col lg={12} sm={12} xl={10}>
               <div className="card card--stats">
@@ -56,7 +41,7 @@ class Recordings extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container__sorter--row justify-content-md-center">
+          {/* <Row className="container__sorter--row justify-content-md-center">
             <Col lg={12} sm={12} xl={10}>
               <div className="card card--stats">
                 <div className="content">
@@ -70,13 +55,13 @@ class Recordings extends Component {
                     {loading ? (
                       <Preloader />
                     ) : (
-                      <ExpandableRecordingsTable {...this.props} />
+                      <ExpandableRecordingsTable studySets={this.props.studySets} />
                     )}
                   </div>
                 </div>
               </div>
             </Col>
-          </Row>
+          </Row> */}
           <Row className="container__sorter--row justify-content-md-center">
             <Col lg={12} sm={12} xl={10}>
               <div className="card card--stats">
@@ -118,6 +103,42 @@ class Recordings extends Component {
                         results.
                       </span>
                     </div>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+          <Row className="container__sorter--row justify-content-md-center">
+            <Col lg={12} sm={12} xl={10}>
+              <div className="card card--stats">
+                <div className="content">
+                  <div className="card__footer">
+                    <hr />
+                    {loading ? (
+                      <Preloader />
+                    ) : (
+                      <span>
+                        {(
+                          this.props.studySets.map((studySet) => (
+                            <span key={`study-set-${studySet.name}`}>
+                              <h4>{studySet.name}</h4>
+                              <table className="table">
+                                <thead>
+                                  <tr><th key="col1">Study name</th><th key="col2">Num. recordings</th></tr>
+                                </thead>
+                                <tbody>
+                                  {(
+                                    studySet.studies.map((study) => (
+                                      <tr key={`study-${study.name}`}><td key="col1"><Link to={`/study/${study.name}`}>{study.name}</Link></td><td key="col2">{study.recordings.length}</td></tr>
+                                    ))
+                                  )}
+                                </tbody>
+                              </table>
+                            </span>
+                          ))
+                        )}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>

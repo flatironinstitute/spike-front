@@ -12,12 +12,12 @@ class StudyRow extends Component {
   }
 
   render() {
-    const study = this.props.value;
+    const study = this.props.study;
     const open = this.state.open;
     let arrow = this.state.open ? "-" : "+";
     let rowClass = this.state.open ? "row__expanded-header-study" : "";
-    const recordingsRows = this.props.value.recordings.map(recording => (
-      <RecordingRow key={recording.name.toString()} value={recording} />
+    const recordingsRows = study.recordings.map(recording => (
+      <RecordingRow key={recording.name.toString()} recording={recording} />
     ));
     const headRow = (
       <tr key={"recording-header"}>
@@ -35,14 +35,12 @@ class StudyRow extends Component {
     recordingsRows.unshift(headRow);
     return (
       <React.Fragment>
-        {/* <tr onClick={() => this.setState({ open: !open })} className={rowClass}> */}
         <tr className={rowClass}>
           <td />
           <td onClick={() => this.setState({ open: !open })} className="arrow__row">{arrow}</td>
           <td>
-            <Link to={`/studyresults/${study.name}`}>{study.name}</Link> ({study.recordings.length})
+            <Link to={`/study/${study.name}`}>{study.name}</Link> ({study.recordings.length})
           </td>
-          {/* <td>{study.sorterNames ? study.sorterNames.join(", ") : ""}</td> */}
         </tr>
         {open ? recordingsRows : null}
       </React.Fragment>

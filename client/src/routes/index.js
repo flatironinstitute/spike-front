@@ -17,27 +17,33 @@ import About from "../components/Pages/About";
 import Recordings from "../components/Pages/Recordings";
 import Studies from "../components/Pages/Studies";
 import Algorithms from "../components/Pages/Algorithms";
-import Internals from "../components/Pages/Internals";
 import Metrics from "../components/Pages/Metrics";
 import Contact from "../components/Contact/Contact";
 import DetailPage from "../components/DetailPage/DetailPage";
 import StudySet from "../components/Pages/StudySet";
+import Study from "../components/Pages/Study";
+import Recording from "../components/Pages/Recording";
 import FourOhFour from "../components/Pages/FourOhFour";
-import RawData from "../components/Pages/RawData";
 
 class Routes extends Component {
   async componentDidMount() {
     // V2 Data: Fetches
     this.props.fetchCPUs();
-    this.props.fetchStudies();
-    //this.props.fetchGroupedURs();
     this.props.fetchSortingResults();
     this.props.fetchSorters();
     this.props.fetchAlgorithms();
     this.props.fetchStats();
     this.props.fetchStudySets();
-    this.props.fetchRecordings();
-    this.props.fetchStudyAnalysisResults();
+  }
+
+  async componentDidUpdate(prevProps) {
+    if (this.props.studySets !== prevProps.studySets) {
+      if (this.props.studySets) {
+        for (let studySet of this.props.studySets) {
+          this.props.fetchStudyAnalysisResults(studySet.name);
+        }
+      }
+    }
   }
 
   render() {
@@ -64,20 +70,12 @@ class Routes extends Component {
             render={props => <Contact {...this.props} />}
           />
           <Route
-            path="/internals"
-            render={props => <Internals {...this.props} />}
-          />
-          <Route
             path="/metrics"
             render={props => <Metrics {...this.props} />}
           />
           <Route
-            path="/rawdata"
-            render={props => <RawData {...this.props} />}
-          />
-          <Route
             path="/recordings"
-            render={props => <Recordings {...this.props} />}
+            render={props => <Recordings studySets={this.props.studySets} />}
           />
           <Route
             path="/algorithms"
@@ -91,19 +89,16 @@ class Routes extends Component {
             path="/studyresults/:studyName"
             render={props => 
               (!this.props.studyAnalysisResults) ||
-              (!this.props.studies) ||
               (!this.props.sorters) ||
-              (!this.props.studysets) ? (loadingContainer) :
+              (!this.props.studySets) ? (loadingContainer) :
               (
                 <DetailPage
                   studyName={props.match.params.studyName}
                   sorterName={this.props.selectedSorterName}
                   studyAnalysisResults={this.props.studyAnalysisResults}
-                  studies={this.props.studies}
-                  recordings={this.props.recordings}
                   sortingResults={this.props.sortingResults}
                   sorters={this.props.sorters}
-                  studysets={this.props.studysets}
+                  studySets={this.props.studySets}
                 />
               )
             }
@@ -111,11 +106,36 @@ class Routes extends Component {
           <Route
             path="/studyset/:studySetName"
             render={props => 
-              (!this.props.studysets) ? (loadingContainer) :
+              (!this.props.studySets) ? (loadingContainer) :
               (
                 <StudySet
-                  studysets={this.props.studysets}
+                  studySets={this.props.studySets}
                   studySetName={props.match.params.studySetName}
+                />
+              )
+            }
+          />
+          <Route
+            path="/study/:studyName"
+            render={props => 
+              (!this.props.studySets) ? (loadingContainer) :
+              (
+                <Study
+                  studySets={this.props.studySets}
+                  studyName={props.match.params.studyName}
+                />
+              )
+            }
+          />
+          <Route
+            path="/recording/:studyName/:recordingName"
+            render={props => 
+              (!this.props.studySets) ? (loadingContainer) :
+              (
+                <Recording
+                  studySets={this.props.studySets}
+                  studyName={props.match.params.studyName}
+                  recordingName={props.match.params.recordingName}
                 />
               )
             }
@@ -134,20 +154,14 @@ function mapStateToProps(state) {
     algorithms: state.algorithms,
     contactSent: state.contactSent,
     cpus: state.cpus,
-    // groupedURs: state.groupedURs,
     loading: state.loading,
-    recordings: state.recordings,
     sortingResults: state.sortingResults,
     sorters: state.sorters,
-    // spikespray: state.spikespray,
     stats: state.stats,
-    studies: state.studies,
-    studysets: state.studysets,
+    studySets: state.studySets,
     selectedStudySortingResult: state.selectedStudySortingResult,
     selectedStudyName: state.selectedStudyName,
     selectedSorterName: state.selectedSorterName,
-    unitResults: state.unitResults,
-    ursByStudy: state.ursByStudy,
     studyAnalysisResults: state.studyAnalysisResults
   };
 }

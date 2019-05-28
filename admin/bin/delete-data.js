@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 require("dotenv").config({ path: __dirname + "/../../.env" });
-const fs = require("fs");
 
 function print_usage() {
   // used below
@@ -37,26 +36,16 @@ mongoose.Promise = global.Promise;
 const Sorter = require("../../models/Sorter");
 const Algorithm = require("../../models/Algorithm");
 const StudySet = require("../../models/StudySet");
-const Study = require("../../models/Study");
-const Recording = require("../../models/Recording");
-const TrueUnit = require("../../models/TrueUnit");
 const SortingResult = require("../../models/SortingResult");
-const UnitResult = require("../../models/UnitResult");
 const StudyAnalysisResult = require("../../models/StudyAnalysisResult");
-const UnitDetail = require("../../models/UnitDetail");
 
 async function deleteData() {
   console.log("😢😢 Goodbye Data...");
   await Sorter.remove();
   await Algorithm.remove();
   await StudySet.remove();
-  await Study.remove();
-  await Recording.remove();
-  await TrueUnit.remove();
   await SortingResult.remove();
-  await UnitResult.remove();
   await StudyAnalysisResult.remove();
-  await UnitDetail.remove();
   console.log("Data Deleted.\n");
   process.exit();
 }

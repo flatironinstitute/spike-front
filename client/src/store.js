@@ -13,20 +13,14 @@ ReactGA.initialize(gaTag);
 const defaultState = {
   contactSent: null,
   cpus: null,
-  // groupedURs: null,
   loading: null,
-  recordings: null,
   sortingResults: null,
   selectedStudySortingResult: null,
   selectedStudyName: null,
   selectedSorterName: null,
   sorters: null,
-  // spikespray: null,
   stats: null,
-  studies: null,
-  studysets: null,
-  unitResults: null,
-  ursByStudy: null,
+  studySets: null,
   studyAnalysisResults: null
 };
 

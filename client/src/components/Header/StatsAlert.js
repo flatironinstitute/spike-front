@@ -8,8 +8,24 @@ class StatsAlert extends Component {
     /* CPU - sum of all cpuTimeSec on every sorting result */
     /* Ground truth - count of all true units */
     /* Recording data - hard code*/
-    let coreHours = this.props.stats ? this.props.stats.cpus : "";
-    let groundTruth = this.props.stats ? this.props.stats.groundTruth : "";
+    let totalCpu = 0;
+    if (this.props.sortingResults) {
+      for (let sortingResult of this.props.sortingResults) {
+        totalCpu += sortingResult.cpuTimeSec;
+      }
+    }
+    let totalNumTrueUnits = 0;
+    if (this.props.studySets) {
+      for (let studySet of this.props.studySets) {
+        for (let study of studySet.studies) {
+          for (let recording of study.recordings) {
+            totalNumTrueUnits += recording.numTrueUnits;
+          }
+        }
+      }
+    }
+    let coreHours = Math.round(totalCpu / 60);
+    let groundTruth = totalNumTrueUnits;
     return (
       <div className="alert__wrapper">
         <Alert dismissible variant={"warning"} className="alert__stats">
@@ -25,7 +41,7 @@ class StatsAlert extends Component {
                 <b>Project totals:</b>
               </div>
               <div className="ticker__item">
-                {Math.round(coreHours / 60)} CPU core hours
+                {coreHours.toLocaleString()} hours compute time
               </div>
               <div className="ticker__item">
                 {groundTruth.toLocaleString()} ground truth units

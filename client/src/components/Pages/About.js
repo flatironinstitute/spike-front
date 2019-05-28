@@ -4,11 +4,6 @@ import { Col, Container, Row } from "react-bootstrap";
 
 class About extends Component {
   render() {
-    let divStyle = {
-      backgroundColor: "#fffdc0",
-      borderRadius: "5px",
-      display: "inline-block"
-    };
     return (
       <div className="page__body">
         <Container className="container__heatmap">

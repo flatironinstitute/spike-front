@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import Preloader from "../Preloader/Preloader";
 import HomeContentContainer from "../Heatmap/HomeContentContainer";
-// import { formatUnitResults } from "../../dataHandlers";
 import { isEmpty } from "../../utils";
 import { Container, Card } from "react-bootstrap";
 import StatsAlert from "../Header/StatsAlert";
 import InfoPanelContent from "../Header/InfoPanelContent";
 
 import "./pages.css";
+// import sortingResults from "../../reducers/sortingResults";
 
 class Home extends Component {
   constructor(props) {
@@ -18,35 +18,9 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    // if (this.props.groupedURs && this.props.sorters) {
-    //   this.mapUnits();
-    // }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // if (
-    //   this.props.groupedURs !== prevProps.groupedURs ||
-    //   this.props.sorters !== prevProps.sorters
-    // ) {
-    //   this.mapUnits();
-    // }
-  }
-
-  // async mapUnits() {
-  //   if (this.props.sorters && this.props.groupedURs) {
-  //     let unitsMap = await formatUnitResults(
-  //       this.props.groupedURs,
-  //       this.props.sorters
-  //     );
-  //     this.setState({ unitsMap: unitsMap });
-  //   }
-  // }
-
-  getStudies() {
-    // returns the unique names of the studies
-    return this.props.studies
-      .map(item => item.name)
-      .filter((value, index, self) => self.indexOf(value) === index);
   }
 
   getSorters() {
@@ -62,19 +36,19 @@ class Home extends Component {
     //   isEmpty(this.props.studies) ||
     //   isEmpty(this.props.sorters);
     let loading =
-        isEmpty(this.props.studies) ||
         isEmpty(this.props.sorters) ||
-        isEmpty(this.props.studysets) ||
+        isEmpty(this.props.studySets) ||
         isEmpty(this.props.studyAnalysisResults);
     if (loading) {
       window.scrollTo(0, 0);
     }
 
-    let sorters = this.props.sorters ? this.getSorters() : null;
-    let studies = this.props.studies ? this.getStudies() : null;
     return (
       <div className="page__body page__body--alert ">
-        <StatsAlert {...this.props} />
+        <StatsAlert
+          sortingResults={this.props.sortingResults}
+          studySets={this.props.studySets}
+        />
         {loading ? (
           <Container className="container__heatmap" id="overview">
             <Card>
@@ -87,8 +61,6 @@ class Home extends Component {
           <HomeContentContainer
             id="overview"
             {...this.props}
-            shortStudies={studies}
-            shortSorters={sorters}
             // unitsMap={this.state.unitsMap}
           />
         )}

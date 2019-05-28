@@ -5,9 +5,7 @@ import React, { Component } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import HeatmapOptionsCol from "../Heatmap/HeatmapOptionsCol";
 import Preloader from "../Preloader/Preloader";
-// import DetailPageRow from "./DetailPageRow";
 import ScatterplotCard from "../ScatterplotBits/ScatterplotCard";
-// import SpikeSpray from "./SpikeSpray";
 import HeatmapViz from "../Heatmap/HeatmapViz";
 import UnitDetail from "./UnitDetail";
 
@@ -43,14 +41,6 @@ class DetailPage extends Component {
       // this.props.fetchSpikeSpray(url);
     }
   }
-
-  // handleSorterChange = sorterName => {
-  //   this.setState({
-  //     sorterName: sorterName,
-  //     selectedUnit: null
-  //   });
-  //   this.props.selectSorterName(sorterName);
-  // };
 
   handleFormatChange = value => {
     var sliderValue;
@@ -117,21 +107,17 @@ class DetailPage extends Component {
       isEmpty(this.props.studyName) ||
       isEmpty(this.props.studyAnalysisResults);
 
-    // let format = this.getSpikeSprayCard();
-
     let heatmapTitle = this.getFormatCopy();
-    // let unitId = this.state.selectedUnit ? this.state.selectedUnit.unitId : "";
-    // let divStyle = {
-    //   backgroundColor: "#fffdc0",
-    //   borderRadius: "5px",
-    //   display: "inline-block"
-    // };
 
-    let studyAnalysisResult = {};
-    this.props.studyAnalysisResults.forEach(sar => {
+    let studyAnalysisResult = null;
+    this.props.studyAnalysisResults.allResults.forEach(sar => {
       if (sar.studyName === this.props.studyName)
         studyAnalysisResult = sar;
     });
+
+    if (!studyAnalysisResult) {
+      loading = true;
+    }
 
     return (
       <div>
@@ -157,25 +143,14 @@ class DetailPage extends Component {
                         </div>
                         <div className="card__footer">
                           <hr />
-
-                          {/* <DetailPageRow
-                          {...this.props}
-                          vizDatum={this.state.filteredData}
-                          key={`hmrow${0}`}
-                          index={0}
-                          format={this.state.format}
-                          // sorters={sorters.sort()}
-                          selectedSorter={this.state.sorterName}
-                          handleSorterChange={this.handleSorterChange}
-                        /> */}
                           <HeatmapViz
                             groupByStudySets={false}
                             selectSorterName={sorterName => { this.setState({ sorterName, selectedUnit: null }) }}
                             selectedStudyName={this.props.studyName}
                             selectedSorterName={this.state.sorterName}
-                            studyAnalysisResults={[studyAnalysisResult]}
-                            studies={this.props.studies}
-                            studysets={this.props.studysets}
+                            studyAnalysisResults={{allResults: [studyAnalysisResult]}}
+                            studySets={this.props.studySets}
+                            sorters={this.props.sorters}
                             format={this.state.format}
                             metric={this.state.metric}
                             threshold={this.state.sliderValue}
@@ -199,9 +174,8 @@ class DetailPage extends Component {
                 <Row>
                   <Col lg={6} sm={12}>
                     <ScatterplotCard
-                      studies={this.props.studies}
                       sorters={this.props.sorters}
-                      studyAnalysisResults={[studyAnalysisResult]}
+                      studyAnalysisResults={{allResults: [studyAnalysisResult]}}
                       studyName={this.props.studyName}
                       sorterName={this.state.sorterName}
                       sliderValue={this.state.sliderValue}
@@ -227,7 +201,6 @@ class DetailPage extends Component {
                               <div className="card__footer">
                                 <hr />
                                 <UnitDetail
-                                  studies={this.props.studies}
                                   sorters={this.props.sorters}
                                   sortingResults={this.props.sortingResults}
                                   studyAnalysisResult={studyAnalysisResult}
@@ -248,51 +221,11 @@ class DetailPage extends Component {
                               </div>
                             );
                           }
-                          /*switch (format) {
-                            case "nounit":
-                              return (
-                                <div className="card__footer">
-                                  <hr />
-                                  <p style={divStyle}>
-                                  </p>
-                                </div>
-                              );
-                            case "nodata":
-                              return (
-                                <div className="card__footer">
-                                  <hr />
-                                  <p>
-                                    Sorry. Spike spray data for this unit has not
-                                    yet been generated. Please check back for more
-                                    sorting results information in the near
-                                    future.
-                                  </p>
-                                </div>
-                              );
-                            case "showspike":
-                              return (
-                                <div className="card__footer">
-                                  <hr />
-                                  <SpikeSpray
-                                    {...this.props}
-                                    unit={this.state.selectedUnit}
-                                    spikeSprayData={this.props.spikespray}
-                                  />
-                                </div>
-                              );
-                            default:
-                              return null;
-                          }*/
                         })()}
                       </div>
                     </div>
                   </Col>
                 </Row>
-                {/* <Row className="container__sorter--row">
-                  <Col lg={12} sm={12}>
-
-                  </Col>
-                </Row> */}
               </Container>
             )}
         </div>

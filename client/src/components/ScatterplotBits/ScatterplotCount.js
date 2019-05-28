@@ -51,27 +51,6 @@ class ScatterplotCount extends Component {
     }
   }
 
-  /*
-  getYValue(unit) {
-    let yValue;
-    switch (this.props.metric) {
-      case "accuracy":
-        yValue = unit.checkAccuracy;
-        break;
-      case "recall":
-        yValue = unit.checkRecall;
-        break;
-      case "precision":
-        yValue = unit.checkPrecision;
-        break;
-      default:
-        yValue = unit.checkAccuracy;
-        break;
-    }
-    return yValue;
-  }
-  */
-
   buildCountData() {
     let sar = this.props.studyAnalysisResult;
     let snrs = sar.trueSnrs;
@@ -115,19 +94,6 @@ class ScatterplotCount extends Component {
         this.setState({ data: newUnits, minSNR: min, maxSNR: max });  
       }
     });
-    
-    /*
-    let newUnits = this.props.selectedUnits.map((unit, index) => ({
-      u: unit,
-      x: Math.round(unit.snr * 100) / 100,
-      y: this.getYValue(unit),
-      size: Math.max(1, this.getSqrt(unit.numMatches)),
-      color: unit.unitId * 10,
-      opacity: unit.checkAccuracy * 0.5 + 0.5,
-      recording: unit.recording,
-      num_events: unit.numMatches
-    }));
-    */
   }
 
   getSqrt(num_events) {

@@ -7,6 +7,10 @@ const studyAnalysisResultSchema = new mongoose.Schema(
       type: String,
       required: "Name of the study."
     },
+    studySetName: {
+      type: String,
+      required: "Name of the study set."
+    },
     recordingNames: {
       type: [String],
       required: "Names of the recordings in the study"
@@ -58,7 +62,7 @@ const studyAnalysisResultSchema = new mongoose.Schema(
             type: [Number]
           }
       }]
-    },  
+    },
   }
 );
 

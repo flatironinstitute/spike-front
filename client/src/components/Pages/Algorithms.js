@@ -144,14 +144,6 @@ class Algorithms extends Component {
                 <Col lg={12} sm={12}>
                   <div className="card card--stats">
                     <div className="content">
-                      {/* <div className="card__label">
-                        <p>
-                          Algorithms:{" "}
-                          <strong>
-                            Spike sorting algorithms tested in this project
-                          </strong>
-                        </p>
-                      </div> */}
                       <div className="card__footer">
                         <hr />
                         <h3>Algorithms overview</h3>

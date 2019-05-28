@@ -16,15 +16,17 @@ class HeatmapViz extends Component {
       selectedStudyName: props.selectedStudyName,
       selectedSorterName: props.selectedSorterName
     };
+    this.studySetNamesByStudyName = {};
     this.handleCellSelected = this.handleCellSelected.bind(this);
   }
 
   componentDidMount() {
-    this.buildVizData(this.props.studyAnalysisResults);
+    this.buildVizData();
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (
+      this.props.studySets !== prevProps.studySets ||
       this.props.studyAnalysisResults !== prevProps.studyAnalysisResults ||
       this.props.threshold !== prevProps.threshold ||
       this.props.format !== prevProps.format ||
@@ -32,7 +34,7 @@ class HeatmapViz extends Component {
       this.state.selectedStudyName !== prevState.selectedStudyName ||
       this.state.selectedSorterName !== prevState.selectedSorterName
     ) {
-      this.buildVizData(this.props.studyAnalysisResults);
+      this.buildVizData();
     }
     if (
       this.state.tableHeader !== prevState.tableHeader ||
@@ -49,125 +51,103 @@ class HeatmapViz extends Component {
       this.props.handleCardHeightChange(height);
   }
 
-  buildVizData(studyAnalysisResults) {
-    if ((studyAnalysisResults) && (studyAnalysisResults.length > 0)) {
+  buildVizData() {
+    let sortedStudySets = this.props.studySets;
+    // Note: study sets are sorted alphabetically by name on inititial fetch
 
-      // assemble a lookup: study_set_id -> study_set_name which we will need later
-      let studySetNamesById = {};
-      this.props.studysets.forEach(function(x, i) {
-        studySetNamesById[x._id] = x.name;
-      }, this);
+    this.studySetNamesByStudyName = {};
+    for (let studySet of this.props.studySets) {
+      for (let study of studySet.studies) {
+        this.studySetNamesByStudyName[study.name] = studySet.name;
+      }
+    }
+    
+    if (this.props.groupByStudySets) {
+      const studySetGroupStrings = ['PAIRED_', 'SYNTH_', 'HYBRID_', 'MANUAL_'];
+      sortedStudySets = [];
+      for (let groupString of studySetGroupStrings) {
+        for (let studySet of this.props.studySets) {
+          if (studySet.name.includes(groupString)) {
+            sortedStudySets.push(studySet);
+          }
+        }
+        // empty row
+        sortedStudySets.push(null);
+      }
+    }
 
-      // assemble a lookup: study_name -> study_set_name
-      // and a collection of study set names
-      let studySetByStudy = {}; // lookup study_name -> study_set_name
-      let studySetNames = {}; // collection of study set names (will be sorted list below)
-      this.props.studies.forEach(function(study, i) {
-        let studySetName = studySetNamesById[study.studySet];
-        studySetByStudy[study.name] = studySetName;
-        studySetNames[studySetName] = true;
-      }, this);
-      // make it a sorted list
-      studySetNames = Object.keys(studySetNames);
-      studySetNames.sort();
-      this.studySetByStudy = studySetByStudy;
+    let studyAnalysisResultsByStudyName = {};
+    for (let studyAnalysisResult of this.props.studyAnalysisResults.allResults) {
+      studyAnalysisResultsByStudyName[studyAnalysisResult.studyName] = studyAnalysisResult;
+    }
 
-      // Assemble the table rows (list of objects that will be passed to the ExpandingHeatmapTable component)
-      let tableRows = [];
-      if (this.props.groupByStudySets) {
-
-        let studySetGroups = ['PAIRED_', 'SYNTH_', 'HYBRID_', 'MANUAL_'];
-
-        studySetGroups.forEach(grp => {
-          studySetNames.forEach(function(studySet, ii) {
-            if (studySet.includes(grp)) {
-              // loop through the study sets
-              // prepare a list of the studies in the study set (formatted properly for convenience)
-              let studyAnalysisResultsInStudySet = [];
-              studyAnalysisResults.forEach(function(studyAnalysisResult, jj) {
-                // loop through the studies with results looking for the ones that match the study set
-                let studyName = studyAnalysisResult.studyName;
-                if (studySetByStudy[studyName] === studySet) {
-                  /*
-                  // important to sort the results by sorter so they all line up
-                  studyWithResults0.sort((a, b) => {
-                    let textA = a.sorter.toUpperCase();
-                    let textB = b.sorter.toUpperCase();
-                    return textA < textB ? -1 : textA > textB ? 1 : 0;
-                  });
-                  */
-                  studyAnalysisResultsInStudySet.push(studyAnalysisResult);
-                }
-                return null;
-              }, this);
-              // Here's the table row associated with the study set
-              let tableRow = {
-                id: 'studySet--' + studySet,
-                cells: this.computeTableRowCellsFromStudySet(
-                  studyAnalysisResultsInStudySet,
-                  studySet
-                ),
-                subrows: []
-              };
-              // loop through the study analysis results in the study set and add a row for each
-              studyAnalysisResultsInStudySet.forEach(function(studyAnalysisResult, kk) {
-                tableRow.subrows.push({
-                  cells: this.computeTableRowCellsFromStudyAnalysisResult(studyAnalysisResult, false)
-                });
-                return null;
-              }, this);
-              tableRows.push(tableRow);
-
-              // // add a spacer row -- which should have the same number of cells and perhaps some formatting associated with the study set
-              // tableRows.push({
-              //   cells: this.computeEmptyTableRowCellsFromStudyAnalysisResult(studyAnalysisResults[0])
-              // });
-              return null;
+    // Assemble the table rows (list of objects that will be passed to the ExpandingHeatmapTable component)
+    let tableRows = [];
+    if (this.props.groupByStudySets) {
+      for (let studySet of sortedStudySets) {
+        if (studySet) {
+          // Here's the table row associated with the study set
+          let tableRow = {
+            id: 'studySet--' + studySet.name,
+            cells: this.computeTableRowCellsFromStudySet(studySet),
+            subrows: []
+          };
+          for (let study of studySet.studies) {
+            let studyAnalysisResult = studyAnalysisResultsByStudyName[study.name] || null;
+            if (studyAnalysisResult) {
+              tableRow.subrows.push({
+                id: `subrow--${studySet.name}-${study.name}`,
+                cells: this.computeTableRowCellsFromStudyAnalysisResult(studyAnalysisResult, false)
+              });
             }
-          }, this);
-          // add a spacer row -- which should have the same number of cells and perhaps some formatting associated with the study set
-          tableRows.push({
-            cells: this.computeEmptyTableRowCellsFromStudyAnalysisResult(studyAnalysisResults[0])
-          });
+          }
+          tableRows.push(tableRow);
+        }
+        else {
+          // empty row
+          let tableRow = {
+            id: `empty--${tableRows.length}`,
+            cells: this.computeEmptyTableRowCells(`empty--${tableRows.length}`),
+            subrows: []
+          };
+          tableRows.push(tableRow);
+        }
+      }
+    }
+    else {
+      for (let studyAnalysisResult of this.props.studyAnalysisResults.allResults) {
+        tableRows.push({
+          id: `sar--${studyAnalysisResult.studyName}`,
+          cells: this.computeTableRowCellsFromStudyAnalysisResult(studyAnalysisResult, false)
         });
       }
-      else {
-        this.props.studyAnalysisResults.forEach(function(studyAnalysisResult) {
-          tableRows.push({
-            cells: this.computeTableRowCellsFromStudyAnalysisResult(studyAnalysisResult, false)
-          });
-        }, this);
-      }
+    }
 
-      let sar = studyAnalysisResults[0]; // first study analysis result
-      let sorterNames = sar.sortingResults.map(function(sr) {
-        return sr.sorterName;
-      });
-
-      let headerCells = [];
+    let headerCells = [];
+    headerCells.push({
+      id: 'header-sorter--',
+      text: ""
+    });
+    for (let sorter of this.props.sorters) {
       headerCells.push({
-        text: ""
-      });
-      sorterNames.forEach(function(sorterName) {
-        headerCells.push({
-          text: sorterName,
-          link: '/algorithms',
-          rotate: true
-        });
-        return null;
-      }, this);
-      let tableHeader = {
-        cells: headerCells
-      };
-
-      let elmnt = document.getElementById("heatmap-card");
-      let width = elmnt.offsetWidth;
-      this.setState({
-        tableRows: tableRows,
-        tableHeader: tableHeader,
-        vizWidth: width
+        id: 'header-sorter-' + sorter.name,
+        text: sorter.name,
+        link: '/algorithms',
+        rotate: true
       });
     }
+    let tableHeader = {
+      id: 'table-header',
+      cells: headerCells
+    };
+
+    let elmnt = document.getElementById("heatmap-card");
+    let width = elmnt.offsetWidth;
+    this.setState({
+      tableRows: tableRows,
+      tableHeader: tableHeader,
+      vizWidth: width
+    });
   }
 
   getFormatCopy() {
@@ -188,19 +168,18 @@ class HeatmapViz extends Component {
     return copy;
   }
 
-  computeTableRowCellsFromStudySet(studyAnalysisResults, studySetName) {
-    let aggregatedStudyAnalysisResult = this.aggregateStudyAnalysisResults(studyAnalysisResults, studySetName);
-    return this.computeTableRowCellsFromStudyAnalysisResult(aggregatedStudyAnalysisResult, true, 'studySet--' + studySetName);
+  computeTableRowCellsFromStudySet(studySet) {
+    let aggregatedStudyAnalysisResult = this.aggregateStudyAnalysisResults(studySet);
+    return this.computeTableRowCellsFromStudyAnalysisResult(aggregatedStudyAnalysisResult, true, 'studySet--' + studySet.name);
   }
 
-  aggregateStudyAnalysisResults(studyAnalysisResults, studySetName) {
-    let numSorters = studyAnalysisResults[0].sortingResults.length;
-
+  aggregateStudyAnalysisResults(studySet) {
     let trueSnrs = [];
     let trueFiringRates = [];
     let trueNumEvents = [];
     // ...
     let sortingResults = [];
+    let numSorters = this.props.sorters.length;
     for (let ii = 0; ii < numSorters; ii++) {
       sortingResults.push({
         accuracies: [],
@@ -209,95 +188,61 @@ class HeatmapViz extends Component {
         numMatches: [],
         numFalsePositives: [],
         numFalseNegatives: [],
-        cpuTimesSec: []
+        cpuTimesSec: [],
+        sorterName: this.props.sorters[ii].name
       });
     }
 
-    studyAnalysisResults.forEach((studyAnalysisResult) => {
-      trueSnrs = trueSnrs.concat(studyAnalysisResult.trueSnrs);
-      trueFiringRates = trueFiringRates.concat(studyAnalysisResult.trueFiringRates);
-      trueNumEvents = trueNumEvents.concat(studyAnalysisResult.trueNumEvents);
-      // ...
-      for (let ii = 0; ii < numSorters; ii++) {
-        sortingResults[ii].accuracies = sortingResults[ii].accuracies.concat(studyAnalysisResult.sortingResults[ii].accuracies);
-        sortingResults[ii].precisions = sortingResults[ii].precisions.concat(studyAnalysisResult.sortingResults[ii].precisions);
-        sortingResults[ii].recalls = sortingResults[ii].recalls.concat(studyAnalysisResult.sortingResults[ii].recalls);
-        sortingResults[ii].numMatches = sortingResults[ii].numMatches.concat(studyAnalysisResult.sortingResults[ii].numMatches);
-        sortingResults[ii].numFalsePositives = sortingResults[ii].numFalsePositives.concat(studyAnalysisResult.sortingResults[ii].numFalsePositives);
-        sortingResults[ii].numFalseNegatives = sortingResults[ii].numFalseNegatives.concat(studyAnalysisResult.sortingResults[ii].numFalseNegatives);
-        sortingResults[ii].cpuTimesSec = sortingResults[ii].cpuTimesSec.concat(studyAnalysisResult.sortingResults[ii].cpuTimesSec);
+    let studyNamesInStudySet = {};
+    for (let study of studySet.studies) {
+      studyNamesInStudySet[study.name] = true;
+    }
+
+    for (let studyAnalysisResult of this.props.studyAnalysisResults.allResults) {
+      if (studyAnalysisResult.studyName in studyNamesInStudySet) {
+        trueSnrs = trueSnrs.concat(studyAnalysisResult.trueSnrs);
+        trueFiringRates = trueFiringRates.concat(studyAnalysisResult.trueFiringRates);
+        trueNumEvents = trueNumEvents.concat(studyAnalysisResult.trueNumEvents);
+        // ...
+        for (let ii = 0; ii < numSorters; ii++) {
+          sortingResults[ii].accuracies = sortingResults[ii].accuracies.concat(studyAnalysisResult.sortingResults[ii].accuracies);
+          sortingResults[ii].precisions = sortingResults[ii].precisions.concat(studyAnalysisResult.sortingResults[ii].precisions);
+          sortingResults[ii].recalls = sortingResults[ii].recalls.concat(studyAnalysisResult.sortingResults[ii].recalls);
+          sortingResults[ii].numMatches = sortingResults[ii].numMatches.concat(studyAnalysisResult.sortingResults[ii].numMatches);
+          sortingResults[ii].numFalsePositives = sortingResults[ii].numFalsePositives.concat(studyAnalysisResult.sortingResults[ii].numFalsePositives);
+          sortingResults[ii].numFalseNegatives = sortingResults[ii].numFalseNegatives.concat(studyAnalysisResult.sortingResults[ii].numFalseNegatives);
+          sortingResults[ii].cpuTimesSec = sortingResults[ii].cpuTimesSec.concat(studyAnalysisResult.sortingResults[ii].cpuTimesSec);
+        }
       }
-    })
+    }
 
     return {
-      studyName: studySetName,
+      studyName: studySet.name,
       trueSnrs: trueSnrs,
       trueFiringRates: trueFiringRates,
       trueNumEvents: trueNumEvents,
       // ...
       sortingResults: sortingResults
     };
-
-    /*
-    let aggregated = [];
-    for (let i = 0; i < numSorters; i++) {
-      aggregated.push({
-        accuracies: [],
-        recalls: [],
-        precisions: [],
-        cpus: [],
-        snrs: [],
-        sorter: list[0][i].sorter,
-        study: studySet
-      });
-    }
-    for (let j = 0; j < list.length; j++) {
-      for (let i = 0; i < numSorters; i++) {
-        aggregated[i].accuracies = aggregated[i].accuracies.concat(
-          list[j][i].accuracies
-        );
-        aggregated[i].recalls = aggregated[i].recalls.concat(
-          list[j][i].recalls
-        );
-        aggregated[i].precisions = aggregated[i].precisions.concat(
-          list[j][i].precisions
-        );
-        aggregated[i].snrs = aggregated[i].snrs.concat(list[j][i].snrs);
-        if (this.props.format === "cpu") {
-          let cpus0 = this.get_cpu_times_for_study_sorter(
-            this.props.cpus,
-            list[j][i].study,
-            list[j][i].sorter
-          );
-          aggregated[i].cpus = aggregated[i].cpus.concat(cpus0);
-        }
-        if (list[j][i].sorter !== aggregated[i].sorter) {
-          throw Error(
-            "Unexpected... sorter does not match in computeTableRowCellsFromStudySet."
-          );
-        }
-      }
-    }
-
-    return this.computeTableRowCellsFromStudy(aggregated, true, studySet);
-    */
   }
 
-  computeEmptyTableRowCellsFromStudyAnalysisResult(studyAnalysisResult) {
+  computeEmptyTableRowCells(id) {
     let ret = [];
     ret.push({
+      id: `${id}---`,
       text: "",
       spacer: true,
       selectable: false
     });
-    studyAnalysisResult.sortingResults.forEach(function(sr) {
+    let numSorters = this.props.sorters.length;
+    for (let ii = 0; ii < numSorters; ii++) {
       ret.push({
+        id: `${id}--${ii}`,
         text: "",
         spacer: true,
         selectable: false
       });
-      return null;
-    }, this);
+    }
     return ret;
   }
 
@@ -312,12 +257,13 @@ class HeatmapViz extends Component {
     let threshold = this.props.threshold;
     let ret = []; // the cells to return
     // the first cell is the name of the study
-    let link = isStudySet ? `/studyset/${studyAnalysisResult.studyName}` : `/studyresults/${studyAnalysisResult.studyName}`;
+    let link = isStudySet ? `/studyset/${studyAnalysisResult.studyName}` : `/study/${studyAnalysisResult.studyName}`;
     let name0 = studyAnalysisResult.studyName;
     if (!this.props.groupByStudySets) {
-      name0 = this.studySetByStudy[studyAnalysisResult.studyName]+' '+studyAnalysisResult.studyName;
+      name0 = this.studySetNamesByStudyName[studyAnalysisResult.studyName]+' '+studyAnalysisResult.studyName;
     }
     ret.push({
+      id: `study-name-${name0}`,
       text: name0,
       link: link,
       expand_id_on_click: expandIdOnClick,
@@ -433,7 +379,7 @@ class HeatmapViz extends Component {
         }
       } else {
         Sentry.captureMessage(
-          "Unsupported format in computeTableRowCellsFromStudy",
+          "Unsupported format in computeTableRowCellsFromStudyAnalysisResult",
           format
         );
         return {value: undefined, num_missing:num_missing};
@@ -471,7 +417,7 @@ class HeatmapViz extends Component {
       }
       // add a cell corresponding to a sorting result
       ret.push({
-        id: studyAnalysisResult.studyName + "--" + sortingResult.sorterName,
+        id: `sorting-result-${studyAnalysisResult.studyName}---${sortingResult.sorterName}`,
         expand_id_on_click: expandIdOnClick,
         color: color,
         bgcolor: bgcolor,
@@ -531,23 +477,6 @@ class HeatmapViz extends Component {
         selectedSorterName: cell.info.sorterName
       });
     }
-  }
-
-  get_cpu_times_for_study_sorter(cpus, study, sorter) {
-    let ret = [];
-    cpus.forEach(function(cpu) {
-      if (cpu._id === sorter) {
-        cpu.studyGroup.forEach(function(x) {
-          if (x.studyName === study) {
-            for (let i = 0; i < x.count; i++) {
-              ret.push(x.averageCPU);
-            }
-            return ret;
-          }
-        });
-      }
-    });
-    return ret;
   }
 
   isNumeric(n) {

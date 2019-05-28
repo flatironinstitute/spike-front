@@ -271,26 +271,6 @@ class SpikeSpray extends Component {
                   <div className="card__label" style={{ fontSize: '14px', textAlign: 'center' }}>
                     <span>{column.num_spikes} of {colTotals[column.name]} spikes shown</span>
                   </div>
-                  {/* <XYPlot
-                      width={350}
-                      height={700}
-                      key={`spikeplot-${Math.random(i)}`}
-                    >
-                      <XAxis title="Samples in time" />
-                      {column.plotData.map((line, i) => (
-                        <LineSeries
-                          key={`line-${Math.random(i)}`}
-                          color={line.color}
-                          data={line.data}
-                          style={{ strokeWidth: 2 }}
-                        />
-                      ))}
-                      <LabelSeries
-                        animation
-                        allowOffsetToBeReversed
-                        data={column.labelData}
-                      />
-                    </XYPlot> */}
                 </Col>
               ))}
             </Row>

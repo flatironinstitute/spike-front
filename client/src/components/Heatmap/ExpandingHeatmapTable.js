@@ -1,5 +1,5 @@
 import React from "react";
-import { getRandomKeyInt } from "../../utils.js";
+// import { getRandomKeyInt } from "../../utils.js";
 
 import "./expandingheatmaptable.css";
 import { Link } from "react-router-dom";
@@ -69,7 +69,7 @@ class ExpandingHeatmapTable extends React.Component {
         onClick={() => this.handleCellSelected(cell)}
         className={class0}
         style={style0}
-        key={"table-cell-" + getRandomKeyInt(0)}
+        key={cell['id']}
       >
         <div>
           <span>{cellContent}</span>
@@ -91,19 +91,19 @@ class ExpandingHeatmapTable extends React.Component {
     if (row.subrows && row.subrows.length > 0) {
       if (isExpanded) {
         tds.push(
-          <td key={"collapse-button-" + getRandomKeyInt(index)}>
+          <td key={"collapse-button-" + id0}>
             {this.createCollapseButton(id0)}
           </td>
         );
       } else {
         tds.push(
-          <td key={"expand-button-" + getRandomKeyInt(index)}>
+          <td key={"expand-button-" + id0}>
             {this.createExpandButton(id0)}
           </td>
         );
       }
     } else {
-      tds.push(<td key={"empty-cell-" + getRandomKeyInt(index)} />);
+      tds.push(<td key={"empty-cell-" + id0} />);
     }
     // Create the Other Cells
     row.cells.forEach((c, i) => {
@@ -118,7 +118,7 @@ class ExpandingHeatmapTable extends React.Component {
     ret.push(
       <tr
         className={isSubrow ? "subrow" : "toprow"}
-        key={"row-key" + getRandomKeyInt(index)}
+        key={"row-key-" + id0}
       >
         {tds}
       </tr>
@@ -131,7 +131,7 @@ class ExpandingHeatmapTable extends React.Component {
           ret = ret.concat(trs0);
           return null;
         }, this);
-        ret.push(<tr><td>&nbsp;</td></tr>);
+        ret.push(<tr key={"expanded-empty-" + id0}><td>&nbsp;</td></tr>);
       }
     }
     return ret;

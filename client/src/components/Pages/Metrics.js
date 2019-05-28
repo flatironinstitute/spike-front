@@ -106,8 +106,8 @@ class Metrics extends Component {
                         <MathJax.Node inline formula={`\\Delta t \\`} />
                         is set as <code>delta_frames</code> in sample units. Note
                         that the time in milliseconds thus depends on the sample rate. We use{" "}
-                        <MathJax.Node inline formula="\Delta t" /> is 10 samples (frames),
-                        corresponding to 0.5 ms at 20 kHz, or 0.333ms at 30 kHz.
+                        <MathJax.Node inline formula="\Delta t" /> is 30 samples (frames),
+                        corresponding to 1.5 ms at 20 kHz, or 1 ms at 30 kHz.
                       </p>
                     </MathJax.Provider>
                   </div>
