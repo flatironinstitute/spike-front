@@ -4,20 +4,17 @@ import { Col, Container, Row } from "react-bootstrap";
 
 class Study extends Component {
   render() {
-    let study = {};
-    this.props.studies.forEach(ss => {
-        if (ss.name === this.props.studyName) {
-            study = ss;
+    console.log('----- study render', this.props.studySets, this.props);
+    let study = null;
+    for (let studySet of this.props.studySets) {
+      for (let study0 of studySet.studies) {
+        if (study0.name === this.props.studyName) {
+          study = study0;
         }
-    })
+      }
+    }
     if (!study) {
       return <div>Study not found: {this.props.studyName}</div>
-    }
-    let recordingsInStudy = [];
-    for (let rec of this.props.recordings) {
-      if (rec.studyName === this.props.studyName) {
-        recordingsInStudy.push(rec);
-      }
     }
     let recording_header = (
       <tr>
@@ -31,16 +28,16 @@ class Study extends Component {
       </tr>
     )
     let recording_rows = [];
-    for (let rec of recordingsInStudy) {
+    for (let rec of study.recordings) {
       recording_rows.push(
-        <tr>
-          <td>{rec.name}</td>
-          <td>{rec.sampleRateHz}</td>
-          <td>{rec.numChannels}</td>
-          <td>{rec.durationSec}</td>
-          <td>{rec.numTrueUnits}</td>
-          <td>{abbreviateSha1Path(rec.directory)}</td>
-          <td>{abbreviateSha1Path(rec.firingsTrue)}</td>
+        <tr key={`recording--${study.name}-${rec.name}`}>
+          <td key={"name"}>{rec.name}</td>
+          <td key={"sampleRateHz"}>{rec.sampleRateHz}</td>
+          <td key={"numChannels"}>{rec.numChannels}</td>
+          <td key={"durationSec"}>{rec.durationSec}</td>
+          <td key={"numTrueUnits"}>{rec.numTrueUnits}</td>
+          <td key={"directory"}>{abbreviateSha1Path(rec.directory)}</td>
+          <td key={"firingsTrue"}>{abbreviateSha1Path(rec.firingsTrue)}</td>
         </tr>
       )
     }
@@ -67,7 +64,6 @@ class Study extends Component {
                         {recording_rows}
                       </tbody>
                     </table>
-                    {/* <pre>{JSON.stringify(this.props.recordings, null, 4)}</pre> */}
                   </div>
                 </div>
               </div>

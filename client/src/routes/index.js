@@ -49,8 +49,6 @@ class Routes extends Component {
       </div>
     );
 
-    console.log('----- props', this.props.studyAnalysisResults, this.props.sorterName, this.props.studySets);
-
     return (
       <div className="wrapper">
         <Header />
@@ -110,9 +108,10 @@ class Routes extends Component {
           <Route
             path="/study/:studyName"
             render={props => 
-              (false) ? (loadingContainer) :
+              (!this.props.studySets) ? (loadingContainer) :
               (
                 <Study
+                  studySets={this.props.studySets}
                   studyName={props.match.params.studyName}
                 />
               )
