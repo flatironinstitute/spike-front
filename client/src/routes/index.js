@@ -22,6 +22,7 @@ import Contact from "../components/Contact/Contact";
 import DetailPage from "../components/DetailPage/DetailPage";
 import StudySet from "../components/Pages/StudySet";
 import Study from "../components/Pages/Study";
+import Recording from "../components/Pages/Recording";
 import FourOhFour from "../components/Pages/FourOhFour";
 
 class Routes extends Component {
@@ -122,6 +123,19 @@ class Routes extends Component {
                 <Study
                   studySets={this.props.studySets}
                   studyName={props.match.params.studyName}
+                />
+              )
+            }
+          />
+          <Route
+            path="/recording/:studyName/:recordingName"
+            render={props => 
+              (!this.props.studySets) ? (loadingContainer) :
+              (
+                <Recording
+                  studySets={this.props.studySets}
+                  studyName={props.match.params.studyName}
+                  recordingName={props.match.params.recordingName}
                 />
               )
             }
