@@ -33,7 +33,16 @@ class Routes extends Component {
     this.props.fetchAlgorithms();
     this.props.fetchStats();
     this.props.fetchStudySets();
-    this.props.fetchStudyAnalysisResults();
+  }
+
+  async componentDidUpdate(prevProps) {
+    if (this.props.studySets !== prevProps.studySets) {
+      if (this.props.studySets) {
+        for (let studySet of this.props.studySets) {
+          this.props.fetchStudyAnalysisResults(studySet.name);
+        }
+      }
+    }
   }
 
   render() {

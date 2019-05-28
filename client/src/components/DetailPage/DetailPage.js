@@ -103,18 +103,21 @@ class DetailPage extends Component {
   }
 
   render() {
-    console.log('---- detail render', this.props);
     let loading =
       isEmpty(this.props.studyName) ||
       isEmpty(this.props.studyAnalysisResults);
 
     let heatmapTitle = this.getFormatCopy();
 
-    let studyAnalysisResult = {};
-    this.props.studyAnalysisResults.forEach(sar => {
+    let studyAnalysisResult = null;
+    this.props.studyAnalysisResults.allResults.forEach(sar => {
       if (sar.studyName === this.props.studyName)
         studyAnalysisResult = sar;
     });
+
+    if (!studyAnalysisResult) {
+      loading = true;
+    }
 
     return (
       <div>
@@ -145,7 +148,7 @@ class DetailPage extends Component {
                             selectSorterName={sorterName => { this.setState({ sorterName, selectedUnit: null }) }}
                             selectedStudyName={this.props.studyName}
                             selectedSorterName={this.state.sorterName}
-                            studyAnalysisResults={[studyAnalysisResult]}
+                            studyAnalysisResults={{allResults: [studyAnalysisResult]}}
                             studySets={this.props.studySets}
                             sorters={this.props.sorters}
                             format={this.state.format}
@@ -172,7 +175,7 @@ class DetailPage extends Component {
                   <Col lg={6} sm={12}>
                     <ScatterplotCard
                       sorters={this.props.sorters}
-                      studyAnalysisResults={[studyAnalysisResult]}
+                      studyAnalysisResults={{allResults: [studyAnalysisResult]}}
                       studyName={this.props.studyName}
                       sorterName={this.state.sorterName}
                       sliderValue={this.state.sliderValue}

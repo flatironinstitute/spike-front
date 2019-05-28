@@ -39,7 +39,7 @@ class ScatterplotCard extends Component {
 
   findStudyAnalysisResult() {
     let sar = null;
-    for (let studyAnalysisResult of this.props.studyAnalysisResults) {
+    for (let studyAnalysisResult of this.props.studyAnalysisResults.allResults) {
       if (studyAnalysisResult.studyName === this.props.studyName) {
         sar = studyAnalysisResult;
       }

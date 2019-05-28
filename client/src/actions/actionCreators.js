@@ -240,8 +240,8 @@ export const receiveStudyAnalysisResults = studyAnalysisResults => {
   }
 };
 
-export const fetchStudyAnalysisResults = () => {
-  let url = `/api/studyanalysisresults`;
+export const fetchStudyAnalysisResults = (studySetName) => {
+  let url = `/api/studyanalysisresults/${studySetName}`;
   return function (dispatch) {
     dispatch(startLoading());
     return createFetchAPI(url)

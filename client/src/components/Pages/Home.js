@@ -7,6 +7,7 @@ import StatsAlert from "../Header/StatsAlert";
 import InfoPanelContent from "../Header/InfoPanelContent";
 
 import "./pages.css";
+// import sortingResults from "../../reducers/sortingResults";
 
 class Home extends Component {
   constructor(props) {
@@ -44,7 +45,10 @@ class Home extends Component {
 
     return (
       <div className="page__body page__body--alert ">
-        <StatsAlert {...this.props} />
+        <StatsAlert
+          sortingResults={this.props.sortingResults}
+          studySets={this.props.studySets}
+        />
         {loading ? (
           <Container className="container__heatmap" id="overview">
             <Card>

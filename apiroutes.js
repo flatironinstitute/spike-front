@@ -42,6 +42,8 @@ router.get("/api/loadObject", async (req, res) => {
 });
 // Study analysis results
 router.get("/api/studyanalysisresults", studyAnalysisResultController.getStudyAnalysisResults);
+// Study analysis result
+router.get("/api/studyanalysisresults/:studySetName", studyAnalysisResultController.getStudyAnalysisResultsForStudySet);
 // Contact Routes
 router.post("/api/contact", async (req, res) => {
   try {

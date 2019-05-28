@@ -4,7 +4,6 @@ import { Col, Container, Row } from "react-bootstrap";
 
 class Study extends Component {
   render() {
-    console.log('----- study render', this.props.studySets, this.props);
     let study = null;
     for (let studySet of this.props.studySets) {
       for (let study0 of studySet.studies) {

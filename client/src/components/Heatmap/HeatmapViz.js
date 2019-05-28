@@ -34,7 +34,7 @@ class HeatmapViz extends Component {
       this.state.selectedStudyName !== prevState.selectedStudyName ||
       this.state.selectedSorterName !== prevState.selectedSorterName
     ) {
-      this.buildVizData(this.props.studySets, this.props.studyAnalysisResults);
+      this.buildVizData();
     }
     if (
       this.state.tableHeader !== prevState.tableHeader ||
@@ -77,7 +77,7 @@ class HeatmapViz extends Component {
     }
 
     let studyAnalysisResultsByStudyName = {};
-    for (let studyAnalysisResult of this.props.studyAnalysisResults) {
+    for (let studyAnalysisResult of this.props.studyAnalysisResults.allResults) {
       studyAnalysisResultsByStudyName[studyAnalysisResult.studyName] = studyAnalysisResult;
     }
 
@@ -115,7 +115,7 @@ class HeatmapViz extends Component {
       }
     }
     else {
-      for (let studyAnalysisResult of this.props.studyAnalysisResults) {
+      for (let studyAnalysisResult of this.props.studyAnalysisResults.allResults) {
         tableRows.push({
           id: `sar--${studyAnalysisResult.studyName}`,
           cells: this.computeTableRowCellsFromStudyAnalysisResult(studyAnalysisResult, false)
@@ -198,7 +198,7 @@ class HeatmapViz extends Component {
       studyNamesInStudySet[study.name] = true;
     }
 
-    for (let studyAnalysisResult of this.props.studyAnalysisResults) {
+    for (let studyAnalysisResult of this.props.studyAnalysisResults.allResults) {
       if (studyAnalysisResult.studyName in studyNamesInStudySet) {
         trueSnrs = trueSnrs.concat(studyAnalysisResult.trueSnrs);
         trueFiringRates = trueFiringRates.concat(studyAnalysisResult.trueFiringRates);
