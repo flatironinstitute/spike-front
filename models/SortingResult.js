@@ -15,8 +15,7 @@ const sortingResultSchema = new mongoose.Schema({
     ref: "Sorter"
   },
   firings: {
-    type: String,
-    required: "sha1:// of the firings file"
+    type: String, /* sha1:// of the firings file */
   },
   firingsTrue: {
     type: String,

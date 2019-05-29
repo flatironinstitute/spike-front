@@ -130,7 +130,9 @@ class ScatterplotCount extends Component {
     metricObj[this.props.metric] = hoveredNode ? hoveredNode.y : 0;
     let otherObj = {
       snr: hoveredNode ? hoveredNode.x : 0,
-      num_events: hoveredNode ? hoveredNode.num_events : 0
+      num_events: hoveredNode ? hoveredNode.num_events : 0,
+      recording: hoveredNode ? hoveredNode.recordingName : '',
+      unit_id: hoveredNode ? hoveredNode.unitId : ''
     };
     let valueObj = { ...metricObj, ...otherObj };
     let alignment = {

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import { abbreviateSha1Path } from "../../utils";
+import ConsoleOutput from "./ConsoleOutput";
 
 class SortingResult extends Component {
   render() {
@@ -86,6 +87,18 @@ class SortingResult extends Component {
                         </tr>
                       </tbody>
                     </table>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+          <Row className="container__sorter--row justify-content-md-center">
+            <Col lg={12} sm={12} xl={10}>
+              <div className="card card--stats">
+                <div className="content">
+                  <div className="card__footer">
+                    <h3>Console output</h3>
+                    <ConsoleOutput consoleOutPath={sortingResult.consoleOut} />
                   </div>
                 </div>
               </div>

@@ -30,7 +30,7 @@ router.get("/api/loadObject", async (req, res) => {
   let path = decodeURIComponent(req.query.path)
 
   let mt = new MountainClient();
-  mt.configDownloadFrom('spikeforest.public');
+  mt.configDownloadFrom(['spikeforest.public1', 'spikeforest.public']);
   
   let obj = await mt.loadObject(path);
   if (obj) {
@@ -40,11 +40,27 @@ router.get("/api/loadObject", async (req, res) => {
     res.send({success:false});
   }
 });
+// Load text
+router.get("/api/loadText", async (req, res) => {
+  let path = decodeURIComponent(req.query.path)
+
+  let mt = new MountainClient();
+  mt.configDownloadFrom(['spikeforest.public1', 'spikeforest.public']);
+  
+  let txt = await mt.loadText(path);
+  if (txt) {
+    res.send({success:true, text: txt});
+  }
+  else {
+    res.send({success:false});
+  }
+});
+// Find file
 router.get("/api/findFile", async (req, res) => {
   let path = decodeURIComponent(req.query.path)
 
   let mt = new MountainClient();
-  mt.configDownloadFrom('spikeforest.public');
+  mt.configDownloadFrom(['spikeforest.public1', 'spikeforest.public']);
   
   let url = await mt.findFile(path);
   if (url) {
