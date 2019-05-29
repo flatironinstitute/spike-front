@@ -23,6 +23,7 @@ import DetailPage from "../components/DetailPage/DetailPage";
 import StudySet from "../components/Pages/StudySet";
 import Study from "../components/Pages/Study";
 import Recording from "../components/Pages/Recording";
+import SortingResult from "../components/Pages/SortingResult";
 import FourOhFour from "../components/Pages/FourOhFour";
 
 class Routes extends Component {
@@ -130,12 +131,28 @@ class Routes extends Component {
           <Route
             path="/recording/:studyName/:recordingName"
             render={props => 
-              (!this.props.studySets) ? (loadingContainer) :
+              (!this.props.studySets) || (!this.props.sortingResults) ? (loadingContainer) :
               (
                 <Recording
                   studySets={this.props.studySets}
+                  sortingResults={this.props.sortingResults}
                   studyName={props.match.params.studyName}
                   recordingName={props.match.params.recordingName}
+                />
+              )
+            }
+          />
+          <Route
+            path="/sortingresult/:studyName/:recordingName/:sorterName"
+            render={props => 
+              (!this.props.studySets) || (!this.props.sortingResults) ? (loadingContainer) :
+              (
+                <SortingResult
+                  studySets={this.props.studySets}
+                  sortingResults={this.props.sortingResults}
+                  studyName={props.match.params.studyName}
+                  recordingName={props.match.params.recordingName}
+                  sorterName={props.match.params.sorterName}
                 />
               )
             }

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Form, InputGroup, Button, Col, Alert } from "react-bootstrap";
 import { Formik } from "formik";
 import * as yup from "yup";
-import { isEmpty } from "../../utils.js";
+import { isEmpty } from "../../utils";
 
 const schema = yup.object({
   firstName: yup.string().required(),

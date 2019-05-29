@@ -27,6 +27,9 @@ const sortingResultSchema = new mongoose.Schema({
   },
   cpuTimeSec: {
     type: Float
+  },
+  consoleOut: {
+    type: String /* sha1:// of console output */
   }
 });
 

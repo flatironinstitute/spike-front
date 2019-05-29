@@ -1,5 +1,5 @@
 import React from "react";
-// import { getRandomKeyInt } from "../../utils.js";
+// import { getRandomKeyInt } from "../../utils";
 
 import "./expandingheatmaptable.css";
 import { Link } from "react-router-dom";

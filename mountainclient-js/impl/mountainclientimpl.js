@@ -73,6 +73,12 @@ function MountainClientImpl() {
     }
     return txt;
   }
+  this.findFile = async function(path, opts) {
+    opts = JSON.parse(JSON.stringify(opts || {}));
+    opts.find = true;
+    let url_or_null = await this.loadBinary(path, opts);
+    return url_or_null;
+  }
   this.fileSha1 = async function(path, opts) {
     if (path.startsWith('sha1://')) {
       let sha1 = path.split('/')[2] || '';
@@ -122,7 +128,7 @@ function MountainClientImpl() {
           opts.hashed_key = hash_of_key(opts.key);
         }
         // tilde means it is already hashed
-        return await this.loadBinary(`key://pairio/${opts.collection}/~${hash_of_key(opts.key)}`);
+        return await this.loadBinary(`key://pairio/${opts.collection}/~${hash_of_key(opts.key)}`, opts);
       }
       else {
         console.warn('If path is not specified, you must provide collection and key.');
@@ -140,17 +146,39 @@ function MountainClientImpl() {
         let kachery_url = await resolve_kachery_url(df);
         if (kachery_url) {
           let url0 = kachery_url + '/get/sha1/' + sha1;
-          let buf = await http_get_binary(url0);
-          if (buf !== null) {
-            m_memory_cache.setBinaryForSha1(sha1, buf);
-            return buf;
+          if (opts.find) {
+            let ok = await http_check(url0);
+            if (ok) {
+              return url0;
+            }
+            else {
+              return null;
+            }
+          }
+          else {
+            let buf = await http_get_binary(url0);
+            if (buf !== null) {
+              m_memory_cache.setBinaryForSha1(sha1, buf);
+              return buf;
+            }
           }
         }
       }
       return null;
     }
     else if ((path.startsWith('http://')) || (path.startsWith('http://'))) {
-      return await http_get_binary(path);
+      if (opts.find) {
+        let ok = await http_check(path);
+        if (ok) {
+          return path;
+        }
+        else {
+          return null;
+        }
+      }
+      else {
+        return await http_get_binary(path);
+      }
     }
     else {
       console.warn('Unsupported protocol for path: ' + path);
@@ -270,7 +298,7 @@ async function http_get_binary(url, opts) {
   return buf;
 }
 
-async function url_exists(url, callback) {
+async function http_check(url, callback) {
   let response;
   try {
     response = await axios.head(url);

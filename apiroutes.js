@@ -40,6 +40,20 @@ router.get("/api/loadObject", async (req, res) => {
     res.send({success:false});
   }
 });
+router.get("/api/findFile", async (req, res) => {
+  let path = decodeURIComponent(req.query.path)
+
+  let mt = new MountainClient();
+  mt.configDownloadFrom('spikeforest.public');
+  
+  let url = await mt.findFile(path);
+  if (url) {
+    res.send({success:true, url: url});
+  }
+  else {
+    res.send({success:false});
+  }
+});
 // Study analysis results
 router.get("/api/studyanalysisresults", studyAnalysisResultController.getStudyAnalysisResults);
 // Study analysis result
