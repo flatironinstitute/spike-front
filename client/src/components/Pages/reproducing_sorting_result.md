@@ -37,7 +37,7 @@ mt.configDownloadFrom('spikeforest.public')
 recdir = '{recordingDirectory}'
 
 print('Loading recording...')
-# This will only work if the recording has been made public
+# The following will only work if the recording has been made public
 # (we have made a subset of recordings public) or if you
 # already have the recording on your computer.
 recording = SFMdaRecordingExtractor(dataset_directory=recdir, download=True)
