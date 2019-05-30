@@ -175,14 +175,16 @@ class Algorithms extends Component {
                           project. The goal is to ultimately merge these with
                           the corresponding wrappers in SpikeInterface/SpikeToolkit.
                         </p>
-                        <h3>How to run the analysis locally</h3>
+                        <h3>How to run the SpikeForest analysis locally</h3>
                         <p>
-                          We have prepared a <a href={"https://github.com/flatironinstitute/spikeforest/blob/master/docs/tutorials/spike_sorting_spikeforest_recording.md"} target={"_blank"}>full tutorial</a>{" "}
+                          We have prepared a <a href={"https://github.com/flatironinstitute/spikeforest/blob/master/docs/tutorials/spike_sorting_spikeforest_recording.md"} target={"_blank"}>tutorial</a>{" "}
                           illustrating how to run these algorithms on your own
                           computer to reproduce the results.
                         </p>
+                        <h3>How to run spike sorting on your own data</h3>
                         <p>
-                          Or to run these algorithms on your own data, see <a href={"https://github.com/flatironinstitute/spikeforest/blob/master/docs/tutorials/spike_sorting_single_recording.md"} target={"_blank"}>this tutorial</a>.
+                          We have also created <a href={"https://github.com/flatironinstitute/spikeforest/blob/master/docs/tutorials/spike_sorting_single_recording.md"} target={"_blank"}>this tutorial</a> which shows
+                          how to run the SpikeForest-wrapped spike sorters on your own data.
                         </p>
                       </div>
                     </div>
