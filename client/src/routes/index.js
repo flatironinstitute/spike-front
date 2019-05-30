@@ -149,6 +149,7 @@ class Routes extends Component {
               (
                 <SortingResult
                   studySets={this.props.studySets}
+                  sorters={this.props.sorters}
                   sortingResults={this.props.sortingResults}
                   studyName={props.match.params.studyName}
                   recordingName={props.match.params.recordingName}
