@@ -12,7 +12,7 @@ The first step is to install spikeforest and mountaintools. The easiest way is t
 the PyPI packages as follows.
 
 ```bash
-pip install --upgrade spikeforest==0.7.0
+pip install --upgrade spikeforest==0.8.0
 pip install --upgrade mountaintools==0.3.3
 ```
 
