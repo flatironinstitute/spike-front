@@ -8,7 +8,7 @@ const TextDecoder = textEncoding.TextDecoder;
 
 function MountainClientImpl() {
   let that = this;
-  let m_pairio_url = process.env.PAIRIO_URL||'https://pairio.org:20443';
+  let m_pairio_url = process.env.PAIRIO_URL||'http://pairio.org';
   let m_download_from = [];
   let m_memory_cache = new MemoryCache();
   let m_kachery_urls = {};
