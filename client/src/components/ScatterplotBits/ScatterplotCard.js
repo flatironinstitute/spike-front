@@ -57,6 +57,7 @@ class ScatterplotCard extends Component {
     //   borderRadius: "5px",
     //   display: "inline-block"
     // };
+    let sar = this.state.studyAnalysisResult;
     return (
       <div
         className="card card--heatmap"
@@ -75,7 +76,7 @@ class ScatterplotCard extends Component {
               <div className="card__header">
                 <div className="card__category--div">
                   <span className="card__title--link">
-                  <Link to={`/studyset/${this.props.studySetName}`}>{this.props.studySetName}</Link>/<Link to={`/studyresults/${this.props.studyName}`}>{this.props.studyName}</Link>
+                  <Link to={`/studyset/${sar.studySetName}`}>{sar.studySetName}</Link>/<Link to={`/studyresults/${this.props.studyName}`}>{this.props.studyName}</Link>
                   </span>
                   <span className="card__title--link">
                     Sorter:
@@ -84,7 +85,7 @@ class ScatterplotCard extends Component {
                 </div>
               </div>
               <ScatterplotContainer
-                studyAnalysisResult={this.state.studyAnalysisResult}
+                studyAnalysisResult={sar}
                 studyName={this.props.studyName}
                 sorterName={this.props.sorterName}
                 sliderValue={this.props.sliderValue}
