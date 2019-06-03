@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
+import { abbreviateSha1Path } from "../../utils";
 
 class Study extends Component {
   render() {
@@ -36,7 +37,7 @@ class Study extends Component {
           <td key={"durationSec"}>{rec.durationSec}</td>
           <td key={"numTrueUnits"}>{rec.numTrueUnits}</td>
           <td key={"directory"}>{abbreviateSha1Path(rec.directory)}</td>
-          <td key={"firingsTrue"}>{abbreviateSha1Path(rec.firingsTrue)}</td>
+          <td key={"firingsTrue"}>{abbreviateSha1Path(rec.firingsTrue, {canDownload: true})}</td>
         </tr>
       )
     }
@@ -49,7 +50,7 @@ class Study extends Component {
                 <div className="content">
                   <div className="card__footer">
                     <hr />
-                    <h3>Study name: {study.name}</h3>
+                    <h3>Study: {study.name}</h3>
                     <p>
                       This study is part of the <Link to={`/studyset/${study.studySetName}`}>{study.studySetName}</Link> study set.
                       You can <Link to={`/studyresults/${study.name}`}>view the sorting results</Link> associated with this study.
@@ -72,11 +73,6 @@ class Study extends Component {
       </div>
     );
   }
-}
-
-function abbreviateSha1Path(path) {
-  let list0 = path.split('/');
-  return <span title={path}>{`${list0[0]}//.../${list0[list0.length-1]}`}</span>;
 }
 
 export default Study;

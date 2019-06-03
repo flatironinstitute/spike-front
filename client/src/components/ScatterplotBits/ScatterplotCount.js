@@ -130,7 +130,9 @@ class ScatterplotCount extends Component {
     metricObj[this.props.metric] = hoveredNode ? hoveredNode.y : 0;
     let otherObj = {
       snr: hoveredNode ? hoveredNode.x : 0,
-      num_events: hoveredNode ? hoveredNode.num_events : 0
+      num_events: hoveredNode ? hoveredNode.num_events : 0,
+      recording: hoveredNode ? hoveredNode.recordingName : '',
+      unit_id: hoveredNode ? hoveredNode.unitId : ''
     };
     let valueObj = { ...metricObj, ...otherObj };
     let alignment = {
@@ -158,6 +160,14 @@ class ScatterplotCount extends Component {
           selectedNode = JSON.parse(JSON.stringify(a));
       })
     }
+
+    let nullNodes = [];
+    for (let node of data) {
+      if (node.y === null) {
+        nullNodes.push(node);
+      }
+    }
+
     // let selectedData = [];
     const yTitle = toTitleCase(this.props.metric);
     return (
@@ -185,6 +195,18 @@ class ScatterplotCount extends Component {
             onValueMouseOver={d => this.setState({ hoveredNode: d })}
             onValueClick={d => {this.handleScatterplotClick(d);}}
           />
+          {(nullNodes.length > 0) && 
+            <MarkSeries
+              // animation={true}
+              className="mark-series-example"
+              sizeRange={[3, 15]}
+              seriesId="null-nodes"
+              colorRange={["#000000", "#000000"]}
+              opacityType="literal"
+              data={nullNodes}
+              onValueClick={d => {this.handleScatterplotClick(d)}}
+            />
+          }
           {hoveredNode && <Hint value={valueObj} align={alignment} />}
           {selectedNode && 
             <MarkSeries

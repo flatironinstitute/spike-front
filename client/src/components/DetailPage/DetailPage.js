@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 // import * as Sentry from "@sentry/browser";
+import { Link } from "react-router-dom";
 
 // Components
 import { Card, Col, Container, Row } from "react-bootstrap";
@@ -119,6 +120,11 @@ class DetailPage extends Component {
       loading = true;
     }
 
+    let recordingName = '';
+    if (this.state.selectedUnit) {
+      recordingName = studyAnalysisResult.recordingNames[studyAnalysisResult.trueRecordingIndices[this.state.selectedUnit.unitIndex]];
+    }
+
     return (
       <div>
         <div className="page__body">
@@ -190,8 +196,29 @@ class DetailPage extends Component {
                         <div className="card__label">
                           <p>
                             {this.state.selectedUnit ?
-                              (<strong>Unit Details: {`${this.props.studyName}/${studyAnalysisResult.recordingNames[studyAnalysisResult.trueRecordingIndices[this.state.selectedUnit.unitIndex]]}/${this.state.selectedUnit.sorterName}/${studyAnalysisResult.trueUnitIds[this.state.selectedUnit.unitIndex]}`}</strong>) :
-                              (<strong>Unit Details:</strong>)
+                              (
+                                <table>
+                                  <thead></thead>
+                                  <tbody>
+                                    <tr>
+                                      <th>Study:</th><td>{<Link to={`/study/${this.props.studyName}`}>{this.props.studyName}</Link>}</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Recording:</th><td>{<Link to={`/recording/${this.props.studyName}/${recordingName}`}>{recordingName}</Link>}</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Sorter:</th><td>{<Link to={`/algorithms`}>{this.state.selectedUnit.sorterName}</Link>}</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Unit ID:</th><td>{this.state.selectedUnit.unitIndex}</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Sorting result:</th><td><Link to={`/sortingresult/${this.props.studyName}/${recordingName}/${this.state.selectedUnit.sorterName}`}>{`/sortingresult/${this.props.studyName}/${recordingName}/${this.state.selectedUnit.sorterName}`}</Link></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                // <strong>Unit Details: {`${this.props.studyName}/${recordingName}/${this.state.selectedUnit.sorterName}/${studyAnalysisResult.trueUnitIds[this.state.selectedUnit.unitIndex]}`}</strong>
+                              ) : (<strong>Unit Details:</strong>)
                             }
                           </p>
                         </div>

@@ -33,4 +33,8 @@ function MountainClient() {
     opts=opts||{};
     return await impl.loadBinary(path, opts);
   }
+  this.findFile = async function(path, opts) {
+    opts=opts||{};
+    return await impl.findFile(path, opts);
+  }
 }

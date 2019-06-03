@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
+import { abbreviateSha1Path } from "../../utils";
 
 class Recording extends Component {
   render() {
@@ -23,7 +24,6 @@ class Recording extends Component {
     }
     let recording_header = (
       <tr>
-        <th>Recording</th>
         <th>Sample rate (Hz)</th>
         <th>Num. Channels</th>
         <th>Duration (sec)</th>
@@ -35,16 +35,37 @@ class Recording extends Component {
     let recording_rows = [];
     let rec = recording;
     recording_rows.push(
-    <tr key={`recording--${study.name}-${rec.name}`}>
-        <td key={"name"}>{rec.name}</td>
-        <td key={"sampleRateHz"}>{rec.sampleRateHz}</td>
-        <td key={"numChannels"}>{rec.numChannels}</td>
-        <td key={"durationSec"}>{rec.durationSec}</td>
-        <td key={"numTrueUnits"}>{rec.numTrueUnits}</td>
-        <td key={"directory"}>{abbreviateSha1Path(rec.directory)}</td>
-        <td key={"firingsTrue"}>{abbreviateSha1Path(rec.firingsTrue)}</td>
-    </tr>
+        <tr key={`recording--${study.name}-${rec.name}`}>
+            <td key={"sampleRateHz"}>{rec.sampleRateHz}</td>
+            <td key={"numChannels"}>{rec.numChannels}</td>
+            <td key={"durationSec"}>{rec.durationSec}</td>
+            <td key={"numTrueUnits"}>{rec.numTrueUnits}</td>
+            <td key={"directory"}>{abbreviateSha1Path(rec.directory)}</td>
+            <td key={"firingsTrue"}>{abbreviateSha1Path(rec.firingsTrue, {canDownload: true})}</td>
+        </tr>
     )
+
+    let sorting_result_header = (
+        <tr>
+            <th key={"sorter"}>Sorter</th>
+            <th key={"compute_time"}>Compute time (sec)</th>
+            <th key={"output"}>Output</th>
+        </tr>
+    )
+    let sorting_result_rows = [];
+    if (this.props.sortingResults) {
+        for (let sr of this.props.sortingResults) {
+            if ((sr.studyName === study.name) && (sr.recordingName === rec.name)) {
+                sorting_result_rows.push(
+                    <tr key={`sorting-result-${study.name}-${rec.name}-${sr.sorterName}`}>
+                        <td key={"sorter"}><Link to={`/sortingresult/${study.name}/${rec.name}/${sr.sorterName}`}>{sr.sorterName}</Link></td>
+                        <td key={"compute_time"}>{sr.cpuTimeSec}</td>
+                        <td key={"output"}>{abbreviateSha1Path(sr.firings + '/firings.mda', {canDownload: true})}</td>
+                    </tr>
+                )
+            }
+        }
+    }
     return (
       <div className="page__body">
         <Container className="container__heatmap">
@@ -54,7 +75,7 @@ class Recording extends Component {
                 <div className="content">
                   <div className="card__footer">
                     <hr />
-                    <h3>Recording name: {recording.name}</h3>
+                    <h3>Recording: {recording.name}</h3>
                     <p>
                       This recording is part of the <Link to={`/study/${recording.studyName}`}>{recording.studyName}</Link> study
                       within the <Link to={`/studyset/${recording.studySetName}`}>{recording.studySetName}</Link> study set.
@@ -73,15 +94,29 @@ class Recording extends Component {
               </div>
             </Col>
           </Row>
+          <Row className="container__sorter--row justify-content-md-center">
+            <Col lg={12} sm={12} xl={10}>
+              <div className="card card--stats">
+                <div className="content">
+                  <div className="card__footer">
+                    <h4>Sorting results</h4>
+                    <table className="table">
+                        <thead>
+                            {sorting_result_header}
+                        </thead>
+                        <tbody>
+                            {sorting_result_rows}
+                        </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
         </Container>
       </div>
     );
   }
-}
-
-function abbreviateSha1Path(path) {
-  let list0 = path.split('/');
-  return <span title={path}>{`${list0[0]}//.../${list0[list0.length-1]}`}</span>;
 }
 
 export default Recording;
