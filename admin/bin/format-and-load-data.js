@@ -16,6 +16,9 @@ function print_usage() {
   console.info(
     "If --database-from-env is specified, the DATABASE environment variable (from .env) will be used for the database url."
   );
+  console.info(
+    "If --database-from-env-prod is specified, the DATABASE_PROD environment variable (from .env) will be used for the database url."
+  );
 }
 
 // parse the arguments
@@ -27,6 +30,9 @@ let database_url = arg2;
 
 if (process.argv.includes("--database-from-env")) {
   database_url = process.env.DATABASE;
+}
+if (process.argv.includes("--database-from-env-prod")) {
+  database_url = process.env.DATABASE_PROD;
 }
 
 // print usage if insufficient args
