@@ -6,6 +6,7 @@ const algorithmController = require("./controllers/algorithmController");
 const sortingResultController = require("./controllers/sortingResultController");
 const studySetController = require("./controllers/studySetController");
 const studyAnalysisResultController = require("./controllers/studyAnalysisResultController");
+const generalController = require("./controllers/generalController");
 const mailer = require("./email/mailer.js");
 
 const MountainClient = require('./mountainclient-js').MountainClient;
@@ -86,5 +87,8 @@ router.post("/api/contact", async (req, res) => {
     console.log("Error", e);
   }
 });
+
+// General
+router.get("/api/general", generalController.getGeneral);
 
 module.exports = router;

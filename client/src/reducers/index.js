@@ -13,6 +13,7 @@ import sorters from "./sorters";
 import stats from "./stats";
 import studySets from "./studysets";
 import studyAnalysisResults from "./studyanalysisresults";
+import general from "./general"
 
 const rootReducer = history =>
   combineReducers({
@@ -27,7 +28,8 @@ const rootReducer = history =>
     sorters,
     stats,
     studySets,
-    studyAnalysisResults
+    studyAnalysisResults,
+    general
   });
 
 export default rootReducer;

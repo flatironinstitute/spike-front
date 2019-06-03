@@ -57,6 +57,7 @@ const Algorithm = require("../../models/Algorithm");
 const StudySet = require("../../models/StudySet");
 const SortingResult = require("../../models/SortingResult");
 const StudyAnalysisResult = require("../../models/StudyAnalysisResult");
+const General = require("../../models/General");
 
 // import all the raw data
 const rawSorters = JSON.parse(
@@ -73,6 +74,9 @@ const rawSortingResults = JSON.parse(
 );
 const rawStudyAnalysisResults = JSON.parse(
   fs.readFileSync(data_directory + "/StudyAnalysisResults.json", "utf-8")
+);
+const rawGeneral = JSON.parse(
+  fs.readFileSync(data_directory + "/General.json", "utf-8")
 );
 
 async function writeNewFile(fileName, newData) {
@@ -139,6 +143,10 @@ async function formatAndLoadData() {
   // Study analysis results
   await loadIntoDB(StudyAnalysisResult, rawStudyAnalysisResults, "StudyAnalysisResults");
   await writeCleanData(StudyAnalysisResult, "studyanalysisresults");
+
+  // General
+  await loadIntoDB(General, rawGeneral, "General");
+  await writeCleanData(General, "general");
 
   // Delete WIP Files
   await emptyDataFolder(data_directory + "/cleanedData");

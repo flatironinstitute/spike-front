@@ -48,6 +48,7 @@ class Home extends Component {
         <StatsAlert
           sortingResults={this.props.sortingResults}
           studySets={this.props.studySets}
+          general={this.props.general}
         />
         {loading ? (
           <Container className="container__heatmap" id="overview">
