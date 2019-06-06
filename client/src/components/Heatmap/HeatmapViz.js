@@ -525,7 +525,11 @@ class HeatmapViz extends Component {
                       </span>
                     ) :
                     (
-                      <span>These are preliminary results prior to parameter optimization, and we are still in the process of ensuring that we are using the proper <Link to="/algorithms">versions of the spike sorters</Link>.</span>
+                      <span>
+                        These are preliminary results prior to parameter optimization, and we are still in the process of ensuring that we are using the proper <Link to="/algorithms">versions of the spike sorters</Link>.
+                        We expect to go live in early July at <a href="https://spikeforest.flatironinstitute.org">spikeforest.flatironinstitute.org</a>.
+                      </span>
+
                     )
                   }
                 </p>

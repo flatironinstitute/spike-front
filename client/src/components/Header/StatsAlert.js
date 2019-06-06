@@ -33,25 +33,16 @@ class StatsAlert extends Component {
           <div className="alert__ticker--wrapper">
             <div className="alert__ticker">
               <div className="ticker__item">
-                <b>Beta notice:</b>
+                <b>** This is a website preview **</b>
               </div>
               <div className="ticker__item">
-                This is a website preview.
+                <b>Project totals:</b>{" "}
+                1.3 TB of recordings;{" "}
+                {groundTruth.toLocaleString()} ground truth units;{" "}
+                {coreHours.toLocaleString()} compute hours
               </div>
               <div className="ticker__item">
-                <b>Project totals:</b>
-              </div>
-              <div className="ticker__item">
-                {coreHours.toLocaleString()} hours compute time
-              </div>
-              <div className="ticker__item">
-                {groundTruth.toLocaleString()} ground truth units
-              </div>
-              <div className="ticker__item">1.2 TB of recordings</div>
-              <div className="ticker__item">
-                <b>Analysis updated:</b>
-              </div>
-              <div className="ticker__item">
+                <b>Analysis updated:</b>{" "}
                 {general.dateUpdated ? new Date(general.dateUpdated).toLocaleString('en-US',{year:'numeric', month:'short', day:'numeric', hour:'numeric', minute:'numeric'}) : ''}
               </div>
             </div>
