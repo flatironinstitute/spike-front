@@ -259,14 +259,16 @@ class HeatmapViz extends Component {
     // the first cell is the name of the study
     let link;
     if (this.props.groupByStudySets) {
-      link = isStudySet ? `/studyset/${studyAnalysisResult.studyName}` : `/studyresults/${studyAnalysisResult.studyName}`;
+      // link = isStudySet ? `/studyset/${studyAnalysisResult.studyName}` : `/studyresults/${studyAnalysisResult.studyName}`;
+      link = isStudySet ? null : `/studyresults/${studyAnalysisResult.studyName}`;
     }
     else {
-      link = isStudySet ? `/studyset/${studyAnalysisResult.studyName}` : `/study/${studyAnalysisResult.studyName}`;
+      // link = isStudySet ? `/studyset/${studyAnalysisResult.studyName}` : `/study/${studyAnalysisResult.studyName}`;
+      link = isStudySet ? null : `/study/${studyAnalysisResult.studyName}`;
     }
     let name0 = studyAnalysisResult.studyName;
     if (!this.props.groupByStudySets) {
-      name0 = this.studySetNamesByStudyName[studyAnalysisResult.studyName]+' '+studyAnalysisResult.studyName;
+      name0 = this.studySetNamesByStudyName[studyAnalysisResult.studyName]+'/'+studyAnalysisResult.studyName;
     }
     ret.push({
       id: `study-name-${name0}`,
@@ -446,17 +448,17 @@ class HeatmapViz extends Component {
   computeBackgroundColor(val) {
     // TODO: Swap d3 ranges with these custom ones
     // const colorRanges = {
-    //   average: [d3.rgb("#00CEA8"), d3.rgb("#0C4F42")],
-    //   count: [d3.rgb("#edf0fc"), d3.rgb("#6B7CC4"), d3.rgb("#102BA3")],
+    //   count: [d3.rgb("#00CEA8"), d3.rgb("#0C4F42")],
+    //   average: [d3.rgb("#edf0fc"), d3.rgb("#6B7CC4"), d3.rgb("#102BA3")],
     //   cpu: [d3.rgb("#EFC1E3"), d3.rgb("#B52F93")]
     // };
     let color;
     switch (this.props.format) {
       case "count":
-        color = d3.interpolateBlues(val);
+        color = d3.interpolateGreens(val);
         break;
       case "average":
-        color = d3.interpolateGreens(val);
+        color = d3.interpolateBlues(val);
         break;
       case "cpu":
         color = d3.interpolateYlOrRd(val);

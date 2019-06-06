@@ -20,7 +20,6 @@ class ScatterplotCount extends Component {
     this.state = {
       data: [],
       hoveredNode: null,
-      selectedUnitCode: null,
       minSNR: 0,
       maxSNR: 100
     };
@@ -119,13 +118,14 @@ class ScatterplotCount extends Component {
 
   handleScatterplotClick(d) {
     if (this.props.handleScatterplotClick) {
-      this.setState({selectedUnitCode: d.unitCode});
+      // this.setState({selectedUnitCode: d.unitCode});
       this.props.handleScatterplotClick(d);
     }
   }
 
   render() {
-    const { data, hoveredNode, selectedUnitCode, maxSNR } = this.state;
+    const { data, hoveredNode, maxSNR } = this.state;
+    let selectedUnitCode = this.props.selectedUnitCode;
     let metricObj = {};
     metricObj[this.props.metric] = hoveredNode ? hoveredNode.y : 0;
     let otherObj = {
@@ -201,7 +201,7 @@ class ScatterplotCount extends Component {
               className="mark-series-example"
               sizeRange={[3, 15]}
               seriesId="null-nodes"
-              colorRange={["#000000", "#000000"]}
+              colorRange={["#aa2223", "#aa2223"]}
               opacityType="literal"
               data={nullNodes}
               onValueClick={d => {this.handleScatterplotClick(d)}}

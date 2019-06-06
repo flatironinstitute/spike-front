@@ -30,9 +30,9 @@ class ScatterplotContainer extends Component {
       format
     } = this.props;
     const colorRanges = {
-      count: ["#6B7CC4", "#102BA3"],
+      average: ["#6B7CC4", "#102BA3"],
       cpu: ["#EFC1E3", "#B52F93"],
-      average: ["#00CEA8", "#0C4F42"]
+      count: ["#00CEA8", "#0C4F42"]
     };
     const copy = this.getHeaderCopy(this.props.metric);
     return (
@@ -61,6 +61,7 @@ class ScatterplotContainer extends Component {
                   sliderValue={sliderValue}
                   format={format}
                   metric={metric}
+                  selectedUnitCode={this.props.selectedUnitCode}
                   handleScatterplotClick={this.props.handleScatterplotClick}
                 />
               );
@@ -75,6 +76,7 @@ class ScatterplotContainer extends Component {
                   sliderValue={sliderValue}
                   format={format}
                   metric={metric}
+                  selectedUnitCode={this.props.selectedUnitCode}
                   handleScatterplotClick={this.props.handleScatterplotClick}
                 />
               );

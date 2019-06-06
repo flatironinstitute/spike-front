@@ -42,11 +42,11 @@ export class ModeCard extends Component {
                 value={this.props.format}
                 onChange={e => this.props.handleFormatChange(e.target.value)}
               >
-                <option key={"count-1"} value={"count"}>
-                  Number of units found above metric threshold
-                </option>
                 <option key={"average-1"} value={"average"}>
                   Average metric above SNR threshold
+                </option>
+                <option key={"count-1"} value={"count"}>
+                  Number of units found above metric threshold
                 </option>
                 {this.props.showCPU ? (
                   <option key={"cpu-1"} value={"cpu"}>

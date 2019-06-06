@@ -24,7 +24,10 @@ export const RECEIVE_GENERAL = "RECEIVE_GENERAL";
 export const SELECT_STUDY_SORTING_RESULT = "SELECT_STUDY_SORTING_RESULT";
 export const SELECT_SORTER_NAME = "SELECT_SORTER_NAME";
 export const SELECT_STUDY_NAME = "SELECT_STUDY_NAME";
-
+export const SET_FORMAT = "SET_FORMAT";
+export const SET_SLIDER_VALUE = "SET_SLIDER_VALUE"
+export const SET_METRIC = "SET_METRIC";
+export const SET_SELECTED_UNIT = "SET_SELECTED_UNIT";
 
 export const START_LOADING = "START_LOADING";
 export const END_LOADING = "END_LOADING";
@@ -293,4 +296,25 @@ export const selectStudyName = studyName => ({
 export const selectSorterName = sorterName => ({
   type: SELECT_SORTER_NAME,
   sorterName
+});
+
+export const setFormat = format => ({
+  type: SET_FORMAT,
+  format
+});
+
+export const setSliderValue = (format, value) => ({
+  type: SET_SLIDER_VALUE,
+  format,
+  value
+});
+
+export const setMetric = metric => ({
+  type: SET_METRIC,
+  metric
+});
+
+export const setSelectedUnit = selectedUnit => ({
+  type: SET_SELECTED_UNIT,
+  selectedUnit
 });

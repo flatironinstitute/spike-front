@@ -38,7 +38,8 @@ class HeatmapCount extends Component {
     });
   };
 
-  handleScatterplotClick = d => {
+  handleScatterplotClick = unit => {
+    this.props.setSelectedUnit(unit);
     this.setState({
       redirect: true
     });
@@ -89,6 +90,7 @@ class HeatmapCount extends Component {
                     format={this.props.format}
                     metric={this.props.metric}
                     cardHeight={this.state.cardHeight}
+                    selectedUnitCode={(this.props.selectedUnit || {}).unitCode || null}
                     handleScatterplotClick={this.handleScatterplotClick}
                   />
                 </Col>) : (<span />)
@@ -105,7 +107,8 @@ function mapStateToProps(state) {
   return {
     selectedStudyName: state.selectedStudyName,
     selectedSorterName: state.selectedSorterName,
-    selectedRecording: state.selectedRecording
+    selectedRecording: state.selectedRecording,
+    selectedUnit: state.selectedUnit
   };
 }
 

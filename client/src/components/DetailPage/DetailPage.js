@@ -24,64 +24,76 @@ class DetailPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      format: "count",
-      metric: "accuracy",
-      sliderValue: 0.8,
-      sorterName: this.props.sorterName,
-      selectedUnit: null
+      sorterName: this.props.sorterName
+      // selectedUnit: null
     };
   }
 
   componentDidMount() {
+    this.checkSelectedUnit();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.selectedUnit !== prevState.selectedUnit) {
-      // TODO: Remove conditional when default db is set.
-      // let url = this.state.selectedUnit.u.spikesprayUrl || "";
-      // this.props.fetchSpikeSpray(url);
+    // if (this.state.selectedUnit !== prevState.selectedUnit) {
+    //   // TODO: Remove conditional when default db is set.
+    //   // let url = this.state.selectedUnit.u.spikesprayUrl || "";
+    //   // this.props.fetchSpikeSpray(url);
+    // }
+
+    this.checkSelectedUnit();
+  }
+
+  checkSelectedUnit() {
+    if (this.props.selectedUnit) {
+      let su = this.props.selectedUnit;
+      if ((su.sorterName !== this.state.sorterName) || (su.studyName !== this.props.studyName)) {
+        // The selected unit is not relevant to this view. Unselecting.
+        this.props.setSelectedUnit(null);
+      }
     }
   }
 
   handleFormatChange = value => {
-    var sliderValue;
-    switch (value) {
-      case "count":
-        sliderValue = 0.8;
-        break;
-      case "average":
-        sliderValue = 8;
-        break;
-      default:
-        sliderValue = 0;
-    }
-    this.setState({
-      format: value,
-      sliderValue: sliderValue
-    });
+    // var sliderValue;
+    // switch (value) {
+    //   case "count":
+    //     sliderValue = 0.8;
+    //     break;
+    //   case "average":
+    //     sliderValue = 8;
+    //     break;
+    //   default:
+    //     sliderValue = 0;
+    // }
+    this.props.setFormat(value);
+    // this.setState({
+    //   sliderValue: sliderValue
+    // });
   };
 
-  handleMetricChange = value => {
-    this.setState({
-      metric: value
-    });
+  handleMetricChange = metric => {
+    this.props.setMetric(metric);
+    // this.setState({
+    //   metric: value
+    // });
   };
 
   handleSliderChange = value => {
     let round = Math.round(value * 100) / 100;
-    this.setState({
-      sliderValue: round
-    });
+    this.props.setSliderValue(this.props.format, round);
+    // this.setState({
+    //   sliderValue: round
+    // });
   };
 
   getFormatCopy() {
     let copy;
-    switch (this.state.format) {
+    switch (this.props.format) {
       case "count":
-        copy = `Number of units found above ${this.state.metric} threshold`;
+        copy = `Number of units found above ${this.props.metric} threshold`;
         break;
       case "average":
-        copy = `Average ${this.state.metric} above SNR threshold`;
+        copy = `Average ${this.props.metric} above SNR threshold`;
         break;
       default:
         copy = "";
@@ -90,11 +102,12 @@ class DetailPage extends Component {
   }
 
   handleScatterplotClick = value => {
-    this.setState({ selectedUnit: value });
+    this.props.setSelectedUnit(value);
+    // this.setState({ selectedUnit: value });
   };
 
   getSpikeSprayCard() {
-    if (isEmpty(this.state.selectedUnit)) {
+    if (isEmpty(this.props.selectedUnit)) {
       return "nounit";
     } else if (isEmpty(this.props.spikespray)) {
       return "nodata";
@@ -121,8 +134,8 @@ class DetailPage extends Component {
     }
 
     let recordingName = '';
-    if (this.state.selectedUnit) {
-      recordingName = studyAnalysisResult.recordingNames[studyAnalysisResult.trueRecordingIndices[this.state.selectedUnit.unitIndex]];
+    if (this.props.selectedUnit) {
+      recordingName = studyAnalysisResult.recordingNames[studyAnalysisResult.trueRecordingIndices[this.props.selectedUnit.unitIndex]];
     }
 
     return (
@@ -151,15 +164,15 @@ class DetailPage extends Component {
                           <hr />
                           <HeatmapViz
                             groupByStudySets={false}
-                            selectSorterName={sorterName => { this.setState({ sorterName, selectedUnit: null }) }}
+                            selectSorterName={sorterName => { this.props.setSelectedUnit(null); this.setState({ sorterName}); }}
                             selectedStudyName={this.props.studyName}
                             selectedSorterName={this.state.sorterName}
                             studyAnalysisResults={{allResults: [studyAnalysisResult]}}
                             studySets={this.props.studySets}
                             sorters={this.props.sorters}
-                            format={this.state.format}
-                            metric={this.state.metric}
-                            threshold={this.state.sliderValue}
+                            format={this.props.format}
+                            metric={this.props.metric}
+                            threshold={this.props.sliderValue[this.props.format]}
                           />
                         </div>
                       </div>
@@ -171,9 +184,9 @@ class DetailPage extends Component {
                       handleFormatChange={this.handleFormatChange}
                       handleSliderChange={this.handleSliderChange}
                       handleMetricChange={this.handleMetricChange}
-                      format={this.state.format}
-                      metric={this.state.metric}
-                      sliderValue={this.state.sliderValue}
+                      format={this.props.format}
+                      metric={this.props.metric}
+                      sliderValue={this.props.sliderValue[this.props.format]}
                     />
                   </Col>
                 </Row>
@@ -184,9 +197,10 @@ class DetailPage extends Component {
                       studyAnalysisResults={{allResults: [studyAnalysisResult]}}
                       studyName={this.props.studyName}
                       sorterName={this.state.sorterName}
-                      sliderValue={this.state.sliderValue}
-                      format={this.state.format}
-                      metric={this.state.metric}
+                      sliderValue={this.props.sliderValue[this.props.format]}
+                      format={this.props.format}
+                      metric={this.props.metric}
+                      selectedUnitCode={(this.props.selectedUnit || {}).unitCode || null}
                       handleScatterplotClick={this.handleScatterplotClick}
                     />
                   </Col>
@@ -195,7 +209,7 @@ class DetailPage extends Component {
                       <div className="content">
                         <div className="card__label">
                           <p>
-                            {this.state.selectedUnit ?
+                            {this.props.selectedUnit ?
                               (
                                 <table>
                                   <thead></thead>
@@ -207,23 +221,23 @@ class DetailPage extends Component {
                                       <th>Recording:</th><td>{<Link to={`/recording/${this.props.studyName}/${recordingName}`}>{recordingName}</Link>}</td>
                                     </tr>
                                     <tr>
-                                      <th>Sorter:</th><td>{<Link to={`/algorithms`}>{this.state.selectedUnit.sorterName}</Link>}</td>
+                                      <th>Sorter:</th><td>{<Link to={`/algorithms`}>{this.props.selectedUnit.sorterName}</Link>}</td>
                                     </tr>
                                     <tr>
-                                      <th>Unit ID:</th><td>{this.state.selectedUnit.unitIndex}</td>
+                                      <th>Unit ID:</th><td>{this.props.selectedUnit.unitIndex}</td>
                                     </tr>
                                     <tr>
-                                      <th>Sorting result:</th><td><Link to={`/sortingresult/${this.props.studyName}/${recordingName}/${this.state.selectedUnit.sorterName}`}>{`/sortingresult/${this.props.studyName}/${recordingName}/${this.state.selectedUnit.sorterName}`}</Link></td>
+                                      <th>Sorting result:</th><td><Link to={`/sortingresult/${this.props.studyName}/${recordingName}/${this.props.selectedUnit.sorterName}`}>{`/sortingresult/${this.props.studyName}/${recordingName}/${this.props.selectedUnit.sorterName}`}</Link></td>
                                     </tr>
                                   </tbody>
                                 </table>
-                                // <strong>Unit Details: {`${this.props.studyName}/${recordingName}/${this.state.selectedUnit.sorterName}/${studyAnalysisResult.trueUnitIds[this.state.selectedUnit.unitIndex]}`}</strong>
+                                // <strong>Unit Details: {`${this.props.studyName}/${recordingName}/${this.props.selectedUnit.sorterName}/${studyAnalysisResult.trueUnitIds[this.props.selectedUnit.unitIndex]}`}</strong>
                               ) : (<strong>Unit Details:</strong>)
                             }
                           </p>
                         </div>
                         {(() => {
-                          if (this.state.selectedUnit) {
+                          if (this.props.selectedUnit) {
                             return (
                               <div className="card__footer">
                                 <hr />
@@ -231,8 +245,8 @@ class DetailPage extends Component {
                                   sorters={this.props.sorters}
                                   sortingResults={this.props.sortingResults}
                                   studyAnalysisResult={studyAnalysisResult}
-                                  unitIndex={this.state.selectedUnit.unitIndex}
-                                  sorterName={this.state.selectedUnit.sorterName}
+                                  unitIndex={this.props.selectedUnit.unitIndex}
+                                  sorterName={this.props.selectedUnit.sorterName}
                                 />
                               </div>
                             )
@@ -262,7 +276,12 @@ class DetailPage extends Component {
 }
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    format: state.format,
+    sliderValue: state.sliderValue,
+    metric: state.metric,
+    selectedUnit: state.selectedUnit
+  };
 }
 
 function mapDispatchToProps(dispatch) {
