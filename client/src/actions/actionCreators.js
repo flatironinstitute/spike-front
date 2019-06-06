@@ -19,6 +19,7 @@ export const RECEIVE_STATS = "RECEIVE_STATS";
 export const RECEIVE_STUDY_SETS = "RECEIVE_STUDY_SETS";
 export const RECEIVE_STUDIES = "RECEIVE_STUDIES";
 export const RECEIVE_STUDY_ANALYSIS_RESULTS = "RECEIVE_STUDY_ANALYSIS_RESULTS";
+export const RECEIVE_GENERAL = "RECEIVE_GENERAL";
 
 export const SELECT_STUDY_SORTING_RESULT = "SELECT_STUDY_SORTING_RESULT";
 export const SELECT_SORTER_NAME = "SELECT_SORTER_NAME";
@@ -247,6 +248,29 @@ export const fetchStudyAnalysisResults = (studySetName) => {
     return createFetchAPI(url)
       .then(res => {
         dispatch(receiveStudyAnalysisResults(res.studyAnalysisResults));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      })
+      .catch(err => Sentry.captureException(err));
+  };
+};
+
+// Study analysis results
+export const receiveGeneral = general => {
+  return {
+    type: RECEIVE_GENERAL,
+    general
+  }
+};
+
+export const fetchGeneral = () => {
+  let url = `/api/general`;
+  return function (dispatch) {
+    dispatch(startLoading());
+    return createFetchAPI(url)
+      .then(res => {
+        dispatch(receiveGeneral(res.general));
       })
       .then(() => {
         dispatch(endLoading());

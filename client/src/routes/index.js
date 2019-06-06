@@ -29,6 +29,7 @@ import FourOhFour from "../components/Pages/FourOhFour";
 class Routes extends Component {
   async componentDidMount() {
     // V2 Data: Fetches
+    this.props.fetchGeneral();
     this.props.fetchCPUs();
     this.props.fetchSortingResults();
     this.props.fetchSorters();
@@ -180,7 +181,8 @@ function mapStateToProps(state) {
     selectedStudySortingResult: state.selectedStudySortingResult,
     selectedStudyName: state.selectedStudyName,
     selectedSorterName: state.selectedSorterName,
-    studyAnalysisResults: state.studyAnalysisResults
+    studyAnalysisResults: state.studyAnalysisResults,
+    general: state.general
   };
 }
 

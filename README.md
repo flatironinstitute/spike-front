@@ -32,6 +32,8 @@ This command clears the database entirely and is the essential first step of the
 
 If `--database-from-env` is specified, the DATABASE environment variable (from .env) will be used for the database url.
 
+If `--database-from-env-prod` is specified, the DATABASE_PROD environment variable (from .env) will be used for the database url.
+
 **Step 2: format and load data into database**
 
 ```
@@ -43,6 +45,8 @@ admin/bin/format-and-load-data.js [data_directory] --database-from-env
 Assigns ids, formats, and injests raw data from the spikeforest pipeline into the website for visualization. Raw data files for injest should be stored in [data_directory] with capitalized titles. After injest is complete, this script automatically deletes temp files generated in the process. 
 
 If `--database-from-env` is specified, the DATABASE environment variable (from .env) will be used for the database url.
+
+If `--database-from-env-prod` is specified, the DATABASE_PROD environment variable (from .env) will be used for the database url.
 
 ## Authors
 

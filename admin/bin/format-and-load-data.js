@@ -16,6 +16,9 @@ function print_usage() {
   console.info(
     "If --database-from-env is specified, the DATABASE environment variable (from .env) will be used for the database url."
   );
+  console.info(
+    "If --database-from-env-prod is specified, the DATABASE_PROD environment variable (from .env) will be used for the database url."
+  );
 }
 
 // parse the arguments
@@ -27,6 +30,9 @@ let database_url = arg2;
 
 if (process.argv.includes("--database-from-env")) {
   database_url = process.env.DATABASE;
+}
+if (process.argv.includes("--database-from-env-prod")) {
+  database_url = process.env.DATABASE_PROD;
 }
 
 // print usage if insufficient args
@@ -57,6 +63,7 @@ const Algorithm = require("../../models/Algorithm");
 const StudySet = require("../../models/StudySet");
 const SortingResult = require("../../models/SortingResult");
 const StudyAnalysisResult = require("../../models/StudyAnalysisResult");
+const General = require("../../models/General");
 
 // import all the raw data
 const rawSorters = JSON.parse(
@@ -73,6 +80,9 @@ const rawSortingResults = JSON.parse(
 );
 const rawStudyAnalysisResults = JSON.parse(
   fs.readFileSync(data_directory + "/StudyAnalysisResults.json", "utf-8")
+);
+const rawGeneral = JSON.parse(
+  fs.readFileSync(data_directory + "/General.json", "utf-8")
 );
 
 async function writeNewFile(fileName, newData) {
@@ -139,6 +149,10 @@ async function formatAndLoadData() {
   // Study analysis results
   await loadIntoDB(StudyAnalysisResult, rawStudyAnalysisResults, "StudyAnalysisResults");
   await writeCleanData(StudyAnalysisResult, "studyanalysisresults");
+
+  // General
+  await loadIntoDB(General, rawGeneral, "General");
+  await writeCleanData(General, "general");
 
   // Delete WIP Files
   await emptyDataFolder(data_directory + "/cleanedData");

@@ -28,6 +28,7 @@ require("./models/Algorithm");
 require("./models/SortingResult");
 require("./models/StudyAnalysisResult");
 require("./models/StudySet");
+require("./models/General");
 
 /* Express Isomorphic
 –––––––––––––––––––––––––––––––––––––––––––––––––– */

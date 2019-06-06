@@ -9,6 +9,9 @@ function print_usage() {
   console.info(
     "If --database-from-env is specified, the DATABASE environment variable (from .env) will be used for the database url."
   );
+  console.info(
+    "If --database-from-env-prod is specified, the DATABASE_PROD environment variable (from .env) will be used for the database url."
+  );
 }
 
 // parse the arguments
@@ -18,6 +21,9 @@ let database_url = arg1;
 
 if (process.argv.includes("--database-from-env")) {
   database_url = process.env.DATABASE;
+}
+if (process.argv.includes("--database-from-env-prod")) {
+  database_url = process.env.DATABASE_PROD;
 }
 
 // print usage if insufficient args
@@ -38,6 +44,7 @@ const Algorithm = require("../../models/Algorithm");
 const StudySet = require("../../models/StudySet");
 const SortingResult = require("../../models/SortingResult");
 const StudyAnalysisResult = require("../../models/StudyAnalysisResult");
+const General = require("../../models/General");
 
 async function deleteData() {
   console.log("😢😢 Goodbye Data...");
@@ -46,6 +53,7 @@ async function deleteData() {
   await StudySet.remove();
   await SortingResult.remove();
   await StudyAnalysisResult.remove();
+  await General.remove();
   console.log("Data Deleted.\n");
   process.exit();
 }
