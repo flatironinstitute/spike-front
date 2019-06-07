@@ -25,7 +25,7 @@ class StatsAlert extends Component {
         }
       }
     }
-    let coreHours = Math.round(totalCpu / 60);
+    let coreHours = Math.round(totalCpu / 60 / 60);
     let groundTruth = totalNumTrueUnits;
     return (
       <div className="alert__wrapper">
