@@ -59,42 +59,37 @@ class Archive extends Component {
             </tr>
         )
         let rows = [];
-        if (this.state.status === 'loading') {
-            rows.push(
-                <tr>
-                    <td>Loading...</td>
-                    <td></td>
-                </tr>
-            )
-        }
-        else if (this.state.status === 'download-failed') {
-            rows.push(
-                <tr>
-                    <td>Failed to download.</td>
-                    <td></td>
-                </tr>
-            )
-        }
-        else if (this.state.status === 'error') {
-            rows.push(
-                <tr>
-                    <td>Error loading.</td>
-                    <td></td>
-                </tr>
-            )
-        }
-        else if (this.state.status === 'loaded') {
+
+        if (this.state.status === 'loaded') {
             let analyses = this.state.analysisHistory.analyses;
             for (let i = analyses.length-1; i >= 0; i--) {
                 let a = analyses[i];
                 let datestr = new Date(a.General.dateUpdated).toLocaleString('en-US', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' })
                 rows.push(
-                    <tr>
-                        <td>{datestr}</td>
-                        <td><PathLink path={a.path} abbreviate={false} canCopy={true} canDownload={false}></PathLink></td>
+                    <tr key={i}>
+                        <td key='date'>{datestr}</td>
+                        <td key='path'><PathLink path={a.path} abbreviate={false} canCopy={true} canDownload={false}></PathLink></td>
                     </tr>
                 )
             }
+        }
+        else {
+            let message = '';
+            if (this.state.status === 'loading') {
+                message = 'Loading analysis history...';
+            }
+            else if (this.state.status === 'download-failed') {
+                message = 'Failed to download analysis history.'
+            }
+            else if (this.state.status === 'error') {
+                message = 'Error in analysis history.';
+            }
+            rows.push(
+                <tr key={0}>
+                    <td key='date'>{message}</td>
+                    <td key='path'></td>
+                </tr>
+            )
         }
         return (
             <div className="page__body">
