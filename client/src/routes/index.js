@@ -155,6 +155,7 @@ class Routes extends Component {
                   studyName={props.match.params.studyName}
                   recordingName={props.match.params.recordingName}
                   sorterName={props.match.params.sorterName}
+                  general={this.props.general}
                 />
               )
             }

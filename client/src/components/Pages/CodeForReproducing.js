@@ -32,7 +32,10 @@ class CodeForReproducing extends Component {
             studyName: this.props.sortingResult.studyName,
             recordingName: this.props.sortingResult.recordingName,
             sorterName: this.props.sortingResult.sorterName,
-            params: JSON.stringify(this.props.sorter.sortingParameters, null, 4)
+            params: JSON.stringify(this.props.sorter.sortingParameters, null, 4),
+            spikeforestVersion: this.props.general.packageVersions.spikeforest,
+            mountaintoolsVersion: this.props.general.packageVersions.mountaintools,
+            container: this.props.sortingResult.container ? `'${this.props.sortingResult.container}'` : 'None'
         });
 
         return <span>

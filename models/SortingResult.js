@@ -29,6 +29,9 @@ const sortingResultSchema = new mongoose.Schema({
   },
   consoleOut: {
     type: String /* sha1:// of console output */
+  },
+  container: {
+    type: String
   }
 });
 

@@ -12,14 +12,17 @@ The first step is to install spikeforest and mountaintools. The easiest way is t
 the PyPI packages as follows.
 
 ```bash
-pip install --upgrade spikeforest==0.9.1
-pip install --upgrade mountaintools==0.5.1
+pip install --upgrade spikeforest=={spikeforestVersion}
+pip install --upgrade mountaintools=={mountaintoolsVersion}
 ```
 
 To use the containerized versions of the spike sorters (recommended), you should
 [install singularity 2.6.1](https://www.sylabs.io/guides/2.6/user-guide/quick_start.html#quick-installation-steps).
 This will work for all of the non-Matlab spike sorters (in the future we will
 also containerize the Matlab packages).
+
+**WARNING:** If you do not use the containerized versions of the sorters, then the version of the sorter is not guaranteed to be the same
+as the one used to generate the website data.
 
 ## Downloading and running the sorting
 
@@ -64,14 +67,14 @@ if os.path.exists('test_outputs'):
     shutil.rmtree('test_outputs')
 os.makedirs('test_outputs', exist_ok=True)
 
-# Run spike sorting in the default singularity container
+# Run spike sorting inside singularity container
 print('Spike sorting...')
 params = {params}
 {processorName}.execute(
     recording_dir=recdir,
     firings_out='test_outputs/firings.mda',
     **params,
-    _container='default'
+    _container={container}
 )
 
 # Load the result into a sorting extractor

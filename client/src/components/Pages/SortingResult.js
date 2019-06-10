@@ -143,7 +143,7 @@ class SortingResult extends Component {
                     <h3>Reproducing</h3>
                     {
                       this.state.codeExpanded ? 
-                        (<CodeForReproducing sortingResult={sortingResult} sorter={sorter} />) :
+                        (<CodeForReproducing sortingResult={sortingResult} sorter={sorter} general={this.props.general} />) :
                         (<button onClick={() => this.setState({codeExpanded: true})}>Load code for reproducing result`</button>)
                     }
                   </div>
