@@ -87,6 +87,7 @@ class ScatterplotCard extends Component {
               <ScatterplotContainer
                 studyAnalysisResult={sar}
                 studyName={this.props.studyName}
+                recordingName={this.props.recordingName}
                 sorterName={this.props.sorterName}
                 sliderValue={this.props.sliderValue}
                 format={this.props.format}

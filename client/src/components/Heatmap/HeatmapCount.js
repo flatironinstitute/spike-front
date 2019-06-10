@@ -107,7 +107,6 @@ function mapStateToProps(state) {
   return {
     selectedStudyName: state.selectedStudyName,
     selectedSorterName: state.selectedSorterName,
-    selectedRecording: state.selectedRecording,
     selectedUnit: state.selectedUnit
   };
 }

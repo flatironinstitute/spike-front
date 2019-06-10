@@ -24,6 +24,7 @@ class ScatterplotContainer extends Component {
     const {
       studyName,
       sorterName,
+      recordingName,
       studyAnalysisResult,
       sliderValue,
       metric,
@@ -57,6 +58,7 @@ class ScatterplotContainer extends Component {
                   colorRange={colorRanges['count']}
                   studyAnalysisResult={studyAnalysisResult}
                   studyName={studyName}
+                  recordingName={recordingName}
                   sorterName={sorterName}
                   sliderValue={sliderValue}
                   format={format}
@@ -72,6 +74,7 @@ class ScatterplotContainer extends Component {
                   colorRange={colorRanges['average']}
                   studyAnalysisResult={studyAnalysisResult}
                   studyName={studyName}
+                  recordingName={recordingName}
                   sorterName={sorterName}
                   sliderValue={sliderValue}
                   format={format}

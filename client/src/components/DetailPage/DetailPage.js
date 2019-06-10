@@ -24,7 +24,8 @@ class DetailPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sorterName: this.props.sorterName
+      sorterName: this.props.sorterName,
+      recordingName: null
       // selectedUnit: null
     };
   }
@@ -165,6 +166,7 @@ class DetailPage extends Component {
                           <HeatmapViz
                             groupByStudySets={false}
                             selectSorterName={sorterName => { this.props.setSelectedUnit(null); this.setState({ sorterName}); }}
+                            selectRecordingName={recordingName => { this.setState({ recordingName }); }}
                             selectedStudyName={this.props.studyName}
                             selectedSorterName={this.state.sorterName}
                             studyAnalysisResults={{allResults: [studyAnalysisResult]}}
@@ -197,6 +199,7 @@ class DetailPage extends Component {
                       studyAnalysisResults={{allResults: [studyAnalysisResult]}}
                       studyName={this.props.studyName}
                       sorterName={this.state.sorterName}
+                      recordingName={this.state.recordingName}
                       sliderValue={this.props.sliderValue[this.props.format]}
                       format={this.props.format}
                       metric={this.props.metric}

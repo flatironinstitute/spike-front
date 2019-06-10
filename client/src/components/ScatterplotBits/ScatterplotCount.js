@@ -33,6 +33,7 @@ class ScatterplotCount extends Component {
     if (
       this.props.studyAnalysisResult !== prevProps.studyAnalysisResult ||
       this.props.studyName !== prevProps.studyName ||
+      this.props.recordingName !== prevProps.recordingName ||
       this.props.sorterName !== prevProps.sorterName ||
       this.props.metric !== prevProps.metric
     ) {
@@ -53,6 +54,15 @@ class ScatterplotCount extends Component {
   buildCountData() {
     let sar = this.props.studyAnalysisResult;
     let snrs = sar.trueSnrs;
+    let recordingIndices = sar.trueRecordingIndices;
+    let selectedRecordingIndex = null;
+    if (this.props.recordingName) {
+      for (let ii = 0; ii < sar.recordingNames.length; ii++) {
+        if (sar.recordingNames[ii] === this.props.recordingName) {
+          selectedRecordingIndex = ii;
+        }
+      }
+    }
     sar.sortingResults.forEach((sr) => {
       if (sr.sorterName === this.props.sorterName) {
         let yvals;
@@ -71,7 +81,8 @@ class ScatterplotCount extends Component {
             break;
         }
         let newUnits = [];
-        for (let ii = 0; ii < snrs.length; ii++) {
+        for (let ii = 0; ii < recordingIndices.length; ii++) {
+          let in_selected_recording = ((selectedRecordingIndex === null) || (selectedRecordingIndex === recordingIndices[ii]));
           newUnits.push({
             unitIndex: ii, // this is the part that is used in the parent component
             sorterName: this.props.sorterName, // this is used by parent component also
@@ -81,11 +92,12 @@ class ScatterplotCount extends Component {
             y: yvals[ii],
             size: Math.max(1, this.getSqrt(sar.trueNumEvents[ii])),
             color: sar.trueRecordingIndices[ii],
-            opacity: yvals[ii] * 0.5 + 0.5,
+            opacity: in_selected_recording ? 0.8 : 1.0,
             recordingIndex: sar.trueRecordingIndices[ii],
             recordingName: sar.recordingNames[sar.trueRecordingIndices[ii]],
             studyName: sar.studyName,
-            num_events: sar.trueNumEvents[ii]
+            num_events: sar.trueNumEvents[ii],
+            grayed: !in_selected_recording
           });
         }
         let min = this.getMinSNR(newUnits);
@@ -161,8 +173,19 @@ class ScatterplotCount extends Component {
       })
     }
 
-    let nullNodes = [];
+    let grayedNodes = [];
+    let ungrayedNodes = [];
     for (let node of data) {
+      if (node.grayed) {
+        grayedNodes.push(node);
+      }
+      else {
+        ungrayedNodes.push(node);
+      }
+    }
+
+    let nullNodes = [];
+    for (let node of ungrayedNodes) {
       if (node.y === null) {
         nullNodes.push(node);
       }
@@ -188,10 +211,19 @@ class ScatterplotCount extends Component {
             // animation={true}
             className="mark-series-example"
             sizeRange={[3, 15]}
-            seriesId="my-example-scatterplot"
+            seriesId="grayed"
+            colorRange={["#999999", "#999999"]}
+            opacityType="literal"
+            data={grayedNodes}
+          />
+          <MarkSeries
+            // animation={true}
+            className="mark-series-example"
+            sizeRange={[3, 15]}
+            seriesId="scatterplot"
             colorRange={this.props.colorRange || ["#6B7CC4", "#102BA3"]}
             opacityType="literal"
-            data={data}
+            data={ungrayedNodes}
             onValueMouseOver={d => this.setState({ hoveredNode: d })}
             onValueClick={d => {this.handleScatterplotClick(d);}}
           />

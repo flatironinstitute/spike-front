@@ -14,6 +14,7 @@ class HeatmapViz extends Component {
       tableHeader: [], 
       vizWidth: null,
       selectedStudyName: props.selectedStudyName,
+      selectedRecordingName: props.selectedRecordingName,
       selectedSorterName: props.selectedSorterName
     };
     this.studySetNamesByStudyName = {};
@@ -32,6 +33,7 @@ class HeatmapViz extends Component {
       this.props.format !== prevProps.format ||
       this.props.metric !== prevProps.metric ||
       this.state.selectedStudyName !== prevState.selectedStudyName ||
+      this.state.selectedRecordingName !== prevState.selectedRecordingName ||
       this.state.selectedSorterName !== prevState.selectedSorterName
     ) {
       this.buildVizData();
@@ -97,7 +99,7 @@ class HeatmapViz extends Component {
             if (studyAnalysisResult) {
               tableRow.subrows.push({
                 id: `subrow--${studySet.name}-${study.name}`,
-                cells: this.computeTableRowCellsFromStudyAnalysisResult(studyAnalysisResult, false)
+                cells: this.computeTableRowCellsFromStudyAnalysisResult(studyAnalysisResult, {})
               });
             }
           }
@@ -116,10 +118,20 @@ class HeatmapViz extends Component {
     }
     else {
       for (let studyAnalysisResult of this.props.studyAnalysisResults.allResults) {
-        tableRows.push({
+        let tableRow = {
           id: `sar--${studyAnalysisResult.studyName}`,
-          cells: this.computeTableRowCellsFromStudyAnalysisResult(studyAnalysisResult, false)
-        });
+          cells: this.computeTableRowCellsFromStudyAnalysisResult(studyAnalysisResult, {}),
+          subrows: []
+        };
+        let sar = studyAnalysisResult;
+        for (let recind = 0; recind < sar.recordingNames.length; recind++) {
+          let recname = sar.recordingNames[recind];
+          tableRow.subrows.push({
+            id: `sar--${studyAnalysisResult.studyName}--${recname}`,
+            cells: this.computeTableRowCellsFromStudyAnalysisResultRecording(studyAnalysisResult, recind, recname)
+          });
+        }
+        tableRows.push(tableRow);
       }
     }
 
@@ -170,7 +182,59 @@ class HeatmapViz extends Component {
 
   computeTableRowCellsFromStudySet(studySet) {
     let aggregatedStudyAnalysisResult = this.aggregateStudyAnalysisResults(studySet);
-    return this.computeTableRowCellsFromStudyAnalysisResult(aggregatedStudyAnalysisResult, true, 'studySet--' + studySet.name);
+    return this.computeTableRowCellsFromStudyAnalysisResult(aggregatedStudyAnalysisResult, {isStudySet: true, expandIdOnClick: 'studySet--' + studySet.name});
+  }
+
+  computeTableRowCellsFromStudyAnalysisResultRecording(studyAnalysisResult, recordingIndex, recordingName) {
+    let sar = this.getStudyAnalysisResultForRecording(studyAnalysisResult, recordingIndex, recordingName);
+    return this.computeTableRowCellsFromStudyAnalysisResult(sar, {});
+  }
+
+  getStudyAnalysisResultForRecording(studyAnalysisResult, recordingIndex, recordingName) {
+    let trueSnrs = [];
+    let trueFiringRates = [];
+    let trueNumEvents = [];
+    // ...
+    let sortingResults = [];
+    let numSorters = this.props.sorters.length;
+    for (let ii = 0; ii < numSorters; ii++) {
+      sortingResults.push({
+        accuracies: [],
+        precisions: [],
+        recalls: [],
+        numMatches: [],
+        numFalsePositives: [],
+        numFalseNegatives: [],
+        cpuTimesSec: [],
+        sorterName: this.props.sorters[ii].name
+      });
+    }
+
+    let sar = studyAnalysisResult;
+    for (let jj = 0; jj < sar.trueRecordingIndices.length; jj++) {
+      if (sar.trueRecordingIndices[jj] === recordingIndex) {
+        trueSnrs.push(sar.trueSnrs[jj]);
+        trueFiringRates.push(sar.trueFiringRates[jj]);
+        trueNumEvents.push(sar.trueNumEvents[jj]);
+        for (let ii = 0; ii < numSorters; ii++) {
+          sortingResults[ii].accuracies.push(sar.sortingResults[ii].accuracies[jj]);
+          sortingResults[ii].precisions.push(sar.sortingResults[ii].precisions[jj]);
+          sortingResults[ii].recalls.push(sar.sortingResults[ii].recalls[jj]);
+          sortingResults[ii].numMatches.push(sar.sortingResults[ii].numMatches[jj]);
+          sortingResults[ii].numFalsePositives.push(sar.sortingResults[ii].numFalsePositives[jj]);
+          sortingResults[ii].numFalseNegatives.push(sar.sortingResults[ii].numFalseNegatives[jj]);
+          sortingResults[ii].cpuTimesSec.push(sar.sortingResults[ii].cpuTimesSec[jj]);
+        }
+      }
+    }
+    return {
+      studyName: sar.studyName,
+      recordingName: recordingName,
+      trueSnrs: trueSnrs,
+      trueFiringRates: trueFiringRates,
+      trueNumEvents: trueNumEvents,
+      sortingResults: sortingResults
+    };
   }
 
   aggregateStudyAnalysisResults(studySet) {
@@ -217,7 +281,7 @@ class HeatmapViz extends Component {
     }
 
     return {
-      studyName: studySet.name,
+      studySetName: studySet.name,
       trueSnrs: trueSnrs,
       trueFiringRates: trueFiringRates,
       trueNumEvents: trueNumEvents,
@@ -248,9 +312,11 @@ class HeatmapViz extends Component {
 
   computeTableRowCellsFromStudyAnalysisResult(
     studyAnalysisResult,
-    isStudySet,
-    expandIdOnClick
+    opts
   ) {
+    let isStudySet = opts.isStudySet || false;
+    let expandIdOnClick = opts.expandIdOnClick || null;
+
     // Compute the table row cells from a study (or for the aggregated results in a study set)
     let format = this.props.format;
     let metric = this.props.metric;
@@ -262,16 +328,38 @@ class HeatmapViz extends Component {
       // link = isStudySet ? `/studyset/${studyAnalysisResult.studyName}` : `/studyresults/${studyAnalysisResult.studyName}`;
       link = isStudySet ? null : `/studyresults/${studyAnalysisResult.studyName}`;
     }
+    else if (studyAnalysisResult.recordingName) {
+      link = `/recording/${studyAnalysisResult.studyName}/${studyAnalysisResult.recordingName}`;
+    }
     else {
       // link = isStudySet ? `/studyset/${studyAnalysisResult.studyName}` : `/study/${studyAnalysisResult.studyName}`;
       link = isStudySet ? null : `/study/${studyAnalysisResult.studyName}`;
     }
-    let name0 = studyAnalysisResult.studyName;
-    if (!this.props.groupByStudySets) {
-      name0 = this.studySetNamesByStudyName[studyAnalysisResult.studyName]+'/'+studyAnalysisResult.studyName;
+    let name0, id0;
+    if (this.props.groupByStudySets) {
+      if (isStudySet) {
+        name0 = studyAnalysisResult.studySetName;
+        id0 = `study-set-${name0}`;
+      }
+      else {
+        name0 = studyAnalysisResult.studyName;
+        id0 = `study-${name0}`;
+      }
+    }
+    else if (studyAnalysisResult.recordingName) {
+      name0 = studyAnalysisResult.recordingName;
+      id0 = `recording-${name0}`
+    }
+    else {
+      let studySetName = this.studySetNamesByStudyName[studyAnalysisResult.studyName];
+      if (studySetName)
+        name0 = studySetName + '/' + studyAnalysisResult.studyName;
+      else
+        name0 = studyAnalysisResult.studyName;
+      id0 = `study-name-${studyAnalysisResult.studyName}`;
     }
     ret.push({
-      id: `study-name-${name0}`,
+      id: id0,
       text: name0,
       link: link,
       expand_id_on_click: expandIdOnClick,
@@ -424,8 +512,17 @@ class HeatmapViz extends Component {
         }
       }
       // add a cell corresponding to a sorting result
+      let selected0, id0;
+      if (studyAnalysisResult.recordingName) {
+        selected0 = ((studyAnalysisResult.studyName === this.state.selectedStudyName) && (sortingResult.sorterName === this.state.selectedSorterName) && (studyAnalysisResult.recordingName.recordingName === this.state.selectedRecordingName));
+        id0 = `sorting-result-${studyAnalysisResult.studyName}---${studyAnalysisResult.recordingName}---${sortingResult.sorterName}`;
+      }
+      else {
+        selected0 = ((studyAnalysisResult.studyName === this.state.selectedStudyName) && (sortingResult.sorterName === this.state.selectedSorterName))
+        id0 = `sorting-result-${studyAnalysisResult.studyName}---${sortingResult.sorterName}`;
+      }
       ret.push({
-        id: `sorting-result-${studyAnalysisResult.studyName}---${sortingResult.sorterName}`,
+        id: id0,
         expand_id_on_click: expandIdOnClick,
         color: color,
         bgcolor: bgcolor,
@@ -435,9 +532,9 @@ class HeatmapViz extends Component {
         border_right: true,
         text_align: "center",
         selectable: isStudySet ? false : true,
-        selected: ((studyAnalysisResult.studyName === this.state.selectedStudyName) && (sortingResult.sorterName === this.state.selectedSorterName)),
+        selected: selected0,
         info: {
-          studyName: studyAnalysisResult.studyName,
+          studyAnalysisResult: studyAnalysisResult,
           sorterName: sortingResult.sorterName
         } // needed in onCellSelected -> selectStudyName, selectSorterName
       });
@@ -477,11 +574,14 @@ class HeatmapViz extends Component {
   handleCellSelected(cell) {
     if (cell.selectable) {
       if (this.props.selectStudyName)
-        this.props.selectStudyName(cell.info.studyName);
+        this.props.selectStudyName(cell.info.studyAnalysisResult.studyName);
+      if (this.props.selectRecordingName)
+        this.props.selectRecordingName(cell.info.studyAnalysisResult.recordingName || null);
       if (this.props.selectSorterName)
         this.props.selectSorterName(cell.info.sorterName);
       this.setState({
-        selectedStudyName: cell.info.studyName,
+        selectedStudyName: cell.info.studyAnalysisResult.studyName,
+        selectedRecordingName: cell.info.studyAnalysisResult.recordingName || null,
         selectedSorterName: cell.info.sorterName
       });
     }
