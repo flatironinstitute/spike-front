@@ -56,7 +56,7 @@ class PathLink extends Component {
         if (this.state.clicked) {
             if (this.props.canCopy) {
                 let style0 = {
-                    // width: 220
+                    width: this.props.abbreviate ? 150 : 350
                 };
                 link0 = <input type={"text"} value={this.props.path} readOnly={true} onFocus={e => e.target.select()} onBlur={this.handleUnclick} autoFocus={true} style={style0} />;
             }

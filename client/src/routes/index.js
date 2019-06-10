@@ -18,6 +18,7 @@ import Recordings from "../components/Pages/Recordings";
 import Studies from "../components/Pages/Studies";
 import Algorithms from "../components/Pages/Algorithms";
 import Metrics from "../components/Pages/Metrics";
+import Archive from "../components/Pages/Archive";
 import Contact from "../components/Contact/Contact";
 import DetailPage from "../components/DetailPage/DetailPage";
 import StudySet from "../components/Pages/StudySet";
@@ -159,6 +160,10 @@ class Routes extends Component {
                 />
               )
             }
+          />
+          <Route
+            path="/archive"
+            render={props => <Archive general={this.props.general} />}
           />
           <Route render={props => <FourOhFour {...this.props} />} />
         </Switch>
