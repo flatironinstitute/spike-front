@@ -6,6 +6,7 @@ export const initialState = {
   cpus: null,
   format: null,
   loading: null,
+  newsPosts: null,
   recordings: null,
   selectedUnit: null,
   sortingResults: null,

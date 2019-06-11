@@ -20,6 +20,7 @@ export const RECEIVE_STUDY_SETS = "RECEIVE_STUDY_SETS";
 export const RECEIVE_STUDIES = "RECEIVE_STUDIES";
 export const RECEIVE_STUDY_ANALYSIS_RESULTS = "RECEIVE_STUDY_ANALYSIS_RESULTS";
 export const RECEIVE_GENERAL = "RECEIVE_GENERAL";
+export const RECEIVE_NEWS_POSTS = "RECEIVE_NEWS_POSTS";
 
 export const SELECT_STUDY_SORTING_RESULT = "SELECT_STUDY_SORTING_RESULT";
 export const SELECT_SORTER_NAME = "SELECT_SORTER_NAME";
@@ -274,6 +275,29 @@ export const fetchGeneral = () => {
     return createFetchAPI(url)
       .then(res => {
         dispatch(receiveGeneral(res.general));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      })
+      .catch(err => Sentry.captureException(err));
+  };
+};
+
+// News posts
+export const receiveNewsPosts = newsPosts => {
+  return {
+    type: RECEIVE_NEWS_POSTS,
+    newsPosts
+  }
+};
+
+export const fetchNewsPosts = () => {
+  let url = `/api/newsposts`;
+  return function (dispatch) {
+    dispatch(startLoading());
+    return createFetchAPI(url)
+      .then(res => {
+        dispatch(receiveNewsPosts(res.newsPosts));
       })
       .then(() => {
         dispatch(endLoading());

@@ -7,6 +7,7 @@ const sortingResultController = require("./controllers/sortingResultController")
 const studySetController = require("./controllers/studySetController");
 const studyAnalysisResultController = require("./controllers/studyAnalysisResultController");
 const generalController = require("./controllers/generalController");
+const newsPostController = require("./controllers/newsPostController");
 const mailer = require("./email/mailer.js");
 
 const MountainClient = require('./mountainclient-js').MountainClient;
@@ -26,6 +27,8 @@ router.get("/api/sortingresults", sortingResultController.getSortingResults);
 router.get("/api/studysets", studySetController.getStudySets);
 // Summary Stats
 router.get("/api/stats", sortingResultController.getStats);
+// News posts
+router.get("/api/newsposts", newsPostController.getNewsPosts);
 // Load object
 router.get("/api/loadObject", async (req, res) => {
   let path = decodeURIComponent(req.query.path)

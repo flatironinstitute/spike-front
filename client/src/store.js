@@ -16,6 +16,7 @@ const defaultState = {
   format: "average",
   loading: null,
   metric: "accuracy",
+  newsPosts: null,
   selectedUnit: null,
   sortingResults: null,
   selectedStudySortingResult: null,
