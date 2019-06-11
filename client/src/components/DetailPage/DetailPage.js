@@ -139,6 +139,16 @@ class DetailPage extends Component {
       recordingName = studyAnalysisResult.recordingNames[studyAnalysisResult.trueRecordingIndices[this.props.selectedUnit.unitIndex]];
     }
 
+    let sortingResult = null;
+    if (this.props.selectedUnit) {
+      let su = this.props.selectedUnit;
+      for (let sr of this.props.sortingResults) {
+        if ((sr.studyName === su.studyName) && (sr.recordingName === su.recordingName) && (sr.sorterName === su.sorterName)) {
+          sortingResult = sr;
+        }
+      }
+    }
+
     return (
       <div>
         <div className="page__body">
@@ -230,7 +240,19 @@ class DetailPage extends Component {
                                       <th>Unit ID:</th><td>{this.props.selectedUnit.unitIndex}</td>
                                     </tr>
                                     <tr>
-                                      <th>Sorting result:</th><td><Link to={`/sortingresult/${this.props.studyName}/${recordingName}/${this.props.selectedUnit.sorterName}`}>{`/sortingresult/${this.props.studyName}/${recordingName}/${this.props.selectedUnit.sorterName}`}</Link></td>
+                                      <th>Sorting result:</th><td>
+                                        <Link to={`/sortingresult/${this.props.studyName}/${recordingName}/${this.props.selectedUnit.sorterName}`}>
+                                          [More details...]{" "}
+                                        </Link></td>
+                                        <span>
+                                        {
+                                          sortingResult.returnCode === 0 ? (<span></span>) :
+                                          (
+                                            <span>Return code: {sortingResult.returnCode}{" "}{sortingResult.timedOut ? "timed out" : ""}{" "}</span>
+                                          )
+                                        }
+                                        </span>
+                                        
                                     </tr>
                                   </tbody>
                                 </table>

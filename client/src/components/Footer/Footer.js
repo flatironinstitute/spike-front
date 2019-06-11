@@ -8,7 +8,7 @@ class Footer extends Component {
   render() {
     return (
       <footer className="footer">
-        <p className="updated">Spike-front client updated on June 6, 2019 (7pm)</p>
+        <p className="updated">Spike-front client updated on June 11, 2019 (9:15am)</p>
         <div className="outro">
           <p className="footer__description">
             SpikeForest is a website and open source computing framework for

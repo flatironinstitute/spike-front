@@ -44,7 +44,7 @@ class UnitDetail extends Component {
     let unitData = this.getUnitData();
     let sr = unitData.sortingResult;
     if (!sr) {
-      this.setState({spikeSprayStatus: 'Unable to find sorting result'});
+      this.setState({spikeSprayStatus: 'Unable to find unit data'});
       return;
     }
     let key0 = {

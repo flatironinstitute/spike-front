@@ -105,7 +105,7 @@ class Archive extends Component {
                                     </div>
                                     <div className="card__footer">
                                         <p>
-                                            Below is the SpikeForest analysis archive with the current analysis at the top.
+                                            Below is the SpikeForest analysis archive with the most recent analysis at the top.
                                             These results may be loaded into Python using the MountainTools and SpikeForest
                                             packages.
                                         </p>
