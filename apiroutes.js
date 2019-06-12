@@ -15,6 +15,9 @@ const MountainClient = require('./mountainclient-js').MountainClient;
 /* V2 Data: New Routes
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
+let mt = new MountainClient();
+mt.configDownloadFrom(['spikeforest.public', 'spikeforest.public']);
+
 // CPU Routes
 router.get("/api/cpus", sortingResultController.getCPUs);
 // Sorters
@@ -32,9 +35,6 @@ router.get("/api/newsposts", newsPostController.getNewsPosts);
 // Load object
 router.get("/api/loadObject", async (req, res) => {
   let path = decodeURIComponent(req.query.path)
-
-  let mt = new MountainClient();
-  mt.configDownloadFrom(['spikeforest.public', 'spikeforest.public']);
   
   let obj = await mt.loadObject(path);
   if (obj) {
@@ -47,9 +47,6 @@ router.get("/api/loadObject", async (req, res) => {
 // Load text
 router.get("/api/loadText", async (req, res) => {
   let path = decodeURIComponent(req.query.path)
-
-  let mt = new MountainClient();
-  mt.configDownloadFrom(['spikeforest.public', 'spikeforest.public']);
   
   let txt = await mt.loadText(path);
   if (txt) {
@@ -62,9 +59,6 @@ router.get("/api/loadText", async (req, res) => {
 // Find file
 router.get("/api/findFile", async (req, res) => {
   let path = decodeURIComponent(req.query.path)
-
-  let mt = new MountainClient();
-  mt.configDownloadFrom(['spikeforest.public', 'spikeforest.public']);
   
   let url = await mt.findFile(path);
   if (url) {

@@ -122,7 +122,7 @@ class Recordings extends Component {
                           this.props.studySets.map((studySet) => (
                             <span key={`study-set-${studySet.name}`}>
                               <h4><Link to={`/studyset/${studySet.name}`}>{studySet.name}</Link></h4>
-                              <table className="table">
+                              <table className="table" style={{width: 'auto'}}>
                                 <thead>
                                   <tr><th key="col1">Study name</th><th key="col2">Num. recordings</th></tr>
                                 </thead>
@@ -149,4 +149,5 @@ class Recordings extends Component {
     );
   }
 }
+
 export default Recordings;
