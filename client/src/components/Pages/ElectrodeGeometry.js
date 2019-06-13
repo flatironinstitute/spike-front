@@ -36,9 +36,10 @@ class ElectrodeGeometry extends Component {
         this.updatePositions();
 
         let painter = new CanvasPainter(ctx);
-        painter.clear();
         let W = this.size[0];
         let H = this.size[1];
+
+        painter.clear(0, 0, W, H);
 
         let W1 = W, H1 = H;
         if (this.transpose) {
