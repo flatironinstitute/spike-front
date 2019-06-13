@@ -140,10 +140,15 @@ class HeatmapViz extends Component {
       id: 'header-sorter--',
       text: ""
     });
+    let sorter_names = [];
     for (let sorter of this.props.sorters) {
+      sorter_names.push(sorter.name);
+    }
+    sorter_names.sort();
+    for (let sorter_name of sorter_names) {
       headerCells.push({
-        id: 'header-sorter-' + sorter.name,
-        text: sorter.name,
+        id: 'header-sorter-' + sorter_name,
+        text: sorter_name,
         link: '/algorithms',
         rotate: true
       });
