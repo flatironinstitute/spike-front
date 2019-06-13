@@ -16,25 +16,22 @@ class ElectrodeGeometry extends Component {
         this.hovered_electrode_index = -1;
         this.current_electrode_index = -1;
         this.canvasRef = React.createRef();
+        this.mouseHandler = new MouseHandler();
+
+        this.mouseHandler.onMousePress(this.handleMousePress);
+        this.mouseHandler.onMouseRelease(this.handleMouseRelease);
+        this.mouseHandler.onMouseMove(this.handleMouseMove);
     }
 
     componentDidUpdate() {
+        this.repaint()
+    }
+
+    repaint() {
         const canvas = this.canvasRef.current;
         const ctx = canvas.getContext('2d');
 
-        // // Draws a square in the middle of the canvas rotated
-        // // around the centre by this.props.angle
-        // const angle = 30;
-        // const width = canvas.width;
-        // const height = canvas.height;
-        // ctx.save();
-        // ctx.beginPath();
-        // ctx.clearRect(0, 0, width, height);
-        // ctx.translate(width / 2, height / 2);
-        // ctx.rotate((angle * Math.PI) / 180);
-        // ctx.fillStyle = '#4397AC';
-        // ctx.fillRect(-width / 4, -height / 4, width / 2, height / 2);
-        // ctx.restore();
+        this.mouseHandler.setElement(canvas);
 
         this.updatePositions();
 
@@ -60,7 +57,7 @@ class ElectrodeGeometry extends Component {
             scale = H1 / h0;
             offset = [(W1 - w0 * scale) / 2 - x1 * scale, 0 - y1 * scale];
         }
-        this.channel_rects = [];
+        this.channel_rects = {};
         if (this.props.locations) {
             for (let i in this.props.locations) {
                 let pt0 = this.props.locations[i];
@@ -145,8 +142,46 @@ class ElectrodeGeometry extends Component {
         }
     }
 
+    electrodeIndexAtPixel(pos) {
+        console.log(pos, this.channel_rects);
+        for (let i in this.channel_rects) {
+            let rect0 = this.channel_rects[i];
+            if ((rect0[0]<=pos[0])&&(pos[0]<=rect0[0]+rect0[2])) {
+                if ((rect0[1]<=pos[1])&&(pos[1]<=rect0[1]+rect0[2])) {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
+    setHoveredElectrodeIndex(ind) {
+        if (ind === this.hovered_electrode_index)
+            return;
+        this.hovered_electrode_index = ind;
+        this.repaint()
+    }
+
+    handleMousePress(X) {
+
+    }
+    handleMouseRelease(X) {
+    }
+    handleMouseMove = (X) => {
+        let elec_ind = this.electrodeIndexAtPixel(X.pos);
+        console.log(elec_ind);
+        this.setHoveredElectrodeIndex(elec_ind);
+    }
+
     render() {
-        let canvas = <canvas width={this.size[0]} height={this.size[1]} ref={this.canvasRef} />
+        let canvas = <canvas
+            ref={this.canvasRef}
+            width={this.size[0]}
+            height={this.size[1]}
+            onMouseDown={this.mouseHandler.mouseDown}
+            onMouseUp={this.mouseHandler.mouseUp}
+            onMouseMove={this.mouseHandler.mouseMove}
+        />
 
         if (this.props.locations === undefined) {
             return <span>
@@ -332,6 +367,63 @@ function PainterPath() {
     }
 }
 
+function MouseHandler() {
+    this.setElement=function(elmt) {m_element=elmt;};
+    this.onMousePress=function(handler) {m_handlers['press'].push(handler);};
+    this.onMouseRelease=function(handler) {m_handlers['release'].push(handler);};
+    this.onMouseMove=function(handler) {m_handlers['move'].push(handler);};
+    this.onMouseEnter=function(handler) {m_handlers['enter'].push(handler);};
+    this.onMouseLeave=function(handler) {m_handlers['leave'].push(handler);};
+    this.onMouseWheel=function(handler) {m_handlers['wheel'].push(handler);};
+
+    this.mouseDown=function(e) {report('press',mouse_event(e)); return true;};
+    this.mouseUp=function(e) {report('release',mouse_event(e)); return true;};
+    this.mouseMove=function(e) {report('move',mouse_event(e)); return true;};
+    this.mouseEnter=function(e) {report('enter',mouse_event(e)); return true;};
+    this.mouseLeave=function(e) {report('leave',mouse_event(e)); return true;};
+    this.mouseWheel=function(e) {report('wheel', wheel_event(e)); return true;};
+    // elmt.on('dragstart',function() {return false;});
+    // elmt.on('mousewheel', function(e){report('wheel',wheel_event($(this),e)); return false;});
+
+    let m_element=null;
+    let m_handlers={
+        press:[],release:[],move:[],enter:[],leave:[],wheel:[]
+    };
+
+    function report(name,X) {
+        console.log('--- report', name, X);
+        for (let i in m_handlers[name]) {
+            m_handlers[name][i](X);
+        }
+    }
+
+    function mouse_event(e) {
+        if (!m_element) return null;
+        //var parentOffset = $(this).parent().offset(); 
+        //var offset=m_element.offset(); //if you really just want the current element's offset
+        var rect = m_element.getBoundingClientRect();
+        window.m_element=m_element;
+        console.log('--1-- m_element.offsetLeft/Right', m_element.offsetLeft, m_element.offsetTop);
+        console.log('--2-- e.pageX/Y', e.pageX, e.pageY);
+        console.log('--2-- e.screenX/Y', e.screenX, e.screenY);
+        console.log('--2-- e.clientX/Y', e.clientX, e.clientY);
+        console.log('--e-- rect.x/y', rect.x, rect.y);
+        window.dbg_m_element = m_element;
+        window.dbg_e = e;
+        var posx = e.clientX - rect.x;
+        var posy = e.clientY - rect.y;
+        return {
+            pos:[posx,posy],
+            modifiers:{ctrlKey:e.ctrlKey}
+        };
+    }
+    function wheel_event(e) {
+        return {
+            delta:e.originalEvent.wheelDelta
+        };
+    }
+}
+
 function compute_average(list) {
     if (list.length === 0) return 0;
     var sum = 0;
@@ -342,28 +434,5 @@ function compute_average(list) {
 function clone(obj) {
     return JSON.parse(JSON.stringify(obj));
 }
-
-/**
- * Copyright 2014 Google Inc. All rights reserved.
- *
- * Use of this source code is governed by a BSD-style
- * license that can be found in the LICENSE file.
- *
- * @fileoverview Description of this file.
- *
- * A polyfill for HTML Canvas features, including
- * Path2D support.
- */
-if (CanvasRenderingContext2D.prototype.ellipse === undefined) {
-    CanvasRenderingContext2D.prototype.ellipse = function (x, y, radiusX, radiusY, rotation, startAngle, endAngle, antiClockwise) {
-        this.save();
-        this.translate(x, y);
-        this.rotate(rotation);
-        this.scale(radiusX, radiusY);
-        this.arc(0, 0, 1, startAngle, endAngle, antiClockwise);
-        this.restore();
-    }
-}
-
 
 export default ElectrodeGeometry
