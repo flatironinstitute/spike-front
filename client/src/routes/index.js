@@ -18,6 +18,8 @@ import Recordings from "../components/Pages/Recordings";
 import Studies from "../components/Pages/Studies";
 import Algorithms from "../components/Pages/Algorithms";
 import Metrics from "../components/Pages/Metrics";
+import Archive from "../components/Pages/Archive";
+import News from "../components/Pages/News";
 import Contact from "../components/Contact/Contact";
 import DetailPage from "../components/DetailPage/DetailPage";
 import StudySet from "../components/Pages/StudySet";
@@ -30,6 +32,7 @@ class Routes extends Component {
   async componentDidMount() {
     // V2 Data: Fetches
     this.props.fetchGeneral();
+    this.props.fetchNewsPosts();
     this.props.fetchCPUs();
     this.props.fetchSortingResults();
     this.props.fetchSorters();
@@ -155,9 +158,18 @@ class Routes extends Component {
                   studyName={props.match.params.studyName}
                   recordingName={props.match.params.recordingName}
                   sorterName={props.match.params.sorterName}
+                  general={this.props.general}
                 />
               )
             }
+          />
+          <Route
+            path="/archive"
+            render={props => <Archive general={this.props.general} />}
+          />
+          <Route
+            path="/news"
+            render={props => <News newsPosts={this.props.newsPosts} />}
           />
           <Route render={props => <FourOhFour {...this.props} />} />
         </Switch>
@@ -173,7 +185,12 @@ function mapStateToProps(state) {
     algorithms: state.algorithms,
     contactSent: state.contactSent,
     cpus: state.cpus,
+    format: state.format,
     loading: state.loading,
+    metric: state.metric,
+    newsPosts: state.newsPosts,
+    selectedUnit: state.selectedUnit,
+    sliderValue: state.sliderValue,
     sortingResults: state.sortingResults,
     sorters: state.sorters,
     stats: state.stats,

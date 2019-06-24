@@ -96,9 +96,6 @@ async function loadIntoDB(model, data, name) {
     await model.insertMany(data);
     console.log(` 😎 😎 😎 ${name} in DB...`);
   } catch (e) {
-    console.log(
-      "\n👎👎👎👎👎👎👎👎 Error! The Error info is below but if you are importing data make sure to drop the existing database first with.\n\n\t yarn run blowitallaway\n\n\n"
-    );
     console.log(e);
     process.exit();
   }

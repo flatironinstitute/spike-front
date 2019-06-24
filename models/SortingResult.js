@@ -29,6 +29,21 @@ const sortingResultSchema = new mongoose.Schema({
   },
   consoleOut: {
     type: String /* sha1:// of console output */
+  },
+  returnCode: {
+    type: Number
+  },
+  timedOut: {
+    type: Boolean
+  },
+  startTime: {
+    type: String
+  },
+  endTime: {
+    type: String
+  },
+  container: {
+    type: String
   }
 });
 

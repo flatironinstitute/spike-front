@@ -24,15 +24,16 @@ class ScatterplotContainer extends Component {
     const {
       studyName,
       sorterName,
+      recordingName,
       studyAnalysisResult,
       sliderValue,
       metric,
       format
     } = this.props;
     const colorRanges = {
-      count: ["#6B7CC4", "#102BA3"],
+      average: ["#6B7CC4", "#102BA3"],
       cpu: ["#EFC1E3", "#B52F93"],
-      average: ["#00CEA8", "#0C4F42"]
+      count: ["#00CEA8", "#0C4F42"]
     };
     const copy = this.getHeaderCopy(this.props.metric);
     return (
@@ -57,10 +58,12 @@ class ScatterplotContainer extends Component {
                   colorRange={colorRanges['count']}
                   studyAnalysisResult={studyAnalysisResult}
                   studyName={studyName}
+                  recordingName={recordingName}
                   sorterName={sorterName}
                   sliderValue={sliderValue}
                   format={format}
                   metric={metric}
+                  selectedUnitCode={this.props.selectedUnitCode}
                   handleScatterplotClick={this.props.handleScatterplotClick}
                 />
               );
@@ -71,10 +74,12 @@ class ScatterplotContainer extends Component {
                   colorRange={colorRanges['average']}
                   studyAnalysisResult={studyAnalysisResult}
                   studyName={studyName}
+                  recordingName={recordingName}
                   sorterName={sorterName}
                   sliderValue={sliderValue}
                   format={format}
                   metric={metric}
+                  selectedUnitCode={this.props.selectedUnitCode}
                   handleScatterplotClick={this.props.handleScatterplotClick}
                 />
               );

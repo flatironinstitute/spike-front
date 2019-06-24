@@ -29,6 +29,7 @@ require("./models/SortingResult");
 require("./models/StudyAnalysisResult");
 require("./models/StudySet");
 require("./models/General");
+require("./models/NewsPost");
 
 /* Express Isomorphic
 –––––––––––––––––––––––––––––––––––––––––––––––––– */

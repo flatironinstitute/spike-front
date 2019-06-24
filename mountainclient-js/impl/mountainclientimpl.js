@@ -90,7 +90,7 @@ function MountainClientImpl() {
       let dir_sha1 = list0[2] || '';
       dir_sha1 = dir_sha1.split('.')[0];
       if (!dir_sha1) return null;
-      let dd = this.loadObject('sha1://'+sha1);
+      let dd = await this.loadObject('sha1://'+dir_sha1);
       if (!dd) return null;
       let ii = 3
       while (ii < list0.length) {
@@ -122,6 +122,7 @@ function MountainClientImpl() {
     }
   }
   this.loadBinary = async function(path, opts) {
+    opts = opts || {};
     if (!path) {
       if ((opts.collection) && ((opts.key)||(opts.hashed_key))) {
         if (!opts.hashed_key) {
@@ -139,8 +140,9 @@ function MountainClientImpl() {
       let sha1 = await this.fileSha1(path);
       if (!sha1) return null;
       let ret = m_memory_cache.getBinaryForSha1(sha1);
-      if (ret !== null)
+      if (ret !== null) {
         return ret;
+      }
       for (let i=0; i<m_download_from.length; i++) {
         let df = m_download_from[i];
         let kachery_url = await resolve_kachery_url(df);

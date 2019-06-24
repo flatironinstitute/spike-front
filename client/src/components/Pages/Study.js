@@ -37,7 +37,7 @@ class Study extends Component {
           <td key={"durationSec"}>{rec.durationSec}</td>
           <td key={"numTrueUnits"}>{rec.numTrueUnits}</td>
           <td key={"directory"}>{abbreviateSha1Path(rec.directory)}</td>
-          <td key={"firingsTrue"}>{abbreviateSha1Path(rec.firingsTrue, {canDownload: true})}</td>
+          <td key={"firingsTrue"}>{abbreviateSha1Path(rec.firingsTrue, {canDownload: false})}</td>
         </tr>
       )
     }

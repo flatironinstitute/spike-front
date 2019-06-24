@@ -9,47 +9,53 @@ import HeatmapOptionsRow from "./HeatmapOptionsRow";
 import "react-rangeslider/lib/index.css";
 import "./heatmap.css";
 
+// Redux
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as actionCreators from "../../actions/actionCreators";
+
 class HomeContentContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      format: "count",
-      metric: "accuracy",
-      sliderValue: 0.8
+      // metric: "accuracy"
     };
   }
-  handleFormatChange = value => {
-    var sliderValue;
-    switch (value) {
-      case "cpu":
-        sliderValue = 300;
-        break;
-      case "count":
-        sliderValue = 0.8;
-        break;
-      case "average":
-        sliderValue = 8;
-        break;
-      default:
-        sliderValue = 0;
-    }
-    this.setState({
-      format: value,
-      sliderValue: sliderValue
-    });
+  handleFormatChange = format => {
+    this.props.setFormat(format);
+    // var sliderValue;
+    // switch (value) {
+    //   case "cpu":
+    //     sliderValue = 300;
+    //     break;
+    //   case "count":
+    //     sliderValue = DEFAULT_SLIDER_COUNT;
+    //     break;
+    //   case "average":
+    //     sliderValue = DEFAULT_SLIDER_AVERAGE;
+    //     break;
+    //   default:
+    //     sliderValue = 0;
+    // }
+    // this.setState({
+    //   format: value,
+    //   sliderValue: sliderValue
+    // });
   };
 
-  handleMetricChange = value => {
-    this.setState({
-      metric: value
-    });
+  handleMetricChange = metric => {
+    this.props.setMetric(metric);
+    // this.setState({
+    //   metric: value
+    // });
   };
 
   handleSliderChange = value => {
     let round = Math.round(value * 100) / 100;
-    this.setState({
-      sliderValue: round
-    });
+    this.props.setSliderValue(this.props.format, round);
+    // this.setState({
+    //   sliderValue: round
+    // });
   };
 
   render() {
@@ -59,37 +65,37 @@ class HomeContentContainer extends Component {
           handleFormatChange={this.handleFormatChange}
           handleSliderChange={this.handleSliderChange}
           handleMetricChange={this.handleMetricChange}
-          format={this.state.format}
-          metric={this.state.metric}
-          sliderValue={this.state.sliderValue}
+          format={this.props.format}
+          metric={this.props.metric}
+          sliderValue={this.props.sliderValue[this.props.format]}
           showCPU={true}
         />
         {(() => {
-          switch (this.state.format) {
+          switch (this.props.format) {
             case "count":
               return (
                 <HeatmapCount
                   {...this.props}
-                  format={this.state.format}
-                  metric={this.state.metric}
-                  sliderValue={this.state.sliderValue}
+                  format={this.props.format}
+                  metric={this.props.metric}
+                  sliderValue={this.props.sliderValue[this.props.format]}
                 />
               );
             case "average":
               return (
                 <HeatmapCount
                   {...this.props}
-                  format={this.state.format}
-                  metric={this.state.metric}
-                  sliderValue={this.state.sliderValue}
+                  format={this.props.format}
+                  metric={this.props.metric}
+                  sliderValue={this.props.sliderValue[this.props.format]}
                 />
               );
             case "cpu":
               return (
                 <HeatmapCount
                   {...this.props}
-                  format={this.state.format}
-                  metric={this.state.metric}
+                  format={this.props.format}
+                  metric={this.props.metric}
                 />
               );
             default:
@@ -101,4 +107,21 @@ class HomeContentContainer extends Component {
   }
 }
 
-export default HomeContentContainer;
+
+function mapStateToProps(state) {
+  return {
+    format: state.format,
+    sliderValue: state.sliderValue,
+    metric: state.metric
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(actionCreators, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomeContentContainer);
+

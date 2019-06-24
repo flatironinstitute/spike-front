@@ -7,12 +7,16 @@ const sortingResultController = require("./controllers/sortingResultController")
 const studySetController = require("./controllers/studySetController");
 const studyAnalysisResultController = require("./controllers/studyAnalysisResultController");
 const generalController = require("./controllers/generalController");
+const newsPostController = require("./controllers/newsPostController");
 const mailer = require("./email/mailer.js");
 
 const MountainClient = require('./mountainclient-js').MountainClient;
 
 /* V2 Data: New Routes
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+let mt = new MountainClient();
+mt.configDownloadFrom(['spikeforest.public', 'spikeforest.public']);
 
 // CPU Routes
 router.get("/api/cpus", sortingResultController.getCPUs);
@@ -26,12 +30,11 @@ router.get("/api/sortingresults", sortingResultController.getSortingResults);
 router.get("/api/studysets", studySetController.getStudySets);
 // Summary Stats
 router.get("/api/stats", sortingResultController.getStats);
+// News posts
+router.get("/api/newsposts", newsPostController.getNewsPosts);
 // Load object
 router.get("/api/loadObject", async (req, res) => {
   let path = decodeURIComponent(req.query.path)
-
-  let mt = new MountainClient();
-  mt.configDownloadFrom(['spikeforest.public', 'spikeforest.public']);
   
   let obj = await mt.loadObject(path);
   if (obj) {
@@ -44,9 +47,6 @@ router.get("/api/loadObject", async (req, res) => {
 // Load text
 router.get("/api/loadText", async (req, res) => {
   let path = decodeURIComponent(req.query.path)
-
-  let mt = new MountainClient();
-  mt.configDownloadFrom(['spikeforest.public', 'spikeforest.public']);
   
   let txt = await mt.loadText(path);
   if (txt) {
@@ -59,9 +59,6 @@ router.get("/api/loadText", async (req, res) => {
 // Find file
 router.get("/api/findFile", async (req, res) => {
   let path = decodeURIComponent(req.query.path)
-
-  let mt = new MountainClient();
-  mt.configDownloadFrom(['spikeforest.public', 'spikeforest.public']);
   
   let url = await mt.findFile(path);
   if (url) {

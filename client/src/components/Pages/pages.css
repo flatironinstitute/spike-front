@@ -68,6 +68,10 @@
   padding-left: 0;
 }
 
+code {
+  background: rgb(200, 210,210)
+}
+
 /* TODO: REMOVE Intro Header Styling
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .intro {

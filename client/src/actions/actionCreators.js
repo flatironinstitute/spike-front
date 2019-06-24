@@ -20,11 +20,15 @@ export const RECEIVE_STUDY_SETS = "RECEIVE_STUDY_SETS";
 export const RECEIVE_STUDIES = "RECEIVE_STUDIES";
 export const RECEIVE_STUDY_ANALYSIS_RESULTS = "RECEIVE_STUDY_ANALYSIS_RESULTS";
 export const RECEIVE_GENERAL = "RECEIVE_GENERAL";
+export const RECEIVE_NEWS_POSTS = "RECEIVE_NEWS_POSTS";
 
 export const SELECT_STUDY_SORTING_RESULT = "SELECT_STUDY_SORTING_RESULT";
 export const SELECT_SORTER_NAME = "SELECT_SORTER_NAME";
 export const SELECT_STUDY_NAME = "SELECT_STUDY_NAME";
-
+export const SET_FORMAT = "SET_FORMAT";
+export const SET_SLIDER_VALUE = "SET_SLIDER_VALUE"
+export const SET_METRIC = "SET_METRIC";
+export const SET_SELECTED_UNIT = "SET_SELECTED_UNIT";
 
 export const START_LOADING = "START_LOADING";
 export const END_LOADING = "END_LOADING";
@@ -279,6 +283,29 @@ export const fetchGeneral = () => {
   };
 };
 
+// News posts
+export const receiveNewsPosts = newsPosts => {
+  return {
+    type: RECEIVE_NEWS_POSTS,
+    newsPosts
+  }
+};
+
+export const fetchNewsPosts = () => {
+  let url = `/api/newsposts`;
+  return function (dispatch) {
+    dispatch(startLoading());
+    return createFetchAPI(url)
+      .then(res => {
+        dispatch(receiveNewsPosts(res.newsPosts));
+      })
+      .then(() => {
+        dispatch(endLoading());
+      })
+      .catch(err => Sentry.captureException(err));
+  };
+};
+
 // Selected Study for Scatterplot
 export const selectStudySortingResult = studySortingResult => ({
   type: SELECT_STUDY_SORTING_RESULT,
@@ -293,4 +320,25 @@ export const selectStudyName = studyName => ({
 export const selectSorterName = sorterName => ({
   type: SELECT_SORTER_NAME,
   sorterName
+});
+
+export const setFormat = format => ({
+  type: SET_FORMAT,
+  format
+});
+
+export const setSliderValue = (format, value) => ({
+  type: SET_SLIDER_VALUE,
+  format,
+  value
+});
+
+export const setMetric = metric => ({
+  type: SET_METRIC,
+  metric
+});
+
+export const setSelectedUnit = selectedUnit => ({
+  type: SET_SELECTED_UNIT,
+  selectedUnit
 });
