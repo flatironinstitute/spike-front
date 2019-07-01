@@ -20,6 +20,7 @@ import Algorithms from "../components/Pages/Algorithms";
 import Metrics from "../components/Pages/Metrics";
 import Archive from "../components/Pages/Archive";
 import News from "../components/Pages/News";
+import Forum from "../components/Pages/Forum";
 import Contact from "../components/Contact/Contact";
 import DetailPage from "../components/DetailPage/DetailPage";
 import StudySet from "../components/Pages/StudySet";
@@ -170,6 +171,10 @@ class Routes extends Component {
           <Route
             path="/news"
             render={props => <News newsPosts={this.props.newsPosts} />}
+          />
+          <Route
+            path="/forum"
+            render={props => <Forum />}
           />
           <Route render={props => <FourOhFour {...this.props} />} />
         </Switch>
