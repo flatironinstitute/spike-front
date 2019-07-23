@@ -61,7 +61,7 @@ class HeatmapCount extends Component {
         ) : (
           <Container className="container__heatmap">
             <Row className="container__heatmap--row">
-              <Col lg={6} sm={12}>
+              <Col style={{minWidth: 700, flexGrow: 1, overflow: 'auto'}}>
                 <HeatmapViz
                   groupByStudySets={true}
                   selectStudyName={this.props.selectStudyName}
@@ -80,7 +80,7 @@ class HeatmapCount extends Component {
 
               {
                 (this.props.format !== "cpu") ?
-                (<Col lg={6} sm={12}>
+                (<Col style={{minWidth: 400, flexGrow: 1}}>
                   <ScatterplotCard
                     sorters={this.props.sorters}
                     studyAnalysisResults={this.props.studyAnalysisResults}

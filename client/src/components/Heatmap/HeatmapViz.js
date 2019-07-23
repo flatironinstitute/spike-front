@@ -12,7 +12,6 @@ class HeatmapViz extends Component {
     this.state = { 
       tableRows: [], 
       tableHeader: [], 
-      vizWidth: null,
       selectedStudyName: props.selectedStudyName,
       selectedRecordingName: props.selectedRecordingName,
       selectedSorterName: props.selectedSorterName
@@ -160,10 +159,10 @@ class HeatmapViz extends Component {
 
     let elmnt = document.getElementById("heatmap-card");
     let width = elmnt.offsetWidth;
+    console.log('--------------------- width', elmnt.offsetWidth);
     this.setState({
       tableRows: tableRows,
-      tableHeader: tableHeader,
-      vizWidth: width
+      tableHeader: tableHeader
     });
   }
 
@@ -599,8 +598,7 @@ class HeatmapViz extends Component {
   render() {
     const loading =
       isEmpty(this.state.tableRows) ||
-      isEmpty(this.state.tableHeader) ||
-      !this.state.vizWidth;
+      isEmpty(this.state.tableHeader);
     const title = this.getFormatCopy();
     const copy =
       this.props.format !== "cpu"
@@ -657,7 +655,6 @@ class HeatmapViz extends Component {
               header={this.state.tableHeader}
               rows={this.state.tableRows}
               onCellSelected={this.handleCellSelected}
-              vizWidth={this.state.vizWidth}
             />
           </div>
         )}

@@ -67,7 +67,7 @@ class ScatterplotCard extends Component {
           {loading ? (
             <div className="card__header">
               <h4 className="card__title">
-                Click a cell in the table to the left to see a detailed scatterplot of
+                Click a cell in the table to see a detailed scatterplot of
                 the corresponding sorter results.
               </h4>
             </div>
