@@ -159,7 +159,6 @@ class HeatmapViz extends Component {
 
     let elmnt = document.getElementById("heatmap-card");
     let width = elmnt.offsetWidth;
-    console.log('--------------------- width', elmnt.offsetWidth);
     this.setState({
       tableRows: tableRows,
       tableHeader: tableHeader
@@ -630,7 +629,7 @@ class HeatmapViz extends Component {
                     (
                       <span>
                         These are preliminary results prior to parameter optimization, and we are still in the process of ensuring that we are using the proper <Link to="/algorithms">versions of the spike sorters</Link>.
-                        We expect to go live in early July at <a href="https://spikeforest.flatironinstitute.org">spikeforest.flatironinstitute.org</a>.
+                        We expect to go live by the end of July at <a href="https://spikeforest.flatironinstitute.org">spikeforest.flatironinstitute.org</a>.
                       </span>
 
                     )

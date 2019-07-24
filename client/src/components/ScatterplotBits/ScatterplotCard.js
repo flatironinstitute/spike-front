@@ -61,7 +61,7 @@ class ScatterplotCard extends Component {
     return (
       <div
         className="card card--heatmap"
-        style={{ height: this.state.cardHeight + "px", minHeight: "215px" }}
+        style={{ height: this.state.cardHeight + "px", minHeight: "100px" }}
       >
         <div className="detail__column-disable">
           {loading ? (

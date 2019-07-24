@@ -89,7 +89,7 @@ class HeatmapCount extends Component {
                     sliderValue={this.props.sliderValue}
                     format={this.props.format}
                     metric={this.props.metric}
-                    cardHeight={this.state.cardHeight}
+                    cardHeight={this.props.selectedUnit ? this.state.cardHeight : 100}
                     selectedUnitCode={(this.props.selectedUnit || {}).unitCode || null}
                     handleScatterplotClick={this.handleScatterplotClick}
                   />
