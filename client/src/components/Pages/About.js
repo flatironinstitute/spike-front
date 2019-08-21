@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
+import ForumAlert from "../Header/ForumAlert";
 
 class About extends Component {
   render() {
     return (
-      <div className="page__body">
+      <div className="page__body page__body--alert">
+        <ForumAlert />
         <Container className="container__heatmap">
           <Row className="justify-content-md-center">
             <Col lg={12} sm={12} xl={10}>
@@ -28,33 +30,70 @@ class About extends Component {
                     <hr />
                     <p>
                       {/* #barcode:29426aa5-spikeforest-overview */}
-                      Extracellular electrical recording is a popular and affordable method to measure the simultaneous spiking activity of a large neural population.
-                      The key computational extraction of distinct neuronal units and firing times is known as spike sorting.
-                      However, there is a growing number of automated spike sorting codes, and much uncertainty and folklore about their accuracy
-                      in various experimental conditions. Several papers report comparisons on a case-by-case basis, but there is a lack of standardized
-                      measures and validation data. Furthermore, there is a potential for bias, such as sub-optimal tuning of competing algorithms, and a focus on one
-                      brain region or probe type. Without a fair and transparent comparison, genuine progress in the field remains difficult.
+                      Extracellular electrical recording is a popular and
+                      affordable method to measure the simultaneous spiking
+                      activity of a large neural population. The key
+                      computational extraction of distinct neuronal units and
+                      firing times is known as spike sorting. However, there is
+                      a growing number of automated spike sorting codes, and
+                      much uncertainty and folklore about their accuracy in
+                      various experimental conditions. Several papers report
+                      comparisons on a case-by-case basis, but there is a lack
+                      of standardized measures and validation data. Furthermore,
+                      there is a potential for bias, such as sub-optimal tuning
+                      of competing algorithms, and a focus on one brain region
+                      or probe type. Without a fair and transparent comparison,
+                      genuine progress in the field remains difficult.
                     </p>
                     <p>
-                      Aiming to address this need, SpikeForest is a reproducible, continuously updating platform which benchmarks the performance of spike sorting
-                      codes across a large curated database of electrophysiological recordings with ground truth. It consists of this website
-                      for presenting our up-to-date findings, a <a href={'https://github.com/flatironinstitute/spikeforest'}>Python package</a> which contains the tools for running the
-                      SpikeForest analysis, and an expanding collection of electrophysiology recordings with ground-truth spiking information.
+                      Aiming to address this need, SpikeForest is a
+                      reproducible, continuously updating platform which
+                      benchmarks the performance of spike sorting codes across a
+                      large curated database of electrophysiological recordings
+                      with ground truth. It consists of this website for
+                      presenting our up-to-date findings, a{" "}
+                      <a
+                        href={
+                          "https://github.com/flatironinstitute/spikeforest"
+                        }
+                      >
+                        Python package
+                      </a>{" "}
+                      which contains the tools for running the SpikeForest
+                      analysis, and an expanding collection of electrophysiology
+                      recordings with ground-truth spiking information.
                     </p>
                     <p>
-                      We host a variety of experimental paired ground truth recordings from
-                      the community and also many in silico synthetic recordings. Each
-                      sorter is run on all recordings and the resulting accuracies for the
-                      ground truth units are updated on a daily basis as needed. Approximate
+                      We host a variety of experimental paired ground truth
+                      recordings from the community and also many in silico
+                      synthetic recordings. Each sorter is run on all recordings
+                      and the resulting accuracies for the ground truth units
+                      are updated on a daily basis as needed. Approximate
                       CPU/GPU run times are also reported.
                     </p>
                     <p>
-                      Visitors may browse all datasets, algorithms, sorting results,
-                      and comparisons, and inspect the source code used to generate these
-                      data. Use the links on the navbar to learn about{" "}
-                      <Link to="/recordings">recordings</Link>,{" "}
+                      Visitors may browse all datasets, algorithms, sorting
+                      results, and comparisons, and inspect the source code used
+                      to generate these data. Use the links on the navbar to
+                      learn about <Link to="/recordings">recordings</Link>,{" "}
                       <Link to="/algorithms">algorithms</Link>, and{" "}
                       <Link to="/metrics">metric definitions</Link>.
+                    </p>
+                    <p>
+                      <b>Resources:</b>
+                      <ul>
+                        <li>
+                          <Link exact="true" to="/news">
+                            News
+                          </Link>{" "}
+                          - click here to learn the latest on the spike sorting
+                          software and website.
+                        </li>
+                        <li>
+                          <a>Forum</a> - browse our new online community, ask
+                          questions or make suggestions.
+                        </li>
+                      </ul>
                     </p>
                   </div>
                 </div>
@@ -72,31 +111,37 @@ class About extends Component {
                   </div>
                   <div className="card__footer">
                     <hr />
-                    There are at least four ways to provide feedback, report problems, or contact us with questions:
-                      <ul>
-                      <li> You may email us using the{" "}
+                    There are several ways to provide feedback, report problems,
+                    or contact us with questions:
+                    <ul>
+                      <li>
+                        {" "}
+                        Join the online community{" "}
+                        <a
+                          href="https://www.spikeforum.org/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          SpikeForum
+                        </a>{" "}
+                        dedicated to supporting this open source spike sorting
+                        software.
+                      </li>
+                      <li>
+                        {" "}
+                        You may email us using the{" "}
                         <Link exact="true" to="/contact">
                           contact form
-                          </Link>{" "}.
-                       </li>
-                      <li> For website problems, please use the{" "}
-                        <a
-                          href="https://github.com/flatironinstitute/spike-front/issues"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Github issues
-                        </a>{" "}
-                        page for the front end.
-                       </li>
-                       <li> Or you can submit issues to the
-                       <a
-                          href="https://github.com/flatironinstitute/spikeforest/issues"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                        SpikeForest analysis repository</a>.</li>
-                      <li> If you prefer a more graphical/interactive way to label problems or questions on a particular page, click on UserSnap in the bottom-right corner of any page.</li>
+                        </Link>{" "}
+                        .
+                      </li>
+                      <li>
+                        {" "}
+                        If you prefer a more graphical/interactive way to label
+                        problems or questions on a particular page, click on the
+                        purple <b>FEEDBACK</b> tab in the bottom-right corner of
+                        any page.
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -115,8 +160,7 @@ class About extends Component {
                   <div className="card__footer">
                     <hr />
                     <p>
-                      SpikeForest is a project of the
-                      {" "}
+                      SpikeForest is a project of the{" "}
                       <a
                         href="https://flatironinstitute.org"
                         target="_blank"
@@ -124,73 +168,118 @@ class About extends Component {
                       >
                         Flatiron Institute
                       </a>{" "}
-                      involving
-                      the{" "}
+                      involving the{" "}
                       <a
                         href="https://www.simonsfoundation.org/flatiron/center-for-computational-mathematics/"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                      Center for Computational Mathematics (CCM)
-                      </a> and the{" "}
+                        Center for Computational Mathematics (CCM)
+                      </a>{" "}
+                      and the{" "}
                       <a
                         href="https://www.simonsfoundation.org/flatiron/scientific-computing-core/"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                      Scientific Computing Core (SCC)
-                      </a>.
+                        Scientific Computing Core (SCC)
+                      </a>
+                      .
                     </p>
                     <ul>
-                      <li>Jeremy Magland, CCM (chief infrastructure developer, backend analysis framework)</li>
-                      <li>James Jun, CCM (infrastructure, testing, recording preparation, and algorithm integration)</li>
-                      <li>Elizabeth Lovero, SCC (site design, web development, visualizations)</li>
+                      <li>
+                        Jeremy Magland, CCM (chief infrastructure developer,
+                        backend analysis framework)
+                      </li>
+                      <li>
+                        James Jun, CCM (infrastructure, testing, recording
+                        preparation, and algorithm integration)
+                      </li>
+                      <li>
+                        Elizabeth Lovero, SCC (site design, web development,
+                        visualizations)
+                      </li>
                       <li>Leslie Greengard, CCM (concept, planning)</li>
-                      <li>Alex Barnett, CCM (concept, planning, site design, testing)</li>
+                      <li>
+                        Alex Barnett, CCM (concept, planning, site design,
+                        testing)
+                      </li>
+                    </ul>
+                    <p>Other key contributors to the project include</p>
+                    <ul>
+                      <li>
+                        Alex Morley - Mozilla Fellow, MRC Brain Network Dynamics
+                        Unit, University of Oxford, UK (infrastructure, testing)
+                      </li>
+                      <li>
+                        Witold Wysota - Warsaw, Poland (MountainTools
+                        infrastructure, testing)
+                      </li>
                     </ul>
                     <p>
-                      Other key contributors to the project include
+                      File format conversions and some computations make use of{" "}
+                      <a
+                        href={"https://github.com/SpikeInterface/"}
+                        target={"_blank"}
+                      >
+                        SpikeInterface
+                      </a>
+                      . Over time we will expand our integration with this
+                      project. It is under development by the following
+                      individuals
                     </p>
                     <ul>
                       <li>
-                        Alex Morley - Mozilla Fellow, MRC Brain Network Dynamics Unit, University of Oxford, UK (infrastructure, testing)
+                        Cole Hurwitz - The Institute for Adaptive and Neural
+                        Computation (ANC), University of Edinburgh, Edinburgh,
+                        Scotland
                       </li>
                       <li>
-                        Witold Wysota - Warsaw, Poland (MountainTools infrastructure, testing)
+                        Alessio Paolo Buccino - Center for Inegrative
+                        Neurolasticity (CINPLA), Department of Biosciences,
+                        Physics, and Informatics, University of Oslo, Oslo,
+                        Norway
                       </li>
-                    </ul>
-                    <p>
-                      File format conversions and some computations make use of <a href={'https://github.com/SpikeInterface/'} target={"_blank"}>SpikeInterface</a>. Over time we
-                      will expand our integration with this project. It is under development by the following individuals
-                    </p>
-                    <ul>
-                      <li>Cole Hurwitz - The Institute for Adaptive and Neural Computation (ANC), University of Edinburgh, Edinburgh, Scotland</li>
-                      <li>Alessio Paolo Buccino - Center for Inegrative Neurolasticity (CINPLA), Department of Biosciences, Physics, and Informatics, University of Oslo, Oslo, Norway</li>
-                      <li>Matthias Hennig - The Institute for Adaptive and Neural Computation (ANC), University of Edinburgh, Edinburgh, Scotland</li>
-                      <li>Samuel Garcia - Centre de Recherche en Neuroscience de Lyon (CRNL), Lyon, France</li>
-                      <li>Jeremy Magland - Center for Computational Mathematics, Flatiron Institute, New York, NY</li>
+                      <li>
+                        Matthias Hennig - The Institute for Adaptive and Neural
+                        Computation (ANC), University of Edinburgh, Edinburgh,
+                        Scotland
+                      </li>
+                      <li>
+                        Samuel Garcia - Centre de Recherche en Neuroscience de
+                        Lyon (CRNL), Lyon, France
+                      </li>
+                      <li>
+                        Jeremy Magland - Center for Computational Mathematics,
+                        Flatiron Institute, New York, NY
+                      </li>
                     </ul>
                     <p>
                       We are grateful for many collaborators at other
-                      institutions for their vital help and supply of recordings:
+                      institutions for their vital help and supply of
+                      recordings:
                     </p>
                     <ul>
                       <li> Frank Lab, UCSF</li>
-                      <ul><li> Jason Chung (UCSF)</li>
+                      <ul>
+                        <li> Jason Chung (UCSF)</li>
                         <li> Loren Frank (UCSF)</li>
                       </ul>
                       <li> Allen Institute for Brian Science</li>
-                      <ul><li> Catalin Mitelut (Columbia)</li>
+                      <ul>
+                        <li> Catalin Mitelut (Columbia)</li>
                         <li> Sergey Gratiy (AIBS)</li>
                         <li> Costas Anastassiou (AIBS)</li>
                       </ul>
                       <li> Buzsaki Lab (NYU)</li>
-                      <ul><li> Dan English (Virginia Tech)</li>
+                      <ul>
+                        <li> Dan English (Virginia Tech)</li>
                         <li> Anton Sirota (LMU Munich)</li>
                         <li> György Buzsáki (NYU)</li>
                       </ul>
                       <li> Kampff Lab, UCL</li>
-                      <ul><li> André Marques-Smith (UCL)</li>
+                      <ul>
+                        <li> André Marques-Smith (UCL)</li>
                         <li> Joana P. Neto (UCL)</li>
                         <li> Adam R. Kampff (UCL)</li>
                       </ul>
@@ -206,7 +295,9 @@ class About extends Component {
                         <li> Giulia LB Spampinato (CNRS)</li>
                         <li> Olivier Marre (CNRS)</li>
                       </ul>
-                      <li>HHMI - Janelia Research Campus (hybrid drift simulation)</li>
+                      <li>
+                        HHMI - Janelia Research Campus (hybrid drift simulation)
+                      </li>
                       <ul>
                         <li>Jennifer O'Connor</li>
                         <li>Marius Pachitariu</li>
@@ -231,9 +322,10 @@ class About extends Component {
                     <p>
                       This project is the fruition of a long-term goal within
                       the spike sorting effort of CCM, starting in 2014 at what
-                       was then SCDA (the Simons Center for Data Analysis). The original spike sorting effort
-                      comprised Jeremy Magland, Alex Barnett, and Leslie
-                      Greengard, and collaborators in Loren Frank's lab.
+                      was then SCDA (the Simons Center for Data Analysis). The
+                      original spike sorting effort comprised Jeremy Magland,
+                      Alex Barnett, and Leslie Greengard, and collaborators in
+                      Loren Frank's lab.
                     </p>
                     <p>
                       Design principles were outlined in our{" "}
@@ -244,11 +336,14 @@ class About extends Component {
                       >
                         white paper
                       </a>{" "}
-                      of May 2018. This was inspired in part by a
-                      community discussion on validation at the Janelia spike sorting workshop
-                      of 3/22/18.
+                      of May 2018. This was inspired in part by a community
+                      discussion on validation at the Janelia spike sorting
+                      workshop of 3/22/18.
                     </p>
-                    <p>We were influenced (in terms of concept, features, and site design) by many neuroscience and non-neuroscience algorithm validation websites, including:
+                    <p>
+                      We were influenced (in terms of concept, features, and
+                      site design) by many neuroscience and non-neuroscience
+                      algorithm validation websites, including:
                     </p>
                     <ul>
                       <li>
@@ -259,10 +354,10 @@ class About extends Component {
                         >
                           ClustEval website
                         </a>{" "}
-                        for comparing clustering algorithms, including parameter optimizations.
-                        Their publication is: Wiwie, C., Röttger, R. & Baumbach, J. "Comparing the
-                        performance of biomedical clustering methods," Nature
-                        Methods (2015).
+                        for comparing clustering algorithms, including parameter
+                        optimizations. Their publication is: Wiwie, C., Röttger,
+                        R. & Baumbach, J. "Comparing the performance of
+                        biomedical clustering methods," Nature Methods (2015).
                       </li>
                       <li>
                         <a
@@ -346,16 +441,32 @@ class About extends Component {
                   </div>
                   <div className="card__footer">
                     <hr />
-                    <p>We have many future plans, and welcome your suggestions. Some of our future plans include:</p>
+                    <p>
+                      We have many future plans, and welcome your suggestions.
+                      Some of our future plans include:
+                    </p>
                     <ol>
                       <li>Expanding the set of test recordings</li>
-                      <li>Parameter settings: more explicit control of parameters for sorting algorithms, with possible optimization.</li>
-                      <li>Hybrid recordings: incorporate a new recording class to complement the current <i>in vivo</i>, <i>ex vivo</i>, and simulated recordings.</li>
                       <li>
-                        Expansion of SNR to other surrogate quality metrics: display noise
-                        overlap, isolation, etc, as used in MountainView.
+                        Parameter settings: more explicit control of parameters
+                        for sorting algorithms, with possible optimization.
                       </li>
-                      <li>Stability-based quality metrics: run sorters multiple times to measure stability, as in our work "Validation of neural spike sorting algorithms without ground-truth information," A. H. Barnett, J. F. Magland, and L. Greengard, J. Neurosci. Meth., 264, 65--77 (2016).
+                      <li>
+                        Hybrid recordings: incorporate a new recording class to
+                        complement the current <i>in vivo</i>, <i>ex vivo</i>,
+                        and simulated recordings.
+                      </li>
+                      <li>
+                        Expansion of SNR to other surrogate quality metrics:
+                        display noise overlap, isolation, etc, as used in
+                        MountainView.
+                      </li>
+                      <li>
+                        Stability-based quality metrics: run sorters multiple
+                        times to measure stability, as in our work "Validation
+                        of neural spike sorting algorithms without ground-truth
+                        information," A. H. Barnett, J. F. Magland, and L.
+                        Greengard, J. Neurosci. Meth., 264, 65--77 (2016).
                       </li>
                       <li>Further integration with SpikeInterface.</li>
                     </ol>

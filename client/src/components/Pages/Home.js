@@ -6,39 +6,12 @@ import { Container, Card } from "react-bootstrap";
 import StatsAlert from "../Header/StatsAlert";
 import InfoPanelContent from "../Header/InfoPanelContent";
 
-import "./pages.css";
-// import sortingResults from "../../reducers/sortingResults";
-
 class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // unitsMap: {}
-    };
-  }
-
-  componentDidMount() {
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-  }
-
-  getSorters() {
-    // returns the unique names of the sorters
-    return this.props.sorters
-      .map(item => item.name)
-      .filter((value, index, self) => self.indexOf(value) === index);
-  }
-
   render() {
-    // let loading =
-    //   isEmpty(this.state.unitsMap) ||
-    //   isEmpty(this.props.studies) ||
-    //   isEmpty(this.props.sorters);
     let loading =
-        isEmpty(this.props.sorters) ||
-        isEmpty(this.props.studySets) ||
-        isEmpty(this.props.studyAnalysisResults);
+      isEmpty(this.props.sorters) ||
+      isEmpty(this.props.studySets) ||
+      isEmpty(this.props.studyAnalysisResults);
     if (loading) {
       window.scrollTo(0, 0);
     }
@@ -59,11 +32,7 @@ class Home extends Component {
             </Card>
           </Container>
         ) : (
-          <HomeContentContainer
-            id="overview"
-            {...this.props}
-            // unitsMap={this.state.unitsMap}
-          />
+          <HomeContentContainer id="overview" {...this.props} />
         )}
         <Container className="container__heatmap">
           <Card>

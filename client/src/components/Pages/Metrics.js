@@ -2,17 +2,10 @@ import React, { Component } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import MathJax from "react-mathjax";
 
-import "./pages.css";
-
 class Metrics extends Component {
   render() {
     const groundtruth =
       "n_{{  \\rm match } }^k \\; := \\; \\{ i: |t_j^k-s_i| < \\Delta t  \\mbox{ for some }\\ j \\}";
-    // let divStyle = {
-    //   backgroundColor: "#fffdc0",
-    //   borderRadius: "5px",
-    //   display: "inline-block"
-    // };
     return (
       <div className="page__body">
         <Container className="container__heatmap">
@@ -44,15 +37,17 @@ class Metrics extends Component {
                         We first describe how labeled firing events output by a
                         sorter are matched to a given list of ground truth
                         events, with firing times{" "}
-                          <MathJax.Node inline formula={`s_i`} />, labeled by the index{" "}
-                          <MathJax.Node inline formula={'i=1,\\dots,n_{GT}'} />.
+                        <MathJax.Node inline formula={`s_i`} />, labeled by the
+                        index{" "}
+                        <MathJax.Node inline formula={"i=1,\\dots,n_{GT}"} />.
                         Consider the sorted unit labeled{" "}
                         <MathJax.Node inline formula={"k"} />. Let{"  "}
                         <MathJax.Node
                           inline
                           formula={"t_j^k, j=1,\\dots,n_k"}
                         />{" "}
-                        be the set of firing times of this unit output by the sorter. Let
+                        be the set of firing times of this unit output by the
+                        sorter. Let
                         {"  "}
                         <MathJax.Node inline formula={`\\Delta t`} /> be an
                         acceptable firing time error, which we assume is shorter
@@ -62,12 +57,15 @@ class Metrics extends Component {
                         The number of matches of unit{" "}
                         <MathJax.Node inline formula={`k`} /> to the ground
                         truth is defined by
-                      <MathJax.Node formula={groundtruth} />
-                        Note that even if more than one sorted event falls within{" "}
+                        <MathJax.Node formula={groundtruth} />
+                        Note that even if more than one sorted event falls
+                        within{" "}
                         <MathJax.Node inline formula={`\\pm \\Delta t`} /> of a
-                          true event, at most one is matched.
-                          The reverse situation, where more than one ground truth event from the same neuron could
-                          match to a given sorted event, cannot happen, by our assumption about the refractory period.
+                        true event, at most one is matched. The reverse
+                        situation, where more than one ground truth event from
+                        the same neuron could match to a given sorted event,
+                        cannot happen, by our assumption about the refractory
+                        period.
                       </p>
                       <p>
                         Given the above, the number of missed events is then{" "}
@@ -84,10 +82,11 @@ class Metrics extends Component {
                       </p>
                       <div>
                         <p>
-                          Translated to the notation of Jun et al, 2017 [1], these three metrics are,
+                          Translated to the notation of Jun et al, 2017 [1],
+                          these three metrics are,
                         </p>
                         <MathJax.Node
-                        formula={`n_1 = n_{{  \\rm miss } }^k,  \\qquad n_2 = n_{{  \\rm match } }^k,
+                          formula={`n_1 = n_{{  \\rm miss } }^k,  \\qquad n_2 = n_{{  \\rm match } }^k,
                         \\qquad n_3
                         = n_{{  \\rm fp } }^k`}
                         />
@@ -104,10 +103,12 @@ class Metrics extends Component {
                         </a>
                         . In this routine, the default{" "}
                         <MathJax.Node inline formula={`\\Delta t \\`} />
-                        is set as <code>delta_frames</code> in sample units. Note
-                        that the time in milliseconds thus depends on the sample rate. We use{" "}
-                        <MathJax.Node inline formula="\Delta t" /> is 30 samples (frames),
-                        corresponding to 1.5 ms at 20 kHz, or 1 ms at 30 kHz.
+                        is set as <code>delta_frames</code> in sample units.
+                        Note that the time in milliseconds thus depends on the
+                        sample rate. We use{" "}
+                        <MathJax.Node inline formula="\Delta t" /> is 30 samples
+                        (frames), corresponding to 1.5 ms at 20 kHz, or 1 ms at
+                        30 kHz.
                       </p>
                     </MathJax.Provider>
                   </div>
@@ -128,7 +129,10 @@ class Metrics extends Component {
                     <hr />
                     <MathJax.Provider>
                       <p>
-                        The main page of SpikeForest allows ground truth unit counts to be filtered by one of three metrics: precision, recall, and overall accuracy. For a given ground truth unit, and sorted unit{" "}
+                        The main page of SpikeForest allows ground truth unit
+                        counts to be filtered by one of three metrics:
+                        precision, recall, and overall accuracy. For a given
+                        ground truth unit, and sorted unit{" "}
                         <MathJax.Node inline formula={`k`} />, these metrics are
                         as follows, in terms of the above counts:
                       </p>
@@ -203,13 +207,16 @@ class Metrics extends Component {
                         For each ground truth unit, the best matching unit{" "}
                         <MathJax.Node inline formula={"k"} /> to the ground
                         truth firing time list{" "}
-                        <MathJax.Node inline formula={"s_i"} /> is defined as the one with
-                        the highest accuracy{" "}
+                        <MathJax.Node inline formula={"s_i"} /> is defined as
+                        the one with the highest accuracy{" "}
                         <MathJax.Node inline formula={"a_k"} />, as defined
                         above.
                       </p>
                     </MathJax.Provider>
-                    <p>Only results (accuracy, precision, recall) for this unit are reported.</p>
+                    <p>
+                      Only results (accuracy, precision, recall) for this unit
+                      are reported.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -236,8 +243,8 @@ class Metrics extends Component {
                         <MathJax.Node inline formula={"m = 1, \\dots,M"} /> is
                         the channel index and{" "}
                         <MathJax.Node inline formula={"t"} /> the time point, is
-                        needed, and the list of firing times.
-                        See below for a description of filtering.
+                        needed, and the list of firing times. See below for a
+                        description of filtering.
                       </p>
                       <p>
                         Firstly, the mean waveforms{" "}
@@ -278,7 +285,8 @@ class Metrics extends Component {
                         is the average of that channel.
                       </p>
                       <p>
-                        In large datasets, the above are estimated by stochastic sampling.{" "}
+                        In large datasets, the above are estimated by stochastic
+                        sampling.{" "}
                       </p>
                       <p>
                         {" "}
@@ -327,27 +335,32 @@ class Metrics extends Component {
                   <div className="card__footer">
                     <hr />
                     <p>
-                      Filtering of recording signals is done throughout SpikeForest using a bandpass filter from 300 to 6000 Hz.
-                      This is implemented via convolution using FFTs, allowing an arbitrary function of frequency
-                      to be used as a filter. We use erf (the error function) to create smooth roll-offs at the low and high ends
-                      of the band. The widths of the low-end roll-off is 100 Hz and the high-end roll-off 1000 Hz.
-                      The point of the smoothness here is to create rapid decay in impulse response in the time domain.
-                      The code for this is{" "}
+                      Filtering of recording signals is done throughout
+                      SpikeForest using a bandpass filter from 300 to 6000 Hz.
+                      This is implemented via convolution using FFTs, allowing
+                      an arbitrary function of frequency to be used as a filter.
+                      We use erf (the error function) to create smooth roll-offs
+                      at the low and high ends of the band. The widths of the
+                      low-end roll-off is 100 Hz and the high-end roll-off 1000
+                      Hz. The point of the smoothness here is to create rapid
+                      decay in impulse response in the time domain. The code for
+                      this is{" "}
                       <a
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          href="https://github.com/flatironinstitute/spikeforest/blob/master/spikeforest/spikeforest_analysis/bandpass_filter.py"
-                        >
-                          bandpass_filter.py
-                       </a>{" "} and the calling code is{" "}
-                       <a
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          href="https://github.com/flatironinstitute/spikeforest/blob/master/spikeforest/spikeforest_analysis/compute_units_info.py"
-                        >
-                          compute_units_info.py
-                       </a>
-                     </p>
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="https://github.com/flatironinstitute/spikeforest/blob/master/spikeforest/spikeforest_analysis/bandpass_filter.py"
+                      >
+                        bandpass_filter.py
+                      </a>{" "}
+                      and the calling code is{" "}
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="https://github.com/flatironinstitute/spikeforest/blob/master/spikeforest/spikeforest_analysis/compute_units_info.py"
+                      >
+                        compute_units_info.py
+                      </a>
+                    </p>
                   </div>
                 </div>
               </div>

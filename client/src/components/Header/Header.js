@@ -7,8 +7,6 @@ import logo from "./logo-no-icon.svg";
 
 import { toTitleCase } from "../../utils";
 
-import "./Header.css";
-
 class Header extends Component {
   constructor() {
     super();
@@ -79,12 +77,6 @@ class Header extends Component {
             </LinkContainer>
             <LinkContainer to="/archive">
               <Nav.Link eventKey="/archive">Archive</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/news">
-              <Nav.Link eventKey="/news">News</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/forum">
-              <Nav.Link eventKey="/forum">Forum</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/about">
               <Nav.Link eventKey="/about">About</Nav.Link>
