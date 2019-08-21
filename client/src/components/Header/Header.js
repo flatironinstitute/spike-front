@@ -83,6 +83,9 @@ class Header extends Component {
             <LinkContainer to="/news">
               <Nav.Link eventKey="/news">News</Nav.Link>
             </LinkContainer>
+            <LinkContainer to="/forum">
+              <Nav.Link eventKey="/forum">Forum</Nav.Link>
+            </LinkContainer>
             <LinkContainer to="/about">
               <Nav.Link eventKey="/about">About</Nav.Link>
             </LinkContainer>

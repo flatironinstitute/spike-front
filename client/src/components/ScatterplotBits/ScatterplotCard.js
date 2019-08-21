@@ -61,13 +61,13 @@ class ScatterplotCard extends Component {
     return (
       <div
         className="card card--heatmap"
-        style={{ height: this.state.cardHeight + "px", minHeight: "215px" }}
+        style={{ height: this.state.cardHeight + "px", minHeight: "100px" }}
       >
         <div className="detail__column-disable">
           {loading ? (
             <div className="card__header">
               <h4 className="card__title">
-                Click a cell in the table to the left to see a detailed scatterplot of
+                Click a cell in the table to see a detailed scatterplot of
                 the corresponding sorter results.
               </h4>
             </div>

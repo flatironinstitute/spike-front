@@ -235,7 +235,7 @@ Use containers when you need a content area that has standard maximum width and 
     width: 95%;
   }
   .col {
-    margin-left: 2%;
+    margin-left: 0%;
   }
   .col:first-child {
     margin-left: 0;

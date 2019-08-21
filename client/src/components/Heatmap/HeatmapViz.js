@@ -12,7 +12,6 @@ class HeatmapViz extends Component {
     this.state = { 
       tableRows: [], 
       tableHeader: [], 
-      vizWidth: null,
       selectedStudyName: props.selectedStudyName,
       selectedRecordingName: props.selectedRecordingName,
       selectedSorterName: props.selectedSorterName
@@ -162,8 +161,7 @@ class HeatmapViz extends Component {
     let width = elmnt.offsetWidth;
     this.setState({
       tableRows: tableRows,
-      tableHeader: tableHeader,
-      vizWidth: width
+      tableHeader: tableHeader
     });
   }
 
@@ -201,8 +199,12 @@ class HeatmapViz extends Component {
     let trueNumEvents = [];
     // ...
     let sortingResults = [];
-    let numSorters = this.props.sorters.length;
-    for (let ii = 0; ii < numSorters; ii++) {
+    let sorter_names = [];
+    for (let sorter of this.props.sorters) {
+      sorter_names.push(sorter.name);
+    }
+    sorter_names.sort();
+    for (let sorter_name of sorter_names) {
       sortingResults.push({
         accuracies: [],
         precisions: [],
@@ -211,7 +213,7 @@ class HeatmapViz extends Component {
         numFalsePositives: [],
         numFalseNegatives: [],
         cpuTimesSec: [],
-        sorterName: this.props.sorters[ii].name
+        sorterName: sorter_name
       });
     }
 
@@ -221,7 +223,7 @@ class HeatmapViz extends Component {
         trueSnrs.push(sar.trueSnrs[jj]);
         trueFiringRates.push(sar.trueFiringRates[jj]);
         trueNumEvents.push(sar.trueNumEvents[jj]);
-        for (let ii = 0; ii < numSorters; ii++) {
+        for (let ii = 0; ii < sorter_names.length; ii++) {
           sortingResults[ii].accuracies.push(sar.sortingResults[ii].accuracies[jj]);
           sortingResults[ii].precisions.push(sar.sortingResults[ii].precisions[jj]);
           sortingResults[ii].recalls.push(sar.sortingResults[ii].recalls[jj]);
@@ -248,8 +250,12 @@ class HeatmapViz extends Component {
     let trueNumEvents = [];
     // ...
     let sortingResults = [];
-    let numSorters = this.props.sorters.length;
-    for (let ii = 0; ii < numSorters; ii++) {
+    let sorter_names = [];
+    for (let sorter of this.props.sorters) {
+      sorter_names.push(sorter.name);
+    }
+    sorter_names.sort();
+    for (let sorter_name of sorter_names) {
       sortingResults.push({
         accuracies: [],
         precisions: [],
@@ -258,7 +264,7 @@ class HeatmapViz extends Component {
         numFalsePositives: [],
         numFalseNegatives: [],
         cpuTimesSec: [],
-        sorterName: this.props.sorters[ii].name
+        sorterName: sorter_name
       });
     }
 
@@ -273,7 +279,7 @@ class HeatmapViz extends Component {
         trueFiringRates = trueFiringRates.concat(studyAnalysisResult.trueFiringRates);
         trueNumEvents = trueNumEvents.concat(studyAnalysisResult.trueNumEvents);
         // ...
-        for (let ii = 0; ii < numSorters; ii++) {
+        for (let ii = 0; ii < sorter_names.length; ii++) {
           sortingResults[ii].accuracies = sortingResults[ii].accuracies.concat(studyAnalysisResult.sortingResults[ii].accuracies);
           sortingResults[ii].precisions = sortingResults[ii].precisions.concat(studyAnalysisResult.sortingResults[ii].precisions);
           sortingResults[ii].recalls = sortingResults[ii].recalls.concat(studyAnalysisResult.sortingResults[ii].recalls);
@@ -303,8 +309,12 @@ class HeatmapViz extends Component {
       spacer: true,
       selectable: false
     });
-    let numSorters = this.props.sorters.length;
-    for (let ii = 0; ii < numSorters; ii++) {
+    let sorter_names = [];
+    for (let sorter of this.props.sorters) {
+      sorter_names.push(sorter.name);
+    }
+    sorter_names.sort();
+    for (let ii = 0; ii < sorter_names.length; ii++) {
       ret.push({
         id: `${id}--${ii}`,
         text: "",
@@ -578,12 +588,15 @@ class HeatmapViz extends Component {
 
   handleCellSelected(cell) {
     if (cell.selectable) {
-      if (this.props.selectStudyName)
+      if (this.props.selectStudyName) {
         this.props.selectStudyName(cell.info.studyAnalysisResult.studyName);
-      if (this.props.selectRecordingName)
+      }
+      if (this.props.selectRecordingName) {
         this.props.selectRecordingName(cell.info.studyAnalysisResult.recordingName || null);
-      if (this.props.selectSorterName)
+      }
+      if (this.props.selectSorterName) {
         this.props.selectSorterName(cell.info.sorterName);
+      }
       this.setState({
         selectedStudyName: cell.info.studyAnalysisResult.studyName,
         selectedRecordingName: cell.info.studyAnalysisResult.recordingName || null,
@@ -599,8 +612,7 @@ class HeatmapViz extends Component {
   render() {
     const loading =
       isEmpty(this.state.tableRows) ||
-      isEmpty(this.state.tableHeader) ||
-      !this.state.vizWidth;
+      isEmpty(this.state.tableHeader);
     const title = this.getFormatCopy();
     const copy =
       this.props.format !== "cpu"
@@ -632,7 +644,7 @@ class HeatmapViz extends Component {
                     (
                       <span>
                         These are preliminary results prior to parameter optimization, and we are still in the process of ensuring that we are using the proper <Link to="/algorithms">versions of the spike sorters</Link>.
-                        We expect to go live in early July at <a href="https://spikeforest.flatironinstitute.org">spikeforest.flatironinstitute.org</a>.
+                        We expect to go live by the end of July at <a href="https://spikeforest.flatironinstitute.org">spikeforest.flatironinstitute.org</a>.
                       </span>
 
                     )
@@ -657,7 +669,6 @@ class HeatmapViz extends Component {
               header={this.state.tableHeader}
               rows={this.state.tableRows}
               onCellSelected={this.handleCellSelected}
-              vizWidth={this.state.vizWidth}
             />
           </div>
         )}
