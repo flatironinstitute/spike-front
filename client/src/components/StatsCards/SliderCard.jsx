@@ -2,17 +2,15 @@ import React, { Component } from "react";
 import Slider from "react-rangeslider";
 import "react-rangeslider/lib/index.css";
 
-import "./statscards.css";
 import { toTitleCase } from "../../utils";
 
 export class SliderCard extends Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
       sliderValue: props.sliderValue
-    }
+    };
   }
 
   getSliderCopy() {
@@ -79,13 +77,13 @@ export class SliderCard extends Component {
   }
 
   handleSliderChange = value => {
-    this.setState({sliderValue: value});
-  }
+    this.setState({ sliderValue: value });
+  };
 
   handleSliderChangeComplete = () => {
     if (this.props.handleSliderChange)
       this.props.handleSliderChange(this.state.sliderValue);
-  }
+  };
 
   render() {
     let max = this.getSliderMax();

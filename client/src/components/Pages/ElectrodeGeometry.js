@@ -144,7 +144,6 @@ class ElectrodeGeometry extends Component {
     }
 
     electrodeIndexAtPixel(pos) {
-        console.log(pos, this.channel_rects);
         for (let i in this.channel_rects) {
             let rect0 = this.channel_rects[i];
             if ((rect0[0]<=pos[0])&&(pos[0]<=rect0[0]+rect0[2])) {
@@ -170,7 +169,6 @@ class ElectrodeGeometry extends Component {
     }
     handleMouseMove = (X) => {
         let elec_ind = this.electrodeIndexAtPixel(X.pos);
-        console.log(elec_ind);
         this.setHoveredElectrodeIndex(elec_ind);
     }
 
@@ -392,7 +390,6 @@ function MouseHandler() {
     };
 
     function report(name,X) {
-        console.log('--- report', name, X);
         for (let i in m_handlers[name]) {
             m_handlers[name][i](X);
         }
@@ -404,11 +401,6 @@ function MouseHandler() {
         //var offset=m_element.offset(); //if you really just want the current element's offset
         var rect = m_element.getBoundingClientRect();
         window.m_element=m_element;
-        console.log('--1-- m_element.offsetLeft/Right', m_element.offsetLeft, m_element.offsetTop);
-        console.log('--2-- e.pageX/Y', e.pageX, e.pageY);
-        console.log('--2-- e.screenX/Y', e.screenX, e.screenY);
-        console.log('--2-- e.clientX/Y', e.clientX, e.clientY);
-        console.log('--e-- rect.x/y', rect.x, rect.y);
         window.dbg_m_element = m_element;
         window.dbg_e = e;
         var posx = e.clientX - rect.x;

@@ -64,6 +64,7 @@ class ExpandingHeatmapTable extends React.Component {
       cellContent = <span></span>;
       style0 = {};
     }
+    console.log(cell.id, cell.text);
     return (
       <td
         onClick={() => this.handleCellSelected(cell)}

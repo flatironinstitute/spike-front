@@ -7,8 +7,6 @@ import {
 
 import { toTitleCase } from "../../utils";
 
-import "./statscards.css";
-
 export class MetricCard extends Component {
   getMetricCopy() {
     let copy;

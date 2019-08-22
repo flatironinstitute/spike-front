@@ -163,7 +163,7 @@ class DetailPage extends Component {
           ) : (
               <Container className="container__heatmap">
                 <Row className="container__sorter--row">
-                  <Col lg={6} sm={12}>
+                <Col style={{minWidth: 700, flexGrow: 1, overflow: 'auto'}}>
                     <div className="card card--stats">
                       <div className="content">
                         <div className="card__label">
@@ -190,7 +190,7 @@ class DetailPage extends Component {
                       </div>
                     </div>
                   </Col>
-                  <Col lg={6} sm={12}>
+                  <Col style={{minWidth: 400, flexGrow: 1}}>
                     <HeatmapOptionsCol
                       showCPU={false}
                       handleFormatChange={this.handleFormatChange}

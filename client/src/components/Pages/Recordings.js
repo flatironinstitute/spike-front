@@ -4,7 +4,6 @@ import { isEmpty } from "../../utils";
 import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import "./pages.css";
 // import ExpandableRecordingsTable from "../Recordings/ExpandableRecordingsTable";
 
 class Recordings extends Component {
@@ -78,7 +77,9 @@ class Recordings extends Component {
                       geometries and types, and fall into three categories:
                     </p>
                     <div className="list__section">
-                      <span className="list__heading">1. Paired (<i>in vivo</i> or <i>in vitro</i>)</span>
+                      <span className="list__heading">
+                        1. Paired (<i>in vivo</i> or <i>in vitro</i>)
+                      </span>
                       <span className="list__body">
                         Recordings from various laboratories where an
                         independent intra- or juxta-cellular probe provides
@@ -118,25 +119,37 @@ class Recordings extends Component {
                       <Preloader />
                     ) : (
                       <span>
-                        {(
-                          this.props.studySets.map((studySet) => (
-                            <span key={`study-set-${studySet.name}`}>
-                              <h4><Link to={`/studyset/${studySet.name}`}>{studySet.name}</Link></h4>
-                              <table className="table" style={{width: 'auto'}}>
-                                <thead>
-                                  <tr><th key="col1">Study name</th><th key="col2">Num. recordings</th></tr>
-                                </thead>
-                                <tbody>
-                                  {(
-                                    studySet.studies.map((study) => (
-                                      <tr key={`study-${study.name}`}><td key="col1"><Link to={`/study/${study.name}`}>{study.name}</Link></td><td key="col2">{study.recordings.length}</td></tr>
-                                    ))
-                                  )}
-                                </tbody>
-                              </table>
-                            </span>
-                          ))
-                        )}
+                        {this.props.studySets.map(studySet => (
+                          <span key={`study-set-${studySet.name}`}>
+                            <h4>
+                              <Link to={`/studyset/${studySet.name}`}>
+                                {studySet.name}
+                              </Link>
+                            </h4>
+                            <table className="table" style={{ width: "auto" }}>
+                              <thead>
+                                <tr>
+                                  <th key="col1">Study name</th>
+                                  <th key="col2">Num. recordings</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {studySet.studies.map(study => (
+                                  <tr key={`study-${study.name}`}>
+                                    <td key="col1">
+                                      <Link to={`/study/${study.name}`}>
+                                        {study.name}
+                                      </Link>
+                                    </td>
+                                    <td key="col2">
+                                      {study.recordings.length}
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </span>
+                        ))}
                       </span>
                     )}
                   </div>

@@ -4,7 +4,7 @@ Benchmarking of spike sorting algorithms. Seeing the spike forest for the trees.
 
 ## Available Scripts
 
-To install software and packages, you will need to first run in *both* the `/` and `/client` folder:
+To install software and packages, you will need to first run in _both_ the `/` and `/client` folder:
 
 ### `yarn install`
 
@@ -42,7 +42,7 @@ or
 admin/bin/format-and-load-data.js [data_directory] --database-from-env
 ```
 
-Assigns ids, formats, and injests raw data from the spikeforest pipeline into the website for visualization. Raw data files for injest should be stored in [data_directory] with capitalized titles. After injest is complete, this script automatically deletes temp files generated in the process. 
+Assigns ids, formats, and injests raw data from the spikeforest pipeline into the website for visualization. Raw data files for injest should be stored in [data_directory] with capitalized titles. After injest is complete, this script automatically deletes temp files generated in the process.
 
 If `--database-from-env` is specified, the DATABASE environment variable (from .env) will be used for the database url.
 
@@ -53,6 +53,7 @@ If `--database-from-env-prod` is specified, the DATABASE_PROD environment variab
 - **Liz Lovero** - [elovero](https://github.com/elovero)
 - **Jeremy Magland** - [magland](https://github.com/magland)
 
+
 ## Acknowledgments
 
-- **Lenny** - [lillenlen](https://www.instagram.com/lillenlen/) 
+- **Lenny** - [lillenlen](https://www.instagram.com/lillenlen/)
