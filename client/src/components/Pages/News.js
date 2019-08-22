@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import avatar from "./avatar.svg";
+import { Link } from "react-router-dom";
 const ReactMarkdown = require("react-markdown");
 
 class News extends Component {
@@ -11,9 +13,6 @@ class News extends Component {
         author: ""
       }
     ];
-    let latest = this.props.newsPosts
-      ? this.props.newsPosts[0].date
-      : "2019/08/21";
 
     return (
       <div className="page__body">
@@ -35,19 +34,26 @@ class News extends Component {
                   <div className="content">
                     <div className="card__label">
                       <p>
-                        <strong>
-                          {post.title} <em>{post.date}</em>
-                        </strong>
+                        <strong>{post.title}</strong>
                       </p>
                     </div>
                     <div className="card__footer">
                       <hr />
-                      <div style={{ height: 400, overflow: "auto" }}>
+                      <div style={{ height: "auto", overflow: "auto" }}>
                         <ReactMarkdown
                           source={preparePostMarkdown(post)}
                           renderers={{ link: renderLink }}
                         />
                       </div>
+                    </div>
+                    <div className="card__author">
+                      {/* <img alt="avatar icon" src={avatar} height="28" /> */}
+                      <p>
+                        <Link exact="true" to="/about">
+                          {post.author}
+                        </Link>
+                        , {post.date}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -69,9 +75,7 @@ function renderLink(props) {
 }
 
 function preparePostMarkdown(post) {
-  return `# ${post.title}\n\n## ${post.date}\n\nby ${post.author}\n\n${
-    post.markdown
-  }`;
+  return `${post.markdown}`;
 }
 
 export default News;

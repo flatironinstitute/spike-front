@@ -36,6 +36,21 @@
   line-height: 30px;
 }
 
+.card__author {
+  font-size: 1.2rem;
+  line-height: 1.2;
+  padding-top: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  margin-bottom: 0;
+}
+
+.card__author p {
+  margin-bottom: 0;
+  color: var(--label-grey);
+}
+
 .card__buttonrow {
   margin: 0 auto 3rem auto;
   width: 100%;
