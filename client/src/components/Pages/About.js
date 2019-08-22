@@ -29,7 +29,6 @@ class About extends Component {
                   <div className="card__footer">
                     <hr />
                     <p>
-                      {/* #barcode:29426aa5-spikeforest-overview */}
                       Extracellular electrical recording is a popular and
                       affordable method to measure the simultaneous spiking
                       activity of a large neural population. The key
@@ -53,9 +52,9 @@ class About extends Component {
                       with ground truth. It consists of this website for
                       presenting our up-to-date findings, a{" "}
                       <a
-                        href={
-                          "https://github.com/flatironinstitute/spikeforest"
-                        }
+                        href="https://github.com/flatironinstitute/spikeforest"
+                        target="_blank"
+                        rel="noopener noreferrer"
                       >
                         Python package
                       </a>{" "}

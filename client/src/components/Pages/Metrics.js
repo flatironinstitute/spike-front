@@ -97,7 +97,7 @@ class Metrics extends Component {
                         <a
                           target="_blank"
                           rel="noopener noreferrer"
-                          href="https://github.com/SpikeInterface/spiketoolkit/blob/master/spiketoolkit/comparison/sortingcomparison.py"
+                          href="https://github.com/SpikeInterface/spiketoolkit/blob/master/spiketoolkit/comparison/sortingcomparison.pyhttps://github.com/flatironinstitute/spikeforest/blob/master/spikeforest/spikeforest_analysis/sortingcomparison.py"
                         >
                           the sortingcomparison.py routine from spiketoolkit
                         </a>

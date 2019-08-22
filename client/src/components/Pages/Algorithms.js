@@ -1,10 +1,5 @@
 import React, { Component } from "react";
-// import RepoIcon from "./AlgosBits/RepoIcon";
-// import DocsIcon from "./AlgosBits/DocsIcon";
-// import ActiveIcon from "./AlgosBits/ActiveIcon";
-// import algoRows from "./AlgosBits/algos-copy";
 import ReactCollapsingTable from "react-collapsing-table";
-// import Preloader from "../Preloader/Preloader";
 import { isEmpty } from "../../utils";
 import { Card, Col, Container, Row } from "react-bootstrap";
 
@@ -41,20 +36,21 @@ class Algorithms extends Component {
         markdown: ""
       };
       if (alg.dockerfile) {
-        row.environment = `<a href="${alg.dockerfile}" target="_blank">${basename(
+        row.environment = `<a href="${
           alg.dockerfile
-        )}</a>`;
-      }
-      else if (alg.environment) {
+        }" target="_blank">${basename(alg.dockerfile)}</a>`;
+      } else if (alg.environment) {
         row.environment = `<span>${alg.environment}</span>`;
       }
       if (alg.wrapper) {
-        row.wrapper = `<a href="${alg.wrapper}" target="_blank">${basename(alg.wrapper)}</a>`;
+        row.wrapper = `<a href="${alg.wrapper}" target="_blank">${basename(
+          alg.wrapper
+        )}</a>`;
       }
       if (alg.markdown_link) {
-        row.markdown = `<a href="${alg.markdown_link}" target="_blank">${basename(
+        row.markdown = `<a href="${
           alg.markdown_link
-        )}</a>`;
+        }" target="_blank">${basename(alg.markdown_link)}</a>`;
       }
       if (alg.website) {
         row.label = `<a href="${alg.website}" target="_blank">${alg.label}</a>`;
@@ -130,6 +126,14 @@ class Algorithms extends Component {
             </Container>
           ) : (
             <Container className="container__heatmap">
+              <Row className="justify-content-md-center">
+                <Col lg={12} sm={12} xl={10}>
+                  <div className="intro">
+                    <p className="big">Algorithms</p>
+                    <div className="dividerthick" />
+                  </div>
+                </Col>
+              </Row>
               <Row className="container__sorter--row">
                 <Col lg={12} sm={12}>
                   <div className="card card--stats">
@@ -144,17 +148,21 @@ class Algorithms extends Component {
                 <Col lg={12} sm={12}>
                   <div className="card card--stats">
                     <div className="content">
+                      <div className="card__label">
+                        <p>
+                          <strong>Overview</strong>
+                        </p>
+                      </div>
                       <div className="card__footer">
                         <hr />
-                        <h3>Algorithms overview</h3>
                         <p>
                           {" "}
                           Generally speaking, a spike sorting algorithm takes in
                           an unfiltered multi-channel timeseries (aka,
-                          recording) and a dictionary of algorithm parameters and
-                          outputs a list of firing times and associated integer
-                          unit labels. This page lists the spike sorting codes
-                          we run, as well as some that have yet to be
+                          recording) and a dictionary of algorithm parameters
+                          and outputs a list of firing times and associated
+                          integer unit labels. This page lists the spike sorting
+                          codes we run, as well as some that have yet to be
                           incorporated. Most of the codes were developed at
                           other institutions; two of them are in-house.
                         </p>
@@ -166,25 +174,86 @@ class Algorithms extends Component {
                           use singularity containers (similar to docker
                           containers) in order to ensure a reproducible compute
                           environment. In those cases, links to the docker files
-                          (environment presciptions) are provided. We almost always use the default parameters of the wrappers, but some
-                          may be overriden in the <a href={'https://github.com/flatironinstitute/spikeforest/tree/master/working/main_analysis'} target={"_blank"}>analysis configuration files</a>.
+                          (environment presciptions) are provided. We almost
+                          always use the default parameters of the wrappers, but
+                          some may be overriden in the{" "}
+                          <a
+                            href="https://github.com/flatironinstitute/spikeforest/tree/master/working/main_analysis"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            analysis configuration files
+                          </a>
+                          .
                         </p>
                         <p>
-                          Wrappers
-                          were created in collaboration with the <a href={'https://github.com/SpikeInterface/'} target={"_blank"}>SpikeInterface</a>{" "}
+                          Wrappers were created in collaboration with the{" "}
+                          <a
+                            href="https://github.com/SpikeInterface/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            SpikeInterface
+                          </a>{" "}
                           project. The goal is to ultimately merge these with
-                          the corresponding wrappers in SpikeInterface/SpikeToolkit.
+                          the corresponding wrappers in
+                          SpikeInterface/SpikeToolkit.
                         </p>
-                        <h3>How to run the SpikeForest analysis locally</h3>
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="container__sorter--row">
+                <Col lg={12} sm={12}>
+                  <div className="card card--stats">
+                    <div className="content">
+                      <div className="card__label">
                         <p>
-                          We have prepared a <a href={"https://github.com/flatironinstitute/spikeforest/blob/master/docs/tutorials/spike_sorting_spikeforest_recording.md"} target={"_blank"}>tutorial</a>{" "}
+                          <strong>Tutorials</strong>
+                        </p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <p>
+                          We have prepared a{" "}
+                          <a
+                            href="https://github.com/flatironinstitute/spikeforest/blob/master/docs/tutorials/spike_sorting_spikeforest_recording.md"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            tutorial
+                          </a>{" "}
                           illustrating how to run these algorithms on your own
                           computer to reproduce the results.
                         </p>
-                        <h3>How to run spike sorting on your own data</h3>
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="container__sorter--row">
+                <Col lg={12} sm={12}>
+                  <div className="card card--stats">
+                    <div className="content">
+                      <div className="card__label">
                         <p>
-                          We have also created <a href={"https://github.com/flatironinstitute/spikeforest/blob/master/docs/tutorials/spike_sorting_single_recording.md"} target={"_blank"}>this tutorial</a> which shows
-                          how to run the SpikeForest-wrapped spike sorters on your own data.
+                          <strong>Spike sorting your own data</strong>
+                        </p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <p>
+                          We have also created{" "}
+                          <a
+                            href="https://github.com/flatironinstitute/spikeforest/blob/master/docs/tutorials/spike_sorting_single_recording.md"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            this tutorial
+                          </a>{" "}
+                          which shows how to run the SpikeForest-wrapped spike
+                          sorters on your own data.
                         </p>
                       </div>
                     </div>
