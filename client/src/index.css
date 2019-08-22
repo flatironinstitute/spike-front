@@ -1002,3 +1002,21 @@ code {
 .metric_button_toggle {
   width: 100%;
 }
+
+/* Info Panel
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.info {
+  margin: 1%;
+}
+
+.info h5 {
+  font-weight: 700;
+  font-size: 3.2rem;
+  line-height: 1.7;
+  margin-top: 1.5rem;
+}
+
+.info p {
+  font-size: 1.7rem;
+  line-height: 1.5;
+}

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import avatar from "./avatar.svg";
 import { Link } from "react-router-dom";
 const ReactMarkdown = require("react-markdown");
 
