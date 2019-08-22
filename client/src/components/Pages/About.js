@@ -90,8 +90,15 @@ class About extends Component {
                           software and website.
                         </li>
                         <li>
-                          <a>Forum</a> - browse our new online community, ask
-                          questions or make suggestions.
+                          <a
+                            href="https://www.spikeforum.org/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Forum
+                          </a>{" "}
+                          - browse our new online community, ask questions or
+                          make suggestions.
                         </li>
                       </ul>
                     </p>
