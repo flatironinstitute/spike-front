@@ -9,7 +9,7 @@ class Footer extends Component {
     return (
       <footer className="footer">
         <p className="updated">
-          Spike-front client updated on July 24, 2019 (9:00am)
+          Spike-front client updated on August 26, 2019 (11:00am)
         </p>
         <div className="outro">
           <p className="footer__description">

@@ -109,7 +109,7 @@ class Recording extends Component {
         <Container className="container__heatmap">
           <Row className="container__sorter--row justify-content-md-center">
             <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
+              <div className="card card__std">
                 <div className="content">
                   <div className="card__footer">
                     <hr />
@@ -134,7 +134,7 @@ class Recording extends Component {
           </Row>
           <Row className="container__sorter--row justify-content-md-center">
             <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
+              <div className="card card__std">
                 <div className="content">
                   <div className="card__footer">
                     <h4>Electrode geometry</h4>
@@ -146,7 +146,7 @@ class Recording extends Component {
           </Row>
           <Row className="container__sorter--row justify-content-md-center">
             <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
+              <div className="card card__std">
                 <div className="content">
                   <div className="card__footer">
                     <h4>Sorting results</h4>
@@ -209,7 +209,7 @@ async function loadText(path, opts) {
 }
 
 function hash_of_string(key) {
-  // creating hash object 
+  // creating hash object
   let hash = crypto.createHash('sha1');
   let data = hash.update(key, 'utf-8');
   return data.digest('hex');

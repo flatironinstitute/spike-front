@@ -19,7 +19,7 @@ class About extends Component {
           </Row>
           <Row className="container__sorter--row justify-content-md-center">
             <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
+              <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
                     <p>
@@ -80,27 +80,27 @@ class About extends Component {
                     </p>
                     <p>
                       <b>Resources:</b>
-                      <ul>
-                        <li>
-                          <Link exact="true" to="/news">
-                            News
-                          </Link>{" "}
-                          - click here to learn the latest on the spike sorting
-                          software and website.
-                        </li>
-                        <li>
-                          <a
-                            href="https://www.spikeforum.org/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            Forum
-                          </a>{" "}
-                          - browse our new online community, ask questions or
-                          make suggestions.
-                        </li>
-                      </ul>
                     </p>
+                    <ul>
+                      <li>
+                        <Link exact="true" to="/news">
+                          News
+                        </Link>{" "}
+                        - click here to learn the latest on the spike sorting
+                        software and website.
+                      </li>
+                      <li>
+                        <a
+                          href="https://www.spikeforum.org/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Forum
+                        </a>{" "}
+                        - browse our new online community, ask questions or make
+                        suggestions.
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -108,7 +108,7 @@ class About extends Component {
           </Row>
           <Row className="container__sorter--row justify-content-md-center">
             <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
+              <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
                     <p>
@@ -156,7 +156,7 @@ class About extends Component {
           </Row>
           <Row className="container__sorter--row justify-content-md-center">
             <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
+              <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
                     <p>
@@ -316,7 +316,7 @@ class About extends Component {
           </Row>
           <Row className="container__sorter--row justify-content-md-center">
             <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
+              <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
                     <p>
@@ -438,7 +438,7 @@ class About extends Component {
           </Row>
           <Row className="container__sorter--row justify-content-md-center">
             <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
+              <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
                     <p>

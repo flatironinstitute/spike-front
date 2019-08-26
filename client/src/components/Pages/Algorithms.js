@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import ReactCollapsingTable from "react-collapsing-table";
+import ReactMarkdown from "react-markdown";
 import { isEmpty } from "../../utils";
 import { Card, Col, Container, Row } from "react-bootstrap";
+
+import sample from "./sample.jpg";
 
 class Algorithms extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rows: []
+      rows: [],
+      markdown: ""
     };
   }
 
@@ -24,6 +28,7 @@ class Algorithms extends Component {
   }
 
   filterActives() {
+    let markdown = this.props.algorithms[0].markdown;
     let rows = this.props.algorithms.map(alg => {
       let row = {
         raw_label: alg.label,
@@ -71,7 +76,7 @@ class Algorithms extends Component {
     rows.forEach(row => {
       row.isActive = true;
     });
-    this.setState({ rows: rows });
+    this.setState({ rows: rows, markdown: markdown });
   }
 
   render() {
@@ -115,6 +120,7 @@ class Algorithms extends Component {
       }
     ];
     let loading = isEmpty(this.props.algorithms);
+    console.log("🐊", this.state);
     return (
       <div>
         <div className="page__body">
@@ -134,9 +140,9 @@ class Algorithms extends Component {
                   </div>
                 </Col>
               </Row>
-              <Row className="container__sorter--row">
-                <Col lg={12} sm={12}>
-                  <div className="card card--stats">
+              <Row className="container__sorter--row justify-content-md-center">
+                <Col lg={12} sm={12} xl={10}>
+                  <div className="card card__std">
                     <ReactCollapsingTable
                       columns={algosColumns}
                       rows={this.state.rows}
@@ -144,9 +150,32 @@ class Algorithms extends Component {
                   </div>
                 </Col>
               </Row>
-              <Row className="container__sorter--row">
-                <Col lg={12} sm={12}>
-                  <div className="card card--stats">
+              <Row className="container__sorter--row justify-content-md-center">
+                <Col lg={12} sm={12} xl={10}>
+                  <Card>
+                    <Card.Img variant="bottom" src={sample} />
+                    <Card.Body>
+                      <Card.Title>Card title</Card.Title>
+                      <Card.Text>
+                        This is a wider card with supporting text below as a
+                        natural lead-in to additional content. This content is a
+                        little bit longer.
+                      </Card.Text>
+                    </Card.Body>
+                    <Card.Footer>
+                      <small className="text-muted">
+                        Last updated 3 mins ago
+                      </small>
+                    </Card.Footer>
+                  </Card>
+                </Col>
+              </Row>
+              <Row className="container__sorter--row justify-content-md-center">
+                <div className="card card__std" />
+              </Row>
+              <Row className="container__sorter--row justify-content-md-center">
+                <Col lg={12} sm={12} xl={10}>
+                  <div className="card card__std">
                     <div className="content">
                       <div className="card__label">
                         <p>
@@ -204,9 +233,9 @@ class Algorithms extends Component {
                   </div>
                 </Col>
               </Row>
-              <Row className="container__sorter--row">
-                <Col lg={12} sm={12}>
-                  <div className="card card--stats">
+              <Row className="container__sorter--row justify-content-md-center">
+                <Col lg={12} sm={12} xl={10}>
+                  <div className="card card__std">
                     <div className="content">
                       <div className="card__label">
                         <p>
@@ -232,9 +261,9 @@ class Algorithms extends Component {
                   </div>
                 </Col>
               </Row>
-              <Row className="container__sorter--row">
-                <Col lg={12} sm={12}>
-                  <div className="card card--stats">
+              <Row className="container__sorter--row justify-content-md-center">
+                <Col lg={12} sm={12} xl={10}>
+                  <div className="card card__std">
                     <div className="content">
                       <div className="card__label">
                         <p>

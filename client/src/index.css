@@ -945,15 +945,15 @@ code {
   justify-content: center;
 }
 
-.card__stats {
+.card__std {
   margin-bottom: 0;
 }
 
-.card__stats-col {
+.card__std-col {
   margin-bottom: 1rem;
 }
 
-.card__stats-top {
+.card__std-top {
   margin-top: 1rem;
 }
 

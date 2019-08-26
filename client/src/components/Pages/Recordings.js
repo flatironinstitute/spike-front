@@ -14,7 +14,7 @@ class Recordings extends Component {
         <Container className="container__heatmap">
           <Row className="container__sorter--row justify-content-md-center">
             <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
+              <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
                     <p>
@@ -42,7 +42,7 @@ class Recordings extends Component {
           </Row>
           {/* <Row className="container__sorter--row justify-content-md-center">
             <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
+              <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
                     <p>
@@ -63,7 +63,7 @@ class Recordings extends Component {
           </Row> */}
           <Row className="container__sorter--row justify-content-md-center">
             <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
+              <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
                     <p>
@@ -111,7 +111,7 @@ class Recordings extends Component {
           </Row>
           <Row className="container__sorter--row justify-content-md-center">
             <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
+              <div className="card card__std">
                 <div className="content">
                   <div className="card__footer">
                     <hr />
