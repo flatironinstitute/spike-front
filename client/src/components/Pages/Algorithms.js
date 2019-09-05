@@ -30,6 +30,7 @@ class Algorithms extends Component {
   }
 
   sortRows(rows) {
+    // TODO: Add sorting choice.
     let sorted = rows.sort((a, b) => {
       if (a.wrapper && !b.wrapper) return -1;
       if (!a.wrapper && b.wrapper) return 1;
