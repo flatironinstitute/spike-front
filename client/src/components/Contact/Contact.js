@@ -37,7 +37,6 @@ class Contact extends Component {
             page to report issues with the data analysis or reach out via the
             form below.
           </p>
-          <div className="dividerthick" />
         </div>
         <Container>
           <ContactForm {...this.props} />

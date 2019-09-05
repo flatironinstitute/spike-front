@@ -13,7 +13,6 @@ class About extends Component {
             <Col lg={12} sm={12} xl={12}>
               <div className="intro">
                 <p className="big">About SpikeForest</p>
-                <div className="dividerthick" />
               </div>
             </Col>
           </Row>
