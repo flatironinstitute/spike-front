@@ -128,16 +128,16 @@ class Algorithms extends Component {
             </Container>
           ) : (
             <Container className="container__heatmap">
-              <Row className="container justify-content-md-center">
-                <Col lg={12} sm={12} xl={11}>
+              <Row className="subcontainer justify-content-md-center">
+                <Col lg={12} sm={12} xl={12}>
                   <div className="intro">
                     <p className="big">Algorithms</p>
                     <div className="dividerthick" />
                   </div>
                 </Col>
               </Row>
-              <Row className="container justify-content-md-center">
-                <Col lg={12} sm={12} xl={11}>
+              <Row className="subcontainer justify-content-md-center">
+                <Col lg={12} sm={12} xl={12}>
                   <div className="card card__std">
                     <div className="content">
                       <div className="card__label">
@@ -196,8 +196,8 @@ class Algorithms extends Component {
                   </div>
                 </Col>
               </Row>
-              <Row className="container justify-content-md-center">
-                <Col lg={12} sm={12} xl={11}>
+              <Row className="subcontainer justify-content-md-center">
+                <Col lg={12} sm={12} xl={12}>
                   <div className="card card__std">
                     <div className="content">
                       <div className="card__label">
@@ -211,62 +211,6 @@ class Algorithms extends Component {
                           columns={algosColumns}
                           rows={this.state.rows}
                         />
-                      </div>
-                    </div>
-                  </div>
-                </Col>
-              </Row>
-              <Row className="container justify-content-md-center">
-                <Col lg={12} sm={12} xl={11}>
-                  <div className="card card__std">
-                    <div className="content">
-                      <div className="card__label">
-                        <p>
-                          <strong>Tutorials</strong>
-                        </p>
-                      </div>
-                      <div className="card__footer">
-                        <hr />
-                        <p>
-                          We have prepared a{" "}
-                          <a
-                            href="https://github.com/flatironinstitute/spikeforest/blob/master/docs/tutorials/spike_sorting_spikeforest_recording.md"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            tutorial
-                          </a>{" "}
-                          illustrating how to run these algorithms on your own
-                          computer to reproduce the results.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </Col>
-              </Row>
-              <Row className="container justify-content-md-center">
-                <Col lg={12} sm={12} xl={11}>
-                  <div className="card card__std">
-                    <div className="content">
-                      <div className="card__label">
-                        <p>
-                          <strong>Spike sorting your own data</strong>
-                        </p>
-                      </div>
-                      <div className="card__footer">
-                        <hr />
-                        <p>
-                          We have also created{" "}
-                          <a
-                            href="https://github.com/flatironinstitute/spikeforest/blob/master/docs/tutorials/spike_sorting_single_recording.md"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            this tutorial
-                          </a>{" "}
-                          which shows how to run the SpikeForest-wrapped spike
-                          sorters on your own data.
-                        </p>
                       </div>
                     </div>
                   </div>

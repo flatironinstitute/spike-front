@@ -105,16 +105,25 @@ class Archive extends Component {
     return (
       <div className="page__body">
         <Container className="container__heatmap">
-          <Row className="container justify-content-md-center">
-            <Col lg={12} sm={12} xl={11}>
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
+              <div className="intro">
+                <p className="big">Analysis Archive</p>
+                <div className="dividerthick" />
+              </div>
+            </Col>
+          </Row>
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
               <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
                     <p>
-                      <strong>Analysis archive</strong>
+                      <strong>Overview</strong>
                     </p>
                   </div>
                   <div className="card__footer">
+                    <hr />
                     <p>
                       Below is the SpikeForest analysis archive with the most
                       recent analysis at the top. These results may be loaded
@@ -126,8 +135,8 @@ class Archive extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container justify-content-md-center">
-            <Col lg={12} sm={12} xl={11}>
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
               <div className="card card__std">
                 <div className="content">
                   <table className="table" style={{ width: "auto" }}>

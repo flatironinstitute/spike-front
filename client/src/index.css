@@ -210,11 +210,15 @@ Use containers when you need a content area that has standard maximum width and 
 .app {
   background-color: var(--fi-grey);
 }
+
 .container {
-  margin: 0 auto 3rem auto;
   padding: 0 10px;
   width: 100%;
   box-sizing: border-box;
+}
+
+.subcontainer {
+  margin: 0 auto 3rem auto;
 }
 
 .col {

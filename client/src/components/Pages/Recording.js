@@ -121,16 +121,16 @@ class Recording extends Component {
     return (
       <div className="page__body">
         <Container className="container__heatmap">
-          <Row className="container justify-content-md-center">
-            <Col lg={12} sm={12} xl={11}>
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
               <div className="intro">
                 <p className="big">Recordings</p>
                 <div className="dividerthick" />
               </div>
             </Col>
           </Row>
-          <Row className="container justify-content-md-center">
-            <Col lg={12} sm={12} xl={11}>
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
               <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
@@ -165,8 +165,8 @@ class Recording extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container justify-content-md-center">
-            <Col lg={12} sm={12} xl={11}>
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
               <div className="card card__std">
                 <div className="content">
                   <div className="card__footer">
@@ -180,8 +180,8 @@ class Recording extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container justify-content-md-center">
-            <Col lg={12} sm={12} xl={11}>
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
               <div className="card card__std">
                 <div className="content">
                   <div className="card__footer">

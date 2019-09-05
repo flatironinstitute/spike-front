@@ -9,16 +9,16 @@ class About extends Component {
       <div className="page__body page__body--alert">
         <ForumAlert />
         <Container className="container__heatmap">
-          <Row className="container justify-content-md-center">
-            <Col lg={12} sm={12} xl={11}>
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
               <div className="intro">
                 <p className="big">About SpikeForest</p>
                 <div className="dividerthick" />
               </div>
             </Col>
           </Row>
-          <Row className="container justify-content-md-center">
-            <Col lg={12} sm={12} xl={11}>
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
               <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
@@ -106,8 +106,46 @@ class About extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container justify-content-md-center">
-            <Col lg={12} sm={12} xl={11}>
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
+              <div className="card card__std">
+                <div className="content">
+                  <div className="card__label">
+                    <p>
+                      <strong>Tutorials</strong>
+                    </p>
+                  </div>
+                  <div className="card__footer">
+                    <hr />
+                    <ul>
+                      <li>
+                        <a
+                          href="https://github.com/flatironinstitute/spikeforest/blob/master/docs/tutorials/spike_sorting_spikeforest_recording.md"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Run these algorithms on your own computer to reproduce
+                          the results.
+                        </a>{" "}
+                      </li>
+                      <li>
+                        <a
+                          href="https://github.com/flatironinstitute/spikeforest/blob/master/docs/tutorials/spike_sorting_single_recording.md"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Run the SpikeForest-wrapped spike sorters on your own
+                          data.
+                        </a>{" "}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
               <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
@@ -154,8 +192,8 @@ class About extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container justify-content-md-center">
-            <Col lg={12} sm={12} xl={11}>
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
               <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
@@ -211,7 +249,8 @@ class About extends Component {
                         testing)
                       </li>
                     </ul>
-                    <p>Other key contributors to the project include</p>
+                    <br />
+                    <p>Other key contributors to the project include: </p>
                     <ul>
                       <li>
                         Alex Morley - Mozilla Fellow, MRC Brain Network Dynamics
@@ -222,6 +261,7 @@ class About extends Component {
                         infrastructure, testing)
                       </li>
                     </ul>
+                    <br />
                     <p>
                       File format conversions and some computations make use of{" "}
                       <a
@@ -232,7 +272,7 @@ class About extends Component {
                       </a>
                       . Over time we will expand our integration with this
                       project. It is under development by the following
-                      individuals
+                      individuals:
                     </p>
                     <ul>
                       <li>
@@ -260,6 +300,7 @@ class About extends Component {
                         Flatiron Institute, New York, NY
                       </li>
                     </ul>
+                    <br />
                     <p>
                       We are grateful for many collaborators at other
                       institutions for their vital help and supply of
@@ -314,8 +355,8 @@ class About extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container justify-content-md-center">
-            <Col lg={12} sm={12} xl={11}>
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
               <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
@@ -436,8 +477,8 @@ class About extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container justify-content-md-center">
-            <Col lg={12} sm={12} xl={11}>
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
               <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
