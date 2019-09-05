@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import ReactCollapsingTable from "react-collapsing-table";
 import { isEmpty } from "../../utils";
 import { Card, Col, Container, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import ListCard from "../ListCard/ListCard";
 
 class Algorithms extends Component {
   constructor(props) {
@@ -117,6 +119,12 @@ class Algorithms extends Component {
       }
     ];
     let loading = isEmpty(this.props.algorithms);
+    let listCards;
+    if (this.props.algorithms.length > 1) {
+      listCards = this.props.algorithms.map((algo, index) => (
+        <ListCard value={algo} key={index} />
+      ));
+    }
     return (
       <div>
         <div className="page__body">
@@ -191,10 +199,18 @@ class Algorithms extends Component {
                           the corresponding wrappers in
                           SpikeInterface/SpikeToolkit.
                         </p>
+                        <p>
+                          For more information on recent runs of all
+                          spike-sorting algorithms, please consult the{" "}
+                          <Link to="/archive">Analysis Archive</Link>
+                        </p>
                       </div>
                     </div>
                   </div>
                 </Col>
+              </Row>
+              <Row className="subcontainer justify-content-md-center">
+                {listCards}
               </Row>
               <Row className="subcontainer justify-content-md-center">
                 <Col lg={12} sm={12} xl={12}>

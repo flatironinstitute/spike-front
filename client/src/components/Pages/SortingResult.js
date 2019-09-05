@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import { abbreviateSha1Path } from "../../utils";
-import ConsoleOutput from "./ConsoleOutput";
-import CodeForReproducing from "./CodeForReproducing";
+import ConsoleOutput from "../Utils/ConsoleOutput";
+import CodeForReproducing from "../Utils/CodeForReproducing";
 
 class SortingResult extends Component {
   constructor(props) {
