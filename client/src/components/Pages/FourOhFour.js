@@ -9,8 +9,8 @@ class FourOhFour extends Component {
         <Container className="container__heatmap">
           <div className="card card--heatmap text-center">
             <h2> It seems you are lost</h2>
-            <Row className="justify-content-md-center">
-              <Col xs lg="2">
+            <Row className="container justify-content-md-center">
+              <Col lg={12} sm={12} xl={10}>
                 <Link to="/">
                   Let's go Home <br />
                 </Link>

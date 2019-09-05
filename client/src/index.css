@@ -211,9 +211,9 @@ Use containers when you need a content area that has standard maximum width and 
   background-color: var(--fi-grey);
 }
 .container {
-  margin: 0 auto;
+  margin: 0 auto 3rem auto;
   padding: 0 10px;
-  width: 95%;
+  width: 100%;
   box-sizing: border-box;
 }
 
@@ -225,7 +225,7 @@ Use containers when you need a content area that has standard maximum width and 
 
 @media (min-width: 400px) {
   .container {
-    width: 85%;
+    width: 95%;
     padding: 0;
   }
 }
@@ -332,7 +332,7 @@ Use containers when you need a content area that has standard maximum width and 
 
 @media (min-width: 1200px) {
   .container {
-    max-width: 1480px;
+    max-width: 1800px;
   }
 }
 
@@ -360,10 +360,6 @@ Use containers when you need a content area that has standard maximum width and 
 
 .container__error {
   margin-top: 10rem;
-}
-
-.container__algos {
-  margin-bottom: 7.2rem;
 }
 
 .container__body--algos {

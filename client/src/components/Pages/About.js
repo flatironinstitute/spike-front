@@ -9,16 +9,16 @@ class About extends Component {
       <div className="page__body page__body--alert">
         <ForumAlert />
         <Container className="container__heatmap">
-          <Row className="justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
+          <Row className="container justify-content-md-center">
+            <Col lg={12} sm={12} xl={11}>
               <div className="intro">
                 <p className="big">About SpikeForest</p>
                 <div className="dividerthick" />
               </div>
             </Col>
           </Row>
-          <Row className="container__sorter--row justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
+          <Row className="container justify-content-md-center">
+            <Col lg={12} sm={12} xl={11}>
               <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
@@ -106,8 +106,8 @@ class About extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container__sorter--row justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
+          <Row className="container justify-content-md-center">
+            <Col lg={12} sm={12} xl={11}>
               <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
@@ -154,8 +154,8 @@ class About extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container__sorter--row justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
+          <Row className="container justify-content-md-center">
+            <Col lg={12} sm={12} xl={11}>
               <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
@@ -314,8 +314,8 @@ class About extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container__sorter--row justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
+          <Row className="container justify-content-md-center">
+            <Col lg={12} sm={12} xl={11}>
               <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
@@ -436,8 +436,8 @@ class About extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container__sorter--row justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
+          <Row className="container justify-content-md-center">
+            <Col lg={12} sm={12} xl={11}>
               <div className="card card__std">
                 <div className="content">
                   <div className="card__label">

@@ -1,17 +1,13 @@
 import React, { Component } from "react";
 import ReactCollapsingTable from "react-collapsing-table";
-import ReactMarkdown from "react-markdown";
 import { isEmpty } from "../../utils";
 import { Card, Col, Container, Row } from "react-bootstrap";
-
-import sample from "./sample.jpg";
 
 class Algorithms extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rows: [],
-      markdown: ""
+      rows: []
     };
   }
 
@@ -21,14 +17,18 @@ class Algorithms extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (this.props.algorithms !== prevProps.algorithms) {
       this.filterActives();
     }
   }
 
+  parseDescription(markdown) {
+    let par1 = markdown.split("Description")[1];
+    return par1.split("## References")[0];
+  }
+
   filterActives() {
-    let markdown = this.props.algorithms[0].markdown;
     let rows = this.props.algorithms.map(alg => {
       let row = {
         raw_label: alg.label,
@@ -38,7 +38,8 @@ class Algorithms extends Component {
         notes: alg.notes,
         environment: "",
         wrapper: "",
-        markdown: ""
+        markdown: "",
+        markdown_link: ""
       };
       if (alg.dockerfile) {
         row.environment = `<a href="${
@@ -53,14 +54,16 @@ class Algorithms extends Component {
         )}</a>`;
       }
       if (alg.markdown_link) {
-        row.markdown = `<a href="${
+        row.markdown_link = `<a href="${
           alg.markdown_link
         }" target="_blank">${basename(alg.markdown_link)}</a>`;
+      }
+      if (alg.markdown) {
+        row.markdown = this.parseDescription(alg.markdown);
       }
       if (alg.website) {
         row.label = `<a href="${alg.website}" target="_blank">${alg.label}</a>`;
       }
-
       return row;
     });
     rows.sort((a, b) => {
@@ -76,7 +79,7 @@ class Algorithms extends Component {
     rows.forEach(row => {
       row.isActive = true;
     });
-    this.setState({ rows: rows, markdown: markdown });
+    this.setState({ rows: rows });
   }
 
   render() {
@@ -87,6 +90,12 @@ class Algorithms extends Component {
         priorityLevel: 1,
         minWidth: 100,
         sortable: true
+      },
+      {
+        accessor: "markdown",
+        label: "Description",
+        priorityLevel: 4,
+        minWidth: 100
       },
       {
         accessor: "authors",
@@ -102,25 +111,12 @@ class Algorithms extends Component {
       },
       {
         accessor: "wrapper",
-        label: "Wrapper",
+        label: "View Wrapper",
         priorityLevel: 4,
         minWidth: 150
-      },
-      {
-        accessor: "markdown",
-        label: "Description",
-        priorityLevel: 4,
-        minWidth: 100
-      },
-      {
-        accessor: "notes",
-        label: "Notes",
-        priorityLevel: 4,
-        minWidth: 100
       }
     ];
     let loading = isEmpty(this.props.algorithms);
-    console.log("🐊", this.state);
     return (
       <div>
         <div className="page__body">
@@ -132,49 +128,16 @@ class Algorithms extends Component {
             </Container>
           ) : (
             <Container className="container__heatmap">
-              <Row className="justify-content-md-center">
-                <Col lg={12} sm={12} xl={10}>
+              <Row className="container justify-content-md-center">
+                <Col lg={12} sm={12} xl={11}>
                   <div className="intro">
                     <p className="big">Algorithms</p>
                     <div className="dividerthick" />
                   </div>
                 </Col>
               </Row>
-              <Row className="container__sorter--row justify-content-md-center">
-                <Col lg={12} sm={12} xl={10}>
-                  <div className="card card__std">
-                    <ReactCollapsingTable
-                      columns={algosColumns}
-                      rows={this.state.rows}
-                    />
-                  </div>
-                </Col>
-              </Row>
-              <Row className="container__sorter--row justify-content-md-center">
-                <Col lg={12} sm={12} xl={10}>
-                  <Card>
-                    <Card.Img variant="bottom" src={sample} />
-                    <Card.Body>
-                      <Card.Title>Card title</Card.Title>
-                      <Card.Text>
-                        This is a wider card with supporting text below as a
-                        natural lead-in to additional content. This content is a
-                        little bit longer.
-                      </Card.Text>
-                    </Card.Body>
-                    <Card.Footer>
-                      <small className="text-muted">
-                        Last updated 3 mins ago
-                      </small>
-                    </Card.Footer>
-                  </Card>
-                </Col>
-              </Row>
-              <Row className="container__sorter--row justify-content-md-center">
-                <div className="card card__std" />
-              </Row>
-              <Row className="container__sorter--row justify-content-md-center">
-                <Col lg={12} sm={12} xl={10}>
+              <Row className="container justify-content-md-center">
+                <Col lg={12} sm={12} xl={11}>
                   <div className="card card__std">
                     <div className="content">
                       <div className="card__label">
@@ -233,8 +196,28 @@ class Algorithms extends Component {
                   </div>
                 </Col>
               </Row>
-              <Row className="container__sorter--row justify-content-md-center">
-                <Col lg={12} sm={12} xl={10}>
+              <Row className="container justify-content-md-center">
+                <Col lg={12} sm={12} xl={11}>
+                  <div className="card card__std">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>
+                          <strong>Algorithms In Use</strong>
+                        </p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <ReactCollapsingTable
+                          columns={algosColumns}
+                          rows={this.state.rows}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="container justify-content-md-center">
+                <Col lg={12} sm={12} xl={11}>
                   <div className="card card__std">
                     <div className="content">
                       <div className="card__label">
@@ -261,8 +244,8 @@ class Algorithms extends Component {
                   </div>
                 </Col>
               </Row>
-              <Row className="container__sorter--row justify-content-md-center">
-                <Col lg={12} sm={12} xl={10}>
+              <Row className="container justify-content-md-center">
+                <Col lg={12} sm={12} xl={11}>
                   <div className="card card__std">
                     <div className="content">
                       <div className="card__label">

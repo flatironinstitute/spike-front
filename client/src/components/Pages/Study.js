@@ -14,7 +14,7 @@ class Study extends Component {
       }
     }
     if (!study) {
-      return <div>Study not found: {this.props.studyName}</div>
+      return <div>Study not found: {this.props.studyName}</div>;
     }
     let recording_header = (
       <tr>
@@ -26,43 +26,58 @@ class Study extends Component {
         <th>Directory</th>
         <th>True firings</th>
       </tr>
-    )
+    );
     let recording_rows = [];
     for (let rec of study.recordings) {
       recording_rows.push(
         <tr key={`recording--${study.name}-${rec.name}`}>
-          <td key={"name"}><Link to={`/recording/${study.name}/${rec.name}`}>{rec.name}</Link></td>
+          <td key={"name"}>
+            <Link to={`/recording/${study.name}/${rec.name}`}>{rec.name}</Link>
+          </td>
           <td key={"sampleRateHz"}>{rec.sampleRateHz}</td>
           <td key={"numChannels"}>{rec.numChannels}</td>
           <td key={"durationSec"}>{rec.durationSec}</td>
           <td key={"numTrueUnits"}>{rec.numTrueUnits}</td>
           <td key={"directory"}>{abbreviateSha1Path(rec.directory)}</td>
-          <td key={"firingsTrue"}>{abbreviateSha1Path(rec.firingsTrue, {canDownload: false})}</td>
+          <td key={"firingsTrue"}>
+            {abbreviateSha1Path(rec.firingsTrue, { canDownload: false })}
+          </td>
         </tr>
-      )
+      );
     }
     return (
       <div className="page__body">
         <Container className="container__heatmap">
-          <Row className="container__sorter--row justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
+          <Row className="container justify-content-md-center">
+            <Col lg={12} sm={12} xl={11}>
+              <div className="intro">
+                <p className="big">{study.name}</p>
+                <div className="dividerthick" />
+              </div>
+            </Col>
+          </Row>
+          <Row className="container justify-content-md-center">
+            <Col lg={12} sm={12} xl={11}>
               <div className="card card__std">
                 <div className="content">
                   <div className="card__footer">
                     <hr />
                     <h3>Study: {study.name}</h3>
                     <p>
-                      This study is part of the <Link to={`/studyset/${study.studySetName}`}>{study.studySetName}</Link> study set.
-                      You can <Link to={`/studyresults/${study.name}`}>view the sorting results</Link> associated with this study.
+                      This study is part of the{" "}
+                      <Link to={`/studyset/${study.studySetName}`}>
+                        {study.studySetName}
+                      </Link>{" "}
+                      study set. You can{" "}
+                      <Link to={`/studyresults/${study.name}`}>
+                        view the sorting results
+                      </Link>{" "}
+                      associated with this study.
                     </p>
                     <h3>Recordings in {study.name}</h3>
                     <table className="table">
-                      <thead>
-                        {recording_header}
-                      </thead>
-                      <tbody>
-                        {recording_rows}
-                      </tbody>
+                      <thead>{recording_header}</thead>
+                      <tbody>{recording_rows}</tbody>
                     </table>
                   </div>
                 </div>

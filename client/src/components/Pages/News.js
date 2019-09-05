@@ -16,8 +16,8 @@ class News extends Component {
     return (
       <div className="page__body">
         <Container className="container__heatmap">
-          <Row className="justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
+          <Row className="container justify-content-md-center">
+            <Col lg={12} sm={12} xl={11}>
               <div className="intro">
                 <p className="big">News</p>
               </div>
@@ -26,9 +26,9 @@ class News extends Component {
           {posts.map(post => (
             <Row
               key={`${post.title}--${post.date}`}
-              className="container__sorter--row justify-content-md-center"
+              className=" justify-content-md-center"
             >
-              <Col lg={12} sm={12} xl={10}>
+              <Col lg={12} sm={12} xl={11}>
                 <div className="card card__std">
                   <div className="content">
                     <div className="card__label">
