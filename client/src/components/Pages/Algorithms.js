@@ -30,6 +30,17 @@ class Algorithms extends Component {
     return par1.split("## References")[0];
   }
 
+  sortRows(rows) {
+    let sorted = rows.sort((a, b) => {
+      if (a.wrapper && !b.wrapper) return -1;
+      if (!a.wrapper && b.wrapper) return 1;
+      let textA = a.raw_label.toUpperCase();
+      let textB = b.raw_label.toUpperCase();
+      return textA < textB ? -1 : textA > textB ? 1 : 0;
+    });
+    return sorted;
+  }
+
   filterActives() {
     let rows = this.props.algorithms.map(alg => {
       let row = {
@@ -82,63 +93,19 @@ class Algorithms extends Component {
       }
       return row;
     });
-    rows.sort((a, b) => {
-      if (a.wrapper && !b.wrapper) return -1;
-      if (!a.wrapper && b.wrapper) return 1;
-      let textA = a.raw_label.toUpperCase();
-      let textB = b.raw_label.toUpperCase();
-      return textA < textB ? -1 : textA > textB ? 1 : 0;
-    });
-    rows.sort((a, b) => {
-      return a.isActive === b.isActive ? 0 : a.isActive ? -1 : 1;
-    });
-    // rows.forEach(row => {
-    //   row.isActive = true;
-    // });
-    this.setState({ rows: rows });
+    let sorted = this.sortRows(rows);
+    this.setState({ rows: sorted });
   }
 
   render() {
-    const algosColumns = [
-      {
-        accessor: "label",
-        label: "Algorithm webpage",
-        priorityLevel: 1,
-        minWidth: 100,
-        sortable: true
-      },
-      {
-        accessor: "markdown",
-        label: "Description",
-        priorityLevel: 4,
-        minWidth: 100
-      },
-      {
-        accessor: "authors",
-        label: "Authors",
-        priorityLevel: 2,
-        minWidth: 100
-      },
-      {
-        accessor: "environment",
-        label: "Environment",
-        priorityLevel: 4,
-        minWidth: 100
-      },
-      {
-        accessor: "wrapper",
-        label: "View Wrapper",
-        priorityLevel: 4,
-        minWidth: 150
-      }
-    ];
-    let loading = isEmpty(this.props.algorithms);
+    let loading = isEmpty(this.state.rows);
     let listCards;
     if (this.state.rows) {
       listCards = this.state.rows.map((row, index) => (
         <ListCard value={row} key={index} />
       ));
     }
+    console.log("🐊", this.props.algorithms);
     return (
       <div>
         <div className="page__body">
@@ -217,7 +184,7 @@ class Algorithms extends Component {
                           <p>
                             For more information on recent runs of all
                             spike-sorting algorithms, please consult the{" "}
-                            <Link to="/archive">Analysis Archive</Link>
+                            <Link to="/archive">Analysis Archive</Link>.
                           </p>
                         </div>
                       </div>
@@ -229,26 +196,6 @@ class Algorithms extends Component {
                 <h3>Algorithms In Use</h3>
                 <Row className="subcontainer justify-content-md-center">
                   {listCards}
-                </Row>
-                <Row className="subcontainer justify-content-md-center">
-                  <Col lg={12} sm={12} xl={12}>
-                    <div className="card card__std">
-                      <div className="content">
-                        <div className="card__label">
-                          <p>
-                            <strong>Algorithms In Use</strong>
-                          </p>
-                        </div>
-                        <div className="card__footer">
-                          <hr />
-                          <ReactCollapsingTable
-                            columns={algosColumns}
-                            rows={this.state.rows}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </Col>
                 </Row>
               </Container>
             </div>

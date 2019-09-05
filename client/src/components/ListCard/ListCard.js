@@ -8,7 +8,6 @@ class ListCard extends Component {
   }
   render() {
     let loading = isEmpty(this.props.value);
-    console.log("🍴", this.props.value);
     return (
       <Col lg={12} sm={12} xl={12}>
         {loading ? (
