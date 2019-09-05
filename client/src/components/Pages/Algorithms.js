@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ReactCollapsingTable from "react-collapsing-table";
 import { isEmpty } from "../../utils";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -59,35 +58,22 @@ class Algorithms extends Component {
         env_link: "/"
       };
       if (alg.dockerfile) {
-        row.environment = `<a href="${
-          alg.dockerfile
-        }" target="_blank">${basename(alg.dockerfile)}</a>`;
         // keep
         row.env_name = "Docker";
         row.env_link = alg.dockerfile;
       } else if (alg.environment) {
-        row.environment = `<span>${alg.environment}</span>`;
         // keep
         row.env_name = alg.environment;
       }
       if (alg.wrapper) {
-        row.wrapper = `<a href="${alg.wrapper}" target="_blank">${basename(
-          alg.wrapper
-        )}</a>`;
         // keep
         row.wrapper_link = alg.wrapper;
-      }
-      if (alg.markdown_link) {
-        row.markdown_link = `<a href="${
-          alg.markdown_link
-        }" target="_blank">${basename(alg.markdown_link)}</a>`;
       }
       if (alg.markdown) {
         // keep
         row.markdown = this.parseDescription(alg.markdown);
       }
       if (alg.website) {
-        row.label = `<a href="${alg.website}" target="_blank">${alg.label}</a>`;
         // keep
         row.website = alg.website;
       }
