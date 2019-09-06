@@ -6,10 +6,6 @@
   margin-top: 3rem;
 }
 
-.container__sorter--row {
-  margin-bottom: 3rem;
-}
-
 .scrollyteller__container {
   display: flex;
   justify-content: space-between;

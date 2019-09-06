@@ -30,8 +30,8 @@ export class MetricCard extends Component {
     let title = toTitleCase(this.props.metric);
     let copy = this.getMetricCopy();
     let primaryClass = this.props.bottomMargin
-      ? "card card__stats-col"
-      : "card card__stats";
+      ? "card card__std-col"
+      : "card card__std";
     return (
       <div className={primaryClass}>
         <div className="content">

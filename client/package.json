@@ -21,7 +21,7 @@
     "react-collapsing-table": "^0.4.2",
     "react-dom": "^16.6.0",
     "react-ga": "^2.5.7",
-    "react-markdown": "^4.0.8",
+    "react-markdown": "^4.1.0",
     "react-mathjax": "^1.0.1",
     "react-plotly.js": "^2.3.0",
     "react-rangeslider": "^2.2.0",

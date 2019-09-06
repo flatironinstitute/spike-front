@@ -89,8 +89,8 @@ export class SliderCard extends Component {
     let max = this.getSliderMax();
     let step = this.getSliderStep();
     let primaryClass = this.props.bottomMargin
-      ? "card card__stats-col"
-      : "card card__stats";
+      ? "card card__std-col"
+      : "card card__std";
     let sliderVal = Math.round(this.state.sliderValue / step) * step;
     sliderVal = Math.round(sliderVal * 100) / 100;
     return (

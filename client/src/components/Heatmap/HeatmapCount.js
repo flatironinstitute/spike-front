@@ -26,12 +26,6 @@ class HeatmapCount extends Component {
     };
   }
 
-  componentDidMount() {
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-  }
-
   handleCardHeightChange = value => {
     this.setState({
       cardHeight: value
@@ -43,7 +37,7 @@ class HeatmapCount extends Component {
     this.setState({
       redirect: true
     });
-  }
+  };
 
   render() {
     let loading = isEmpty(this.props.studyAnalysisResults);
@@ -61,7 +55,7 @@ class HeatmapCount extends Component {
         ) : (
           <Container className="container__heatmap">
             <Row className="container__heatmap--row">
-              <Col style={{minWidth: 700, flexGrow: 1, overflow: 'auto'}}>
+              <Col style={{ minWidth: 700, flexGrow: 1, overflow: "auto" }}>
                 <HeatmapViz
                   groupByStudySets={true}
                   selectStudyName={this.props.selectStudyName}
@@ -78,9 +72,8 @@ class HeatmapCount extends Component {
                 />
               </Col>
 
-              {
-                (this.props.format !== "cpu") ?
-                (<Col style={{minWidth: 400, flexGrow: 1}}>
+              {this.props.format !== "cpu" ? (
+                <Col style={{ minWidth: 400, flexGrow: 1 }}>
                   <ScatterplotCard
                     sorters={this.props.sorters}
                     studyAnalysisResults={this.props.studyAnalysisResults}
@@ -89,12 +82,18 @@ class HeatmapCount extends Component {
                     sliderValue={this.props.sliderValue}
                     format={this.props.format}
                     metric={this.props.metric}
-                    cardHeight={this.props.selectedUnit ? this.state.cardHeight : 100}
-                    selectedUnitCode={(this.props.selectedUnit || {}).unitCode || null}
+                    cardHeight={
+                      this.props.selectedUnit ? this.state.cardHeight : 100
+                    }
+                    selectedUnitCode={
+                      (this.props.selectedUnit || {}).unitCode || null
+                    }
                     handleScatterplotClick={this.handleScatterplotClick}
                   />
-                </Col>) : (<span />)
-              }
+                </Col>
+              ) : (
+                <span />
+              )}
             </Row>
           </Container>
         )}

@@ -210,11 +210,15 @@ Use containers when you need a content area that has standard maximum width and 
 .app {
   background-color: var(--fi-grey);
 }
+
 .container {
-  margin: 0 auto;
   padding: 0 10px;
-  width: 95%;
+  width: 100%;
   box-sizing: border-box;
+}
+
+.subcontainer {
+  margin: 0 auto 3rem auto;
 }
 
 .col {
@@ -225,7 +229,7 @@ Use containers when you need a content area that has standard maximum width and 
 
 @media (min-width: 400px) {
   .container {
-    width: 85%;
+    width: 95%;
     padding: 0;
   }
 }
@@ -332,7 +336,7 @@ Use containers when you need a content area that has standard maximum width and 
 
 @media (min-width: 1200px) {
   .container {
-    max-width: 1480px;
+    max-width: 1800px;
   }
 }
 
@@ -360,10 +364,6 @@ Use containers when you need a content area that has standard maximum width and 
 
 .container__error {
   margin-top: 10rem;
-}
-
-.container__algos {
-  margin-bottom: 7.2rem;
 }
 
 .container__body--algos {
@@ -577,11 +577,10 @@ code {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .intro {
   text-align: center;
-  padding-bottom: 4.2rem;
 }
 
 .big {
-  font-size: 6.4rem;
+  font-size: 5rem;
   max-width: 70rem;
   line-height: 1.3;
   margin: 0 auto;
@@ -945,15 +944,15 @@ code {
   justify-content: center;
 }
 
-.card__stats {
+.card__std {
   margin-bottom: 0;
 }
 
-.card__stats-col {
+.card__std-col {
   margin-bottom: 1rem;
 }
 
-.card__stats-top {
+.card__std-top {
   margin-top: 1rem;
 }
 
@@ -1019,4 +1018,79 @@ code {
 .info p {
   font-size: 1.7rem;
   line-height: 1.5;
+}
+
+/* List Card
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.listcard {
+  box-shadow: unset;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  max-width: 100%;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.listcard-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.listcard-section {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 0.5em;
+  flex-direction: column;
+  width: 100%;
+}
+
+.listcard-title {
+  font-size: 20px;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: -0.03em;
+  text-transform: none;
+  line-height: 1em;
+  margin: 0.5em 0 0.25em;
+  line-height: 1.15em;
+  /* border-bottom: 1px solid var(--fi-blue); */
+}
+
+.listcard-authors {
+  font-size: 11px;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.5em;
+  margin: 0.6em 0 0.15em;
+  color: var(--label-grey);
+}
+
+.listcard-block-link {
+  width: 100%;
+}
+
+.listcard-env {
+  font-size: 11px;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.5em;
+  margin-right: 1em;
+  color: var(--label-grey);
+}
+
+.listcard-section__bottom {
+  flex-direction: row;
+}
+
+.listcard-copy {
+  margin-bottom: 0;
+  font-size: 1.5rem;
 }

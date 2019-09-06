@@ -9,21 +9,16 @@ class Metrics extends Component {
     return (
       <div className="page__body">
         <Container className="container__heatmap">
-          <Row className="justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
               <div className="intro">
                 <p className="big">Metrics</p>
-                <div className="dividerthick" />
-                <p className="subhead">
-                  Definitions of accuracy and other metrics used throughout
-                  SpikeForest.
-                </p>
               </div>
             </Col>
           </Row>
-          <Row className="container__sorter--row justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
+              <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
                     <p>
@@ -97,7 +92,7 @@ class Metrics extends Component {
                         <a
                           target="_blank"
                           rel="noopener noreferrer"
-                          href="https://github.com/SpikeInterface/spiketoolkit/blob/master/spiketoolkit/comparison/sortingcomparison.py"
+                          href="https://github.com/SpikeInterface/spiketoolkit/blob/master/spiketoolkit/comparison/sortingcomparison.pyhttps://github.com/flatironinstitute/spikeforest/blob/master/spikeforest/spikeforest_analysis/sortingcomparison.py"
                         >
                           the sortingcomparison.py routine from spiketoolkit
                         </a>
@@ -116,9 +111,9 @@ class Metrics extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container__sorter--row justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
+              <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
                     <p>
@@ -191,9 +186,9 @@ class Metrics extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container__sorter--row justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
+              <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
                     <p>
@@ -222,9 +217,9 @@ class Metrics extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container__sorter--row justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
+              <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
                     <p>
@@ -323,9 +318,9 @@ class Metrics extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container__sorter--row justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
+              <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
                     <p>
@@ -366,9 +361,9 @@ class Metrics extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container__sorter--row justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
+              <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
                     <p>

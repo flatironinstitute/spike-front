@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import Preloader from "../Preloader/Preloader";
-import HomeContentContainer from "../Heatmap/HomeContentContainer";
 import { isEmpty } from "../../utils";
 import { Container, Card } from "react-bootstrap";
 import StatsAlert from "../Header/StatsAlert";
 import InfoPanelContent from "../Header/InfoPanelContent";
+import Preloader from "../Preloader/Preloader";
+import HomeContentContainer from "../Heatmap/HomeContentContainer";
 
 class Home extends Component {
   render() {

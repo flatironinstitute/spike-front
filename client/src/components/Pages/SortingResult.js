@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import { abbreviateSha1Path } from "../../utils";
-import ConsoleOutput from "./ConsoleOutput";
-import CodeForReproducing from "./CodeForReproducing";
+import ConsoleOutput from "../Utils/ConsoleOutput";
+import CodeForReproducing from "../Utils/CodeForReproducing";
 
 class SortingResult extends Component {
   constructor(props) {
@@ -74,9 +74,9 @@ class SortingResult extends Component {
     return (
       <div className="page__body">
         <Container className="container__heatmap">
-          <Row className="container__sorter--row justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
+              <div className="card card__std">
                 <div className="content">
                   <div className="card__footer">
                     <hr />
@@ -137,9 +137,9 @@ class SortingResult extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container__sorter--row justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
+              <div className="card card__std">
                 <div className="content">
                   <div className="card__footer">
                     <table className="table" style={{ width: "auto" }}>
@@ -198,9 +198,9 @@ class SortingResult extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container__sorter--row justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
+              <div className="card card__std">
                 <div className="content">
                   <div className="card__footer">
                     <h3>Console output</h3>
@@ -222,9 +222,9 @@ class SortingResult extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="container__sorter--row justify-content-md-center">
-            <Col lg={12} sm={12} xl={10}>
-              <div className="card card--stats">
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
+              <div className="card card__std">
                 <div className="content">
                   <div className="card__footer">
                     <h3>Reproducing</h3>

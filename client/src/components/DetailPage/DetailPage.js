@@ -162,9 +162,9 @@ class DetailPage extends Component {
             </Container>
           ) : (
               <Container className="container__heatmap">
-                <Row className="container__sorter--row">
+                <Row className="">
                 <Col style={{minWidth: 700, flexGrow: 1, overflow: 'auto'}}>
-                    <div className="card card--stats">
+                    <div className="card card__std">
                       <div className="content">
                         <div className="card__label">
                           <p>
@@ -252,7 +252,7 @@ class DetailPage extends Component {
                                           )
                                         }
                                         </span>
-                                        
+
                                     </tr>
                                   </tbody>
                                 </table>

@@ -31,9 +31,6 @@ class StatsAlert extends Component {
           <div className="alert__ticker--wrapper">
             <div className="alert__ticker">
               <div className="ticker__item">
-                <b>** This is a website preview **</b>
-              </div>
-              <div className="ticker__item">
                 <b>Project totals:</b> 1.3 TB of recordings;{" "}
                 {groundTruth.toLocaleString()} ground truth units;{" "}
                 {coreHours.toLocaleString()} compute hours
