@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactCollapsingTable from "react-collapsing-table";
 import { isEmpty } from "../../utils";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -30,7 +31,6 @@ class Algorithms extends Component {
   }
 
   sortRows(rows) {
-    // TODO: Add sorting choice.
     let sorted = rows.sort((a, b) => {
       if (a.wrapper && !b.wrapper) return -1;
       if (!a.wrapper && b.wrapper) return 1;
@@ -59,22 +59,35 @@ class Algorithms extends Component {
         env_link: "/"
       };
       if (alg.dockerfile) {
+        row.environment = `<a href="${
+          alg.dockerfile
+        }" target="_blank">${basename(alg.dockerfile)}</a>`;
         // keep
         row.env_name = "Docker";
         row.env_link = alg.dockerfile;
       } else if (alg.environment) {
+        row.environment = `<span>${alg.environment}</span>`;
         // keep
         row.env_name = alg.environment;
       }
       if (alg.wrapper) {
+        row.wrapper = `<a href="${alg.wrapper}" target="_blank">${basename(
+          alg.wrapper
+        )}</a>`;
         // keep
         row.wrapper_link = alg.wrapper;
+      }
+      if (alg.markdown_link) {
+        row.markdown_link = `<a href="${
+          alg.markdown_link
+        }" target="_blank">${basename(alg.markdown_link)}</a>`;
       }
       if (alg.markdown) {
         // keep
         row.markdown = this.parseDescription(alg.markdown);
       }
       if (alg.website) {
+        row.label = `<a href="${alg.website}" target="_blank">${alg.label}</a>`;
         // keep
         row.website = alg.website;
       }
@@ -85,6 +98,39 @@ class Algorithms extends Component {
   }
 
   render() {
+    const algosColumns = [
+      {
+        accessor: "label",
+        label: "Algorithm webpage",
+        priorityLevel: 1,
+        minWidth: 100,
+        sortable: true
+      },
+      {
+        accessor: "markdown",
+        label: "Description",
+        priorityLevel: 4,
+        minWidth: 100
+      },
+      {
+        accessor: "authors",
+        label: "Authors",
+        priorityLevel: 2,
+        minWidth: 100
+      },
+      {
+        accessor: "environment",
+        label: "Environment",
+        priorityLevel: 4,
+        minWidth: 100
+      },
+      {
+        accessor: "wrapper",
+        label: "View Wrapper",
+        priorityLevel: 4,
+        minWidth: 150
+      }
+    ];
     let loading = isEmpty(this.state.rows);
     let listCards;
     if (this.state.rows) {
@@ -179,11 +225,34 @@ class Algorithms extends Component {
                   </Col>
                 </Row>
               </Container>
-              <Container className="container">
-                <h3>Algorithms In Use</h3>
+              <Container className="container__heatmap">
+                <Col lg={12} sm={12} xl={12}>
+                  {" "}
+                  <h3>Algorithms In Use</h3>
+                </Col>
                 <Row className="subcontainer justify-content-md-center">
                   {listCards}
                 </Row>
+                {/* <Row className="subcontainer justify-content-md-center">
+                  <Col lg={12} sm={12} xl={12}>
+                    <div className="card card__std">
+                      <div className="content">
+                        <div className="card__label">
+                          <p>
+                            <strong>Algorithms In Use</strong>
+                          </p>
+                        </div>
+                        <div className="card__footer">
+                          <hr />
+                          <ReactCollapsingTable
+                            columns={algosColumns}
+                            rows={this.state.rows}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </Col>
+                </Row> */}
               </Container>
             </div>
           )}

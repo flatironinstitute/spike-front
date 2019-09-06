@@ -3,9 +3,6 @@ import { Col } from "react-bootstrap";
 import { isEmpty } from "../../utils";
 
 class ListCard extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     let loading = isEmpty(this.props.value);
     return (
