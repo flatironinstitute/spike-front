@@ -9,9 +9,15 @@ import { Link } from "react-router-dom";
 class HeatmapViz extends Component {
   constructor(props) {
     super(props);
+<<<<<<< HEAD
     this.state = {
       tableRows: [],
       tableHeader: [],
+=======
+    this.state = { 
+      tableRows: [], 
+      tableHeader: [], 
+>>>>>>> 60c0c6916aad65f5de662500aeb909bcf8131306
       selectedStudyName: props.selectedStudyName,
       selectedRecordingName: props.selectedRecordingName,
       selectedSorterName: props.selectedSorterName
@@ -254,12 +260,17 @@ class HeatmapViz extends Component {
         trueFiringRates.push(sar.trueFiringRates[jj]);
         trueNumEvents.push(sar.trueNumEvents[jj]);
         for (let ii = 0; ii < sorter_names.length; ii++) {
+<<<<<<< HEAD
           sortingResults[ii].accuracies.push(
             sar.sortingResults[ii].accuracies[jj]
           );
           sortingResults[ii].precisions.push(
             sar.sortingResults[ii].precisions[jj]
           );
+=======
+          sortingResults[ii].accuracies.push(sar.sortingResults[ii].accuracies[jj]);
+          sortingResults[ii].precisions.push(sar.sortingResults[ii].precisions[jj]);
+>>>>>>> 60c0c6916aad65f5de662500aeb909bcf8131306
           sortingResults[ii].recalls.push(sar.sortingResults[ii].recalls[jj]);
           sortingResults[ii].numMatches.push(
             sar.sortingResults[ii].numMatches[jj]
@@ -325,6 +336,7 @@ class HeatmapViz extends Component {
         trueNumEvents = trueNumEvents.concat(studyAnalysisResult.trueNumEvents);
         // ...
         for (let ii = 0; ii < sorter_names.length; ii++) {
+<<<<<<< HEAD
           sortingResults[ii].accuracies = sortingResults[ii].accuracies.concat(
             studyAnalysisResult.sortingResults[ii].accuracies
           );
@@ -352,6 +364,15 @@ class HeatmapViz extends Component {
           ].cpuTimesSec.concat(
             studyAnalysisResult.sortingResults[ii].cpuTimesSec
           );
+=======
+          sortingResults[ii].accuracies = sortingResults[ii].accuracies.concat(studyAnalysisResult.sortingResults[ii].accuracies);
+          sortingResults[ii].precisions = sortingResults[ii].precisions.concat(studyAnalysisResult.sortingResults[ii].precisions);
+          sortingResults[ii].recalls = sortingResults[ii].recalls.concat(studyAnalysisResult.sortingResults[ii].recalls);
+          sortingResults[ii].numMatches = sortingResults[ii].numMatches.concat(studyAnalysisResult.sortingResults[ii].numMatches);
+          sortingResults[ii].numFalsePositives = sortingResults[ii].numFalsePositives.concat(studyAnalysisResult.sortingResults[ii].numFalsePositives);
+          sortingResults[ii].numFalseNegatives = sortingResults[ii].numFalseNegatives.concat(studyAnalysisResult.sortingResults[ii].numFalseNegatives);
+          sortingResults[ii].cpuTimesSec = sortingResults[ii].cpuTimesSec.concat(studyAnalysisResult.sortingResults[ii].cpuTimesSec);
+>>>>>>> 60c0c6916aad65f5de662500aeb909bcf8131306
         }
       }
     }
@@ -668,9 +689,13 @@ class HeatmapViz extends Component {
         this.props.selectStudyName(cell.info.studyAnalysisResult.studyName);
       }
       if (this.props.selectRecordingName) {
+<<<<<<< HEAD
         this.props.selectRecordingName(
           cell.info.studyAnalysisResult.recordingName || null
         );
+=======
+        this.props.selectRecordingName(cell.info.studyAnalysisResult.recordingName || null);
+>>>>>>> 60c0c6916aad65f5de662500aeb909bcf8131306
       }
       if (this.props.selectSorterName) {
         this.props.selectSorterName(cell.info.sorterName);
@@ -688,6 +713,7 @@ class HeatmapViz extends Component {
     return !isNaN(parseFloat(n)) && isFinite(n);
   }
 
+<<<<<<< HEAD
   getAlertCopy() {
     // let divStyle = {
     //   backgroundColor: "#fffdc0",
@@ -708,6 +734,14 @@ class HeatmapViz extends Component {
 
   getParaCopy() {
     const innercopy =
+=======
+  render() {
+    const loading =
+      isEmpty(this.state.tableRows) ||
+      isEmpty(this.state.tableHeader);
+    const title = this.getFormatCopy();
+    const copy =
+>>>>>>> 60c0c6916aad65f5de662500aeb909bcf8131306
       this.props.format !== "cpu"
         ? "  Select individual cells to see corresponding details. "
         : "";
@@ -737,8 +771,42 @@ class HeatmapViz extends Component {
           <h4 className="card__title">{title}</h4>
         </div>
         <div>
+<<<<<<< HEAD
           {alertCopy}
           {paraCopy}
+=======
+          {
+            this.props.groupByStudySets ?
+            (
+              <span>
+                <p style={divStyle}>
+                  {
+                    this.props.format === 'cpu' ?
+                    (
+                      <span><b>Important!</b> These numbers reflect actual compute times on our cluster and are not meant to be a rigorous benchmark. The algorithms were applied in batches, with many different algorithms possibly running
+                        simultaneously on the same machine. Some runs may have been allocated more CPU cores than others. We are working toward a more accurate compute time test.
+                      </span>
+                    ) :
+                    (
+                      <span>
+                        These are preliminary results prior to parameter optimization, and we are still in the process of ensuring that we are using the proper <Link to="/algorithms">versions of the spike sorters</Link>.
+                        We expect to go live by the end of July at <a href="https://spikeforest.flatironinstitute.org">spikeforest.flatironinstitute.org</a>.
+                      </span>
+
+                    )
+                  }
+                </p>
+                <p>
+                  Click to expand study set rows and see component study data. {copy} * An asterisk indicates an incomplete or failed sorting on a subset of results.</p>
+              </span>
+            ) :
+            (
+              <span>
+                <p>{copy} * An asterisk indicates an incomplete or failed sorting on a subset of results.</p>
+              </span>
+            )
+          }
+>>>>>>> 60c0c6916aad65f5de662500aeb909bcf8131306
         </div>
         {loading ? (
           <h4>...</h4>

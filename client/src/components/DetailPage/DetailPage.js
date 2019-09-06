@@ -162,9 +162,15 @@ class DetailPage extends Component {
             </Container>
           ) : (
               <Container className="container__heatmap">
+<<<<<<< HEAD
                 <Row className="">
                 <Col style={{minWidth: 700, flexGrow: 1, overflow: 'auto'}}>
                     <div className="card card__std">
+=======
+                <Row className="container__sorter--row">
+                <Col style={{minWidth: 700, flexGrow: 1, overflow: 'auto'}}>
+                    <div className="card card--stats">
+>>>>>>> 60c0c6916aad65f5de662500aeb909bcf8131306
                       <div className="content">
                         <div className="card__label">
                           <p>

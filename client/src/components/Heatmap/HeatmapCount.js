@@ -55,7 +55,11 @@ class HeatmapCount extends Component {
         ) : (
           <Container className="container__heatmap">
             <Row className="container__heatmap--row">
+<<<<<<< HEAD
               <Col style={{ minWidth: 700, flexGrow: 1, overflow: "auto" }}>
+=======
+              <Col style={{minWidth: 700, flexGrow: 1, overflow: 'auto'}}>
+>>>>>>> 60c0c6916aad65f5de662500aeb909bcf8131306
                 <HeatmapViz
                   groupByStudySets={true}
                   selectStudyName={this.props.selectStudyName}
@@ -72,8 +76,14 @@ class HeatmapCount extends Component {
                 />
               </Col>
 
+<<<<<<< HEAD
               {this.props.format !== "cpu" ? (
                 <Col style={{ minWidth: 400, flexGrow: 1 }}>
+=======
+              {
+                (this.props.format !== "cpu") ?
+                (<Col style={{minWidth: 400, flexGrow: 1}}>
+>>>>>>> 60c0c6916aad65f5de662500aeb909bcf8131306
                   <ScatterplotCard
                     sorters={this.props.sorters}
                     studyAnalysisResults={this.props.studyAnalysisResults}
@@ -82,12 +92,17 @@ class HeatmapCount extends Component {
                     sliderValue={this.props.sliderValue}
                     format={this.props.format}
                     metric={this.props.metric}
+<<<<<<< HEAD
                     cardHeight={
                       this.props.selectedUnit ? this.state.cardHeight : 100
                     }
                     selectedUnitCode={
                       (this.props.selectedUnit || {}).unitCode || null
                     }
+=======
+                    cardHeight={this.props.selectedUnit ? this.state.cardHeight : 100}
+                    selectedUnitCode={(this.props.selectedUnit || {}).unitCode || null}
+>>>>>>> 60c0c6916aad65f5de662500aeb909bcf8131306
                     handleScatterplotClick={this.handleScatterplotClick}
                   />
                 </Col>
