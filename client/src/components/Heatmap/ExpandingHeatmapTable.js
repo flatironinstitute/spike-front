@@ -1,5 +1,5 @@
 import React from "react";
-// import { getRandomKeyInt } from "../../utils";
+import { Table } from "react-bootstrap";
 
 import "./expandingheatmaptable.css";
 import { Link } from "react-router-dom";
@@ -16,7 +16,7 @@ class ExpandingHeatmapTable extends React.Component {
           selectedCellId = c.id;
         }
       });
-    })
+    });
 
     this.state = {
       expandedRowIds: {},
@@ -35,7 +35,9 @@ class ExpandingHeatmapTable extends React.Component {
     this.setState({
       selectedCellId: cell["id"]
     });
-    if (this.props.onCellSelected) this.props.onCellSelected(cell);
+    if (this.props.onCellSelected) {
+      this.props.onCellSelected(cell);
+    }
   }
 
   createTableCell(cell, index, opts) {
@@ -58,22 +60,21 @@ class ExpandingHeatmapTable extends React.Component {
     };
     if (cell.text_align === "right") style0.paddingRight = "4px";
     let cellContent = cell.text;
-    if (cell.link)
-      cellContent = <Link to={cell.link}>{cellContent}</Link>;
+    if (cell.link) cellContent = <Link to={cell.link}>{cellContent}</Link>;
     if (opts.empty_content) {
-      cellContent = <span></span>;
+      cellContent = <span />;
       style0 = {};
     }
-    console.log(cell.id, cell.text);
+    // console.log("tablecell", cell.id, cell.text);
     return (
       <td
         onClick={() => this.handleCellSelected(cell)}
         className={class0}
         style={style0}
-        key={cell['id']}
+        key={cell["id"]}
       >
         <div>
-          <span>{cellContent}</span>
+          <span> {cellContent}</span>
         </div>
       </td>
     );
@@ -98,9 +99,7 @@ class ExpandingHeatmapTable extends React.Component {
         );
       } else {
         tds.push(
-          <td key={"expand-button-" + id0}>
-            {this.createExpandButton(id0)}
-          </td>
+          <td key={"expand-button-" + id0}>{this.createExpandButton(id0)}</td>
         );
       }
     } else {
@@ -108,19 +107,15 @@ class ExpandingHeatmapTable extends React.Component {
     }
     // Create the Other Cells
     row.cells.forEach((c, i) => {
-      if ((!isExpanded) || (i === 0)) {
+      if (!isExpanded || i === 0) {
         tds.push(this.createTableCell(c, i));
-      }
-      else {
-        tds.push(this.createTableCell(c, i, {empty_content: true}));
+      } else {
+        tds.push(this.createTableCell(c, i, { empty_content: true }));
       }
     });
     // Create Rows and put cells in
     ret.push(
-      <tr
-        className={isSubrow ? "subrow" : "toprow"}
-        key={"row-key-" + id0}
-      >
+      <tr className={isSubrow ? "subrow" : "toprow"} key={"row-key-" + id0}>
         {tds}
       </tr>
     );
@@ -132,7 +127,11 @@ class ExpandingHeatmapTable extends React.Component {
           ret = ret.concat(trs0);
           return null;
         }, this);
-        ret.push(<tr key={"expanded-empty-" + id0}><td>&nbsp;</td></tr>);
+        ret.push(
+          <tr key={"expanded-empty-" + id0}>
+            <td>&nbsp;</td>
+          </tr>
+        );
       }
     }
     return ret;
@@ -185,10 +184,10 @@ class ExpandingHeatmapTable extends React.Component {
     });
     return (
       <div>
-        <table className="expandingheatmaptable">
+        <Table borderless responsive className="expandingheatmaptable">
           <thead>{trhead}</thead>
           <tbody>{trs}</tbody>
-        </table>
+        </Table>
       </div>
     );
   }

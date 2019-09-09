@@ -47,7 +47,10 @@ class DetailPage extends Component {
   checkSelectedUnit() {
     if (this.props.selectedUnit) {
       let su = this.props.selectedUnit;
-      if ((su.sorterName !== this.state.sorterName) || (su.studyName !== this.props.studyName)) {
+      if (
+        su.sorterName !== this.state.sorterName ||
+        su.studyName !== this.props.studyName
+      ) {
         // The selected unit is not relevant to this view. Unselecting.
         this.props.setSelectedUnit(null);
       }
@@ -119,31 +122,38 @@ class DetailPage extends Component {
 
   render() {
     let loading =
-      isEmpty(this.props.studyName) ||
-      isEmpty(this.props.studyAnalysisResults);
+      isEmpty(this.props.studyName) || isEmpty(this.props.studyAnalysisResults);
 
     let heatmapTitle = this.getFormatCopy();
 
     let studyAnalysisResult = null;
     this.props.studyAnalysisResults.allResults.forEach(sar => {
-      if (sar.studyName === this.props.studyName)
-        studyAnalysisResult = sar;
+      if (sar.studyName === this.props.studyName) studyAnalysisResult = sar;
     });
 
     if (!studyAnalysisResult) {
       loading = true;
     }
 
-    let recordingName = '';
+    let recordingName = "";
     if (this.props.selectedUnit) {
-      recordingName = studyAnalysisResult.recordingNames[studyAnalysisResult.trueRecordingIndices[this.props.selectedUnit.unitIndex]];
+      recordingName =
+        studyAnalysisResult.recordingNames[
+          studyAnalysisResult.trueRecordingIndices[
+            this.props.selectedUnit.unitIndex
+          ]
+        ];
     }
 
     let sortingResult = null;
     if (this.props.selectedUnit) {
       let su = this.props.selectedUnit;
       for (let sr of this.props.sortingResults) {
-        if ((sr.studyName === su.studyName) && (sr.recordingName === su.recordingName) && (sr.sorterName === su.sorterName)) {
+        if (
+          sr.studyName === su.studyName &&
+          sr.recordingName === su.recordingName &&
+          sr.sorterName === su.sorterName
+        ) {
           sortingResult = sr;
         }
       }
@@ -161,139 +171,186 @@ class DetailPage extends Component {
               </Card>
             </Container>
           ) : (
-              <Container className="container__heatmap">
-                <Row className="">
-                <Col style={{minWidth: 700, flexGrow: 1, overflow: 'auto'}}>
-                    <div className="card card__std">
-                      <div className="content">
-                        <div className="card__label">
-                          <p>
-                            <b>{heatmapTitle}</b>
-                          </p>
-                        </div>
-                        <div className="card__footer">
-                          <hr />
-                          <HeatmapViz
-                            groupByStudySets={false}
-                            selectSorterName={sorterName => { this.props.setSelectedUnit(null); this.setState({ sorterName}); }}
-                            selectRecordingName={recordingName => { this.setState({ recordingName }); }}
-                            selectedStudyName={this.props.studyName}
-                            selectedSorterName={this.state.sorterName}
-                            studyAnalysisResults={{allResults: [studyAnalysisResult]}}
-                            studySets={this.props.studySets}
-                            sorters={this.props.sorters}
-                            format={this.props.format}
-                            metric={this.props.metric}
-                            threshold={this.props.sliderValue[this.props.format]}
-                          />
-                        </div>
+            <Container className="container__heatmap">
+              <Row className="">
+                <Col style={{ minWidth: 700, flexGrow: 1, overflow: "auto" }}>
+                  <div className="card card__std-col">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>
+                          <b>{heatmapTitle}</b>
+                        </p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <HeatmapViz
+                          groupByStudySets={false}
+                          selectSorterName={sorterName => {
+                            this.props.setSelectedUnit(null);
+                            this.setState({ sorterName });
+                          }}
+                          selectRecordingName={recordingName => {
+                            this.setState({ recordingName });
+                          }}
+                          selectedStudyName={this.props.studyName}
+                          selectedSorterName={this.state.sorterName}
+                          studyAnalysisResults={{
+                            allResults: [studyAnalysisResult]
+                          }}
+                          studySets={this.props.studySets}
+                          sorters={this.props.sorters}
+                          format={this.props.format}
+                          metric={this.props.metric}
+                          threshold={this.props.sliderValue[this.props.format]}
+                        />
                       </div>
                     </div>
-                  </Col>
-                  <Col style={{minWidth: 400, flexGrow: 1}}>
-                    <HeatmapOptionsCol
-                      showCPU={false}
-                      handleFormatChange={this.handleFormatChange}
-                      handleSliderChange={this.handleSliderChange}
-                      handleMetricChange={this.handleMetricChange}
-                      format={this.props.format}
-                      metric={this.props.metric}
-                      sliderValue={this.props.sliderValue[this.props.format]}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col lg={6} sm={12}>
-                    <ScatterplotCard
-                      sorters={this.props.sorters}
-                      studyAnalysisResults={{allResults: [studyAnalysisResult]}}
-                      studyName={this.props.studyName}
-                      sorterName={this.state.sorterName}
-                      recordingName={this.state.recordingName}
-                      sliderValue={this.props.sliderValue[this.props.format]}
-                      format={this.props.format}
-                      metric={this.props.metric}
-                      selectedUnitCode={(this.props.selectedUnit || {}).unitCode || null}
-                      handleScatterplotClick={this.handleScatterplotClick}
-                    />
-                  </Col>
-                  <Col lg={6} sm={12}>
-                    <div className="card card--heatmap">
-                      <div className="content">
-                        <div className="card__label">
-                          <p>
-                            {this.props.selectedUnit ?
-                              (
-                                <table>
-                                  <thead></thead>
-                                  <tbody>
-                                    <tr>
-                                      <th>Study:</th><td>{<Link to={`/study/${this.props.studyName}`}>{this.props.studyName}</Link>}</td>
-                                    </tr>
-                                    <tr>
-                                      <th>Recording:</th><td>{<Link to={`/recording/${this.props.studyName}/${recordingName}`}>{recordingName}</Link>}</td>
-                                    </tr>
-                                    <tr>
-                                      <th>Sorter:</th><td>{<Link to={`/algorithms`}>{this.props.selectedUnit.sorterName}</Link>}</td>
-                                    </tr>
-                                    <tr>
-                                      <th>Unit ID:</th><td>{this.props.selectedUnit.unitIndex}</td>
-                                    </tr>
-                                    <tr>
-                                      <th>Sorting result:</th><td>
-                                        <Link to={`/sortingresult/${this.props.studyName}/${recordingName}/${this.props.selectedUnit.sorterName}`}>
-                                          [More details...]{" "}
-                                        </Link></td>
-                                        <span>
-                                        {
-                                          sortingResult.returnCode === 0 ? (<span></span>) :
-                                          (
-                                            <span>Return code: {sortingResult.returnCode}{" "}{sortingResult.timedOut ? "timed out" : ""}{" "}</span>
-                                          )
-                                        }
-                                        </span>
-
-                                    </tr>
-                                  </tbody>
-                                </table>
-                                // <strong>Unit Details: {`${this.props.studyName}/${recordingName}/${this.props.selectedUnit.sorterName}/${studyAnalysisResult.trueUnitIds[this.props.selectedUnit.unitIndex]}`}</strong>
-                              ) : (<strong>Unit Details:</strong>)
-                            }
-                          </p>
-                        </div>
-                        {(() => {
-                          if (this.props.selectedUnit) {
-                            return (
-                              <div className="card__footer">
-                                <hr />
-                                <UnitDetail
-                                  sorters={this.props.sorters}
-                                  sortingResults={this.props.sortingResults}
-                                  studyAnalysisResult={studyAnalysisResult}
-                                  unitIndex={this.props.selectedUnit.unitIndex}
-                                  sorterName={this.props.selectedUnit.sorterName}
-                                />
-                              </div>
-                            )
-                          }
-                          else {
-                            return (
-                              <div className="card__footer">
-                                <hr />
-                                <p>
-                                  Click a marker in the scatterplot to
-                                  view details of the corresponding unit.
+                  </div>
+                </Col>
+                <Col style={{ minWidth: 400, flexGrow: 1 }}>
+                  <HeatmapOptionsCol
+                    showCPU={false}
+                    handleFormatChange={this.handleFormatChange}
+                    handleSliderChange={this.handleSliderChange}
+                    handleMetricChange={this.handleMetricChange}
+                    format={this.props.format}
+                    metric={this.props.metric}
+                    sliderValue={this.props.sliderValue[this.props.format]}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col lg={6} sm={12}>
+                  <ScatterplotCard
+                    sorters={this.props.sorters}
+                    studyAnalysisResults={{ allResults: [studyAnalysisResult] }}
+                    studyName={this.props.studyName}
+                    sorterName={this.state.sorterName}
+                    recordingName={this.state.recordingName}
+                    sliderValue={this.props.sliderValue[this.props.format]}
+                    format={this.props.format}
+                    metric={this.props.metric}
+                    selectedUnitCode={
+                      (this.props.selectedUnit || {}).unitCode || null
+                    }
+                    handleScatterplotClick={this.handleScatterplotClick}
+                  />
+                </Col>
+                <Col lg={6} sm={12}>
+                  <div className="card card--heatmap">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>
+                          {this.props.selectedUnit ? (
+                            <table>
+                              <thead />
+                              <tbody>
+                                <tr>
+                                  <th>Study:</th>
+                                  <td>
+                                    {
+                                      <Link
+                                        to={`/study/${this.props.studyName}`}
+                                      >
+                                        {this.props.studyName}
+                                      </Link>
+                                    }
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th>Recording:</th>
+                                  <td>
+                                    {
+                                      <Link
+                                        to={`/recording/${
+                                          this.props.studyName
+                                        }/${recordingName}`}
+                                      >
+                                        {recordingName}
+                                      </Link>
+                                    }
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th>Sorter:</th>
+                                  <td>
+                                    {
+                                      <Link to={`/algorithms`}>
+                                        {this.props.selectedUnit.sorterName}
+                                      </Link>
+                                    }
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th>Unit ID:</th>
+                                  <td>{this.props.selectedUnit.unitIndex}</td>
+                                </tr>
+                                <tr>
+                                  <th>Sorting result:</th>
+                                  <td>
+                                    <Link
+                                      to={`/sortingresult/${
+                                        this.props.studyName
+                                      }/${recordingName}/${
+                                        this.props.selectedUnit.sorterName
+                                      }`}
+                                    >
+                                      [More details...]{" "}
+                                    </Link>
+                                  </td>
+                                  <span>
+                                    {sortingResult.returnCode === 0 ? (
+                                      <span />
+                                    ) : (
+                                      <span>
+                                        Return code: {sortingResult.returnCode}{" "}
+                                        {sortingResult.timedOut
+                                          ? "timed out"
+                                          : ""}{" "}
+                                      </span>
+                                    )}
+                                  </span>
+                                </tr>
+                              </tbody>
+                            </table>
+                          ) : (
+                            // <strong>Unit Details: {`${this.props.studyName}/${recordingName}/${this.props.selectedUnit.sorterName}/${studyAnalysisResult.trueUnitIds[this.props.selectedUnit.unitIndex]}`}</strong>
+                            <strong>Unit Details:</strong>
+                          )}
+                        </p>
+                      </div>
+                      {(() => {
+                        if (this.props.selectedUnit) {
+                          return (
+                            <div className="card__footer">
+                              <hr />
+                              <UnitDetail
+                                sorters={this.props.sorters}
+                                sortingResults={this.props.sortingResults}
+                                studyAnalysisResult={studyAnalysisResult}
+                                unitIndex={this.props.selectedUnit.unitIndex}
+                                sorterName={this.props.selectedUnit.sorterName}
+                              />
+                            </div>
+                          );
+                        } else {
+                          return (
+                            <div className="card__footer">
+                              <hr />
+                              <p>
+                                Click a marker in the scatterplot to view
+                                details of the corresponding unit.
                               </p>
-                              </div>
-                            );
-                          }
-                        })()}
-                      </div>
+                            </div>
+                          );
+                        }
+                      })()}
                     </div>
-                  </Col>
-                </Row>
-              </Container>
-            )}
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          )}
         </div>
       </div>
     );

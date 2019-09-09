@@ -4,20 +4,14 @@ import * as Sentry from "@sentry/browser";
 import * as d3 from "d3";
 import ExpandingHeatmapTable from "./ExpandingHeatmapTable";
 
-import { Link } from "react-router-dom";
-
 class HeatmapViz extends Component {
   constructor(props) {
     super(props);
     this.state = {
       tableRows: [],
-      tableHeader: [],
-      selectedStudyName: props.selectedStudyName,
-      selectedRecordingName: props.selectedRecordingName,
-      selectedSorterName: props.selectedSorterName
+      tableHeader: []
     };
     this.studySetNamesByStudyName = {};
-    this.handleCellSelected = this.handleCellSelected.bind(this);
   }
 
   componentDidMount() {
@@ -662,38 +656,11 @@ class HeatmapViz extends Component {
     return val < 0.5 ? "black" : "white";
   }
 
-  handleCellSelected(cell) {
-    if (cell.selectable) {
-      if (this.props.selectStudyName) {
-        this.props.selectStudyName(cell.info.studyAnalysisResult.studyName);
-      }
-      if (this.props.selectRecordingName) {
-        this.props.selectRecordingName(
-          cell.info.studyAnalysisResult.recordingName || null
-        );
-      }
-      if (this.props.selectSorterName) {
-        this.props.selectSorterName(cell.info.sorterName);
-      }
-      this.setState({
-        selectedStudyName: cell.info.studyAnalysisResult.studyName,
-        selectedRecordingName:
-          cell.info.studyAnalysisResult.recordingName || null,
-        selectedSorterName: cell.info.sorterName
-      });
-    }
-  }
-
   isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
   }
 
   getAlertCopy() {
-    // let divStyle = {
-    //   backgroundColor: "#fffdc0",
-    //   borderRadius: "5px",
-    //   display: "inline-block"
-    // };
     return this.props.groupByStudySets && this.props.format === "cpu" ? (
       <p className="updated">
         <b>Important!</b>
@@ -709,18 +676,15 @@ class HeatmapViz extends Component {
   getParaCopy() {
     const innercopy =
       this.props.format !== "cpu"
-        ? "  Select individual cells to see corresponding details. "
+        ? "  Select individual cells to see a detailed scatterplot of the corresponding sorter results."
         : "";
     return this.props.groupByStudySets ? (
-      <p>
-        Click to expand study set rows and see component study data. {innercopy}{" "}
-        * An asterisk indicates an incomplete or failed sorting on a subset of
-        results.
+      <p className="updated updated__no-top">
+        Click to expand study set rows and see component study data. {innercopy}
       </p>
     ) : (
-      <p>
-        {innercopy} * An asterisk indicates an incomplete or failed sorting on a
-        subset of results.
+      <p className="updated updated__no-top">
+        {innercopy} <br />
       </p>
     );
   }
@@ -739,6 +703,10 @@ class HeatmapViz extends Component {
         <div>
           {alertCopy}
           {paraCopy}
+          <p>
+            * An asterisk indicates an incomplete or failed sorting on a subset
+            of results.
+          </p>
         </div>
         {loading ? (
           <h4>...</h4>
@@ -747,7 +715,7 @@ class HeatmapViz extends Component {
             <ExpandingHeatmapTable
               header={this.state.tableHeader}
               rows={this.state.tableRows}
-              onCellSelected={this.handleCellSelected}
+              onCellSelected={this.props.handleCellSelected}
             />
           </div>
         )}

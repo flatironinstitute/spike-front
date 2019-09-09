@@ -1,15 +1,52 @@
-.expandingheatmaptable tr {
-  padding: 2px;
-  margin: 4px;
+.expandingheatmaptable {
+  overflow: auto;
+  display: block;
+  table-layout: auto;
 }
 
 .expandable-button {
   font-weight: 700;
-  font-size: 2rem;
+  font-size: 1.9rem;
   color: #384ca2;
   text-align: center;
   cursor: pointer;
 }
+
+/* .expandingheatmaptable tr {
+  padding: 2px;
+  margin: 4px;
+} */
+
+.expandingheatmaptable td.selectable:hover {
+  border: 2px solid #f28b00 !important;
+}
+
+.expandingheatmaptable td.selected {
+  border-style: solid;
+  border-width: 2px;
+  border-color: #f28b00 !important;
+}
+
+.expandingheatmaptable td.rotate {
+  height: 100px;
+  white-space: nowrap;
+  padding-bottom: 10px;
+  font-size: 14px;
+  font-weight: 400px;
+  line-height: 16px;
+}
+
+.expandingheatmaptable td.rotate > div {
+  transform: translate(5px, 45px) rotate(315deg);
+  width: 44px;
+}
+
+.expandingheatmaptable td.rotate > div > span {
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.125); */
+  padding: 5px 10px;
+}
+
+/*
 
 .toprow {
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
@@ -47,15 +84,7 @@ tr.toprow > :nth-child(2) {
   border-left: 1px solid rgba(0, 0, 0, 0.125);
 }
 
-.expandingheatmaptable td.selectable:hover {
-  border: 2px solid #f28b00 !important;
-}
 
-.expandingheatmaptable td.selected {
-  border-style: solid;
-  border-width: 2px;
-  border-color: #f28b00 !important;
-}
 
 .expandingheatmaptable td.spacer {
   height: 4px;
@@ -70,24 +99,4 @@ tbody :last-child {
   border-bottom: none;
 }
 
-/* Thanks: https://css-tricks.com/rotated-table-column-headers/ */
-
-.expandingheatmaptable td.rotate {
-  height: 100px;
-  white-space: nowrap;
-  padding-bottom: 10px;
-  font-size: 11px;
-  font-weight: 400px;
-  line-height: 16px;
-}
-
-.expandingheatmaptable td.rotate > div {
-  transform: /* Magic Numbers */ translate(5px, 28px)
-    /* 45 is really 360 - 45 */ rotate(315deg);
-  width: 44px;
-}
-
-.expandingheatmaptable td.rotate > div > span {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-  padding: 5px 10px;
-}
+*/

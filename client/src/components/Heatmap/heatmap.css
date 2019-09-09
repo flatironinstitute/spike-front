@@ -35,6 +35,7 @@
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .card--heatmap {
   padding: 15px;
+  margin-bottom: 2rem;
 }
 
 .card--barchart {
@@ -96,9 +97,7 @@
 }
 
 .heatmap__column {
-  display: flex;
-  /* align-items: center;
-  justify-content: center; */
+  display: block;
   padding-top: 20px;
 }
 

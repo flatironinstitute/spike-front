@@ -622,6 +622,10 @@ code {
   margin-top: 2rem;
 }
 
+.updated__no-top {
+  margin: 0 auto 1rem;
+}
+
 .updated-sub {
   font-size: 1.2rem;
   font-weight: 500;
@@ -1083,6 +1087,7 @@ code {
   text-transform: uppercase;
   line-height: 1.5em;
   margin-right: 1em;
+  margin-bottom: 0;
   color: var(--label-grey);
 }
 
