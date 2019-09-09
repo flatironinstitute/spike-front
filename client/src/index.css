@@ -622,6 +622,10 @@ code {
   margin-top: 2rem;
 }
 
+.updated__no-top {
+  margin: 0 auto 1rem;
+}
+
 .updated-sub {
   font-size: 1.2rem;
   font-weight: 500;

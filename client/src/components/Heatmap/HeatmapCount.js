@@ -38,7 +38,8 @@ class HeatmapCount extends Component {
       redirect: true
     });
   };
-
+  //  <Col style={{ minWidth: 700, flexGrow: 1, overflow: "auto" }}>
+  //  <Col style={{ minWidth: 400, flexGrow: 1 }}>
   render() {
     let loading = isEmpty(this.props.studyAnalysisResults);
     let study = this.props.selectedStudyName || "";
@@ -46,6 +47,8 @@ class HeatmapCount extends Component {
     if (this.state.redirect) {
       return <Redirect push to={study} />;
     }
+    let leftCol = "10";
+    let rightCol = "2";
     return (
       <div>
         {loading ? (
@@ -55,7 +58,7 @@ class HeatmapCount extends Component {
         ) : (
           <Container className="container__heatmap">
             <Row className="container__heatmap--row">
-              <Col style={{ minWidth: 700, flexGrow: 1, overflow: "auto" }}>
+              <Col lg={leftCol} sm={leftCol} xl={leftCol}>
                 <HeatmapViz
                   groupByStudySets={true}
                   selectStudyName={this.props.selectStudyName}
@@ -71,9 +74,8 @@ class HeatmapCount extends Component {
                   handleCardHeightChange={this.handleCardHeightChange}
                 />
               </Col>
-              {/* If this is not either  */}
               {this.props.format !== "cpu" ? (
-                <Col style={{ minWidth: 400, flexGrow: 1 }}>
+                <Col lg={rightCol} sm={rightCol} xl={rightCol}>
                   <ScatterplotCard
                     sorters={this.props.sorters}
                     studyAnalysisResults={this.props.studyAnalysisResults}

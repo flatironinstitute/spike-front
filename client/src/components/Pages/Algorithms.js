@@ -3,7 +3,6 @@ import { isEmpty } from "../../utils";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ListCard from "../ListCard/ListCard";
-// import ReactCollapsingTable from "react-collapsing-table";
 const removeMd = require("remove-markdown");
 
 class Algorithms extends Component {
@@ -105,39 +104,6 @@ class Algorithms extends Component {
   }
 
   render() {
-    // const algosColumns = [
-    //   {
-    //     accessor: "label",
-    //     label: "Algorithm webpage",
-    //     priorityLevel: 1,
-    //     minWidth: 100,
-    //     sortable: true
-    //   },
-    //   {
-    //     accessor: "markdown",
-    //     label: "Description",
-    //     priorityLevel: 4,
-    //     minWidth: 100
-    //   },
-    //   {
-    //     accessor: "authors",
-    //     label: "Authors",
-    //     priorityLevel: 2,
-    //     minWidth: 100
-    //   },
-    //   {
-    //     accessor: "environment",
-    //     label: "Environment",
-    //     priorityLevel: 4,
-    //     minWidth: 100
-    //   },
-    //   {
-    //     accessor: "wrapper",
-    //     label: "View Wrapper",
-    //     priorityLevel: 4,
-    //     minWidth: 150
-    //   }
-    // ];
     let loading = isEmpty(this.state.rows);
     let listCards;
     if (this.state.rows) {

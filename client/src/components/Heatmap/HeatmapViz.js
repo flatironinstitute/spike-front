@@ -689,11 +689,6 @@ class HeatmapViz extends Component {
   }
 
   getAlertCopy() {
-    // let divStyle = {
-    //   backgroundColor: "#fffdc0",
-    //   borderRadius: "5px",
-    //   display: "inline-block"
-    // };
     return this.props.groupByStudySets && this.props.format === "cpu" ? (
       <p className="updated">
         <b>Important!</b>
@@ -712,15 +707,12 @@ class HeatmapViz extends Component {
         ? "  Select individual cells to see corresponding details. "
         : "";
     return this.props.groupByStudySets ? (
-      <p>
-        Click to expand study set rows and see component study data. {innercopy}{" "}
-        * An asterisk indicates an incomplete or failed sorting on a subset of
-        results.
+      <p className="updated updated__no-top">
+        Click to expand study set rows and see component study data. {innercopy}
       </p>
     ) : (
-      <p>
-        {innercopy} * An asterisk indicates an incomplete or failed sorting on a
-        subset of results.
+      <p className="updated updated__no-top">
+        {innercopy} <br />
       </p>
     );
   }
@@ -739,6 +731,10 @@ class HeatmapViz extends Component {
         <div>
           {alertCopy}
           {paraCopy}
+          <p>
+            * An asterisk indicates an incomplete or failed sorting on a subset
+            of results.
+          </p>
         </div>
         {loading ? (
           <h4>...</h4>
