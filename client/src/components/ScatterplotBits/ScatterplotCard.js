@@ -8,8 +8,7 @@ class ScatterplotCard extends Component {
     super(props);
 
     this.state = {
-      studyAnalysisResult: null,
-      cardHeight: "auto"
+      studyAnalysisResult: null
     };
   }
 
@@ -25,15 +24,6 @@ class ScatterplotCard extends Component {
       this.props.sorterName !== prevProps.sorterName
     ) {
       this.findStudyAnalysisResult();
-    }
-    if (this.props.cardHeight !== prevProps.cardHeight) {
-      this.updateCardHeight();
-    }
-  }
-
-  updateCardHeight() {
-    if (this.props.cardHeight) {
-      this.setState({ cardHeight: this.props.cardHeight });
     }
   }
 
@@ -53,18 +43,13 @@ class ScatterplotCard extends Component {
       !this.props.studyName ||
       !this.props.sorterName ||
       !this.state.studyAnalysisResult;
-
-    console.log(
-      "🍭loading state",
-      this.props.studyName,
-      this.props.sorterName,
-      this.state.studyAnalysisResult
-    );
     let sar = this.state.studyAnalysisResult;
+    console.log("cardheight", this.props.cardHeight);
+    let cardHeight = this.props.cardHeight || 100;
     return (
       <div
         className="card card--heatmap"
-        style={{ height: this.state.cardHeight + "px", minHeight: "100px" }}
+        style={{ height: cardHeight + "px", minHeight: "648px" }}
       >
         <div className="detail__column-disable">
           {loading ? (

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { isEmpty } from "../../utils";
 import { Card, Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import ListCard from "../ListCard/ListCard";
 const removeMd = require("remove-markdown");
 

@@ -1,5 +1,5 @@
 import React from "react";
-// import { getRandomKeyInt } from "../../utils";
+import { Table } from "react-bootstrap";
 
 import "./expandingheatmaptable.css";
 import { Link } from "react-router-dom";
@@ -35,7 +35,9 @@ class ExpandingHeatmapTable extends React.Component {
     this.setState({
       selectedCellId: cell["id"]
     });
-    if (this.props.onCellSelected) this.props.onCellSelected(cell);
+    if (this.props.onCellSelected) {
+      this.props.onCellSelected(cell);
+    }
   }
 
   createTableCell(cell, index, opts) {
@@ -72,7 +74,7 @@ class ExpandingHeatmapTable extends React.Component {
         key={cell["id"]}
       >
         <div>
-          <span>{cellContent}</span>
+          <span> {cellContent}</span>
         </div>
       </td>
     );
@@ -182,10 +184,10 @@ class ExpandingHeatmapTable extends React.Component {
     });
     return (
       <div>
-        <table className="expandingheatmaptable">
+        <Table borderless responsive className="expandingheatmaptable">
           <thead>{trhead}</thead>
           <tbody>{trs}</tbody>
-        </table>
+        </Table>
       </div>
     );
   }

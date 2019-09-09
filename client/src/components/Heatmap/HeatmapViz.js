@@ -4,20 +4,14 @@ import * as Sentry from "@sentry/browser";
 import * as d3 from "d3";
 import ExpandingHeatmapTable from "./ExpandingHeatmapTable";
 
-import { Link } from "react-router-dom";
-
 class HeatmapViz extends Component {
   constructor(props) {
     super(props);
     this.state = {
       tableRows: [],
-      tableHeader: [],
-      selectedStudyName: props.selectedStudyName,
-      selectedRecordingName: props.selectedRecordingName,
-      selectedSorterName: props.selectedSorterName
+      tableHeader: []
     };
     this.studySetNamesByStudyName = {};
-    this.handleCellSelected = this.handleCellSelected.bind(this);
   }
 
   componentDidMount() {
@@ -662,28 +656,6 @@ class HeatmapViz extends Component {
     return val < 0.5 ? "black" : "white";
   }
 
-  handleCellSelected(cell) {
-    if (cell.selectable) {
-      if (this.props.selectStudyName) {
-        this.props.selectStudyName(cell.info.studyAnalysisResult.studyName);
-      }
-      if (this.props.selectRecordingName) {
-        this.props.selectRecordingName(
-          cell.info.studyAnalysisResult.recordingName || null
-        );
-      }
-      if (this.props.selectSorterName) {
-        this.props.selectSorterName(cell.info.sorterName);
-      }
-      this.setState({
-        selectedStudyName: cell.info.studyAnalysisResult.studyName,
-        selectedRecordingName:
-          cell.info.studyAnalysisResult.recordingName || null,
-        selectedSorterName: cell.info.sorterName
-      });
-    }
-  }
-
   isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
   }
@@ -704,7 +676,7 @@ class HeatmapViz extends Component {
   getParaCopy() {
     const innercopy =
       this.props.format !== "cpu"
-        ? "  Select individual cells to see corresponding details. "
+        ? "  Select individual cells to see a detailed scatterplot of the corresponding sorter results."
         : "";
     return this.props.groupByStudySets ? (
       <p className="updated updated__no-top">
@@ -743,7 +715,7 @@ class HeatmapViz extends Component {
             <ExpandingHeatmapTable
               header={this.state.tableHeader}
               rows={this.state.tableRows}
-              onCellSelected={this.handleCellSelected}
+              onCellSelected={this.props.handleCellSelected}
             />
           </div>
         )}
