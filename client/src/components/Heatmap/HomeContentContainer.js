@@ -11,9 +11,6 @@ import { connect } from "react-redux";
 import * as actionCreators from "../../actions/actionCreators";
 
 class HomeContentContainer extends Component {
-  constructor(props) {
-    super(props);
-  }
   handleFormatChange = format => {
     this.props.setFormat(format);
   };

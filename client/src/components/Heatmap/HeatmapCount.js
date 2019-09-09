@@ -71,7 +71,7 @@ class HeatmapCount extends Component {
                   handleCardHeightChange={this.handleCardHeightChange}
                 />
               </Col>
-
+              {/* If this is not either  */}
               {this.props.format !== "cpu" ? (
                 <Col style={{ minWidth: 400, flexGrow: 1 }}>
                   <ScatterplotCard

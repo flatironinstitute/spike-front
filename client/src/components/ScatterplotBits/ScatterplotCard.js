@@ -14,15 +14,15 @@ class ScatterplotCard extends Component {
   }
 
   componentDidMount() {
-    if ((this.props.studyName) && (this.props.sorterName)) {
+    if (this.props.studyName && this.props.sorterName) {
       this.findStudyAnalysisResult();
     }
   }
 
   componentDidUpdate(prevProps) {
     if (
-      (this.props.studyName !== prevProps.studyName) ||
-      (this.props.sorterName !== prevProps.sorterName)
+      this.props.studyName !== prevProps.studyName ||
+      this.props.sorterName !== prevProps.sorterName
     ) {
       this.findStudyAnalysisResult();
     }
@@ -39,24 +39,27 @@ class ScatterplotCard extends Component {
 
   findStudyAnalysisResult() {
     let sar = null;
-    for (let studyAnalysisResult of this.props.studyAnalysisResults.allResults) {
+    for (let studyAnalysisResult of this.props.studyAnalysisResults
+      .allResults) {
       if (studyAnalysisResult.studyName === this.props.studyName) {
         sar = studyAnalysisResult;
       }
     }
-    this.setState({studyAnalysisResult: sar});
+    this.setState({ studyAnalysisResult: sar });
   }
 
   render() {
     const loading =
-      (!this.props.studyName) ||
-      (!this.props.sorterName) ||
-      (!this.state.studyAnalysisResult);
-    // let divStyle = {
-    //   backgroundColor: "#fffdc0",
-    //   borderRadius: "5px",
-    //   display: "inline-block"
-    // };
+      !this.props.studyName ||
+      !this.props.sorterName ||
+      !this.state.studyAnalysisResult;
+
+    console.log(
+      "🍭loading state",
+      this.props.studyName,
+      this.props.sorterName,
+      this.state.studyAnalysisResult
+    );
     let sar = this.state.studyAnalysisResult;
     return (
       <div
@@ -67,8 +70,8 @@ class ScatterplotCard extends Component {
           {loading ? (
             <div className="card__header">
               <h4 className="card__title">
-                Click a cell in the table to see a detailed scatterplot of
-                the corresponding sorter results.
+                Click a cell in the table to see a detailed scatterplot of the
+                corresponding sorter results.
               </h4>
             </div>
           ) : (
@@ -76,7 +79,13 @@ class ScatterplotCard extends Component {
               <div className="card__header">
                 <div className="card__category--div">
                   <span className="card__title--link">
-                  <Link to={`/studyset/${sar.studySetName}`}>{sar.studySetName}</Link>/<Link to={`/studyresults/${this.props.studyName}`}>{this.props.studyName}</Link>
+                    <Link to={`/studyset/${sar.studySetName}`}>
+                      {sar.studySetName}
+                    </Link>
+                    /
+                    <Link to={`/studyresults/${this.props.studyName}`}>
+                      {this.props.studyName}
+                    </Link>
                   </span>
                   <span className="card__title--link">
                     Sorter:

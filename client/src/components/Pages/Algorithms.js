@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import ReactCollapsingTable from "react-collapsing-table";
 import { isEmpty } from "../../utils";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ListCard from "../ListCard/ListCard";
+// import ReactCollapsingTable from "react-collapsing-table";
+const removeMd = require("remove-markdown");
 
 class Algorithms extends Component {
   constructor(props) {
@@ -27,7 +28,10 @@ class Algorithms extends Component {
 
   parseDescription(markdown) {
     let par1 = markdown.split("Description")[1];
-    return par1.split("## References")[0];
+    let useable = par1.split("## References")[0];
+    // TODO: Replace with expandable cell and markdown
+    const plainText = removeMd(useable);
+    return plainText;
   }
 
   sortRows(rows) {
@@ -75,7 +79,10 @@ class Algorithms extends Component {
           alg.wrapper
         )}</a>`;
         // keep
-        row.wrapper_link = alg.wrapper;
+        let nextTo = alg.wrapper.split("/")[9];
+        let last = alg.wrapper.split("/")[10];
+        let wrapper = `https://github.com/flatironinstitute/spikeforest/blob/master/spikeforest/spikeforestsorters/${nextTo}/${last}`;
+        row.wrapper_link = wrapper;
       }
       if (alg.markdown_link) {
         row.markdown_link = `<a href="${
@@ -98,39 +105,39 @@ class Algorithms extends Component {
   }
 
   render() {
-    const algosColumns = [
-      {
-        accessor: "label",
-        label: "Algorithm webpage",
-        priorityLevel: 1,
-        minWidth: 100,
-        sortable: true
-      },
-      {
-        accessor: "markdown",
-        label: "Description",
-        priorityLevel: 4,
-        minWidth: 100
-      },
-      {
-        accessor: "authors",
-        label: "Authors",
-        priorityLevel: 2,
-        minWidth: 100
-      },
-      {
-        accessor: "environment",
-        label: "Environment",
-        priorityLevel: 4,
-        minWidth: 100
-      },
-      {
-        accessor: "wrapper",
-        label: "View Wrapper",
-        priorityLevel: 4,
-        minWidth: 150
-      }
-    ];
+    // const algosColumns = [
+    //   {
+    //     accessor: "label",
+    //     label: "Algorithm webpage",
+    //     priorityLevel: 1,
+    //     minWidth: 100,
+    //     sortable: true
+    //   },
+    //   {
+    //     accessor: "markdown",
+    //     label: "Description",
+    //     priorityLevel: 4,
+    //     minWidth: 100
+    //   },
+    //   {
+    //     accessor: "authors",
+    //     label: "Authors",
+    //     priorityLevel: 2,
+    //     minWidth: 100
+    //   },
+    //   {
+    //     accessor: "environment",
+    //     label: "Environment",
+    //     priorityLevel: 4,
+    //     minWidth: 100
+    //   },
+    //   {
+    //     accessor: "wrapper",
+    //     label: "View Wrapper",
+    //     priorityLevel: 4,
+    //     minWidth: 150
+    //   }
+    // ];
     let loading = isEmpty(this.state.rows);
     let listCards;
     if (this.state.rows) {
@@ -138,7 +145,6 @@ class Algorithms extends Component {
         <ListCard value={row} key={index} />
       ));
     }
-    console.log("🐊", this.props.algorithms);
     return (
       <div>
         <div className="page__body">
@@ -213,11 +219,6 @@ class Algorithms extends Component {
                             project. The goal is to ultimately merge these with
                             the corresponding wrappers in
                             SpikeInterface/SpikeToolkit.
-                          </p>
-                          <p>
-                            For more information on recent runs of all
-                            spike-sorting algorithms, please consult the{" "}
-                            <Link to="/archive">Analysis Archive</Link>.
                           </p>
                         </div>
                       </div>

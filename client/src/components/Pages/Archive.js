@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Card, Col, Container, Row } from "react-bootstrap";
 import PathLink from "../PathLink/PathLink";
+import ReactCollapsingTable from "react-collapsing-table";
 const axios = require("axios");
 const stable_stringify = require("json-stable-stringify");
 const crypto = require("crypto");
@@ -30,8 +31,6 @@ class Archive extends Component {
     this.setState({ status: "loaded" });
   }
 
-  async componentDidUpdate(prevProps, prevState) {}
-
   async loadObject(path, opts) {
     if (!path) {
       if (opts.key && opts.collection) {
@@ -53,13 +52,27 @@ class Archive extends Component {
   }
 
   render() {
-    let header = (
-      <tr>
-        <th>Analysis date</th>
-        <th>Snapshot</th>
-      </tr>
-    );
-    let rows = [];
+    const archiveColumns = [
+      {
+        accessor: "date",
+        label: "Analysis date",
+        priorityLevel: 1,
+        position: 1,
+        minWidth: 150,
+        sortable: true
+      },
+      {
+        accessor: "path",
+        label: "Snapshot",
+        priorityLevel: 2,
+        position: 1,
+        minWidth: 150,
+        CustomComponent: PathLink
+      }
+    ];
+
+    let archiveRows = [];
+    let message = "";
 
     if (this.state.status === "loaded") {
       let analyses = this.state.analysisHistory.analyses;
@@ -72,22 +85,13 @@ class Archive extends Component {
           hour: "numeric",
           minute: "numeric"
         });
-        rows.push(
-          <tr key={i}>
-            <td key="date">{datestr}</td>
-            <td key="path">
-              <PathLink
-                path={a.path}
-                abbreviate={false}
-                canCopy={true}
-                canDownload={false}
-              />
-            </td>
-          </tr>
-        );
+        archiveRows.push({
+          id: i,
+          date: datestr,
+          path: a.path
+        });
       }
     } else {
-      let message = "";
       if (this.state.status === "loading") {
         message = "Loading analysis history...";
       } else if (this.state.status === "download-failed") {
@@ -95,58 +99,72 @@ class Archive extends Component {
       } else if (this.state.status === "error") {
         message = "Error in analysis history.";
       }
-      rows.push(
-        <tr key={0}>
-          <td key="date">{message}</td>
-          <td key="path" />
-        </tr>
-      );
     }
     return (
       <div className="page__body">
-        <Container className="container__heatmap">
-          <Row className="subcontainer justify-content-md-center">
-            <Col lg={12} sm={12} xl={12}>
-              <div className="intro">
-                <p className="big">Analysis Archive</p>
-              </div>
-            </Col>
-          </Row>
-          <Row className="subcontainer justify-content-md-center">
-            <Col lg={12} sm={12} xl={12}>
-              <div className="card card__std">
-                <div className="content">
-                  <div className="card__label">
-                    <p>
-                      <strong>Overview</strong>
-                    </p>
-                  </div>
-                  <div className="card__footer">
-                    <hr />
-                    <p>
-                      Below is the SpikeForest analysis archive with the most
-                      recent analysis at the top. These results may be loaded
-                      into Python using the MountainTools and SpikeForest
-                      packages.
-                    </p>
+        {this.state.status === "loaded" ? (
+          <Container className="container__heatmap">
+            <Row className="subcontainer justify-content-md-center">
+              <Col lg={12} sm={12} xl={12}>
+                <div className="intro">
+                  <p className="big">Analysis Archive</p>
+                </div>
+              </Col>
+            </Row>
+            <Row className="subcontainer justify-content-md-center">
+              <Col lg={12} sm={12} xl={12}>
+                <div className="card card__std">
+                  <div className="content">
+                    <div className="card__label">
+                      <p>
+                        <strong>Overview</strong>
+                      </p>
+                    </div>
+                    <div className="card__footer">
+                      <hr />
+                      <p>
+                        Below is the SpikeForest analysis archive with the most
+                        recent analysis at the top. These results may be loaded
+                        into Python using the MountainTools and SpikeForest
+                        packages.
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Col>
-          </Row>
-          <Row className="subcontainer justify-content-md-center">
-            <Col lg={12} sm={12} xl={12}>
-              <div className="card card__std">
-                <div className="content">
-                  <table className="table" style={{ width: "auto" }}>
-                    <thead>{header}</thead>
-                    <tbody>{rows}</tbody>
-                  </table>
+              </Col>
+            </Row>
+            <Row className="subcontainer justify-content-md-center">
+              <Col lg={12} sm={12} xl={12}>
+                <div className="card card__std">
+                  <div className="content">
+                    <div className="card__label">
+                      <p>
+                        <strong>Past Analyses</strong>
+                      </p>
+                    </div>
+                    <div className="card__footer">
+                      <hr />
+                      <ReactCollapsingTable
+                        columns={archiveColumns}
+                        rows={archiveRows}
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </Col>
-          </Row>
-        </Container>
+              </Col>
+            </Row>
+          </Container>
+        ) : (
+          <Container className="container__heatmap">
+            <Card>
+              <Card.Body>
+                <Card.Title>
+                  <h3>{message}</h3>
+                </Card.Title>
+              </Card.Body>
+            </Card>
+          </Container>
+        )}
       </div>
     );
   }

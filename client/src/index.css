@@ -1083,6 +1083,7 @@ code {
   text-transform: uppercase;
   line-height: 1.5em;
   margin-right: 1em;
+  margin-bottom: 0;
   color: var(--label-grey);
 }
 

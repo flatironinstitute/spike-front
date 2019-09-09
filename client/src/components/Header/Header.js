@@ -64,7 +64,7 @@ class Header extends Component {
           </LinkContainer>
           <Nav className="navbar__right">
             <LinkContainer exact to="/">
-              <Nav.Link eventKey="/">Home</Nav.Link>
+              <Nav.Link eventKey="/">Heatmap</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/recordings">
               <Nav.Link eventKey="/recordings">Recordings</Nav.Link>
@@ -74,6 +74,9 @@ class Header extends Component {
             </LinkContainer>
             <LinkContainer to="/metrics">
               <Nav.Link eventKey="/metrics">Metrics</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/archive">
+              <Nav.Link eventKey="/archive">Archive</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/about">
               <Nav.Link eventKey="/about">About</Nav.Link>
