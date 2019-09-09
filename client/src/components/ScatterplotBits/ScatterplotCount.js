@@ -63,7 +63,7 @@ class ScatterplotCount extends Component {
         }
       }
     }
-    sar.sortingResults.forEach((sr) => {
+    sar.sortingResults.forEach(sr => {
       if (sr.sorterName === this.props.sorterName) {
         let yvals;
         switch (this.props.metric) {
@@ -82,12 +82,16 @@ class ScatterplotCount extends Component {
         }
         let newUnits = [];
         for (let ii = 0; ii < recordingIndices.length; ii++) {
-          let in_selected_recording = ((selectedRecordingIndex === null) || (selectedRecordingIndex === recordingIndices[ii]));
+          let in_selected_recording =
+            selectedRecordingIndex === null ||
+            selectedRecordingIndex === recordingIndices[ii];
           newUnits.push({
             unitIndex: ii, // this is the part that is used in the parent component
             sorterName: this.props.sorterName, // this is used by parent component also
             unitId: sar.trueUnitIds[ii],
-            unitCode: `${sar.studyName}/${sar.recordingNames[sar.trueRecordingIndices[ii]]}/${this.props.sorterName}/${sar.trueUnitIds[ii]}`,
+            unitCode: `${sar.studyName}/${
+              sar.recordingNames[sar.trueRecordingIndices[ii]]
+            }/${this.props.sorterName}/${sar.trueUnitIds[ii]}`,
             x: Math.round(snrs[ii] * 100) / 100,
             y: yvals[ii],
             size: Math.max(1, this.getSqrt(sar.trueNumEvents[ii])),
@@ -102,7 +106,7 @@ class ScatterplotCount extends Component {
         }
         let min = this.getMinSNR(newUnits);
         let max = this.getMaxSNR(newUnits);
-        this.setState({ data: newUnits, minSNR: min, maxSNR: max });  
+        this.setState({ data: newUnits, minSNR: min, maxSNR: max });
       }
     });
   }
@@ -143,23 +147,22 @@ class ScatterplotCount extends Component {
     let otherObj = {
       snr: hoveredNode ? hoveredNode.x : 0,
       num_events: hoveredNode ? hoveredNode.num_events : 0,
-      recording: hoveredNode ? hoveredNode.recordingName : '',
-      unit_id: hoveredNode ? hoveredNode.unitId : ''
+      recording: hoveredNode ? hoveredNode.recordingName : "",
+      unit_id: hoveredNode ? hoveredNode.unitId : ""
     };
     let valueObj = { ...metricObj, ...otherObj };
     let alignment = {
       horizontal: "rightEdge",
       vertical: "topEdge"
     };
-    const lineOrientation = this.props.lineOrientation || 'horizontal';
+    const lineOrientation = this.props.lineOrientation || "horizontal";
     let lineObjArr;
-    if (lineOrientation === 'horizontal') {
+    if (lineOrientation === "horizontal") {
       lineObjArr = [
         { x: 0, y: this.props.sliderValue },
         { x: maxSNR, y: this.props.sliderValue }
       ];
-    }
-    else {
+    } else {
       lineObjArr = [
         { x: this.props.sliderValue, y: 0 },
         { x: this.props.sliderValue, y: 1 }
@@ -170,7 +173,7 @@ class ScatterplotCount extends Component {
       data.forEach(a => {
         if (a.unitCode === selectedUnitCode)
           selectedNode = JSON.parse(JSON.stringify(a));
-      })
+      });
     }
 
     let grayedNodes = [];
@@ -178,8 +181,7 @@ class ScatterplotCount extends Component {
     for (let node of data) {
       if (node.grayed) {
         grayedNodes.push(node);
-      }
-      else {
+      } else {
         ungrayedNodes.push(node);
       }
     }
@@ -193,6 +195,7 @@ class ScatterplotCount extends Component {
 
     // let selectedData = [];
     const yTitle = toTitleCase(this.props.metric);
+    console.log("color range", this.props.colorRange);
     return (
       <div className="canvas-wrapper">
         <FlexibleXYPlot
@@ -225,9 +228,11 @@ class ScatterplotCount extends Component {
             opacityType="literal"
             data={ungrayedNodes}
             onValueMouseOver={d => this.setState({ hoveredNode: d })}
-            onValueClick={d => {this.handleScatterplotClick(d);}}
+            onValueClick={d => {
+              this.handleScatterplotClick(d);
+            }}
           />
-          {(nullNodes.length > 0) && 
+          {nullNodes.length > 0 && (
             <MarkSeries
               // animation={true}
               className="mark-series-example"
@@ -236,11 +241,13 @@ class ScatterplotCount extends Component {
               colorRange={["#aa2223", "#aa2223"]}
               opacityType="literal"
               data={nullNodes}
-              onValueClick={d => {this.handleScatterplotClick(d)}}
+              onValueClick={d => {
+                this.handleScatterplotClick(d);
+              }}
             />
-          }
+          )}
           {hoveredNode && <Hint value={valueObj} align={alignment} />}
-          {selectedNode && 
+          {selectedNode && (
             <MarkSeries
               // animation={true}
               className="mark-series-example"
@@ -249,9 +256,11 @@ class ScatterplotCount extends Component {
               colorRange={["#bbbb05", "#bbbb05"]}
               opacityType="literal"
               data={[selectedNode]}
-              onValueClick={d => {this.handleScatterplotClick(d)}}
+              onValueClick={d => {
+                this.handleScatterplotClick(d);
+              }}
             />
-          }
+          )}
           <LineSeries
             className="fourth-series"
             strokeDasharray="7, 3"
