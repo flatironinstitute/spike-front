@@ -23,7 +23,9 @@ class SpikeSpray extends Component {
       "#8dd3c7",
       "#6a5acd",
       "#4c9d2f",
+      "#bbbb05",
       "#903f2c",
+      "b96ac9",
       "#fd7e14",
       "#00839b"
     ];
