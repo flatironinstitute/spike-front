@@ -43,15 +43,30 @@ class ExpandingHeatmapTable extends React.Component {
   createTableCell(cell, index, opts) {
     opts = opts || {};
     let classes0 = [];
-    if (cell["id"] === this.state.selectedCellId) classes0.push("selected");
-    if (cell["rotate"]) classes0.push("rotate");
-    if (cell["border_right"]) classes0.push("border_right");
-    if (cell["border_top"]) classes0.push("border_top");
+    if (cell["id"] === this.state.selectedCellId) {
+      classes0.push("selected");
+    }
+    if (cell["rotate"]) {
+      classes0.push("rotate");
+    }
+    if (cell["border_right"]) {
+      classes0.push("border_right");
+    }
+    if (cell["border_top"]) {
+      classes0.push("border_top");
+    }
     if (cell["selectable"]) {
       classes0.push("selectable");
     }
-    if (cell["spacer"]) classes0.push("spacer");
-    if (cell.expand_id_on_click) classes0.push("expandable");
+    if (cell["spacer"]) {
+      classes0.push("spacer");
+    }
+    if (cell.expand_id_on_click) {
+      classes0.push("expandable");
+    }
+    if (index === 0 && cell.text) {
+      classes0.push("cell-wrap");
+    }
     let class0 = classes0.join(" ");
     let style0 = {
       color: cell.color || "black",
@@ -65,7 +80,6 @@ class ExpandingHeatmapTable extends React.Component {
       cellContent = <span />;
       style0 = {};
     }
-    // console.log("tablecell", cell.id, cell.text);
     return (
       <td
         onClick={() => this.handleCellSelected(cell)}

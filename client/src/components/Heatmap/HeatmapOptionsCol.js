@@ -2,10 +2,8 @@ import React, { Component } from "react";
 import ModeCard from "../StatsCards/ModeCard";
 import MetricCard from "../StatsCards/MetricCard";
 import SliderCard from "../StatsCards/SliderCard";
-// import { Col, Container, Row } from "react-bootstrap";
 
 import "react-rangeslider/lib/index.css";
-import "./heatmap.css";
 
 class HeatmapOptionsCol extends Component {
   render() {

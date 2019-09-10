@@ -78,6 +78,10 @@ tr.toprow > :nth-child(2) {
   border-left: 1px solid rgba(0, 0, 0, 0.125);
 }
 
+.expandingheatmaptable td.cell-wrap {
+  word-break: break-all;
+}
+
 .expandingheatmaptable td.selectable {
   cursor: cell;
   border-left: 1px solid rgba(0, 0, 0, 0.125);

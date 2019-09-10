@@ -3,7 +3,6 @@ import HeatmapCount from "./HeatmapCount";
 import HeatmapOptionsRow from "./HeatmapOptionsRow";
 
 import "react-rangeslider/lib/index.css";
-import "./heatmap.css";
 
 // Redux
 import { bindActionCreators } from "redux";
