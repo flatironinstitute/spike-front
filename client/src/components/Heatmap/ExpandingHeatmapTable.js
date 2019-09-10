@@ -184,10 +184,10 @@ class ExpandingHeatmapTable extends React.Component {
     });
     return (
       <div>
-        <Table borderless responsive className="expandingheatmaptable">
+        <table className="expandingheatmaptable">
           <thead>{trhead}</thead>
           <tbody>{trs}</tbody>
-        </Table>
+        </table>
       </div>
     );
   }
