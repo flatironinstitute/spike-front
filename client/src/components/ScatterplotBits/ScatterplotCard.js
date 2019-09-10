@@ -44,13 +44,8 @@ class ScatterplotCard extends Component {
       !this.props.sorterName ||
       !this.state.studyAnalysisResult;
     let sar = this.state.studyAnalysisResult;
-    console.log("cardheight", this.props.cardHeight);
-    let cardHeight = this.props.cardHeight || 100;
     return (
-      <div
-        className="card card--heatmap"
-        style={{ height: cardHeight + "px", minHeight: "648px" }}
-      >
+      <div className="card card--heatmap">
         <div className="detail__column-disable">
           {loading ? (
             <div className="card__header">

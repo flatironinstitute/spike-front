@@ -25,9 +25,12 @@ class DetailPage extends Component {
     super(props);
     this.state = {
       sorterName: this.props.sorterName,
-      recordingName: null
-      // selectedUnit: null
+      recordingName: null,
+      selectedStudyName: props.selectedStudyName,
+      selectedRecordingName: props.selectedRecordingName,
+      selectedSorterName: props.selectedSorterName
     };
+    this.handleCellSelected = this.handleCellSelected.bind(this);
   }
 
   componentDidMount() {
@@ -35,12 +38,6 @@ class DetailPage extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // if (this.state.selectedUnit !== prevState.selectedUnit) {
-    //   // TODO: Remove conditional when default db is set.
-    //   // let url = this.state.selectedUnit.u.spikesprayUrl || "";
-    //   // this.props.fetchSpikeSpray(url);
-    // }
-
     this.checkSelectedUnit();
   }
 
@@ -58,36 +55,16 @@ class DetailPage extends Component {
   }
 
   handleFormatChange = value => {
-    // var sliderValue;
-    // switch (value) {
-    //   case "count":
-    //     sliderValue = 0.8;
-    //     break;
-    //   case "average":
-    //     sliderValue = 8;
-    //     break;
-    //   default:
-    //     sliderValue = 0;
-    // }
     this.props.setFormat(value);
-    // this.setState({
-    //   sliderValue: sliderValue
-    // });
   };
 
   handleMetricChange = metric => {
     this.props.setMetric(metric);
-    // this.setState({
-    //   metric: value
-    // });
   };
 
   handleSliderChange = value => {
     let round = Math.round(value * 100) / 100;
     this.props.setSliderValue(this.props.format, round);
-    // this.setState({
-    //   sliderValue: round
-    // });
   };
 
   getFormatCopy() {
@@ -107,8 +84,30 @@ class DetailPage extends Component {
 
   handleScatterplotClick = value => {
     this.props.setSelectedUnit(value);
-    // this.setState({ selectedUnit: value });
   };
+
+  handleCellSelected(cell) {
+    console.log("cell selected detail page 🏴‍☠️", cell);
+    if (cell.selectable) {
+      if (this.props.selectStudyName) {
+        this.props.selectStudyName(cell.info.studyAnalysisResult.studyName);
+      }
+      if (this.props.selectRecordingName) {
+        this.props.selectRecordingName(
+          cell.info.studyAnalysisResult.recordingName || null
+        );
+      }
+      if (this.props.selectSorterName) {
+        this.props.selectSorterName(cell.info.sorterName);
+      }
+      this.setState({
+        selectedStudyName: cell.info.studyAnalysisResult.studyName,
+        selectedRecordingName:
+          cell.info.studyAnalysisResult.recordingName || null,
+        selectedSorterName: cell.info.sorterName
+      });
+    }
+  }
 
   getSpikeSprayCard() {
     if (isEmpty(this.props.selectedUnit)) {
@@ -158,6 +157,7 @@ class DetailPage extends Component {
         }
       }
     }
+    console.log("DETAIL PAGE PROPS", this.props);
 
     return (
       <div>
@@ -184,23 +184,24 @@ class DetailPage extends Component {
                       <div className="card__footer">
                         <hr />
                         <HeatmapViz
+                          format={this.props.format}
                           groupByStudySets={false}
+                          handleCellSelected={this.handleCellSelected}
+                          metric={this.props.metric}
+                          selectRecordingName={recordingName => {
+                            this.setState({ recordingName });
+                          }}
                           selectSorterName={sorterName => {
                             this.props.setSelectedUnit(null);
                             this.setState({ sorterName });
                           }}
-                          selectRecordingName={recordingName => {
-                            this.setState({ recordingName });
-                          }}
                           selectedStudyName={this.props.studyName}
                           selectedSorterName={this.state.sorterName}
+                          sorters={this.props.sorters}
                           studyAnalysisResults={{
                             allResults: [studyAnalysisResult]
                           }}
                           studySets={this.props.studySets}
-                          sorters={this.props.sorters}
-                          format={this.props.format}
-                          metric={this.props.metric}
                           threshold={this.props.sliderValue[this.props.format]}
                         />
                       </div>

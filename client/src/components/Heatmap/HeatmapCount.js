@@ -13,14 +13,11 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as actionCreators from "../../actions/actionCreators";
 
-// Stylin'
-import "./heatmap.css";
-
 class HeatmapCount extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cardHeight: 686,
+      cardHeight: "auto",
       redirect: false,
       selectedStudyName: props.selectedStudyName,
       selectedRecordingName: props.selectedRecordingName,
@@ -84,7 +81,7 @@ class HeatmapCount extends Component {
           </Container>
         ) : (
           <Container className="container__heatmap">
-            <Row className="container__heatmap--row">
+            <Row className="container__heatmap--row even-row">
               <Col
                 sm={leftCol[0]}
                 md={leftCol[1]}
@@ -92,19 +89,18 @@ class HeatmapCount extends Component {
                 xl={leftCol[3]}
               >
                 <HeatmapViz
+                  format={this.props.format}
                   groupByStudySets={true}
+                  handleCellSelected={this.handleCellSelected}
+                  metric={this.props.metric}
                   selectStudyName={this.props.selectStudyName}
                   selectSorterName={this.props.selectSorterName}
                   selectedStudyName={this.state.selectedStudyName}
                   selectedSorterName={this.state.selectedSorterName}
+                  sorters={this.props.sorters}
                   studyAnalysisResults={this.props.studyAnalysisResults}
                   studySets={this.props.studySets}
-                  sorters={this.props.sorters}
-                  format={this.props.format}
-                  metric={this.props.metric}
                   threshold={this.props.sliderValue}
-                  handleCardHeightChange={this.handleCardHeightChange}
-                  handleCellSelected={this.handleCellSelected}
                 />
               </Col>
               {this.props.format !== "cpu" && !noScatterplot ? (

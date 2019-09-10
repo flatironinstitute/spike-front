@@ -164,8 +164,6 @@ class HeatmapViz extends Component {
       cells: headerCells
     };
 
-    let elmnt = document.getElementById("heatmap-card");
-    let width = elmnt.offsetWidth;
     this.setState({
       tableRows: tableRows,
       tableHeader: tableHeader

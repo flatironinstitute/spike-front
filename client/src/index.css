@@ -370,6 +370,15 @@ Use containers when you need a content area that has standard maximum width and 
   padding: 7.2rem 1rem 0rem 1rem;
 }
 
+.even-row [class*="col-"] {
+  margin-bottom: -99999px;
+  padding-bottom: 99999px;
+}
+
+.even-row {
+  overflow: hidden;
+}
+
 /* Lists
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 ul {
@@ -1098,4 +1107,145 @@ code {
 .listcard-copy {
   margin-bottom: 0;
   font-size: 1.5rem;
+}
+
+/* Heatmap
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.container__heatmap {
+  width: 100%;
+  max-width: 95vw !important;
+  margin-top: 3rem;
+}
+
+.scrollyteller__container {
+  display: flex;
+  justify-content: space-between;
+  /* padding: 5rem 0; */
+}
+
+.detail__column {
+  top: 0px;
+  width: 100%;
+  position: sticky;
+  flex-basis: 60%;
+  align-self: flex-start;
+}
+
+.step {
+  margin: 0 auto 2rem auto;
+  border: 1px solid #333;
+  padding-top: 200px;
+  padding-bottom: 200px;
+}
+
+.heatmap__legend {
+  /* margin-bottom: 5rem; */
+}
+
+/* Heatmap Cards
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.card--heatmap {
+  padding: 15px;
+  margin-bottom: 2rem;
+}
+
+.card--barchart {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: flex-start;
+}
+
+.card__label--barchart {
+  margin-right: 10px;
+  margin-bottom: 0;
+}
+
+.card__image {
+  margin: 0 auto;
+}
+
+.card__header {
+  margin-bottom: 15px;
+}
+
+.card__header--cpu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+/* .card__header--checkboxes {
+  background-color: pink;
+} */
+
+.card__title {
+  margin: 0;
+  color: #333;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 30px;
+}
+
+.card__title--link {
+  font-size: 20px;
+  margin-right: 15px;
+}
+
+.card__category {
+  font-size: 1.7rem;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #495057;
+  margin-bottom: 0;
+}
+
+.card__category--div {
+  margin-bottom: 0;
+  line-height: 1.5;
+  display: flex;
+}
+
+.heatmap__column {
+  display: block;
+  padding-top: 20px;
+}
+
+/* Unit Detail
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.unitdetail {
+  text-align: right;
+}
+
+.unitdetail__title {
+  font-family: var(--serif);
+  margin-top: 1nav0px;
+}
+
+.unitdetail__copy {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.2rem;
+  line-height: 2.9rem;
+  text-align: right;
+  padding: 5rem;
+  background-color: white;
+}
+
+.unitdetail__list {
+  font-size: 1.2rem;
+  font-family: var(--serif);
+  text-align: right;
+}
+
+.tab-header__row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+}
+
+.tab-header__bundle {
+  font-size: 1.4rem;
 }

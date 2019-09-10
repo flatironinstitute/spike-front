@@ -1,7 +1,8 @@
 .expandingheatmaptable {
   overflow: auto;
-  display: block;
+  /* display: block; */
   table-layout: auto;
+  width: 100%;
 }
 
 .expandable-button {
@@ -12,10 +13,10 @@
   cursor: pointer;
 }
 
-/* .expandingheatmaptable tr {
+.expandingheatmaptable tr {
   padding: 2px;
   margin: 4px;
-} */
+}
 
 .expandingheatmaptable td.selectable:hover {
   border: 2px solid #f28b00 !important;
@@ -30,14 +31,14 @@
 .expandingheatmaptable td.rotate {
   height: 100px;
   white-space: nowrap;
-  padding-bottom: 10px;
-  font-size: 14px;
+  padding-bottom: 30px;
+  font-size: 12px;
   font-weight: 400px;
   line-height: 16px;
 }
 
 .expandingheatmaptable td.rotate > div {
-  transform: translate(5px, 45px) rotate(315deg);
+  transform: translate(-4px, 45px) rotate(315deg);
   width: 44px;
 }
 
@@ -45,8 +46,6 @@
   /* border-bottom: 1px solid rgba(0, 0, 0, 0.125); */
   padding: 5px 10px;
 }
-
-/*
 
 .toprow {
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
@@ -79,12 +78,14 @@ tr.toprow > :nth-child(2) {
   border-left: 1px solid rgba(0, 0, 0, 0.125);
 }
 
+.expandingheatmaptable td.cell-wrap {
+  word-break: break-all;
+}
+
 .expandingheatmaptable td.selectable {
   cursor: cell;
   border-left: 1px solid rgba(0, 0, 0, 0.125);
 }
-
-
 
 .expandingheatmaptable td.spacer {
   height: 4px;
@@ -98,5 +99,3 @@ td.border_right {
 tbody :last-child {
   border-bottom: none;
 }
-
-*/
