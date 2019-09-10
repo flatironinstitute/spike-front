@@ -90,18 +90,17 @@ class HeatmapCount extends Component {
               >
                 <HeatmapViz
                   format={this.props.format}
-                  metric={this.props.metric}
                   groupByStudySets={true}
+                  handleCellSelected={this.handleCellSelected}
+                  metric={this.props.metric}
                   selectStudyName={this.props.selectStudyName}
                   selectSorterName={this.props.selectSorterName}
                   selectedStudyName={this.state.selectedStudyName}
                   selectedSorterName={this.state.selectedSorterName}
+                  sorters={this.props.sorters}
                   studyAnalysisResults={this.props.studyAnalysisResults}
                   studySets={this.props.studySets}
-                  sorters={this.props.sorters}
                   threshold={this.props.sliderValue}
-                  handleCardHeightChange={this.handleCardHeightChange}
-                  handleCellSelected={this.handleCellSelected}
                 />
               </Col>
               {this.props.format !== "cpu" && !noScatterplot ? (

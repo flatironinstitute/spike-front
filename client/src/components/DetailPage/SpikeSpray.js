@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import Preloader from "../Preloader/Preloader";
 // import { XYPlot, XAxis, LineSeries, LabelSeries } from "react-vis";
-import Plot from 'react-plotly.js';
+import Plot from "react-plotly.js";
 import { isEmpty } from "../../utils";
 // import { width, height } from "window-size";
 
@@ -18,16 +18,23 @@ class SpikeSpray extends Component {
     this.numChannels = 0;
     this.numTimepoints = 0;
     this.colorArr = [
-      "#e6194B",
-      "#bfef45",
-      "#3cb44b",
-      "#42d4f4",
-      "#4363d8",
-      "#911eb4",
-      "#f032e6",
-      "#ffe119"
+      "384ca2",
+      "#007bff",
+      "#8dd3c7",
+      "#6a5acd",
+      "#4c9d2f",
+      "#903f2c",
+      "#fd7e14",
+      "#00839b"
     ];
   }
+
+  // --fi-teal: #00839b;
+  // --fi-green: #4c9d2f;
+  // --fi-yellow: #f6cf3f;
+  // --fi-brown: #903f2c;
+  // --fi-orange: #f28b00;
+  // --liz-lilac: #b96ac9;
 
   componentDidMount() {
     this.buildSprayData3();
@@ -105,12 +112,12 @@ class SpikeSpray extends Component {
           this.numTimepoints = channel.waveform.length;
           channel.waveform.forEach(a => {
             vals.push(a + 0);
-          })
+          });
         });
       });
     });
     // Custom sort is needed to deal with annoying case of scientific notation for very small values
-    vals.sort(function (a, b) {
+    vals.sort(function(a, b) {
       if (Number(a) < Number(b)) return -1;
       else if (Number(b) < Number(a)) return 1;
       else return 0;
@@ -131,7 +138,10 @@ class SpikeSpray extends Component {
               channel: channel.channel_id,
               // data: this.formatWaveformsAddOffset(channel.waveform, i),
               xdata: this.getXDataFromWaveform(channel.waveform),
-              ydata: this.getYDataFromWaveform(channel.waveform, -i * this.spacing)
+              ydata: this.getYDataFromWaveform(
+                channel.waveform,
+                -i * this.spacing
+              )
             });
           });
         });
@@ -172,10 +182,10 @@ class SpikeSpray extends Component {
 
   render() {
     if (!this.state.goRender) {
-      let that=this;
+      let that = this;
       setTimeout(function() {
-        that.setState({goRender: true});
-      },10);
+        that.setState({ goRender: true });
+      }, 10);
       return <div>Rendering...</div>;
     }
     let loading = isEmpty(this.state.spikeObjArr);
@@ -208,73 +218,76 @@ class SpikeSpray extends Component {
             </Card>
           </Container>
         ) : (
-            <Row style={{ marginLeft: 0, marginRight: 0 }}>
-              {this.state.spikeObjArr.map((column, i) => (
-                <Col lg={3} key={`spikecol-${Math.random(i)}`} style={{ paddingLeft: 0, paddingRight: 0 }}>
-                  <div className="card__label">
-                    <p className="card__charttitle">
-                      {colTitles[column.name]}
-                    </p>
-                  </div>
-                  <Plot style={{ width: '100%', height: '400px' }}
-                    data={(
-                      column.plotData.map((line, i) => (
-                        {
-                          x: line.xdata,
-                          y: line.ydata,
-                          type: 'scatter',
-                          mode: 'lines',
-                          line: {
-                            width: 0.5,
-                            color: line.color
-                          },
-                          hoverinfo: 'skip'
-                        }
-                      ))
-                    )}
-                    layout={(
-                      {
-                        // width: '100%',
-                        // height: '100%',
-                        title: '',
-                        showlegend: false,
-                        xaxis: {
-                          autorange: false,
-                          range: [0, this.numTimepoints - 1],
-                          showgrid: false,
-                          zeroline: false,
-                          showline: false,
-                          ticks: '',
-                          showticklabels: false
-                        },
-                        yaxis: {
-                          autorange: false,
-                          range: [-this.numChannels * this.spacing, this.spacing],
-                          showgrid: false,
-                          zeroline: false,
-                          showline: false,
-                          ticks: '',
-                          showticklabels: false
-                        },
-                        margin: {
-                          l: 20, r: 20, b: 0, t: 0
-                        }
-                      }
-                    )}
-                    config={(
-                      {
-                        displayModeBar: false,
-                        responsive: true
-                      }
-                    )}
-                  />
-                  <div className="card__label" style={{ fontSize: '14px', textAlign: 'center' }}>
-                    <span>{column.num_spikes} of {colTotals[column.name]} spikes shown</span>
-                  </div>
-                </Col>
-              ))}
-            </Row>
-          )}
+          <Row style={{ marginLeft: 0, marginRight: 0 }}>
+            {this.state.spikeObjArr.map((column, i) => (
+              <Col
+                lg={3}
+                key={`spikecol-${Math.random(i)}`}
+                style={{ paddingLeft: 0, paddingRight: 0 }}
+              >
+                <div className="card__label">
+                  <p className="card__charttitle">{colTitles[column.name]}</p>
+                </div>
+                <Plot
+                  style={{ width: "100%", height: "400px" }}
+                  data={column.plotData.map((line, i) => ({
+                    x: line.xdata,
+                    y: line.ydata,
+                    type: "scatter",
+                    mode: "lines",
+                    line: {
+                      width: 0.5,
+                      color: line.color
+                    },
+                    hoverinfo: "skip"
+                  }))}
+                  layout={{
+                    // width: '100%',
+                    // height: '100%',
+                    title: "",
+                    showlegend: false,
+                    xaxis: {
+                      autorange: false,
+                      range: [0, this.numTimepoints - 1],
+                      showgrid: false,
+                      zeroline: false,
+                      showline: false,
+                      ticks: "",
+                      showticklabels: false
+                    },
+                    yaxis: {
+                      autorange: false,
+                      range: [-this.numChannels * this.spacing, this.spacing],
+                      showgrid: false,
+                      zeroline: false,
+                      showline: false,
+                      ticks: "",
+                      showticklabels: false
+                    },
+                    margin: {
+                      l: 20,
+                      r: 20,
+                      b: 0,
+                      t: 0
+                    }
+                  }}
+                  config={{
+                    displayModeBar: false,
+                    responsive: true
+                  }}
+                />
+                <div
+                  className="card__label"
+                  style={{ fontSize: "14px", textAlign: "center" }}
+                >
+                  <span>
+                    {column.num_spikes} of {colTotals[column.name]} spikes shown
+                  </span>
+                </div>
+              </Col>
+            ))}
+          </Row>
+        )}
       </Container>
     );
   }
