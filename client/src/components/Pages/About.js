@@ -345,7 +345,7 @@ class About extends Component {
                         HHMI - Janelia Research Campus (hybrid drift simulation)
                       </li>
                       <ul>
-                        <li>Jennifer O'Connor</li>
+                        <li>Jennifer Colonell</li>
                         <li>Marius Pachitariu</li>
                       </ul>
                     </ul>

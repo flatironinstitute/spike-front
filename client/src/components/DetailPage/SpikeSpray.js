@@ -31,13 +31,6 @@ class SpikeSpray extends Component {
     ];
   }
 
-  // --fi-teal: #00839b;
-  // --fi-green: #4c9d2f;
-  // --fi-yellow: #f6cf3f;
-  // --fi-brown: #903f2c;
-  // --fi-orange: #f28b00;
-  // --liz-lilac: #b96ac9;
-
   componentDidMount() {
     this.buildSprayData3();
   }
@@ -47,19 +40,6 @@ class SpikeSpray extends Component {
       this.buildSprayData3();
     }
   }
-
-  // addOffset(timepoints, i) {
-  //   let offset = -this.spacing * i;
-  //   let newTPs = [];
-  //   timepoints.forEach(timepoint => {
-  //     let newtp = {
-  //       x: timepoint.x,
-  //       y: timepoint.y + offset
-  //     };
-  //     newTPs.push(newtp);
-  //   });
-  //   return newTPs;
-  // }
 
   formatWaveformsAddOffset(waveforms, i) {
     let xyWaves = waveforms.map((wave, index) => {

@@ -63,6 +63,15 @@
   line-height: 1.2;
 }
 
+@media (min-width: 1400px) {
+  .expandingheatmaptable td {
+    padding: 3px auto;
+    margin: 0px;
+    font-size: 1.5rem;
+    line-height: 1.8;
+  }
+}
+
 tr.toprow > :first-child,
 tr.subrow > :first-child {
   width: 16px;
