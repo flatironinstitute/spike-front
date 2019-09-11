@@ -238,7 +238,7 @@ class DetailPage extends Component {
                   />
                 </Col>
                 <Col lg={6} sm={12}>
-                  <div className="card card--heatmap">
+                  <div className="card card--spikeforest">
                     <div className="content">
                       <div className="card__label">
                         <p>
