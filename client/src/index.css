@@ -801,7 +801,7 @@ code {
 }
 
 .navbar__left {
-  margin: 0 0 0 2rem !important;
+  margin: 0 0 0 5rem !important;
   border-bottom: none;
   display: flex;
 }
@@ -885,7 +885,7 @@ code {
 }
 .ticker__item {
   display: inline-block;
-  padding: 0 2rem;
+  padding: 0 2rem 0 0;
 }
 
 .alert-dismissible .close {

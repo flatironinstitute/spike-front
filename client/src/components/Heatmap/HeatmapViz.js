@@ -626,19 +626,14 @@ class HeatmapViz extends Component {
   }
 
   computeBackgroundColor(val) {
-    // TODO: Swap d3 ranges with these custom ones
-    // const colorRanges = {
-    //   count: [d3.rgb("#00CEA8"), d3.rgb("#0C4F42")],
-    //   average: [d3.rgb("#edf0fc"), d3.rgb("#6B7CC4"), d3.rgb("#102BA3")],
-    //   cpu: [d3.rgb("#EFC1E3"), d3.rgb("#B52F93")]
-    // };
     let color;
+    let square = Math.pow(val, 2);
     switch (this.props.format) {
       case "count":
-        color = d3.interpolateGreens(val);
+        color = d3.interpolateGreens(square);
         break;
       case "average":
-        color = d3.interpolateBlues(val);
+        color = d3.interpolateBlues(square);
         break;
       case "cpu":
         color = d3.interpolateYlOrRd(val);
@@ -651,7 +646,7 @@ class HeatmapViz extends Component {
   }
 
   computeForegroundColor(val) {
-    return val < 0.5 ? "black" : "white";
+    return val < 0.7 ? "black" : "white";
   }
 
   isNumeric(n) {
