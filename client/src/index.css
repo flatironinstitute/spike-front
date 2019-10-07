@@ -1249,3 +1249,18 @@ code {
 .tab-header__bundle {
   font-size: 1.4rem;
 }
+
+.container-sidebar {
+  width: 100vw;
+  max-width: 5000px;
+}
+
+.sidebar {
+  position: sticky;
+  top: 7rem;
+  z-index: 1000;
+  height: calc(100vh - 7rem);
+  background-color: #b96ac9;
+  border-right: 1px solid #ececec;
+  padding: 1.5rem !important;
+}
