@@ -20,6 +20,7 @@
     "react-app-polyfill": "^1.0.0",
     "react-bootstrap": "^1.0.0-beta.5",
     "react-collapsing-table": "^0.4.2",
+    "react-device-detect": "^1.9.10",
     "react-dom": "^16.6.0",
     "react-ga": "^2.5.7",
     "react-markdown": "^4.1.0",

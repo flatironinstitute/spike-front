@@ -9,7 +9,7 @@ class About extends Component {
       <div>
         <Container className="container-sidebar">
           <Row noGutters>
-            <Col xl={2} md={3} sm={12} className="sidebar">
+            <Col xl={2} md={3} sm={3} className="sidebar">
               <ul>
                 <li>
                   <HashLink to="/about#test">Goto Cool Section</HashLink>

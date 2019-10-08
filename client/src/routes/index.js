@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router";
+import { isMobile } from "react-device-detect";
 
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -11,6 +12,7 @@ import Preloader from "../components/Preloader/Preloader";
 // import components
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
+import MobileModal from "../components/MobileModal/MobileModal";
 
 import Home from "../components/Pages/Home";
 import About from "../components/Pages/About";
@@ -30,6 +32,14 @@ import SortingResult from "../components/Pages/SortingResult";
 import FourOhFour from "../components/Pages/FourOhFour";
 
 class Routes extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showModal: false
+    };
+
+    this.handleModalClose = this.handleModalClose.bind(this);
+  }
   async componentDidMount() {
     // V2 Data: Fetches
     this.props.fetchGeneral();
@@ -40,6 +50,10 @@ class Routes extends Component {
     this.props.fetchAlgorithms();
     this.props.fetchStats();
     this.props.fetchStudySets();
+
+    if (isMobile) {
+      this.setState({ showModal: true });
+    }
   }
 
   async componentDidUpdate(prevProps) {
@@ -50,6 +64,11 @@ class Routes extends Component {
         }
       }
     }
+  }
+
+  handleModalClose() {
+    console.log("CLOSE");
+    this.setState({ showModal: false });
   }
 
   render() {
@@ -68,6 +87,10 @@ class Routes extends Component {
     return (
       <div className="wrapper">
         <Header />
+        <MobileModal
+          show={this.state.showModal}
+          handleModalClose={this.handleModalClose}
+        />
         <Switch>
           <Route exact path="/" render={props => <Home {...this.props} />} />
           <Route path="/about" render={props => <About {...this.props} />} />
@@ -93,11 +116,12 @@ class Routes extends Component {
           />
           <Route
             path="/studyresults/:studyName"
-            render={props => 
-              (!this.props.studyAnalysisResults) ||
-              (!this.props.sorters) ||
-              (!this.props.studySets) ? (loadingContainer) :
-              (
+            render={props =>
+              !this.props.studyAnalysisResults ||
+              !this.props.sorters ||
+              !this.props.studySets ? (
+                loadingContainer
+              ) : (
                 <DetailPage
                   studyName={props.match.params.studyName}
                   sorterName={this.props.selectedSorterName}
@@ -111,9 +135,10 @@ class Routes extends Component {
           />
           <Route
             path="/studyset/:studySetName"
-            render={props => 
-              (!this.props.studySets) ? (loadingContainer) :
-              (
+            render={props =>
+              !this.props.studySets ? (
+                loadingContainer
+              ) : (
                 <StudySet
                   studySets={this.props.studySets}
                   studySetName={props.match.params.studySetName}
@@ -123,9 +148,10 @@ class Routes extends Component {
           />
           <Route
             path="/study/:studyName"
-            render={props => 
-              (!this.props.studySets) ? (loadingContainer) :
-              (
+            render={props =>
+              !this.props.studySets ? (
+                loadingContainer
+              ) : (
                 <Study
                   studySets={this.props.studySets}
                   studyName={props.match.params.studyName}
@@ -135,9 +161,10 @@ class Routes extends Component {
           />
           <Route
             path="/recording/:studyName/:recordingName"
-            render={props => 
-              (!this.props.studySets) || (!this.props.sortingResults) ? (loadingContainer) :
-              (
+            render={props =>
+              !this.props.studySets || !this.props.sortingResults ? (
+                loadingContainer
+              ) : (
                 <Recording
                   studySets={this.props.studySets}
                   sortingResults={this.props.sortingResults}
@@ -149,9 +176,10 @@ class Routes extends Component {
           />
           <Route
             path="/sortingresult/:studyName/:recordingName/:sorterName"
-            render={props => 
-              (!this.props.studySets) || (!this.props.sortingResults) ? (loadingContainer) :
-              (
+            render={props =>
+              !this.props.studySets || !this.props.sortingResults ? (
+                loadingContainer
+              ) : (
                 <SortingResult
                   studySets={this.props.studySets}
                   sorters={this.props.sorters}
@@ -172,10 +200,7 @@ class Routes extends Component {
             path="/news"
             render={props => <News newsPosts={this.props.newsPosts} />}
           />
-          <Route
-            path="/forum"
-            render={props => <Forum />}
-          />
+          <Route path="/forum" render={props => <Forum />} />
           <Route render={props => <FourOhFour {...this.props} />} />
         </Switch>
         <Footer />

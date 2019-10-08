@@ -1258,7 +1258,8 @@ code {
 .sidebar {
   position: sticky;
   top: 7rem;
-  z-index: 1000;
+  margin-top: 7rem;
+  z-index: 800;
   height: calc(100vh - 7rem);
   background-color: #b96ac9;
   border-right: 1px solid #ececec;
