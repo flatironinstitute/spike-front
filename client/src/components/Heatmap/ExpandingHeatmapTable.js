@@ -1,7 +1,5 @@
 import React from "react";
 import { Table } from "react-bootstrap";
-
-import "./expandingheatmaptable.css";
 import { Link } from "react-router-dom";
 
 class ExpandingHeatmapTable extends React.Component {
@@ -197,7 +195,7 @@ class ExpandingHeatmapTable extends React.Component {
       return this.createTableRows(row, false, i);
     });
     return (
-      <div>
+      <div className="expandingheatmaptable-container">
         <table className="expandingheatmaptable">
           <thead>{trhead}</thead>
           <tbody>{trs}</tbody>

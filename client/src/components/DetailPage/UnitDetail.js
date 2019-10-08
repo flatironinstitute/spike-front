@@ -159,13 +159,13 @@ class UnitDetail extends Component {
             }
           </Row>
         </Container>
-        
+
     )
   }
 }
 
 function hash_of_string(key) {
-  // creating hash object 
+  // creating hash object
   let hash = crypto.createHash('sha1');
   let data = hash.update(key, 'utf-8');
   return data.digest('hex');
