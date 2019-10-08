@@ -67,7 +67,6 @@ class Routes extends Component {
   }
 
   handleModalClose() {
-    console.log("CLOSE");
     this.setState({ showModal: false });
   }
 

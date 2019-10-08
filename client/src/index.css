@@ -1210,6 +1210,12 @@ code {
 .heatmap__column {
   display: block;
   padding-top: 20px;
+  display: flex;
+  padding-top: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 /* Unit Detail
@@ -1261,7 +1267,166 @@ code {
   margin-top: 7rem;
   z-index: 800;
   height: calc(100vh - 7rem);
-  background-color: #b96ac9;
-  border-right: 1px solid #ececec;
+  background-color: var(--off-white);
+  border-right: 3px solid var(--fi-blue);
   padding: 1.5rem !important;
+}
+.sidebar-list {
+  list-style: none;
+}
+
+/* Expanding Heatmap Table
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.expandingheatmaptable {
+  overflow: auto;
+  /* display: block; */
+  table-layout: auto;
+  width: 100%;
+}
+
+.expandable-button {
+  font-weight: 700;
+  font-size: 1.9rem;
+  color: #384ca2;
+  text-align: center;
+  cursor: pointer;
+}
+
+.expandingheatmaptable tr {
+  padding: 2px;
+  margin: 4px;
+}
+
+.expandingheatmaptable td.selectable:hover {
+  border: 2px solid #f28b00 !important;
+}
+
+.expandingheatmaptable td.selected {
+  border-style: solid;
+  border-width: 2px;
+  border-color: #f28b00 !important;
+}
+
+.expandingheatmaptable td.rotate {
+  height: 100px;
+  white-space: nowrap;
+  padding-bottom: 30px;
+  font-size: 12px;
+  font-weight: 400px;
+  line-height: 16px;
+}
+
+.expandingheatmaptable td.rotate > div {
+  transform: translate(-4px, 45px) rotate(315deg);
+  width: 44px;
+}
+
+.expandingheatmaptable td.rotate > div > span {
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.125); */
+  padding: 5px 10px;
+}
+
+.toprow {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  height: 1vh;
+}
+
+.subrow {
+  height: 1vh;
+}
+
+.expandingheatmaptable td {
+  padding: 0px;
+  margin: 0px;
+  font-size: 1.1rem;
+  line-height: 1.2;
+  max-width: 110px;
+}
+
+@media (min-width: 1400px) {
+  .expandingheatmaptable td {
+    padding: 3px auto;
+    margin: 0px;
+    font-size: 1.5rem;
+    line-height: 1.8;
+  }
+}
+
+tr.toprow > :first-child,
+tr.subrow > :first-child {
+  width: 16px;
+  text-align: center;
+}
+
+tr.toprow > :nth-child(2) {
+  border-left: none !important;
+}
+
+.expandingheatmaptable td.expandable {
+  cursor: pointer;
+  border-left: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.expandingheatmaptable td.cell-wrap {
+  word-break: break-all;
+}
+
+.expandingheatmaptable td.selectable {
+  cursor: cell;
+  border-left: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.expandingheatmaptable td.spacer {
+  height: 4px;
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+td.border_right {
+  max-width: calc(25vw / 10);
+}
+
+tbody :last-child {
+  border-bottom: none;
+}
+
+.expandingheatmaptable-container {
+  max-width: 1800px;
+  width: 100%;
+}
+
+/* Contact
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.contact__form {
+  max-width: 80rem;
+  margin: 0 auto;
+  margin-bottom: 7rem;
+}
+
+/* CopyHeader
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* .header {
+  margin: 6rem 0;
+  text-align: center;
+} */
+.header__title {
+  font-family: var(--serif);
+  margin-bottom: 3rem;
+}
+.header__logo {
+  height: 52px;
+  margin-bottom: 3rem;
+  user-select: none;
+}
+.header__copy {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 780px;
+  font-size: 1.8rem;
+  line-height: 2.9rem;
+  text-align: left;
+}
+.header__copy--em {
+  color: var(--fi-blue);
+  font-weight: bold;
 }

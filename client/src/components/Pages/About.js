@@ -9,23 +9,38 @@ class About extends Component {
       <div>
         <Container className="container-sidebar">
           <Row noGutters>
-            <Col xl={2} md={3} sm={3} className="sidebar">
-              <ul>
-                <li>
-                  <HashLink to="/about#test">Goto Cool Section</HashLink>
-                </li>
-                <li>
-                  <a href="place">Thing</a>
-                </li>
-                <li>
-                  <a href="place">Thing</a>
-                </li>
-              </ul>
-            </Col>
-            <Col xl={10} md={9} sm={12} className="page__body">
+            {/* <Col xl={2} md={3} sm={12} className="sidebar">
+              <div className="card card__std">
+                <div className="content">
+                  <h6 className="listcard-title">About</h6>
+                  <ul className="sidebar-list">
+                    <li>
+                      <HashLink to="/about#overview">Overview</HashLink>
+                    </li>
+                    <li>
+                      <HashLink to="/about#tutorials">Tutorials</HashLink>
+                    </li>
+                    <li>
+                      <HashLink to="/about#credits">Credits</HashLink>
+                    </li>
+                    <li>
+                      <HashLink to="/about#feedback">Feedback</HashLink>
+                    </li>
+                    <li>
+                      <HashLink to="/about#background">Background</HashLink>
+                    </li>
+                    <li>
+                      <HashLink to="/about#futureplans">Future Plans</HashLink>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </Col> */}
+            <Col xl={12} md={12} sm={12} className="page__body">
               <Container className="container__heatmap">
                 <Row className="subcontainer justify-content-md-center">
                   <Col lg={12} sm={12} xl={12}>
+                    <div id="overview" />
                     <div className="intro">
                       <p className="big">About SpikeForest</p>
                     </div>
@@ -126,6 +141,7 @@ class About extends Component {
                     </div>
                   </Col>
                 </Row>
+                <div id="tutorials" />
                 <Row className="subcontainer justify-content-md-center">
                   <Col lg={12} sm={12} xl={12}>
                     <div className="card card__std">
@@ -164,6 +180,7 @@ class About extends Component {
                     </div>
                   </Col>
                 </Row>
+                <div id="feedback" />
                 <Row className="subcontainer justify-content-md-center">
                   <Col lg={12} sm={12} xl={12}>
                     <div className="card card__std">
@@ -212,6 +229,7 @@ class About extends Component {
                     </div>
                   </Col>
                 </Row>
+                <div id="credits" />
                 <Row className="subcontainer justify-content-md-center">
                   <Col lg={12} sm={12} xl={12}>
                     <div className="card card__std">
@@ -378,6 +396,7 @@ class About extends Component {
                     </div>
                   </Col>
                 </Row>
+                <div id="background" />
                 <Row className="subcontainer justify-content-md-center">
                   <Col lg={12} sm={12} xl={12}>
                     <div className="card card__std">
@@ -504,10 +523,8 @@ class About extends Component {
                     </div>
                   </Col>
                 </Row>
-                <Row
-                  className="subcontainer justify-content-md-center"
-                  id="test"
-                >
+                <div id="futureplans" />
+                <Row className="subcontainer justify-content-md-center">
                   <Col lg={12} sm={12} xl={12}>
                     <div className="card card__std">
                       <div className="content">
