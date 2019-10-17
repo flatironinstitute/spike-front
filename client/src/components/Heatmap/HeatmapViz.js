@@ -693,14 +693,14 @@ class HeatmapViz extends Component {
         <div className="card__header">
           <h4 className="card__title">{title}</h4>
         </div>
-        <div>
+        {/* <div>
           {alertCopy}
           {paraCopy}
           <p>
             * An asterisk indicates an incomplete or failed sorting on a subset
             of results.
           </p>
-        </div>
+        </div> */}
         {loading ? (
           <h4>...</h4>
         ) : (
