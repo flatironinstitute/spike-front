@@ -218,6 +218,10 @@ Use containers when you need a content area that has standard maximum width and 
 }
 
 .subcontainer {
+  margin: 0 auto -5rem auto;
+}
+
+.subcontainer-final {
   margin: 0 auto 3rem auto;
 }
 
@@ -379,9 +383,9 @@ Use containers when you need a content area that has standard maximum width and 
   overflow: hidden;
 }
 
-/* .finder {
+.finder {
   padding-top: 8rem;
-} */
+}
 
 /* Lists
 –––––––––––––––––––––––––––––––––––––––––––––––––– */

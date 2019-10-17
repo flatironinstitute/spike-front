@@ -7,10 +7,10 @@ class About extends Component {
   render() {
     const listItems = [
       { name: "Overview", value: "overview" },
-      { name: "Tutorials", value: "tutorials" },
       { name: "Resources", value: "resources" },
+      { name: "Tutorials", value: "tutorials" },
       { name: "Feedback", value: "feedback" },
-
+      { name: "References", value: "references" },
       { name: "Background", value: "background" },
       { name: "Future plans", value: "futureplans" }
     ];
@@ -19,18 +19,18 @@ class About extends Component {
         <Container className="container-sidebar">
           <Row noGutters>
             <Col xl={2} md={3} sm={12} className="sidebar">
-              <Sidebar listItems={listItems} />
+              <Sidebar listItems={listItems} listTitle={"About"} />
             </Col>
             <Col xl={10} md={9} sm={12} className="page__body">
               <Container className="container__heatmap">
                 <Row className="subcontainer justify-content-md-center">
                   <Col lg={12} sm={12} xl={12}>
-                    <div id="overview" />
                     <div className="intro">
                       <p className="big">About SpikeForest</p>
                     </div>
                   </Col>
                 </Row>
+                <div className="finder" id="overview" />
                 <Row className="subcontainer justify-content-md-center">
                   <Col lg={12} sm={12} xl={12}>
                     <div className="card card__std">
@@ -103,7 +103,7 @@ class About extends Component {
                     </div>
                   </Col>
                 </Row>
-                <div className="finder" id="tutorials" />
+                <div className="finder" id="resources" />
                 <Row className="subcontainer justify-content-md-center">
                   <Col lg={12} sm={12} xl={12}>
                     <div className="card card__std">
@@ -523,7 +523,7 @@ class About extends Component {
                   </Col>
                 </Row>
                 <div className="finder" id="futureplans" />
-                <Row className="subcontainer justify-content-md-center">
+                <Row className="subcontainer-final justify-content-md-center">
                   <Col lg={12} sm={12} xl={12}>
                     <div className="card card__std">
                       <div className="content">

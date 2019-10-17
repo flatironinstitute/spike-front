@@ -2,8 +2,15 @@ import React, { Component } from "react";
 import { HashLink } from "react-router-hash-link";
 
 class Sidebar extends Component {
+  constructor(props) {
+    super(props);
+  }
+  scrollToTop() {
+    window.scrollTo(0, 0);
+  }
   render() {
-    let url = window.location.hash.substr(1);
+    let path = window.location.pathname + "#";
+    let hash = window.location.hash.substr(1);
     const listItemsWithKeys = this.props.listItems.map((item, index) => ({
       ...item,
       id: index
@@ -11,9 +18,9 @@ class Sidebar extends Component {
     const listItems = listItemsWithKeys.map(item => (
       <li key={item.id}>
         <HashLink
-          to={"/about#" + item.value}
+          to={path + item.value}
           className={
-            item.value === url
+            item.value === hash
               ? "sidebar-link sidebar-selected"
               : "sidebar-link"
           }
@@ -25,7 +32,9 @@ class Sidebar extends Component {
     return (
       <div className="card card__sidebar">
         <div className="content">
-          <h5 className="listcard-title">About</h5>
+          <h5 className="listcard-title" onClick={this.scrollToTop}>
+            {this.props.listTitle}
+          </h5>
           <ul className="sidebar-list">{listItems}</ul>
         </div>
       </div>
