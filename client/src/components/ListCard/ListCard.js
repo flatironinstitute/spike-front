@@ -7,6 +7,7 @@ class ListCard extends Component {
     let loading = isEmpty(this.props.value);
     return (
       <Col lg={12} sm={12} xl={12}>
+        <div className="finder" id={this.props.value.raw_label} />
         {loading ? (
           <div className="listcard">
             <h3>...</h3>

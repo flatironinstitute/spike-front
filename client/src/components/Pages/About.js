@@ -1,51 +1,36 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { HashLink } from "react-router-hash-link";
+import Sidebar from "../Sidebar/Sidebar";
 import { Col, Container, Row } from "react-bootstrap";
 
 class About extends Component {
   render() {
+    const listItems = [
+      { name: "Overview", value: "overview" },
+      { name: "Resources", value: "resources" },
+      { name: "Tutorials", value: "tutorials" },
+      { name: "Feedback", value: "feedback" },
+      { name: "References", value: "references" },
+      { name: "Background", value: "background" },
+      { name: "Future plans", value: "futureplans" }
+    ];
     return (
       <div>
         <Container className="container-sidebar">
           <Row noGutters>
-            {/* <Col xl={2} md={3} sm={12} className="sidebar">
-              <div className="card card__std">
-                <div className="content">
-                  <h6 className="listcard-title">About</h6>
-                  <ul className="sidebar-list">
-                    <li>
-                      <HashLink to="/about#overview">Overview</HashLink>
-                    </li>
-                    <li>
-                      <HashLink to="/about#tutorials">Tutorials</HashLink>
-                    </li>
-                    <li>
-                      <HashLink to="/about#credits">Credits</HashLink>
-                    </li>
-                    <li>
-                      <HashLink to="/about#feedback">Feedback</HashLink>
-                    </li>
-                    <li>
-                      <HashLink to="/about#background">Background</HashLink>
-                    </li>
-                    <li>
-                      <HashLink to="/about#futureplans">Future Plans</HashLink>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </Col> */}
-            <Col xl={12} md={12} sm={12} className="page__body">
+            <Col xl={2} md={3} sm={12} className="sidebar">
+              <Sidebar listItems={listItems} listTitle={"About"} />
+            </Col>
+            <Col xl={10} md={9} sm={12} className="page__body">
               <Container className="container__heatmap">
                 <Row className="subcontainer justify-content-md-center">
                   <Col lg={12} sm={12} xl={12}>
-                    <div id="overview" />
                     <div className="intro">
                       <p className="big">About SpikeForest</p>
                     </div>
                   </Col>
                 </Row>
+                <div className="finder" id="overview" />
                 <Row className="subcontainer justify-content-md-center">
                   <Col lg={12} sm={12} xl={12}>
                     <div className="card card__std">
@@ -113,9 +98,23 @@ class About extends Component {
                             <Link to="/algorithms">algorithms</Link>, and{" "}
                             <Link to="/metrics">metric definitions</Link>.
                           </p>
+                        </div>
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
+                <div className="finder" id="resources" />
+                <Row className="subcontainer justify-content-md-center">
+                  <Col lg={12} sm={12} xl={12}>
+                    <div className="card card__std">
+                      <div className="content">
+                        <div className="card__label">
                           <p>
-                            <b>Resources:</b>
+                            <strong>Resources</strong>
                           </p>
+                        </div>
+                        <div className="card__footer">
+                          <hr />
                           <ul>
                             <li>
                               <Link exact="true" to="/news">
@@ -141,7 +140,7 @@ class About extends Component {
                     </div>
                   </Col>
                 </Row>
-                <div id="tutorials" />
+                <div className="finder" id="tutorials" />
                 <Row className="subcontainer justify-content-md-center">
                   <Col lg={12} sm={12} xl={12}>
                     <div className="card card__std">
@@ -180,7 +179,7 @@ class About extends Component {
                     </div>
                   </Col>
                 </Row>
-                <div id="feedback" />
+                <div className="finder" id="feedback" />
                 <Row className="subcontainer justify-content-md-center">
                   <Col lg={12} sm={12} xl={12}>
                     <div className="card card__std">
@@ -229,14 +228,14 @@ class About extends Component {
                     </div>
                   </Col>
                 </Row>
-                <div id="credits" />
+                <div className="finder" id="references" />
                 <Row className="subcontainer justify-content-md-center">
                   <Col lg={12} sm={12} xl={12}>
                     <div className="card card__std">
                       <div className="content">
                         <div className="card__label">
                           <p>
-                            <strong>Credits</strong>
+                            <strong>References</strong>
                           </p>
                         </div>
                         <div className="card__footer">
@@ -396,7 +395,7 @@ class About extends Component {
                     </div>
                   </Col>
                 </Row>
-                <div id="background" />
+                <div className="finder" id="background" />
                 <Row className="subcontainer justify-content-md-center">
                   <Col lg={12} sm={12} xl={12}>
                     <div className="card card__std">
@@ -523,8 +522,8 @@ class About extends Component {
                     </div>
                   </Col>
                 </Row>
-                <div id="futureplans" />
-                <Row className="subcontainer justify-content-md-center">
+                <div className="finder" id="futureplans" />
+                <Row className="subcontainer-final justify-content-md-center">
                   <Col lg={12} sm={12} xl={12}>
                     <div className="card card__std">
                       <div className="content">
