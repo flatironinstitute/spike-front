@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { HashLink } from "react-router-hash-link";
+import Scrollspy from "react-scrollspy";
 
 class Sidebar extends Component {
   constructor(props) {
@@ -11,20 +12,15 @@ class Sidebar extends Component {
   render() {
     let path = window.location.pathname + "#";
     let hash = window.location.hash.substr(1);
-    const listItemsWithKeys = this.props.listItems.map((item, index) => ({
-      ...item,
-      id: index
-    }));
+    let listItemsWithKeys = [];
+    let scrollSpyItems = [];
+    this.props.listItems.forEach((item, index) => {
+      listItemsWithKeys.push({ ...item, id: index });
+      scrollSpyItems.push(item.value);
+    });
     const listItems = listItemsWithKeys.map(item => (
       <li key={item.id}>
-        <HashLink
-          to={path + item.value}
-          className={
-            item.value === hash
-              ? "sidebar-link sidebar-selected"
-              : "sidebar-link"
-          }
-        >
+        <HashLink to={path + item.value} className={"sidebar-link"}>
           {item.name}
         </HashLink>
       </li>
@@ -35,7 +31,13 @@ class Sidebar extends Component {
           <h5 className="listcard-title" onClick={this.scrollToTop}>
             {this.props.listTitle}
           </h5>
-          <ul className="sidebar-list">{listItems}</ul>
+          <Scrollspy
+            items={scrollSpyItems}
+            currentClassName="sidebar-selected"
+            className="sidebar-list"
+          >
+            {listItems}
+          </Scrollspy>
         </div>
       </div>
     );

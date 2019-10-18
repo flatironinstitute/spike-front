@@ -111,6 +111,7 @@ class Archive extends Component {
                 </div>
               </Col>
             </Row>
+            <div className="finder" id="overview" />
             <Row className="subcontainer justify-content-md-center">
               <Col lg={12} sm={12} xl={12}>
                 <div className="card card__std">
@@ -133,7 +134,8 @@ class Archive extends Component {
                 </div>
               </Col>
             </Row>
-            <Row className="subcontainer justify-content-md-center">
+            <div className="finder" id="pastanalyses" />
+            <Row className="subcontainer-final justify-content-md-center">
               <Col lg={12} sm={12} xl={12}>
                 <div className="card card__std">
                   <div className="content">
