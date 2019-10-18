@@ -1,171 +1,183 @@
 import React, { Component } from "react";
 import Preloader from "../Preloader/Preloader";
-import { isEmpty } from "../../utils";
+import Sidebar from "../Sidebar/Sidebar";
+import { isEmpty, toTitleCase } from "../../utils";
 import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
-// import ExpandableRecordingsTable from "../Recordings/ExpandableRecordingsTable";
 
 class Recordings extends Component {
   render() {
     let loading = isEmpty(this.props.studySets);
+    let sidebarItems = [];
+    if (this.props.studySets) {
+      sidebarItems = this.props.studySets.map(item => ({
+        name: toTitleCase(item.name.replace(/_/g, " ").toLowerCase()),
+        value: item.name
+      }));
+    }
+    sidebarItems.unshift(
+      { name: "Recording Organization", value: "recordingorganization" },
+      { name: "Recording Types", value: "recordingtypes" }
+    );
+    console.log("🚀", sidebarItems);
     return (
-      <div className="page__body">
-        <Container className="container__heatmap">
-          <Row className="subcontainer justify-content-md-center">
-            <Col lg={12} sm={12} xl={12}>
-              <div className="intro">
-                <p className="big">Recordings</p>
-              </div>
-            </Col>
-          </Row>
-          <Row className="subcontainer justify-content-md-center">
-            <Col lg={12} sm={12} xl={12}>
-              <div className="card card__std">
-                <div className="content">
-                  <div className="card__label">
-                    <p>
-                      <strong>Recording Organization</strong>
-                    </p>
+      <Container className="container-sidebar">
+        <Row noGutters>
+          <Col xl={2} md={3} sm={12} className="sidebar">
+            <Sidebar listItems={sidebarItems} listTitle={"Recordings"} />
+          </Col>
+          <Col xl={10} md={9} sm={12} className="page__body">
+            <Container className="container__heatmap">
+              <Row className="subcontainer justify-content-md-center">
+                <Col lg={12} sm={12} xl={12}>
+                  <div className="intro">
+                    <p className="big">Recordings</p>
                   </div>
-                  <div className="card__footer">
-                    <hr />
-                    <p>
-                      Recordings are grouped into "studies". Each study contains
-                      a set of real or synthesized recordings sharing a common
-                      source (probe and brain region, or simulation code
-                      settings). It is appropriate to aggregate the statistics
-                      from all recordings within a particular study.
-                    </p>
-                    <p>
-                      In turn, studies are grouped into "study sets". Each study
-                      set is a collection of studies which have different
-                      parameters but share some common features.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </Col>
-          </Row>
-          {/* <Row className="subcontainer justify-content-md-center">
-            <Col lg={12} sm={12} xl={12}>
-              <div className="card card__std">
-                <div className="content">
-                  <div className="card__label">
-                    <p>
-                      <strong>SpikeForest study sets</strong>
-                    </p>
-                  </div>
-                  <div className="card__footer">
-                    <hr />
-                    {loading ? (
-                      <Preloader />
-                    ) : (
-                      <ExpandableRecordingsTable studySets={this.props.studySets} />
-                    )}
-                  </div>
-                </div>
-              </div>
-            </Col>
-          </Row> */}
-          <Row className="subcontainer justify-content-md-center">
-            <Col lg={12} sm={12} xl={12}>
-              <div className="card card__std">
-                <div className="content">
-                  <div className="card__label">
-                    <p>
-                      <strong>Recording Types</strong>
-                    </p>
-                  </div>
-                  <div className="card__footer">
-                    <hr />
-                    <p>
-                      Our hosted recordings include many popular probe
-                      geometries and types, and fall into three categories:
-                    </p>
-                    <div className="list__section">
-                      <span className="list__heading">
-                        1. Paired (<i>in vivo</i> or <i>in vitro</i>)
-                      </span>
-                      <span className="list__body">
-                        Recordings from various laboratories where an
-                        independent intra- or juxta-cellular probe provides
-                        reliable ground truth firing events, usually for one
-                        neuron per recording.
-                      </span>
-                    </div>
-                    <div className="list__section">
-                      <span className="list__heading">
-                        2. Simulated (in silico)
-                      </span>
-                      <span className="list__body">
-                        Recordings from neural simulator codes with various
-                        degrees of fidelity, with known firing events for large
-                        numbers of neurons.
-                      </span>
-                    </div>
-                    <div className="list__section">
-                      <span className="list__heading">3. Human-curated</span>
-                      <span className="list__body">
-                        We also host a small set of expert human-curated sorting
-                        results.
-                      </span>
+                </Col>
+              </Row>
+              <div className="finder" id="recordingorganization" />
+              <Row className="subcontainer justify-content-md-center">
+                <Col lg={12} sm={12} xl={12}>
+                  <div className="card card__std">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>
+                          <strong>Recording Organization</strong>
+                        </p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <p>
+                          Recordings are grouped into "studies". Each study
+                          contains a set of real or synthesized recordings
+                          sharing a common source (probe and brain region, or
+                          simulation code settings). It is appropriate to
+                          aggregate the statistics from all recordings within a
+                          particular study.
+                        </p>
+                        <p>
+                          In turn, studies are grouped into "study sets". Each
+                          study set is a collection of studies which have
+                          different parameters but share some common features.
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </Col>
-          </Row>
-          <Row className="subcontainer justify-content-md-center">
-            <Col lg={12} sm={12} xl={12}>
-              <div className="card card__std">
-                <div className="content">
-                  <div className="card__footer">
-                    <hr />
-                    {loading ? (
-                      <Preloader />
-                    ) : (
-                      <span>
-                        {this.props.studySets.map(studySet => (
-                          <span key={`study-set-${studySet.name}`}>
-                            <h4>
-                              <Link to={`/studyset/${studySet.name}`}>
-                                {studySet.name}
-                              </Link>
-                            </h4>
-                            <table className="table" style={{ width: "auto" }}>
-                              <thead>
-                                <tr>
-                                  <th key="col1">Study name</th>
-                                  <th key="col2">Num. recordings</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {studySet.studies.map(study => (
-                                  <tr key={`study-${study.name}`}>
-                                    <td key="col1">
-                                      <Link to={`/study/${study.name}`}>
-                                        {study.name}
-                                      </Link>
-                                    </td>
-                                    <td key="col2">
-                                      {study.recordings.length}
-                                    </td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
+                </Col>
+              </Row>
+              <div className="finder" id="recordingtypes" />
+              <Row className="subcontainer justify-content-md-center">
+                <Col lg={12} sm={12} xl={12}>
+                  <div className="card card__std">
+                    <div className="content">
+                      <div className="card__label">
+                        <p>
+                          <strong>Recording Types</strong>
+                        </p>
+                      </div>
+                      <div className="card__footer">
+                        <hr />
+                        <p>
+                          Our hosted recordings include many popular probe
+                          geometries and types, and fall into three categories:
+                        </p>
+                        <div className="list__section">
+                          <span className="list__heading">
+                            1. Paired (<i>in vivo</i> or <i>in vitro</i>)
                           </span>
-                        ))}
-                      </span>
-                    )}
+                          <span className="list__body">
+                            Recordings from various laboratories where an
+                            independent intra- or juxta-cellular probe provides
+                            reliable ground truth firing events, usually for one
+                            neuron per recording.
+                          </span>
+                        </div>
+                        <div className="list__section">
+                          <span className="list__heading">
+                            2. Simulated (in silico)
+                          </span>
+                          <span className="list__body">
+                            Recordings from neural simulator codes with various
+                            degrees of fidelity, with known firing events for
+                            large numbers of neurons.
+                          </span>
+                        </div>
+                        <div className="list__section">
+                          <span className="list__heading">
+                            3. Human-curated
+                          </span>
+                          <span className="list__body">
+                            We also host a small set of expert human-curated
+                            sorting results.
+                          </span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
+                </Col>
+              </Row>
+              {loading ? (
+                <Row className="subcontainer justify-content-md-center">
+                  <Col lg={12} sm={12} xl={12}>
+                    <div className="card card__std">
+                      <div className="content">
+                        <Preloader />
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
+              ) : (
+                <div>
+                  {this.props.studySets.map(studySet => (
+                    <div key={`study-set-${studySet.name}`}>
+                      <div className="finder" id={studySet.name} />
+                      <Row className="subcontainer justify-content-md-center">
+                        <Col lg={12} sm={12} xl={12}>
+                          <div className="card card__std">
+                            <div className="content">
+                              <h4>
+                                <Link to={`/studyset/${studySet.name}`}>
+                                  {studySet.name}
+                                </Link>
+                              </h4>
+                              <table
+                                className="table"
+                                style={{ width: "auto" }}
+                              >
+                                <thead>
+                                  <tr>
+                                    <th key="col1">Study name</th>
+                                    <th key="col2">Num. recordings</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {studySet.studies.map(study => (
+                                    <tr key={`study-${study.name}`}>
+                                      <td key="col1">
+                                        <Link to={`/study/${study.name}`}>
+                                          {study.name}
+                                        </Link>
+                                      </td>
+                                      <td key="col2">
+                                        {study.recordings.length}
+                                      </td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  ))}
                 </div>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </div>
+              )}
+              <div style={{ margin: "8rem 0" }} />
+            </Container>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }

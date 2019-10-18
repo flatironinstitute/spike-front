@@ -11,7 +11,6 @@ class Sidebar extends Component {
   }
   render() {
     let path = window.location.pathname + "#";
-    let hash = window.location.hash.substr(1);
     let listItemsWithKeys = [];
     let scrollSpyItems = [];
     this.props.listItems.forEach((item, index) => {

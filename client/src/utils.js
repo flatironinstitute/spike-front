@@ -1,5 +1,5 @@
 import React from "react";
-import PathLink from "./components/PathLink/PathLink"
+import PathLink from "./components/PathLink/PathLink";
 
 export function isEmpty(obj) {
   for (var key in obj) {
@@ -24,7 +24,14 @@ export function getRandomKeyInt(index) {
 
 export function abbreviateSha1Path(path, opts) {
   opts = opts || {};
-  return <PathLink path={path} abbreviate={true} canCopy={true} canDownload={opts.canDownload||false}></PathLink>
+  return (
+    <PathLink
+      path={path}
+      abbreviate={true}
+      canCopy={true}
+      canDownload={opts.canDownload || false}
+    />
+  );
   // let list0 = path.split('/');
   // return <span title={path}>{`${list0[0]}//.../${list0[list0.length-1]}`}</span>;
 }

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { isEmpty } from "../../utils";
+import { isEmpty, toTitleCase } from "../../utils";
+import { removeMd } from "remove-markdown";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import ListCard from "../ListCard/ListCard";
 import Preloader from "../Preloader/Preloader";
 import Sidebar from "../Sidebar/Sidebar";
-const removeMd = require("remove-markdown");
 
 class Algorithms extends Component {
   constructor(props) {
@@ -29,14 +29,6 @@ class Algorithms extends Component {
 
   basename(path) {
     return path.split("/").reverse()[0];
-  }
-
-  toTitleCase(str) {
-    str = str.toLowerCase().split(" ");
-    for (var i = 0; i < str.length; i++) {
-      str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
-    }
-    return str.join(" ");
   }
 
   parseDescription(markdown) {
@@ -126,11 +118,10 @@ class Algorithms extends Component {
       ));
     }
     let sidebarItems = this.state.rows.map(row => ({
-      name: this.toTitleCase(row.raw_label.replace(/_/g, " ").toLowerCase()),
+      name: toTitleCase(row.raw_label.replace(/_/g, " ").toLowerCase()),
       value: row.raw_label
     }));
     sidebarItems.unshift({ name: "Overview", value: "overview" });
-    console.log("🚀", sidebarItems);
     return (
       <div>
         {loading ? (
