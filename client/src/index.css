@@ -981,6 +981,7 @@ code {
   background-color: hsla(240, 7%, 81%, 0);
   margin-bottom: 0;
   border: none;
+  position: fixed;
 }
 
 /* Range Slider
@@ -1056,6 +1057,7 @@ code {
   max-width: 100%;
   position: relative;
   margin-bottom: 1rem;
+  margin-top: -6rem;
 }
 
 .listcard-content {

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { isEmpty } from "../../utils";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import ListCard from "../ListCard/ListCard";
+import Preloader from "../Preloader/Preloader";
+import Sidebar from "../Sidebar/Sidebar";
 const removeMd = require("remove-markdown");
 
 class Algorithms extends Component {
@@ -10,6 +12,7 @@ class Algorithms extends Component {
     this.state = {
       rows: []
     };
+    this.handleClick = this.basename.bind(this);
   }
 
   componentDidMount() {
@@ -22,6 +25,18 @@ class Algorithms extends Component {
     if (this.props.algorithms !== prevProps.algorithms) {
       this.filterActives();
     }
+  }
+
+  basename(path) {
+    return path.split("/").reverse()[0];
+  }
+
+  toTitleCase(str) {
+    str = str.toLowerCase().split(" ");
+    for (var i = 0; i < str.length; i++) {
+      str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+    }
+    return str.join(" ");
   }
 
   parseDescription(markdown) {
@@ -63,7 +78,7 @@ class Algorithms extends Component {
       if (alg.dockerfile) {
         row.environment = `<a href="${
           alg.dockerfile
-        }" target="_blank">${basename(alg.dockerfile)}</a>`;
+        }" target="_blank">${this.basename(alg.dockerfile)}</a>`;
         // keep
         row.env_name = "Docker";
         row.env_link = alg.dockerfile;
@@ -73,7 +88,7 @@ class Algorithms extends Component {
         row.env_name = alg.environment;
       }
       if (alg.wrapper) {
-        row.wrapper = `<a href="${alg.wrapper}" target="_blank">${basename(
+        row.wrapper = `<a href="${alg.wrapper}" target="_blank">${this.basename(
           alg.wrapper
         )}</a>`;
         // keep
@@ -85,7 +100,7 @@ class Algorithms extends Component {
       if (alg.markdown_link) {
         row.markdown_link = `<a href="${
           alg.markdown_link
-        }" target="_blank">${basename(alg.markdown_link)}</a>`;
+        }" target="_blank">${this.basename(alg.markdown_link)}</a>`;
       }
       if (alg.markdown) {
         // keep
@@ -110,126 +125,114 @@ class Algorithms extends Component {
         <ListCard value={row} key={index} />
       ));
     }
+    let sidebarItems = this.state.rows.map(row => ({
+      name: this.toTitleCase(row.raw_label.replace(/_/g, " ").toLowerCase()),
+      value: row.raw_label
+    }));
+    sidebarItems.unshift({ name: "Overview", value: "overview" });
+    console.log("🚀", sidebarItems);
     return (
       <div>
-        <div className="page__body">
-          {loading ? (
-            <Container className="container__heatmap">
-              <Card>
-                <Card.Body>Preloader</Card.Body>
-              </Card>
-            </Container>
-          ) : (
-            <div>
-              <Container className="container__heatmap">
-                <Row className="subcontainer justify-content-md-center">
-                  <Col lg={12} sm={12} xl={12}>
-                    <div className="intro">
-                      <p className="big">Algorithms</p>
-                    </div>
-                  </Col>
-                </Row>
-                <Row className="subcontainer justify-content-md-center">
-                  <Col lg={12} sm={12} xl={12}>
-                    <div className="card card__std">
-                      <div className="content">
-                        <div className="card__label">
-                          <p>
-                            <strong>Overview</strong>
-                          </p>
-                        </div>
-                        <div className="card__footer">
-                          <hr />
-                          <p>
-                            {" "}
-                            Generally speaking, a spike sorting algorithm takes
-                            in an unfiltered multi-channel timeseries (aka,
-                            recording) and a dictionary of algorithm parameters
-                            and outputs a list of firing times and associated
-                            integer unit labels. This page lists the spike
-                            sorting codes we run, as well as some that have yet
-                            to be incorporated. Most of the codes were developed
-                            at other institutions; two of them are in-house.
-                          </p>
-                          <p>
-                            {" "}
-                            SpikeForest uses Python wrappers to implement the
-                            algorithms. Links to those may be found in the
-                            "Wrapper" links above. For the non-MATLAB sorters,
-                            we use singularity containers (similar to docker
-                            containers) in order to ensure a reproducible
-                            compute environment. In those cases, links to the
-                            docker files (environment presciptions) are
-                            provided. We almost always use the default
-                            parameters of the wrappers, but some may be
-                            overriden in the{" "}
-                            <a
-                              href="https://github.com/flatironinstitute/spikeforest/tree/master/working/main_analysis"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              analysis configuration files
-                            </a>
-                            .
-                          </p>
-                          <p>
-                            Wrappers were created in collaboration with the{" "}
-                            <a
-                              href="https://github.com/SpikeInterface/"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              SpikeInterface
-                            </a>{" "}
-                            project. The goal is to ultimately merge these with
-                            the corresponding wrappers in
-                            SpikeInterface/SpikeToolkit.
-                          </p>
+        {loading ? (
+          <Container className="container__heatmap">
+            <Card>
+              <Preloader />
+            </Card>
+          </Container>
+        ) : (
+          <Container className="container-sidebar">
+            <Row noGutters>
+              <Col xl={2} md={3} sm={12} className="sidebar">
+                <Sidebar
+                  listItems={sidebarItems}
+                  listTitle={"Algorithms In Use"}
+                />
+              </Col>
+              <Col xl={10} md={9} sm={12} className="page__body">
+                <Container className="container__heatmap">
+                  <Row className="subcontainer justify-content-md-center">
+                    <Col lg={12} sm={12} xl={12}>
+                      <div className="intro">
+                        <p className="big">Algorithms</p>
+                      </div>
+                    </Col>
+                  </Row>
+                  <div className="finder" id="overview" />
+                  <Row className="subcontainer-final justify-content-md-center">
+                    <Col lg={12} sm={12} xl={12}>
+                      <div className="card card__std">
+                        <div className="content">
+                          <div className="card__label">
+                            <p>
+                              <strong>Overview</strong>
+                            </p>
+                          </div>
+                          <div className="card__footer">
+                            <hr />
+                            <p>
+                              {" "}
+                              Generally speaking, a spike sorting algorithm
+                              takes in an unfiltered multi-channel timeseries
+                              (aka, recording) and a dictionary of algorithm
+                              parameters and outputs a list of firing times and
+                              associated integer unit labels. This page lists
+                              the spike sorting codes we run, as well as some
+                              that have yet to be incorporated. Most of the
+                              codes were developed at other institutions; two of
+                              them are in-house.
+                            </p>
+                            <p>
+                              {" "}
+                              SpikeForest uses Python wrappers to implement the
+                              algorithms. Links to those may be found in the
+                              "Wrapper" links above. For the non-MATLAB sorters,
+                              we use singularity containers (similar to docker
+                              containers) in order to ensure a reproducible
+                              compute environment. In those cases, links to the
+                              docker files (environment presciptions) are
+                              provided. We almost always use the default
+                              parameters of the wrappers, but some may be
+                              overriden in the{" "}
+                              <a
+                                href="https://github.com/flatironinstitute/spikeforest/tree/master/working/main_analysis"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                analysis configuration files
+                              </a>
+                              .
+                            </p>
+                            <p>
+                              Wrappers were created in collaboration with the{" "}
+                              <a
+                                href="https://github.com/SpikeInterface/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                SpikeInterface
+                              </a>{" "}
+                              project. The goal is to ultimately merge these
+                              with the corresponding wrappers in
+                              SpikeInterface/SpikeToolkit.
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </Col>
-                </Row>
-              </Container>
-              <Container className="container__heatmap">
-                <Col lg={12} sm={12} xl={12}>
-                  {" "}
-                  <h3>Algorithms In Use</h3>
-                </Col>
-                <Row className="subcontainer justify-content-md-center">
-                  {listCards}
-                </Row>
-                {/* <Row className="subcontainer justify-content-md-center">
-                  <Col lg={12} sm={12} xl={12}>
-                    <div className="card card__std">
-                      <div className="content">
-                        <div className="card__label">
-                          <p>
-                            <strong>Algorithms In Use</strong>
-                          </p>
-                        </div>
-                        <div className="card__footer">
-                          <hr />
-                          <ReactCollapsingTable
-                            columns={algosColumns}
-                            rows={this.state.rows}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </Col>
-                </Row> */}
-              </Container>
-            </div>
-          )}
-        </div>
+                    </Col>
+                  </Row>
+                </Container>
+                <Container className="container__heatmap">
+                  <Row className="subcontainer-final justify-content-md-center">
+                    {listCards}
+                  </Row>
+                </Container>
+              </Col>
+            </Row>
+          </Container>
+        )}
       </div>
     );
   }
-}
-
-function basename(path) {
-  return path.split("/").reverse()[0];
 }
 
 export default Algorithms;
