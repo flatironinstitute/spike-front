@@ -405,20 +405,70 @@ class About extends Component {
                           <p>
                             <strong>References</strong>
                           </p>
-                          <p>[1] F. J. Chaure, H. G. Rey, and R. Quian Quiroga. A novel and fully automatic spike-sorting implementation with variable number of features.Journal of neurophysiol-ogy, 120(4):1859–1871, 2018.</p>
-                          <p>[2] J. E. Chung, J. F. Magland, A. H. Barnett, et al. A fully automated approach to spikesorting.Neuron, 95(6):1381–1394, 2017.</p>
-                          <p>[3] S. Garcia and C. Pouzat.    Tridesclous.https://github.com/tridesclous/tridesclous.</p>
-                          <p>[4] G. Hilgen, M. Sorbaro, S. Pirmoradian, J.-O. Muthmann, I. E. Kepiro, S. Ullo, C. J.Ramirez, A. P. Encinas, A. Maccione, L. Berdondini, et al. Unsupervised spike sort-ing for large-scale, high-density multielectrode arrays.Cell reports, 18(10):2521–2532, 2017.</p>
-                          <p>[5] J. J. Jun, C. Mitelut, C. Lai, S. Gratiy, C. Anastassiou, and T. D. Harris.  Real-time spike sorting platform for high-density extracellular probes with ground-truthvalidation and drift correction.bioRxiv, page 101030, 2017.</p>
-                          <p>[6] J. J. Jun, N. A. Steinmetz, J. H. Siegle, D. J. Denman, M. Bauza, B. Barbarits, A. K.Lee, C. A. Anastassiou, A. Andrei, Ç. Aydın, et al. Fully integrated silicon probesfor high-density recording of neural activity.Nature, 551(7679):232, 2017.</p>
-                          <p>[7] M. Pachitariu, N. A. Steinmetz, and J. Colonell. Kilosort2.https://github.com/MouseLand/Kilosort2.</p>
-                          <p>[8] R. Q. Quiroga, Z. Nadasdy, and Y. Ben-Shaul. Unsupervised spike detection andsorting with wavelets and superparamagnetic clustering.Neural computation,16(8):1661–1687, 2004.</p>
-                          <p>[9] P. Yger, G. L. Spampinato, E. Esposito, B. Lefebvre, S. Deny, C. Gardella, M. Stim-berg, F. Jetter, G. Zeck, S. Picaud, et al.  A spike sorting toolbox for up to thou-sands of electrodes validated with ground truth recordings in vitro and in vivo.Elife,7:e34518, 2018.</p>
-                          <p>[10] M. J. Zaki and W. Meira Jr.Data mining and analysis: fundamental concepts andalgorithms. Cambridge University Press, New York, NY, 2014.12</p>
                         </div>
                         <div className="card__footer">
                           <hr />
-                          
+                          <p>
+                            [1] F. J. Chaure, H. G. Rey, and R. Quian Quiroga. A
+                            novel and fully automatic spike-sorting
+                            implementation with variable number of
+                            features.Journal of neurophysiol-ogy,
+                            120(4):1859–1871, 2018.
+                          </p>
+                          <p>
+                            [2] J. E. Chung, J. F. Magland, A. H. Barnett, et
+                            al. A fully automated approach to
+                            spikesorting.Neuron, 95(6):1381–1394, 2017.
+                          </p>
+                          <p>
+                            [3] S. Garcia and C. Pouzat.
+                            Tridesclous.https://github.com/tridesclous/tridesclous.
+                          </p>
+                          <p>
+                            [4] G. Hilgen, M. Sorbaro, S. Pirmoradian, J.-O.
+                            Muthmann, I. E. Kepiro, S. Ullo, C. J.Ramirez, A. P.
+                            Encinas, A. Maccione, L. Berdondini, et al.
+                            Unsupervised spike sort-ing for large-scale,
+                            high-density multielectrode arrays.Cell reports,
+                            18(10):2521–2532, 2017.
+                          </p>
+                          <p>
+                            [5] J. J. Jun, C. Mitelut, C. Lai, S. Gratiy, C.
+                            Anastassiou, and T. D. Harris. Real-time spike
+                            sorting platform for high-density extracellular
+                            probes with ground-truthvalidation and drift
+                            correction.bioRxiv, page 101030, 2017.
+                          </p>
+                          <p>
+                            [6] J. J. Jun, N. A. Steinmetz, J. H. Siegle, D. J.
+                            Denman, M. Bauza, B. Barbarits, A. K.Lee, C. A.
+                            Anastassiou, A. Andrei, Ç. Aydın, et al. Fully
+                            integrated silicon probesfor high-density recording
+                            of neural activity.Nature, 551(7679):232, 2017.
+                          </p>
+                          <p>
+                            [7] M. Pachitariu, N. A. Steinmetz, and J. Colonell.
+                            Kilosort2.https://github.com/MouseLand/Kilosort2.
+                          </p>
+                          <p>
+                            [8] R. Q. Quiroga, Z. Nadasdy, and Y. Ben-Shaul.
+                            Unsupervised spike detection andsorting with
+                            wavelets and superparamagnetic clustering.Neural
+                            computation,16(8):1661–1687, 2004.
+                          </p>
+                          <p>
+                            [9] P. Yger, G. L. Spampinato, E. Esposito, B.
+                            Lefebvre, S. Deny, C. Gardella, M. Stim-berg, F.
+                            Jetter, G. Zeck, S. Picaud, et al. A spike sorting
+                            toolbox for up to thou-sands of electrodes validated
+                            with ground truth recordings in vitro and in
+                            vivo.Elife,7:e34518, 2018.
+                          </p>
+                          <p>
+                            [10] M. J. Zaki and W. Meira Jr.Data mining and
+                            analysis: fundamental concepts andalgorithms.
+                            Cambridge University Press, New York, NY, 2014.12
+                          </p>
                         </div>
                       </div>
                     </div>
