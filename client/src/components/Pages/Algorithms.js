@@ -119,8 +119,10 @@ class Algorithms extends Component {
       <div>
         {loading ? (
           <Container className="container__heatmap">
-            <Card className="preloader-card">
-              <Preloader />
+            <Card>
+              <Card.Body>
+                <Preloader />
+              </Card.Body>
             </Card>
           </Container>
         ) : (
