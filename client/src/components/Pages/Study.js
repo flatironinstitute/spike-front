@@ -67,7 +67,7 @@ class Study extends Component {
                 <div className="content">
                   <div className="card__label">
                     <p>
-                      <strong>Study Details: {study.name}</strong>
+                      <strong>Study details: {study.name}</strong>
                     </p>
                   </div>
                   <div className="card__footer">
