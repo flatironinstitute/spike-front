@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Table } from "react-bootstrap";
 import { abbreviateSha1Path } from "../../utils";
 
 class Study extends Component {
@@ -55,29 +55,50 @@ class Study extends Component {
               </div>
             </Col>
           </Row>
+          <div className="finder" />
           <Row className="subcontainer justify-content-md-center">
             <Col lg={12} sm={12} xl={12}>
               <div className="card card__std">
                 <div className="content">
+                  <div className="card__label">
+                    <p>
+                      <strong>Study: {study.name}</strong>
+                    </p>
+                  </div>
                   <div className="card__footer">
                     <hr />
-                    <h3>Study: {study.name}</h3>
                     <p>
                       This study is part of the{" "}
                       <Link to={`/studyset/${study.studySetName}`}>
-                        {study.studySetName}
-                      </Link>{" "}
-                      study set. You can{" "}
+                        {study.studySetName}{" "}
+                      </Link>
+                      study set. Click to{" "}
                       <Link to={`/studyresults/${study.name}`}>
                         view the sorting results
                       </Link>{" "}
                       associated with this study.
                     </p>
-                    <h3>Recordings in {study.name}</h3>
-                    <table className="table">
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+          <div className="finder" id="pastanalyses" />
+          <Row className="subcontainer-final justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
+              <div className="card card__std">
+                <div className="content">
+                  <div className="card__label">
+                    <p>
+                      <strong>Recordings in {study.name}</strong>
+                    </p>
+                  </div>
+                  <div className="card__footer">
+                    <hr />
+                    <Table striped size="sm">
                       <thead>{recording_header}</thead>
                       <tbody>{recording_rows}</tbody>
-                    </table>
+                    </Table>
                   </div>
                 </div>
               </div>

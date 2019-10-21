@@ -53,3 +53,7 @@
     opacity: 0.2;
   }
 }
+
+.preloader-card {
+  min-height: 80vh;
+}

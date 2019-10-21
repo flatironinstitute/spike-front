@@ -23,7 +23,7 @@ class Sidebar extends Component {
     ));
     return (
       <div className="card card__sidebar">
-        <div className="content">
+        <div className="sidebar-content">
           <h5 className="listcard-title" onClick={this.scrollToTop}>
             {this.props.listTitle}
           </h5>

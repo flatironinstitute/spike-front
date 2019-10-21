@@ -119,14 +119,14 @@ class Algorithms extends Component {
       <div>
         {loading ? (
           <Container className="container__heatmap">
-            <Card>
+            <Card className="preloader-card">
               <Preloader />
             </Card>
           </Container>
         ) : (
           <Container className="container-sidebar">
             <Row noGutters>
-              <Col xl={2} md={3} sm={12} className="sidebar">
+              <Col xl={2} md={3} sm={2} className="sidebar">
                 <Sidebar
                   listItems={sidebarItems}
                   listTitle={"Algorithms In Use"}
@@ -142,7 +142,7 @@ class Algorithms extends Component {
                     </Col>
                   </Row>
                   <div className="finder" id="overview" />
-                  <Row className="subcontainer-final justify-content-md-center">
+                  <Row className="subcontainer justify-content-md-center">
                     <Col lg={12} sm={12} xl={12}>
                       <div className="card card__std">
                         <div className="content">
@@ -204,8 +204,6 @@ class Algorithms extends Component {
                       </div>
                     </Col>
                   </Row>
-                </Container>
-                <Container className="container__heatmap container-short">
                   <Row className="subcontainer-final justify-content-md-center">
                     {listCards}
                   </Row>
