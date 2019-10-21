@@ -31,8 +31,13 @@ class Study extends Component {
     for (let rec of study.recordings) {
       recording_rows.push(
         <tr key={`recording--${study.name}-${rec.name}`}>
-          <td key={"name"}>
-            <Link to={`/recording/${study.name}/${rec.name}`}>{rec.name}</Link>
+          <td key={"name"} className="listcard-link">
+            <Link
+              className="listcard-env"
+              to={`/recording/${study.name}/${rec.name}`}
+            >
+              {rec.name}
+            </Link>
           </td>
           <td key={"sampleRateHz"}>{rec.sampleRateHz}</td>
           <td key={"numChannels"}>{rec.numChannels}</td>
@@ -62,7 +67,7 @@ class Study extends Component {
                 <div className="content">
                   <div className="card__label">
                     <p>
-                      <strong>Study: {study.name}</strong>
+                      <strong>Study Details: {study.name}</strong>
                     </p>
                   </div>
                   <div className="card__footer">
@@ -72,11 +77,17 @@ class Study extends Component {
                       <Link to={`/studyset/${study.studySetName}`}>
                         {study.studySetName}{" "}
                       </Link>
-                      study set. Click to{" "}
+                      study set. <br />
+                      In the table below, click <strong>Recording</strong> names
+                      to view electrode geometry and compute time.{"   "} Click
+                      the links in the <strong>Directory</strong> or{" "}
+                      <strong>True firings</strong> columns to copy the SHA-1
+                      hash associated with this data.
+                      <br />
                       <Link to={`/studyresults/${study.name}`}>
-                        view the sorting results
+                        Click here to view the <strong>sorting results</strong>{" "}
+                        associated with this study.
                       </Link>{" "}
-                      associated with this study.
                     </p>
                   </div>
                 </div>
@@ -95,7 +106,7 @@ class Study extends Component {
                   </div>
                   <div className="card__footer">
                     <hr />
-                    <Table striped size="sm">
+                    <Table striped bordered size="sm">
                       <thead>{recording_header}</thead>
                       <tbody>{recording_rows}</tbody>
                     </Table>
