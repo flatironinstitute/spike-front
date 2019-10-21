@@ -1125,6 +1125,13 @@ code {
   font-size: 1.5rem;
 }
 
+.listcard-copy > h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 0.1rem;
+  margin-bottom: 1rem;
+}
+
 /* Heatmap
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .container__heatmap {

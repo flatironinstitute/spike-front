@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Col } from "react-bootstrap";
 import { isEmpty } from "../../utils";
+const ReactMarkdown = require("react-markdown");
 
 class ListCard extends Component {
   render() {
@@ -24,7 +25,9 @@ class ListCard extends Component {
                 </p>
               </div>
               <div className="listcard-section">
-                <p className="listcard-copy">{this.props.value.markdown}</p>
+                <p className="listcard-copy">
+                  <ReactMarkdown source={this.props.value.markdown} />
+                </p>
               </div>
               <div className="listcard-section__bottom">
                 {this.props.value.env_link !== "/" ? (

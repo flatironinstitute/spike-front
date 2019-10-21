@@ -3,9 +3,6 @@ import { HashLink } from "react-router-hash-link";
 import Scrollspy from "react-scrollspy";
 
 class Sidebar extends Component {
-  constructor(props) {
-    super(props);
-  }
   scrollToTop() {
     window.scrollTo(0, 0);
   }

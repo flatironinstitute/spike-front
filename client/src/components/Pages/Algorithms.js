@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { isEmpty, toTitleCase } from "../../utils";
-import { removeMd } from "remove-markdown";
+// import { removeMd } from "remove-markdown";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import ListCard from "../ListCard/ListCard";
 import Preloader from "../Preloader/Preloader";
@@ -34,9 +34,7 @@ class Algorithms extends Component {
   parseDescription(markdown) {
     let par1 = markdown.split("Description")[1];
     let useable = par1.split("## References")[0];
-    // TODO: Replace with expandable cell and markdown
-    const plainText = removeMd(useable);
-    return plainText;
+    return useable;
   }
 
   sortRows(rows) {
@@ -95,7 +93,6 @@ class Algorithms extends Component {
         }" target="_blank">${this.basename(alg.markdown_link)}</a>`;
       }
       if (alg.markdown) {
-        // keep
         row.markdown = this.parseDescription(alg.markdown);
       }
       if (alg.website) {
