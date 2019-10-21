@@ -69,19 +69,16 @@ class Algorithms extends Component {
         row.environment = `<a href="${
           alg.dockerfile
         }" target="_blank">${this.basename(alg.dockerfile)}</a>`;
-        // keep
         row.env_name = "Docker";
         row.env_link = alg.dockerfile;
       } else if (alg.environment) {
         row.environment = `<span>${alg.environment}</span>`;
-        // keep
         row.env_name = alg.environment;
       }
       if (alg.wrapper) {
         row.wrapper = `<a href="${alg.wrapper}" target="_blank">${this.basename(
           alg.wrapper
         )}</a>`;
-        // keep
         let nextTo = alg.wrapper.split("/")[9];
         let last = alg.wrapper.split("/")[10];
         let wrapper = `https://github.com/flatironinstitute/spikeforest/blob/master/spikeforest/spikeforestsorters/${nextTo}/${last}`;
@@ -97,7 +94,6 @@ class Algorithms extends Component {
       }
       if (alg.website) {
         row.label = `<a href="${alg.website}" target="_blank">${alg.label}</a>`;
-        // keep
         row.website = alg.website;
       }
       return row;
@@ -209,7 +205,7 @@ class Algorithms extends Component {
                     </Col>
                   </Row>
                 </Container>
-                <Container className="container__heatmap">
+                <Container className="container__heatmap container-short">
                   <Row className="subcontainer-final justify-content-md-center">
                     {listCards}
                   </Row>

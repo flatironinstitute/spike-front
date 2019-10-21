@@ -1140,10 +1140,8 @@ code {
   margin-top: 3rem;
 }
 
-.scrollyteller__container {
-  display: flex;
-  justify-content: space-between;
-  /* padding: 5rem 0; */
+.container-short {
+  margin-top: -2rem;
 }
 
 .detail__column {
