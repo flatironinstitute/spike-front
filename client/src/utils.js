@@ -32,6 +32,4 @@ export function abbreviateSha1Path(path, opts) {
       canDownload={opts.canDownload || false}
     />
   );
-  // let list0 = path.split('/');
-  // return <span title={path}>{`${list0[0]}//.../${list0[list0.length-1]}`}</span>;
 }

@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { Col } from "react-bootstrap";
 import { isEmpty } from "../../utils";
-const ReactMarkdown = require("react-markdown");
 
-class ListCard extends Component {
+class ListCardRecording extends Component {
   render() {
     let loading = isEmpty(this.props.value);
     return (
@@ -56,4 +55,4 @@ class ListCard extends Component {
     );
   }
 }
-export default ListCard;
+export default ListCardRecording;

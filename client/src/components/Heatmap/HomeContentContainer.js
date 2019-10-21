@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import HeatmapCount from "./HeatmapCount";
 import HeatmapOptionsRow from "./HeatmapOptionsRow";
+import { isMobile } from "react-device-detect";
+import { Container, Card } from "react-bootstrap";
 
 import "react-rangeslider/lib/index.css";
 
@@ -26,23 +28,43 @@ class HomeContentContainer extends Component {
   render() {
     return (
       <div>
-        <HeatmapOptionsRow
-          handleFormatChange={this.handleFormatChange}
-          handleSliderChange={this.handleSliderChange}
-          handleMetricChange={this.handleMetricChange}
-          format={this.props.format}
-          metric={this.props.metric}
-          sliderValue={this.props.sliderValue[this.props.format]}
-          showCPU={true}
-        />
-        {this.props.format ? (
-          <HeatmapCount
-            {...this.props}
-            format={this.props.format}
-            metric={this.props.metric}
-            sliderValue={this.props.sliderValue[this.props.format]}
-          />
-        ) : null}
+        {isMobile ? (
+          <Container
+            className="container__heatmap"
+            style={{ paddingTop: "7.2rem" }}
+          >
+            <Card>
+              <Card.Body>
+                <div className="info">
+                  <h5>Mobile Notice</h5>
+                  This SpikeForest content is not available for viewing on a
+                  mobile devices. Please visit again from a laptop or desktop
+                  computer.
+                </div>
+              </Card.Body>
+            </Card>
+          </Container>
+        ) : (
+          <div>
+            <HeatmapOptionsRow
+              handleFormatChange={this.handleFormatChange}
+              handleSliderChange={this.handleSliderChange}
+              handleMetricChange={this.handleMetricChange}
+              format={this.props.format}
+              metric={this.props.metric}
+              sliderValue={this.props.sliderValue[this.props.format]}
+              showCPU={true}
+            />
+            {this.props.format ? (
+              <HeatmapCount
+                {...this.props}
+                format={this.props.format}
+                metric={this.props.metric}
+                sliderValue={this.props.sliderValue[this.props.format]}
+              />
+            ) : null}
+          </div>
+        )}
       </div>
     );
   }

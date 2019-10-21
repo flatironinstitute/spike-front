@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Preloader from "../Preloader/Preloader";
 import Sidebar from "../Sidebar/Sidebar";
 import { isEmpty, toTitleCase } from "../../utils";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 class Recordings extends Component {
@@ -19,7 +19,6 @@ class Recordings extends Component {
       { name: "Recording Organization", value: "recordingorganization" },
       { name: "Recording Types", value: "recordingtypes" }
     );
-    console.log("🚀", sidebarItems);
     return (
       <Container className="container-sidebar">
         <Row noGutters>
@@ -130,10 +129,54 @@ class Recordings extends Component {
                 <div>
                   {this.props.studySets.map(studySet => (
                     <div key={`study-set-${studySet.name}`}>
-                      <div className="finder" id={studySet.name} />
                       <Row className="subcontainer justify-content-md-center">
                         <Col lg={12} sm={12} xl={12}>
-                          <div className="card card__std">
+                          <div className="finder" id={studySet.name} />
+                          <div className="listcard listcard-recording">
+                            <div className="listcard-content">
+                              <div className="listcard-section">
+                                <Link
+                                  to={`/studyset/${studySet.name}`}
+                                  className="listcard-title"
+                                >
+                                  {studySet.name}
+                                </Link>
+                              </div>
+                              <div className="listcard-section">
+                                <Table striped bordered size="sm">
+                                  <thead>
+                                    <tr>
+                                      <th key="col1">Study name</th>
+                                      <th key="col2">Number recordings</th>
+                                      <th key="col3"> </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {studySet.studies.map(study => (
+                                      <tr key={`study-${study.name}`}>
+                                        <td key="col1">{study.name}</td>
+                                        <td key="col2">
+                                          {study.recordings.length}
+                                        </td>
+                                        <td
+                                          key="col3"
+                                          className="listcard-link"
+                                        >
+                                          <Link
+                                            to={`/study/${study.name}`}
+                                            className="listcard-env"
+                                          >
+                                            View study details
+                                          </Link>
+                                        </td>
+                                      </tr>
+                                    ))}
+                                  </tbody>
+                                </Table>{" "}
+                              </div>
+                            </div>
+                          </div>
+                          {/* <div className="card card__std">
                             <div className="content">
                               <h4>
                                 <Link to={`/studyset/${studySet.name}`}>
@@ -166,7 +209,7 @@ class Recordings extends Component {
                                 </tbody>
                               </table>
                             </div>
-                          </div>
+                          </div> */}
                         </Col>
                       </Row>
                     </div>

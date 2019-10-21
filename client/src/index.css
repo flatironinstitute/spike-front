@@ -911,6 +911,16 @@ code {
   padding: 15px 15px 10px;
 }
 
+.sidebar-content {
+  padding: 15px 0px 10px;
+}
+
+@media (min-width: 880px) {
+  .sidebar-content {
+    padding: 15px 15px 10px;
+  }
+}
+
 .card__label {
   font-size: 2rem;
   text-align: left;
@@ -940,6 +950,18 @@ code {
   padding: 0;
   background-color: transparent;
   line-height: 30px;
+}
+
+.markdown-footer h1,
+.markdown-footer h2 {
+  font-size: 20px;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: -0.03em;
+  text-transform: none;
+  line-height: 1em;
+  margin: 0.5em 0 0.25em;
+  line-height: 1.15em;
 }
 
 .card__author {
@@ -977,11 +999,13 @@ code {
   margin-top: 1rem;
 }
 
-.card__sidebar {
-  background-color: hsla(240, 7%, 81%, 0);
-  margin-bottom: 0;
-  border: none;
-  position: fixed;
+@media (min-width: 768px) {
+  .card__sidebar {
+    background-color: hsla(240, 7%, 81%, 0);
+    margin-bottom: 0;
+    border: none;
+    position: fixed;
+  }
 }
 
 /* Range Slider
@@ -1056,8 +1080,11 @@ code {
   background-color: #fff;
   max-width: 100%;
   position: relative;
-  margin-bottom: 1rem;
-  margin-top: -6rem;
+  margin: 0 auto -5rem auto;
+}
+
+.listcard-recording {
+  margin: 0 auto 0rem auto;
 }
 
 .listcard-content {
@@ -1116,6 +1143,10 @@ code {
   color: var(--label-grey);
 }
 
+td.listcard-link > a {
+  border-bottom: 1px solid #384ca2;
+}
+
 .listcard-section__bottom {
   flex-direction: row;
 }
@@ -1125,18 +1156,19 @@ code {
   font-size: 1.5rem;
 }
 
+.listcard-copy > h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 0.1rem;
+  margin-bottom: 1rem;
+}
+
 /* Heatmap
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .container__heatmap {
   width: 100%;
   max-width: 95vw !important;
   margin-top: 3rem;
-}
-
-.scrollyteller__container {
-  display: flex;
-  justify-content: space-between;
-  /* padding: 5rem 0; */
 }
 
 .detail__column {
@@ -1290,10 +1322,10 @@ code {
 }
 .sidebar-link {
   border-bottom: none;
-  padding-left: 15px;
+  padding-left: 10px;
 }
 .sidebar-selected {
-  padding-left: 12px;
+  margin-left: -3px;
   border-left: 3px solid var(--fi-blue);
   color: var(--fi-blue);
   font-weight: bold;
@@ -1429,10 +1461,6 @@ tbody :last-child {
 
 /* CopyHeader
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-/* .header {
-  margin: 6rem 0;
-  text-align: center;
-} */
 .header__title {
   font-family: var(--serif);
   margin-bottom: 3rem;

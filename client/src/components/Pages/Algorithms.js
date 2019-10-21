@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { isEmpty, toTitleCase } from "../../utils";
-import { removeMd } from "remove-markdown";
+// import { removeMd } from "remove-markdown";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import ListCard from "../ListCard/ListCard";
 import Preloader from "../Preloader/Preloader";
@@ -34,9 +34,7 @@ class Algorithms extends Component {
   parseDescription(markdown) {
     let par1 = markdown.split("Description")[1];
     let useable = par1.split("## References")[0];
-    // TODO: Replace with expandable cell and markdown
-    const plainText = removeMd(useable);
-    return plainText;
+    return useable;
   }
 
   sortRows(rows) {
@@ -71,19 +69,16 @@ class Algorithms extends Component {
         row.environment = `<a href="${
           alg.dockerfile
         }" target="_blank">${this.basename(alg.dockerfile)}</a>`;
-        // keep
         row.env_name = "Docker";
         row.env_link = alg.dockerfile;
       } else if (alg.environment) {
         row.environment = `<span>${alg.environment}</span>`;
-        // keep
         row.env_name = alg.environment;
       }
       if (alg.wrapper) {
         row.wrapper = `<a href="${alg.wrapper}" target="_blank">${this.basename(
           alg.wrapper
         )}</a>`;
-        // keep
         let nextTo = alg.wrapper.split("/")[9];
         let last = alg.wrapper.split("/")[10];
         let wrapper = `https://github.com/flatironinstitute/spikeforest/blob/master/spikeforest/spikeforestsorters/${nextTo}/${last}`;
@@ -95,12 +90,10 @@ class Algorithms extends Component {
         }" target="_blank">${this.basename(alg.markdown_link)}</a>`;
       }
       if (alg.markdown) {
-        // keep
         row.markdown = this.parseDescription(alg.markdown);
       }
       if (alg.website) {
         row.label = `<a href="${alg.website}" target="_blank">${alg.label}</a>`;
-        // keep
         row.website = alg.website;
       }
       return row;
@@ -127,13 +120,15 @@ class Algorithms extends Component {
         {loading ? (
           <Container className="container__heatmap">
             <Card>
-              <Preloader />
+              <Card.Body>
+                <Preloader />
+              </Card.Body>
             </Card>
           </Container>
         ) : (
           <Container className="container-sidebar">
             <Row noGutters>
-              <Col xl={2} md={3} sm={12} className="sidebar">
+              <Col xl={2} md={3} sm={2} className="sidebar">
                 <Sidebar
                   listItems={sidebarItems}
                   listTitle={"Algorithms In Use"}
@@ -149,7 +144,7 @@ class Algorithms extends Component {
                     </Col>
                   </Row>
                   <div className="finder" id="overview" />
-                  <Row className="subcontainer-final justify-content-md-center">
+                  <Row className="subcontainer justify-content-md-center">
                     <Col lg={12} sm={12} xl={12}>
                       <div className="card card__std">
                         <div className="content">
@@ -211,8 +206,6 @@ class Algorithms extends Component {
                       </div>
                     </Col>
                   </Row>
-                </Container>
-                <Container className="container__heatmap">
                   <Row className="subcontainer-final justify-content-md-center">
                     {listCards}
                   </Row>

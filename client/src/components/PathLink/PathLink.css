@@ -1,15 +1,25 @@
 .path-link-button {
   background-color: transparent;
   border: none;
-  cursor: pointer;
   text-decoration: underline;
+  cursor: pointer;
   display: inline;
   margin: 0;
   padding: 0;
   text-transform: none !important;
+  font-size: 11px;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.5em;
+  color: #6b6b76;
+  color: var(--label-grey);
+  border-bottom: 1px solid var(--fi-blue);
+  height: auto;
 }
 
 .path-link-button:hover,
 .path-link-button:focus {
-text-decoration: none;
+  color: var(--fi-blue);
 }

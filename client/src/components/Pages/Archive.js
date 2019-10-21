@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import PathLink from "../PathLink/PathLink";
 import ReactCollapsingTable from "react-collapsing-table";
+import Preloader from "../Preloader/Preloader.js";
 const axios = require("axios");
 const stable_stringify = require("json-stable-stringify");
 const crypto = require("crypto");
@@ -160,9 +161,7 @@ class Archive extends Component {
           <Container className="container__heatmap">
             <Card>
               <Card.Body>
-                <Card.Title>
-                  <h3>{message}</h3>
-                </Card.Title>
+                <Preloader />
               </Card.Body>
             </Card>
           </Container>
