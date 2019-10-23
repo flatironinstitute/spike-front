@@ -25,9 +25,9 @@ class ListCard extends Component {
                 </p>
               </div>
               <div className="listcard-section">
-                <p className="listcard-copy">
+                <div className="listcard-copy">
                   <ReactMarkdown source={this.props.value.markdown} />
-                </p>
+                </div>
               </div>
               <div className="listcard-section__bottom">
                 {this.props.value.env_link !== "/" ? (
