@@ -385,6 +385,7 @@ Use containers when you need a content area that has standard maximum width and 
 
 .finder {
   padding-top: 8rem;
+  z-index: -1000;
 }
 
 /* Lists
@@ -1080,6 +1081,7 @@ code {
   background-color: #fff;
   max-width: 100%;
   position: relative;
+  z-index: 100;
   margin: 0 auto -5rem auto;
 }
 
@@ -1224,16 +1226,16 @@ td.listcard-link > a {
   align-items: baseline;
 }
 
-/* .card__header--checkboxes {
-  background-color: pink;
-} */
-
 .card__title {
   margin: 0;
   color: #333;
   font-weight: 300;
   font-size: 22px;
   line-height: 30px;
+}
+
+.card__subtitle {
+  margin-top: 1rem;
 }
 
 .card__title--link {

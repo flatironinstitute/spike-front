@@ -161,7 +161,7 @@ class Archive extends Component {
           <Container className="container__heatmap">
             <Card>
               <Card.Body>
-                <Preloader />
+                <Preloader message={message} />
               </Card.Body>
             </Card>
           </Container>

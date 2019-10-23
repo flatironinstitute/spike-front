@@ -1,5 +1,4 @@
 import React from "react";
-import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 class ExpandingHeatmapTable extends React.Component {
