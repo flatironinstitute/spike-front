@@ -655,13 +655,13 @@ class HeatmapViz extends Component {
 
   getAlertCopy() {
     return this.props.groupByStudySets && this.props.format === "cpu" ? (
-      <p className="updated">
-        <b>Important!</b>
-        <br /> These numbers reflect actual compute times on our cluster and are
-        not meant to be a rigorous benchmark. The algorithms were applied in
-        batches, with many different algorithms possibly running simultaneously
-        on the same machine. Some runs may have been allocated more CPU cores
-        than others. We are working toward a more accurate compute time test.
+      <p>
+        <b>Note:</b> These numbers reflect actual compute times on our cluster
+        and are not meant to be a rigorous benchmark. The algorithms were
+        applied in batches, with many different algorithms possibly running
+        simultaneously on the same machine. Some runs may have been allocated
+        more CPU cores than others. We are working toward a more accurate
+        compute time test.
       </p>
     ) : null;
   }
@@ -676,9 +676,7 @@ class HeatmapViz extends Component {
         Click to expand study set rows and see component study data. {innercopy}
       </p>
     ) : (
-      <p className="updated updated__no-top">
-        {innercopy} <br />
-      </p>
+      <p className="updated updated__no-top">{innercopy}</p>
     );
   }
 
@@ -692,15 +690,8 @@ class HeatmapViz extends Component {
       <div className="card card--spikeforest card--heatmap" id="heatmap-card">
         <div className="card__header">
           <h4 className="card__title">{title}</h4>
+          <div className="card__subtitle">{paraCopy}</div>
         </div>
-        {/* <div>
-          {alertCopy}
-          {paraCopy}
-          <p>
-            * An asterisk indicates an incomplete or failed sorting on a subset
-            of results.
-          </p>
-        </div> */}
         {loading ? (
           <h4>...</h4>
         ) : (
@@ -710,6 +701,11 @@ class HeatmapViz extends Component {
               rows={this.state.tableRows}
               onCellSelected={this.props.handleCellSelected}
             />
+            <p>
+              * An asterisk indicates an incomplete or failed sorting on a
+              subset of results.
+            </p>
+            {alertCopy}
           </div>
         )}
       </div>

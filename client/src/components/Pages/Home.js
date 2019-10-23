@@ -5,7 +5,6 @@ import StatsAlert from "../Header/StatsAlert";
 import InfoPanelContent from "../Header/InfoPanelContent";
 import Preloader from "../Preloader/Preloader";
 import HomeContentContainer from "../Heatmap/HomeContentContainer";
-import { isMobile } from "react-device-detect";
 
 class Home extends Component {
   render() {
