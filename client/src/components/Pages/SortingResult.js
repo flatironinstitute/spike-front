@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Table } from "react-bootstrap";
 import { abbreviateSha1Path } from "../../utils";
 import ConsoleOutput from "../Utils/ConsoleOutput";
 import CodeForReproducing from "../Utils/CodeForReproducing";
@@ -13,11 +13,6 @@ class SortingResult extends Component {
     };
   }
 
-  async componentDidUpdate(prevProps, prevState) {
-    if (this.props.consoleOutPath !== prevProps.consoleOutPath) {
-    }
-  }
-
   findSorter(sorterName) {
     for (let sorter of this.props.sorters) {
       if (sorter.name === sorterName) {
@@ -25,6 +20,17 @@ class SortingResult extends Component {
       }
     }
     return null;
+  }
+
+  format_date(x) {
+    return new Date(x).toLocaleString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric"
+    });
   }
 
   render() {
@@ -76,12 +82,33 @@ class SortingResult extends Component {
         <Container className="container__heatmap">
           <Row className="subcontainer justify-content-md-center">
             <Col lg={12} sm={12} xl={12}>
+              <div className="intro">
+                <p className="big">Sorting result</p>
+                <p className="subhead">
+                  {" "}
+                  <Link to={`/study/${study.name}`}>{study.name}</Link> (
+                  <Link to={`/recording/${study.name}/${recording.name}`}>
+                    {recording.name}
+                  </Link>
+                  ) sorted with{" "}
+                  <Link to={`/algorithms`}>{sortingResult.sorterName}</Link>{" "}
+                </p>
+              </div>
+            </Col>
+          </Row>
+          <div className="finder" />
+          <Row className="subcontainer justify-content-md-center">
+            <Col lg={12} sm={12} xl={12}>
               <div className="card card__std">
                 <div className="content">
+                  <div className="card__label">
+                    <p>
+                      <strong>Sorting result details</strong>
+                    </p>
+                  </div>
                   <div className="card__footer">
                     <hr />
-                    <h3>Sorting result</h3>
-                    <table className="table" style={{ width: "auto" }}>
+                    <Table striped bordered size="sm">
                       <thead />
                       <tbody>
                         <tr>
@@ -130,21 +157,6 @@ class SortingResult extends Component {
                             </pre>
                           </td>
                         </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </Col>
-          </Row>
-          <Row className="subcontainer justify-content-md-center">
-            <Col lg={12} sm={12} xl={12}>
-              <div className="card card__std">
-                <div className="content">
-                  <div className="card__footer">
-                    <table className="table" style={{ width: "auto" }}>
-                      <thead />
-                      <tbody>
                         <tr>
                           <th>Firings output</th>
                           <td>
@@ -185,25 +197,31 @@ class SortingResult extends Component {
                         </tr>
                         <tr>
                           <th>Start time</th>
-                          <td>{format_date(sortingResult.startTime)}</td>
+                          <td>{this.format_date(sortingResult.startTime)}</td>
                         </tr>
                         <tr>
                           <th>End time</th>
-                          <td>{format_date(sortingResult.endTime)}</td>
+                          <td>{this.format_date(sortingResult.endTime)}</td>
                         </tr>
                       </tbody>
-                    </table>
+                    </Table>
                   </div>
                 </div>
               </div>
             </Col>
           </Row>
+          <div className="finder" />
           <Row className="subcontainer justify-content-md-center">
             <Col lg={12} sm={12} xl={12}>
               <div className="card card__std">
                 <div className="content">
+                  <div className="card__label">
+                    <p>
+                      <strong>Console output</strong>
+                    </p>
+                  </div>
                   <div className="card__footer">
-                    <h3>Console output</h3>
+                    <hr />
                     {this.state.consoleOutExpanded ? (
                       <ConsoleOutput
                         consoleOutPath={sortingResult.consoleOut}
@@ -222,12 +240,18 @@ class SortingResult extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="subcontainer justify-content-md-center">
+          <div className="finder" />
+          <Row className="subcontainer-final justify-content-md-center">
             <Col lg={12} sm={12} xl={12}>
               <div className="card card__std">
                 <div className="content">
+                  <div className="card__label">
+                    <p>
+                      <strong>Reproduction steps</strong>
+                    </p>
+                  </div>
                   <div className="card__footer">
-                    <h3>Reproducing</h3>
+                    <hr />
                     {this.state.codeExpanded ? (
                       <CodeForReproducing
                         sortingResult={sortingResult}
@@ -238,7 +262,7 @@ class SortingResult extends Component {
                       <button
                         onClick={() => this.setState({ codeExpanded: true })}
                       >
-                        Load code for reproducing result`
+                        Load code for reproducing result
                       </button>
                     )}
                   </div>
@@ -250,17 +274,6 @@ class SortingResult extends Component {
       </div>
     );
   }
-}
-
-function format_date(x) {
-  return new Date(x).toLocaleString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric"
-  });
 }
 
 export default SortingResult;

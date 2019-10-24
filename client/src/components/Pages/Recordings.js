@@ -176,40 +176,6 @@ class Recordings extends Component {
                               </div>
                             </div>
                           </div>
-                          {/* <div className="card card__std">
-                            <div className="content">
-                              <h4>
-                                <Link to={`/studyset/${studySet.name}`}>
-                                  {studySet.name}
-                                </Link>
-                              </h4>
-                              <table
-                                className="table"
-                                style={{ width: "auto" }}
-                              >
-                                <thead>
-                                  <tr>
-                                    <th key="col1">Study name</th>
-                                    <th key="col2">Num. recordings</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {studySet.studies.map(study => (
-                                    <tr key={`study-${study.name}`}>
-                                      <td key="col1">
-                                        <Link to={`/study/${study.name}`}>
-                                          {study.name}
-                                        </Link>
-                                      </td>
-                                      <td key="col2">
-                                        {study.recordings.length}
-                                      </td>
-                                    </tr>
-                                  ))}
-                                </tbody>
-                              </table>
-                            </div>
-                          </div> */}
                         </Col>
                       </Row>
                     </div>
