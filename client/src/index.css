@@ -123,6 +123,7 @@ code {
   margin: 0;
   padding: 0.2em 0.4em;
   color: var(--dark-grey);
+  background: #f5f5f5;
 }
 
 /* Links
@@ -585,10 +586,6 @@ li {
   margin-top: 0.5rem;
   padding-right: 0;
   padding-left: 0;
-}
-
-code {
-  background: #f5f5f5;
 }
 
 /* TODO: REMOVE Intro Header Styling
@@ -1483,4 +1480,18 @@ tbody :last-child {
 .header__copy--em {
   color: var(--fi-blue);
   font-weight: bold;
+}
+
+/* Console Output
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.console-output {
+  max-height: 40vh;
+}
+.console-output code {
+  background-color: none;
+  background: none;
+}
+.reproduction-code {
+  border: 1px solid var(--fi-blue);
+  padding: 10px;
 }

@@ -38,8 +38,8 @@ class HomeContentContainer extends Component {
                 <div className="info">
                   <h5>Mobile Notice</h5>
                   This SpikeForest content is not available for viewing on a
-                  mobile devices. Please visit again from a laptop or desktop
-                  computer.
+                  mobile device. Please visit again from a laptop or desktop
+                  computer. Thank you.
                 </div>
               </Card.Body>
             </Card>
