@@ -37,6 +37,13 @@ class DetailPage extends Component {
     this.checkSelectedUnit();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.selectedSorterName !== prevProps.selectedSorterName || this.state.selectedSorterName !== prevState.selectedSorterName ) {
+      console.log('sorterCHange');
+      this.checkSelectedUnit();
+    }
+  }
+
   checkSelectedUnit() {
     if (this.props.selectedUnit) {
       let su = this.props.selectedUnit;
