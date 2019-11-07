@@ -4,20 +4,6 @@ import ScatterplotCount from "./ScatterplotCount";
 class ScatterplotContainer extends Component {
   getHeaderCopy(metric) {
     return `Unit ${metric} vs. SNR`;
-    /*
-    var sliderValue;
-    switch (value) {
-      case "count":
-        sliderValue = "Items above threshold:";
-        break;
-      case "average":
-        sliderValue = "Average accuracy: ";
-        break;
-      default:
-        sliderValue = "";
-    }
-    return sliderValue;
-    */
   }
 
   render() {
@@ -38,24 +24,24 @@ class ScatterplotContainer extends Component {
     const copy = this.getHeaderCopy(this.props.metric);
     return (
       <div>
-        {
-          this.props.handleScatterplotClick ?
-          (
-            <p>
-              Each marker corresponds to one ground truth unit in the study and may be clicked for more details. Marker area is proportional to the number of events and color reflects the particular recording within the study.
-            </p>
-          ) : (<span></span>)
-        }
-        <p>
-          {copy}
-        </p>
+        {this.props.handleScatterplotClick ? (
+          <p>
+            Each marker corresponds to one ground truth unit in the study and
+            may be clicked for more details. Marker area is proportional to the
+            number of events and color reflects the particular recording within
+            the study.
+          </p>
+        ) : (
+          <span />
+        )}
+        <p>{copy}</p>
         {(() => {
           switch (format) {
             case "count":
               return (
                 <ScatterplotCount
-                  lineOrientation={'horizontal'}
-                  colorRange={colorRanges['count']}
+                  lineOrientation={"horizontal"}
+                  colorRange={colorRanges["count"]}
                   studyAnalysisResult={studyAnalysisResult}
                   studyName={studyName}
                   recordingName={recordingName}
@@ -70,8 +56,8 @@ class ScatterplotContainer extends Component {
             case "average":
               return (
                 <ScatterplotCount
-                  lineOrientation={'vertical'}
-                  colorRange={colorRanges['average']}
+                  lineOrientation={"vertical"}
+                  colorRange={colorRanges["average"]}
                   studyAnalysisResult={studyAnalysisResult}
                   studyName={studyName}
                   recordingName={recordingName}

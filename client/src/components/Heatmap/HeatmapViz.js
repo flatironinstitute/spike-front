@@ -1,29 +1,18 @@
+
 import React, { Component } from "react";
 import { isEmpty } from "../../utils";
 import * as Sentry from "@sentry/browser";
 import * as d3 from "d3";
 import ExpandingHeatmapTable from "./ExpandingHeatmapTable";
 
-import { Link } from "react-router-dom";
-
 class HeatmapViz extends Component {
   constructor(props) {
     super(props);
-<<<<<<< HEAD
     this.state = {
       tableRows: [],
-      tableHeader: [],
-=======
-    this.state = { 
-      tableRows: [], 
-      tableHeader: [], 
->>>>>>> 60c0c6916aad65f5de662500aeb909bcf8131306
-      selectedStudyName: props.selectedStudyName,
-      selectedRecordingName: props.selectedRecordingName,
-      selectedSorterName: props.selectedSorterName
+      tableHeader: []
     };
     this.studySetNamesByStudyName = {};
-    this.handleCellSelected = this.handleCellSelected.bind(this);
   }
 
   componentDidMount() {
@@ -176,8 +165,6 @@ class HeatmapViz extends Component {
       cells: headerCells
     };
 
-    let elmnt = document.getElementById("heatmap-card");
-    let width = elmnt.offsetWidth;
     this.setState({
       tableRows: tableRows,
       tableHeader: tableHeader
@@ -260,17 +247,12 @@ class HeatmapViz extends Component {
         trueFiringRates.push(sar.trueFiringRates[jj]);
         trueNumEvents.push(sar.trueNumEvents[jj]);
         for (let ii = 0; ii < sorter_names.length; ii++) {
-<<<<<<< HEAD
           sortingResults[ii].accuracies.push(
             sar.sortingResults[ii].accuracies[jj]
           );
           sortingResults[ii].precisions.push(
             sar.sortingResults[ii].precisions[jj]
           );
-=======
-          sortingResults[ii].accuracies.push(sar.sortingResults[ii].accuracies[jj]);
-          sortingResults[ii].precisions.push(sar.sortingResults[ii].precisions[jj]);
->>>>>>> 60c0c6916aad65f5de662500aeb909bcf8131306
           sortingResults[ii].recalls.push(sar.sortingResults[ii].recalls[jj]);
           sortingResults[ii].numMatches.push(
             sar.sortingResults[ii].numMatches[jj]
@@ -336,7 +318,6 @@ class HeatmapViz extends Component {
         trueNumEvents = trueNumEvents.concat(studyAnalysisResult.trueNumEvents);
         // ...
         for (let ii = 0; ii < sorter_names.length; ii++) {
-<<<<<<< HEAD
           sortingResults[ii].accuracies = sortingResults[ii].accuracies.concat(
             studyAnalysisResult.sortingResults[ii].accuracies
           );
@@ -364,15 +345,6 @@ class HeatmapViz extends Component {
           ].cpuTimesSec.concat(
             studyAnalysisResult.sortingResults[ii].cpuTimesSec
           );
-=======
-          sortingResults[ii].accuracies = sortingResults[ii].accuracies.concat(studyAnalysisResult.sortingResults[ii].accuracies);
-          sortingResults[ii].precisions = sortingResults[ii].precisions.concat(studyAnalysisResult.sortingResults[ii].precisions);
-          sortingResults[ii].recalls = sortingResults[ii].recalls.concat(studyAnalysisResult.sortingResults[ii].recalls);
-          sortingResults[ii].numMatches = sortingResults[ii].numMatches.concat(studyAnalysisResult.sortingResults[ii].numMatches);
-          sortingResults[ii].numFalsePositives = sortingResults[ii].numFalsePositives.concat(studyAnalysisResult.sortingResults[ii].numFalsePositives);
-          sortingResults[ii].numFalseNegatives = sortingResults[ii].numFalseNegatives.concat(studyAnalysisResult.sortingResults[ii].numFalseNegatives);
-          sortingResults[ii].cpuTimesSec = sortingResults[ii].cpuTimesSec.concat(studyAnalysisResult.sortingResults[ii].cpuTimesSec);
->>>>>>> 60c0c6916aad65f5de662500aeb909bcf8131306
         }
       }
     }
@@ -655,19 +627,14 @@ class HeatmapViz extends Component {
   }
 
   computeBackgroundColor(val) {
-    // TODO: Swap d3 ranges with these custom ones
-    // const colorRanges = {
-    //   count: [d3.rgb("#00CEA8"), d3.rgb("#0C4F42")],
-    //   average: [d3.rgb("#edf0fc"), d3.rgb("#6B7CC4"), d3.rgb("#102BA3")],
-    //   cpu: [d3.rgb("#EFC1E3"), d3.rgb("#B52F93")]
-    // };
     let color;
+    let square = Math.pow(val, 2);
     switch (this.props.format) {
       case "count":
-        color = d3.interpolateGreens(val);
+        color = d3.interpolateGreens(square);
         break;
       case "average":
-        color = d3.interpolateBlues(val);
+        color = d3.interpolateBlues(square);
         break;
       case "cpu":
         color = d3.interpolateYlOrRd(val);
@@ -680,82 +647,37 @@ class HeatmapViz extends Component {
   }
 
   computeForegroundColor(val) {
-    return val < 0.5 ? "black" : "white";
-  }
-
-  handleCellSelected(cell) {
-    if (cell.selectable) {
-      if (this.props.selectStudyName) {
-        this.props.selectStudyName(cell.info.studyAnalysisResult.studyName);
-      }
-      if (this.props.selectRecordingName) {
-<<<<<<< HEAD
-        this.props.selectRecordingName(
-          cell.info.studyAnalysisResult.recordingName || null
-        );
-=======
-        this.props.selectRecordingName(cell.info.studyAnalysisResult.recordingName || null);
->>>>>>> 60c0c6916aad65f5de662500aeb909bcf8131306
-      }
-      if (this.props.selectSorterName) {
-        this.props.selectSorterName(cell.info.sorterName);
-      }
-      this.setState({
-        selectedStudyName: cell.info.studyAnalysisResult.studyName,
-        selectedRecordingName:
-          cell.info.studyAnalysisResult.recordingName || null,
-        selectedSorterName: cell.info.sorterName
-      });
-    }
+    return val < 0.7 ? "black" : "white";
   }
 
   isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
   }
 
-<<<<<<< HEAD
   getAlertCopy() {
-    // let divStyle = {
-    //   backgroundColor: "#fffdc0",
-    //   borderRadius: "5px",
-    //   display: "inline-block"
-    // };
     return this.props.groupByStudySets && this.props.format === "cpu" ? (
-      <p className="updated">
-        <b>Important!</b>
-        <br /> These numbers reflect actual compute times on our cluster and are
-        not meant to be a rigorous benchmark. The algorithms were applied in
-        batches, with many different algorithms possibly running simultaneously
-        on the same machine. Some runs may have been allocated more CPU cores
-        than others. We are working toward a more accurate compute time test.
+      <p>
+        <b>Note:</b> These numbers reflect actual compute times on our cluster
+        and are not meant to be a rigorous benchmark. The algorithms were
+        applied in batches, with many different algorithms possibly running
+        simultaneously on the same machine. Some runs may have been allocated
+        more CPU cores than others. We are working toward a more accurate
+        compute time test.
       </p>
     ) : null;
   }
 
   getParaCopy() {
     const innercopy =
-=======
-  render() {
-    const loading =
-      isEmpty(this.state.tableRows) ||
-      isEmpty(this.state.tableHeader);
-    const title = this.getFormatCopy();
-    const copy =
->>>>>>> 60c0c6916aad65f5de662500aeb909bcf8131306
       this.props.format !== "cpu"
-        ? "  Select individual cells to see corresponding details. "
+        ? "  Select individual cells to see a detailed scatterplot of the corresponding sorter results."
         : "";
     return this.props.groupByStudySets ? (
-      <p>
-        Click to expand study set rows and see component study data. {innercopy}{" "}
-        * An asterisk indicates an incomplete or failed sorting on a subset of
-        results.
+      <p className="updated updated__no-top">
+        Click to expand study set rows and see component study data. {innercopy}
       </p>
     ) : (
-      <p>
-        {innercopy} * An asterisk indicates an incomplete or failed sorting on a
-        subset of results.
-      </p>
+      <p className="updated updated__no-top">{innercopy}</p>
     );
   }
 
@@ -766,47 +688,10 @@ class HeatmapViz extends Component {
     const alertCopy = this.getAlertCopy();
     const paraCopy = this.getParaCopy();
     return (
-      <div className="card card--heatmap" id="heatmap-card">
+      <div className="card card--spikeforest card--heatmap" id="heatmap-card">
         <div className="card__header">
           <h4 className="card__title">{title}</h4>
-        </div>
-        <div>
-<<<<<<< HEAD
-          {alertCopy}
-          {paraCopy}
-=======
-          {
-            this.props.groupByStudySets ?
-            (
-              <span>
-                <p style={divStyle}>
-                  {
-                    this.props.format === 'cpu' ?
-                    (
-                      <span><b>Important!</b> These numbers reflect actual compute times on our cluster and are not meant to be a rigorous benchmark. The algorithms were applied in batches, with many different algorithms possibly running
-                        simultaneously on the same machine. Some runs may have been allocated more CPU cores than others. We are working toward a more accurate compute time test.
-                      </span>
-                    ) :
-                    (
-                      <span>
-                        These are preliminary results prior to parameter optimization, and we are still in the process of ensuring that we are using the proper <Link to="/algorithms">versions of the spike sorters</Link>.
-                        We expect to go live by the end of July at <a href="https://spikeforest.flatironinstitute.org">spikeforest.flatironinstitute.org</a>.
-                      </span>
-
-                    )
-                  }
-                </p>
-                <p>
-                  Click to expand study set rows and see component study data. {copy} * An asterisk indicates an incomplete or failed sorting on a subset of results.</p>
-              </span>
-            ) :
-            (
-              <span>
-                <p>{copy} * An asterisk indicates an incomplete or failed sorting on a subset of results.</p>
-              </span>
-            )
-          }
->>>>>>> 60c0c6916aad65f5de662500aeb909bcf8131306
+          <div className="card__subtitle">{paraCopy}</div>
         </div>
         {loading ? (
           <h4>...</h4>
@@ -815,8 +700,13 @@ class HeatmapViz extends Component {
             <ExpandingHeatmapTable
               header={this.state.tableHeader}
               rows={this.state.tableRows}
-              onCellSelected={this.handleCellSelected}
+              onCellSelected={this.props.handleCellSelected}
             />
+            <p>
+              * An asterisk indicates an incomplete or failed sorting on a
+              subset of results.
+            </p>
+            {alertCopy}
           </div>
         )}
       </div>

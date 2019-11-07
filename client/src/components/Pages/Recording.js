@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Table } from "react-bootstrap";
 import { abbreviateSha1Path } from "../../utils";
 import ElectrodeGeometry from "./ElectrodeGeometry";
 import axios from "axios";
@@ -124,22 +124,22 @@ class Recording extends Component {
           <Row className="subcontainer justify-content-md-center">
             <Col lg={12} sm={12} xl={12}>
               <div className="intro">
-                <p className="big">Recordings</p>
+                <p className="big">{recording.name}</p>
               </div>
             </Col>
           </Row>
+          <div className="finder" />
           <Row className="subcontainer justify-content-md-center">
             <Col lg={12} sm={12} xl={12}>
               <div className="card card__std">
                 <div className="content">
                   <div className="card__label">
                     <p>
-                      <strong>Recording</strong>
+                      <strong>Recording details: {recording.name}</strong>
                     </p>
                   </div>
                   <div className="card__footer">
                     <hr />
-                    <h3>Recording: {recording.name}</h3>
                     <p>
                       This recording is part of the{" "}
                       <Link to={`/study/${recording.studyName}`}>
@@ -164,12 +164,18 @@ class Recording extends Component {
               </div>
             </Col>
           </Row>
+          <div className="finder" />
           <Row className="subcontainer justify-content-md-center">
             <Col lg={12} sm={12} xl={12}>
               <div className="card card__std">
                 <div className="content">
+                  <div className="card__label">
+                    <p>
+                      <strong>Electrode Geometry</strong>
+                    </p>
+                  </div>
                   <div className="card__footer">
-                    <h4>Electrode geometry</h4>
+                    <hr />
                     <ElectrodeGeometry
                       locations={this.state.electrodeLocations}
                       labels={electrodeLabels}
@@ -179,16 +185,22 @@ class Recording extends Component {
               </div>
             </Col>
           </Row>
-          <Row className="subcontainer justify-content-md-center">
+          <div className="finder" />
+          <Row className="subcontainer-final justify-content-md-center">
             <Col lg={12} sm={12} xl={12}>
               <div className="card card__std">
                 <div className="content">
+                  <div className="card__label">
+                    <p>
+                      <strong>Sorting Results</strong>
+                    </p>
+                  </div>
                   <div className="card__footer">
-                    <h4>Sorting results</h4>
-                    <table className="table">
+                    <hr />
+                    <Table triped bordered size="sm">
                       <thead>{sorting_result_header}</thead>
                       <tbody>{sorting_result_rows}</tbody>
-                    </table>
+                    </Table>
                   </div>
                 </div>
               </div>

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { isEmpty } from "../../utils";
 import { Redirect } from "react-router";
-// import * as Sentry from "@sentry/browser";
 
 // Components
 import { Col, Container, Row } from "react-bootstrap";
@@ -14,16 +13,17 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as actionCreators from "../../actions/actionCreators";
 
-// Stylin'
-import "./heatmap.css";
-
 class HeatmapCount extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cardHeight: null,
-      redirect: false
+      cardHeight: "auto",
+      redirect: false,
+      selectedStudyName: props.selectedStudyName,
+      selectedRecordingName: props.selectedRecordingName,
+      selectedSorterName: props.selectedSorterName
     };
+    this.handleCellSelected = this.handleCellSelected.bind(this);
   }
 
   handleCardHeightChange = value => {
@@ -39,13 +39,40 @@ class HeatmapCount extends Component {
     });
   };
 
+  handleCellSelected(cell) {
+    if (cell.selectable) {
+      if (this.props.selectStudyName) {
+        this.props.selectStudyName(cell.info.studyAnalysisResult.studyName);
+      }
+      if (this.props.selectRecordingName) {
+        this.props.selectRecordingName(
+          cell.info.studyAnalysisResult.recordingName || null
+        );
+      }
+      if (this.props.selectSorterName) {
+        this.props.selectSorterName(cell.info.sorterName);
+      }
+      this.setState({
+        selectedStudyName: cell.info.studyAnalysisResult.studyName,
+        selectedRecordingName:
+          cell.info.studyAnalysisResult.recordingName || null,
+        selectedSorterName: cell.info.sorterName
+      });
+    }
+  }
+
   render() {
     let loading = isEmpty(this.props.studyAnalysisResults);
-    let study = this.props.selectedStudyName || "";
+    let study = this.state.selectedStudyName || "";
     study = "/studyresults/" + study;
     if (this.state.redirect) {
       return <Redirect push to={study} />;
     }
+    const noScatterplot =
+      !this.state.selectedStudyName || !this.state.selectedSorterName;
+
+    let leftCol = noScatterplot ? [12, 12, 12, 12] : [12, 12, 12, 6];
+    let rightCol = [12, 12, 12, 6];
     return (
       <div>
         {loading ? (
@@ -54,61 +81,51 @@ class HeatmapCount extends Component {
           </Container>
         ) : (
           <Container className="container__heatmap">
-            <Row className="container__heatmap--row">
-<<<<<<< HEAD
-              <Col style={{ minWidth: 700, flexGrow: 1, overflow: "auto" }}>
-=======
-              <Col style={{minWidth: 700, flexGrow: 1, overflow: 'auto'}}>
->>>>>>> 60c0c6916aad65f5de662500aeb909bcf8131306
+            <Row className="container__heatmap--row even-row">
+              <Col
+                sm={leftCol[0]}
+                md={leftCol[1]}
+                lg={leftCol[2]}
+                xl={leftCol[3]}
+              >
                 <HeatmapViz
+                  format={this.props.format}
                   groupByStudySets={true}
+                  handleCellSelected={this.handleCellSelected}
+                  metric={this.props.metric}
                   selectStudyName={this.props.selectStudyName}
                   selectSorterName={this.props.selectSorterName}
-                  selectedStudyName={this.props.selectedStudyName}
-                  selectedSorterName={this.props.selectedSorterName}
+                  selectedStudyName={this.state.selectedStudyName}
+                  selectedSorterName={this.state.selectedSorterName}
+                  sorters={this.props.sorters}
                   studyAnalysisResults={this.props.studyAnalysisResults}
                   studySets={this.props.studySets}
-                  sorters={this.props.sorters}
-                  format={this.props.format}
-                  metric={this.props.metric}
                   threshold={this.props.sliderValue}
-                  handleCardHeightChange={this.handleCardHeightChange}
                 />
               </Col>
-
-<<<<<<< HEAD
-              {this.props.format !== "cpu" ? (
-                <Col style={{ minWidth: 400, flexGrow: 1 }}>
-=======
-              {
-                (this.props.format !== "cpu") ?
-                (<Col style={{minWidth: 400, flexGrow: 1}}>
->>>>>>> 60c0c6916aad65f5de662500aeb909bcf8131306
+              {this.props.format !== "cpu" && !noScatterplot ? (
+                <Col
+                  sm={rightCol[0]}
+                  md={rightCol[1]}
+                  lg={rightCol[2]}
+                  xl={rightCol[3]}
+                >
                   <ScatterplotCard
                     sorters={this.props.sorters}
                     studyAnalysisResults={this.props.studyAnalysisResults}
-                    studyName={this.props.selectedStudyName}
-                    sorterName={this.props.selectedSorterName}
+                    studyName={this.state.selectedStudyName}
+                    sorterName={this.state.selectedSorterName}
                     sliderValue={this.props.sliderValue}
                     format={this.props.format}
                     metric={this.props.metric}
-<<<<<<< HEAD
-                    cardHeight={
-                      this.props.selectedUnit ? this.state.cardHeight : 100
-                    }
+                    cardHeight={noScatterplot ? 100 : this.state.cardHeight}
                     selectedUnitCode={
                       (this.props.selectedUnit || {}).unitCode || null
                     }
-=======
-                    cardHeight={this.props.selectedUnit ? this.state.cardHeight : 100}
-                    selectedUnitCode={(this.props.selectedUnit || {}).unitCode || null}
->>>>>>> 60c0c6916aad65f5de662500aeb909bcf8131306
                     handleScatterplotClick={this.handleScatterplotClick}
                   />
                 </Col>
-              ) : (
-                <span />
-              )}
+              ) : null}
             </Row>
           </Container>
         )}

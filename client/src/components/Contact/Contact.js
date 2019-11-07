@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import ContactForm from "./ContactForm";
 import { Container } from "react-bootstrap";
 
-import "./contact.css";
-
 class Contact extends Component {
   render() {
     return (

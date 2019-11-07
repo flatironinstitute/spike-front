@@ -10,7 +10,7 @@ class Footer extends Component {
       <footer className="footer">
 <<<<<<< HEAD
         <p className="updated">
-          Spike-front client updated on September 5, 2019 (5:00pm)
+          Spike-front client updated on October 18, 2019 (5:00pm)
         </p>
 =======
         <p className="updated">Spike-front client updated on ````July 24, 2019 (9:00am)</p>

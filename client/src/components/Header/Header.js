@@ -3,7 +3,6 @@ import { LinkContainer } from "react-router-bootstrap";
 
 import { Nav, Navbar } from "react-bootstrap";
 import logo from "./logo-no-icon.svg";
-// import InfoPanel from "./InfoPanel";
 
 import { toTitleCase } from "../../utils";
 
@@ -64,7 +63,7 @@ class Header extends Component {
           </LinkContainer>
           <Nav className="navbar__right">
             <LinkContainer exact to="/">
-              <Nav.Link eventKey="/">Home</Nav.Link>
+              <Nav.Link eventKey="/">Heatmap</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/recordings">
               <Nav.Link eventKey="/recordings">Recordings</Nav.Link>
@@ -75,18 +74,9 @@ class Header extends Component {
             <LinkContainer to="/metrics">
               <Nav.Link eventKey="/metrics">Metrics</Nav.Link>
             </LinkContainer>
-<<<<<<< HEAD
-=======
             <LinkContainer to="/archive">
               <Nav.Link eventKey="/archive">Archive</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/news">
-              <Nav.Link eventKey="/news">News</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/forum">
-              <Nav.Link eventKey="/forum">Forum</Nav.Link>
-            </LinkContainer>
->>>>>>> 60c0c6916aad65f5de662500aeb909bcf8131306
             <LinkContainer to="/about">
               <Nav.Link eventKey="/about">About</Nav.Link>
             </LinkContainer>

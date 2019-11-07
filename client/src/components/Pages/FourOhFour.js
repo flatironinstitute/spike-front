@@ -7,7 +7,7 @@ class FourOhFour extends Component {
     return (
       <div className="page__body">
         <Container className="container__heatmap">
-          <div className="card card--heatmap text-center">
+          <div className="card card--spikeforest text-center">
             <h2> It seems you are lost</h2>
             <Row className="subcontainer justify-content-md-center">
               <Col lg={12} sm={12} xl={10}>

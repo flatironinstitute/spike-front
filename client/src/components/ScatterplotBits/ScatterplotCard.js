@@ -8,67 +8,50 @@ class ScatterplotCard extends Component {
     super(props);
 
     this.state = {
-      studyAnalysisResult: null,
-      cardHeight: "auto"
+      studyAnalysisResult: null
     };
   }
 
   componentDidMount() {
-    if ((this.props.studyName) && (this.props.sorterName)) {
+    if (this.props.studyName && this.props.sorterName) {
       this.findStudyAnalysisResult();
     }
   }
 
   componentDidUpdate(prevProps) {
     if (
-      (this.props.studyName !== prevProps.studyName) ||
-      (this.props.sorterName !== prevProps.sorterName)
+      this.props.studyName !== prevProps.studyName ||
+      this.props.sorterName !== prevProps.sorterName
     ) {
       this.findStudyAnalysisResult();
-    }
-    if (this.props.cardHeight !== prevProps.cardHeight) {
-      this.updateCardHeight();
-    }
-  }
-
-  updateCardHeight() {
-    if (this.props.cardHeight) {
-      this.setState({ cardHeight: this.props.cardHeight });
     }
   }
 
   findStudyAnalysisResult() {
     let sar = null;
-    for (let studyAnalysisResult of this.props.studyAnalysisResults.allResults) {
+    for (let studyAnalysisResult of this.props.studyAnalysisResults
+      .allResults) {
       if (studyAnalysisResult.studyName === this.props.studyName) {
         sar = studyAnalysisResult;
       }
     }
-    this.setState({studyAnalysisResult: sar});
+    this.setState({ studyAnalysisResult: sar });
   }
 
   render() {
     const loading =
-      (!this.props.studyName) ||
-      (!this.props.sorterName) ||
-      (!this.state.studyAnalysisResult);
-    // let divStyle = {
-    //   backgroundColor: "#fffdc0",
-    //   borderRadius: "5px",
-    //   display: "inline-block"
-    // };
+      !this.props.studyName ||
+      !this.props.sorterName ||
+      !this.state.studyAnalysisResult;
     let sar = this.state.studyAnalysisResult;
     return (
-      <div
-        className="card card--heatmap"
-        style={{ height: this.state.cardHeight + "px", minHeight: "100px" }}
-      >
+      <div className="card card--spikeforest">
         <div className="detail__column-disable">
           {loading ? (
             <div className="card__header">
               <h4 className="card__title">
-                Click a cell in the table to see a detailed scatterplot of
-                the corresponding sorter results.
+                Click a cell in the table to see a detailed scatterplot of the
+                corresponding sorter results.
               </h4>
             </div>
           ) : (
@@ -76,7 +59,13 @@ class ScatterplotCard extends Component {
               <div className="card__header">
                 <div className="card__category--div">
                   <span className="card__title--link">
-                  <Link to={`/studyset/${sar.studySetName}`}>{sar.studySetName}</Link>/<Link to={`/studyresults/${this.props.studyName}`}>{this.props.studyName}</Link>
+                    <Link to={`/studyset/${sar.studySetName}`}>
+                      {sar.studySetName}
+                    </Link>
+                    /
+                    <Link to={`/studyresults/${this.props.studyName}`}>
+                      {this.props.studyName}
+                    </Link>
                   </span>
                   <span className="card__title--link">
                     Sorter:

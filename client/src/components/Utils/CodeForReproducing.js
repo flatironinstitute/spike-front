@@ -43,9 +43,9 @@ class CodeForReproducing extends Component {
     });
 
     return (
-      <span>
+      <div className="reproduction-code">
         <ReactMarkdown source={markdownSource} />
-      </span>
+      </div>
     );
   }
 }

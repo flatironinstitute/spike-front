@@ -123,6 +123,7 @@ code {
   margin: 0;
   padding: 0.2em 0.4em;
   color: var(--dark-grey);
+  background: #f5f5f5;
 }
 
 /* Links
@@ -218,6 +219,10 @@ Use containers when you need a content area that has standard maximum width and 
 }
 
 .subcontainer {
+  margin: 0 auto -5rem auto;
+}
+
+.subcontainer-final {
   margin: 0 auto 3rem auto;
 }
 
@@ -368,6 +373,20 @@ Use containers when you need a content area that has standard maximum width and 
 
 .container__body--algos {
   padding: 7.2rem 1rem 0rem 1rem;
+}
+
+.even-row [class*="col-"] {
+  margin-bottom: -99999px;
+  padding-bottom: 99999px;
+}
+
+.even-row {
+  overflow: hidden;
+}
+
+.finder {
+  padding-top: 8rem;
+  z-index: -1000;
 }
 
 /* Lists
@@ -569,10 +588,6 @@ li {
   padding-left: 0;
 }
 
-code {
-  background: #f5f5f5;
-}
-
 /* TODO: REMOVE Intro Header Styling
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .intro {
@@ -620,6 +635,10 @@ code {
   font-weight: 500;
   margin: 0 auto;
   margin-top: 2rem;
+}
+
+.updated__no-top {
+  margin: 0 auto 1rem;
 }
 
 .updated-sub {
@@ -788,7 +807,7 @@ code {
 }
 
 .navbar__left {
-  margin: 0 0 0 2rem !important;
+  margin: 0 0 0 5rem !important;
   border-bottom: none;
   display: flex;
 }
@@ -872,7 +891,7 @@ code {
 }
 .ticker__item {
   display: inline-block;
-  padding: 0 2rem;
+  padding: 0 2rem 0 0;
 }
 
 .alert-dismissible .close {
@@ -888,6 +907,16 @@ code {
 
 .card .content {
   padding: 15px 15px 10px;
+}
+
+.sidebar-content {
+  padding: 15px 0px 10px;
+}
+
+@media (min-width: 880px) {
+  .sidebar-content {
+    padding: 15px 15px 10px;
+  }
 }
 
 .card__label {
@@ -919,6 +948,18 @@ code {
   padding: 0;
   background-color: transparent;
   line-height: 30px;
+}
+
+.markdown-footer h1,
+.markdown-footer h2 {
+  font-size: 20px;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: -0.03em;
+  text-transform: none;
+  line-height: 1em;
+  margin: 0.5em 0 0.25em;
+  line-height: 1.15em;
 }
 
 .card__author {
@@ -954,6 +995,15 @@ code {
 
 .card__std-top {
   margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  .card__sidebar {
+    background-color: hsla(240, 7%, 81%, 0);
+    margin-bottom: 0;
+    border: none;
+    position: fixed;
+  }
 }
 
 /* Range Slider
@@ -1028,7 +1078,12 @@ code {
   background-color: #fff;
   max-width: 100%;
   position: relative;
-  margin-bottom: 1rem;
+  z-index: 100;
+  margin: 0 auto -5rem auto;
+}
+
+.listcard-recording {
+  margin: 0 auto 0rem auto;
 }
 
 .listcard-content {
@@ -1083,7 +1138,12 @@ code {
   text-transform: uppercase;
   line-height: 1.5em;
   margin-right: 1em;
+  margin-bottom: 0;
   color: var(--label-grey);
+}
+
+td.listcard-link > a {
+  border-bottom: 1px solid #384ca2;
 }
 
 .listcard-section__bottom {
@@ -1093,4 +1153,345 @@ code {
 .listcard-copy {
   margin-bottom: 0;
   font-size: 1.5rem;
+}
+
+.listcard-copy > h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 0.1rem;
+  margin-bottom: 1rem;
+}
+
+/* Heatmap
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.container__heatmap {
+  width: 100%;
+  max-width: 95vw !important;
+  margin-top: 3rem;
+}
+
+.detail__column {
+  top: 0px;
+  width: 100%;
+  position: sticky;
+  flex-basis: 60%;
+  align-self: flex-start;
+}
+
+.step {
+  margin: 0 auto 2rem auto;
+  border: 1px solid #333;
+  padding-top: 200px;
+  padding-bottom: 200px;
+}
+
+.heatmap__legend {
+  /* margin-bottom: 5rem; */
+}
+
+/* Heatmap Cards
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.card--spikeforest {
+  padding: 15px;
+  margin-bottom: 2rem;
+}
+
+.card--barchart {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: flex-start;
+}
+
+.card__label--barchart {
+  margin-right: 10px;
+  margin-bottom: 0;
+}
+
+.card__image {
+  margin: 0 auto;
+}
+
+.card__header {
+  margin-bottom: 15px;
+}
+
+.card__header--cpu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.card__title {
+  margin: 0;
+  color: #333;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 30px;
+}
+
+.card__subtitle {
+  margin-top: 1rem;
+}
+
+.card__title--link {
+  font-size: 20px;
+  margin-right: 15px;
+}
+
+.card__category {
+  font-size: 1.7rem;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #495057;
+  margin-bottom: 0;
+}
+
+.card__category--div {
+  margin-bottom: 0;
+  line-height: 1.5;
+  display: flex;
+}
+
+.heatmap__column {
+  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Unit Detail
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.unitdetail {
+  text-align: right;
+}
+
+.unitdetail__title {
+  font-family: var(--serif);
+  margin-top: 1nav0px;
+}
+
+.unitdetail__copy {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.2rem;
+  line-height: 2.9rem;
+  text-align: right;
+  padding: 5rem;
+  background-color: white;
+}
+
+.unitdetail__list {
+  font-size: 1.2rem;
+  font-family: var(--serif);
+  text-align: right;
+}
+
+.tab-header__row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+}
+
+.tab-header__bundle {
+  font-size: 1.4rem;
+}
+
+.container-sidebar {
+  width: 100vw;
+  max-width: 5000px;
+}
+
+.sidebar {
+  position: sticky;
+  top: 7rem;
+  margin-top: 7rem;
+  z-index: 800;
+  height: calc(100vh - 7rem);
+  border-right: 2px solid var(--fi-blue);
+  padding: 1.5rem !important;
+}
+.sidebar-list {
+  list-style: none;
+  margin-top: 1.5rem;
+}
+.sidebar-link {
+  border-bottom: none;
+  padding-left: 10px;
+}
+.sidebar-selected {
+  margin-left: -3px;
+  border-left: 3px solid var(--fi-blue);
+  color: var(--fi-blue);
+  font-weight: bold;
+}
+
+/* Expanding Heatmap Table
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.expandingheatmaptable {
+  overflow: auto;
+  /* display: block; */
+  table-layout: auto;
+  width: 100%;
+}
+
+.expandable-button {
+  font-weight: 700;
+  font-size: 1.9rem;
+  color: #384ca2;
+  text-align: center;
+  cursor: pointer;
+}
+
+.expandingheatmaptable tr {
+  padding: 2px;
+  margin: 4px;
+}
+
+.expandingheatmaptable td.selectable:hover {
+  border: 2px solid #f28b00 !important;
+}
+
+.expandingheatmaptable td.selected {
+  border-style: solid;
+  border-width: 2px;
+  border-color: #f28b00 !important;
+}
+
+.expandingheatmaptable td.rotate {
+  height: 100px;
+  white-space: nowrap;
+  padding-bottom: 30px;
+  font-size: 12px;
+  font-weight: 400px;
+  line-height: 16px;
+}
+
+.expandingheatmaptable td.rotate > div {
+  transform: translate(-4px, 45px) rotate(315deg);
+  width: 44px;
+}
+
+.expandingheatmaptable td.rotate > div > span {
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.125); */
+  padding: 5px 10px;
+}
+
+.toprow {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  height: 1vh;
+}
+
+.subrow {
+  height: 1vh;
+}
+
+.expandingheatmaptable td {
+  padding: 0px;
+  margin: 0px;
+  font-size: 1.1rem;
+  line-height: 1.2;
+  max-width: 110px;
+}
+
+@media (min-width: 1400px) {
+  .expandingheatmaptable td {
+    padding: 3px auto;
+    margin: 0px;
+    font-size: 1.5rem;
+    line-height: 1.8;
+  }
+}
+
+tr.toprow > :first-child,
+tr.subrow > :first-child {
+  width: 16px;
+  text-align: center;
+}
+
+tr.toprow > :nth-child(2) {
+  border-left: none !important;
+}
+
+.expandingheatmaptable td.expandable {
+  cursor: pointer;
+  border-left: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.expandingheatmaptable td.cell-wrap {
+  word-break: break-all;
+}
+
+.expandingheatmaptable td.selectable {
+  cursor: cell;
+  border-left: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.expandingheatmaptable td.spacer {
+  height: 4px;
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+td.border_right {
+  max-width: calc(25vw / 10);
+}
+
+tbody :last-child {
+  border-bottom: none;
+}
+
+.expandingheatmaptable-container {
+  max-width: 1800px;
+  width: 100%;
+}
+
+/* Contact
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.contact__form {
+  max-width: 80rem;
+  margin: 0 auto;
+  margin-bottom: 7rem;
+}
+
+/* CopyHeader
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.header__title {
+  font-family: var(--serif);
+  margin-bottom: 3rem;
+}
+.header__logo {
+  height: 52px;
+  margin-bottom: 3rem;
+  user-select: none;
+}
+.header__copy {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 780px;
+  font-size: 1.8rem;
+  line-height: 2.9rem;
+  text-align: left;
+}
+.header__copy--em {
+  color: var(--fi-blue);
+  font-weight: bold;
+}
+
+/* Console Output
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.console-output {
+  max-height: 40vh;
+}
+.console-output code {
+  background-color: none;
+  background: none;
+}
+.reproduction-code {
+  border: 1px solid var(--fi-blue);
+  padding: 10px;
 }
