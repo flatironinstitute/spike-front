@@ -1,9 +1,9 @@
 {
-  "name": "spikeforest-client-and-api",
-  "version": "1.0.0",
-  "description": "Benchmarking spike sorting algorithms. Seeing the spike forest for the trees",
+  "name": "spike-front",
+  "version": "0.1.2",
+  "description": "Benchmarking website for spike sorting algorithms. This isomorphic javascipt repo includes a client and back end.",
   "private": true,
-  "author": "Elizabeth Lovero",
+  "author": "Elizabeth Lovero, @lizlove",
   "license": "Apache-2.0",
   "scripts": {
     "client": "cd client && yarn start",
@@ -19,13 +19,14 @@
     "body-parser": "^1.18.3",
     "dotenv": "^6.2.0",
     "es6-promisify": "^6.0.1",
+    "eslint": "^6.6.0",
     "express": "^4.16.4",
     "html-to-text": "^4.0.0",
     "husky": "^1.3.1",
     "json-stable-stringify": "^1.0.1",
     "juice": "^5.1.0",
     "lint-staged": "^8.1.1",
-    "mongoose": "^5.4.18",
+    "mongoose": "^5.7.5",
     "mongoose-float": "^1.0.4",
     "nodemailer": "^5.1.1",
     "nodemon": "^1.18.11",
@@ -38,5 +39,5 @@
     "concurrently": "^4.0.1",
     "eslint-plugin-prettier": "^3.0.1"
   },
-  "homepage": "https://lillenlen.tech"
+  "homepage": "https://spikeforest.flatironinstitute.org/"
 }
