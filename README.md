@@ -18,9 +18,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
-## Loading data into the database
+## Injesting data into the database
 
-**Step 1: delete the data (clear the database)**
+### Step 1: Delete the data (clear the database)
 
 ```
 admin/bin/delete-data.js [database_url] --delete
@@ -34,7 +34,7 @@ If `--database-from-env` is specified, the DATABASE environment variable (from .
 
 If `--database-from-env-prod` is specified, the DATABASE_PROD environment variable (from .env) will be used for the database url.
 
-**Step 2: format and load data into database**
+### Step 2: Format and load data into database
 
 ```
 admin/bin/format-and-load-data.js [data_directory] [database_url]
