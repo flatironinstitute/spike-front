@@ -1,8 +1,8 @@
-# Spikeforest
+# Spike-Front
 
-Benchmarking of spike sorting algorithms. Seeing the spike forest for the trees.
+Front end repository for the SpikeForest pipeline. This site presents benchmarking of spike sorting algorithms.
 
-## Available Scripts
+## Getting started
 
 To install software and packages, you will need to first run in _both_ the `/` and `/client` folder:
 
@@ -50,10 +50,5 @@ If `--database-from-env-prod` is specified, the DATABASE_PROD environment variab
 
 ## Authors
 
-- **Liz Lovero** - [elovero](https://github.com/elovero)
+- **Liz Lovero** - [lizlove](https://github.com/lizlove)
 - **Jeremy Magland** - [magland](https://github.com/magland)
-
-
-## Acknowledgments
-
-- **Lenny** - [lillenlen](https://www.instagram.com/lillenlen/)
