@@ -38,8 +38,10 @@ class DetailPage extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.selectedSorterName !== prevProps.selectedSorterName || this.state.selectedSorterName !== prevState.selectedSorterName ) {
-      console.log('sorterCHange');
+    if (
+      this.props.selectedSorterName !== prevProps.selectedSorterName ||
+      this.state.selectedSorterName !== prevState.selectedSorterName
+    ) {
       this.checkSelectedUnit();
     }
   }
@@ -86,10 +88,10 @@ class DetailPage extends Component {
   }
 
   handleScatterplotClick(value) {
-    if(!isEmpty(value)) {
+    if (!isEmpty(value)) {
       this.props.setSelectedUnit(value);
     }
-  };
+  }
 
   handleCellSelected(cell) {
     if (cell.selectable) {
@@ -244,81 +246,77 @@ class DetailPage extends Component {
                   <div className="card card--spikeforest">
                     <div className="content">
                       <div className="card__label">
-                          {this.props.selectedUnit ? (
-                            <table>
-                              <thead />
-                              <tbody>
-                                <tr>
-                                  <th>Study:</th>
-                                  <td>
-                                    {
-                                      <Link
-                                        to={`/study/${this.props.studyName}`}
-                                      >
-                                        {this.props.studyName}
-                                      </Link>
-                                    }
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <th>Recording:</th>
-                                  <td>
-                                    {
-                                      <Link
-                                        to={`/recording/${
-                                          this.props.studyName
-                                        }/${recordingName}`}
-                                      >
-                                        {recordingName}
-                                      </Link>
-                                    }
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <th>Sorter:</th>
-                                  <td>
-                                    {
-                                      <Link to={`/algorithms`}>
-                                        {this.props.selectedUnit.sorterName}
-                                      </Link>
-                                    }
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <th>Unit ID:</th>
-                                  <td>{this.props.selectedUnit.unitIndex}</td>
-                                </tr>
-                                <tr>
-                                  <th>Sorting result:</th>
-                                  <td>
-                                    <Link
-                                      to={`/sortingresult/${
-                                        this.props.studyName
-                                      }/${recordingName}/${
-                                        this.props.selectedUnit.sorterName
-                                      }`}
-                                    >
-                                      [More details...]{" "}
+                        {this.props.selectedUnit ? (
+                          <table>
+                            <thead />
+                            <tbody>
+                              <tr>
+                                <th>Study:</th>
+                                <td>
+                                  {
+                                    <Link to={`/study/${this.props.studyName}`}>
+                                      {this.props.studyName}
                                     </Link>
-                                  </td>
-                                </tr>
-                                <tr>
+                                  }
+                                </td>
+                              </tr>
+                              <tr>
+                                <th>Recording:</th>
+                                <td>
+                                  {
+                                    <Link
+                                      to={`/recording/${
+                                        this.props.studyName
+                                      }/${recordingName}`}
+                                    >
+                                      {recordingName}
+                                    </Link>
+                                  }
+                                </td>
+                              </tr>
+                              <tr>
+                                <th>Sorter:</th>
+                                <td>
+                                  {
+                                    <Link to={`/algorithms`}>
+                                      {this.props.selectedUnit.sorterName}
+                                    </Link>
+                                  }
+                                </td>
+                              </tr>
+                              <tr>
+                                <th>Unit ID:</th>
+                                <td>{this.props.selectedUnit.unitIndex}</td>
+                              </tr>
+                              <tr>
+                                <th>Sorting result:</th>
+                                <td>
+                                  <Link
+                                    to={`/sortingresult/${
+                                      this.props.studyName
+                                    }/${recordingName}/${
+                                      this.props.selectedUnit.sorterName
+                                    }`}
+                                  >
+                                    [More details...]{" "}
+                                  </Link>
+                                </td>
+                              </tr>
+                              <tr>
                                 {sortingResult.returnCode === 0 ? (
-                                    <td />
-                                    ) : (
-                                      <td>
-                                        Return code: {sortingResult.returnCode}{" "}
-                                        {sortingResult.timedOut
-                                          ? "timed out"
-                                          : ""}{" "}
-                                      </td>
-                                    )}
-                                </tr>
-                              </tbody>
-                            </table>
-                          ) : (
-                            <strong>Unit Details:</strong>
-                          )}
+                                  <td />
+                                ) : (
+                                  <td>
+                                    Return code: {sortingResult.returnCode}{" "}
+                                    {sortingResult.timedOut ? "timed out" : ""}{" "}
+                                  </td>
+                                )}
+                              </tr>
+                            </tbody>
+                          </table>
+                        ) : (
+                          <strong>Unit Details:</strong>
+                        )}
                       </div>
                       {(() => {
                         if (this.props.selectedUnit) {
