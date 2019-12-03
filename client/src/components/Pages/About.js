@@ -124,17 +124,6 @@ class About extends Component {
                               - click here to learn the latest on the spike
                               sorting software and website.
                             </li>
-                            <li>
-                              <a
-                                href="https://www.spikeforum.org/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                Forum
-                              </a>{" "}
-                              - browse our new online community, ask questions
-                              or make suggestions.
-                            </li>
                           </ul>
                         </div>
                       </div>
@@ -195,19 +184,6 @@ class About extends Component {
                           There are several ways to provide feedback, report
                           problems, or contact us with questions:
                           <ul>
-                            <li>
-                              {" "}
-                              Join the online community{" "}
-                              <a
-                                href="https://www.spikeforum.org/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                SpikeForum
-                              </a>{" "}
-                              dedicated to supporting this open source spike
-                              sorting software.
-                            </li>
                             <li>
                               {" "}
                               You may email us using the{" "}

@@ -1,5 +1,5 @@
-import 'react-app-polyfill/ie9';
-import 'react-app-polyfill/stable';
+import "react-app-polyfill/ie9";
+import "react-app-polyfill/stable";
 import React from "react";
 import ReactDOM from "react-dom";
 import * as Sentry from "@sentry/browser";
@@ -32,5 +32,3 @@ const render = () => {
 };
 
 render();
-// serviceWorker.register();
-serviceWorker.unregister();
