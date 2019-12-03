@@ -1,5 +1,5 @@
-import 'react-app-polyfill/ie9';
-import 'react-app-polyfill/stable';
+import "react-app-polyfill/ie9";
+import "react-app-polyfill/stable";
 import React from "react";
 import ReactDOM from "react-dom";
 import * as Sentry from "@sentry/browser";
@@ -15,9 +15,6 @@ import "./index.css";
 // import components
 import App from "./App";
 
-// import service worker from CRA
-import * as serviceWorker from "./serviceWorker";
-
 Sentry.init({
   dsn: "https://a7b7f1b624b44a9ea537ec1069859393@sentry.io/1365884"
 });
@@ -32,5 +29,3 @@ const render = () => {
 };
 
 render();
-// serviceWorker.register();
-serviceWorker.unregister();

@@ -134,7 +134,6 @@ class ScatterplotCount extends Component {
 
   handleScatterplotClick(d) {
     if (this.props.handleScatterplotClick) {
-      // this.setState({selectedUnitCode: d.unitCode});
       this.props.handleScatterplotClick(d);
     }
   }
@@ -195,7 +194,6 @@ class ScatterplotCount extends Component {
 
     // let selectedData = [];
     const yTitle = toTitleCase(this.props.metric);
-    console.log("color range", this.props.colorRange);
     return (
       <div className="canvas-wrapper">
         <FlexibleXYPlot

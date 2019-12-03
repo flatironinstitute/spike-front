@@ -338,7 +338,9 @@ export const setMetric = metric => ({
   metric
 });
 
-export const setSelectedUnit = selectedUnit => ({
+export const setSelectedUnit = selectedUnit => {
+  return {
   type: SET_SELECTED_UNIT,
   selectedUnit
-});
+  }
+};

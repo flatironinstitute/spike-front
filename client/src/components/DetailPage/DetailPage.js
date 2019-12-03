@@ -30,6 +30,7 @@ class DetailPage extends Component {
       selectedSorterName: props.selectedSorterName
     };
     this.handleCellSelected = this.handleCellSelected.bind(this);
+    this.handleScatterplotClick = this.handleScatterplotClick.bind(this);
   }
 
   componentDidMount() {
@@ -37,7 +38,12 @@ class DetailPage extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    this.checkSelectedUnit();
+    if (
+      this.props.selectedSorterName !== prevProps.selectedSorterName ||
+      this.state.selectedSorterName !== prevState.selectedSorterName
+    ) {
+      this.checkSelectedUnit();
+    }
   }
 
   checkSelectedUnit() {
@@ -81,12 +87,13 @@ class DetailPage extends Component {
     return copy;
   }
 
-  handleScatterplotClick = value => {
-    this.props.setSelectedUnit(value);
-  };
+  handleScatterplotClick(value) {
+    if (!isEmpty(value)) {
+      this.props.setSelectedUnit(value);
+    }
+  }
 
   handleCellSelected(cell) {
-    console.log("cell selected detail page 🏴‍☠️", cell);
     if (cell.selectable) {
       if (this.props.selectStudyName) {
         this.props.selectStudyName(cell.info.studyAnalysisResult.studyName);
@@ -144,7 +151,7 @@ class DetailPage extends Component {
     }
 
     let sortingResult = null;
-    if (this.props.selectedUnit) {
+    if (this.props.selectedUnit && this.props.sortingResults) {
       let su = this.props.selectedUnit;
       for (let sr of this.props.sortingResults) {
         if (
@@ -156,7 +163,6 @@ class DetailPage extends Component {
         }
       }
     }
-    console.log("DETAIL PAGE PROPS", this.props);
 
     return (
       <div>
@@ -225,7 +231,7 @@ class DetailPage extends Component {
                     sorters={this.props.sorters}
                     studyAnalysisResults={{ allResults: [studyAnalysisResult] }}
                     studyName={this.props.studyName}
-                    sorterName={this.state.sorterName}
+                    sorterName={this.props.sorterName}
                     recordingName={this.state.recordingName}
                     sliderValue={this.props.sliderValue[this.props.format]}
                     format={this.props.format}
@@ -240,84 +246,77 @@ class DetailPage extends Component {
                   <div className="card card--spikeforest">
                     <div className="content">
                       <div className="card__label">
-                        <p>
-                          {this.props.selectedUnit ? (
-                            <table>
-                              <thead />
-                              <tbody>
-                                <tr>
-                                  <th>Study:</th>
-                                  <td>
-                                    {
-                                      <Link
-                                        to={`/study/${this.props.studyName}`}
-                                      >
-                                        {this.props.studyName}
-                                      </Link>
-                                    }
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <th>Recording:</th>
-                                  <td>
-                                    {
-                                      <Link
-                                        to={`/recording/${
-                                          this.props.studyName
-                                        }/${recordingName}`}
-                                      >
-                                        {recordingName}
-                                      </Link>
-                                    }
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <th>Sorter:</th>
-                                  <td>
-                                    {
-                                      <Link to={`/algorithms`}>
-                                        {this.props.selectedUnit.sorterName}
-                                      </Link>
-                                    }
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <th>Unit ID:</th>
-                                  <td>{this.props.selectedUnit.unitIndex}</td>
-                                </tr>
-                                <tr>
-                                  <th>Sorting result:</th>
-                                  <td>
-                                    <Link
-                                      to={`/sortingresult/${
-                                        this.props.studyName
-                                      }/${recordingName}/${
-                                        this.props.selectedUnit.sorterName
-                                      }`}
-                                    >
-                                      [More details...]{" "}
+                        {this.props.selectedUnit ? (
+                          <table>
+                            <thead />
+                            <tbody>
+                              <tr>
+                                <th>Study:</th>
+                                <td>
+                                  {
+                                    <Link to={`/study/${this.props.studyName}`}>
+                                      {this.props.studyName}
                                     </Link>
+                                  }
+                                </td>
+                              </tr>
+                              <tr>
+                                <th>Recording:</th>
+                                <td>
+                                  {
+                                    <Link
+                                      to={`/recording/${
+                                        this.props.studyName
+                                      }/${recordingName}`}
+                                    >
+                                      {recordingName}
+                                    </Link>
+                                  }
+                                </td>
+                              </tr>
+                              <tr>
+                                <th>Sorter:</th>
+                                <td>
+                                  {
+                                    <Link to={`/algorithms`}>
+                                      {this.props.selectedUnit.sorterName}
+                                    </Link>
+                                  }
+                                </td>
+                              </tr>
+                              <tr>
+                                <th>Unit ID:</th>
+                                <td>{this.props.selectedUnit.unitIndex}</td>
+                              </tr>
+                              <tr>
+                                <th>Sorting result:</th>
+                                <td>
+                                  <Link
+                                    to={`/sortingresult/${
+                                      this.props.studyName
+                                    }/${recordingName}/${
+                                      this.props.selectedUnit.sorterName
+                                    }`}
+                                  >
+                                    [More details...]{" "}
+                                  </Link>
+                                </td>
+                              </tr>
+                              <tr>
+                                {sortingResult.returnCode === 0 ? (
+                                  <td />
+                                ) : (
+                                  <td>
+                                    Return code: {sortingResult.returnCode}{" "}
+                                    {sortingResult.timedOut ? "timed out" : ""}{" "}
                                   </td>
-                                  <span>
-                                    {sortingResult.returnCode === 0 ? (
-                                      <span />
-                                    ) : (
-                                      <span>
-                                        Return code: {sortingResult.returnCode}{" "}
-                                        {sortingResult.timedOut
-                                          ? "timed out"
-                                          : ""}{" "}
-                                      </span>
-                                    )}
-                                  </span>
-                                </tr>
-                              </tbody>
-                            </table>
-                          ) : (
-                            // <strong>Unit Details: {`${this.props.studyName}/${recordingName}/${this.props.selectedUnit.sorterName}/${studyAnalysisResult.trueUnitIds[this.props.selectedUnit.unitIndex]}`}</strong>
-                            <strong>Unit Details:</strong>
-                          )}
-                        </p>
+                                )}
+                              </tr>
+                            </tbody>
+                          </table>
+                        ) : (
+                          <strong>Unit Details:</strong>
+                        )}
                       </div>
                       {(() => {
                         if (this.props.selectedUnit) {
