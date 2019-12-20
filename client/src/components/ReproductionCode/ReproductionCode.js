@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import ReactMarkdown from "react-markdown";
+import MarkdownCodeBlock from "./MarkdownCodeBlock";
+import Preloader from "../Preloader/Preloader";
 import markdownPath from "./reproducing_sorting_result.md";
+import { isEmpty } from "../../utils";
 
-// TODO: What is this file for?
-class CodeForReproducing extends Component {
+class ReproductionCode extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,24 +13,31 @@ class CodeForReproducing extends Component {
     };
   }
 
-  componentWillMount() {
-    fetch(markdownPath)
+  componentDidMount() {
+    this._asyncrequest = fetch(markdownPath)
       .then(response => response.text())
       .then(text => {
         this.setState({ markdownTemplate: text });
       });
   }
 
-  async componentDidMount() {}
-
-  async componentDidUpdate(prevProps, prevState) {
-    if (this.props.sortingResult !== prevProps.sortingResult) {
+  componentWillUnmount() {
+    if (this._asyncRequest) {
+      this._asyncRequest.cancel();
     }
+  }
+
+  replaceAll(str, mapObj) {
+    let ret = str;
+    for (let key in mapObj) {
+      ret = ret.split(`{${key}}`).join(mapObj[key]);
+    }
+    return ret;
   }
 
   render() {
     let markdownSource = this.state.markdownTemplate || "";
-    markdownSource = replaceAll(markdownSource, {
+    markdownSource = this.replaceAll(markdownSource, {
       recordingDirectory: this.props.sortingResult.recordingDirectory,
       processorName: this.props.sorter.processorName,
       studyName: this.props.sortingResult.studyName,
@@ -41,21 +50,20 @@ class CodeForReproducing extends Component {
         ? `'${this.props.sortingResult.container}'`
         : "None"
     });
-
+    let loading = isEmpty(this.state.markdownTemplate);
     return (
       <div className="reproduction-code">
-        <ReactMarkdown source={markdownSource} />
+        {loading ? (
+          <Preloader />
+        ) : (
+          <ReactMarkdown
+            source={markdownSource}
+            renderers={{ code: MarkdownCodeBlock }}
+          />
+        )}
       </div>
     );
   }
 }
 
-function replaceAll(str, mapObj) {
-  let ret = str;
-  for (let key in mapObj) {
-    ret = ret.split(`{${key}}`).join(mapObj[key]);
-  }
-  return ret;
-}
-
-export default CodeForReproducing;
+export default ReproductionCode;

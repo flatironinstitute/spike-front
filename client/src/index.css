@@ -117,13 +117,12 @@ p {
 }
 
 code {
-  background-color: rgba(27, 31, 35, 0.05);
+  /* background-color: rgba(27, 31, 35, 0.05); */
   border-radius: 3px;
   font-size: 85%;
   margin: 0;
   padding: 0.2em 0.4em;
   color: var(--dark-grey);
-  background: #f5f5f5;
 }
 
 /* Links
@@ -902,6 +901,15 @@ li {
   padding: 0.75rem 2rem;
 }
 
+/* Options Row
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.options-group {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  justify-content: flex-start;
+}
+
 /* Cards
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -994,7 +1002,7 @@ li {
 }
 
 .card__std-top {
-  margin-top: 1rem;
+  margin-top: 0;
 }
 
 @media (min-width: 768px) {

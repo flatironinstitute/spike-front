@@ -243,7 +243,7 @@ class DetailPage extends Component {
                   />
                 </Col>
                 <Col style={{ minWidth: 400, flexGrow: 1 }}>
-                  <div className="card card--spikeforest">
+                  <div className="card card__std-col">
                     <div className="content">
                       <div className="card__label">
                         {this.props.selectedUnit ? (
@@ -315,7 +315,9 @@ class DetailPage extends Component {
                             </tbody>
                           </table>
                         ) : (
-                          <strong>Unit Details:</strong>
+                          <p>
+                            <strong>Unit Details</strong>
+                          </p>
                         )}
                       </div>
                       {(() => {

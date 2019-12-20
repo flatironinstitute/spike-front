@@ -8,7 +8,7 @@ import "react-rangeslider/lib/index.css";
 class HeatmapOptionsCol extends Component {
   render() {
     return (
-      <div>
+      <div className="options-group">
         <ModeCard
           bottomMargin={true}
           showCPU={this.props.showCPU}

@@ -1,12 +1,12 @@
-Scripts for spike sorting of {studyName}/{recordingName} using {sorterName}.
+## Scripts for spike sorting of {studyName}/{recordingName} using {sorterName}.
 
 This will only work if the recording has been made public (we have made a subset of recordings public) or if you already have the recording on your computer.
 
-## Prerequisites
+#### Prerequisites
 
 At this point, SpikeForest has only been tested in Linux. In the future we will support OSX. It is also possible to use Linux within Windows.
 
-## Installation
+#### Installation
 
 The first step is to install spikeforest and mountaintools. The easiest way is to use
 the PyPI packages as follows.
@@ -24,7 +24,7 @@ also containerize the Matlab packages).
 **WARNING:** If you do not use the containerized versions of the sorters, then the version of the sorter is not guaranteed to be the same
 as the one used to generate the website data.
 
-## Downloading and running the sorting
+#### Downloading and running the sorting
 
 Making use of [SpikeInterface](https://github.com/SpikeInterface/), we can load the recording and the above ground truth sorting in Python:
 
@@ -89,7 +89,7 @@ To run outside the container (without singularity), use `_container=None`. In th
 You can use any of the SpikeForest-wrapped
 sorting algorithms in place of {processorName}.
 
-## Comparison with ground truth
+#### Comparison with ground truth
 
 Next, we can compare the result with ground truth
 
@@ -133,11 +133,11 @@ for unit in true_units_info:
   true_units_info_by_unit_id[unit['unit_id']] = unit
 for unit in comparison.values():
   unit['true_unit_info'] = true_units_info_by_unit_id[unit['unit_id']]
-  
+
 # Print SNRs and accuracies
 for unit in comparison.values():
   print('Unit {}: SNR={}, accuracy={}'.format(unit['unit_id'], unit['true_unit_info']['snr'], unit['accuracy']))
-  
+
 # Report number of units found
 snrthresh = 8
 units_above = [unit for unit in comparison.values() if float(unit['true_unit_info']['snr'] > snrthresh)]

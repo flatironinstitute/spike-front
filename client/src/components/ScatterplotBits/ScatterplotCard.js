@@ -49,10 +49,10 @@ class ScatterplotCard extends Component {
         <div className="detail__column-disable">
           {loading ? (
             <div className="card__header">
-              <h4 className="card__title">
+              <p className="updated updated__no-top">
                 Click a cell in the table to see a detailed scatterplot of the
                 corresponding sorter results.
-              </h4>
+              </p>
             </div>
           ) : (
             <div>
