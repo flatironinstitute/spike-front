@@ -226,7 +226,7 @@ class DetailPage extends Component {
                 </Col>
               </Row>
               <Row>
-                <Col lg={6} sm={12}>
+                <Col style={{ minWidth: 700, flexGrow: 1, overflow: "auto" }}>
                   <ScatterplotCard
                     sorters={this.props.sorters}
                     studyAnalysisResults={{ allResults: [studyAnalysisResult] }}
@@ -242,8 +242,8 @@ class DetailPage extends Component {
                     handleScatterplotClick={this.handleScatterplotClick}
                   />
                 </Col>
-                <Col lg={6} sm={12}>
-                  <div className="card card--spikeforest">
+                <Col style={{ minWidth: 400, flexGrow: 1 }}>
+                  <div className="card card__std-col">
                     <div className="content">
                       <div className="card__label">
                         {this.props.selectedUnit ? (
@@ -315,7 +315,9 @@ class DetailPage extends Component {
                             </tbody>
                           </table>
                         ) : (
-                          <strong>Unit Details:</strong>
+                          <p>
+                            <strong>Unit Details</strong>
+                          </p>
                         )}
                       </div>
                       {(() => {

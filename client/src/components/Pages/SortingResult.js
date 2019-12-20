@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Col, Container, Row, Table } from "react-bootstrap";
 import { abbreviateSha1Path } from "../../utils";
 import ConsoleOutput from "../Utils/ConsoleOutput";
-import CodeForReproducing from "../Utils/CodeForReproducing";
+import ReproductionCode from "../ReproductionCode/ReproductionCode";
 
 class SortingResult extends Component {
   constructor(props) {
@@ -253,7 +253,7 @@ class SortingResult extends Component {
                   <div className="card__footer">
                     <hr />
                     {this.state.codeExpanded ? (
-                      <CodeForReproducing
+                      <ReproductionCode
                         sortingResult={sortingResult}
                         sorter={sorter}
                         general={this.props.general}
