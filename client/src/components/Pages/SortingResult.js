@@ -76,6 +76,7 @@ class SortingResult extends Component {
         </div>
       );
     }
+    console.log('--- sorting result', sortingResult);
     let sorter = this.findSorter(sortingResult.sorterName) || {};
     return (
       <div className="page__body">
@@ -148,7 +149,7 @@ class SortingResult extends Component {
                         <tr>
                           <th>Sorter version</th>
                           <td>
-                            {sortingResult.processorName} {sortingResult.processorVersion}
+                            {sortingResult.processorName}: {sortingResult.processorVersion}
                           </td>
                         </tr>
                         <tr>

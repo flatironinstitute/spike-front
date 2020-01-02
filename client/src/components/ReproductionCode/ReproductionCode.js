@@ -37,18 +37,21 @@ class ReproductionCode extends Component {
 
   render() {
     let markdownSource = this.state.markdownTemplate || "";
+    let sr = this.props.sortingResult;
+    console.log('----- sr', sr);
+    console.log('----- srparams', JSON.stringify(sr.sortingParameters, null, 4))
     markdownSource = this.replaceAll(markdownSource, {
-      recordingDirectory: this.props.sortingResult.recordingDirectory,
-      processorName: this.props.sorter.processorName,
-      studyName: this.props.sortingResult.studyName,
-      recordingName: this.props.sortingResult.recordingName,
-      sorterName: this.props.sortingResult.sorterName,
-      params: JSON.stringify(this.props.sorter.sortingParameters, null, 4),
-      spikeforestVersion: this.props.general.packageVersions.spikeforest,
-      mountaintoolsVersion: this.props.general.packageVersions.mountaintools,
-      container: this.props.sortingResult.container
-        ? `'${this.props.sortingResult.container}'`
-        : "None"
+      recordingDirectory: sr.recordingDirectory,
+      sortingTruePath: sr.firingsTrue,
+      processorName: sr.processorName,
+      processorVersion: sr.processorVersion,
+      studyName: sr.studyName,
+      recordingName: sr.recordingName,
+      sorterName: sr.sorterName,
+      params: JSON.stringify(sr.sortingParameters || {}, null, 4),
+      container: sr.container
+        ? sr.container
+        : ''
     });
     let loading = isEmpty(this.state.markdownTemplate);
     return (
