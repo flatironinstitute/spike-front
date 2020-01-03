@@ -19,7 +19,7 @@ class News extends Component {
           <Row className="subcontainer justify-content-md-center">
             <Col lg={12} sm={12} xl={12}>
               <div className="intro">
-                <p className="big">Algorithms</p>
+                <p className="big">News</p>
               </div>
             </Col>
           </Row>
