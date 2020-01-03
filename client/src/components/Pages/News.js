@@ -23,10 +23,11 @@ class News extends Component {
               </div>
             </Col>
           </Row>
+          <div className="finder" id="news" />
           {posts.map(post => (
             <Row
               key={`${post.title}--${post.date}`}
-              className=" justify-content-md-center"
+              className="subcontainer-final justify-content-md-center"
             >
               <Col lg={12} sm={12} xl={12}>
                 <div className="card card__std">

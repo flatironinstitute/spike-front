@@ -1111,6 +1111,14 @@ li {
   width: 100%;
 }
 
+.listcard-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
 .listcard-title {
   font-size: 20px;
   font-weight: 700;

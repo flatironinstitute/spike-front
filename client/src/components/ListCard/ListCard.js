@@ -17,9 +17,25 @@ class ListCard extends Component {
           <div className="listcard">
             <div className="listcard-content">
               <div className="listcard-section">
-                <a href={this.props.value.website}>
-                  <p className="listcard-title">{this.props.value.raw_label}</p>{" "}
-                </a>
+                <div className="listcard-top">
+                  <a href={this.props.value.website}>
+                    <p className="listcard-title">
+                      {this.props.value.raw_label}
+                    </p>{" "}
+                  </a>
+                  {this.props.value.env_link !== "/" ? (
+                    <a
+                      className="listcard-env"
+                      href={this.props.value.env_link}
+                    >
+                      View {this.props.value.env_name}
+                    </a>
+                  ) : (
+                    <span className="listcard-env">
+                      {this.props.value.env_name}
+                    </span>
+                  )}
+                </div>
                 <p className="listcard-authors">
                   <span>By</span> {this.props.value.authors}
                 </p>
@@ -30,15 +46,6 @@ class ListCard extends Component {
                 </div>
               </div>
               <div className="listcard-section__bottom">
-                {this.props.value.env_link !== "/" ? (
-                  <a className="listcard-env" href={this.props.value.env_link}>
-                    View {this.props.value.env_name}
-                  </a>
-                ) : (
-                  <span className="listcard-env">
-                    {this.props.value.env_name}
-                  </span>
-                )}
                 <a
                   className="listcard-env"
                   href={this.props.value.wrapper_link}

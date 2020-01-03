@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { isEmpty, toTitleCase } from "../../utils";
-// import { removeMd } from "remove-markdown";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import ListCard from "../ListCard/ListCard";
 import Preloader from "../Preloader/Preloader";
