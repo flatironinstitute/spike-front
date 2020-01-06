@@ -520,6 +520,9 @@ class HeatmapViz extends Component {
 
           // This just prints the output to 2 digits
           let avgRounded = Math.round(aboveAvg * 100) / 100;
+          if (avgRounded === 0) {
+            console.log("Its Zero", avgRounded);
+          }
           return { value: avgRounded, num_missing: num_missing };
         } else {
           return { value: undefined, num_missing: num_missing };
@@ -572,7 +575,12 @@ class HeatmapViz extends Component {
         color = "black";
         bgcolor = "white";
       } else {
-        text = val0;
+        if (val0 === 0) {
+          text = "N/A";
+        } else {
+          text = val0;
+        }
+
         if (cellvalList[i].num_missing > 0) text += "*";
         if (rowNormalize && maxMetricVal) {
           val0 = val0 / maxMetricVal;
@@ -584,6 +592,7 @@ class HeatmapViz extends Component {
           color = "black";
           bgcolor = "white";
         }
+        // TODO: ADD background color as gray
       }
       // add a cell corresponding to a sorting result
       let selected0, id0;
