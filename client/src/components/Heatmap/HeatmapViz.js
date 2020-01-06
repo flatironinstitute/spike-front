@@ -48,7 +48,7 @@ class HeatmapViz extends Component {
 
   buildVizData() {
     let sortedStudySets = this.props.studySets;
-    // Note: study sets are sorted alphabetically by name on inititial fetch
+    // Note: study sets are sorted alphabetically by name on initial fetch
 
     this.studySetNamesByStudyName = {};
     for (let studySet of this.props.studySets) {
