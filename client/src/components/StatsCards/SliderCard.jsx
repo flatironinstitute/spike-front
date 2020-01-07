@@ -9,8 +9,21 @@ export class SliderCard extends Component {
     super(props);
 
     this.state = {
-      sliderValue: props.sliderValue
+      sliderValue: 8,
+      format: "average"
     };
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.format !== state.format) {
+      return {
+        sliderValue: props.sliderValue,
+        format: props.format
+      };
+    }
+
+    // Return null to indicate no change to state.
+    return null;
   }
 
   getSliderCopy() {
@@ -81,8 +94,9 @@ export class SliderCard extends Component {
   };
 
   handleSliderChangeComplete = () => {
-    if (this.props.handleSliderChange)
+    if (this.props.handleSliderChange) {
       this.props.handleSliderChange(this.state.sliderValue);
+    }
   };
 
   render() {
@@ -112,7 +126,6 @@ export class SliderCard extends Component {
                 orientation="horizontal"
                 onChange={this.handleSliderChange}
                 onChangeComplete={this.handleSliderChangeComplete}
-                // onChange={this.props.handleSliderChange}
               />
             </div>
           </div>
