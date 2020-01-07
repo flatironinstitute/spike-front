@@ -3,7 +3,7 @@ const axios = require("axios");
 
 var baseurl;
 if (process.env.NODE_ENV === "production") {
-  baseurl = '';
+  baseurl = "";
 } else {
   baseurl = "http://localhost:5000";
 }
@@ -26,7 +26,7 @@ export const SELECT_STUDY_SORTING_RESULT = "SELECT_STUDY_SORTING_RESULT";
 export const SELECT_SORTER_NAME = "SELECT_SORTER_NAME";
 export const SELECT_STUDY_NAME = "SELECT_STUDY_NAME";
 export const SET_FORMAT = "SET_FORMAT";
-export const SET_SLIDER_VALUE = "SET_SLIDER_VALUE"
+export const SET_SLIDER_VALUE = "SET_SLIDER_VALUE";
 export const SET_METRIC = "SET_METRIC";
 export const SET_SELECTED_UNIT = "SET_SELECTED_UNIT";
 
@@ -80,7 +80,7 @@ export function sendContactFailure(error) {
 }
 
 export const sendContact = options => {
-  return function (dispatch) {
+  return function(dispatch) {
     return createFetchPost(`/api/contact`, options)
       .then(res => {
         dispatch(sendContactSuccess(res.success));
@@ -101,7 +101,7 @@ export const receiveCPUs = cpus => {
 
 export const fetchCPUs = () => {
   let url = `/api/cpus`;
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(startLoading());
     return createFetchAPI(url)
       .then(res => {
@@ -122,7 +122,7 @@ export const receiveSorters = sorters => ({
 
 export const fetchSorters = () => {
   let url = `/api/sorters`;
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(startLoading());
     return createFetchAPI(url)
       .then(res => {
@@ -145,7 +145,7 @@ export const receiveAlgorithms = algorithms => ({
 
 export const fetchAlgorithms = () => {
   let url = `/api/algorithms`;
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(startLoading());
     return createFetchAPI(url)
       .then(res => {
@@ -181,7 +181,7 @@ export const recieveStats = stats => {
 
 export const fetchStats = () => {
   let url = `/api/stats`;
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(startLoading());
     return createFetchAPI(url)
       .then(stats => {
@@ -203,7 +203,7 @@ export const recieveStudySets = studySets => {
 
 export const fetchStudySets = () => {
   let url = `/api/studysets`;
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(startLoading());
     return createFetchAPI(url)
       .then(studySets => {
@@ -225,7 +225,7 @@ export const receiveSortingResults = sortingResults => {
 
 export const fetchSortingResults = () => {
   let url = `/api/sortingresults`;
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(startLoading());
     return createFetchAPI(url)
       .then(sortingResults => {
@@ -242,12 +242,12 @@ export const receiveStudyAnalysisResults = studyAnalysisResults => {
   return {
     type: RECEIVE_STUDY_ANALYSIS_RESULTS,
     studyAnalysisResults
-  }
+  };
 };
 
-export const fetchStudyAnalysisResults = (studySetName) => {
+export const fetchStudyAnalysisResults = studySetName => {
   let url = `/api/studyanalysisresults/${studySetName}`;
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(startLoading());
     return createFetchAPI(url)
       .then(res => {
@@ -265,12 +265,12 @@ export const receiveGeneral = general => {
   return {
     type: RECEIVE_GENERAL,
     general
-  }
+  };
 };
 
 export const fetchGeneral = () => {
   let url = `/api/general`;
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(startLoading());
     return createFetchAPI(url)
       .then(res => {
@@ -288,12 +288,12 @@ export const receiveNewsPosts = newsPosts => {
   return {
     type: RECEIVE_NEWS_POSTS,
     newsPosts
-  }
+  };
 };
 
 export const fetchNewsPosts = () => {
   let url = `/api/newsposts`;
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(startLoading());
     return createFetchAPI(url)
       .then(res => {
@@ -340,7 +340,7 @@ export const setMetric = metric => ({
 
 export const setSelectedUnit = selectedUnit => {
   return {
-  type: SET_SELECTED_UNIT,
-  selectedUnit
-  }
+    type: SET_SELECTED_UNIT,
+    selectedUnit
+  };
 };

@@ -48,7 +48,7 @@ class HeatmapViz extends Component {
 
   buildVizData() {
     let sortedStudySets = this.props.studySets;
-    // Note: study sets are sorted alphabetically by name on inititial fetch
+    // Note: study sets are sorted alphabetically by name on initial fetch
 
     this.studySetNamesByStudyName = {};
     for (let studySet of this.props.studySets) {
@@ -516,6 +516,8 @@ class HeatmapViz extends Component {
               return { value: undefined, num_missing: num_missing };
             }
             aboveAvg = sum / count;
+          } else {
+            return { value: "N/A", num_missing: num_missing };
           }
 
           // This just prints the output to 2 digits
@@ -571,8 +573,13 @@ class HeatmapViz extends Component {
         text = "";
         color = "black";
         bgcolor = "white";
+      } else if (val0 === "N/A") {
+        text = "N/A";
+        color = "gray";
+        bgcolor = "#f7f7f8";
       } else {
         text = val0;
+
         if (cellvalList[i].num_missing > 0) text += "*";
         if (rowNormalize && maxMetricVal) {
           val0 = val0 / maxMetricVal;
@@ -703,7 +710,8 @@ class HeatmapViz extends Component {
             />
             <p>
               * An asterisk indicates an incomplete or failed sorting on a
-              subset of results.
+              subset of results. <i>N/A </i>indicates that no groundtruth units
+              were above the SNR threshold.
             </p>
             {alertCopy}
           </div>
