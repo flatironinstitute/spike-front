@@ -516,13 +516,12 @@ class HeatmapViz extends Component {
               return { value: undefined, num_missing: num_missing };
             }
             aboveAvg = sum / count;
+          } else {
+            return { value: "N/A", num_missing: num_missing };
           }
 
           // This just prints the output to 2 digits
           let avgRounded = Math.round(aboveAvg * 100) / 100;
-          if (avgRounded === 0) {
-            console.log("Its Zero", avgRounded);
-          }
           return { value: avgRounded, num_missing: num_missing };
         } else {
           return { value: undefined, num_missing: num_missing };
@@ -574,12 +573,12 @@ class HeatmapViz extends Component {
         text = "";
         color = "black";
         bgcolor = "white";
+      } else if (val0 === "N/A") {
+        text = "N/A";
+        color = "gray";
+        bgcolor = "#f7f7f8";
       } else {
-        if (val0 === 0) {
-          text = "N/A";
-        } else {
-          text = val0;
-        }
+        text = val0;
 
         if (cellvalList[i].num_missing > 0) text += "*";
         if (rowNormalize && maxMetricVal) {
@@ -594,6 +593,10 @@ class HeatmapViz extends Component {
         }
         // TODO: ADD background color as gray
       }
+      if (val0 === "N/A") {
+        console.log(text, color, bgcolor);
+      }
+
       // add a cell corresponding to a sorting result
       let selected0, id0;
       if (studyAnalysisResult.recordingName) {
@@ -712,7 +715,8 @@ class HeatmapViz extends Component {
             />
             <p>
               * An asterisk indicates an incomplete or failed sorting on a
-              subset of results.
+              subset of results. <i>N/A </i>indicates that no groundtruth units were
+              above the SNR threshold.
             </p>
             {alertCopy}
           </div>
