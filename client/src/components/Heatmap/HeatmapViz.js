@@ -591,12 +591,7 @@ class HeatmapViz extends Component {
           color = "black";
           bgcolor = "white";
         }
-        // TODO: ADD background color as gray
       }
-      if (val0 === "N/A") {
-        console.log(text, color, bgcolor);
-      }
-
       // add a cell corresponding to a sorting result
       let selected0, id0;
       if (studyAnalysisResult.recordingName) {
@@ -715,8 +710,8 @@ class HeatmapViz extends Component {
             />
             <p>
               * An asterisk indicates an incomplete or failed sorting on a
-              subset of results. <i>N/A </i>indicates that no groundtruth units were
-              above the SNR threshold.
+              subset of results. <i>N/A </i>indicates that no groundtruth units
+              were above the SNR threshold.
             </p>
             {alertCopy}
           </div>
