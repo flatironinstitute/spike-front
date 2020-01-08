@@ -38,8 +38,6 @@ class ReproductionCode extends Component {
   render() {
     let markdownSource = this.state.markdownTemplate || "";
     let sr = this.props.sortingResult;
-    console.log('----- sr', sr);
-    console.log('----- srparams', JSON.stringify(sr.sortingParameters, null, 4))
     markdownSource = this.replaceAll(markdownSource, {
       recordingDirectory: sr.recordingDirectory,
       sortingTruePath: sr.firingsTrue,

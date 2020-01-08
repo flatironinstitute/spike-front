@@ -76,7 +76,6 @@ class SortingResult extends Component {
         </div>
       );
     }
-    console.log('--- sorting result', sortingResult);
     let sorter = this.findSorter(sortingResult.sorterName) || {};
     return (
       <div className="page__body">

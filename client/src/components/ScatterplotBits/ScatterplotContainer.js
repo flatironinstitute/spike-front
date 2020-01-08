@@ -14,6 +14,7 @@ class ScatterplotContainer extends Component {
       studyAnalysisResult,
       sliderValue,
       metric,
+      imputeMissingValues,
       format
     } = this.props;
     const colorRanges = {
@@ -49,6 +50,7 @@ class ScatterplotContainer extends Component {
                   sliderValue={sliderValue}
                   format={format}
                   metric={metric}
+                  imputeMissingValues={imputeMissingValues}
                   selectedUnitCode={this.props.selectedUnitCode}
                   handleScatterplotClick={this.props.handleScatterplotClick}
                 />
@@ -65,6 +67,7 @@ class ScatterplotContainer extends Component {
                   sliderValue={sliderValue}
                   format={format}
                   metric={metric}
+                  imputeMissingValues={imputeMissingValues}
                   selectedUnitCode={this.props.selectedUnitCode}
                   handleScatterplotClick={this.props.handleScatterplotClick}
                 />

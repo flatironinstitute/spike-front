@@ -54,6 +54,7 @@ class DetailPage extends Component {
         su.studyName !== this.props.studyName
       ) {
         // The selected unit is not relevant to this view. Unselecting.
+        console.warn('The selected unit is not relevant to this view. Unselecting.')
         this.props.setSelectedUnit(null);
       }
     }
@@ -65,6 +66,10 @@ class DetailPage extends Component {
 
   handleMetricChange = metric => {
     this.props.setMetric(metric);
+  };
+
+  handleImputeMissingValuesChange = val => {
+    this.props.setImputeMissingValues(val);
   };
 
   handleSliderChange = value => {
@@ -151,8 +156,12 @@ class DetailPage extends Component {
     }
 
     let sortingResult = null;
+    let su = this.props.selectedUnit;
+    if (!su) {
+      console.warn('No selected unit.');
+      return <span>No selected unit.</span>;
+    }
     if (this.props.selectedUnit && this.props.sortingResults) {
-      let su = this.props.selectedUnit;
       for (let sr of this.props.sortingResults) {
         if (
           sr.studyName === su.studyName &&
@@ -162,6 +171,11 @@ class DetailPage extends Component {
           sortingResult = sr;
         }
       }
+    }
+
+    if (!sortingResult) {
+      console.warn('Sorting result not found.', su);
+      return <span>No sorting result found: {su.studyName} {su.recordingName} {su.sorterName}</span>;
     }
 
     return (
@@ -193,6 +207,7 @@ class DetailPage extends Component {
                           groupByStudySets={false}
                           handleCellSelected={this.handleCellSelected}
                           metric={this.props.metric}
+                          imputeMissingValues={this.props.imputeMissingValues}
                           selectRecordingName={recordingName => {
                             this.setState({ recordingName });
                           }}
@@ -219,8 +234,10 @@ class DetailPage extends Component {
                     handleFormatChange={this.handleFormatChange}
                     handleSliderChange={this.handleSliderChange}
                     handleMetricChange={this.handleMetricChange}
+                    handleImputeMissingValuesChange={this.handleImputeMissingValuesChange}
                     format={this.props.format}
                     metric={this.props.metric}
+                    imputeMissingValues={this.props.imputeMissingValues}
                     sliderValue={this.props.sliderValue[this.props.format]}
                   />
                 </Col>
@@ -236,6 +253,7 @@ class DetailPage extends Component {
                     sliderValue={this.props.sliderValue[this.props.format]}
                     format={this.props.format}
                     metric={this.props.metric}
+                    imputeMissingValues={this.props.imputeMissingValues}
                     selectedUnitCode={
                       (this.props.selectedUnit || {}).unitCode || null
                     }
@@ -363,6 +381,7 @@ function mapStateToProps(state) {
     format: state.format,
     sliderValue: state.sliderValue,
     metric: state.metric,
+    imputeMissingValues: state.imputeMissingValues,
     selectedUnit: state.selectedUnit
   };
 }
