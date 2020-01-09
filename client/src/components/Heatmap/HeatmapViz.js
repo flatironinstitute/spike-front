@@ -474,9 +474,7 @@ class HeatmapViz extends Component {
       for (let a of metricVals) metricValsCopy.push(a);
       metricValueMatrix.push(metricValsCopy);
     });
-    let imputed = false;
     if (this.props.imputeMissingValues) {
-      imputed = true;
       imputeMissingValues(metricValueMatrix, { num_pls_components: 4 });
     }
     // here's where we can optionally impute the missing data in the metricValueMatrix
