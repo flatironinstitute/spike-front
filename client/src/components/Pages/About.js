@@ -144,14 +144,14 @@ class About extends Component {
                           <hr />
                           <ul>
                             <li>
-                              For information on reproducing the results reported on the webpage or running the SpikeForest-wrapped sorters on your own data, see the
+                              For information on reproducing the results reported on the webpage or running the SpikeForest-wrapped sorters on your own data, see the{" "}
                               <a
                                 href="https://github.com/flatironinstitute/spikeforest2"
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
                                 SpikeForest2 Python package
-                              </a>
+                              </a>.
                             </li>
                           </ul>
                         </div>
