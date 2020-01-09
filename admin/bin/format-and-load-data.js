@@ -77,7 +77,11 @@ const StudyAnalysisResult = require("../../models/StudyAnalysisResult");
 const General = require("../../models/General");
 
 // import all the raw data
+<<<<<<< HEAD
 let rawSorters, rawAlgorithms, rawStudySets, rawSortingResults, rawStudyAnalysisResults, rawGeneral;
+=======
+let rawSorters, rawAlgorithms, rawStudySets, rawSortingResults, rawStudySets, rawGeneral;
+>>>>>>> bb7492690912377cf9ac9306d3efbb6651520523
 if (data_directory) {
   rawSorters = JSON.parse(
     fs.readFileSync(data_directory + "/Sorters.json", "utf-8")
@@ -98,7 +102,11 @@ if (data_directory) {
     fs.readFileSync(data_directory + "/General.json", "utf-8")
   );
 }
+<<<<<<< HEAD
 else if (data_file) {
+=======
+else if (raw_file) {
+>>>>>>> bb7492690912377cf9ac9306d3efbb6651520523
   const obj = JSON.parse(
     fs.readFileSync(data_file, "utf-8")
   );
