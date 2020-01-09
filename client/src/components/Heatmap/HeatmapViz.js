@@ -735,11 +735,9 @@ class HeatmapViz extends Component {
             <p>
               {
                 this.props.imputeMissingValues ? (
-                  "* Indicates an incomplete or failed sorting on a subset of results and quantities are computed from imputed values. <i>N/A </i>indicates that no groundtruth units
-              were above the SNR threshold."
+                  "* Indicates an incomplete or failed sorting on a subset of results and quantities are computed from imputed values. <i>N/A </i>indicates that no ground-truth units were above the SNR threshold."
                 ) : (
-                  "\u2020 Indicates an incomplete or failed sorting on a subset of results. <i>N/A </i>indicates that no groundtruth units
-              were above the SNR threshold."
+                  "\u2020 Indicates an incomplete or failed sorting on a subset of results. <i>N/A </i>indicates that no ground-truth units were above the SNR threshold."
                 )
               }
               
