@@ -262,8 +262,7 @@ class About extends Component {
                               (infrastructure, testing)
                             </li>
                             <li>
-                              Witold Wysota - Warsaw, Poland (MountainTools
-                              infrastructure, testing)
+                              Witold Wysota - Warsaw, Poland (infrastructure, testing)
                             </li>
                           </ul>
                           <br />

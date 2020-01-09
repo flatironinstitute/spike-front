@@ -127,8 +127,7 @@ class Archive extends Component {
                       <p>
                         Below is the SpikeForest analysis archive with the most
                         recent analysis at the top. These results may be loaded
-                        into Python using the MountainTools and SpikeForest
-                        packages.
+                        into Python using the <a href={"https://github.com/flatironinstitute/spikeforest2"}>spikeforest2</a> package.
                       </p>
                     </div>
                   </div>
