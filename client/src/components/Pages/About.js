@@ -7,8 +7,8 @@ class About extends Component {
   render() {
     const listItems = [
       { name: "Overview", value: "overview" },
-      { name: "Resources", value: "resources" },
-      { name: "Tutorials", value: "tutorials" },
+      // { name: "Resources", value: "resources" },
+      { name: "Reproducing", value: "reproducing" },
       { name: "Feedback", value: "feedback" },
       { name: "Credits", value: "credits" },
       { name: "References", value: "references" },
@@ -104,7 +104,7 @@ class About extends Component {
                     </div>
                   </Col>
                 </Row>
-                <div className="finder" id="resources" />
+                {/* <div className="finder" id="resources" />
                 <Row className="subcontainer justify-content-md-center">
                   <Col lg={12} sm={12} xl={12}>
                     <div className="card card__std">
@@ -129,8 +129,8 @@ class About extends Component {
                       </div>
                     </div>
                   </Col>
-                </Row>
-                <div className="finder" id="tutorials" />
+                </Row> */}
+                <div className="finder" id="reproducing" />
                 <Row className="subcontainer justify-content-md-center">
                   <Col lg={12} sm={12} xl={12}>
                     <div className="card card__std">
