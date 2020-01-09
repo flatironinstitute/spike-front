@@ -54,7 +54,9 @@ class HomeContentContainer extends Component {
               handleFormatChange={this.handleFormatChange}
               handleSliderChange={this.handleSliderChange}
               handleMetricChange={this.handleMetricChange}
-              handleImputeMissingValuesChange={this.handleImputeMissingValuesChange}
+              handleImputeMissingValuesChange={
+                this.handleImputeMissingValuesChange
+              }
               format={this.props.format}
               metric={this.props.metric}
               imputeMissingValues={this.props.imputeMissingValues}
@@ -66,7 +68,6 @@ class HomeContentContainer extends Component {
                 {...this.props}
                 format={this.props.format}
                 metric={this.props.metric}
-                imputeMissingValues={this.props.imputeMissingValues}
                 imputeMissingValues={this.props.imputeMissingValues}
                 sliderValue={this.props.sliderValue[this.props.format]}
               />
