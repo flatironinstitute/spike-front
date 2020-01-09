@@ -627,6 +627,9 @@ li {
 
 .updated {
   background: #fffdc0;
+  /* color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba; */
   font-size: 1.5rem;
   padding: 0 10px;
   border-radius: 5px;
@@ -846,6 +849,11 @@ li {
   min-height: 41px;
 }
 
+/* .alert-warning {
+  color: var(--black) !important;
+  background: #fffdc0 !important;
+} */
+
 .alert__stats {
   margin-top: 50px;
   padding: 0.75rem 2rem !important;
@@ -938,6 +946,11 @@ li {
   margin-bottom: 0;
 }
 
+.card__label--row {
+  display: flex;
+  justify-content: space-between;
+}
+
 .card__charttitle {
   text-align: center;
 }
@@ -956,6 +969,12 @@ li {
   padding: 0;
   background-color: transparent;
   line-height: 30px;
+}
+
+.input__label {
+  font-size: 1.5rem;
+  line-height: 1.5;
+  margin-bottom: 0;
 }
 
 .markdown-footer h1,
