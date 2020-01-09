@@ -70,7 +70,7 @@ class About extends Component {
                             It consists of this website for presenting our
                             up-to-date findings, a{" "}
                             <a
-                              href="https://github.com/flatironinstitute/spikeforest"
+                              href="https://github.com/flatironinstitute/spikeforest2"
                               target="_blank"
                               rel="noopener noreferrer"
                             >
@@ -137,31 +137,21 @@ class About extends Component {
                       <div className="content">
                         <div className="card__label">
                           <p>
-                            <strong>Tutorials</strong>
+                            <strong>Running SpikeForest locally</strong>
                           </p>
                         </div>
                         <div className="card__footer">
                           <hr />
                           <ul>
                             <li>
+                              For information on reproducing the results reported on the webpage or running the SpikeForest-wrapped sorters on your own data, see the
                               <a
-                                href="https://github.com/flatironinstitute/spikeforest/blob/master/docs/tutorials/spike_sorting_spikeforest_recording.md"
+                                href="https://github.com/flatironinstitute/spikeforest2"
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
-                                Run these algorithms on your own computer to
-                                reproduce the results.
-                              </a>{" "}
-                            </li>
-                            <li>
-                              <a
-                                href="https://github.com/flatironinstitute/spikeforest/blob/master/docs/tutorials/spike_sorting_single_recording.md"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                Run the SpikeForest-wrapped spike sorters on
-                                your own data.
-                              </a>{" "}
+                                SpikeForest2 Python package
+                              </a>
                             </li>
                           </ul>
                         </div>

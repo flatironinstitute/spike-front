@@ -14,6 +14,15 @@ const sortingResultSchema = new mongoose.Schema({
     type: String,
     ref: "Sorter"
   },
+  processorName: {
+    type: String
+  },
+  processorVersion: {
+    type: String
+  },
+  sortingParameters: {
+    type: Map
+  },
   firings: {
     type: String, /* sha1:// of the firings file */
   },

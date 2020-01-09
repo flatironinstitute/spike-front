@@ -28,6 +28,7 @@ export const SELECT_STUDY_NAME = "SELECT_STUDY_NAME";
 export const SET_FORMAT = "SET_FORMAT";
 export const SET_SLIDER_VALUE = "SET_SLIDER_VALUE";
 export const SET_METRIC = "SET_METRIC";
+export const SET_IMPUTE_MISSING_VALUES = "SET_IMPUTE_MISSING_VALUES";
 export const SET_SELECTED_UNIT = "SET_SELECTED_UNIT";
 
 export const START_LOADING = "START_LOADING";
@@ -336,6 +337,11 @@ export const setSliderValue = (format, value) => ({
 export const setMetric = metric => ({
   type: SET_METRIC,
   metric
+});
+
+export const setImputeMissingValues = imputeMissingValues => ({
+  type: SET_IMPUTE_MISSING_VALUES,
+  imputeMissingValues
 });
 
 export const setSelectedUnit = selectedUnit => {

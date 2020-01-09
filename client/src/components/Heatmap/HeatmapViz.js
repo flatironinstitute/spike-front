@@ -4,6 +4,8 @@ import * as Sentry from "@sentry/browser";
 import * as d3 from "d3";
 import ExpandingHeatmapTable from "./ExpandingHeatmapTable";
 
+let imputeMissingValues = require("./imputeMissingValues.js");
+
 class HeatmapViz extends Component {
   constructor(props) {
     super(props);
@@ -25,6 +27,7 @@ class HeatmapViz extends Component {
       this.props.threshold !== prevProps.threshold ||
       this.props.format !== prevProps.format ||
       this.props.metric !== prevProps.metric ||
+      this.props.imputeMissingValues !== prevProps.imputeMissingValues ||
       this.state.selectedStudyName !== prevState.selectedStudyName ||
       this.state.selectedRecordingName !== prevState.selectedRecordingName ||
       this.state.selectedSorterName !== prevState.selectedSorterName
@@ -446,11 +449,9 @@ class HeatmapViz extends Component {
       default:
         rowNormalize = true;
     }
-    let trueSnrs = studyAnalysisResult.trueSnrs;
-    // loop through the sorting results for the study, and get the metrics (e.g., counts) to display
-    let cellvalList = studyAnalysisResult.sortingResults.map(function(
-      sortingResult
-    ) {
+
+    let metricValueMatrix = [];
+    studyAnalysisResult.sortingResults.forEach(sortingResult => {
       let metricVals;
       if (format === "count" || format === "average") {
         switch (metric) {
@@ -469,6 +470,19 @@ class HeatmapViz extends Component {
       } else if (format === "cpu") {
         metricVals = sortingResult.cpuTimesSec;
       }
+      let metricValsCopy = [];
+      for (let a of metricVals) metricValsCopy.push(a);
+      metricValueMatrix.push(metricValsCopy);
+    });
+    if (this.props.imputeMissingValues) {
+      imputeMissingValues(metricValueMatrix, { num_pls_components: 4 });
+    }
+    // here's where we can optionally impute the missing data in the metricValueMatrix
+
+    let trueSnrs = studyAnalysisResult.trueSnrs;
+    // loop through the sorting results for the study, and get the metrics (e.g., counts) to display
+    let cellvalList = metricValueMatrix.map(function(metricVals, ii) {
+      let sortingResult = studyAnalysisResult.sortingResults[ii];
       let num_found = 0;
       let num_missing = 0;
       for (let i = 0; i < trueSnrs.length; i++) {
@@ -556,8 +570,7 @@ class HeatmapViz extends Component {
         );
         return { value: undefined, num_missing: num_missing };
       }
-    },
-    this);
+    }, this);
 
     let maxMetricVal = 0;
     cellvalList.forEach(x => {
@@ -579,8 +592,13 @@ class HeatmapViz extends Component {
         bgcolor = "#f7f7f8";
       } else {
         text = val0;
-
-        if (cellvalList[i].num_missing > 0) text += "*";
+        if (cellvalList[i].num_missing > 0) {
+          if (this.props.imputeMissingValues) {
+            text += "*";
+          } else {
+            text += "\u2020";
+          }
+        }
         if (rowNormalize && maxMetricVal) {
           val0 = val0 / maxMetricVal;
         }
@@ -709,9 +727,9 @@ class HeatmapViz extends Component {
               onCellSelected={this.props.handleCellSelected}
             />
             <p>
-              * An asterisk indicates an incomplete or failed sorting on a
-              subset of results. <i>N/A </i>indicates that no groundtruth units
-              were above the SNR threshold.
+              {this.props.imputeMissingValues
+                ? "* Indicates an incomplete or failed sorting on a subset of results and quantities are computed from imputed values. N/A indicates that no ground-truth units were above the SNR threshold."
+                : "\u2020 Indicates an incomplete or failed sorting on a subset of results. N/A indicates that no ground-truth units were above the SNR threshold."}
             </p>
             {alertCopy}
           </div>

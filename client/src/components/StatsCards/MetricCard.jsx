@@ -73,6 +73,16 @@ export class MetricCard extends Component {
             </ButtonToolbar>
           </div>
         </div>
+        <div
+          title="If checked, calculations in the main table are based on imputed values using multiple linear regression to fill in missing data."
+        >
+          <input
+            type="checkbox"
+            checked={this.props.imputeMissingValues}
+            onChange={evt => {this.props.handleImputeMissingValuesChange(evt.target.checked)}}
+          />
+          Impute missing values
+        </div>
       </div>
     );
   }

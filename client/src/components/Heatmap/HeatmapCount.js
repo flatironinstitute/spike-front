@@ -93,6 +93,7 @@ class HeatmapCount extends Component {
                   groupByStudySets={true}
                   handleCellSelected={this.handleCellSelected}
                   metric={this.props.metric}
+                  imputeMissingValues={this.props.imputeMissingValues}
                   selectStudyName={this.props.selectStudyName}
                   selectSorterName={this.props.selectSorterName}
                   selectedStudyName={this.state.selectedStudyName}
@@ -118,6 +119,7 @@ class HeatmapCount extends Component {
                     sliderValue={this.props.sliderValue}
                     format={this.props.format}
                     metric={this.props.metric}
+                    imputeMissingValues={this.props.imputeMissingValues}
                     cardHeight={noScatterplot ? 100 : this.state.cardHeight}
                     selectedUnitCode={
                       (this.props.selectedUnit || {}).unitCode || null

@@ -146,6 +146,18 @@ class SortingResult extends Component {
                           </td>
                         </tr>
                         <tr>
+                          <th>Sorter version</th>
+                          <td>
+                            {sortingResult.processorName}: {sortingResult.processorVersion}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>Container</th>
+                          <td>
+                            {sortingResult.container}
+                          </td>
+                        </tr>
+                        <tr>
                           <th>Sorting parameters</th>
                           <td>
                             <pre>

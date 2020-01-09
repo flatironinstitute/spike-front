@@ -26,7 +26,7 @@ class InfoPanel extends Component {
           spike sorting codes across a large curated database of
           electrophysiological recordings with ground truth. It consists of this
           website for presenting our up-to-date findings, a{" "}
-          <a href={"https://github.com/flatironinstitute/spikeforest"}>
+          <a href={"https://github.com/flatironinstitute/spikeforest2"}>
             Python package
           </a>{" "}
           which contains the tools for running the SpikeForest analysis, and an

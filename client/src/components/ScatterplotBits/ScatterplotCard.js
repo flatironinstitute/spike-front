@@ -81,6 +81,7 @@ class ScatterplotCard extends Component {
                 sliderValue={this.props.sliderValue}
                 format={this.props.format}
                 metric={this.props.metric}
+                imputeMissingValues={this.props.imputeMissingValues}
                 cardHeight={this.props.cardHeight}
                 selectedUnitCode={this.props.selectedUnitCode}
                 handleScatterplotClick={this.props.handleScatterplotClick}

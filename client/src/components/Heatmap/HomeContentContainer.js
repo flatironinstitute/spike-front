@@ -20,6 +20,10 @@ class HomeContentContainer extends Component {
     this.props.setMetric(metric);
   };
 
+  handleImputeMissingValuesChange = val => {
+    this.props.setImputeMissingValues(val);
+  };
+
   handleSliderChange = value => {
     let round = Math.round(value * 100) / 100;
     this.props.setSliderValue(this.props.format, round);
@@ -50,8 +54,12 @@ class HomeContentContainer extends Component {
               handleFormatChange={this.handleFormatChange}
               handleSliderChange={this.handleSliderChange}
               handleMetricChange={this.handleMetricChange}
+              handleImputeMissingValuesChange={
+                this.handleImputeMissingValuesChange
+              }
               format={this.props.format}
               metric={this.props.metric}
+              imputeMissingValues={this.props.imputeMissingValues}
               sliderValue={this.props.sliderValue[this.props.format]}
               showCPU={true}
             />
@@ -60,6 +68,7 @@ class HomeContentContainer extends Component {
                 {...this.props}
                 format={this.props.format}
                 metric={this.props.metric}
+                imputeMissingValues={this.props.imputeMissingValues}
                 sliderValue={this.props.sliderValue[this.props.format]}
               />
             ) : null}
@@ -74,7 +83,8 @@ function mapStateToProps(state) {
   return {
     format: state.format,
     sliderValue: state.sliderValue,
-    metric: state.metric
+    metric: state.metric,
+    imputeMissingValues: state.imputeMissingValues
   };
 }
 
