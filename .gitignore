@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 */node_modules
+**/node_modules
 /.pnp
 .pnp.js
 npm-debug.log*
@@ -19,11 +20,6 @@ yarn-error.log*
 
 # testing
 /coverage
-
-# production
-/build
-*/build
-/client/build
 
 # misc
 .eslintrc
