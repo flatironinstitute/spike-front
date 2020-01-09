@@ -48,7 +48,7 @@ class Footer extends Component {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://github.com/flatironinstitute/spikeforest"
+              href="https://github.com/flatironinstitute/spikeforest2"
             >
               SpikeForest Analysis Framework
             </a>
@@ -72,7 +72,7 @@ class Footer extends Component {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://github.com/flatironinstitute/spikeforest"
+              href="https://github.com/flatironinstitute/spikeforest2"
               className="github-logo"
             >
               <img alt="spikeforest logo" src={github} height="24" />
