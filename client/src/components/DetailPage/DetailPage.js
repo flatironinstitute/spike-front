@@ -157,10 +157,6 @@ class DetailPage extends Component {
 
     let sortingResult = null;
     let su = this.props.selectedUnit;
-    if (!su) {
-      console.warn('No selected unit.');
-      return <span>No selected unit.</span>;
-    }
     if (this.props.selectedUnit && this.props.sortingResults) {
       for (let sr of this.props.sortingResults) {
         if (
@@ -171,11 +167,6 @@ class DetailPage extends Component {
           sortingResult = sr;
         }
       }
-    }
-
-    if (!sortingResult) {
-      console.warn('Sorting result not found.', su);
-      return <span>No sorting result found: {su.studyName} {su.recordingName} {su.sorterName}</span>;
     }
 
     return (
@@ -321,7 +312,7 @@ class DetailPage extends Component {
                                 </td>
                               </tr>
                               <tr>
-                                {sortingResult.returnCode === 0 ? (
+                                {(sortingResult||{}).returnCode === 0 ? (
                                   <td />
                                 ) : (
                                   <td>
