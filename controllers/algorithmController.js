@@ -4,7 +4,8 @@ const Algorithm = mongoose.model("Algorithm");
 exports.getAlgorithms = async (req, res) => {
   const algorithmsPromise = Algorithm.find();
   const [algorithms] = await Promise.all([algorithmsPromise]);
-  res.send({ algorithms: algorithms });
+  res.send(new Error("this is an error"));
+  // res.send({ algorithms: algorithms });
 };
 
 exports.getAlgorithmById = async (req, res, next) => {

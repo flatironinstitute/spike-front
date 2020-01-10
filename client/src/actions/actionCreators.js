@@ -46,9 +46,11 @@ export const createFetchAPI = async url => {
   try {
     const response = await axios.get(newUrl);
     const returned = await response.data;
-    if (response.status !== 200) Sentry.captureException(returned.message);
+    // if (response.status !== 200) Sentry.captureException(returned.message);
+    if (response.status !== 200) console.error(returned.message);
     return returned;
   } catch (error) {
+    console.error("catch error", error);
     Sentry.captureException(error);
   }
 };
