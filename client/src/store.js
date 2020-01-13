@@ -23,11 +23,12 @@ const defaultState = {
   selectedStudySortingResult: null,
   selectedStudyName: null,
   selectedSorterName: null,
-  sliderValue: {average: 8, count: 0.8},
+  sliderValue: { average: 8, count: 0.8 },
   sorters: null,
   stats: null,
   studySets: null,
-  studyAnalysisResults: null
+  studyAnalysisResults: null,
+  fetchFailure: false
 };
 
 export const history = createBrowserHistory();

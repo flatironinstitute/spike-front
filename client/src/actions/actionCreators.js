@@ -37,6 +37,8 @@ export const SEND_CONTACT = "SEND_CONTACT";
 export const SEND_CONTACT_SUCCESS = "SEND_CONTACT_SUCCESS";
 export const SEND_CONTACT_FAILURE = "SEND_CONTACT_FAILURE";
 
+export const FETCH_FAILURE = "FETCH_FAILURE";
+
 /* V2 Data Fetch Functions
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -46,12 +48,17 @@ export const createFetchAPI = async url => {
   try {
     const response = await axios.get(newUrl);
     const returned = await response.data;
-    // if (response.status !== 200) Sentry.captureException(returned.message);
-    if (response.status !== 200) console.error(returned.message);
+
+    if (response.status !== 200) {
+      console.error("in status try", returned.message);
+      sendFetchFailure(returned.message);
+      return;
+      // Sentry.captureException(returned.message);
+    }
+
     return returned;
   } catch (error) {
-    console.error("catch error", error);
-    Sentry.captureException(error);
+    sendFetchFailure(error);
   }
 };
 
@@ -63,9 +70,18 @@ export const createFetchPost = async (url, options) => {
     if (response.status !== 200) Sentry.captureException(returned.message);
     return returned;
   } catch (error) {
-    Sentry.captureException(error);
+    sendFetchFailure(error);
   }
 };
+
+export function sendFetchFailure(error) {
+  console.log("IN new fetch failure function", error);
+  Sentry.captureException(error);
+  return {
+    type: FETCH_FAILURE,
+    fetchFailure: true
+  };
+}
 
 // Contacts
 export function sendContactSuccess() {
