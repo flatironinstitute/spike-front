@@ -26,7 +26,6 @@ class Preloader extends Component {
         </div>
       );
     }
-    console.log("PRELOADER", this.props);
     return (
       <Container className="preloader">
         <h4 className="preloader__header">

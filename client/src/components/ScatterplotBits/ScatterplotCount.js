@@ -39,16 +39,6 @@ class ScatterplotCount extends Component {
     ) {
       this.buildCountData();
     }
-    if (this.state.selectedRecording !== prevState.selectedRecording) {
-      if (this.state.selectedRecording !== prevState.selectedRecording) {
-        console.log(
-          "🕌 NEW SELECTED RECORDING",
-          this.state.selectedRecording,
-          this.props.studyName,
-          this.props.sorterName
-        );
-      }
-    }
   }
 
   buildCountData() {

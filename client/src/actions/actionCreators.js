@@ -57,13 +57,11 @@ export const createFetchAPI = async url => {
     });
 
     if (response.status !== 200 || returnsNull) {
-      console.error("in first conditional", response);
       return new Error(response);
     }
 
     return returned;
   } catch (err) {
-    console.error("in catch fetch", err);
     return new Error(err);
   }
 };

@@ -948,7 +948,13 @@ li {
 
 .card__label--row {
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: space-between;
+}
+
+.card-label-form {
+  margin-top: 1rem;
 }
 
 .card__charttitle {
@@ -971,10 +977,16 @@ li {
   line-height: 30px;
 }
 
-.input__label {
-  font-size: 1.5rem;
-  line-height: 1.5;
-  margin-bottom: 0;
+@media (min-width: 1600px) {
+  .card__label--row {
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: baseline;
+  }
+  .card-label-form {
+    margin-top: 0;
+    align-items: baseline;
+  }
 }
 
 .markdown-footer h1,

@@ -81,8 +81,6 @@ class Routes extends Component {
         </Container>
       </div>
     );
-
-    console.log("🥗", this.props.fetchFailure);
     return (
       <div className="wrapper">
         <Header />

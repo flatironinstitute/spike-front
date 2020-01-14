@@ -82,8 +82,7 @@ router.post("/api/contact", async (req, res) => {
       success: true
     });
   } catch (e) {
-    //TODO: Add Sentry logging
-    console.log("Error", e);
+    Sentry.captureException(e);
   }
 });
 

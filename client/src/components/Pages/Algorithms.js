@@ -15,7 +15,6 @@ class Algorithms extends Component {
   }
 
   componentDidMount() {
-    console.log("🐻 props", this.props);
     if (this.props.algorithms && this.props.algorithms.length) {
       this.filterActives();
     }

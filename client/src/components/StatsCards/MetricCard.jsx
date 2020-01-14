@@ -42,7 +42,12 @@ export class MetricCard extends Component {
                 Metric: <strong>{title}</strong>{" "}
                 <span className="card__formula">{copy}</span>
               </p>
-              <Form.Check type="checkbox" id="check-api-checkbox" inline>
+              <Form.Check
+                type="checkbox"
+                id="check-api-checkbox"
+                inline
+                className="card-label-form"
+              >
                 <Form.Check.Input
                   type="checkbox"
                   checked={this.props.imputeMissingValues}
