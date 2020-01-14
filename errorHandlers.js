@@ -8,11 +8,6 @@
 
 exports.catchErrors = fn => {
   return function(req, res, next) {
-    console.log(
-      "in catch errors with data",
-      Math.floor(Date.now() / 1000),
-      req.data
-    );
     return fn(req, res, next).catch(next);
   };
 };
@@ -47,7 +42,6 @@ exports.developmentErrors = (err, req, res, next) => {
     No stacktraces are leaked to user
   */
 exports.productionErrors = (err, req, res, next) => {
-  console.log("PRODUCTION ERRORS");
   res.status(err.status || 500);
   res.render("error", {
     message: err.message,

@@ -10,8 +10,6 @@ const generalController = require("./controllers/generalController");
 const newsPostController = require("./controllers/newsPostController");
 const mailer = require("./email/mailer.js");
 
-const { catchErrors } = require("./errorHandlers");
-
 const MountainClient = require("./mountainclient-js").MountainClient;
 
 /* V2 Data: New Routes
@@ -23,18 +21,15 @@ mt.configDownloadFrom(["spikeforest.public", "spikeforest.public"]);
 // CPU Routes
 router.get("/api/cpus", catchErrors(sortingResultController.getCPUs));
 // Sorters
-router.get("/api/sorters", catchErrors(sorterController.getSorters));
+router.get("/api/sorters", sorterController.getSorters);
 // Algorithms
-router.get("/api/algorithms", catchErrors(algorithmController.getAlgorithms));
+router.get("/api/algorithms", algorithmController.getAlgorithms);
 // Sorting Results
-router.get(
-  "/api/sortingresults",
-  catchErrors(sortingResultController.getSortingResults)
-);
+router.get("/api/sortingresults", sortingResultController.getSortingResults);
 // Study Sets
-router.get("/api/studysets", catchErrors(studySetController.getStudySets));
+router.get("/api/studysets", studySetController.getStudySets);
 // Summary Stats
-router.get("/api/stats", catchErrors(sortingResultController.getStats));
+router.get("/api/stats", sortingResultController.getStats);
 // News posts
 router.get("/api/newsposts", newsPostController.getNewsPosts);
 // Load object
