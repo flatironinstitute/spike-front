@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Algorithm = mongoose.model("Algorithm");
 
 exports.getAlgorithms = async (req, res) => {
-  const algorithmsPromise = Algorithm.find();
+  const algorithmsPromise = await Algorithm.find();
   const [algorithms] = await Promise.all([algorithmsPromise]);
   res.send({ algorithms: algorithms });
 };

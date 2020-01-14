@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import {
   ButtonToolbar,
   ToggleButtonGroup,
-  ToggleButton
+  ToggleButton,
+  Form
 } from "react-bootstrap";
 
 import { toTitleCase } from "../../utils";
@@ -36,10 +37,31 @@ export class MetricCard extends Component {
       <div className={primaryClass}>
         <div className="content">
           <div className="card__label">
-            <p>
-              Metric: <strong>{title}</strong>{" "}
-              <span className="card__formula">{copy}</span>
-            </p>
+            <div className="card__label--row">
+              <p>
+                Metric: <strong>{title}</strong>{" "}
+                <span className="card__formula">{copy}</span>
+              </p>
+              <Form.Check
+                type="checkbox"
+                id="check-api-checkbox"
+                inline
+                className="card-label-form"
+              >
+                <Form.Check.Input
+                  type="checkbox"
+                  checked={this.props.imputeMissingValues}
+                  onChange={evt => {
+                    this.props.handleImputeMissingValuesChange(
+                      evt.target.checked
+                    );
+                  }}
+                />
+                <Form.Check.Label className="input__label">
+                  Impute missing values
+                </Form.Check.Label>
+              </Form.Check>
+            </div>
           </div>
           <div className="card__footer">
             <hr />
@@ -72,16 +94,16 @@ export class MetricCard extends Component {
               </ToggleButtonGroup>
             </ButtonToolbar>
           </div>
-        </div>
-        <div
-          title="If checked, calculations in the main table are based on imputed values using multiple linear regression to fill in missing data."
-        >
-          <input
-            type="checkbox"
-            checked={this.props.imputeMissingValues}
-            onChange={evt => {this.props.handleImputeMissingValuesChange(evt.target.checked)}}
-          />
-          Impute missing values
+          {/* <div title="If checked, calculations in the main table are based on imputed values using multiple linear regression to fill in missing data.">
+            <input
+              type="checkbox"
+              checked={this.props.imputeMissingValues}
+              onChange={evt => {
+                this.props.handleImputeMissingValuesChange(evt.target.checked);
+              }}
+            />
+            Impute missing values
+          </div> */}
         </div>
       </div>
     );

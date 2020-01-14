@@ -75,13 +75,12 @@ class Routes extends Component {
         <Container className="container__heatmap">
           <Card>
             <Card.Body>
-              <Preloader />
+              <Preloader fetchFailure={this.props.fetchFailure} />
             </Card.Body>
           </Card>
         </Container>
       </div>
     );
-
     return (
       <div className="wrapper">
         <Header />
@@ -90,34 +89,84 @@ class Routes extends Component {
           handleModalClose={this.handleModalClose}
         />
         <Switch>
-          <Route exact path="/" render={props => <Home {...this.props} />} />
-          <Route path="/about" render={props => <About {...this.props} />} />
+          <Route
+            exact
+            path="/"
+            render={props =>
+              this.props.fetchFailure ? (
+                loadingContainer
+              ) : (
+                <Home {...this.props} />
+              )
+            }
+          />
+          <Route
+            path="/about"
+            render={props =>
+              this.props.fetchFailure ? (
+                loadingContainer
+              ) : (
+                <About {...this.props} />
+              )
+            }
+          />
           <Route
             path="/contact"
-            render={props => <Contact {...this.props} />}
+            render={props =>
+              this.props.fetchFailure ? (
+                loadingContainer
+              ) : (
+                <Contact {...this.props} />
+              )
+            }
           />
           <Route
             path="/metrics"
-            render={props => <Metrics {...this.props} />}
+            render={props =>
+              this.props.fetchFailure ? (
+                loadingContainer
+              ) : (
+                <Metrics {...this.props} />
+              )
+            }
           />
           <Route
             path="/recordings"
-            render={props => <Recordings studySets={this.props.studySets} />}
+            render={props =>
+              this.props.fetchFailure ? (
+                loadingContainer
+              ) : (
+                <Recordings {...this.props} />
+              )
+            }
           />
           <Route
             path="/algorithms"
-            render={props => <Algorithms algorithms={this.props.algorithms} />}
+            render={props =>
+              this.props.fetchFailure ? (
+                loadingContainer
+              ) : (
+                <Algorithms {...this.props} />
+              )
+            }
           />
           <Route
             path="/studies"
-            render={props => <Studies {...this.props} />}
+            render={props =>
+              this.props.fetchFailure ? (
+                loadingContainer
+              ) : (
+                <Studies {...this.props} />
+              )
+            }
           />
           <Route
             path="/studyresults/:studyName"
             render={props =>
               !this.props.studyAnalysisResults ||
               !this.props.sorters ||
-              !this.props.studySets ? (
+              !this.props.studySets ||
+              this.props.fetchFailure ? (
                 loadingContainer
               ) : (
                 <DetailPage
@@ -134,7 +183,7 @@ class Routes extends Component {
           <Route
             path="/studyset/:studySetName"
             render={props =>
-              !this.props.studySets ? (
+              !this.props.studySets || this.props.fetchFailure ? (
                 loadingContainer
               ) : (
                 <StudySet
@@ -147,7 +196,7 @@ class Routes extends Component {
           <Route
             path="/study/:studyName"
             render={props =>
-              !this.props.studySets ? (
+              !this.props.studySets || this.props.fetchFailure ? (
                 loadingContainer
               ) : (
                 <Study
@@ -160,7 +209,9 @@ class Routes extends Component {
           <Route
             path="/recording/:studyName/:recordingName"
             render={props =>
-              !this.props.studySets || !this.props.sortingResults ? (
+              !this.props.studySets ||
+              !this.props.sortingResults ||
+              this.props.fetchFailure ? (
                 loadingContainer
               ) : (
                 <Recording
@@ -175,7 +226,9 @@ class Routes extends Component {
           <Route
             path="/sortingresult/:studyName/:recordingName/:sorterName"
             render={props =>
-              !this.props.studySets || !this.props.sortingResults ? (
+              !this.props.studySets ||
+              !this.props.sortingResults ||
+              this.props.fetchFailure ? (
                 loadingContainer
               ) : (
                 <SortingResult
@@ -192,13 +245,25 @@ class Routes extends Component {
           />
           <Route
             path="/archive"
-            render={props => <Archive general={this.props.general} />}
+            render={props =>
+              this.props.fetchFailure ? (
+                loadingContainer
+              ) : (
+                <Archive general={this.props.general} />
+              )
+            }
           />
           <Route
             path="/news"
-            render={props => <News newsPosts={this.props.newsPosts} />}
+            render={props =>
+              this.props.fetchFailure ? (
+                loadingContainer
+              ) : (
+                <News newsPosts={this.props.newsPosts} />
+              )
+            }
           />
-          <Route render={props => <FourOhFour {...this.props} />} />
+          <Route render={props => <FourOhFour />} />
         </Switch>
         <Footer />
       </div>
@@ -212,22 +277,23 @@ function mapStateToProps(state) {
     algorithms: state.algorithms,
     contactSent: state.contactSent,
     cpus: state.cpus,
+    fetchFailure: state.fetchFailure,
     format: state.format,
+    general: state.general,
     loading: state.loading,
     metric: state.metric,
     imputeMissingValues: state.imputeMissingValues,
     newsPosts: state.newsPosts,
     selectedUnit: state.selectedUnit,
+    selectedSorterName: state.selectedSorterName,
+    selectedStudyName: state.selectedStudyName,
+    selectedStudySortingResult: state.selectedStudySortingResult,
     sliderValue: state.sliderValue,
-    sortingResults: state.sortingResults,
     sorters: state.sorters,
+    sortingResults: state.sortingResults,
     stats: state.stats,
     studySets: state.studySets,
-    selectedStudySortingResult: state.selectedStudySortingResult,
-    selectedStudyName: state.selectedStudyName,
-    selectedSorterName: state.selectedSorterName,
-    studyAnalysisResults: state.studyAnalysisResults,
-    general: state.general
+    studyAnalysisResults: state.studyAnalysisResults
   };
 }
 
