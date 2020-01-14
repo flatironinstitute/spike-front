@@ -1,5 +1,4 @@
 const Sentry = require("@sentry/node");
-const errorHandlers = require("./errorHandlers");
 
 const IS_DEBUG = true;
 Sentry.init({
@@ -44,8 +43,6 @@ const path = require("path");
 const app = express();
 const port = process.env.PORT || 5000;
 const apiroutes = require("./apiroutes");
-
-// const mail = require("./email/mail");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

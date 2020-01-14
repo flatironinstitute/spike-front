@@ -15,6 +15,7 @@ class Algorithms extends Component {
   }
 
   componentDidMount() {
+    console.log("🐻 props", this.props);
     if (this.props.algorithms && this.props.algorithms.length) {
       this.filterActives();
     }
@@ -78,9 +79,6 @@ class Algorithms extends Component {
         row.wrapper = `<a href="${alg.wrapper}" target="_blank">${this.basename(
           alg.wrapper
         )}</a>`;
-        // let nextTo = alg.wrapper.split("/")[9];
-        // let last = alg.wrapper.split("/")[10];
-        // let wrapper = `https://github.com/flatironinstitute/spikeforest/blob/master/spikeforest/spikeforestsorters/${nextTo}/${last}`;
         let wrapper = alg.wrapper;
         row.wrapper_link = wrapper;
       }

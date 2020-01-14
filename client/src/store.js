@@ -11,24 +11,26 @@ ReactGA.initialize(gaTag);
 
 // create an object for the default data
 const defaultState = {
+  algorithms: null,
   contactSent: null,
   cpus: null,
+  fetchFailure: false,
   format: "average",
+  general: null,
   loading: null,
   metric: "accuracy",
   imputeMissingValues: true,
   newsPosts: null,
   selectedUnit: null,
-  sortingResults: null,
-  selectedStudySortingResult: null,
-  selectedStudyName: null,
   selectedSorterName: null,
+  selectedStudyName: null,
+  selectedStudySortingResult: null,
   sliderValue: { average: 8, count: 0.8 },
   sorters: null,
+  sortingResults: null,
   stats: null,
   studySets: null,
-  studyAnalysisResults: null,
-  fetchFailure: false
+  studyAnalysisResults: null
 };
 
 export const history = createBrowserHistory();

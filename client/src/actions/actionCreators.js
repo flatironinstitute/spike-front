@@ -49,16 +49,22 @@ export const createFetchAPI = async url => {
     const response = await axios.get(newUrl);
     const returned = await response.data;
 
-    if (response.status !== 200) {
-      console.error("in status try", returned.message);
-      sendFetchFailure(returned.message);
-      return;
-      // Sentry.captureException(returned.message);
+    let returnsNull = false;
+    Object.values(returned).forEach(val => {
+      if (val == null) {
+        returnsNull = true;
+      }
+    });
+
+    if (response.status !== 200 || returnsNull) {
+      console.error("in first conditional", response);
+      return new Error(response);
     }
 
     return returned;
-  } catch (error) {
-    sendFetchFailure(error);
+  } catch (err) {
+    console.error("in catch", err);
+    return new Error(err);
   }
 };
 
@@ -67,15 +73,17 @@ export const createFetchPost = async (url, options) => {
     const newUrl = baseurl + url;
     const response = await axios.post(newUrl, options);
     const returned = await response.data;
-    if (response.status !== 200) Sentry.captureException(returned.message);
+    if (response.status !== 200) {
+      return new Error(response);
+    }
     return returned;
   } catch (error) {
-    sendFetchFailure(error);
+    return error;
   }
 };
 
+// Generic Failure condition
 export function sendFetchFailure(error) {
-  console.log("IN new fetch failure function", error);
   Sentry.captureException(error);
   return {
     type: FETCH_FAILURE,
@@ -129,7 +137,9 @@ export const fetchCPUs = () => {
       .then(() => {
         dispatch(endLoading());
       })
-      .catch(err => Sentry.captureException(err));
+      .catch(err => {
+        dispatch(sendFetchFailure(err));
+      });
   };
 };
 
@@ -152,6 +162,9 @@ export const fetchSorters = () => {
       })
       .then(() => {
         dispatch(endLoading());
+      })
+      .catch(err => {
+        dispatch(sendFetchFailure(err));
       });
   };
 };
@@ -175,6 +188,9 @@ export const fetchAlgorithms = () => {
       })
       .then(() => {
         dispatch(endLoading());
+      })
+      .catch(err => {
+        dispatch(sendFetchFailure(err));
       });
   };
 };
@@ -208,6 +224,9 @@ export const fetchStats = () => {
       })
       .then(() => {
         dispatch(endLoading());
+      })
+      .catch(err => {
+        dispatch(sendFetchFailure(err));
       });
   };
 };
@@ -230,6 +249,9 @@ export const fetchStudySets = () => {
       })
       .then(() => {
         dispatch(endLoading());
+      })
+      .catch(err => {
+        dispatch(sendFetchFailure(err));
       });
   };
 };
@@ -252,6 +274,9 @@ export const fetchSortingResults = () => {
       })
       .then(() => {
         dispatch(endLoading());
+      })
+      .catch(err => {
+        dispatch(sendFetchFailure(err));
       });
   };
 };
@@ -275,7 +300,9 @@ export const fetchStudyAnalysisResults = studySetName => {
       .then(() => {
         dispatch(endLoading());
       })
-      .catch(err => Sentry.captureException(err));
+      .catch(err => {
+        dispatch(sendFetchFailure(err));
+      });
   };
 };
 
@@ -298,7 +325,9 @@ export const fetchGeneral = () => {
       .then(() => {
         dispatch(endLoading());
       })
-      .catch(err => Sentry.captureException(err));
+      .catch(err => {
+        dispatch(sendFetchFailure(err));
+      });
   };
 };
 
@@ -321,7 +350,9 @@ export const fetchNewsPosts = () => {
       .then(() => {
         dispatch(endLoading());
       })
-      .catch(err => Sentry.captureException(err));
+      .catch(err => {
+        dispatch(sendFetchFailure(err));
+      });
   };
 };
 

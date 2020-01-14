@@ -19,7 +19,7 @@ let mt = new MountainClient();
 mt.configDownloadFrom(["spikeforest.public", "spikeforest.public"]);
 
 // CPU Routes
-router.get("/api/cpus", catchErrors(sortingResultController.getCPUs));
+router.get("/api/cpus", sortingResultController.getCPUs);
 // Sorters
 router.get("/api/sorters", sorterController.getSorters);
 // Algorithms

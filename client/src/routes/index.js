@@ -82,6 +82,7 @@ class Routes extends Component {
       </div>
     );
 
+    console.log("🥗", this.props.fetchFailure);
     return (
       <div className="wrapper">
         <Header />
@@ -102,11 +103,11 @@ class Routes extends Component {
           />
           <Route
             path="/recordings"
-            render={props => <Recordings studySets={this.props.studySets} />}
+            render={props => <Recordings {...this.props} />}
           />
           <Route
             path="/algorithms"
-            render={props => <Algorithms algorithms={this.props.algorithms} />}
+            render={props => <Algorithms {...this.props} />}
           />
           <Route
             path="/studies"
@@ -212,22 +213,23 @@ function mapStateToProps(state) {
     algorithms: state.algorithms,
     contactSent: state.contactSent,
     cpus: state.cpus,
+    fetchFailure: state.fetchFailure,
     format: state.format,
+    general: state.general,
     loading: state.loading,
     metric: state.metric,
     imputeMissingValues: state.imputeMissingValues,
     newsPosts: state.newsPosts,
     selectedUnit: state.selectedUnit,
+    selectedSorterName: state.selectedSorterName,
+    selectedStudyName: state.selectedStudyName,
+    selectedStudySortingResult: state.selectedStudySortingResult,
     sliderValue: state.sliderValue,
-    sortingResults: state.sortingResults,
     sorters: state.sorters,
+    sortingResults: state.sortingResults,
     stats: state.stats,
     studySets: state.studySets,
-    selectedStudySortingResult: state.selectedStudySortingResult,
-    selectedStudyName: state.selectedStudyName,
-    selectedSorterName: state.selectedSorterName,
-    studyAnalysisResults: state.studyAnalysisResults,
-    general: state.general
+    studyAnalysisResults: state.studyAnalysisResults
   };
 }
 
