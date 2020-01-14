@@ -35,7 +35,6 @@ router.get("/api/newsposts", newsPostController.getNewsPosts);
 // Load object
 router.get("/api/loadObject", async (req, res) => {
   let path = decodeURIComponent(req.query.path);
-
   let obj = await mt.loadObject(path);
   if (obj) {
     res.send({ success: true, object: obj });
