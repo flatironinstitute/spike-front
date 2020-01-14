@@ -953,6 +953,10 @@ li {
   justify-content: space-between;
 }
 
+.input__label {
+  font-size: 1.2rem;
+}
+
 .card-label-form {
   margin-top: 1rem;
 }
