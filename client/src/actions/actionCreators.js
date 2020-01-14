@@ -63,7 +63,7 @@ export const createFetchAPI = async url => {
 
     return returned;
   } catch (err) {
-    console.error("in catch", err);
+    console.error("in catch fetch", err);
     return new Error(err);
   }
 };

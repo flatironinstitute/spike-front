@@ -33,13 +33,3 @@ export function abbreviateSha1Path(path, opts) {
     />
   );
 }
-
-export function isEmptyArray(arr) {
-  let allNull = true;
-  arr.forEach((arr, i) => {
-    if (arr[i] && arr[i] !== null) {
-      allNull = false;
-    }
-  });
-  return allNull;
-}
