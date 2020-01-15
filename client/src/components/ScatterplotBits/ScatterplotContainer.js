@@ -25,8 +25,7 @@ class ScatterplotContainer extends Component {
     const copy = this.getHeaderCopy(this.props.metric);
     const legendItems = [
       { title: "selected", color: "legend-yellow" },
-      { title: "null", color: "legend-red" },
-      { title: "disabled", color: "legend-gray" }
+      { title: "failed", color: "legend-red" }
     ];
     const legend = legendItems.map(leg => (
       <div className="legend-item">
@@ -39,18 +38,14 @@ class ScatterplotContainer extends Component {
           <p>
             Each marker corresponds to one ground truth unit in the study and
             may be clicked for more details. Marker area is proportional to the
-            number of events and color reflects the particular recording within
-            the study.
+            number of events and color indicates the recording within the study.
           </p>
         ) : (
           <span />
         )}
         <div className="legend-row">
           <p>{copy}</p>
-          <div className="legend-container">
-            {legend}
-            <p className="legend-item">Size corresponds to number of units. </p>
-          </div>
+          <div className="legend-container">{legend}</div>
         </div>
         {(() => {
           switch (format) {
