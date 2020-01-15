@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ScatterplotContainer from "./ScatterplotContainer";
-// import { isEmpty } from "../../utils";
 import { Link } from "react-router-dom";
 
 class ScatterplotCard extends Component {
