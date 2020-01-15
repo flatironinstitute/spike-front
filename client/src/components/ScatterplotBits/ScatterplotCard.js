@@ -59,17 +59,22 @@ class ScatterplotCard extends Component {
               <div className="card__header">
                 <div className="card__category--div">
                   <span className="card__title--link">
-                    <Link to={`/studyset/${sar.studySetName}`}>
-                      {sar.studySetName}
-                    </Link>
-                    /
-                    <Link to={`/studyresults/${this.props.studyName}`}>
-                      {this.props.studyName}
-                    </Link>
+                    Study Set/Study:{" "}
+                    <b>
+                      <Link to={`/studyset/${sar.studySetName}`}>
+                        {sar.studySetName}
+                      </Link>
+                      /
+                      <Link to={`/studyresults/${this.props.studyName}`}>
+                        {this.props.studyName}
+                      </Link>
+                    </b>
                   </span>
                   <span className="card__title--link">
-                    Sorter:
-                    <Link to="/algorithms">{this.props.sorterName}</Link>
+                    Sorter:{" "}
+                    <b>
+                      <Link to="/algorithms">{this.props.sorterName}</Link>
+                    </b>
                   </span>
                 </div>
               </div>
