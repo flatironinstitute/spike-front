@@ -27,7 +27,7 @@ class StatsAlert extends Component {
     let groundTruth = totalNumTrueUnits;
     return (
       <div className="alert__wrapper">
-        <Alert dismissible variant={"warning"} className="alert__stats">
+        <Alert dismissible variant={"secondary"} className="alert__stats">
           <div className="alert__ticker--wrapper">
             <div className="alert__ticker">
               <div className="ticker__item">

@@ -102,6 +102,7 @@ class HeatmapCount extends Component {
                   studyAnalysisResults={this.props.studyAnalysisResults}
                   studySets={this.props.studySets}
                   threshold={this.props.sliderValue}
+                  showTitle={true}
                 />
               </Col>
               {this.props.format !== "cpu" && !noScatterplot ? (

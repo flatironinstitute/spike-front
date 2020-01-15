@@ -981,6 +981,13 @@ li {
   line-height: 30px;
 }
 
+.card__label-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
 @media (min-width: 1600px) {
   .card__label--row {
     justify-content: space-between;
@@ -1277,9 +1284,9 @@ td.listcard-link > a {
 .card__title {
   margin: 0;
   color: #333;
-  font-weight: 300;
-  font-size: 22px;
-  line-height: 30px;
+  font-weight: 700;
+  font-size: 1.8rem;
+  line-height: 1.5;
 }
 
 .card__subtitle {
