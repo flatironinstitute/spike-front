@@ -706,7 +706,6 @@ class HeatmapViz extends Component {
   }
 
   render() {
-    console.log("💙", this.props);
     const loading =
       isEmpty(this.state.tableRows) || isEmpty(this.state.tableHeader);
     const title = this.getFormatCopy();

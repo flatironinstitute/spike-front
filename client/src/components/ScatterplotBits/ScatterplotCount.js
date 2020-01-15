@@ -8,10 +8,10 @@ import {
   HorizontalGridLines,
   MarkSeries,
   LineSeries,
-  Hint
+  Hint,
+  DiscreteColorLegend
 } from "react-vis";
 import { toTitleCase } from "../../utils";
-import "./scatterplot.css";
 
 class ScatterplotCount extends Component {
   constructor(props) {
@@ -75,6 +75,8 @@ class ScatterplotCount extends Component {
           let in_selected_recording =
             selectedRecordingIndex === null ||
             selectedRecordingIndex === recordingIndices[ii];
+
+          console.log("color", sar.trueRecordingIndices[ii]);
           newUnits.push({
             unitIndex: ii, // this is the part that is used in the parent component
             sorterName: this.props.sorterName, // this is used by parent component also
@@ -182,7 +184,6 @@ class ScatterplotCount extends Component {
       }
     }
 
-    // let selectedData = [];
     const yTitle = toTitleCase(this.props.metric);
     return (
       <div className="canvas-wrapper">
@@ -199,16 +200,20 @@ class ScatterplotCount extends Component {
           <XAxis title="SNR" />
           <YAxis title={yTitle} />
           <MarkSeries
-            // animation={true}
+            // gray nodes
             className="mark-series-example"
             sizeRange={[3, 15]}
             seriesId="grayed"
-            colorRange={["#999999", "#999999"]}
+            colorRange={["#e3e3e4", "#e3e3e4"]}
             opacityType="literal"
             data={grayedNodes}
+            onValueMouseOver={d => this.setState({ hoveredNode: d })}
+            onValueClick={d => {
+              this.handleScatterplotClick(d);
+            }}
           />
           <MarkSeries
-            // animation={true}
+            // blue nodes
             className="mark-series-example"
             sizeRange={[3, 15]}
             seriesId="scatterplot"
@@ -222,13 +227,14 @@ class ScatterplotCount extends Component {
           />
           {nullNodes.length > 0 && (
             <MarkSeries
-              // animation={true}
+              // brown (null) nodes
               className="mark-series-example"
               sizeRange={[3, 15]}
               seriesId="null-nodes"
-              colorRange={["#aa2223", "#aa2223"]}
+              colorRange={["#903f2c", "#903f2c"]}
               opacityType="literal"
               data={nullNodes}
+              onValueMouseOver={d => this.setState({ hoveredNode: d })}
               onValueClick={d => {
                 this.handleScatterplotClick(d);
               }}
@@ -237,13 +243,14 @@ class ScatterplotCount extends Component {
           {hoveredNode && <Hint value={valueObj} align={alignment} />}
           {selectedNode && (
             <MarkSeries
-              // animation={true}
+              // yellow (selected) nodes
               className="mark-series-example"
               sizeRange={[3, 15]}
               seriesId="selected"
-              colorRange={["#bbbb05", "#bbbb05"]}
+              colorRange={["#f6cf3f", "#f6cf3f"]}
               opacityType="literal"
               data={[selectedNode]}
+              onValueMouseOver={d => this.setState({ hoveredNode: d })}
               onValueClick={d => {
                 this.handleScatterplotClick(d);
               }}

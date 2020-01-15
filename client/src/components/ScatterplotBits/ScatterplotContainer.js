@@ -23,6 +23,16 @@ class ScatterplotContainer extends Component {
       count: ["#00CEA8", "#0C4F42"]
     };
     const copy = this.getHeaderCopy(this.props.metric);
+    const legendItems = [
+      { title: "selected", color: "legend-yellow" },
+      { title: "null", color: "legend-red" },
+      { title: "disabled", color: "legend-gray" }
+    ];
+    const legend = legendItems.map(leg => (
+      <div className="legend-item">
+        <p className={leg.color}>{leg.title}</p>
+      </div>
+    ));
     return (
       <div>
         {this.props.handleScatterplotClick ? (
@@ -35,7 +45,13 @@ class ScatterplotContainer extends Component {
         ) : (
           <span />
         )}
-        <p>{copy}</p>
+        <div className="legend-row">
+          <p>{copy}</p>
+          <div className="legend-container">
+            {legend}
+            <p className="legend-item">Size corresponds to number of units. </p>
+          </div>
+        </div>
         {(() => {
           switch (format) {
             case "count":
