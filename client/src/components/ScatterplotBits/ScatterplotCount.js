@@ -8,8 +8,7 @@ import {
   HorizontalGridLines,
   MarkSeries,
   LineSeries,
-  Hint,
-  DiscreteColorLegend
+  Hint
 } from "react-vis";
 import { toTitleCase } from "../../utils";
 
