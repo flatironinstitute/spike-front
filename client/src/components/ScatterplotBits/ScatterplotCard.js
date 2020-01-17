@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ScatterplotContainer from "./ScatterplotContainer";
 import { Link } from "react-router-dom";
+import ConsoleOutput from "../Utils/ConsoleOutput";
 
 class ScatterplotCard extends Component {
   constructor(props) {
@@ -43,6 +44,7 @@ class ScatterplotCard extends Component {
       !this.props.sorterName ||
       !this.state.studyAnalysisResult;
     let sar = this.state.studyAnalysisResult;
+    console.log("📸", this.props.recordingName);
     return (
       <div className="card card--spikeforest" id="scatterplot-card">
         <div className="detail__column-disable">

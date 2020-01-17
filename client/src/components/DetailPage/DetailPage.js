@@ -119,8 +119,7 @@ class DetailPage extends Component {
       }
       this.setState({
         selectedStudyName: cell.info.studyAnalysisResult.studyName,
-        selectedRecordingName:
-          cell.info.studyAnalysisResult.recordingName || null,
+        recordingName: cell.info.studyAnalysisResult.recordingName || null,
         selectedSorterName: cell.info.sorterName
       });
     }
