@@ -35,10 +35,9 @@ class ScatterplotContainer extends Component {
     return (
       <div>
         {this.props.handleScatterplotClick ? (
-          <p>
+          <p className="updated updated__no-top">
             Each marker corresponds to one ground truth unit in the study and
-            may be clicked for more details. Marker area is proportional to the
-            number of events and color indicates the recording within the study.
+            may be clicked to view more details.
           </p>
         ) : (
           <span />
@@ -94,6 +93,10 @@ class ScatterplotContainer extends Component {
               return null;
           }
         })()}
+        <p>
+          Marker area is proportional to the number of events and color
+          indicates the recording within the study.
+        </p>
       </div>
     );
   }
