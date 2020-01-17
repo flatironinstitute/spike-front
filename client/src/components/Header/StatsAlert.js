@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Alert } from "react-bootstrap";
+import { isEmpty } from "../../utils";
 
 class StatsAlert extends Component {
   render() {
@@ -8,7 +9,7 @@ class StatsAlert extends Component {
     /* Recording data - hard code*/
     let general = this.props.general || {};
     let totalCpu = 0;
-    if (this.props.sortingResults) {
+    if (this.props.sortingResults && !isEmpty(this.props.sortingResult)) {
       for (let sortingResult of this.props.sortingResults) {
         totalCpu += sortingResult.cpuTimeSec;
       }
@@ -27,7 +28,7 @@ class StatsAlert extends Component {
     let groundTruth = totalNumTrueUnits;
     return (
       <div className="alert__wrapper">
-        <Alert dismissible variant={"warning"} className="alert__stats">
+        <Alert dismissible variant={"secondary"} className="alert__stats">
           <div className="alert__ticker--wrapper">
             <div className="alert__ticker">
               <div className="ticker__item">

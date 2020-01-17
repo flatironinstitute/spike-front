@@ -23,19 +23,29 @@ class ScatterplotContainer extends Component {
       count: ["#00CEA8", "#0C4F42"]
     };
     const copy = this.getHeaderCopy(this.props.metric);
+    const legendItems = [
+      { title: "selected", color: "legend-yellow" },
+      { title: "failed", color: "legend-red" }
+    ];
+    const legend = legendItems.map((leg, i) => (
+      <div key={leg.toString() + i.toString()} className="legend-item">
+        <p className={leg.color}>{leg.title}</p>
+      </div>
+    ));
     return (
       <div>
         {this.props.handleScatterplotClick ? (
-          <p>
+          <p className="updated updated__no-top">
             Each marker corresponds to one ground truth unit in the study and
-            may be clicked for more details. Marker area is proportional to the
-            number of events and color reflects the particular recording within
-            the study.
+            may be clicked to view more details.
           </p>
         ) : (
           <span />
         )}
-        <p>{copy}</p>
+        <div className="legend-row">
+          <p>{copy}</p>
+          <div className="legend-container">{legend}</div>
+        </div>
         {(() => {
           switch (format) {
             case "count":
@@ -83,6 +93,10 @@ class ScatterplotContainer extends Component {
               return null;
           }
         })()}
+        <p>
+          Marker area is proportional to the number of events and color
+          indicates the recording within the study.
+        </p>
       </div>
     );
   }

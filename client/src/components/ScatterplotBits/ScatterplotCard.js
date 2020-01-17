@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ScatterplotContainer from "./ScatterplotContainer";
-// import { isEmpty } from "../../utils";
 import { Link } from "react-router-dom";
+import ConsoleOutput from "../Utils/ConsoleOutput";
 
 class ScatterplotCard extends Component {
   constructor(props) {
@@ -44,8 +44,9 @@ class ScatterplotCard extends Component {
       !this.props.sorterName ||
       !this.state.studyAnalysisResult;
     let sar = this.state.studyAnalysisResult;
+    console.log("📸", this.props.recordingName);
     return (
-      <div className="card card--spikeforest">
+      <div className="card card--spikeforest" id="scatterplot-card">
         <div className="detail__column-disable">
           {loading ? (
             <div className="card__header">
@@ -59,17 +60,22 @@ class ScatterplotCard extends Component {
               <div className="card__header">
                 <div className="card__category--div">
                   <span className="card__title--link">
-                    <Link to={`/studyset/${sar.studySetName}`}>
-                      {sar.studySetName}
-                    </Link>
-                    /
-                    <Link to={`/studyresults/${this.props.studyName}`}>
-                      {this.props.studyName}
-                    </Link>
+                    Study Set/Study:{" "}
+                    <b>
+                      <Link to={`/studyset/${sar.studySetName}`}>
+                        {sar.studySetName}
+                      </Link>
+                      /
+                      <Link to={`/studyresults/${this.props.studyName}`}>
+                        {this.props.studyName}
+                      </Link>
+                    </b>
                   </span>
                   <span className="card__title--link">
-                    Sorter:
-                    <Link to="/algorithms">{this.props.sorterName}</Link>
+                    Sorter:{" "}
+                    <b>
+                      <Link to="/algorithms">{this.props.sorterName}</Link>
+                    </b>
                   </span>
                 </div>
               </div>

@@ -27,7 +27,8 @@ class DetailPage extends Component {
       recordingName: null,
       selectedStudyName: props.selectedStudyName,
       selectedRecordingName: props.selectedRecordingName,
-      selectedSorterName: props.selectedSorterName
+      selectedSorterName: props.selectedSorterName,
+      cardHeight: "auto"
     };
     this.handleCellSelected = this.handleCellSelected.bind(this);
     this.handleScatterplotClick = this.handleScatterplotClick.bind(this);
@@ -54,9 +55,14 @@ class DetailPage extends Component {
         su.studyName !== this.props.studyName
       ) {
         // The selected unit is not relevant to this view. Unselecting.
-        console.warn('The selected unit is not relevant to this view. Unselecting.')
+        console.warn(
+          "The selected unit is not relevant to this view. Unselecting."
+        );
         this.props.setSelectedUnit(null);
       }
+
+      let cardHeight = document.getElementById("scatterplot-card").offsetHeight;
+      this.setState({ cardHeight: cardHeight });
     }
   }
 
@@ -113,8 +119,7 @@ class DetailPage extends Component {
       }
       this.setState({
         selectedStudyName: cell.info.studyAnalysisResult.studyName,
-        selectedRecordingName:
-          cell.info.studyAnalysisResult.recordingName || null,
+        recordingName: cell.info.studyAnalysisResult.recordingName || null,
         selectedSorterName: cell.info.sorterName
       });
     }
@@ -214,6 +219,7 @@ class DetailPage extends Component {
                           }}
                           studySets={this.props.studySets}
                           threshold={this.props.sliderValue[this.props.format]}
+                          showTitle={false}
                         />
                       </div>
                     </div>
@@ -225,7 +231,9 @@ class DetailPage extends Component {
                     handleFormatChange={this.handleFormatChange}
                     handleSliderChange={this.handleSliderChange}
                     handleMetricChange={this.handleMetricChange}
-                    handleImputeMissingValuesChange={this.handleImputeMissingValuesChange}
+                    handleImputeMissingValuesChange={
+                      this.handleImputeMissingValuesChange
+                    }
                     format={this.props.format}
                     metric={this.props.metric}
                     imputeMissingValues={this.props.imputeMissingValues}
@@ -252,27 +260,19 @@ class DetailPage extends Component {
                   />
                 </Col>
                 <Col style={{ minWidth: 400, flexGrow: 1 }}>
-                  <div className="card card__std-col">
+                  <div
+                    className="card card__std-col"
+                    style={{ minHeight: this.state.cardHeight }}
+                  >
                     <div className="content">
                       <div className="card__label">
                         {this.props.selectedUnit ? (
-                          <table>
-                            <thead />
-                            <tbody>
-                              <tr>
-                                <th>Study:</th>
-                                <td>
-                                  {
-                                    <Link to={`/study/${this.props.studyName}`}>
-                                      {this.props.studyName}
-                                    </Link>
-                                  }
-                                </td>
-                              </tr>
-                              <tr>
-                                <th>Recording:</th>
-                                <td>
-                                  {
+                          <div>
+                            <div className="card__label-wrapper">
+                              <div className="card__label-left">
+                                <p>
+                                  Recording:{"  "}
+                                  <b>
                                     <Link
                                       to={`/recording/${
                                         this.props.studyName
@@ -280,49 +280,41 @@ class DetailPage extends Component {
                                     >
                                       {recordingName}
                                     </Link>
-                                  }
-                                </td>
-                              </tr>
-                              <tr>
-                                <th>Sorter:</th>
-                                <td>
-                                  {
-                                    <Link to={`/algorithms`}>
-                                      {this.props.selectedUnit.sorterName}
-                                    </Link>
-                                  }
-                                </td>
-                              </tr>
-                              <tr>
-                                <th>Unit ID:</th>
-                                <td>{this.props.selectedUnit.unitIndex}</td>
-                              </tr>
-                              <tr>
-                                <th>Sorting result:</th>
-                                <td>
+                                  </b>
+                                </p>
+                                <p>
+                                  Unit ID:{"  "}
+                                  <b>{this.props.selectedUnit.unitIndex}</b>
+                                </p>
+                              </div>
+                              <div className="card__label-right">
+                                <button>
                                   <Link
+                                    style={{ border: "none" }}
                                     to={`/sortingresult/${
                                       this.props.studyName
                                     }/${recordingName}/${
                                       this.props.selectedUnit.sorterName
                                     }`}
                                   >
-                                    [More details...]{" "}
+                                    View Sorting Result Details{" "}
                                   </Link>
-                                </td>
-                              </tr>
-                              <tr>
-                                {(sortingResult||{}).returnCode === 0 ? (
-                                  <td />
-                                ) : (
-                                  <td>
-                                    Return code: {sortingResult.returnCode}{" "}
-                                    {sortingResult.timedOut ? "timed out" : ""}{" "}
-                                  </td>
-                                )}
-                              </tr>
-                            </tbody>
-                          </table>
+                                </button>
+                              </div>
+                            </div>
+                            <div className="card__label-pair">
+                              {!sortingResult ||
+                              sortingResult.returnCode ||
+                              sortingResult.returnCode === 0 ? (
+                                <p />
+                              ) : (
+                                <p>
+                                  Return code: {sortingResult.returnCode}{" "}
+                                  {sortingResult.timedOut ? "timed out" : ""}{" "}
+                                </p>
+                              )}
+                            </div>
+                          </div>
                         ) : (
                           <p>
                             <strong>Unit Details</strong>

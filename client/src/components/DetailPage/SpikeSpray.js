@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import Preloader from "../Preloader/Preloader";
-// import { XYPlot, XAxis, LineSeries, LabelSeries } from "react-vis";
 import Plot from "react-plotly.js";
 import { isEmpty } from "../../utils";
-// import { width, height } from "window-size";
 
 class SpikeSpray extends Component {
   constructor(props) {
@@ -12,7 +10,8 @@ class SpikeSpray extends Component {
     this.state = {
       spikeObjArr: [],
       hoveredNode: null,
-      goRender: false
+      goRender: false,
+      sprayHeight: 400
     };
     this.spacing = 0;
     this.numChannels = 0;
@@ -84,7 +83,15 @@ class SpikeSpray extends Component {
     return ret;
   }
 
+  getScatterplotHeight() {
+    let scatterplot = document.getElementById("scatterplot-wrapper");
+    return scatterplot.offsetHeight + 20;
+  }
+
   buildSprayData3() {
+    // set scatterplot height
+    let sprayHeight = this.getScatterplotHeight();
+
     // determine spacing, numTimepoints, numChannels
     let vals = [];
     this.props.spikeSprayData.forEach(chartObj => {
@@ -106,8 +113,6 @@ class SpikeSpray extends Component {
     });
     let pctl_low = vals[Math.floor(vals.length * 0.01)];
     let pctl_high = vals[Math.floor(vals.length * 0.99)];
-    // let pctl_low = vals[0];
-    // let pctl_high = vals[vals.length - 1];
     this.spacing = pctl_high - pctl_low;
     let withPlots = this.props.spikeSprayData.map(chartObj => {
       let plotData = [];
@@ -118,7 +123,6 @@ class SpikeSpray extends Component {
             plotData.push({
               color: colorLine,
               channel: channel.channel_id,
-              // data: this.formatWaveformsAddOffset(channel.waveform, i),
               xdata: this.getXDataFromWaveform(channel.waveform),
               ydata: this.getYDataFromWaveform(
                 channel.waveform,
@@ -134,33 +138,12 @@ class SpikeSpray extends Component {
       plotData.reverse();
       return { ...chartObj, plotData: plotData };
     });
-    // let spikeObjArr = this.buildLabelData(withPlots);
-    // this.setState({
-    //   spikeObjArr: spikeObjArr
-    // });
     let spikeObjArr = withPlots;
     this.setState({
-      spikeObjArr: spikeObjArr
+      spikeObjArr: spikeObjArr,
+      sprayHeight: sprayHeight
     });
   }
-
-  // buildLabelData(spikeObjArr) {
-  //   let withLabels = spikeObjArr.map(chartObj => {
-  //     let labelData = [];
-  //     chartObj.channel_ids.forEach((channel, i) => {
-  //       let offset = -this.spacing * i;
-  //       let labelObj = {
-  //         x: 0,
-  //         y: offset,
-  //         label: "Channel " + channel,
-  //         style: { fontSize: "14px", lineheight: "16px", fontWeight: "400" }
-  //       };
-  //       labelData.push(labelObj);
-  //     });
-  //     return { ...chartObj, labelData: labelData };
-  //   });
-  //   return withLabels;
-  // }
 
   render() {
     if (!this.state.goRender) {
@@ -185,9 +168,6 @@ class SpikeSpray extends Component {
       true_missed: this.props.numFalseNegatives,
       sorted_false: this.props.numFalsePositives
     };
-    // let totalSpikes = isEmpty(this.state.spikeObjArr)
-    //   ? 0
-    //   : this.state.spikeObjArr[0].num_spikes;
 
     return (
       <Container fluid={true}>
@@ -211,7 +191,7 @@ class SpikeSpray extends Component {
                   <p className="card__charttitle">{colTitles[column.name]}</p>
                 </div>
                 <Plot
-                  style={{ width: "100%", height: "400px" }}
+                  style={{ width: "100%", height: this.state.sprayHeight }}
                   data={column.plotData.map((line, i) => ({
                     x: line.xdata,
                     y: line.ydata,
@@ -224,8 +204,6 @@ class SpikeSpray extends Component {
                     hoverinfo: "skip"
                   }))}
                   layout={{
-                    // width: '100%',
-                    // height: '100%',
                     title: "",
                     showlegend: false,
                     xaxis: {

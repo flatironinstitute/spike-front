@@ -981,6 +981,13 @@ li {
   line-height: 30px;
 }
 
+.card__label-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
 @media (min-width: 1600px) {
   .card__label--row {
     justify-content: space-between;
@@ -1277,9 +1284,9 @@ td.listcard-link > a {
 .card__title {
   margin: 0;
   color: #333;
-  font-weight: 300;
-  font-size: 22px;
-  line-height: 30px;
+  font-weight: 700;
+  font-size: 1.8rem;
+  line-height: 1.5;
 }
 
 .card__subtitle {
@@ -1289,7 +1296,6 @@ td.listcard-link > a {
 .card__title--link {
   font-size: 20px;
   margin-right: 15px;
-  font-weight: bold;
   margin-bottom: 0;
 }
 
@@ -1298,7 +1304,6 @@ td.listcard-link > a {
     font-size: 1.6rem;
     line-height: 1.5;
     margin-bottom: 0;
-    font-weight: bold;
   }
 }
 
@@ -1556,4 +1561,70 @@ tbody :last-child {
 .reproduction-code {
   border: 1px solid var(--fi-blue);
   padding: 10px;
+}
+
+/* Scatterplot
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.legend-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: baseline;
+}
+
+.legend-container {
+  display: flex;
+}
+
+.legend-item {
+  padding: 0 10px;
+  color: rgb(58, 58, 72);
+  font-family: "Quattrocento Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  height: 19px;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+/* .legend-item::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 7.5px;
+  background-color: #69b6d5;
+} */
+
+.legend-yellow::before {
+  background-color: var(--fi-yellow);
+  content: "";
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 7.5px;
+  margin-right: 3px;
+}
+
+.legend-gray::before {
+  background-color: #e3e3e4;
+  content: "";
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 7.5px;
+  margin-right: 3px;
+}
+
+.legend-red::before {
+  background-color: var(--fi-brown);
+  content: "";
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 7.5px;
+  margin-right: 3px;
 }

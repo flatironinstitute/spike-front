@@ -713,10 +713,15 @@ class HeatmapViz extends Component {
     const paraCopy = this.getParaCopy();
     return (
       <div className="card card--spikeforest card--heatmap" id="heatmap-card">
-        <div className="card__header">
-          <h4 className="card__title">{title}</h4>
-          <div className="card__subtitle">{paraCopy}</div>
-        </div>
+        {this.props.showTitle ? (
+          <div className="card__header">
+            <h4 className="card__title">{title}</h4>
+            <div className="card__subtitle">{paraCopy}</div>
+          </div>
+        ) : (
+          <span />
+        )}
+
         {loading ? (
           <h4>...</h4>
         ) : (
