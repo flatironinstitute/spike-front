@@ -27,7 +27,8 @@ class DetailPage extends Component {
       recordingName: null,
       selectedStudyName: props.selectedStudyName,
       selectedRecordingName: props.selectedRecordingName,
-      selectedSorterName: props.selectedSorterName
+      selectedSorterName: props.selectedSorterName,
+      cardHeight: "auto"
     };
     this.handleCellSelected = this.handleCellSelected.bind(this);
     this.handleScatterplotClick = this.handleScatterplotClick.bind(this);
@@ -59,6 +60,9 @@ class DetailPage extends Component {
         );
         this.props.setSelectedUnit(null);
       }
+
+      let cardHeight = document.getElementById("scatterplot-card").offsetHeight;
+      this.setState({ cardHeight: cardHeight });
     }
   }
 
@@ -257,7 +261,10 @@ class DetailPage extends Component {
                   />
                 </Col>
                 <Col style={{ minWidth: 400, flexGrow: 1 }}>
-                  <div className="card card__std-col">
+                  <div
+                    className="card card__std-col"
+                    style={{ minHeight: this.state.cardHeight }}
+                  >
                     <div className="content">
                       <div className="card__label">
                         {this.props.selectedUnit ? (

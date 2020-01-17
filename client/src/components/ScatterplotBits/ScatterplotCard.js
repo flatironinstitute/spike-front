@@ -44,7 +44,7 @@ class ScatterplotCard extends Component {
       !this.state.studyAnalysisResult;
     let sar = this.state.studyAnalysisResult;
     return (
-      <div className="card card--spikeforest">
+      <div className="card card--spikeforest" id="scatterplot-card">
         <div className="detail__column-disable">
           {loading ? (
             <div className="card__header">

@@ -27,8 +27,8 @@ class ScatterplotContainer extends Component {
       { title: "selected", color: "legend-yellow" },
       { title: "failed", color: "legend-red" }
     ];
-    const legend = legendItems.map(leg => (
-      <div className="legend-item">
+    const legend = legendItems.map((leg, i) => (
+      <div key={leg.toString() + i.toString()} className="legend-item">
         <p className={leg.color}>{leg.title}</p>
       </div>
     ));

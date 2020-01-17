@@ -75,7 +75,6 @@ class ScatterplotCount extends Component {
             selectedRecordingIndex === null ||
             selectedRecordingIndex === recordingIndices[ii];
 
-          console.log("color", sar.trueRecordingIndices[ii]);
           newUnits.push({
             unitIndex: ii, // this is the part that is used in the parent component
             sorterName: this.props.sorterName, // this is used by parent component also
@@ -185,7 +184,7 @@ class ScatterplotCount extends Component {
 
     const yTitle = toTitleCase(this.props.metric);
     return (
-      <div className="canvas-wrapper">
+      <div className="canvas-wrapper" id="scatterplot-wrapper">
         <FlexibleXYPlot
           onMouseLeave={() => this.setState({ hoveredNode: null })}
           height={400}
