@@ -1609,8 +1609,8 @@ tbody :last-child {
   margin-right: 3px;
 }
 
-.legend-gray::before {
-  background-color: #e3e3e4;
+.legend-blue::before {
+  background-color: rgb(8, 64, 130);
   content: "";
   display: inline-block;
   width: 15px;

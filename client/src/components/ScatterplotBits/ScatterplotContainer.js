@@ -24,7 +24,8 @@ class ScatterplotContainer extends Component {
     };
     const copy = this.getHeaderCopy(this.props.metric);
     const legendItems = [
-      { title: "selected", color: "legend-yellow" },
+      { title: "selected unit", color: "legend-yellow" },
+      { title: "selected recording(s)", color: "legend-blue" },
       { title: "failed", color: "legend-red" }
     ];
     const legend = legendItems.map((leg, i) => (
