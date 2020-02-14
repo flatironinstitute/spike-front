@@ -215,6 +215,7 @@ function mapStateToProps(state) {
     format: state.format,
     loading: state.loading,
     metric: state.metric,
+    imputeMissingValues: state.imputeMissingValues,
     newsPosts: state.newsPosts,
     selectedUnit: state.selectedUnit,
     sliderValue: state.sliderValue,

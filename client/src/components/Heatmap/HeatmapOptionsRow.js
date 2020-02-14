@@ -35,6 +35,7 @@ class HeatmapOptionsRow extends Component {
                 <SliderCard
                   format={this.props.format}
                   metric={this.props.metric}
+                  imputeMissingValues={this.props.imputeMissingValues}
                   sliderValue={this.props.sliderValue}
                   handleSliderChange={this.props.handleSliderChange}
                 />
@@ -42,7 +43,9 @@ class HeatmapOptionsRow extends Component {
               <Col lg={4} sm={12}>
                 <MetricCard
                   metric={this.props.metric}
+                  imputeMissingValues={this.props.imputeMissingValues}
                   handleMetricChange={this.props.handleMetricChange}
+                  handleImputeMissingValuesChange={this.props.handleImputeMissingValuesChange}
                 />
               </Col>
             </Row>

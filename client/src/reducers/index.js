@@ -7,6 +7,7 @@ import cpus from "./cpus";
 import format from "./format";
 import loading from "./loading";
 import metric from "./metric";
+import imputeMissingValues from "./imputeMissingValues";
 import newsPosts from "./newsPosts";
 import sortingResults from "./sortingResults";
 import selectedStudySortingResult from "./selectedStudySortingResult";
@@ -28,6 +29,7 @@ const rootReducer = history =>
     format,
     loading,
     metric,
+    imputeMissingValues,
     newsPosts,
     sortingResults,
     selectedUnit,

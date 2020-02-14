@@ -9,7 +9,7 @@ class Footer extends Component {
     return (
       <footer className="footer">
         <p className="updated">
-          Spike-front client updated on December 12, 2019 (1:00pm)
+          Spike-front client updated on January 7, 2020 (10:42pm)
         </p>
         <div className="outro">
           <p className="footer__description">
@@ -48,7 +48,7 @@ class Footer extends Component {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://github.com/flatironinstitute/spikeforest"
+              href="https://github.com/flatironinstitute/spikeforest2"
             >
               SpikeForest Analysis Framework
             </a>
@@ -72,7 +72,7 @@ class Footer extends Component {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://github.com/flatironinstitute/spikeforest"
+              href="https://github.com/flatironinstitute/spikeforest2"
               className="github-logo"
             >
               <img alt="spikeforest logo" src={github} height="24" />

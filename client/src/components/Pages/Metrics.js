@@ -186,11 +186,11 @@ class Metrics extends Component {
                           </a>
                         </p>
                         <p>
-                          See the GenSortingComparisonTable class in{" "}
+                          See the SortingComparison class in{" "}
                           <a
                             target="_blank"
                             rel="noopener noreferrer"
-                            href="https://github.com/flatironinstitute/spikeforest/blob/master/spikeforest/spikeforest_analysis/compare_sortings_with_truth.py"
+                            href="https://github.com/flatironinstitute/spikeforest2/blob/master/spikeforest2_utils/_sortingcomparison.py"
                           >
                             compare_sortings_with_truth.py
                           </a>{" "}
@@ -306,7 +306,7 @@ class Metrics extends Component {
                           <a
                             target="_blank"
                             rel="noopener noreferrer"
-                            href="https://github.com/flatironinstitute/spikeforest"
+                            href="https://github.com/flatironinstitute/spikeforest2"
                           >
                             See here
                           </a>{" "}
@@ -324,7 +324,7 @@ class Metrics extends Component {
                           <a
                             target="_blank"
                             rel="noopener noreferrer"
-                            href="https://github.com/flatironinstitute/spikeforest"
+                            href="https://github.com/flatironinstitute/spikeforest2"
                           >
                             compute_units_info.py
                           </a>
@@ -358,22 +358,7 @@ class Metrics extends Component {
                         widths of the low-end roll-off is 100 Hz and the
                         high-end roll-off 1000 Hz. The point of the smoothness
                         here is to create rapid decay in impulse response in the
-                        time domain. The code for this is{" "}
-                        <a
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          href="https://github.com/flatironinstitute/spikeforest/blob/master/spikeforest/spikeforest_analysis/bandpass_filter.py"
-                        >
-                          bandpass_filter.py
-                        </a>{" "}
-                        and the calling code is{" "}
-                        <a
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          href="https://github.com/flatironinstitute/spikeforest/blob/master/spikeforest/spikeforest_analysis/compute_units_info.py"
-                        >
-                          compute_units_info.py
-                        </a>
+                        time domain.
                       </p>
                     </div>
                   </div>

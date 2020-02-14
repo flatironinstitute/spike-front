@@ -7,8 +7,8 @@ class About extends Component {
   render() {
     const listItems = [
       { name: "Overview", value: "overview" },
-      { name: "Resources", value: "resources" },
-      { name: "Tutorials", value: "tutorials" },
+      // { name: "Resources", value: "resources" },
+      { name: "Reproducing", value: "reproducing" },
       { name: "Feedback", value: "feedback" },
       { name: "Credits", value: "credits" },
       { name: "References", value: "references" },
@@ -70,7 +70,7 @@ class About extends Component {
                             It consists of this website for presenting our
                             up-to-date findings, a{" "}
                             <a
-                              href="https://github.com/flatironinstitute/spikeforest"
+                              href="https://github.com/flatironinstitute/spikeforest2"
                               target="_blank"
                               rel="noopener noreferrer"
                             >
@@ -104,64 +104,32 @@ class About extends Component {
                     </div>
                   </Col>
                 </Row>
-                <div className="finder" id="resources" />
+                <div className="finder" id="reproducing" />
                 <Row className="subcontainer justify-content-md-center">
                   <Col lg={12} sm={12} xl={12}>
                     <div className="card card__std">
                       <div className="content">
                         <div className="card__label">
                           <p>
-                            <strong>Resources</strong>
+                            <strong>Running locally</strong>
                           </p>
                         </div>
                         <div className="card__footer">
                           <hr />
                           <ul>
                             <li>
-                              <Link exact="true" to="/news">
-                                News
-                              </Link>{" "}
-                              - click here to learn the latest on the spike
-                              sorting software and website.
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </Col>
-                </Row>
-                <div className="finder" id="tutorials" />
-                <Row className="subcontainer justify-content-md-center">
-                  <Col lg={12} sm={12} xl={12}>
-                    <div className="card card__std">
-                      <div className="content">
-                        <div className="card__label">
-                          <p>
-                            <strong>Tutorials</strong>
-                          </p>
-                        </div>
-                        <div className="card__footer">
-                          <hr />
-                          <ul>
-                            <li>
+                              For information on reproducing the results
+                              reported on the webpage or running the
+                              SpikeForest-wrapped sorters on your own data, see
+                              the{" "}
                               <a
-                                href="https://github.com/flatironinstitute/spikeforest/blob/master/docs/tutorials/spike_sorting_spikeforest_recording.md"
+                                href="https://github.com/flatironinstitute/spikeforest2"
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
-                                Run these algorithms on your own computer to
-                                reproduce the results.
-                              </a>{" "}
-                            </li>
-                            <li>
-                              <a
-                                href="https://github.com/flatironinstitute/spikeforest/blob/master/docs/tutorials/spike_sorting_single_recording.md"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                Run the SpikeForest-wrapped spike sorters on
-                                your own data.
-                              </a>{" "}
+                                SpikeForest2 Python package
+                              </a>
+                              .
                             </li>
                           </ul>
                         </div>
@@ -196,7 +164,7 @@ class About extends Component {
                               {" "}
                               If you prefer a more graphical/interactive way to
                               label problems or questions on a particular page,
-                              click on the purple <b>FEEDBACK</b> tab in the
+                              click on the <b>Contact Us</b> tab in the
                               bottom-right corner of any page.
                             </li>
                           </ul>
@@ -272,8 +240,8 @@ class About extends Component {
                               (infrastructure, testing)
                             </li>
                             <li>
-                              Witold Wysota - Warsaw, Poland (MountainTools
-                              infrastructure, testing)
+                              Witold Wysota - Warsaw, Poland (infrastructure,
+                              testing)
                             </li>
                           </ul>
                           <br />

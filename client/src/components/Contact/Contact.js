@@ -26,7 +26,7 @@ class Contact extends Component {
           <p className="byline">
             Please use this
             <a
-              href="https://github.com/flatironinstitute/spikeforest"
+              href="https://github.com/flatironinstitute/spikeforest2"
               target="_blank"
               rel="noopener noreferrer"
             >

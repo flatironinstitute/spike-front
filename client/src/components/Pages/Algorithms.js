@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { isEmpty, toTitleCase } from "../../utils";
-// import { removeMd } from "remove-markdown";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import ListCard from "../ListCard/ListCard";
 import Preloader from "../Preloader/Preloader";
@@ -79,9 +78,10 @@ class Algorithms extends Component {
         row.wrapper = `<a href="${alg.wrapper}" target="_blank">${this.basename(
           alg.wrapper
         )}</a>`;
-        let nextTo = alg.wrapper.split("/")[9];
-        let last = alg.wrapper.split("/")[10];
-        let wrapper = `https://github.com/flatironinstitute/spikeforest/blob/master/spikeforest/spikeforestsorters/${nextTo}/${last}`;
+        // let nextTo = alg.wrapper.split("/")[9];
+        // let last = alg.wrapper.split("/")[10];
+        // let wrapper = `https://github.com/flatironinstitute/spikeforest/blob/master/spikeforest/spikeforestsorters/${nextTo}/${last}`;
+        let wrapper = alg.wrapper;
         row.wrapper_link = wrapper;
       }
       if (alg.markdown_link) {
