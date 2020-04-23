@@ -3,17 +3,32 @@ import { Alert } from "react-bootstrap";
 import { isEmpty } from "../../utils";
 
 class StatsAlert extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { totalCpu: 0 };
+  }
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.sortingResults !== prevProps.sortingResults &&
+      !isEmpty(this.props.sortingResults)
+    ) {
+      this.setTotalCpu(this.props.sortingResults);
+    }
+  }
+
+  setTotalCpu(sortingResults) {
+    let totalCpu = 0;
+    for (let sortingResult of sortingResults) {
+      totalCpu += sortingResult.cpuTimeSec;
+    }
+    this.setState({ totalCpu: totalCpu });
+  }
+
   render() {
     /* CPU - sum of all cpuTimeSec on every sorting result */
     /* Ground truth - count of all true units */
     /* Recording data - hard code*/
     let general = this.props.general || {};
-    let totalCpu = 0;
-    if (this.props.sortingResults && !isEmpty(this.props.sortingResult)) {
-      for (let sortingResult of this.props.sortingResults) {
-        totalCpu += sortingResult.cpuTimeSec;
-      }
-    }
     let totalNumTrueUnits = 0;
     if (this.props.studySets) {
       for (let studySet of this.props.studySets) {
@@ -24,7 +39,7 @@ class StatsAlert extends Component {
         }
       }
     }
-    let coreHours = Math.round(totalCpu / 60 / 60);
+    let coreHours = Math.round(this.state.totalCpu / 60 / 60);
     let groundTruth = totalNumTrueUnits;
     return (
       <div className="alert__wrapper">
@@ -44,7 +59,7 @@ class StatsAlert extends Component {
                       month: "short",
                       day: "numeric",
                       hour: "numeric",
-                      minute: "numeric"
+                      minute: "numeric",
                     })
                   : ""}
               </div>

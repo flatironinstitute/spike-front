@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import ScatterplotContainer from "./ScatterplotContainer";
 import { Link } from "react-router-dom";
-import ConsoleOutput from "../Utils/ConsoleOutput";
 
 class ScatterplotCard extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      studyAnalysisResult: null
+      studyAnalysisResult: null,
     };
   }
 
