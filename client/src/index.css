@@ -1433,8 +1433,7 @@ td.listcard-link > a {
   height: 100px;
   white-space: nowrap;
   padding-bottom: 30px;
-  font-size: 12px;
-  font-weight: 400px;
+  font-size: 1.5rem;
   line-height: 16px;
 }
 
@@ -1460,8 +1459,8 @@ td.listcard-link > a {
 .expandingheatmaptable td {
   padding: 0px;
   margin: 0px;
-  font-size: 1.1rem;
-  line-height: 1.2;
+  font-size: 1.5rem;
+  line-height: 1.8;
   max-width: 110px;
 }
 
@@ -1469,7 +1468,7 @@ td.listcard-link > a {
   .expandingheatmaptable td {
     padding: 3px auto;
     margin: 0px;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     line-height: 1.8;
   }
 }
