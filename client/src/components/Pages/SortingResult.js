@@ -148,7 +148,7 @@ class SortingResult extends Component {
                         <tr>
                           <th>Sorter version</th>
                           <td>
-                            {sortingResult.processorName}: {sortingResult.processorVersion}
+                            {sortingResult.processorName} {sortingResult.processorVersion}
                           </td>
                         </tr>
                         <tr>
