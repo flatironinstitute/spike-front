@@ -1374,8 +1374,8 @@ td.listcard-link > a {
 }
 
 .sidebar {
-  position: sticky;
-  top: 7rem;
+  position: relative;
+  /* top: 7rem; */
   margin-top: 7rem;
   z-index: 800;
   height: calc(100vh - 7rem);
