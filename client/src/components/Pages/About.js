@@ -2,18 +2,20 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import { Col, Container, Row } from "react-bootstrap";
+import long from "./SpikeForest_Long.jpg";
+import short from "./SpikeForest_Short.jpg";
 
 class About extends Component {
   render() {
     const listItems = [
       { name: "Overview", value: "overview" },
-      // { name: "Resources", value: "resources" },
+      { name: "Citation", value: "citation" },
       { name: "Reproducing", value: "reproducing" },
       { name: "Feedback", value: "feedback" },
       { name: "Credits", value: "credits" },
       { name: "References", value: "references" },
       { name: "Background", value: "background" },
-      { name: "Future plans", value: "futureplans" }
+      { name: "Future plans", value: "futureplans" },
     ];
     return (
       <div>
@@ -28,6 +30,23 @@ class About extends Component {
                   <Col lg={12} sm={12} xl={12}>
                     <div className="intro">
                       <p className="big">About SpikeForest</p>
+                    </div>
+                  </Col>
+                </Row>
+                <div className="finder" id="image" />
+                <Row className="subcontainer justify-content-md-center">
+                  <Col lg={12} sm={12} xl={12}>
+                    <div className="card card__std">
+                      <div className="content">
+                        <div className="card__footer">
+                          <Row className="justify-content-md-center">
+                            <img
+                              src={long}
+                              className="card-img-top card-img-long"
+                            />
+                          </Row>
+                        </div>
+                      </div>
                     </div>
                   </Col>
                 </Row>
@@ -98,6 +117,37 @@ class About extends Component {
                             <Link to="/recordings">recordings</Link>,{" "}
                             <Link to="/algorithms">algorithms</Link>, and{" "}
                             <Link to="/metrics">metric definitions</Link>.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
+                <div className="finder" id="citation" />
+                <Row className="subcontainer justify-content-md-center">
+                  <Col lg={12} sm={12} xl={12}>
+                    <div className="card card__std">
+                      <div className="content">
+                        <div className="card__label">
+                          <p>
+                            <strong>Citation</strong>
+                          </p>
+                        </div>
+                        <div className="card__footer">
+                          <hr />
+                          <p>
+                            For a comprehensive discussion of SpikeForest,
+                            please consult the following eLife paper:
+                          </p>
+                          <p>
+                            Magland, J., Jun, J. J., Lovero, E., Morley, A. J.,
+                            Hurwitz, C. L., Buccino, A. P., Garcia, S., Barnett,
+                            A. H. (2020). SpikeForest, reproducible web-facing
+                            ground-truth validation of automated neural spike
+                            sorters. <i>eLife, 9.</i>{" "}
+                            <a href="https://elifesciences.org/articles/55167">
+                              doi:10.7554/elife.55167
+                            </a>
                           </p>
                         </div>
                       </div>

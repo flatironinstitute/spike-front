@@ -981,6 +981,11 @@ li {
   line-height: 30px;
 }
 
+.card-img-long {
+  max-height: 150vh;
+  width: auto;
+}
+
 .card__label-wrapper {
   display: flex;
   justify-content: space-between;
@@ -1375,10 +1380,8 @@ td.listcard-link > a {
 
 .sidebar {
   position: sticky;
-  top: 7rem;
   margin-top: 7rem;
   z-index: 800;
-  height: calc(100vh - 7rem);
   border-right: 2px solid var(--fi-blue);
   padding: 1.5rem !important;
 }

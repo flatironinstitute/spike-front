@@ -7,6 +7,16 @@ class InfoPanel extends Component {
       <div className="info">
         <h5>About SpikeForest</h5>
         <p>
+          <i>
+            For a complete discussion of this project, please consult the eLife
+            paper{" "}
+            <a href="https://elifesciences.org/articles/55167">
+              SpikeForest, reproducible web-facing ground-truth validation of
+              automated neural spike sorters
+            </a>{" "}
+          </i>
+        </p>
+        <p>
           Extracellular electrical recording is a popular and affordable method
           to measure the simultaneous spiking activity of a large neural
           population. The key computational extraction of distinct neuronal
