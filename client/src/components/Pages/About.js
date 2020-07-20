@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import { Col, Container, Row } from "react-bootstrap";
+import long from "./SpikeForest_Long.jpg";
+import short from "./SpikeForest_Short.jpg";
 
 class About extends Component {
   render() {
@@ -28,6 +30,23 @@ class About extends Component {
                   <Col lg={12} sm={12} xl={12}>
                     <div className="intro">
                       <p className="big">About SpikeForest</p>
+                    </div>
+                  </Col>
+                </Row>
+                <div className="finder" id="image" />
+                <Row className="subcontainer justify-content-md-center">
+                  <Col lg={12} sm={12} xl={12}>
+                    <div className="card card__std">
+                      <div className="content">
+                        <div className="card__footer">
+                          <Row className="justify-content-md-center">
+                            <img
+                              src={long}
+                              className="card-img-top card-img-long"
+                            />
+                          </Row>
+                        </div>
+                      </div>
                     </div>
                   </Col>
                 </Row>
