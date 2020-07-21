@@ -4,6 +4,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import { Col, Container, Row } from "react-bootstrap";
 import long from "./SpikeForest_Long.jpg";
 import short from "./SpikeForest_Short.jpg";
+import ModalImage from "react-modal-image";
 
 class About extends Component {
   render() {
@@ -33,23 +34,6 @@ class About extends Component {
                     </div>
                   </Col>
                 </Row>
-                <div className="finder" id="image" />
-                <Row className="subcontainer justify-content-md-center">
-                  <Col lg={12} sm={12} xl={12}>
-                    <div className="card card__std">
-                      <div className="content">
-                        <div className="card__footer">
-                          <Row className="justify-content-md-center">
-                            <img
-                              src={long}
-                              className="card-img-top card-img-long"
-                            />
-                          </Row>
-                        </div>
-                      </div>
-                    </div>
-                  </Col>
-                </Row>
                 <div className="finder" id="overview" />
                 <Row className="subcontainer justify-content-md-center">
                   <Col lg={12} sm={12} xl={12}>
@@ -62,62 +46,82 @@ class About extends Component {
                         </div>
                         <div className="card__footer">
                           <hr />
-                          <p>
-                            Extracellular electrical recording is a popular and
-                            affordable method to measure the simultaneous
-                            spiking activity of a large neural population. The
-                            key computational extraction of distinct neuronal
-                            units and firing times is known as spike sorting.
-                            However, there is a growing number of automated
-                            spike sorting codes, and much uncertainty and
-                            folklore about their accuracy in various
-                            experimental conditions. Several papers report
-                            comparisons on a case-by-case basis, but there is a
-                            lack of standardized measures and validation data.
-                            Furthermore, there is a potential for bias, such as
-                            sub-optimal tuning of competing algorithms, and a
-                            focus on one brain region or probe type. Without a
-                            fair and transparent comparison, genuine progress in
-                            the field remains difficult.
-                          </p>
-                          <p>
-                            Aiming to address this need, SpikeForest is a
-                            reproducible, continuously updating platform which
-                            benchmarks the performance of spike sorting codes
-                            across a large curated database of
-                            electrophysiological recordings with ground truth.
-                            It consists of this website for presenting our
-                            up-to-date findings, a{" "}
-                            <a
-                              href="https://github.com/flatironinstitute/spikeforest2"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              Python package
-                            </a>{" "}
-                            which contains the tools for running the SpikeForest
-                            analysis, and an expanding collection of
-                            electrophysiology recordings with ground-truth
-                            spiking information.
-                          </p>
-                          <p>
-                            We host a variety of experimental paired ground
-                            truth recordings from the community and also many in
-                            silico synthetic recordings. Each sorter is run on
-                            all recordings and the resulting accuracies for the
-                            ground truth units are updated on a daily basis as
-                            needed. Approximate CPU/GPU run times are also
-                            reported.
-                          </p>
-                          <p>
-                            Visitors may browse all datasets, algorithms,
-                            sorting results, and comparisons, and inspect the
-                            source code used to generate these data. Use the
-                            links on the navbar to learn about{" "}
-                            <Link to="/recordings">recordings</Link>,{" "}
-                            <Link to="/algorithms">algorithms</Link>, and{" "}
-                            <Link to="/metrics">metric definitions</Link>.
-                          </p>
+                          <Row>
+                            <Col>
+                              <p>
+                                Extracellular electrical recording is a popular
+                                and affordable method to measure the
+                                simultaneous spiking activity of a large neural
+                                population. The key computational extraction of
+                                distinct neuronal units and firing times is
+                                known as spike sorting. However, there is a
+                                growing number of automated spike sorting codes,
+                                and much uncertainty and folklore about their
+                                accuracy in various experimental conditions.
+                                Several papers report comparisons on a
+                                case-by-case basis, but there is a lack of
+                                standardized measures and validation data.
+                                Furthermore, there is a potential for bias, such
+                                as sub-optimal tuning of competing algorithms,
+                                and a focus on one brain region or probe type.
+                                Without a fair and transparent comparison,
+                                genuine progress in the field remains difficult.
+                              </p>
+                              <p>
+                                Aiming to address this need, SpikeForest is a
+                                reproducible, continuously updating platform
+                                which benchmarks the performance of spike
+                                sorting codes across a large curated database of
+                                electrophysiological recordings with ground
+                                truth. It consists of this website for
+                                presenting our up-to-date findings, a{" "}
+                                <a
+                                  href="https://github.com/flatironinstitute/spikeforest2"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  Python package
+                                </a>{" "}
+                                which contains the tools for running the
+                                SpikeForest analysis, and an expanding
+                                collection of electrophysiology recordings with
+                                ground-truth spiking information.
+                              </p>
+                              <p>
+                                We host a variety of experimental paired ground
+                                truth recordings from the community and also
+                                many in silico synthetic recordings. Each sorter
+                                is run on all recordings and the resulting
+                                accuracies for the ground truth units are
+                                updated on a daily basis as needed. Approximate
+                                CPU/GPU run times are also reported.
+                              </p>
+                              <p>
+                                Visitors may browse all datasets, algorithms,
+                                sorting results, and comparisons, and inspect
+                                the source code used to generate these data. Use
+                                the links on the navbar to learn about{" "}
+                                <Link to="/recordings">recordings</Link>,{" "}
+                                <Link to="/algorithms">algorithms</Link>, and{" "}
+                                <Link to="/metrics">metric definitions</Link>.
+                              </p>
+                            </Col>
+                            <Col>
+                              <p>Click to expand graphical abstracts</p>
+                              <ModalImage
+                                small={short}
+                                large={short}
+                                className="graphic-abstract"
+                                alt="SpikeForest Graphical Abstract"
+                              />
+                              <ModalImage
+                                small={long}
+                                large={long}
+                                className="graphic-abstract"
+                                alt="Spike Sorting Graphical Abstract"
+                              />
+                            </Col>
+                          </Row>
                         </div>
                       </div>
                     </div>
