@@ -27,6 +27,7 @@
     "react-ga": "^2.5.7",
     "react-markdown": "^4.1.0",
     "react-mathjax": "^1.0.1",
+    "react-modal-image": "^2.5.0",
     "react-plotly.js": "^2.3.0",
     "react-rangeslider": "^2.2.0",
     "react-redux": "^6.0.0",

@@ -981,9 +981,9 @@ li {
   line-height: 30px;
 }
 
-.card-img-long {
-  max-height: 150vh;
-  width: auto;
+.graphic-abstract {
+  max-height: 30vh;
+  border: 2px solid var(--fi-blue);
 }
 
 .card__label-wrapper {
