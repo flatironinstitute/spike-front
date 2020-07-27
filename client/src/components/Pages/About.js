@@ -47,7 +47,7 @@ class About extends Component {
                         <div className="card__footer">
                           <hr />
                           <Row>
-                            <Col>
+                            <Col lg={6} md={6} sm={12}>
                               <p>
                                 Extracellular electrical recording is a popular
                                 and affordable method to measure the
@@ -106,20 +106,30 @@ class About extends Component {
                                 <Link to="/metrics">metric definitions</Link>.
                               </p>
                             </Col>
-                            <Col>
-                              <p>Click to expand graphical abstracts</p>
-                              <ModalImage
-                                small={short}
-                                large={short}
-                                className="graphic-abstract"
-                                alt="SpikeForest Graphical Abstract"
-                              />
-                              <ModalImage
-                                small={long}
-                                large={long}
-                                className="graphic-abstract"
-                                alt="Spike Sorting Graphical Abstract"
-                              />
+                            <Col lg={6} md={6} sm={12}>
+                              <p>
+                                <i>Click to expand graphical abstracts</i>
+                              </p>
+                              <Row>
+                                {" "}
+                                <Col lg={6} md={6} sm={12}>
+                                  {" "}
+                                  <ModalImage
+                                    small={short}
+                                    large={short}
+                                    className="graphic-abstract"
+                                    alt="SpikeForest Graphical Abstract"
+                                  />
+                                </Col>
+                                <Col lg={6} md={6} sm={12}>
+                                  <ModalImage
+                                    small={long}
+                                    large={long}
+                                    className="graphic-abstract"
+                                    alt="Spike Sorting Graphical Abstract"
+                                  />
+                                </Col>
+                              </Row>
                             </Col>
                           </Row>
                         </div>
