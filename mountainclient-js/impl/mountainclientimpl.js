@@ -145,7 +145,8 @@ function MountainClientImpl() {
       }
       for (let i=0; i<m_download_from.length; i++) {
         let df = m_download_from[i];
-        let kachery_url = await resolve_kachery_url(df);
+        // let kachery_url = await resolve_kachery_url(df);
+        let kachery_url = 'http://132.249.245.246:24342'
         if (kachery_url) {
           let url0 = kachery_url + '/get/sha1/' + sha1;
           if (opts.find) {
