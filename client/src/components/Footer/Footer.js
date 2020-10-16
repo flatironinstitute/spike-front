@@ -1,22 +1,19 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-import "./footer.css";
-import github from "./github-white.svg";
+import './footer.css';
+import github from './github-white.svg';
 
 class Footer extends Component {
   render() {
     return (
       <footer className="footer">
-        <p className="updated">
-          Spike-front client updated on July 27, 2020 (11:38 am)
-        </p>
+        <p className="updated">Spike-front client updated on October 16, 2020 (3:38 PM)</p>
         <div className="outro">
           <p className="footer__description">
-            SpikeForest is a website and open source computing framework for
-            evaluating and comparing spike sorting algorithms for
-            neurophysiology data analysis. It is a project of the Center for
-            Computational Mathematics at the Flatiron Institute.
+            SpikeForest is a website and open source computing framework for evaluating and
+            comparing spike sorting algorithms for neurophysiology data analysis. It is a project of
+            the Center for Computational Mathematics at the Flatiron Institute.
           </p>
         </div>
 
@@ -27,20 +24,12 @@ class Footer extends Component {
             </Link>
           </li>
           <li className="x-small">
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://simonsfoundation.org"
-            >
+            <a target="_blank" rel="noopener noreferrer" href="https://simonsfoundation.org">
               Simons Foundation
             </a>
           </li>
           <li className="x-small">
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://flatironinstitute.org"
-            >
+            <a target="_blank" rel="noopener noreferrer" href="https://flatironinstitute.org">
               Flatiron Institute
             </a>
           </li>
