@@ -31,7 +31,7 @@
     "nodemailer": "^5.1.1",
     "nodemon": "^1.18.11",
     "prettier": "1.17.0",
-    "pug": "^2.0.3",
+    "pug": "^3.0.1",
     "remove-markdown": "^0.3.0",
     "text-encoding": "^0.7.0"
   },
