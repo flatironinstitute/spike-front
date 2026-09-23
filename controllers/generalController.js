@@ -1,8 +1,5 @@
-const mongoose = require("mongoose");
-const General = mongoose.model("General"); //Singleton from mongoose
+const data = require("../data");
 
 exports.getGeneral = async (req, res) => {
-  const generalPromise = General.find();
-  const [general] = await Promise.all([generalPromise]);
-  res.send({ general: general[0] || {} });
+  res.send({ general: data.general[0] || {} });
 };

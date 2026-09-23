@@ -14,27 +14,6 @@ Sentry.init({
 // import environmental variables from our variables.env file
 require("dotenv").config({ path: ".env" });
 
-/* Mongoose DB setup
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-const mongoose = require("mongoose");
-
-// Connect to our Database and handle any bad connections
-mongoose.connect(process.env.DATABASE, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
-mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
-mongoose.connection.on("error", err => {
-  console.error(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
-});
-require("./models/Sorter");
-require("./models/Algorithm");
-require("./models/SortingResult");
-require("./models/StudyAnalysisResult");
-require("./models/StudySet");
-require("./models/General");
-require("./models/NewsPost");
-
 /* Express Isomorphic
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 const express = require("express");

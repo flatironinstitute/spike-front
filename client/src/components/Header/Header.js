@@ -63,8 +63,8 @@ class Header extends Component {
             </Navbar.Brand>
           </LinkContainer>
           <Nav className="navbar__right">
-            <LinkContainer exact to="/">
-              <Nav.Link eventKey="/">Heatmap</Nav.Link>
+            <LinkContainer exact to="/heatmap">
+              <Nav.Link eventKey="/heatmap">Heatmap</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/recordings">
               <Nav.Link eventKey="/recordings">Recordings</Nav.Link>

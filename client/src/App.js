@@ -2,8 +2,9 @@ import React, { Component } from "react";
 
 // import router dependencies
 import PropTypes from "prop-types";
-import { Router, withRouter } from "react-router";
+import { Route, Router, Switch, withRouter } from "react-router";
 import Routes from "./routes";
+import Landing from "./components/Landing/Landing";
 
 class ScrollToTop extends Component {
   componentDidUpdate(prevProps) {
@@ -23,7 +24,10 @@ const App = ({ history }) => {
   return (
     <Router history={history}>
       <Scroll>
-        <Routes1 />
+        <Switch>
+          <Route exact path="/" component={Landing} />
+          <Route component={Routes1} />
+        </Switch>
       </Scroll>
     </Router>
   );

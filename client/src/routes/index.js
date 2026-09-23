@@ -91,7 +91,7 @@ class Routes extends Component {
         <Switch>
           <Route
             exact
-            path="/"
+            path="/heatmap"
             render={props =>
               this.props.fetchFailure ? (
                 loadingContainer

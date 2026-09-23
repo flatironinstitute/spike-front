@@ -18,35 +18,13 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
-## Injesting data into the database
+## Data
 
-### Step 1: Delete the data (clear the database)
+The site no longer uses a database. The server loads its data at startup from the JSON files in `spikeforest_website_data/` (Algorithms, Sorters, StudySets, SortingResults, StudyAnalysisResults, General, and optionally NewsPosts), which are committed and deployed along with the app. To update the site data, replace these files with new output from the spikeforest pipeline and redeploy.
 
-```
-admin/bin/delete-data.js [database_url] --delete
-or
-admin/bin/delete-data.js --database-from-env --delete
-```
+## Deploying to Vercel
 
-This command clears the database entirely and is the essential first step of the data injest process.
-
-If `--database-from-env` is specified, the DATABASE environment variable (from .env) will be used for the database url.
-
-If `--database-from-env-prod` is specified, the DATABASE_PROD environment variable (from .env) will be used for the database url.
-
-### Step 2: Format and load data into database
-
-```
-admin/bin/format-and-load-data.js [data_directory] [database_url]
-or
-admin/bin/format-and-load-data.js [data_directory] --database-from-env
-```
-
-Assigns ids, formats, and injests raw data from the spikeforest pipeline into the website for visualization. Raw data files for injest should be stored in [data_directory] with capitalized titles. After injest is complete, this script automatically deletes temp files generated in the process.
-
-If `--database-from-env` is specified, the DATABASE environment variable (from .env) will be used for the database url.
-
-If `--database-from-env-prod` is specified, the DATABASE_PROD environment variable (from .env) will be used for the database url.
+The site is deployed as static files. The build (see `vercel.json`) compiles the client and runs `scripts/build-static-api.js`, which writes each API response to `client/build/api/*.json`; rewrites in `vercel.json` map the `/api/...` routes onto these files. The endpoints that depend on the external file store (`loadObject`, `loadText`, `findFile`) and the contact form are not available in this deployment.
 
 ## Authors
 

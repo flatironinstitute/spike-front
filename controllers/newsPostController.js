@@ -1,11 +1,10 @@
-const mongoose = require("mongoose");
-const NewsPost = mongoose.model("NewsPost"); //Singleton from mongoose
+const data = require("../data");
+
+// newest first
+const sortedNewsPosts = [...data.newsPosts].sort((a, b) =>
+  b.date < a.date ? -1 : b.date > a.date ? 1 : 0
+);
 
 exports.getNewsPosts = async (req, res) => {
-  const newsPostsPromise = NewsPost.find();
-  let [newsPosts] = await Promise.all([newsPostsPromise]);
-  newsPosts.sort((a, b) => {
-    return b < a ? -1 : b > a ? 1 : 0;
-  });
-  res.send({ newsPosts: newsPosts });
+  res.send({ newsPosts: sortedNewsPosts });
 };

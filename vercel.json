@@ -1,0 +1,14 @@
+{
+  "framework": null,
+  "installCommand": "cd client && yarn install --frozen-lockfile",
+  "buildCommand": "cd client && NODE_OPTIONS=--openssl-legacy-provider yarn build && cd .. && node scripts/build-static-api.js",
+  "outputDirectory": "client/build",
+  "rewrites": [
+    {
+      "source": "/api/studyanalysisresults/:studySetName",
+      "destination": "/api/studyanalysisresults/:studySetName.json"
+    },
+    { "source": "/api/:name", "destination": "/api/:name.json" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

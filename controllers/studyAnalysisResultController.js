@@ -1,22 +1,14 @@
-const mongoose = require("mongoose");
-const StudyAnalysisResult = mongoose.model("StudyAnalysisResult"); //Singleton from mongoose
+const data = require("../data");
 
 exports.getStudyAnalysisResults = async (req, res) => {
-  const studyAnalysisResultsPromise = StudyAnalysisResult.find();
-  const [studyAnalysisResults] = await Promise.all([
-    studyAnalysisResultsPromise
-  ]);
-  res.send({ studyAnalysisResults: studyAnalysisResults });
+  res.send({ studyAnalysisResults: data.studyAnalysisResults });
 };
 
 exports.getStudyAnalysisResultsForStudySet = async (req, res) => {
   let studySetName = req.params.studySetName;
-  const studyAnalysisResultsForStudySetPromise = StudyAnalysisResult.find({
-    studySetName: { $eq: studySetName }
-  });
-  const [studyAnalysisResults] = await Promise.all([
-    studyAnalysisResultsForStudySetPromise
-  ]);
+  const studyAnalysisResults = data.studyAnalysisResults.filter(
+    sar => sar.studySetName === studySetName
+  );
   res.send({
     studyAnalysisResults: studyAnalysisResults,
     studySetName: studySetName
