@@ -1,12 +1,9 @@
 import * as Sentry from "@sentry/browser";
+import { basePath } from "../basePath";
 const axios = require("axios");
 
-var baseurl;
-if (process.env.NODE_ENV === "production") {
-  baseurl = "";
-} else {
-  baseurl = "http://localhost:5000";
-}
+const isProduction = process.env.NODE_ENV === "production";
+const baseurl = isProduction ? basePath : "http://localhost:5000";
 
 /* V2 Data Actions
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -44,7 +41,8 @@ export const FETCH_FAILURE = "FETCH_FAILURE";
 
 // Utilities
 export const createFetchAPI = async url => {
-  const newUrl = baseurl + url;
+  // Production serves the API as static JSON files (see scripts/build-static-api.js)
+  const newUrl = baseurl + url + (isProduction ? ".json" : "");
   try {
     const response = await axios.get(newUrl);
     const returned = await response.data;

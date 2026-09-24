@@ -6,6 +6,7 @@ import logo from "./logo-no-icon.svg";
 // import InfoPanel from "./InfoPanel";
 
 import { toTitleCase } from "../../utils";
+import { history } from "../../store";
 
 class Header extends Component {
   constructor() {
@@ -27,7 +28,7 @@ class Header extends Component {
   }
 
   getPageName() {
-    let activeRoute = window.location.pathname;
+    let activeRoute = history.location.pathname;
     let activeArr = activeRoute.split("/").filter(item => item);
     if (activeArr[0] === "study") {
       let str = activeArr[1].replace(/_/g, " ");

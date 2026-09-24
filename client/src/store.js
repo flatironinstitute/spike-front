@@ -5,6 +5,7 @@ import { createBrowserHistory } from "history";
 import { routerMiddleware } from "connected-react-router";
 import rootReducer from "./reducers";
 import thunk from "redux-thunk";
+import { basePath } from "./basePath";
 
 const gaTag = "UA-138500572-1";
 ReactGA.initialize(gaTag);
@@ -33,7 +34,12 @@ const defaultState = {
   studyAnalysisResults: null
 };
 
-export const history = createBrowserHistory();
+export const history = createBrowserHistory({
+  basename: basePath
+});
+if (history.location.pathname === "/index.html") {
+  history.replace("/");
+}
 history.listen(location => ReactGA.pageview(location.pathname));
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

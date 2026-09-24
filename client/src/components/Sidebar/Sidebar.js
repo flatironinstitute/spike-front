@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { HashLink } from "react-router-hash-link";
 import Scrollspy from "react-scrollspy";
+import { history } from "../../store";
 
 class Sidebar extends Component {
   scrollToTop() {
     window.scrollTo(0, 0);
   }
   render() {
-    let path = window.location.pathname + "#";
+    let path = history.location.pathname + "#";
     let listItemsWithKeys = [];
     let scrollSpyItems = [];
     this.props.listItems.forEach((item, index) => {

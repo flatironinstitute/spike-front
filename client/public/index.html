@@ -2,6 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <script>
+      // Serve from a user directory (/~user/dir/) or from a domain root with the same build.
+      (function() {
+        var m = window.location.pathname.match(/^\/~[^/]+\/[^/]+/);
+        window.BASE_PATH = m ? m[0] : "";
+        var base = document.createElement("base");
+        base.href = window.BASE_PATH + "/";
+        document.head.appendChild(base);
+      })();
+    </script>
 
     <!-- Disable caching by browser -->
     <meta

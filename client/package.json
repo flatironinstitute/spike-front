@@ -2,6 +2,7 @@
   "name": "spike-front-client",
   "version": "0.1.2",
   "private": true,
+  "homepage": ".",
   "author": "Elizabeth Lovero, @lizlove",
   "license": "Apache-2.0",
   "dependencies": {
