@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import logo from "../Header/logo-no-icon.svg";
+import waveforms from "./spike-waveforms.jpg";
+import infographic from "../Pages/SpikeForest_Long.jpg";
 import "./landing.css";
 
 const Landing = () => (
@@ -24,6 +26,25 @@ const Landing = () => (
         <span>Results as of December 2019</span>
       </li>
     </ul>
+    <figure className="landing__figure landing__figure--infographic">
+      <a href={infographic}>
+        <img
+          src={infographic}
+          alt="Infographic: Spike Sorting and Its Validation"
+        />
+      </a>
+    </figure>
+    <figure className="landing__figure">
+      <img
+        src={waveforms}
+        alt="Spike waveforms on seven channels for ground truth, sorted, false negative, and false positive events"
+      />
+      <figcaption>
+        Ground-truth and sorted waveforms for one unit on seven channels, with
+        missed (false negative) and spurious (false positive) events shown
+        separately.
+      </figcaption>
+    </figure>
   </div>
 );
 

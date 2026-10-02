@@ -35,3 +35,19 @@
   color: var(--label-grey);
   text-align: right;
 }
+.landing__figure {
+  margin: 6rem 0 0;
+}
+.landing__figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.landing__figure figcaption {
+  margin-top: 1rem;
+  font-size: 1.4rem;
+  color: var(--label-grey);
+}
+.landing__figure--infographic img {
+  border: 1px solid #e3e3e8;
+}
